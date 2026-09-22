@@ -1,0 +1,23 @@
+{
+  "implementation": "dd0b59faff73995d5e608f2b7482f72c6b0ee91b5cde5f07cd91977b04e63c17",
+  "freeze_valid": true,
+  "targeted_successful": 124,
+  "full_total": 1208,
+  "full_successful": 1201,
+  "full_skipped": 7,
+  "lifecycle": "81/81",
+  "wrapped_integrity": "PASS",
+  "wrapper_counts": {
+    "trial": 10,
+    "backup-trial": 10,
+    "proxy-trial": 203,
+    "rounding-trial": 193
+  },
+  "exact_key_scan": "PASS",
+  "normalization_live_answers": 1,
+  "log_sha256": {
+    "rounding-targeted.log": "38bf9d1cadb2b3a4884621fbb257782a4531950ba013336ef5846c59d832a352",
+    "rounding-full-suite.log": "64d95ce6926c04febd087cf9a0597578895addee5d9ceaa1d0c12edf2bf5067c",
+    "rounding-live.log": "644e9c7dea9402cd84e6a0359184297598537a0a1d5c8a320f8b8c4552f20c24"
+  }
+}

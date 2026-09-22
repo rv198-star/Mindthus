@@ -1,0 +1,3394 @@
+{
+  "source_freeze_commit": "a7d292c43",
+  "trial_root": "/Users/william/Documents/Codex/2026-09-22/mindthus-c01-language-diagnostic/rounding-trial",
+  "original_summary": {
+    "abc": "not_run",
+    "analysis": {
+      "arms": {
+        "english": {
+          "all": {
+            "abstentions": [],
+            "fields": {
+              "entry_mode": {
+                "matched": 12,
+                "scored": 15
+              },
+              "owner": {
+                "matched": 13,
+                "scored": 15
+              },
+              "route": {
+                "matched": 13,
+                "scored": 15
+              }
+            },
+            "joint": {
+              "matched": 11,
+              "scored": 15
+            }
+          },
+          "by_family": {
+            "explicit_method": {
+              "abstentions": [],
+              "fields": {
+                "entry_mode": {
+                  "matched": 2,
+                  "scored": 4
+                },
+                "owner": {
+                  "matched": 4,
+                  "scored": 4
+                },
+                "route": {
+                  "matched": 4,
+                  "scored": 4
+                }
+              },
+              "joint": {
+                "matched": 2,
+                "scored": 4
+              }
+            },
+            "obligation_d0": {
+              "abstentions": [],
+              "fields": {
+                "entry_mode": {
+                  "matched": 4,
+                  "scored": 4
+                },
+                "owner": {
+                  "matched": 4,
+                  "scored": 4
+                },
+                "route": {
+                  "matched": 4,
+                  "scored": 4
+                }
+              },
+              "joint": {
+                "matched": 4,
+                "scored": 4
+              }
+            },
+            "sela_mpg": {
+              "abstentions": [],
+              "fields": {
+                "entry_mode": {
+                  "matched": 2,
+                  "scored": 3
+                },
+                "owner": {
+                  "matched": 2,
+                  "scored": 3
+                },
+                "route": {
+                  "matched": 2,
+                  "scored": 3
+                }
+              },
+              "joint": {
+                "matched": 2,
+                "scored": 3
+              }
+            },
+            "wae_boundary": {
+              "abstentions": [],
+              "fields": {
+                "entry_mode": {
+                  "matched": 4,
+                  "scored": 4
+                },
+                "owner": {
+                  "matched": 3,
+                  "scored": 4
+                },
+                "route": {
+                  "matched": 3,
+                  "scored": 4
+                }
+              },
+              "joint": {
+                "matched": 3,
+                "scored": 4
+              }
+            }
+          },
+          "fallbacks": [
+            "L22",
+            "L27",
+            "L28",
+            "L29"
+          ],
+          "mechanical_d0": {
+            "abstentions": [],
+            "fields": {
+              "entry_mode": {
+                "matched": 2,
+                "scored": 2
+              },
+              "owner": {
+                "matched": 2,
+                "scored": 2
+              },
+              "route": {
+                "matched": 2,
+                "scored": 2
+              }
+            },
+            "joint": {
+              "matched": 2,
+              "scored": 2
+            }
+          },
+          "mismatches": [
+            "L18",
+            "L22",
+            "L27",
+            "L28"
+          ],
+          "semantic_only": {
+            "abstentions": [],
+            "fields": {
+              "entry_mode": {
+                "matched": 10,
+                "scored": 13
+              },
+              "owner": {
+                "matched": 11,
+                "scored": 13
+              },
+              "route": {
+                "matched": 11,
+                "scored": 13
+              }
+            },
+            "joint": {
+              "matched": 9,
+              "scored": 13
+            }
+          }
+        },
+        "source": {
+          "all": {
+            "abstentions": [],
+            "fields": {
+              "entry_mode": {
+                "matched": 11,
+                "scored": 15
+              },
+              "owner": {
+                "matched": 11,
+                "scored": 15
+              },
+              "route": {
+                "matched": 12,
+                "scored": 15
+              }
+            },
+            "joint": {
+              "matched": 9,
+              "scored": 15
+            }
+          },
+          "by_family": {
+            "explicit_method": {
+              "abstentions": [],
+              "fields": {
+                "entry_mode": {
+                  "matched": 1,
+                  "scored": 4
+                },
+                "owner": {
+                  "matched": 3,
+                  "scored": 4
+                },
+                "route": {
+                  "matched": 3,
+                  "scored": 4
+                }
+              },
+              "joint": {
+                "matched": 1,
+                "scored": 4
+              }
+            },
+            "obligation_d0": {
+              "abstentions": [],
+              "fields": {
+                "entry_mode": {
+                  "matched": 4,
+                  "scored": 4
+                },
+                "owner": {
+                  "matched": 4,
+                  "scored": 4
+                },
+                "route": {
+                  "matched": 4,
+                  "scored": 4
+                }
+              },
+              "joint": {
+                "matched": 4,
+                "scored": 4
+              }
+            },
+            "sela_mpg": {
+              "abstentions": [],
+              "fields": {
+                "entry_mode": {
+                  "matched": 2,
+                  "scored": 3
+                },
+                "owner": {
+                  "matched": 1,
+                  "scored": 3
+                },
+                "route": {
+                  "matched": 2,
+                  "scored": 3
+                }
+              },
+              "joint": {
+                "matched": 1,
+                "scored": 3
+              }
+            },
+            "wae_boundary": {
+              "abstentions": [],
+              "fields": {
+                "entry_mode": {
+                  "matched": 4,
+                  "scored": 4
+                },
+                "owner": {
+                  "matched": 3,
+                  "scored": 4
+                },
+                "route": {
+                  "matched": 3,
+                  "scored": 4
+                }
+              },
+              "joint": {
+                "matched": 3,
+                "scored": 4
+              }
+            }
+          },
+          "fallbacks": [
+            "L22",
+            "L26",
+            "L27",
+            "L28",
+            "L29"
+          ],
+          "mechanical_d0": {
+            "abstentions": [],
+            "fields": {
+              "entry_mode": {
+                "matched": 2,
+                "scored": 2
+              },
+              "owner": {
+                "matched": 2,
+                "scored": 2
+              },
+              "route": {
+                "matched": 2,
+                "scored": 2
+              }
+            },
+            "joint": {
+              "matched": 2,
+              "scored": 2
+            }
+          },
+          "mismatches": [
+            "L18",
+            "L19",
+            "L22",
+            "L26",
+            "L27",
+            "L28"
+          ],
+          "semantic_only": {
+            "abstentions": [],
+            "fields": {
+              "entry_mode": {
+                "matched": 9,
+                "scored": 13
+              },
+              "owner": {
+                "matched": 9,
+                "scored": 13
+              },
+              "route": {
+                "matched": 10,
+                "scored": 13
+              }
+            },
+            "joint": {
+              "matched": 7,
+              "scored": 13
+            }
+          }
+        }
+      },
+      "complete_pairs": 15,
+      "disagreements": [
+        {
+          "case_id": "L19",
+          "english": {
+            "entry_mode": "mindthus_intervention",
+            "owner": "mpg",
+            "route": "intervene"
+          },
+          "source": {
+            "entry_mode": "mindthus_intervention",
+            "owner": "sela",
+            "route": "intervene"
+          }
+        },
+        {
+          "case_id": "L26",
+          "english": {
+            "entry_mode": "mindthus_intervention",
+            "owner": "edsp",
+            "route": "intervene"
+          },
+          "source": {
+            "entry_mode": "direct_execution",
+            "owner": null,
+            "route": "llm_fallback"
+          }
+        }
+      ],
+      "paired_joint": {
+        "both_correct": 9,
+        "english_only": 2,
+        "neither": 4
+      },
+      "semantic_paired_joint": {
+        "both_correct": 7,
+        "english_only": 2,
+        "neither": 4
+      }
+    },
+    "attempts": {
+      "english": 21,
+      "source": 20
+    },
+    "completed_views": 30,
+    "estimated_input_cost_usd": {
+      "english": 0.00278775,
+      "source": 0.0027218520000000003
+    },
+    "excluded_case_ids": [
+      "L01",
+      "L02",
+      "L03",
+      "L04",
+      "L05",
+      "L06",
+      "L07",
+      "L08",
+      "L09",
+      "L10",
+      "L11",
+      "L12",
+      "L13",
+      "L14",
+      "L15",
+      "L16",
+      "L17"
+    ],
+    "holdout": "not_run",
+    "inference_seconds": {
+      "english": 31.06312308300403,
+      "source": 30.347690542002965
+    },
+    "original_planned_views": 64,
+    "planned_views": 30,
+    "qualification": "development diagnostic only",
+    "reserved_usd": 0.110208,
+    "resolved_runtime": {
+      "model": "jev-1.13.0",
+      "provider": "TypeSafe"
+    },
+    "rows": [
+      {
+        "arm": "source",
+        "call_keys": [
+          "570c8c176a0123e6a124c4945137e76c4ae5580e7140fc8897d62dbfc8e36e97"
+        ],
+        "case_id": "L18",
+        "family": "sela_mpg",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "570c8c176a0123e6a124c4945137e76c4ae5580e7140fc8897d62dbfc8e36e97",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.69,
+                  "probabilities": {
+                    "acquire_information": 0.03,
+                    "direct_execution": 0.76,
+                    "mindthus_intervention": 0.2,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.96,
+                  "probabilities": {
+                    "clear": 0.97,
+                    "present": 0.02,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": false,
+          "obligations": [],
+          "owner": null,
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "status": "ok"
+        },
+        "run_id": "5e9d34f4f9cf79428f301b42725cba34879a92764fe732def644fe7185a662c6",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": false,
+            "owner": false,
+            "route": false
+          },
+          "joint": false
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "d778d7d14e45a588d39db335d0c258769fdd16d7c158c1b5756d89cd00f51a07"
+        ],
+        "case_id": "L18",
+        "family": "sela_mpg",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "d778d7d14e45a588d39db335d0c258769fdd16d7c158c1b5756d89cd00f51a07",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.69,
+                  "probabilities": {
+                    "acquire_information": 0.03,
+                    "direct_execution": 0.76,
+                    "mindthus_intervention": 0.2,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.91,
+                  "probabilities": {
+                    "clear": 0.94,
+                    "present": 0.05,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": false,
+          "obligations": [],
+          "owner": null,
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "status": "ok"
+        },
+        "run_id": "b002ae1e49911d86fb5432d244e50765bba83cf2951e60360e0e36415a84276b",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": false,
+            "owner": false,
+            "route": false
+          },
+          "joint": false
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "fedecafac732733ed3f373fff1e39a588e5297d270df57825bedaab8d096ddd4",
+          "dc1346549fc56a176d888ce85d2b76f29161b53cdea14fb4c5b448bbd50954f7",
+          "df6371902f8775243a3e3cdbed8850222eb8dbf78ca49267b017137a9a0b1d59"
+        ],
+        "case_id": "L19",
+        "family": "sela_mpg",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "fedecafac732733ed3f373fff1e39a588e5297d270df57825bedaab8d096ddd4",
+            "results": {
+              "entry_mode": {
+                "reason": "choice_probability_sum_normalized_v1",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.75,
+                  "probabilities": {
+                    "acquire_information": 0.1111111111111111,
+                    "direct_execution": 0.0707070707070707,
+                    "mindthus_intervention": 0.8181818181818181,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mindthus_intervention"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.59,
+                  "probabilities": {
+                    "clear": 0.73,
+                    "present": 0.24,
+                    "unclear": 0.03
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          },
+          {
+            "call_key": "dc1346549fc56a176d888ce85d2b76f29161b53cdea14fb4c5b448bbd50954f7",
+            "results": {
+              "owner": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.56,
+                  "probabilities": {
+                    "3l5s": 0.0,
+                    "edsp": 0.03,
+                    "mpg": 0.62,
+                    "sela": 0.3,
+                    "sra": 0.05,
+                    "tplan": 0.0,
+                    "tvg": 0.0,
+                    "unclear": 0.0,
+                    "wae": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mpg"
+              }
+            }
+          },
+          {
+            "call_key": "df6371902f8775243a3e3cdbed8850222eb8dbf78ca49267b017137a9a0b1d59",
+            "results": {
+              "applicable": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.95,
+                  "probabilities": {
+                    "no": 0.03,
+                    "unclear": 0.0,
+                    "yes": 0.97
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "yes"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "mpg",
+          "route": "intervene"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "mindthus_intervention",
+          "fallback_owner": "original-agent",
+          "hard_judgment": true,
+          "obligations": [],
+          "owner": "mpg",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "status": "ok"
+        },
+        "run_id": "1d2b96733156f2ca998604db08a22d7123d358cf1edc078ab191d3d188da31a1",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [
+          "3d56f771dbeca40af689290c9fa438072b5f94c2eda149e5befa39b5012ff6da",
+          "bbafada05084f092ff6446bab29b638e87185beea2a42a8cd2fe9ce62bc71566",
+          "fec4af6d41a770fad36d107a5fcfceff345b5ae11d2117864937bf1ff03d6c76"
+        ],
+        "case_id": "L19",
+        "family": "sela_mpg",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "3d56f771dbeca40af689290c9fa438072b5f94c2eda149e5befa39b5012ff6da",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.67,
+                  "probabilities": {
+                    "acquire_information": 0.11,
+                    "direct_execution": 0.13,
+                    "mindthus_intervention": 0.75,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mindthus_intervention"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.84,
+                  "probabilities": {
+                    "clear": 0.89,
+                    "present": 0.09,
+                    "unclear": 0.02
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          },
+          {
+            "call_key": "bbafada05084f092ff6446bab29b638e87185beea2a42a8cd2fe9ce62bc71566",
+            "results": {
+              "owner": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.6,
+                  "probabilities": {
+                    "3l5s": 0.0,
+                    "edsp": 0.04,
+                    "mpg": 0.24,
+                    "sela": 0.65,
+                    "sra": 0.07,
+                    "tplan": 0.0,
+                    "tvg": 0.0,
+                    "unclear": 0.0,
+                    "wae": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "sela"
+              }
+            }
+          },
+          {
+            "call_key": "fec4af6d41a770fad36d107a5fcfceff345b5ae11d2117864937bf1ff03d6c76",
+            "results": {
+              "applicable": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.53,
+                  "probabilities": {
+                    "no": 0.29,
+                    "unclear": 0.02,
+                    "yes": 0.69
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "yes"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "sela",
+          "route": "intervene"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "mindthus_intervention",
+          "fallback_owner": "original-agent",
+          "hard_judgment": true,
+          "obligations": [],
+          "owner": "sela",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "status": "ok"
+        },
+        "run_id": "052321cab3b05bd70b4f6bb39afd9b29bf38658f95aebe3174d6e241ce17ab08",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": false,
+            "route": true
+          },
+          "joint": false
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [
+          "8365401fa1fe92bb99474f9d524cc34d9f1c121710de61f75508424f832c1a45",
+          "28c26babd5af46c6ce0e2e68ca610d4289e7fc983cdcaaef0384b0f711b1f2d3",
+          "a75db16739d0a4392d2e0ffaed3005357b4de93c98730e853486caeec97a48c7"
+        ],
+        "case_id": "L20",
+        "family": "sela_mpg",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "8365401fa1fe92bb99474f9d524cc34d9f1c121710de61f75508424f832c1a45",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.49,
+                  "probabilities": {
+                    "acquire_information": 0.11,
+                    "direct_execution": 0.27,
+                    "mindthus_intervention": 0.61,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mindthus_intervention"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.9,
+                  "probabilities": {
+                    "clear": 0.9299999999999999,
+                    "present": 0.05,
+                    "unclear": 0.02
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          },
+          {
+            "call_key": "28c26babd5af46c6ce0e2e68ca610d4289e7fc983cdcaaef0384b0f711b1f2d3",
+            "results": {
+              "owner": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.58,
+                  "probabilities": {
+                    "3l5s": 0.0,
+                    "edsp": 0.01,
+                    "mpg": 0.63,
+                    "sela": 0.13,
+                    "sra": 0.23,
+                    "tplan": 0.0,
+                    "tvg": 0.0,
+                    "unclear": 0.0,
+                    "wae": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mpg"
+              }
+            }
+          },
+          {
+            "call_key": "a75db16739d0a4392d2e0ffaed3005357b4de93c98730e853486caeec97a48c7",
+            "results": {
+              "applicable": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.84,
+                  "probabilities": {
+                    "no": 0.08,
+                    "unclear": 0.02,
+                    "yes": 0.9
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "yes"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "mpg",
+          "route": "intervene"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "mindthus_intervention",
+          "fallback_owner": "original-agent",
+          "hard_judgment": true,
+          "obligations": [],
+          "owner": "mpg",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "status": "ok"
+        },
+        "run_id": "ba31e405dbb67c489b43f1ca4ddaebf2ff81687c3eb2a467d91c4d74eb53c308",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "1ad10d49f4bc0aa6117c5ac2096c85f6471aea69b9f6ecf907a8cb553ca4e57c",
+          "a10ab270afae59a9bb645c4387f489dd13735d2a7b62258fe76e0aab624323c0",
+          "cad15b4abc21cd7510c7a1e7bbb8b34a600713847fe408bbfe8ece5e6b6c894e"
+        ],
+        "case_id": "L20",
+        "family": "sela_mpg",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "1ad10d49f4bc0aa6117c5ac2096c85f6471aea69b9f6ecf907a8cb553ca4e57c",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.38,
+                  "probabilities": {
+                    "acquire_information": 0.06,
+                    "direct_execution": 0.4,
+                    "mindthus_intervention": 0.53,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mindthus_intervention"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.89,
+                  "probabilities": {
+                    "clear": 0.93,
+                    "present": 0.06,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          },
+          {
+            "call_key": "a10ab270afae59a9bb645c4387f489dd13735d2a7b62258fe76e0aab624323c0",
+            "results": {
+              "owner": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.38,
+                  "probabilities": {
+                    "3l5s": 0.0,
+                    "edsp": 0.02,
+                    "mpg": 0.46,
+                    "sela": 0.25,
+                    "sra": 0.27,
+                    "tplan": 0.0,
+                    "tvg": 0.0,
+                    "unclear": 0.0,
+                    "wae": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mpg"
+              }
+            }
+          },
+          {
+            "call_key": "cad15b4abc21cd7510c7a1e7bbb8b34a600713847fe408bbfe8ece5e6b6c894e",
+            "results": {
+              "applicable": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.81,
+                  "probabilities": {
+                    "no": 0.12,
+                    "unclear": 0.01,
+                    "yes": 0.87
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "yes"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "mpg",
+          "route": "intervene"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "mindthus_intervention",
+          "fallback_owner": "original-agent",
+          "hard_judgment": true,
+          "obligations": [],
+          "owner": "mpg",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "status": "ok"
+        },
+        "run_id": "23bd510d41d3d3233e8d20cadf1883b701504e82d8be695427836d28e41214b1",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "9fcb023561c0f047fe8abfc781756af3a7ec4bd8f5c7a44f71920ec96b54a927",
+          "2d176b6230c8c8bd3feba4d7578ccbc57c84f8e09408cd5f5ef56c94fe68fe33",
+          "02b3df721cbcfd576e10ecea4de84cdbc74a610f79ccd8d302cd296fe501422b"
+        ],
+        "case_id": "L21",
+        "family": "wae_boundary",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "9fcb023561c0f047fe8abfc781756af3a7ec4bd8f5c7a44f71920ec96b54a927",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.8,
+                  "probabilities": {
+                    "acquire_information": 0.05,
+                    "direct_execution": 0.1,
+                    "mindthus_intervention": 0.84,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mindthus_intervention"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.55,
+                  "probabilities": {
+                    "clear": 0.7,
+                    "present": 0.28,
+                    "unclear": 0.02
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          },
+          {
+            "call_key": "2d176b6230c8c8bd3feba4d7578ccbc57c84f8e09408cd5f5ef56c94fe68fe33",
+            "results": {
+              "owner": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.5,
+                  "probabilities": {
+                    "3l5s": 0.16,
+                    "edsp": 0.11,
+                    "mpg": 0.01,
+                    "sela": 0.01,
+                    "sra": 0.05,
+                    "tplan": 0.02,
+                    "tvg": 0.0,
+                    "unclear": 0.09,
+                    "wae": 0.55
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "wae"
+              }
+            }
+          },
+          {
+            "call_key": "02b3df721cbcfd576e10ecea4de84cdbc74a610f79ccd8d302cd296fe501422b",
+            "results": {
+              "applicable": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.93,
+                  "probabilities": {
+                    "no": 0.05,
+                    "unclear": 0.0,
+                    "yes": 0.95
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "yes"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "wae",
+          "route": "intervene"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "mindthus_intervention",
+          "fallback_owner": "original-agent",
+          "hard_judgment": true,
+          "obligations": [],
+          "owner": "wae",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "status": "ok"
+        },
+        "run_id": "ab3cfaf63ef1690873cdf00cb04ec628ea06d529f2d629aa36896e8644b06641",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [
+          "be226a845c2f2b64dd3c53d31307f901a1000206f4aebdf7315b4e32786e9740",
+          "13b2053788aef551b46f6075232dd967f65f08099b7aa81f4b345bf033a24492",
+          "9357774404594735001449ad090f1b93019e8a8ebe56cfed575de9397ed1f6da"
+        ],
+        "case_id": "L21",
+        "family": "wae_boundary",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "be226a845c2f2b64dd3c53d31307f901a1000206f4aebdf7315b4e32786e9740",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.84,
+                  "probabilities": {
+                    "acquire_information": 0.06,
+                    "direct_execution": 0.05,
+                    "mindthus_intervention": 0.89,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mindthus_intervention"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.29,
+                  "probabilities": {
+                    "clear": 0.53,
+                    "present": 0.45,
+                    "unclear": 0.02
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          },
+          {
+            "call_key": "13b2053788aef551b46f6075232dd967f65f08099b7aa81f4b345bf033a24492",
+            "results": {
+              "owner": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.52,
+                  "probabilities": {
+                    "3l5s": 0.15,
+                    "edsp": 0.14,
+                    "mpg": 0.01,
+                    "sela": 0.0,
+                    "sra": 0.01,
+                    "tplan": 0.04,
+                    "tvg": 0.01,
+                    "unclear": 0.06,
+                    "wae": 0.58
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "wae"
+              }
+            }
+          },
+          {
+            "call_key": "9357774404594735001449ad090f1b93019e8a8ebe56cfed575de9397ed1f6da",
+            "results": {
+              "applicable": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.94,
+                  "probabilities": {
+                    "no": 0.04,
+                    "unclear": 0.0,
+                    "yes": 0.96
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "yes"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "wae",
+          "route": "intervene"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "mindthus_intervention",
+          "fallback_owner": "original-agent",
+          "hard_judgment": true,
+          "obligations": [],
+          "owner": "wae",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "status": "ok"
+        },
+        "run_id": "76be026fc3c3541d2e9fe0c8e6f70d4de0ac5bac8cebeaf95484e0464a04d31d",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [
+          "4b710728744ec12abec5494441f64c370e0bb2eab5938c84effb0a5e916a3fda"
+        ],
+        "case_id": "L22",
+        "family": "wae_boundary",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "4b710728744ec12abec5494441f64c370e0bb2eab5938c84effb0a5e916a3fda",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.81,
+                  "probabilities": {
+                    "acquire_information": 0.06,
+                    "direct_execution": 0.08,
+                    "mindthus_intervention": 0.85,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mindthus_intervention"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.33,
+                  "probabilities": {
+                    "clear": 0.43,
+                    "present": 0.55,
+                    "unclear": 0.02
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "present"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "mindthus_intervention",
+          "owner": null,
+          "route": "llm_fallback"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "mindthus_intervention",
+          "fallback_owner": "original-agent",
+          "hard_judgment": true,
+          "obligations": [
+            "unresolved_entry_obligation"
+          ],
+          "owner": null,
+          "reason": "unresolved_or_conflicting_judgment",
+          "route": "llm_fallback",
+          "status": "abstain"
+        },
+        "run_id": "f082430b20b2ac6cda99e1a22ef79a05ca835a7f5abac88e0ebb0f81810ff504",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": false,
+            "route": false
+          },
+          "joint": false
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "6a03de73e1350e7154cb253dea033471c012f6f930f5397961fc9d702fe4b697"
+        ],
+        "case_id": "L22",
+        "family": "wae_boundary",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "6a03de73e1350e7154cb253dea033471c012f6f930f5397961fc9d702fe4b697",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.81,
+                  "probabilities": {
+                    "acquire_information": 0.04,
+                    "direct_execution": 0.1,
+                    "mindthus_intervention": 0.85,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mindthus_intervention"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.25,
+                  "probabilities": {
+                    "clear": 0.48,
+                    "present": 0.5,
+                    "unclear": 0.02
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "present"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "mindthus_intervention",
+          "owner": null,
+          "route": "llm_fallback"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "mindthus_intervention",
+          "fallback_owner": "original-agent",
+          "hard_judgment": true,
+          "obligations": [
+            "unresolved_entry_obligation"
+          ],
+          "owner": null,
+          "reason": "unresolved_or_conflicting_judgment",
+          "route": "llm_fallback",
+          "status": "abstain"
+        },
+        "run_id": "ba77f48fd20440726c1e620be52724f7d54207bf1a4d45fbea451a53643cf339",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": false,
+            "route": false
+          },
+          "joint": false
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "1e8c8ea9552e9134b46474f4c728762b9c0a70d0543f162c65d994e1c6e8868d"
+        ],
+        "case_id": "L23",
+        "family": "wae_boundary",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "1e8c8ea9552e9134b46474f4c728762b9c0a70d0543f162c65d994e1c6e8868d",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 1.0,
+                  "probabilities": {
+                    "acquire_information": 0.0,
+                    "direct_execution": 1.0,
+                    "mindthus_intervention": 0.0,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.99,
+                  "probabilities": {
+                    "clear": 1.0,
+                    "present": 0.0,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": false,
+          "obligations": [],
+          "owner": null,
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "status": "ok"
+        },
+        "run_id": "bc2aa986c8fcced7166cb0f59c099d25bd40e4899da69e024935fb64126750c1",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [
+          "762a8e96c893aba22c134fb10038410a947b33a911f479274692e19c22e42413"
+        ],
+        "case_id": "L23",
+        "family": "wae_boundary",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "762a8e96c893aba22c134fb10038410a947b33a911f479274692e19c22e42413",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 1.0,
+                  "probabilities": {
+                    "acquire_information": 0.0,
+                    "direct_execution": 1.0,
+                    "mindthus_intervention": 0.0,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.99,
+                  "probabilities": {
+                    "clear": 0.99,
+                    "present": 0.01,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": false,
+          "obligations": [],
+          "owner": null,
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "status": "ok"
+        },
+        "run_id": "c8fe5c9f9890d36f6c0f4b3744d223d5fee63803c87f7459b66137477bd762b8",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [
+          "60b5444952f003d0765037edf006e2d878bdb560794b326f817fb8b8648de122"
+        ],
+        "case_id": "L24",
+        "family": "wae_boundary",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "60b5444952f003d0765037edf006e2d878bdb560794b326f817fb8b8648de122",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 1.0,
+                  "probabilities": {
+                    "acquire_information": 0.0,
+                    "direct_execution": 1.0,
+                    "mindthus_intervention": 0.0,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 1.0,
+                  "probabilities": {
+                    "clear": 1.0,
+                    "present": 0.0,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": false,
+          "obligations": [],
+          "owner": null,
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "status": "ok"
+        },
+        "run_id": "e773c809e1cdad4b07c39bd3f5eee19dfbb9acab3e9454aa0c573b8e6aaf18bc",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "bf9d39280b6f0ca60dcf97804039c0983a68c3deb102f065ecdf5b4e3030133f"
+        ],
+        "case_id": "L24",
+        "family": "wae_boundary",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "bf9d39280b6f0ca60dcf97804039c0983a68c3deb102f065ecdf5b4e3030133f",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 1.0,
+                  "probabilities": {
+                    "acquire_information": 0.0,
+                    "direct_execution": 1.0,
+                    "mindthus_intervention": 0.0,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.99,
+                  "probabilities": {
+                    "clear": 0.99,
+                    "present": 0.01,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": false,
+          "obligations": [],
+          "owner": null,
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "status": "ok"
+        },
+        "run_id": "d9d03566b5251317aacef10256e3f65984c065d5195f71044cb57adee78a16cb",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "6991ba8e9a5d55e016303fb393abd74b09ed242d7a60f2e28e53d4b2676917b7",
+          "1258a4d55e7db7faa9530d17fbc8010c2bdd6b450a1560e60518492799842beb"
+        ],
+        "case_id": "L25",
+        "family": "explicit_method",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "6991ba8e9a5d55e016303fb393abd74b09ed242d7a60f2e28e53d4b2676917b7",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.42,
+                  "probabilities": {
+                    "acquire_information": 0.33,
+                    "direct_execution": 0.09,
+                    "mindthus_intervention": 0.5599999999999999,
+                    "unclear": 0.02
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mindthus_intervention"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.82,
+                  "probabilities": {
+                    "clear": 0.88,
+                    "present": 0.1,
+                    "unclear": 0.02
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          },
+          {
+            "call_key": "1258a4d55e7db7faa9530d17fbc8010c2bdd6b450a1560e60518492799842beb",
+            "results": {
+              "applicable": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.82,
+                  "probabilities": {
+                    "no": 0.1,
+                    "unclear": 0.02,
+                    "yes": 0.88
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "yes"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "route": "intervene"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "mindthus_intervention",
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": "sra",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "status": "ok"
+        },
+        "run_id": "af100cc76dad2be13011e7a6b4eeebe4c14fe40d7619e84ccbebd6d4b5f28116",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [
+          "7f2c42f68b5bc3f68695e5e93d15a255b0464583e4bbe5a99f0c6557ac7f4049",
+          "2ecd637b5ecbe942b32324c33b1a4a49795c12db112d0a24bac72f0197b5eb41"
+        ],
+        "case_id": "L25",
+        "family": "explicit_method",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "7f2c42f68b5bc3f68695e5e93d15a255b0464583e4bbe5a99f0c6557ac7f4049",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.35,
+                  "probabilities": {
+                    "acquire_information": 0.4,
+                    "direct_execution": 0.07,
+                    "mindthus_intervention": 0.51,
+                    "unclear": 0.02
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mindthus_intervention"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.72,
+                  "probabilities": {
+                    "clear": 0.81,
+                    "present": 0.16,
+                    "unclear": 0.03
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          },
+          {
+            "call_key": "2ecd637b5ecbe942b32324c33b1a4a49795c12db112d0a24bac72f0197b5eb41",
+            "results": {
+              "applicable": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.82,
+                  "probabilities": {
+                    "no": 0.09,
+                    "unclear": 0.02,
+                    "yes": 0.89
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "yes"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "route": "intervene"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "mindthus_intervention",
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": "sra",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "status": "ok"
+        },
+        "run_id": "8d906343c485397a298032fcb9f8065e43196876111fd74ebdbe15b648324534",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [
+          "53a8911384167e06c8f113c9c0e5ed662a7e5961da25c4d91b6defc9defe7181"
+        ],
+        "case_id": "L26",
+        "family": "explicit_method",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "53a8911384167e06c8f113c9c0e5ed662a7e5961da25c4d91b6defc9defe7181",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.3,
+                  "probabilities": {
+                    "acquire_information": 0.13,
+                    "direct_execution": 0.47,
+                    "mindthus_intervention": 0.39,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.9,
+                  "probabilities": {
+                    "clear": 0.93,
+                    "present": 0.06,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "llm_fallback"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": null,
+          "reason": "explicit_method_conflicts_with_direct",
+          "route": "llm_fallback",
+          "status": "abstain"
+        },
+        "run_id": "79b82568a32ba024e52d201077aea90e0de1896dde392992e48bdf17329a38c6",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": false,
+            "owner": false,
+            "route": false
+          },
+          "joint": false
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "8e439f40e44309f35413b7defbdddcff3cd2ed85e18bd2fd40f3830900aab8fd",
+          "59f2cb037de974e8c2e51a40f16c74ade75a2a6f3693233bd2d196e43e6ae25d"
+        ],
+        "case_id": "L26",
+        "family": "explicit_method",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "8e439f40e44309f35413b7defbdddcff3cd2ed85e18bd2fd40f3830900aab8fd",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.27,
+                  "probabilities": {
+                    "acquire_information": 0.26,
+                    "direct_execution": 0.27,
+                    "mindthus_intervention": 0.45,
+                    "unclear": 0.02
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "mindthus_intervention"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.81,
+                  "probabilities": {
+                    "clear": 0.87,
+                    "present": 0.1,
+                    "unclear": 0.03
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          },
+          {
+            "call_key": "59f2cb037de974e8c2e51a40f16c74ade75a2a6f3693233bd2d196e43e6ae25d",
+            "results": {
+              "applicable": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.84,
+                  "probabilities": {
+                    "no": 0.1,
+                    "unclear": 0.01,
+                    "yes": 0.89
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "yes"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "edsp",
+          "route": "intervene"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "mindthus_intervention",
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": "edsp",
+          "reason": "eligible_owner_selected",
+          "route": "intervene",
+          "status": "ok"
+        },
+        "run_id": "b6e26556d96d93d6baccc3a915b2dc63dbed50634a3766b413b76cf2ae2d5698",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "11258adec403d3ce5acd288c9db0fd54902c98d38d34a555ff92f94842d0f4a4"
+        ],
+        "case_id": "L27",
+        "family": "explicit_method",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "11258adec403d3ce5acd288c9db0fd54902c98d38d34a555ff92f94842d0f4a4",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.98,
+                  "probabilities": {
+                    "acquire_information": 0.0,
+                    "direct_execution": 0.99,
+                    "mindthus_intervention": 0.01,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.92,
+                  "probabilities": {
+                    "clear": 0.95,
+                    "present": 0.05,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "llm_fallback"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": null,
+          "reason": "explicit_method_conflicts_with_direct",
+          "route": "llm_fallback",
+          "status": "abstain"
+        },
+        "run_id": "51aeeb03185f70a6c614663769fa3c0f05c19b92b1d49466d5999cfa00b6334f",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": false,
+            "owner": true,
+            "route": true
+          },
+          "joint": false
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [
+          "e84cd45593a427f9babc838236c4bd4b607e138db44304ffc940a4a0ead8d68b"
+        ],
+        "case_id": "L27",
+        "family": "explicit_method",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "e84cd45593a427f9babc838236c4bd4b607e138db44304ffc940a4a0ead8d68b",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.97,
+                  "probabilities": {
+                    "acquire_information": 0.01,
+                    "direct_execution": 0.97,
+                    "mindthus_intervention": 0.01,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.9,
+                  "probabilities": {
+                    "clear": 0.93,
+                    "present": 0.07,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "llm_fallback"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": null,
+          "reason": "explicit_method_conflicts_with_direct",
+          "route": "llm_fallback",
+          "status": "abstain"
+        },
+        "run_id": "0fc2f89ff3ecd697083efa93b3e4e273b0a78ac1a68f3d98d7d4a359efaefad3",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": false,
+            "owner": true,
+            "route": true
+          },
+          "joint": false
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [
+          "5d4f24e714d1b75caa4f34c58a18c72895fb6791558321d1fd9cff36f8475274"
+        ],
+        "case_id": "L28",
+        "family": "explicit_method",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "5d4f24e714d1b75caa4f34c58a18c72895fb6791558321d1fd9cff36f8475274",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.98,
+                  "probabilities": {
+                    "acquire_information": 0.0,
+                    "direct_execution": 0.99,
+                    "mindthus_intervention": 0.01,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.87,
+                  "probabilities": {
+                    "clear": 0.92,
+                    "present": 0.08,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "llm_fallback"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": null,
+          "reason": "explicit_method_conflicts_with_direct",
+          "route": "llm_fallback",
+          "status": "abstain"
+        },
+        "run_id": "490ce43a3a7777d0a2b35c94b9a5acb6077dd53941a78c6e0d87746cc88652fb",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": false,
+            "owner": true,
+            "route": true
+          },
+          "joint": false
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "4bba1832cfa1993c5f3d8545e62df207131177d75689f677bfc18416deea42c9"
+        ],
+        "case_id": "L28",
+        "family": "explicit_method",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "4bba1832cfa1993c5f3d8545e62df207131177d75689f677bfc18416deea42c9",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.98,
+                  "probabilities": {
+                    "acquire_information": 0.0,
+                    "direct_execution": 0.99,
+                    "mindthus_intervention": 0.01,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.81,
+                  "probabilities": {
+                    "clear": 0.88,
+                    "present": 0.12,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "llm_fallback"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": null,
+          "reason": "explicit_method_conflicts_with_direct",
+          "route": "llm_fallback",
+          "status": "abstain"
+        },
+        "run_id": "12f034d490c836f02a4e0d61bb2d249093656a92a2837669daea08616a0cf1f0",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": false,
+            "owner": true,
+            "route": true
+          },
+          "joint": false
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "5cb72c0e1a9f3e48e709d5ba17577a494712e3a27b63716f439e4dcea54322c4"
+        ],
+        "case_id": "L29",
+        "family": "obligation_d0",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "5cb72c0e1a9f3e48e709d5ba17577a494712e3a27b63716f439e4dcea54322c4",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.43,
+                  "probabilities": {
+                    "acquire_information": 0.57,
+                    "direct_execution": 0.08,
+                    "mindthus_intervention": 0.34,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "acquire_information"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.92,
+                  "probabilities": {
+                    "clear": 0.05,
+                    "present": 0.95,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "present"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "acquire_information",
+          "owner": null,
+          "route": "llm_fallback"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "acquire_information",
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [
+            "No voting result exists yet; do not upgrade completed preparations into selection of a design.",
+            "unresolved_entry_obligation"
+          ],
+          "owner": null,
+          "reason": "unresolved_or_conflicting_judgment",
+          "route": "llm_fallback",
+          "status": "abstain"
+        },
+        "run_id": "d394a81b008692c52f2e238375c6bae070dc628a9896418b3edf640bff4e162d",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [
+          "18dca8975032665f8bf7ebb2d6b4901fd1248563c64dae38797954e1ea8355cb"
+        ],
+        "case_id": "L29",
+        "family": "obligation_d0",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "18dca8975032665f8bf7ebb2d6b4901fd1248563c64dae38797954e1ea8355cb",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.43,
+                  "probabilities": {
+                    "acquire_information": 0.57,
+                    "direct_execution": 0.07,
+                    "mindthus_intervention": 0.35,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "acquire_information"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.89,
+                  "probabilities": {
+                    "clear": 0.07,
+                    "present": 0.93,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "present"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "acquire_information",
+          "owner": null,
+          "route": "llm_fallback"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "acquire_information",
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [
+            "投票结果尚不存在，不得把筹备完成升级为方案获选。",
+            "unresolved_entry_obligation"
+          ],
+          "owner": null,
+          "reason": "unresolved_or_conflicting_judgment",
+          "route": "llm_fallback",
+          "status": "abstain"
+        },
+        "run_id": "8604a882c371615ba0f163d03e4e9ff8f5bac5a39836bde990731abe069ff70f",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [],
+        "case_id": "L30",
+        "family": "obligation_d0",
+        "mechanical_d0": true,
+        "nodes": [],
+        "observed": {
+          "entry_mode": null,
+          "owner": null,
+          "route": "original_path"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": null,
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": null,
+          "reason": "stale_or_unknown_context",
+          "route": "original_path",
+          "status": "missing_context"
+        },
+        "run_id": "52693544b6c21b656effce42adb56edb9481aa85c5f5457a4f30259d4dd73d30",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [],
+        "case_id": "L30",
+        "family": "obligation_d0",
+        "mechanical_d0": true,
+        "nodes": [],
+        "observed": {
+          "entry_mode": null,
+          "owner": null,
+          "route": "original_path"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": null,
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": null,
+          "reason": "stale_or_unknown_context",
+          "route": "original_path",
+          "status": "missing_context"
+        },
+        "run_id": "42257de7fc5e822c3c8c28dee7d277861d9c14ee94a82ff605e994ac4ae87b08",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [],
+        "case_id": "L31",
+        "family": "obligation_d0",
+        "mechanical_d0": true,
+        "nodes": [],
+        "observed": {
+          "entry_mode": null,
+          "owner": null,
+          "route": "original_path"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": null,
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": null,
+          "reason": "missing_request",
+          "route": "original_path",
+          "status": "missing_context"
+        },
+        "run_id": "fc957fe4e95d7e17616bcdd55dcf8f8ccd96c9cf584cb746e66d9095bb1a3c66",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [],
+        "case_id": "L31",
+        "family": "obligation_d0",
+        "mechanical_d0": true,
+        "nodes": [],
+        "observed": {
+          "entry_mode": null,
+          "owner": null,
+          "route": "original_path"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": null,
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": null,
+          "reason": "missing_request",
+          "route": "original_path",
+          "status": "missing_context"
+        },
+        "run_id": "e4193102c912859c35372c45a429636837a52d7391bbd52be400a8828b938abc",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "source",
+        "call_keys": [
+          "b5484e73e28becf01f02fb737e86626cf060b3136e2498798884b2bb31b8d9e0"
+        ],
+        "case_id": "L32",
+        "family": "obligation_d0",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "b5484e73e28becf01f02fb737e86626cf060b3136e2498798884b2bb31b8d9e0",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.96,
+                  "probabilities": {
+                    "acquire_information": 0.01,
+                    "direct_execution": 0.97,
+                    "mindthus_intervention": 0.01,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.82,
+                  "probabilities": {
+                    "clear": 0.89,
+                    "present": 0.11,
+                    "unclear": 0.0
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": false,
+          "obligations": [],
+          "owner": null,
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "status": "ok"
+        },
+        "run_id": "aca3a1747561c92968ed6120b5003021150dde38f24cdb9e9cb434f9432f8ddf",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "arm": "english",
+        "call_keys": [
+          "3422956e22fbef678927c39d72073af2df4205124a81ff62c4d27697744bc338"
+        ],
+        "case_id": "L32",
+        "family": "obligation_d0",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "3422956e22fbef678927c39d72073af2df4205124a81ff62c4d27697744bc338",
+            "results": {
+              "entry_mode": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.92,
+                  "probabilities": {
+                    "acquire_information": 0.04,
+                    "direct_execution": 0.94,
+                    "mindthus_intervention": 0.01,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "direct_execution"
+              },
+              "unresolved_obligation": {
+                "reason": "",
+                "status": "ok",
+                "uncertainty": {
+                  "confidence": 0.81,
+                  "probabilities": {
+                    "clear": 0.87,
+                    "present": 0.12,
+                    "unclear": 0.01
+                  },
+                  "source": "provider_distribution"
+                },
+                "value": "clear"
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": "direct_execution",
+          "fallback_owner": "original-agent",
+          "hard_judgment": false,
+          "obligations": [],
+          "owner": null,
+          "reason": "fact_sufficient_low_risk_direct_task",
+          "route": "direct_execute",
+          "status": "ok"
+        },
+        "run_id": "29b9155b4a09a9ed04e24883eac4562af456455d9cf96c53ff1c5cd8ca801363",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": true,
+            "owner": true,
+            "route": true
+          },
+          "joint": true
+        }
+      }
+    ],
+    "stop_reason": null,
+    "total_attempts": 41,
+    "translation_and_host_cost": "unknown",
+    "translation_latency": "offline preparation; no production latency claim",
+    "unrun": [],
+    "usage": {
+      "english": {
+        "cost_usd": null,
+        "input_tokens": 66375,
+        "output_tokens": 1780
+      },
+      "source": {
+        "cost_usd": null,
+        "input_tokens": 64806,
+        "output_tokens": 1735
+      }
+    }
+  },
+  "combined_descriptive_only": {
+    "arms": {
+      "source": {
+        "all": {
+          "joint": {
+            "matched": 22,
+            "scored": 29
+          },
+          "fields": {
+            "entry_mode": {
+              "matched": 24,
+              "scored": 29
+            },
+            "owner": {
+              "matched": 24,
+              "scored": 29
+            },
+            "route": {
+              "matched": 25,
+              "scored": 29
+            }
+          },
+          "abstentions": []
+        },
+        "semantic_only": {
+          "joint": {
+            "matched": 20,
+            "scored": 27
+          },
+          "fields": {
+            "entry_mode": {
+              "matched": 22,
+              "scored": 27
+            },
+            "owner": {
+              "matched": 22,
+              "scored": 27
+            },
+            "route": {
+              "matched": 23,
+              "scored": 27
+            }
+          },
+          "abstentions": []
+        },
+        "mechanical_d0": {
+          "joint": {
+            "matched": 2,
+            "scored": 2
+          },
+          "fields": {
+            "entry_mode": {
+              "matched": 2,
+              "scored": 2
+            },
+            "owner": {
+              "matched": 2,
+              "scored": 2
+            },
+            "route": {
+              "matched": 2,
+              "scored": 2
+            }
+          },
+          "abstentions": []
+        },
+        "by_family": {
+          "direct": {
+            "joint": {
+              "matched": 2,
+              "scored": 2
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 2,
+                "scored": 2
+              },
+              "owner": {
+                "matched": 2,
+                "scored": 2
+              },
+              "route": {
+                "matched": 2,
+                "scored": 2
+              }
+            },
+            "abstentions": []
+          },
+          "edsp": {
+            "joint": {
+              "matched": 4,
+              "scored": 4
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 4,
+                "scored": 4
+              },
+              "owner": {
+                "matched": 4,
+                "scored": 4
+              },
+              "route": {
+                "matched": 4,
+                "scored": 4
+              }
+            },
+            "abstentions": []
+          },
+          "explicit_method": {
+            "joint": {
+              "matched": 1,
+              "scored": 4
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 1,
+                "scored": 4
+              },
+              "owner": {
+                "matched": 3,
+                "scored": 4
+              },
+              "route": {
+                "matched": 3,
+                "scored": 4
+              }
+            },
+            "abstentions": []
+          },
+          "missing_facts": {
+            "joint": {
+              "matched": 4,
+              "scored": 4
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 4,
+                "scored": 4
+              },
+              "owner": {
+                "matched": 4,
+                "scored": 4
+              },
+              "route": {
+                "matched": 4,
+                "scored": 4
+              }
+            },
+            "abstentions": []
+          },
+          "obligation_d0": {
+            "joint": {
+              "matched": 4,
+              "scored": 4
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 4,
+                "scored": 4
+              },
+              "owner": {
+                "matched": 4,
+                "scored": 4
+              },
+              "route": {
+                "matched": 4,
+                "scored": 4
+              }
+            },
+            "abstentions": []
+          },
+          "sela_mpg": {
+            "joint": {
+              "matched": 1,
+              "scored": 3
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 2,
+                "scored": 3
+              },
+              "owner": {
+                "matched": 1,
+                "scored": 3
+              },
+              "route": {
+                "matched": 2,
+                "scored": 3
+              }
+            },
+            "abstentions": []
+          },
+          "sra": {
+            "joint": {
+              "matched": 3,
+              "scored": 4
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 3,
+                "scored": 4
+              },
+              "owner": {
+                "matched": 3,
+                "scored": 4
+              },
+              "route": {
+                "matched": 3,
+                "scored": 4
+              }
+            },
+            "abstentions": []
+          },
+          "wae_boundary": {
+            "joint": {
+              "matched": 3,
+              "scored": 4
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 4,
+                "scored": 4
+              },
+              "owner": {
+                "matched": 3,
+                "scored": 4
+              },
+              "route": {
+                "matched": 3,
+                "scored": 4
+              }
+            },
+            "abstentions": []
+          }
+        },
+        "fallbacks": [
+          "L22",
+          "L26",
+          "L27",
+          "L28",
+          "L29"
+        ],
+        "mismatches": [
+          "L09",
+          "L18",
+          "L19",
+          "L22",
+          "L26",
+          "L27",
+          "L28"
+        ]
+      },
+      "english": {
+        "all": {
+          "joint": {
+            "matched": 22,
+            "scored": 29
+          },
+          "fields": {
+            "entry_mode": {
+              "matched": 23,
+              "scored": 29
+            },
+            "owner": {
+              "matched": 24,
+              "scored": 29
+            },
+            "route": {
+              "matched": 24,
+              "scored": 29
+            }
+          },
+          "abstentions": []
+        },
+        "semantic_only": {
+          "joint": {
+            "matched": 20,
+            "scored": 27
+          },
+          "fields": {
+            "entry_mode": {
+              "matched": 21,
+              "scored": 27
+            },
+            "owner": {
+              "matched": 22,
+              "scored": 27
+            },
+            "route": {
+              "matched": 22,
+              "scored": 27
+            }
+          },
+          "abstentions": []
+        },
+        "mechanical_d0": {
+          "joint": {
+            "matched": 2,
+            "scored": 2
+          },
+          "fields": {
+            "entry_mode": {
+              "matched": 2,
+              "scored": 2
+            },
+            "owner": {
+              "matched": 2,
+              "scored": 2
+            },
+            "route": {
+              "matched": 2,
+              "scored": 2
+            }
+          },
+          "abstentions": []
+        },
+        "by_family": {
+          "direct": {
+            "joint": {
+              "matched": 2,
+              "scored": 2
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 2,
+                "scored": 2
+              },
+              "owner": {
+                "matched": 2,
+                "scored": 2
+              },
+              "route": {
+                "matched": 2,
+                "scored": 2
+              }
+            },
+            "abstentions": []
+          },
+          "edsp": {
+            "joint": {
+              "matched": 2,
+              "scored": 4
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 2,
+                "scored": 4
+              },
+              "owner": {
+                "matched": 2,
+                "scored": 4
+              },
+              "route": {
+                "matched": 2,
+                "scored": 4
+              }
+            },
+            "abstentions": []
+          },
+          "explicit_method": {
+            "joint": {
+              "matched": 2,
+              "scored": 4
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 2,
+                "scored": 4
+              },
+              "owner": {
+                "matched": 4,
+                "scored": 4
+              },
+              "route": {
+                "matched": 4,
+                "scored": 4
+              }
+            },
+            "abstentions": []
+          },
+          "missing_facts": {
+            "joint": {
+              "matched": 4,
+              "scored": 4
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 4,
+                "scored": 4
+              },
+              "owner": {
+                "matched": 4,
+                "scored": 4
+              },
+              "route": {
+                "matched": 4,
+                "scored": 4
+              }
+            },
+            "abstentions": []
+          },
+          "obligation_d0": {
+            "joint": {
+              "matched": 4,
+              "scored": 4
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 4,
+                "scored": 4
+              },
+              "owner": {
+                "matched": 4,
+                "scored": 4
+              },
+              "route": {
+                "matched": 4,
+                "scored": 4
+              }
+            },
+            "abstentions": []
+          },
+          "sela_mpg": {
+            "joint": {
+              "matched": 2,
+              "scored": 3
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 2,
+                "scored": 3
+              },
+              "owner": {
+                "matched": 2,
+                "scored": 3
+              },
+              "route": {
+                "matched": 2,
+                "scored": 3
+              }
+            },
+            "abstentions": []
+          },
+          "sra": {
+            "joint": {
+              "matched": 3,
+              "scored": 4
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 3,
+                "scored": 4
+              },
+              "owner": {
+                "matched": 3,
+                "scored": 4
+              },
+              "route": {
+                "matched": 3,
+                "scored": 4
+              }
+            },
+            "abstentions": []
+          },
+          "wae_boundary": {
+            "joint": {
+              "matched": 3,
+              "scored": 4
+            },
+            "fields": {
+              "entry_mode": {
+                "matched": 4,
+                "scored": 4
+              },
+              "owner": {
+                "matched": 3,
+                "scored": 4
+              },
+              "route": {
+                "matched": 3,
+                "scored": 4
+              }
+            },
+            "abstentions": []
+          }
+        },
+        "fallbacks": [
+          "L22",
+          "L27",
+          "L28",
+          "L29"
+        ],
+        "mismatches": [
+          "L11",
+          "L14",
+          "L15",
+          "L18",
+          "L22",
+          "L27",
+          "L28"
+        ]
+      }
+    },
+    "paired_joint": {
+      "both_correct": 19,
+      "english_only": 3,
+      "source_only": 3,
+      "neither": 4
+    },
+    "semantic_paired_joint": {
+      "both_correct": 17,
+      "english_only": 3,
+      "source_only": 3,
+      "neither": 4
+    },
+    "complete_pairs": 29,
+    "disagreements": [
+      {
+        "case_id": "L09",
+        "source": {
+          "entry_mode": "acquire_information",
+          "owner": null,
+          "route": "acquire_information"
+        },
+        "english": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "route": "intervene"
+        }
+      },
+      {
+        "case_id": "L11",
+        "source": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra",
+          "route": "intervene"
+        },
+        "english": {
+          "entry_mode": "acquire_information",
+          "owner": null,
+          "route": "acquire_information"
+        }
+      },
+      {
+        "case_id": "L14",
+        "english": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute"
+        },
+        "source": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "edsp",
+          "route": "intervene"
+        }
+      },
+      {
+        "case_id": "L15",
+        "source": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "edsp",
+          "route": "intervene"
+        },
+        "english": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "direct_execute"
+        }
+      },
+      {
+        "case_id": "L19",
+        "english": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "mpg",
+          "route": "intervene"
+        },
+        "source": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "sela",
+          "route": "intervene"
+        }
+      },
+      {
+        "case_id": "L26",
+        "source": {
+          "entry_mode": "direct_execution",
+          "owner": null,
+          "route": "llm_fallback"
+        },
+        "english": {
+          "entry_mode": "mindthus_intervention",
+          "owner": "edsp",
+          "route": "intervene"
+        }
+      }
+    ]
+  },
+  "combined_note": "29paired cases across two adapter versions; not one unchanged-source acceptance run. Exclude L17 historical rejected response and L01/L02 transport failures.",
+  "normalized_live_answers": [
+    {
+      "case": "L19",
+      "arm": "english",
+      "question": "entry_mode"
+    }
+  ],
+  "new_wire_usage": {
+    "input_tokens": 131181,
+    "output_tokens": 3515
+  },
+  "new_estimated_input_cost_usd": 0.005509602,
+  "new_actual_cost": "unknown",
+  "series_attempts": 88,
+  "series_reserved_usd": 0.236544,
+  "historical_cumulative_attempts": 173,
+  "historical_cumulative_reserved_usd": 0.465024,
+  "series_known_input_tokens": 272240,
+  "series_known_output_tokens": 7463,
+  "series_known_input_cost_estimate_usd": 0.01143408,
+  "series_unknown_usage": "2originaltransport attempts unchanged",
+  "historical_known_input_tokens": 539774,
+  "historical_known_output_tokens": 15794,
+  "historical_known_input_cost_estimate_usd": 0.022670508,
+  "historical_unknown_usage": "3transport/oldunknown calls unchanged",
+  "model": "jev-1.13.0",
+  "semantic_qualification": false,
+  "decision": "Finish this bounded diagnosis; retain provider precision as nonblocking follow-up. No automatic tuning, holdout or ABC; focus next on observed contract boundaries."
+}

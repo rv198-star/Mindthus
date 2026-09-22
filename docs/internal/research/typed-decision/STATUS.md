@@ -5,6 +5,26 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current state — bounded language diagnostic delivered; precision follow-up nonblocking
+
+User accepted1%probability-sum discrepancy as a follow-up, not a study blocker. Opt-in
+Choice hundredth normalization added at adapter boundary (strict default/shared validator
+unchanged), with raw wire retained, reason marker and adapter version binding. Sourcea7d292c43.
+[Disposition](language-diagnostic/rounding-disposition.md), [observations](language-diagnostic/rounding-observation.json),
+[verification](language-diagnostic/rounding-verification.json), [policy](language-diagnostic/rounding-recovery.md).
+RemainingL18–L32 completed:41native calls,15pairs, no technical failure;1normalized answer.
+This stage source9/15,English11/15; excludingD0 source7/13,English9/13.
+Combined with prior14strict pairs:each language22/29,semantic20/27. Two adapter stages are
+reported separately; not one unchanged-source qualification. OriginalL01/L02transport errors
+andL17rejected response preserved; L17English remains unrun. No32case-completion claim.
+Precision cause unconfirmed; track as nonblocking. No prompt/label changes or blind retries.
+124targeted;full1208=1201success+7skip;81/81lifecycle;416JSONintegrity and exact-key scanPASS.
+Series88attempts/reserveUSD0.236544; historical173/reserveUSD0.465024. Actualbilling unknown.
+Next substantive priority:offline J2 distinction between current execution obligations and
+flaws in the system being analyzed. No evidence for net English superiority; no automatic
+prompt tuning, holdout, A/B/C or C02 run. This bounded diagnosis is delivered; #211/#212
+behavior/value acceptance remains unmet. Earlier blocked checkpoints below are historical.
+
 ## Current state — proxy restored; 14 pairs measured, response validation blocked
 
 User instructed changing proxy and continuing. Explicit process HTTP(S) proxy127.0.0.1:7890
