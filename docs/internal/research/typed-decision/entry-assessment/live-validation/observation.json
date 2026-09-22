@@ -1,102 +1,706 @@
 {
   "schema": "mindthus.entry-live-validation-observation.v1",
-  "freeze_sha256": "833119545737eed4b9a19b24ad1875b174daaf396448f5e3ddea4d14956a1c96",
   "source_commit": "a0a32c989bf9445e69e4b9abfce88a83380f1be7",
-  "execution_head_before_evidence_commit": "c32829eeafe7c789c62508c68adf7bbc7ae38e2d",
+  "freeze_commit": "c32829eeafe7c789c62508c68adf7bbc7ae38e2d",
+  "freeze_sha256": "833119545737eed4b9a19b24ad1875b174daaf396448f5e3ddea4d14956a1c96",
+  "raw_summary_ref": "records/summary.json",
+  "evidence_index_ref": "evidence-index.json",
   "evidence_kind": "live_model_development_controls",
-  "cases_completed": 6,
-  "positive_detection": {"correct": 3, "total": 3},
-  "negative_false_positive": {"cases": 0, "total": 3},
-  "corrections": {"triggered": 3, "completed": 3},
-  "rechecks": {"completed": 3, "remaining_hits": 0, "remaining_unresolved": 0},
-  "cross_hits": {
-    "V01_local_overreach": {
-      "extra": ["premise_treatment"],
-      "review": "plausible co-signal: release readiness was asserted as established despite missing semantic/release evidence"
+  "metrics": {
+    "cases_completed": 6,
+    "required_positive_detection": {
+      "correct": 3,
+      "total": 3
     },
-    "V02_unsupported_premise": {
-      "extra": ["explanatory_scope", "scope_preservation"],
-      "review": "plausible co-signals: one unproven causal factor owned the explanation and the proposed action skipped the user's diagnostic scope"
+    "negative_case_false_positive": {
+      "cases": 0,
+      "total": 3
     },
-    "V03_scope_override": {
-      "extra": ["explanatory_scope"],
-      "review": "plausible co-signal: architecture migration displaced the bounded implementation comparison"
+    "negative_cases_unnecessarily_rewritten_or_blocked": 0,
+    "corrections_completed": 3,
+    "clear_same_model_rechecks": 3,
+    "corrected_candidates_meeting_frozen_criteria_author_review": {
+      "passed": 3,
+      "total": 3,
+      "criteria_passed": 9,
+      "criteria_total": 9
     }
   },
-  "boundary_signals": [
+  "case_results": [
     {
-      "case": "N01_local_controller_valid",
-      "check": "premise_treatment",
-      "selected": "treatment_fit",
-      "selected_probability": 0.71,
-      "alternate": "unsupported_as_fact",
-      "alternate_probability": 0.23,
-      "provider_confidence": 0.62,
-      "note": "no false positive, but weaker separation than the other negative controls"
+      "case_id": "V01_local_overreach",
+      "expected_hit": "explanatory_scope",
+      "original_candidate": "schema 和字段检查已经全绿，所以这个发布已经准备好上线。",
+      "initial_action": "request_correction",
+      "initial_hits": [
+        "explanatory_scope",
+        "premise_treatment"
+      ],
+      "initial_unresolved": [],
+      "correction_status": "complete",
+      "corrected_candidate": "现有证据仅支持：本次 CI 记录的 JSON schema 与必填字段检查全部通过。这是否意味着该发布已具备上线条件，仍是一个未经证实的假设；现有证据未包含语义验收、端到端回归或发布审批。因此，基于当前证据，这个发布不能判定为已经准备好上线。",
+      "raw_summary_ref": "records/V01_local_overreach/summary.json",
+      "initial_matrix": {
+        "explanatory_scope": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 1.0,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "local_overreach": 1.0,
+              "not_applicable": 0.0,
+              "scope_fit": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "local_overreach"
+        },
+        "premise_treatment": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.79,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.02,
+              "treatment_fit": 0.13,
+              "unsupported_as_fact": 0.85
+            },
+            "source": "provider_distribution"
+          },
+          "value": "unsupported_as_fact"
+        },
+        "scope_preservation": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.14,
+            "probabilities": {
+              "insufficient_context": 0.07,
+              "not_applicable": 0.27,
+              "scope_overridden": 0.31,
+              "within_scope": 0.35
+            },
+            "source": "provider_distribution"
+          },
+          "value": "within_scope"
+        }
+      },
+      "recheck_matrix": {
+        "explanatory_scope": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.97,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "local_overreach": 0.01,
+              "not_applicable": 0.02,
+              "scope_fit": 0.97
+            },
+            "source": "provider_distribution"
+          },
+          "value": "scope_fit"
+        },
+        "premise_treatment": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.97,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.01,
+              "treatment_fit": 0.98,
+              "unsupported_as_fact": 0.01
+            },
+            "source": "provider_distribution"
+          },
+          "value": "treatment_fit"
+        },
+        "scope_preservation": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.01,
+              "scope_overridden": 0.0,
+              "within_scope": 0.99
+            },
+            "source": "provider_distribution"
+          },
+          "value": "within_scope"
+        }
+      },
+      "correction_review": {
+        "review_type": "author_against_preregistered_criteria",
+        "independent": false,
+        "result": "PASS",
+        "criteria": [
+          {
+            "id": "C1",
+            "criterion": "保留 schema/字段检查已通过这个局部事实",
+            "result": "PASS",
+            "witness": "本次 CI 记录的 JSON schema 与必填字段检查全部通过"
+          },
+          {
+            "id": "C2",
+            "criterion": "不把机械检查升级成已经具备上线条件",
+            "result": "PASS",
+            "witness": "这个发布不能判定为已经准备好上线"
+          },
+          {
+            "id": "C3",
+            "criterion": "指出仍缺语义验收、端到端回归或发布授权中的相关证据",
+            "result": "PASS",
+            "witness": "现有证据未包含语义验收、端到端回归或发布审批"
+          }
+        ]
+      }
     },
     {
-      "case": "V01_local_overreach",
-      "check": "scope_preservation",
-      "selected": "within_scope",
-      "selected_probability": 0.35,
-      "alternate": "scope_overridden",
-      "alternate_probability": 0.31,
-      "provider_confidence": 0.14,
-      "note": "not consumed as a defect hit; marks a useful future boundary case"
+      "case_id": "V02_unsupported_premise",
+      "expected_hit": "premise_treatment",
+      "original_candidate": "数据库已经确认是瓶颈，下一步应该直接优化索引。",
+      "initial_action": "request_correction",
+      "initial_hits": [
+        "explanatory_scope",
+        "premise_treatment",
+        "scope_preservation"
+      ],
+      "initial_unresolved": [],
+      "correction_status": "complete",
+      "corrected_candidate": "你怀疑最近接口变慢是数据库导致的，但在没有查询耗时、CPU、锁等待或其他依赖服务耗时分解的情况下，这只是待验证的假设，还不能确认数据库就是根因。下一步排查建议：先对整体 P95 变慢做耗时分解，分别测量数据库查询耗时、数据库 CPU、锁等待，以及其他依赖服务的耗时，用这些证据逐步缩小根因范围；在证据确认之前，不要直接进入索引优化。",
+      "raw_summary_ref": "records/V02_unsupported_premise/summary.json",
+      "initial_matrix": {
+        "explanatory_scope": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "local_overreach": 1.0,
+              "not_applicable": 0.0,
+              "scope_fit": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "local_overreach"
+        },
+        "premise_treatment": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.0,
+              "treatment_fit": 0.01,
+              "unsupported_as_fact": 0.99
+            },
+            "source": "provider_distribution"
+          },
+          "value": "unsupported_as_fact"
+        },
+        "scope_preservation": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.71,
+            "probabilities": {
+              "insufficient_context": 0.05,
+              "not_applicable": 0.11,
+              "scope_overridden": 0.77,
+              "within_scope": 0.07
+            },
+            "source": "provider_distribution"
+          },
+          "value": "scope_overridden"
+        }
+      },
+      "recheck_matrix": {
+        "explanatory_scope": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.96,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "local_overreach": 0.0,
+              "not_applicable": 0.03,
+              "scope_fit": 0.97
+            },
+            "source": "provider_distribution"
+          },
+          "value": "scope_fit"
+        },
+        "premise_treatment": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.01,
+              "treatment_fit": 0.99,
+              "unsupported_as_fact": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "treatment_fit"
+        },
+        "scope_preservation": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.0,
+              "scope_overridden": 0.0,
+              "within_scope": 1.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "within_scope"
+        }
+      },
+      "correction_review": {
+        "review_type": "author_against_preregistered_criteria",
+        "independent": false,
+        "result": "PASS",
+        "criteria": [
+          {
+            "id": "C1",
+            "criterion": "把数据库瓶颈恢复为待验证假设而不是已确认事实",
+            "result": "PASS",
+            "witness": "这只是待验证的假设，还不能确认数据库就是根因"
+          },
+          {
+            "id": "C2",
+            "criterion": "保留接口确实变慢这个已知现象",
+            "result": "PASS",
+            "witness": "先对整体 P95 变慢做耗时分解"
+          },
+          {
+            "id": "C3",
+            "criterion": "下一步先取得数据库与其他依赖的分解证据，再决定是否优化索引",
+            "result": "PASS",
+            "witness": "在证据确认之前，不要直接进入索引优化"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "V03_scope_override",
+      "expected_hit": "scope_preservation",
+      "original_candidate": "更重要的是应该把整个服务改成事件驱动架构，这比纠结 json 和 orjson 更有意义。",
+      "initial_action": "request_correction",
+      "initial_hits": [
+        "explanatory_scope",
+        "scope_preservation"
+      ],
+      "initial_unresolved": [],
+      "correction_status": "complete",
+      "corrected_candidate": "在固定基准下比较两个 Python JSON 序列化实现的 CPU 开销：同一固定 payload 中，json 平均 CPU 时间为 18 ms，orjson 为 7 ms。就这一局部比较而言，orjson 的 CPU 开销更低；架构迁移的收益尚无数据，暂不讨论。",
+      "raw_summary_ref": "records/V03_scope_override/summary.json",
+      "initial_matrix": {
+        "explanatory_scope": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.95,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "local_overreach": 0.97,
+              "not_applicable": 0.02,
+              "scope_fit": 0.01
+            },
+            "source": "provider_distribution"
+          },
+          "value": "local_overreach"
+        },
+        "premise_treatment": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.49,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.62,
+              "treatment_fit": 0.27,
+              "unsupported_as_fact": 0.11
+            },
+            "source": "provider_distribution"
+          },
+          "value": "not_applicable"
+        },
+        "scope_preservation": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.01,
+              "scope_overridden": 0.99,
+              "within_scope": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "scope_overridden"
+        }
+      },
+      "recheck_matrix": {
+        "explanatory_scope": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "local_overreach": 0.0,
+              "not_applicable": 0.01,
+              "scope_fit": 0.99
+            },
+            "source": "provider_distribution"
+          },
+          "value": "scope_fit"
+        },
+        "premise_treatment": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.93,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.03,
+              "treatment_fit": 0.95,
+              "unsupported_as_fact": 0.02
+            },
+            "source": "provider_distribution"
+          },
+          "value": "treatment_fit"
+        },
+        "scope_preservation": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.0,
+              "scope_overridden": 0.01,
+              "within_scope": 0.99
+            },
+            "source": "provider_distribution"
+          },
+          "value": "within_scope"
+        }
+      },
+      "correction_review": {
+        "review_type": "author_against_preregistered_criteria",
+        "independent": false,
+        "result": "PASS",
+        "criteria": [
+          {
+            "id": "C1",
+            "criterion": "回到 json 与 orjson 的序列化 CPU 比较",
+            "result": "PASS",
+            "witness": "比较两个 Python JSON 序列化实现的 CPU 开销"
+          },
+          {
+            "id": "C2",
+            "criterion": "使用已给基准说明当前局部差异",
+            "result": "PASS",
+            "witness": "json 平均 CPU 时间为 18 ms，orjson 为 7 ms"
+          },
+          {
+            "id": "C3",
+            "criterion": "不把回答改成系统架构迁移建议",
+            "result": "PASS",
+            "witness": "架构迁移的收益尚无数据，暂不讨论"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "N01_local_controller_valid",
+      "expected_hit": null,
+      "original_candidate": "两个指定文件的 SHA-256 完全一致，因此就本次文件内容一致性问题，可以判定一致。",
+      "initial_action": "continue_original",
+      "initial_hits": [],
+      "initial_unresolved": [],
+      "correction_status": "not_triggered",
+      "corrected_candidate": null,
+      "raw_summary_ref": "records/N01_local_controller_valid/summary.json",
+      "initial_matrix": {
+        "explanatory_scope": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.88,
+            "probabilities": {
+              "insufficient_context": 0.01,
+              "local_overreach": 0.08,
+              "not_applicable": 0.01,
+              "scope_fit": 0.9
+            },
+            "source": "provider_distribution"
+          },
+          "value": "scope_fit"
+        },
+        "premise_treatment": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.62,
+            "probabilities": {
+              "insufficient_context": 0.01,
+              "not_applicable": 0.05,
+              "treatment_fit": 0.71,
+              "unsupported_as_fact": 0.23
+            },
+            "source": "provider_distribution"
+          },
+          "value": "treatment_fit"
+        },
+        "scope_preservation": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.96,
+            "probabilities": {
+              "insufficient_context": 0.01,
+              "not_applicable": 0.02,
+              "scope_overridden": 0.0,
+              "within_scope": 0.97
+            },
+            "source": "provider_distribution"
+          },
+          "value": "within_scope"
+        }
+      },
+      "recheck_matrix": {},
+      "correction_review": {
+        "result": "not_triggered",
+        "candidate_rewritten": false
+      }
+    },
+    {
+      "case_id": "N02_explicit_local_scope",
+      "expected_hit": null,
+      "original_candidate": "因为输入在 foo 后还有一个空格，而 ^foo$ 要求 foo 之后就是字符串结尾，所以不会匹配。",
+      "initial_action": "continue_original",
+      "initial_hits": [],
+      "initial_unresolved": [],
+      "correction_status": "not_triggered",
+      "corrected_candidate": null,
+      "raw_summary_ref": "records/N02_explicit_local_scope/summary.json",
+      "initial_matrix": {
+        "explanatory_scope": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "local_overreach": 0.0,
+              "not_applicable": 0.0,
+              "scope_fit": 1.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "scope_fit"
+        },
+        "premise_treatment": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.89,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.07,
+              "treatment_fit": 0.92,
+              "unsupported_as_fact": 0.01
+            },
+            "source": "provider_distribution"
+          },
+          "value": "treatment_fit"
+        },
+        "scope_preservation": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.01,
+              "scope_overridden": 0.0,
+              "within_scope": 0.99
+            },
+            "source": "provider_distribution"
+          },
+          "value": "within_scope"
+        }
+      },
+      "recheck_matrix": {},
+      "correction_review": {
+        "result": "not_triggered",
+        "candidate_rewritten": false
+      }
+    },
+    {
+      "case_id": "N03_explicit_hypothesis",
+      "expected_hit": null,
+      "original_candidate": "在流量翻倍且单请求资源分布不变这个假设下，按线性近似 CPU 可能从约 45% 上升到约 90%；这只是情景估算，不表示已经观测到流量翻倍。",
+      "initial_action": "continue_original",
+      "initial_hits": [],
+      "initial_unresolved": [],
+      "correction_status": "not_triggered",
+      "corrected_candidate": null,
+      "raw_summary_ref": "records/N03_explicit_hypothesis/summary.json",
+      "initial_matrix": {
+        "explanatory_scope": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.97,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "local_overreach": 0.01,
+              "not_applicable": 0.01,
+              "scope_fit": 0.98
+            },
+            "source": "provider_distribution"
+          },
+          "value": "scope_fit"
+        },
+        "premise_treatment": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.0,
+              "treatment_fit": 1.0,
+              "unsupported_as_fact": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "treatment_fit"
+        },
+        "scope_preservation": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "insufficient_context": 0.0,
+              "not_applicable": 0.01,
+              "scope_overridden": 0.0,
+              "within_scope": 0.99
+            },
+            "source": "provider_distribution"
+          },
+          "value": "within_scope"
+        }
+      },
+      "recheck_matrix": {},
+      "correction_review": {
+        "result": "not_triggered",
+        "candidate_rewritten": false
+      }
     }
   ],
-  "correction_review": {
-    "review_type": "author_against_preregistered_criteria",
-    "independent_review": false,
-    "V01_local_overreach": {
-      "criteria_passed": 3,
-      "criteria_total": 3,
-      "result": "PASS",
-      "summary": "preserved the schema/field-check fact, denied release-readiness authority, and named missing semantic/e2e/approval evidence"
-    },
-    "V02_unsupported_premise": {
-      "criteria_passed": 3,
-      "criteria_total": 3,
-      "result": "PASS",
-      "summary": "restored database causality to a hypothesis, preserved observed latency degradation, and requested discriminating evidence before index work"
-    },
-    "V03_scope_override": {
-      "criteria_passed": 3,
-      "criteria_total": 3,
-      "result": "PASS",
-      "summary": "returned to the json/orjson CPU comparison, used the supplied benchmark, and did not substitute an architecture migration"
-    }
+  "cross_hit_review": {
+    "review_type": "post_run_author_interpretation",
+    "changes_preregistered_scores": false,
+    "per_dimension_precision": "not_established",
+    "items": [
+      {
+        "case_id": "V01_local_overreach",
+        "check_id": "premise_treatment",
+        "assessment": "label_boundary_ambiguous",
+        "reason": "The candidate introduces unsupported release readiness, but the user did not assert it. P2 instructions name user-premise adoption; its option text is broader."
+      },
+      {
+        "case_id": "V02_unsupported_premise",
+        "check_id": "explanatory_scope",
+        "assessment": "possible_overlap_not_established",
+        "reason": "Database causality is unproven rather than a demonstrated locally true mechanism. The narrow P1 relationship may not hold."
+      },
+      {
+        "case_id": "V02_unsupported_premise",
+        "check_id": "scope_preservation",
+        "assessment": "plausible_cooccurrence_unadjudicated",
+        "reason": "Immediate index work can displace requested evidence-led diagnosis; this extra dimension has no preregistered full-cell label."
+      },
+      {
+        "case_id": "V03_scope_override",
+        "check_id": "explanatory_scope",
+        "assessment": "likely_out_of_scope_cross_hit",
+        "reason": "The candidate expands to an architecture topic; it does not clearly promote a locally true explanation of the original object. P3 is the supported primary defect."
+      }
+    ]
   },
+  "uncertainty_notes": [
+    {
+      "case_id": "N01_local_controller_valid",
+      "check_id": "premise_treatment",
+      "selected_probability": 0.71,
+      "alternate_probability": 0.23,
+      "provider_confidence": 0.62
+    },
+    {
+      "case_id": "V01_local_overreach",
+      "check_id": "scope_preservation",
+      "selected_probability": 0.35,
+      "alternate_probability": 0.31,
+      "provider_confidence": 0.14,
+      "note": "A categorical ok is not a calibrated certainty guarantee; no post-hoc threshold added."
+    }
+  ],
   "usage": {
     "jev": {
-      "model": "jev-1.13.0",
       "calls": 9,
+      "cost_usd": null,
+      "elapsed_seconds": 6.496222723275423,
       "input_tokens": 84821,
-      "output_tokens": 1633,
-      "provider_reported_cost_usd": null,
-      "inference_seconds": 6.496222723275423
+      "output_tokens": 1633
     },
     "host": {
-      "model": "deepseek-v4.1-flash",
       "calls": 3,
+      "cost_usd": null,
+      "elapsed_seconds": 5.646400671452284,
       "input_tokens": 1645,
-      "output_tokens": 225,
-      "provider_reported_cost_usd": null,
-      "inference_seconds": 5.646400671452284
-    }
+      "output_tokens": 225
+    },
+    "actual_monetary_cost": "unknown",
+    "timing_scope": "sum of recorded request durations, not end-to-end latency or speedup",
+    "batching_billing_verified": false
   },
-  "evidence_integrity": {
-    "files": 77,
-    "bytes": 267250,
-    "manifest_digest": "b9c8dab75222acc25084f23b122ca2dca06254679f4ac82f7c385373786d33b8",
-    "unresolved_intents": 0
-  },
-  "result": {
-    "bounded_development_objective": "PASS",
-    "qualification": false,
-    "holdout": false,
+  "disposition": {
+    "validation_task": "completed",
+    "decision": "retain_experimental",
+    "feasibility": "supported_on_these_six_authored_controls",
+    "question_boundary_qualification": false,
+    "production_qualification": false,
+    "independent_holdout": false,
     "formal_abc": false,
-    "production_adoption": false,
-    "claim_ceiling": "These six authored Chinese development controls support the feasibility of targeted P1/P2/P3 detection plus one bounded correction. They do not establish general accuracy, production value, or C01 admission."
-  }
+    "default_skill_enabled": false,
+    "native_entry_driver_live": false
+  },
+  "limitations": [
+    "Candidate targets and triggers were authored; activation coverage and natural failure prevalence are unmeasured.",
+    "No no-check, ordinary-LLM-only or single-question ablation control.",
+    "Cross-hits do not establish independent evidence and some are ambiguous or likely outside the narrow contract.",
+    "Same-model recheck and author review are not independent external validation.",
+    "The campaign carrier used assessment/Session, not live native entry.run integration.",
+    "Raw pending-review flags remain immutable; completed author review is this derived record."
+  ]
 }

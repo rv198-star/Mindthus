@@ -1,80 +1,95 @@
 {
-  "schema": "mindthus.entry-live-validation-verification.v1",
-  "source_commit": "a0a32c989bf9445e69e4b9abfce88a83380f1be7",
+  "schema": "mindthus.entry-live-closeout-verification.v1",
+  "runtime_source_commit": "a0a32c989bf9445e69e4b9abfce88a83380f1be7",
   "freeze_commit": "c32829eeafe7c789c62508c68adf7bbc7ae38e2d",
-  "evidence_commit": "65574d55d828bb92e1ce3c2cd4aef7f98422dfd4",
   "freeze_sha256": "833119545737eed4b9a19b24ad1875b174daaf396448f5e3ddea4d14956a1c96",
-  "implementation_digest": "fd5a8d2a0994e406bf954f58b12fa54d7cf9ad1a57ce163696493623b7e1bd53",
-  "preflight": {
-    "freeze_identity": "PASS",
-    "initial_request_keys": 6,
-    "network_auth_layer": {
-      "typesafe_systemone_without_credential": 403,
-      "cpa_chat_without_credential": 401
-    },
-    "inference_performed": false
-  },
-  "offline_driver": {
-    "status": "PASS",
-    "network_calls": 0,
-    "positive_detection_fixture": "3/3",
-    "negative_false_positive_fixture": "0/3",
-    "corrections": 3,
-    "rechecks": 3
-  },
-  "live": {
-    "cases": "6/6",
-    "positive_detection": "3/3",
-    "negative_false_positive": "0/3",
-    "corrections": "3/3 complete",
-    "rechecks": "3/3 complete; zero remaining hits/unresolved",
-    "automatic_retries": 0,
-    "model_substitutions": 0,
-    "semantic_revisions": 0,
+  "runtime_digest": "fd5a8d2a0994e406bf954f58b12fa54d7cf9ad1a57ce163696493623b7e1bd53",
+  "frozen_source_files_match": true,
+  "runtime_skills_scripts_tests_unchanged": true,
+  "archive": {
+    "index_ref": "evidence-index.json",
+    "record_index_sha256": "911a3024609fc694806d62800a1c78d85deb4c480270b93f294f56ad7733b5bf",
+    "count": 77,
+    "bytes": 267250,
+    "source_equals_archive": true,
+    "wrapper_checksums": "PASS",
+    "original_summary_sha256": "742364ce7a202b95c30a84b3f7dcb9973021ddd5c32017b6c888bb733eccb8ea",
+    "jev_batches": 9,
+    "host_attempts": 3,
     "unresolved_intents": 0,
-    "evidence_files": 77,
-    "evidence_bytes": 267250,
-    "evidence_manifest_digest": "b9c8dab75222acc25084f23b122ca2dca06254679f4ac82f7c385373786d33b8"
+    "validated_typed_answers": 27
   },
-  "usage": {
-    "jev_1_13_0": {
-      "calls": 9,
-      "input_tokens": 84821,
-      "output_tokens": 1633,
-      "provider_reported_cost_usd": null,
-      "inference_seconds": 6.496222723275423
+  "tests_this_closeout": {
+    "scope": "documentation/layering/release-boundary only",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.test_packaging_docs",
+      "tests.test_method_layering_contract",
+      "tests.test_release_boundary_contract",
+      "-q"
+    ],
+    "run": 60,
+    "passed": 59,
+    "skipped": 1,
+    "failures": 0,
+    "exit_code": 0,
+    "log_sha256": "2d9efd45467cb9bb5054c99f0df0140162326582fbbafa734b0d26aef642ad87",
+    "log_path": "/srv/agentdock/tmp/mindthus-entry-live-closeout/documentation-tests.log",
+    "log_ref": "verification-logs/documentation-tests.log"
+  },
+  "prior_runtime_regression": {
+    "source": "../verification.json",
+    "file_sha256": "246f43e92f691caf2183bb8769dce91e9380893944ceeb81b92ee33bf8110039",
+    "reused_not_rerun": true,
+    "new_tests": {
+      "run": 46,
+      "passed": 46,
+      "failed": 0,
+      "log_sha256": "64edb8d89dea0fc7472d08f1ec7fe94c8d68e2eaf9f40a056082d1b4050c2b66"
     },
-    "deepseek_v4_1_flash": {
-      "calls": 3,
-      "prompt_tokens": 1645,
-      "completion_tokens": 225,
-      "provider_reported_cost_usd": null,
-      "inference_seconds": 5.646400671452284
-    }
+    "full_suite": {
+      "run": 1281,
+      "passed": 1276,
+      "skipped": 5,
+      "failed": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "log_sha256": "0b925daed8a8faf0d5ace18821a91a48de430ad1902d0f5741d0143aece041b9"
+    },
+    "reason": "runtime/test sources unchanged; closeout only archives evidence and updates documents"
   },
-  "tests": {
-    "entry_assessment": {"run": 46, "failures": 0},
-    "full_repository": {"run": 1281, "passed": 1276, "skipped": 5, "failures": 0},
-    "lifecycle": "82/82",
-    "git_diff_check": "PASS",
-    "json_parse": "PASS"
-  },
-  "security": {
-    "credential_source": "NexusDock Private Notes -> single process environment only",
-    "exact_credential_value_scan_repo_and_live_root": "PASS",
-    "credential_hits": 0,
-    "credentials_persisted": false
+  "lifecycle": {
+    "coverage": "82/82",
+    "status": "PASS",
+    "log_sha256": "1944b28f704002611d117209038bbbe9b1f43d0f851addb371b4e0d6a6588fc8",
+    "log_ref": "verification-logs/lifecycle.log"
   },
   "review": {
-    "correction_quality": "author review against preregistered criteria: all 3 positive cases passed 3/3 criteria",
-    "independent_review": false,
-    "same_model_recheck_is_independent_truth": false
+    "type": "author_against_preregistered_criteria",
+    "independent": false,
+    "candidates_passed": 3,
+    "criteria_passed": 9,
+    "cross_hit_interpretations_post_hoc": true,
+    "preregistered_scores_changed": false
   },
-  "repository": {
-    "branch": "experiment/typed-decision-runtime",
-    "formal_main": "1527f32b99c375db9ff73f80812c644686a6576a",
-    "main_changed": false
+  "preserved_raw_review_flags": true,
+  "new_model_calls_during_closeout": 0,
+  "credential_plaintext_read_during_closeout": false,
+  "secret_scan": {
+    "scope": "77 archived JSON records; credential patterns and sensitive dictionary keys",
+    "status": "PASS",
+    "exact_key_scan_performed": false
   },
-  "qualification": false,
-  "claim_ceiling": "bounded authored development evidence only"
+  "monetary_cost": "unknown",
+  "semantic_adoption": "retain_experimental",
+  "production_qualification": false,
+  "issue_211": "OPEN",
+  "changed_markdown_links_checked": 88,
+  "temporary_skill_environment": {
+    "skill": "agentdock-user-guide",
+    "variables_observed_at_closeout": 0,
+    "checked_by": "skill_package.env_list; metadata only"
+  }
 }

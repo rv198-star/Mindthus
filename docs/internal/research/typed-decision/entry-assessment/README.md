@@ -149,7 +149,13 @@ positive detection was3/3, negative-case defect hits0/3, three bounded correctio
 and their one allowed recheck cleared all three dimensions. This is development evidence,
 not an independent holdout or production qualification.
 
-Next evidence should stress the same P1/P2/P3 contracts on more varied/less-authored cases
-and use ablation/negative controls to determine whether their cross-hits add independent
-downstream value. Do not expand the question set, enable a default entry hook, or reopen the
-old graph4 formal A/B/C merely because this small batch passed.
+The reviewed replies satisfy their frozen criteria, but this does not certify all cross-hits:
+V01/P2 has a user-premise/candidate-overclaim ambiguity and V03/P1 is likely outside narrow
+P1 scope. Initial scores remain unchanged; see the separately labeled author analysis in
+[the disposition](live-validation/disposition.md). The [evidence index](live-validation/evidence-index.json)
+binds 77 byte-identical records and the [verification](live-validation/verification.json) records checks.
+The live carrier reused assessment/Session, not live native `entry.run` or automatic activation.
+
+Close this six-case task. Next design should resolve existing question boundaries and define
+one bounded marginal-value/ablation comparison, rather than expand the question set or build
+another framework. No new run, default entry hook or old graph4 A/B/C is admitted by these results.
