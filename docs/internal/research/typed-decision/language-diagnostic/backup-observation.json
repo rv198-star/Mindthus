@@ -1,0 +1,486 @@
+{
+  "source_commit": "c1f66307a",
+  "root": "/Users/william/Documents/Codex/2026-09-22/mindthus-c01-language-diagnostic/backup-trial",
+  "raw_summary": {
+    "abc": "not_run",
+    "analysis": {
+      "arms": {
+        "english": {
+          "all": {
+            "abstentions": [],
+            "fields": {},
+            "joint": {
+              "matched": 0,
+              "scored": 0
+            }
+          },
+          "by_family": {},
+          "fallbacks": [],
+          "mechanical_d0": {
+            "abstentions": [],
+            "fields": {},
+            "joint": {
+              "matched": 0,
+              "scored": 0
+            }
+          },
+          "mismatches": [],
+          "semantic_only": {
+            "abstentions": [],
+            "fields": {},
+            "joint": {
+              "matched": 0,
+              "scored": 0
+            }
+          }
+        },
+        "source": {
+          "all": {
+            "abstentions": [],
+            "fields": {
+              "entry_mode": {
+                "matched": 0,
+                "scored": 1
+              },
+              "owner": {
+                "matched": 1,
+                "scored": 1
+              },
+              "route": {
+                "matched": 0,
+                "scored": 1
+              }
+            },
+            "joint": {
+              "matched": 0,
+              "scored": 1
+            }
+          },
+          "by_family": {
+            "direct": {
+              "abstentions": [],
+              "fields": {
+                "entry_mode": {
+                  "matched": 0,
+                  "scored": 1
+                },
+                "owner": {
+                  "matched": 1,
+                  "scored": 1
+                },
+                "route": {
+                  "matched": 0,
+                  "scored": 1
+                }
+              },
+              "joint": {
+                "matched": 0,
+                "scored": 1
+              }
+            }
+          },
+          "fallbacks": [
+            "L02"
+          ],
+          "mechanical_d0": {
+            "abstentions": [],
+            "fields": {},
+            "joint": {
+              "matched": 0,
+              "scored": 0
+            }
+          },
+          "mismatches": [
+            "L02"
+          ],
+          "semantic_only": {
+            "abstentions": [],
+            "fields": {
+              "entry_mode": {
+                "matched": 0,
+                "scored": 1
+              },
+              "owner": {
+                "matched": 1,
+                "scored": 1
+              },
+              "route": {
+                "matched": 0,
+                "scored": 1
+              }
+            },
+            "joint": {
+              "matched": 0,
+              "scored": 1
+            }
+          }
+        }
+      },
+      "complete_pairs": 0,
+      "disagreements": [],
+      "paired_joint": {},
+      "semantic_paired_joint": {}
+    },
+    "attempts": {
+      "english": 0,
+      "source": 1
+    },
+    "completed_views": 1,
+    "estimated_input_cost_usd": {
+      "english": null,
+      "source": null
+    },
+    "excluded_case_ids": [
+      "L01"
+    ],
+    "holdout": "not_run",
+    "inference_seconds": {
+      "english": null,
+      "source": 5.024184207999497
+    },
+    "original_planned_views": 64,
+    "planned_views": 62,
+    "qualification": "development diagnostic only",
+    "reserved_usd": 0.002688,
+    "resolved_runtime": null,
+    "rows": [
+      {
+        "arm": "source",
+        "call_keys": [
+          "ef38a668cc69067db50ca40be7dbfefd9941b8d5937d88a2d38d5eb60e0efda5"
+        ],
+        "case_id": "L02",
+        "family": "direct",
+        "mechanical_d0": false,
+        "nodes": [
+          {
+            "call_key": "ef38a668cc69067db50ca40be7dbfefd9941b8d5937d88a2d38d5eb60e0efda5",
+            "results": {
+              "entry_mode": {
+                "reason": "ProviderError:transport_failure",
+                "status": "provider_error",
+                "uncertainty": null,
+                "value": null
+              },
+              "unresolved_obligation": {
+                "reason": "ProviderError:transport_failure",
+                "status": "provider_error",
+                "uncertainty": null,
+                "value": null
+              }
+            }
+          }
+        ],
+        "observed": {
+          "entry_mode": null,
+          "owner": null,
+          "route": "llm_fallback"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "entry_mode": null,
+          "fallback_owner": "original-agent",
+          "hard_judgment": null,
+          "obligations": [],
+          "owner": null,
+          "reason": "entry_mode:provider_error",
+          "route": "llm_fallback",
+          "status": "provider_error"
+        },
+        "run_id": "b7e9db2949db204be7355246f5d6e95d76b161cba99d9b18ec62476dbd95c541",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "entry_mode": false,
+            "owner": true,
+            "route": false
+          },
+          "joint": false
+        }
+      }
+    ],
+    "stop_reason": "technical_failure",
+    "total_attempts": 1,
+    "translation_and_host_cost": "unknown",
+    "translation_latency": "offline preparation; no production latency claim",
+    "unrun": [
+      {
+        "arm": "english",
+        "case_id": "L02"
+      },
+      {
+        "arm": "source",
+        "case_id": "L03"
+      },
+      {
+        "arm": "english",
+        "case_id": "L03"
+      },
+      {
+        "arm": "source",
+        "case_id": "L04"
+      },
+      {
+        "arm": "english",
+        "case_id": "L04"
+      },
+      {
+        "arm": "source",
+        "case_id": "L05"
+      },
+      {
+        "arm": "english",
+        "case_id": "L05"
+      },
+      {
+        "arm": "source",
+        "case_id": "L06"
+      },
+      {
+        "arm": "english",
+        "case_id": "L06"
+      },
+      {
+        "arm": "source",
+        "case_id": "L07"
+      },
+      {
+        "arm": "english",
+        "case_id": "L07"
+      },
+      {
+        "arm": "source",
+        "case_id": "L08"
+      },
+      {
+        "arm": "english",
+        "case_id": "L08"
+      },
+      {
+        "arm": "source",
+        "case_id": "L09"
+      },
+      {
+        "arm": "english",
+        "case_id": "L09"
+      },
+      {
+        "arm": "source",
+        "case_id": "L10"
+      },
+      {
+        "arm": "english",
+        "case_id": "L10"
+      },
+      {
+        "arm": "source",
+        "case_id": "L11"
+      },
+      {
+        "arm": "english",
+        "case_id": "L11"
+      },
+      {
+        "arm": "source",
+        "case_id": "L12"
+      },
+      {
+        "arm": "english",
+        "case_id": "L12"
+      },
+      {
+        "arm": "source",
+        "case_id": "L13"
+      },
+      {
+        "arm": "english",
+        "case_id": "L13"
+      },
+      {
+        "arm": "source",
+        "case_id": "L14"
+      },
+      {
+        "arm": "english",
+        "case_id": "L14"
+      },
+      {
+        "arm": "source",
+        "case_id": "L15"
+      },
+      {
+        "arm": "english",
+        "case_id": "L15"
+      },
+      {
+        "arm": "source",
+        "case_id": "L16"
+      },
+      {
+        "arm": "english",
+        "case_id": "L16"
+      },
+      {
+        "arm": "source",
+        "case_id": "L17"
+      },
+      {
+        "arm": "english",
+        "case_id": "L17"
+      },
+      {
+        "arm": "source",
+        "case_id": "L18"
+      },
+      {
+        "arm": "english",
+        "case_id": "L18"
+      },
+      {
+        "arm": "source",
+        "case_id": "L19"
+      },
+      {
+        "arm": "english",
+        "case_id": "L19"
+      },
+      {
+        "arm": "source",
+        "case_id": "L20"
+      },
+      {
+        "arm": "english",
+        "case_id": "L20"
+      },
+      {
+        "arm": "source",
+        "case_id": "L21"
+      },
+      {
+        "arm": "english",
+        "case_id": "L21"
+      },
+      {
+        "arm": "source",
+        "case_id": "L22"
+      },
+      {
+        "arm": "english",
+        "case_id": "L22"
+      },
+      {
+        "arm": "source",
+        "case_id": "L23"
+      },
+      {
+        "arm": "english",
+        "case_id": "L23"
+      },
+      {
+        "arm": "source",
+        "case_id": "L24"
+      },
+      {
+        "arm": "english",
+        "case_id": "L24"
+      },
+      {
+        "arm": "source",
+        "case_id": "L25"
+      },
+      {
+        "arm": "english",
+        "case_id": "L25"
+      },
+      {
+        "arm": "source",
+        "case_id": "L26"
+      },
+      {
+        "arm": "english",
+        "case_id": "L26"
+      },
+      {
+        "arm": "source",
+        "case_id": "L27"
+      },
+      {
+        "arm": "english",
+        "case_id": "L27"
+      },
+      {
+        "arm": "source",
+        "case_id": "L28"
+      },
+      {
+        "arm": "english",
+        "case_id": "L28"
+      },
+      {
+        "arm": "source",
+        "case_id": "L29"
+      },
+      {
+        "arm": "english",
+        "case_id": "L29"
+      },
+      {
+        "arm": "source",
+        "case_id": "L30"
+      },
+      {
+        "arm": "english",
+        "case_id": "L30"
+      },
+      {
+        "arm": "source",
+        "case_id": "L31"
+      },
+      {
+        "arm": "english",
+        "case_id": "L31"
+      },
+      {
+        "arm": "source",
+        "case_id": "L32"
+      },
+      {
+        "arm": "english",
+        "case_id": "L32"
+      }
+    ],
+    "usage": {
+      "english": null,
+      "source": {
+        "cost_usd": null,
+        "input_tokens": null,
+        "output_tokens": null
+      }
+    }
+  },
+  "file_sha256": {
+    "campaign.json": "3ef7c95eda2ea23f3af10fef3e3ade088a34c8a0e3aa72b5dc6e841a5f29f330",
+    "english/campaign.json": "5f9434006f08e9fc905d5af46336e79faf5f29dbad889ab89e02de24654f112e",
+    "source/calls/ef38a668cc69067db50ca40be7dbfefd9941b8d5937d88a2d38d5eb60e0efda5/intent.json": "c18a3c18825ac47306139b1fbde1ce767b6fbfc44487fc442fb7b648fe8a0dc8",
+    "source/calls/ef38a668cc69067db50ca40be7dbfefd9941b8d5937d88a2d38d5eb60e0efda5/outcome.json": "0a483aea637256781416bad650e64d86c263ea948efdd4876ce059d96ef891f3",
+    "source/campaign.json": "a0b6cfd64eaa7509bee56bac58b182c6b13101c77d7a5b1edefac309edd948bf",
+    "source/policy.json": "59e5ffe2417b7a01d2afdb4a7c989fa0df56be4dd2e6e90b5746476c31d56fa3",
+    "source/rows/L02.json": "4c2285e2fb148326cda81b8721092815d4c5bc7a92823c543bcceeea65f759ba",
+    "source/runs/b7e9db2949db204be7355246f5d6e95d76b161cba99d9b18ec62476dbd95c541.json": "a76c996a80b4f2c3946456c7e5761f62cdec009e0a57e1af44cf7c2fafe60cfd",
+    "source/wire/bbfb748694c727947ec0a7686f40f69e4284e8c95bef3903dbb7e6ab46a211aa.json": "34a4b1bc419c606ec546db9edd2edcb8cfecd20fcd60dacd5481cf9b0eecc2b9",
+    "summary.json": "732dfbe2cf7836ddd20f123757c4a3a5e5a1c9e7690ccdc9efa38d4225637d8b"
+  },
+  "interpretation": {
+    "successful_semantic_views": 0,
+    "complete_pairs": 0,
+    "reason": "first backup L02/source request returned local transport_failure, no valid response",
+    "public_models_http200": "proves read-only route reachability only, not authenticated Decisions POST availability",
+    "native_attempts": 1,
+    "backup_attempts": 1,
+    "total_series_attempts": 2,
+    "reserved_series_usd": 0.005376,
+    "actual_cost": "unknown",
+    "language_effect": "unknown",
+    "no_more_recovery_in_this_campaign": true
+  }
+}

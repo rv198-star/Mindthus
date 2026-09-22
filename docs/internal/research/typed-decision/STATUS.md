@@ -5,6 +5,25 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Final current state — steps1–2 ready; live diagnosis BLOCKED
+
+See [final disposition](language-diagnostic/backup-disposition.md),
+[backup observation](language-diagnostic/backup-observation.json),
+[final verification](language-diagnostic/backup-verification.json).
+Authorized OpenRouter backup was attempted after its publicmodels GET200; its first
+L02/source Decisions POST also producedtransport_failure, with no model/usage response.
+NativeL01/source and backupL02/source remain unknown remote processing; do not resubmit.
+Total2attempts,0successful semantic views,0pairs;62original views never attempted.
+Steps3–4 remain incomplete, no language or accuracy conclusion. No further recovery here.
+32bilingual cases and9full English derived method contracts remain frozen/reusable.
+Final sourcec1f66307a:120targeted;full1204=1197success+7skipped; lifecycle81/81;
+20total wrappedJSON intact, exact-key scanPASS, backupfreeze valid. Main unchanged.
+SeriesreserveUSD0.005376, cumulative87attempts/reserveUSD0.233856, new actualusage unknown.
+Missionblocked/requires_human due external connectivity. All preparation remains authorized;
+connection recovery is needed, not new direction approval. No C02/holdout/ABC inference.
+GitHub push failedTLS; commits since12f9eb32d are local, not confirmed remote.
+Below are chronological historical checkpoints; do not run either terminal live script.
+
 ## Named backup recovery — frozen, live pending
 
 Original authorization permits OpenRouter backup. Public models GET returned200 while

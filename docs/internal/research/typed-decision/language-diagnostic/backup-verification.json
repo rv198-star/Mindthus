@@ -1,0 +1,23 @@
+{
+  "implementation": "f47020fe36403b7ad7062be18502f23feb7447bdaa74e4bdf8808ab01625f2d3",
+  "backup_freeze_valid": true,
+  "old_native_freeze": "historical at83ff3a625; deliberately not rebound to recovery carrier",
+  "targeted_successful": 120,
+  "full_total": 1204,
+  "full_successful": 1197,
+  "full_skipped": 7,
+  "failures": 0,
+  "errors": 0,
+  "lifecycle": "81/81 unchanged registration",
+  "native_wrappers": 10,
+  "backup_wrappers": 10,
+  "wrapped_integrity": "PASS",
+  "exact_key_scan": "PASS",
+  "scanned_files": 55,
+  "log_sha256": {
+    "backup-targeted.log": "7946b81d1df256e236ca503648c4927bd09d772d206c919d979294f3fdde53fb",
+    "backup-full-suite.log": "455500fa4c18aa827afcdf1464486320e460ef1c4fe8e05ba7bf5caf8a2010b2",
+    "lifecycle.log": "ac26365e6bce84bed223ebee51cdb4d0144d98e7f02a82a4e4347c1cf0c48539",
+    "backup-native.log": "36f7492a817088930ae68d5b449036c83116730b2f9d7658a1d8e4d9a28437cc"
+  }
+}
