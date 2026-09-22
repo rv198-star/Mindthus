@@ -1,0 +1,84 @@
+{
+  "evidence_kind": "offline_control_flow_fixture_not_semantic_evidence",
+  "input": {
+    "state_version": "1",
+    "task": {
+      "request": "请判断这个备份现在是否可靠，并说明依据。",
+      "constraints": [
+        "只依据提供记录分析，不修改系统。"
+      ],
+      "evidence": [
+        {
+          "source_ref": "fixture:backup-observation",
+          "summary": "备份文件数与源文件数一致；没有内容校验和恢复演练记录。"
+        }
+      ],
+      "provenance": {
+        "source_ref": "fixture:backup-task",
+        "revision": "1"
+      },
+      "known_obligations": [],
+      "explicit_method": null,
+      "risk": "low",
+      "freshness": "current",
+      "permission": {
+        "mode": "advisory",
+        "source_ref": "fixture:owner"
+      }
+    },
+    "decision_context": {
+      "object": "这份备份的可靠性",
+      "goal": "判断可靠性及其证据上限",
+      "scope": "仅依据现有观测，不扩建备份系统",
+      "source_ref": "fixture:task-and-constraints"
+    },
+    "target": {
+      "id": "draft-thesis",
+      "kind": "candidate_thesis",
+      "version": "1",
+      "source_ref": "fixture:initial-draft",
+      "text": "文件数相同，因此整个备份已可靠。"
+    },
+    "activation": {
+      "event": "before-answer",
+      "source_ref": "fixture:entry-triage",
+      "reason": "数量这个局部信号可能替代可靠性结论",
+      "frame_risk": true,
+      "execution_impact": true,
+      "required": false,
+      "checks": [
+        "explanatory_scope",
+        "premise_treatment",
+        "scope_preservation"
+      ]
+    }
+  },
+  "answers": {
+    "initial": {
+      "explanatory_scope": "local_overreach",
+      "premise_treatment": "unsupported_as_fact",
+      "scope_preservation": "within_scope"
+    },
+    "by_target_version": {
+      "2": {
+        "explanatory_scope": "scope_fit",
+        "premise_treatment": "treatment_fit",
+        "scope_preservation": "within_scope"
+      }
+    },
+    "routing": {
+      "entry_mode": "acquire_information",
+      "unresolved_obligation": "present"
+    }
+  },
+  "correction": {
+    "text": "数量一致只证明文件数相同，不能确认备份可靠；还需内容校验与实际恢复证据。现有记录不足以宣称可靠。",
+    "version": "2",
+    "receipt_ref": "fixture:host-correction-once",
+    "usage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    }
+  }
+}

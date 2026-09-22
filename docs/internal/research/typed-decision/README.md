@@ -14,6 +14,14 @@ bounded stop decisions: neither current contract/data pair qualified. Read
 before any continuation. Existing non-Jev methods remain the baseline. Dynamic design
 is a bounded optional exception, not a prerequisite or recursive runtime.
 
+## Current entry-assessment slice
+
+The approved manual1.1 first slice is now implemented as opt-in `assessment.py` and
+`entry.py`: P1–P3 batched checks, a scoped matrix, one host-owned correction, one recheck
+and optional unchanged-C01 continuation. See [implementation](entry-assessment/README.md).
+This is new engineering functionality, not a new live holdout or production qualification.
+The previous formal A/B/C remains paused; #212 is not restarted.
+
 ## Mainline
 Read `STATUS.md` to resume; `standard.md` for the provider-neutral contract; `portfolio.md` for the frozen candidate rationale; `implementation.md` and `protocol.json` for the exact delivered slice and remaining live gates.
 

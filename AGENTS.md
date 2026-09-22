@@ -48,6 +48,8 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 同 State 的独立题优先合批，真实依赖才分阶段；并行计费和准确率收益须有单独证据。
 具名纠偏应有一次处理与有限复查边界；动态设计优先复用合同，不为追分递归改题。
 矩阵/trace留在内部，用户只看结论与依据；新设计不自动成为已实施能力或冻结试验的续跑授权。
+入口评估首个切片的 opt-in 接入与边界见 `docs/internal/research/typed-decision/entry-assessment/README.md`；
+默认技能不自动调用它，离线夹具不证明 Jev 检测或纠偏效果。
 
 实验渠道授权（用户于 2026-09-22 明确限定）：OpenRouter 仅允许调用 Jev，禁止调用其他模型。
 需要普通 LLM 或其他对照模型时，先与用户商议具体渠道和型号，由用户确认或另行提供。
