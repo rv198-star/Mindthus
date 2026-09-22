@@ -5,7 +5,20 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current node attribution — offline decomposition delivered; no new inference
+## Current paired retest — protocol frozen; live comparison pending
+
+Owner explicitly requested redesign and retesting. [Protocol](paired-retest/protocol.md) and
+[freeze](paired-retest/freeze.json) define fresh English same-graph B/C development comparison:
+Sonnet4.6 via OpenRouter/Anthropic versus official Jev1.13.0,32 cases (30 semantic,2 D0).
+Final(route,owner) match is primary; original joint path and predefined22-case sensitivity are
+reported alongside it. No old gold edits; no technical-error fallback counted as success.
+USD4 accounted inference cap,180-call ceiling,0 retries/semantic revisions; global runtime locks.
+Two previously involved AI contexts checked labels/fairness before results, not blind human gold.
+Existing graph/provider architecture is unchanged. Carrier has4 offline checks; targeted124 pass;
+full suite1208 (1201 pass/7 skipped) passed before live start. No new live calls yet. True original-A/holdout/task outcome
+comparison remain later gates; do not call this development comparison formal adoption evidence.
+
+## Previous node attribution — offline decomposition delivered; no new inference
 
 [Node report](node-attribution/README.md), [64-view data](node-attribution/observations.json)
 and CSV/reproducer now separate node observations from final fields. Four original summaries and
