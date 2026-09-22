@@ -5,7 +5,20 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current portfolio reassessment — C03 first conditional candidate, C07 second
+## Current correction — retain C01 routing research; current implementation unqualified
+
+Owner challenged the inference from composite failures to abandoning semantic routing.
+[Reconsideration](c01-routing-reconsideration-2026-09-22.md) checks the official skill-suggestion
+example and narrows the prior parent adjudication. C01 remains a research direction; its current
+graph is not qualified. Next evidence priority is bounded node attribution / same-contract engine
+comparison, with a frozen protocol before any new inference, not another whole-graph prompt loop.
+No new protocol/budget frozen or live calls made here. C03/C07 remain conditional alternatives;
+they do not automatically outrank C01 on this evidence. C02 stop and #212 conditional status remain.
+Historical results/reviewer opinions are unchanged; this is a parent correction, not a new panel vote.
+Only docs changed; prior engineering checks reused, main unchanged. Older checkpoints below are
+historical: their blanket C01 research stop and C03-first next-action instructions are superseded.
+
+## Historical portfolio reassessment — C03 first conditional candidate, C07 second
 
 Owner requested reassessing the original eight candidates. [Updated ranking](portfolio.md) and
 [reasoning](portfolio-reassessment-2026-09-22.md). C01/C02 stop decision remains effective.
@@ -17,7 +30,7 @@ Do not turn candidate priority into launch permission: confirm existing authoriz
 repeat workload and labelability first; do not invent a use case or auto-start another candidate.
 Historical stop and diagnostic records below remain intact. Main unchanged; tests not rerun for docs.
 
-## Current adjudication — stop current Jev routing/planning investment
+## Historical adjudication — stop current Jev routing/planning investment
 
 Owner requested independent review and a continue/abandon verdict. Three AI contexts reviewed
 claims, contracts and value; parent adjudicated. [Review and decision](adoption-review-2026-09-22/README.md).
