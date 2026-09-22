@@ -1,0 +1,28 @@
+{
+  "cached_reentry_verified": false,
+  "complete": false,
+  "native_skill_load": "not_observed",
+  "new_host_attempts": 1,
+  "new_jev_attempts": 0,
+  "qualification": false,
+  "rows": [
+    {
+      "case_id": "L27",
+      "host": {
+        "answer": null,
+        "cost_usd": null,
+        "elapsed_seconds": 0.5985382920043776,
+        "error": "ProviderError:http_403",
+        "native_skill_load": "not_observed",
+        "status": "failed",
+        "usage": {}
+      },
+      "source": "historical-routing/new-handoff"
+    }
+  ],
+  "stop_reason": "host_failed",
+  "unrun": 4,
+  "wall_seconds": 0.6024630419997266,
+  "source_commit": "9d1f97774",
+  "interpretation": "HTTP403 access failure; no semantic observation or usage; 4 cases unrun; terminal preserved"
+}

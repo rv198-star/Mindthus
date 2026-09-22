@@ -958,6 +958,7 @@ class C01HostTests(unittest.TestCase):
     def host(self, url, headers, body, timeout):
         self.host_calls.append(body)
         self.assertEqual(url, c01_host.ENDPOINT)
+        self.assertEqual(headers['User-Agent'], 'Mindthus-C01-integration/1')
         self.assertNotIn('tools', body)
         return {'model': body['model'], 'choices': [{'finish_reason': 'stop', 'message': {'content': 'Fixture answer'}}],
                 'usage': {'prompt_tokens': 10, 'completion_tokens': 2}}

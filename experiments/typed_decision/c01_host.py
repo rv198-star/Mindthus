@@ -81,7 +81,8 @@ def consume(bundle: dict, root: Path, model: str, key: str, *, transport=post_js
            'native_skill_load': 'not_observed'}
     begin = time.monotonic()
     try:
-        raw = transport(ENDPOINT, {'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'}, payload, 60)
+        raw = transport(ENDPOINT, {'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json',
+                                   'User-Agent': 'Mindthus-C01-integration/1'}, payload, 60)
         require(time.monotonic() - begin <= 60, 'deadline_exceeded')
         reported = raw.get('model')
         row['reported_model'] = reported if reported in MODELS else 'unrecognized'

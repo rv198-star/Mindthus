@@ -20,16 +20,16 @@ def prepare():
     bundles={ident:handoff.prepare(SOURCE/ident,rows[ident]['run_id'],original[ident]['context'],METHODS) for ident in IDS}
     manifest=c01_host.admission(json.loads((DOCS/'E01-context.json').read_text()),METHODS,'deepseek-v4.1-flash',
                                'Owner requested uninterrupted C01 implementation; c01-completion/protocol.md')
-    files=[Path(__file__).resolve(),DOCS/'protocol.md',DOCS/'E01-context.json']
+    files=[Path(__file__).resolve(),DOCS/'protocol.md',DOCS/'E01-context.json',DOCS/'technical-recovery.md']
     frozen={'implementation':implementation_digest(),'files':{str(p.relative_to(REPO)):__import__('hashlib').sha256(p.read_bytes()).hexdigest() for p in files},
             'host_requests':{i:digest(c01_host.host_body(b,'deepseek-v4.1-flash')) for i,b in bundles.items()},
             'handoff_digests':{i:digest(b) for i,b in bundles.items()},'chain_manifest':manifest,
             'max_host_calls':5,'max_jev_calls':3,'host_model':'deepseek-v4.1-flash','semantic_revisions':0,'retries':0}
     return frozen,bundles
 
-def run(root,key):
+def run(root,key,*,freeze_path=DOCS/'freeze.json'):
     frozen,bundles=prepare()
-    require(frozen==json.loads((DOCS/'freeze.json').read_text()),'frozen source/input changed')
+    require(frozen==json.loads(freeze_path.read_text()),'frozen source/input changed')
     require(not root.exists(),'batch terminal; do not replay paid feedback')
     write_once(root/'manifest.json',frozen)
     started=time.monotonic();rows=[];stop=None

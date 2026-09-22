@@ -26,8 +26,8 @@ class DriverChecks(unittest.TestCase):
         def factory(*a,**kw):kw['transport']=native_wire;return original(*a,**kw)
         def fake_consume(bundle,root,model,key,**kw):return consume(bundle,root,model,key,transport=host_wire)
         with tempfile.TemporaryDirectory() as d,patch.dict(os.environ,{'TYPESAFE_API_KEY':'offline-only'}),patch.object(m.c01_host,'TypeSafeJevProvider',factory),patch.object(m.c01_host,'consume',fake_consume),contextlib.redirect_stdout(io.StringIO()):
-            root=Path(d)/'trial';r=m.run(root,'offline-host')
-            with self.assertRaises(Exception):m.run(root,'offline-host')
+            root=Path(d)/'trial';r=m.run(root,'offline-host',freeze_path=m.DOCS/'recovery-freeze.json')
+            with self.assertRaises(Exception):m.run(root,'offline-host',freeze_path=m.DOCS/'recovery-freeze.json')
             return r,host,native
 
     def test_full_fixed_batch_and_real_chain_orchestration(self):
