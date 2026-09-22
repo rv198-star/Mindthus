@@ -1,0 +1,57 @@
+{
+  "source_commit": "d4b69b066327bcb9113f0dc9b98e36e643693189",
+  "freeze_commit": "06185252c97aeece76aa16a1f703079d61d38d55",
+  "runtime_digest": "52c0ba1478057b74587720daad2a6cf4cf5b09636d9d504f8bd3300a6743a70e",
+  "freeze_sha256": "2c890cff0f8e27058c29bae7f45329e0bc730cb42be8adf17ba733a7d762c071",
+  "record_count": 260,
+  "record_index_sha256": "689484f8ce4f62d12d291ce1dc89d710c0b051755c5299c808aecf221f6b7ca0",
+  "unresolved_intents": [],
+  "calls": {
+    "corrector": 17,
+    "detector": 32
+  },
+  "post_run_model_calls": 0,
+  "offline_controls": {
+    "run": 10,
+    "passed": 10,
+    "network_calls": 0
+  },
+  "entry_regression": {
+    "run": 46,
+    "passed": 46
+  },
+  "full_suite": {
+    "run": 1281,
+    "passed": 1276,
+    "skipped": 5,
+    "failed": 0,
+    "seconds": 140.911,
+    "log_sha256": "db211c21d001876368bc4c483261cdd412f9b96c09b0882b526aaa378ade7fd5"
+  },
+  "secret_scan": {
+    "type": "exact authorized credential values via isolated command environment",
+    "files": 1439,
+    "hits": 0,
+    "keys_persisted_in_evidence": false,
+    "temporary_environment_cleared": true
+  },
+  "preserved": [
+    "old six-case archive",
+    "canonical skills and primitives",
+    "Provider/Session",
+    "entry.run",
+    "graph4",
+    "main"
+  ],
+  "claim_ceiling": "one authored v2 development and ablation batch; not holdout, original-A, independent audit or production admission",
+  "documentation_checks": {
+    "run": 60,
+    "passed": 59,
+    "skipped": 1,
+    "failed": 0,
+    "log_sha256": "673ba3dce9f11251e6f6202986239191ca42de17ac1afac4d96d9ac3ac9b6d2a"
+  },
+  "relative_links_checked": 86,
+  "lifecycle": "82/82",
+  "archive_byte_identity_rechecked": true
+}

@@ -6,19 +6,36 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current successor — P1/P2 boundary v2 and bounded physical question ablation
+## Current checkpoint — boundary v2 and physical question ablation complete; retain experimental
 
-Owner approved the existing-question boundary/marginal-value successor after the six-case
-closeout. Task: `tsk_b6b77338b7f10bf1`. Baseline: `c1500da7d4f051420f73ae323c341a9db34b6142`.
-Read [the pre-results protocol](entry-assessment/boundary-ablation-v2/protocol.md).
-P1 requires supported local truth promoted to a broader same-object conclusion; P2 requires
-unsupported user-origin premise adoption; P3 text is unchanged. The question-set/policy is v2;
-old report/input versions cannot be consumed by the new correction instructions.
-Eight new authored controls compare full, drop-P1, drop-P2 and drop-P3 with identical State.
-The no-check reference retains the existing candidate and evidence duties, not original-A.
-Physical reduced-question calls and zero-call output projection are reported separately.
-No new question bank, default activation, old-batch replay or production claim. New live
-execution requires this successor's committed source/freeze and completed offline preflight.
+Task `tsk_b6b77338b7f10bf1` delivered the Owner-approved boundary/marginal-value successor.
+Source `d4b69b0`; freeze `06185252c97aeece76aa16a1f703079d61d38d55`; baseline `c1500da7`.
+Read [the disposition](entry-assessment/boundary-ablation-v2/disposition.md), then
+[author review](entry-assessment/boundary-ablation-v2/review.json) and
+[verification](entry-assessment/boundary-ablation-v2/verification.json).
+P1 now requires supported local truth promoted to a broader same-object conclusion;
+P2 requires unsupported user-origin premise adoption. P3 text is unchanged. The v2 consumer
+rejects an old-version report or a different input snapshot. Canonical methods remain intact.
+
+Eight new authored controls ran four physically different question sets each on identical
+projected State: 32 official Jev calls, followed by 17 DeepSeek corrections, zero retries,
+zero rechecks and no semantic revision. Full-arm P1 and P2 agree with all eight per-cell
+expectations; P3 has two expected hits and two extra hits against frozen author labels.
+Removing P1 loses E01's needed correction; removing P3 loses E03's. P2's independent task
+benefit is not isolated because broad P3 triggers on the same cases. Do not delete P2 on
+that basis. E08/drop-P3 also exhibits an extra P1 hit absent in full-output projection.
+These observations do not certify per-dimension general accuracy or batch independence.
+
+All 17 corrections technically completed; only 12 meet all three frozen criteria without
+pending/uncertain items in author review. E07's three revisions still require the original
+notice/evidence owner; two E08 plans have ambiguous read-only comparison feasibility.
+All three acceptable controls stayed unchanged in every arm. 260 immutable records were
+archived byte-for-byte; 49 intents have outcomes. Both monetary cost fields are unknown.
+
+This terminal batch is not v1 replay, holdout, original-A/LLM-only comparison or default
+entry.run activation. No further run is admitted here. Residual work concerns P3 scope-change
+versus answer-correctness and correction executability, not a new question bank. Keep #211
+OPEN/unqualified, #212 untouched and main unchanged. Temporary credential environment cleared.
 
 ## Previous checkpoint — six-case live validation reviewed and archived; retain experimental
 

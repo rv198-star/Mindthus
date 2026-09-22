@@ -5,6 +5,10 @@
 execution mechanics stay intact; version/input checks reject cross-contract correction.
 The six-case evidence below remains version 1 and is not rebound to the new questions.
 No default Skill activation or production qualification follows from this revision.
+The one-shot physical deletion comparison is now complete; read its
+[disposition](boundary-ablation-v2/disposition.md). P1/P3 show distinct useful actions,
+but P3 over-detection and an extra P1 hit in one reduced batch remain. P2's independent
+benefit is not isolated. The eight authored controls do not confer production qualification.
 
 Status: **implemented opt-in engineering slice; small live development validation completed; no production qualification**.
 Design authority: [entry assessment design 0.1](../using-mindthus-assessment-design.md)

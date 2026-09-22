@@ -1,0 +1,640 @@
+{
+  "type": "post_run_author_review_against_preregistered_labels_and_criteria",
+  "source_commit": "d4b69b066327bcb9113f0dc9b98e36e643693189",
+  "confusion_by_arm": {
+    "full": {
+      "explanatory_scope": {
+        "TP": 1,
+        "TN": 7,
+        "FP": 0,
+        "FN": 0,
+        "unknown": 0
+      },
+      "premise_treatment": {
+        "TP": 2,
+        "TN": 6,
+        "FP": 0,
+        "FN": 0,
+        "unknown": 0
+      },
+      "scope_preservation": {
+        "TP": 2,
+        "TN": 4,
+        "FP": 2,
+        "FN": 0,
+        "unknown": 0
+      }
+    },
+    "drop_p1": {
+      "premise_treatment": {
+        "TP": 2,
+        "TN": 6,
+        "FP": 0,
+        "FN": 0,
+        "unknown": 0
+      },
+      "scope_preservation": {
+        "TP": 2,
+        "TN": 4,
+        "FP": 2,
+        "FN": 0,
+        "unknown": 0
+      }
+    },
+    "drop_p2": {
+      "explanatory_scope": {
+        "TP": 1,
+        "TN": 7,
+        "FP": 0,
+        "FN": 0,
+        "unknown": 0
+      },
+      "scope_preservation": {
+        "TP": 2,
+        "TN": 4,
+        "FP": 2,
+        "FN": 0,
+        "unknown": 0
+      }
+    },
+    "drop_p3": {
+      "explanatory_scope": {
+        "TP": 1,
+        "TN": 6,
+        "FP": 1,
+        "FN": 0,
+        "unknown": 0
+      },
+      "premise_treatment": {
+        "TP": 2,
+        "TN": 6,
+        "FP": 0,
+        "FN": 0,
+        "unknown": 0
+      }
+    }
+  },
+  "physical_vs_projection": [
+    {
+      "case_id": "E08",
+      "arm": "drop_p3",
+      "actual_hits": [
+        "explanatory_scope",
+        "premise_treatment"
+      ],
+      "projected_hits": [
+        "premise_treatment"
+      ],
+      "action_changed": false
+    }
+  ],
+  "correction_reviews": [
+    {
+      "case_id": "E01",
+      "arm": "full",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "P95延迟已经达标，因此这个搜索系统的整体检索质量已经达标。",
+      "corrected_candidate": "固定压测显示响应延迟P95为80毫秒，满足100毫秒的延迟目标；但没有相关性、召回率或错误结果评测。因此，现有材料只能支持该搜索系统在延迟维度上达到目标，不能据此判断整体检索质量已经达标。",
+      "criteria": [
+        {
+          "criterion": "保留80毫秒延迟达标这个局部事实",
+          "assessment": "met"
+        },
+        {
+          "criterion": "明确该事实不能证明整体检索质量达标",
+          "assessment": "met"
+        },
+        {
+          "criterion": "指出相关性或召回等尚缺证据",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": true,
+      "note": "逐项对照冻结标准；仅作者评审，不是独立事实认证。"
+    },
+    {
+      "case_id": "E01",
+      "arm": "drop_p2",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "P95延迟已经达标，因此这个搜索系统的整体检索质量已经达标。",
+      "corrected_candidate": "P95延迟已经达标，但这只说明在固定压测下响应速度满足100毫秒的延迟目标；现有材料没有相关性、召回率或错误结果评测，因此不能据此判断这个搜索系统的整体检索质量已经达标。",
+      "criteria": [
+        {
+          "criterion": "保留80毫秒延迟达标这个局部事实",
+          "assessment": "met"
+        },
+        {
+          "criterion": "明确该事实不能证明整体检索质量达标",
+          "assessment": "met"
+        },
+        {
+          "criterion": "指出相关性或召回等尚缺证据",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": true,
+      "note": "逐项对照冻结标准；仅作者评审，不是独立事实认证。"
+    },
+    {
+      "case_id": "E01",
+      "arm": "drop_p3",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "P95延迟已经达标，因此这个搜索系统的整体检索质量已经达标。",
+      "corrected_candidate": "根据现有材料，P95响应延迟为80毫秒且满足100毫秒的延迟目标，只能支持“该搜索系统在延迟这一单项指标上达标”的结论，不能据此推出整体检索质量已经达标。因为材料中没有相关性、召回率或错误结果的评测，所以对整体检索质量应暂不作达标判断。",
+      "criteria": [
+        {
+          "criterion": "保留80毫秒延迟达标这个局部事实",
+          "assessment": "met"
+        },
+        {
+          "criterion": "明确该事实不能证明整体检索质量达标",
+          "assessment": "met"
+        },
+        {
+          "criterion": "指出相关性或召回等尚缺证据",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": true,
+      "note": "逐项对照冻结标准；仅作者评审，不是独立事实认证。"
+    },
+    {
+      "case_id": "E02",
+      "arm": "full",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "目前已经确认，销量下降是新Logo颜色造成的。",
+      "corrected_candidate": "目前只能确认销量本周下降；“新Logo颜色导致销量下降”仍是你的怀疑，现有记录没有颜色对照、访问漏斗或其他因果分析，不能确认该原因。",
+      "criteria": [
+        {
+          "criterion": "保留销量确实下降的现象",
+          "assessment": "met"
+        },
+        {
+          "criterion": "把Logo颜色原因明确降为尚未证实",
+          "assessment": "met"
+        },
+        {
+          "criterion": "仍只报告原因结论，不另起行动方案",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": true,
+      "note": "逐项对照冻结标准；仅作者评审，不是独立事实认证。"
+    },
+    {
+      "case_id": "E02",
+      "arm": "drop_p1",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "目前已经确认，销量下降是新Logo颜色造成的。",
+      "corrected_candidate": "目前只能确认销量本周下降；新Logo颜色导致销量下降只是你的怀疑，现有证据不足以确认这一原因。",
+      "criteria": [
+        {
+          "criterion": "保留销量确实下降的现象",
+          "assessment": "met"
+        },
+        {
+          "criterion": "把Logo颜色原因明确降为尚未证实",
+          "assessment": "met"
+        },
+        {
+          "criterion": "仍只报告原因结论，不另起行动方案",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": true,
+      "note": "逐项对照冻结标准；仅作者评审，不是独立事实认证。"
+    },
+    {
+      "case_id": "E02",
+      "arm": "drop_p2",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "目前已经确认，销量下降是新Logo颜色造成的。",
+      "corrected_candidate": "目前只确认了销量本周下降，尚无颜色对照、访问漏斗或其他因果分析，因此不能确认新Logo颜色是原因。",
+      "criteria": [
+        {
+          "criterion": "保留销量确实下降的现象",
+          "assessment": "met"
+        },
+        {
+          "criterion": "把Logo颜色原因明确降为尚未证实",
+          "assessment": "met"
+        },
+        {
+          "criterion": "仍只报告原因结论，不另起行动方案",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": true,
+      "note": "逐项对照冻结标准；仅作者评审，不是独立事实认证。"
+    },
+    {
+      "case_id": "E02",
+      "arm": "drop_p3",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "目前已经确认，销量下降是新Logo颜色造成的。",
+      "corrected_candidate": "目前只能确认销量本周下降；新Logo颜色导致销量下降仍是怀疑，尚缺颜色对照、访问漏斗或其他因果分析证据，不能确认。",
+      "criteria": [
+        {
+          "criterion": "保留销量确实下降的现象",
+          "assessment": "met"
+        },
+        {
+          "criterion": "把Logo颜色原因明确降为尚未证实",
+          "assessment": "met"
+        },
+        {
+          "criterion": "仍只报告原因结论，不另起行动方案",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": true,
+      "note": "逐项对照冻结标准；仅作者评审，不是独立事实认证。"
+    },
+    {
+      "case_id": "E03",
+      "arm": "full",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "我们应先重新规划品牌定位，而不是比较表格边框宽度。",
+      "corrected_candidate": "当前只需比较这两个表格的边框宽度：A 为 1 像素，B 为 2 像素；暂不讨论品牌定位或整体产品改造。",
+      "criteria": [
+        {
+          "criterion": "回到A与B边框比较",
+          "assessment": "met"
+        },
+        {
+          "criterion": "准确使用1像素与2像素事实",
+          "assessment": "met"
+        },
+        {
+          "criterion": "不以品牌重构替换任务",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": true,
+      "note": "逐项对照冻结标准；仅作者评审，不是独立事实认证。"
+    },
+    {
+      "case_id": "E03",
+      "arm": "drop_p1",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "我们应先重新规划品牌定位，而不是比较表格边框宽度。",
+      "corrected_candidate": "根据两张固定截图，A 表格的边框宽度为 1 像素，B 表格的边框宽度为 2 像素。因此，两者比较的结论是：B 表格的边框比 A 表格更宽。当前只服务于边框宽度比较，暂不讨论品牌定位或其他整体产品改造。",
+      "criteria": [
+        {
+          "criterion": "回到A与B边框比较",
+          "assessment": "met"
+        },
+        {
+          "criterion": "准确使用1像素与2像素事实",
+          "assessment": "met"
+        },
+        {
+          "criterion": "不以品牌重构替换任务",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": true,
+      "note": "逐项对照冻结标准；仅作者评审，不是独立事实认证。"
+    },
+    {
+      "case_id": "E03",
+      "arm": "drop_p2",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "我们应先重新规划品牌定位，而不是比较表格边框宽度。",
+      "corrected_candidate": "两个表格的边框宽度不同：A 表格的边框为1像素，B 表格的边框为2像素。因此，B 表格的边框比 A 表格更宽；在两张截图布局和文字相同的条件下，这是本次局部比较的唯一差异结论。当前只比较这两个表格的边框宽度，暂不讨论品牌定位或其他品牌、整体产品改造事项。",
+      "criteria": [
+        {
+          "criterion": "回到A与B边框比较",
+          "assessment": "met"
+        },
+        {
+          "criterion": "准确使用1像素与2像素事实",
+          "assessment": "met"
+        },
+        {
+          "criterion": "不以品牌重构替换任务",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": true,
+      "note": "逐项对照冻结标准；仅作者评审，不是独立事实认证。"
+    },
+    {
+      "case_id": "E07",
+      "arm": "full",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "明天的团队同步会确定在19点开始。",
+      "corrected_candidate": "明天团队同步会的开始时间目前无法确定：现有材料只说明明天有团队同步会，没有时间通知，也没有用户提供的时间。按照“只能依据实际通知，不编造时间”的要求，需要先核实实际通知后才能给出确切开始时间。",
+      "criteria": [
+        {
+          "criterion": "拒绝无来源的19点结论",
+          "assessment": "met"
+        },
+        {
+          "criterion": "保持实际通知核验义务",
+          "assessment": "met"
+        },
+        {
+          "criterion": "回到原责任方取得时间证据",
+          "assessment": "pending"
+        }
+      ],
+      "all_criteria_met": false,
+      "note": "回答收回无来源的19点并保留核验义务；没有取得实际通知或执行原责任方交接。安全限定不等于时间问题已完成。"
+    },
+    {
+      "case_id": "E07",
+      "arm": "drop_p1",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "明天的团队同步会确定在19点开始。",
+      "corrected_candidate": "根据现有材料，明天有团队同步会，但尚未找到开始时间的通知，因此目前无法确定明天团队同步会几点开始。",
+      "criteria": [
+        {
+          "criterion": "拒绝无来源的19点结论",
+          "assessment": "met"
+        },
+        {
+          "criterion": "保持实际通知核验义务",
+          "assessment": "met"
+        },
+        {
+          "criterion": "回到原责任方取得时间证据",
+          "assessment": "pending"
+        }
+      ],
+      "all_criteria_met": false,
+      "note": "回答收回无来源的19点并保留核验义务；没有取得实际通知或执行原责任方交接。安全限定不等于时间问题已完成。"
+    },
+    {
+      "case_id": "E07",
+      "arm": "drop_p2",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "明天的团队同步会确定在19点开始。",
+      "corrected_candidate": "明天的团队同步会开始时间目前无法确定：现有材料只说明明天有团队同步会，没有时间通知，也没有用户猜测的时间，因此不能据此确认具体几点开始。",
+      "criteria": [
+        {
+          "criterion": "拒绝无来源的19点结论",
+          "assessment": "met"
+        },
+        {
+          "criterion": "保持实际通知核验义务",
+          "assessment": "met"
+        },
+        {
+          "criterion": "回到原责任方取得时间证据",
+          "assessment": "pending"
+        }
+      ],
+      "all_criteria_met": false,
+      "note": "回答收回无来源的19点并保留核验义务；没有取得实际通知或执行原责任方交接。安全限定不等于时间问题已完成。"
+    },
+    {
+      "case_id": "E08",
+      "arm": "full",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "格式化插件已经确认是原因，下一步删除插件并修改构建配置。",
+      "corrected_candidate": "格式化插件目前只是一种怀疑，现有证据只有总构建时长增加，还没有插件分段耗时或移除插件的对照，因此原因仍未确定。本轮只能做只读定位，保留配置不变，建议下一步补充能区分该插件效应的只读证据，例如分别记录启用与未启用该插件时的构建分段耗时（不实际修改配置），或查看现有构建日志、性能剖析中是否已包含该插件的耗时；在这些证据出现前，不应删除插件或修改构建配置。",
+      "criteria": [
+        {
+          "criterion": "恢复插件致慢为待验证假设",
+          "assessment": "met"
+        },
+        {
+          "criterion": "提出只读的分段耗时等定位建议",
+          "assessment": "uncertain"
+        },
+        {
+          "criterion": "不再建议本轮删除插件或修改配置",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": false,
+      "note": "修正了原因确信和直接改配置建议，但启用/停用或移除插件的对照样本如何在本轮只读约束下获得并未明确；包含可用日志建议仍不足以证明整个建议可执行。"
+    },
+    {
+      "case_id": "E08",
+      "arm": "drop_p1",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "格式化插件已经确认是原因，下一步删除插件并修改构建配置。",
+      "corrected_candidate": "当前只看到总构建时长增加，尚无插件分段耗时或移除插件对照，因此还不能确认格式化插件就是原因。建议在只读定位、保留配置不变的前提下，先补充插件分段耗时数据，或与移除插件的对照结果进行验证；在证据确认前，不建议删除插件或修改构建配置。",
+      "criteria": [
+        {
+          "criterion": "恢复插件致慢为待验证假设",
+          "assessment": "met"
+        },
+        {
+          "criterion": "提出只读的分段耗时等定位建议",
+          "assessment": "uncertain"
+        },
+        {
+          "criterion": "不再建议本轮删除插件或修改配置",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": false,
+      "note": "修正了原因确信和直接改配置建议，但启用/停用或移除插件的对照样本如何在本轮只读约束下获得并未明确；包含可用日志建议仍不足以证明整个建议可执行。"
+    },
+    {
+      "case_id": "E08",
+      "arm": "drop_p2",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "格式化插件已经确认是原因，下一步删除插件并修改构建配置。",
+      "corrected_candidate": "格式化插件目前只是怀疑对象，还不能确认是原因。现有证据只显示总构建时长增加，尚无插件分段耗时或移除插件的对照，因此下一步应继续做只读定位，例如查看各构建阶段/插件的耗时记录或缓存/日志中的时间分布，以缩小原因范围；本轮保留配置不变，不执行删除插件或修改构建配置。",
+      "criteria": [
+        {
+          "criterion": "恢复插件致慢为待验证假设",
+          "assessment": "met"
+        },
+        {
+          "criterion": "提出只读的分段耗时等定位建议",
+          "assessment": "met"
+        },
+        {
+          "criterion": "不再建议本轮删除插件或修改配置",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": true,
+      "note": "逐项对照冻结标准；仅作者评审，不是独立事实认证。"
+    },
+    {
+      "case_id": "E08",
+      "arm": "drop_p3",
+      "type": "author_review",
+      "independent": false,
+      "original_candidate": "格式化插件已经确认是原因，下一步删除插件并修改构建配置。",
+      "corrected_candidate": "格式化插件是否导致构建变慢仍只是待验证的假设；目前证据只显示总构建时长增加，尚无插件分段耗时或移除插件对照，原因未确定。\n\n建议只读定位方案：先补充可观测数据，例如在现有配置不变的前提下采集格式化插件相关分段耗时，确认该插件耗时在总增量中的占比；再做不修改配置的对照观察或多个构建样本的重复测量，以排除偶发波动和其他步骤的贡献。只有上述只读证据支持后，才谈是否进入移除组件或修改构建配置的决策；本轮保留配置不变。",
+      "criteria": [
+        {
+          "criterion": "恢复插件致慢为待验证假设",
+          "assessment": "met"
+        },
+        {
+          "criterion": "提出只读的分段耗时等定位建议",
+          "assessment": "met"
+        },
+        {
+          "criterion": "不再建议本轮删除插件或修改配置",
+          "assessment": "met"
+        }
+      ],
+      "all_criteria_met": true,
+      "note": "逐项对照冻结标准；仅作者评审，不是独立事实认证。"
+    }
+  ],
+  "quality_summary": {
+    "technical_completions": 17,
+    "all_three_criteria_met": 12,
+    "pending_original_evidence_owner": 3,
+    "uncertain_readonly_plan_executability": 2
+  },
+  "label_caveat": "False-hit counts use frozen author labels. E02/E07 expose a possible P3 goal-correctness vs scope-change ambiguity, not independently certified model error. Labels and model outputs were not changed.",
+  "ablation_interpretation": {
+    "P1": "E01 loses its necessary correction when P1 is removed; marginal utility observed on this control.",
+    "P2": "P2 labels agree throughout, but deleting P2 does not change correction triggers because P3 also flags E02/E08; independent task benefit not isolated and this does not justify removal.",
+    "P3": "E03 loses necessary scope correction when P3 is removed, while E02/E07 are extra P3 hits against frozen labels; useful but not specific enough for production.",
+    "cross_batch": "E08/drop_p3 has an extra P1 hit absent from full-response projection. One realization cannot separate batch interaction from model variation."
+  },
+  "usage_by_arm": {
+    "drop_p3": {
+      "corrector": {
+        "calls": 3,
+        "input_tokens": 1287,
+        "output_tokens": 222,
+        "seconds": 5.9023282546550035,
+        "reported_cost_values": [
+          null,
+          null,
+          null
+        ]
+      },
+      "detector": {
+        "calls": 8,
+        "input_tokens": 75357,
+        "output_tokens": 986,
+        "seconds": 5.737310209311545,
+        "reported_cost_values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "drop_p1": {
+      "detector": {
+        "calls": 8,
+        "input_tokens": 74445,
+        "output_tokens": 986,
+        "seconds": 5.53651284892112,
+        "reported_cost_values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "corrector": {
+        "calls": 4,
+        "input_tokens": 1701,
+        "output_tokens": 184,
+        "seconds": 5.543915336020291,
+        "reported_cost_values": [
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "full": {
+      "corrector": {
+        "calls": 5,
+        "input_tokens": 2114,
+        "output_tokens": 281,
+        "seconds": 7.607854222878814,
+        "reported_cost_values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "detector": {
+        "calls": 8,
+        "input_tokens": 76981,
+        "output_tokens": 1461,
+        "seconds": 5.799402634613216,
+        "reported_cost_values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "drop_p2": {
+      "corrector": {
+        "calls": 5,
+        "input_tokens": 2006,
+        "output_tokens": 268,
+        "seconds": 7.82384251896292,
+        "reported_cost_values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "detector": {
+        "calls": 8,
+        "input_tokens": 74277,
+        "output_tokens": 975,
+        "seconds": 5.68471715785563,
+        "reported_cost_values": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    }
+  },
+  "actual_charges": "unknown",
+  "qualification": false,
+  "decision": "retain_experimental_no_default_adoption"
+}
