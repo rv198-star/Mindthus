@@ -40,6 +40,7 @@ def run(root,key):
     frozen=json.loads((DOCS/'freeze.json').read_text())
     require(prepare()==frozen,'frozen inputs/source changed')
     require(not root.exists(),'trial root exists; no resubmission')
+    require(all(key.encode() not in p.read_bytes() for p in DOCS.glob('*') if p.is_file()),'credential in source artifact')
     write_once(root/'manifest.json',frozen)
     cases=json.loads((DOCS/'inputs.json').read_text())['cases']
     rows=[];start=time.monotonic();stop=None;resolved=None
@@ -57,11 +58,12 @@ def run(root,key):
                                   'User-Agent':'Mindthus-C01-integration/1'},payload,min(60,remaining))
             require(time.monotonic()-start<=240,'deadline_exceeded')
             model=raw.get('model')
-            row['reported_model']=model if isinstance(model,str) and re.fullmatch(r'[a-zA-Z0-9_./-]{1,128}',model) else None
+            row['reported_model']=model if model in (MODEL,'glm-5.3-flash') else 'unrecognized'
             usage=raw.get('usage') or {}
             row['usage']={k:v for k,v in usage.items() if k in ('prompt_tokens','completion_tokens','total_tokens','cost')
                           and type(v) in (int,float) and math.isfinite(v) and v>=0}
             row['cost_usd']=None  # CPA usage.cost has no verified currency contract.
+            require(row['usage'].get('completion_tokens',0)<=1600,'output token ceiling exceeded')
             require(model==MODEL and (resolved is None or model==resolved),'model identity mismatch')
             resolved=model
             choices=raw.get('choices')
@@ -89,6 +91,8 @@ def run(root,key):
              'resolved_model':resolved,'provider_snapshot':'unobservable behind CPA',
              'new_jev_calls':0,'native_skill_load':'not_observed','qualification':False}
     write_once(root/'summary.json',summary)
+    require(all(key.encode() not in p.read_bytes() for p in root.rglob('*') if p.is_file()),'credential in trial artifact')
+    print(json.dumps({'exact_key_scan':'PASS'}),flush=True)
     return summary
 
 if __name__=='__main__':
