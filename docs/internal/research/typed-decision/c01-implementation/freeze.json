@@ -1,0 +1,195 @@
+{
+  "implementation": "d609b2bc2168bf6938518b6837c3468989a7bf9d5db877cd24f65936445f4b6c",
+  "graph": {
+    "id": "mindthus.c01",
+    "version": "4",
+    "dependencies": {
+      "D0": [],
+      "J1": [
+        "D0"
+      ],
+      "J2": [
+        "D0"
+      ],
+      "M1": [
+        "J1",
+        "J2"
+      ],
+      "J4": [
+        "M1"
+      ],
+      "L1": [
+        "J4"
+      ],
+      "J5": [
+        "L1"
+      ],
+      "M2": [
+        "J5"
+      ]
+    }
+  },
+  "files": {
+    "docs/internal/research/typed-decision/c01-implementation/protocol.md": "bfe27b517f75ca8a0b19860daba375de32267df75c8896e402165a52bb36cb2f",
+    "docs/internal/research/typed-decision/c01-implementation/cases.json": "0832fd889e26f1b3ef9f473cb1d7b0561967e70babf7f2c7b93b4fa63bc9ff63",
+    "docs/internal/research/typed-decision/c01-implementation/run.py": "8a4d084dddea87b8f02009b93b61b17154029e27bfe3ee0f0463d69151da17c5",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/3l5s/SKILL.md": "ee5d6023e9e02a1c62b76f4fd958432d65a4ba14ed9bbec28d2342826c6b84f3",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/edsp/SKILL.md": "74752ef4c5ce812e3fd2eb02a09361710b2394d7449c43f62ccfca384297c589",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/mpg/SKILL.md": "8ae81df5090faa3188e100af2a942edf1845263834ab21e81b4c2a2d7d8a4fb2",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/sela/SKILL.md": "62bcd1d98555ac9bc4ede44a99f2603b0b511cfd1b1860886eb2e0935d23681e",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/sra/SKILL.md": "9c8b82e1ed44bb477bcb5af207bfa69c4a53dddfc09676f040838f2715e8e541",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/tplan/SKILL.md": "1bfaab186574f4a348cb9dba81bca8e8f441444cff2b1276e0c530b1d0085db2",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/tvg/SKILL.md": "ca0947d7e37920971a1bc986bde254e9493db1324d836c4bbac482435c88a5ee",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/using-mindthus/SKILL.md": "819bcf5e05f6040a879a85735b357cbea81f965477fcc8bfb54b0fdfdc1a6587",
+    "docs/internal/research/typed-decision/language-diagnostic/english/skills/wae/SKILL.md": "2a8c6d0b8b9f41012f2e7f4c4ed4855165dd67a444cc44130e2043908dc4070e"
+  },
+  "allowlist": {
+    "L01": [
+      "15bcb3fe6a6b7a7d33da2a37343f2cba425e8d053e595ce3cea71836d1313446",
+      "3e4af5b9eeba410fa478ce5fda0575a2c72606ce55f3b9f426256a3e9ae64e65",
+      "46c45ccff4e60ff0e5d50f0c6fc665ee9ec5813f90928a8ad44c5dc02fa28d6a",
+      "654f90e7f938cbd2fbab83c7374b53dee0e9cfcb6f3a171979f578867e7925b9",
+      "6aba9357ae3ca0c52e68831e2d8e50554f287b8809a4a5157e4b68d8c6d59f3a",
+      "76a797a43984a71cadfc27812f110765bb810003c580ed19d8df2b83afd0c7ae",
+      "85fb287fc80e81fc05d4d8dd478bfd29940dd2dbe44e0bdbb489e9b3eb4b05ff",
+      "9a7c33629c793971b9fc874651e8fd5093bc8c807ef39b3da5520a1e3c310b28",
+      "e534e3b7d53b413f7086fcf7f9487f0316f2f3c6e428e22ef217f9b29bb2fc4e",
+      "e7cc9dbe9cd0997d58deaba66da1af261d2cb36f85c93da4a6616e3dd4325972"
+    ],
+    "L05": [
+      "025877e8fc692e711be08edc03b7b05281dedff022c4792f1b5a2e2ce078111e",
+      "080a91b1cc81d357e8fd877698a6474d5475040577df10be42a667863a696ea8",
+      "2b13b30e93b3c730803e14e86bc5436de6a5b2c47e501c55fbb61f476204b91b",
+      "86630cea22b39fb4980b0846ec28d95fdf340dbe4a1a1ad6c05d1c459aa72980",
+      "8ea920acc6ecb388d22cd6c2b04b3345fbce0d21c218ff5340be31d017edaabe",
+      "946c807eacbb47745cfb7fd60f277a8e9c1a97209bc85c46542dbaf543435d6d",
+      "9ff90ce07e73bfb21793e0bd77f0fe2107ae11d3ae9cc2493bdba3bf0c837a0e",
+      "bd7e9b9767c0f02449fdf34b924d8811623cc07f4709875578e161fe0584b3b3",
+      "ddd877dd553acb2735a43cc3c489171ca00817fe0ef9520948ca6619d87f3821",
+      "fb35ec651ec02bfffcce2b503888ac39e641b726c14360c78b0c80561f9abf9d"
+    ],
+    "L21": [
+      "031f4e720dc490c272259b6d4bcf878d5379e56c418ca429d91e7ffe72c72bdf",
+      "2ad4630566e45a52634c73719a1b2057b152eb431a14d0898a37a2304e4c75cd",
+      "420521440765916c95dde7e76b07976b9dab9eedf78f8cf1bece46aafe691836",
+      "4a43652adb6e2ca2ae71ea67b00d990fb63910fd7712dc770163db89824b7616",
+      "588061d5ca4c5e619dec39f2c325edd9e4fc4cb38766f255fc2a57c960ea0029",
+      "5fbe90b7ace80fbf4e8c0295475657d0722b5073059016d51f7d03a4c4ba57f7",
+      "7a2f9ec3267ca1c3e455cc2bb0d3981e96392d43e545118484b8575e09fcdf4f",
+      "7d3dc72eaea19564b5aa18743820e0960cd5520640d7b6cf3e51ef1a03cced4b",
+      "c2d690722634908a828d3f620ae2e1dc1d7b45c381020f2f68c0929968a082db",
+      "e0b4685c18c17045b8f4bfd363dde325df7c04ec85706f2301fc671b89329fd9"
+    ],
+    "L22": [
+      "3aa72cd031aa774aa3b8ecec775dd05403e6661cb705b43e56f899759da28909",
+      "4e75d9b3d4fbf5ce9b14017a772bd96010e3790857ef8b0eed18abf0c20d9fbf",
+      "4ea917f6e772bc2b7893e6920053c510f9183c56b31b8b2dacac6119c8a43755",
+      "58156d2149a9eb2b54486f778af370396fc6f1d8a48c5c765e4fa79f96f83768",
+      "769281992397bdacfbf712bdef011b44a93ea8819dd5efa8c4482876cdfeb879",
+      "b5d8372ed20e55a2ba8a04034a36b40c1118a1af778dd387bb2e49479bc6a81a",
+      "c866313c8dca30e53ffd1f984d1e7a7c3d22b91457f58b6e60176aaf757097c0",
+      "d0571f6128e06da9403c2b979920d913cca33eb2f0b779ff24a614db250a0cc3",
+      "d355262e5527f88c1251c2f87672bf8314dbba29fcf6900b2ce360e0f8966d12",
+      "ef5a8299198c183b55d6c3992886422d773a7252a3239580b9008084af65f6ac"
+    ],
+    "L25": [
+      "0bf4249d268facb55b427cb6075fbe7ff1fa0e4b4f998250d434c518021cee7f",
+      "1b501583190feea5f07f9dff15a10bba80ec528960700656658de0d456199f03"
+    ],
+    "L26": [
+      "38da95c1789661364bfc304645c53afc3d398b53580fee6c19366a3c890d8fcf",
+      "81c97d03c41265b1788c1b8bb3d5116f3e101a2a0a8be2ddae33f93c1b4aec7c"
+    ],
+    "L27": [
+      "0d235b9852c90343ac54f3e2450929a6095df16797d757891611471b9977c1c5",
+      "a4d36915bb4f4377c8d6ae02289d9112307fdab932da5b727267e0156a13e148"
+    ],
+    "L28": [
+      "29f899c60dc5e072f2d312156b52879e7d97820faaa197d0e44937331cf8046d",
+      "567555defa900c3a627e3955a058231f44c2ee464036cb8a1f43f8ddb9da1846"
+    ],
+    "L29": [
+      "a5739dc2b507cb9b47e2b7310a1d5aac9ee18fc1f6f8e696717e123db2af8e56"
+    ],
+    "L30": [
+      "a0fd5bb9214ab21ab1ae420992ce4d25d2bdb4d540e4094b969053dc5cd5c277"
+    ],
+    "N01": [
+      "0ab3f3df9f830416d2ed6b407b334bb673c3fa02877e54b92de77e944e852cac",
+      "1e94e5e91bb395983e6a5ed65d8d4c3e6f26e3de2e4d3ea77425d5b565a24ab2",
+      "2d4134414047105e7b4ef1c1a5de54bc150ba6d5dbe959aa0c165718c36b105c",
+      "2f6828be1ebee478d1ffecfc4b325df8290bbc7185f0278bb521b0676c4a59d8",
+      "470f86b07017a75f4d523b64c83aacb751b072bd67855ced90e99e872137bd4f",
+      "4991071944fd53c02e50130e82179548f72b244b42f2e8a4c5b8996f727c0f9f",
+      "8169a130595de0aab6df55df7d2aaade6b22615a9b8b7281075be46c89d401c7",
+      "9f8f936f5de55c60a16092c2d14986ec68216ae51cb26aca7d54cfabb10a4f44",
+      "fe16e48b5736fabb3eca797c2a1076ac9b4778443f588a2a9419e12bc8f65e23",
+      "fe256f65feec05d5f6f8c7aaddf8cf779e577ab1fe286897036f89bcd647b452"
+    ],
+    "N02": [
+      "01ddd89d8abc6caecbe98297f97bb0a9c9874bc50dfc4bb11fc0233fe9a177b2",
+      "0a2aa58044046b9d4d36d6af854fe6db07581104003eaaba112ea869dda6de0f",
+      "120813b4f44ee618907c4457c07605404b5d026a7a737ddffe44f6708730d99f",
+      "45255fdacba8d50edfb99ad586bb58892887030072371364c47d03fa2b9ffada",
+      "4b8587a3b4e65575af80b900861ac88ce225069453296bfbbfe82f216bfb8687",
+      "615a5ac72f8424c1ebc8ac1dfa138734aaf16364f7149a744dd32c828b95a76b",
+      "ac39688b703bb40ccfd14f7d4c98bd43ab5d718567c23ca9b2ac0b4a9c248915",
+      "cae6a7029d77e9ba4972e4681b936002bbed6c81ce6868a85a213f53d0676d88",
+      "d9aabc0fb0b2996e0c479140a745aa104da9c367d906ec742f93f4696ed4fcb5",
+      "f998be6bfb6e3eb858b66ac815579a0efe6c85bebf0861a34495c2d5d9df4d3e"
+    ],
+    "N03": [
+      "1eaa6c0f275c0696673101637be89bebd1e357db4d25e10aa3c58ebaed4ec74e",
+      "c6655624e61d5b8791ec43dbce783f97d5a3400042741138ab8022a8b9bae051"
+    ],
+    "N04": [
+      "0cf74996fe1cd653f35d9dba88b7ee17f676d672e0676f2b1cbba99d6c1de9ba"
+    ]
+  },
+  "provider_configuration": {
+    "engine": {
+      "family": "system_one",
+      "implementation": "jev",
+      "model_family": "jev-1.13",
+      "interface_version": "typed-decision.v1"
+    },
+    "serving": {
+      "provider": "typesafe",
+      "transport": "systemone-v1",
+      "requested_model": "jev-1.13.0",
+      "endpoint": "https://api.typesafe.ai/v1/systemone",
+      "adapter_version": "2-choice-rounding-v1"
+    },
+    "capabilities": [
+      "assess_proposition",
+      "rate",
+      "select"
+    ]
+  },
+  "limits": {
+    "max_calls": 3,
+    "max_seconds": 60,
+    "max_request_bytes": 24576
+  },
+  "max_calls": 39,
+  "max_seconds": 300,
+  "max_cost_usd": 0.12,
+  "reserve_per_call_usd": 0.002688,
+  "case_ids": [
+    "L01",
+    "L05",
+    "L21",
+    "L22",
+    "L25",
+    "L26",
+    "L27",
+    "L28",
+    "L29",
+    "L30",
+    "N01",
+    "N02",
+    "N03",
+    "N04"
+  ],
+  "authorization_ref": "Owner requested C01 implementation; c01-implementation/protocol.md"
+}

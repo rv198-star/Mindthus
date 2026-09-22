@@ -5,6 +5,18 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current C01 implementation — graph 4 prepared; targeted live feedback pending
+
+Owner requested implementing the first scenario after the paired development comparison.
+[Protocol](c01-implementation/protocol.md) fixes two boundaries only: explicit method invocation
+is code-owned after successful entry/obligation gates; J2 judges duties blocking the current task,
+not defects merely described as its analysis object. Graph4/J2v4; J1/J4/J5 and engine/provider
+layers unchanged. Explicit direct answers now proceed to full-contract applicability; original
+model answer remains in the journal. No-match, missing information, failure and obligations retain vetoes.
+14 fixed English checks (10 original including1D0,4 near-neighbors), one semantic revision already
+used, zero further revisions/retries; native TypeSafe only,39-call/USD0.12/300sec ceiling.
+No holdout, other-model call, host consumption, C02 or main change. Historical trials remain terminal.
+
 ## Current channel restriction and value interpretation
 
 Owner explicitly restricted OpenRouter to Jev only. No other model may be called through it.

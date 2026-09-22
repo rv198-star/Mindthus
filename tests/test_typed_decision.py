@@ -737,8 +737,45 @@ class C01Tests(unittest.TestCase):
     def test_explicit_method_cannot_be_erased_by_direct_choice(self):
         context = dict(FIXTURE['context'], explicit_method='sra')
         report, provider = self.run_graph({'entry_mode': 'direct_execution'}, context)
-        self.assertEqual(report['result']['reason'], 'explicit_method_conflicts_with_direct')
-        self.assertEqual(len(provider.calls), 1)
+        self.assertEqual(report['result']['route'], 'intervene')
+        self.assertEqual(report['result']['owner'], 'sra')
+        self.assertEqual(report['result']['entry_mode'], 'mindthus_intervention')
+        self.assertIsNone(report['result']['hard_judgment'])
+        self.assertEqual(provider.calls, [['entry_mode', 'unresolved_obligation'], ['applicable']])
+        self.assertEqual(report['result']['consumption'], 'not_executed')
+
+    def test_explicit_direct_still_checks_complete_contract_and_rejects_inapplicability(self):
+        context = dict(FIXTURE['context'], explicit_method='wae')
+        seen = []
+        class Capture(FixtureProvider):
+            def evaluate(self, specs, state, timeout):
+                seen.append(state)
+                return super().evaluate(specs, state, timeout)
+        provider = Capture(dict(FIXTURE['answers'], entry_mode='direct_execution', applicable='no'))
+        with Session(self.root, provider, scope='c01') as session:
+            report = c01.run(session, context, ROOT)
+        self.assertEqual(report['result']['reason'], 'selected_owner_not_established')
+        self.assertEqual(report['result']['route'], 'llm_fallback')
+        self.assertIsNone(report['result']['owner'])
+        self.assertEqual(seen[-1]['selected_owner'], 'wae')
+        self.assertEqual(seen[-1]['method_contract'], (ROOT / 'skills/wae/SKILL.md').read_text())
+        self.assertEqual(provider.calls, [['entry_mode', 'unresolved_obligation'], ['applicable']])
+
+    def test_explicit_invocation_never_overrides_unknown_gap_failure_or_obligation(self):
+        cases = [({'entry_mode': 'unclear'}, {}, 'llm_fallback'),
+                 ({'entry_mode': 'acquire_information'}, {}, 'acquire_information'),
+                 ({'entry_mode': asdict(DecisionResult('provider_error'))}, {}, 'llm_fallback'),
+                 ({'entry_mode': 'direct_execution', 'unresolved_obligation': 'present'}, {}, 'llm_fallback'),
+                 ({'entry_mode': 'direct_execution', 'unresolved_obligation': 'unclear'}, {}, 'llm_fallback'),
+                 ({'entry_mode': 'direct_execution'}, {'known_obligations': ['required_review']}, 'llm_fallback')]
+        for i, (answers, data, route) in enumerate(cases):
+            with self.subTest(i=i):
+                context = dict(FIXTURE['context'], explicit_method='sra', **data)
+                report, provider = self.run_graph(answers, context, root=self.root / str(i))
+                self.assertEqual(report['result']['route'], route)
+                self.assertEqual(provider.calls, [['entry_mode', 'unresolved_obligation']])
+                self.assertEqual(report['result']['consumption'], 'not_executed')
+                self.assertTrue(set(data.get('known_obligations', [])) <= set(report['result']['obligations']))
 
     def test_known_obligation_change_invalidates_entry_state(self):
         self.run_graph()
