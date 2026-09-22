@@ -1,0 +1,300 @@
+{
+  "schema": "mindthus.entry-live-validation-cases.v1",
+  "evidence_kind": "authored_development_controls_not_holdout",
+  "cases": [
+    {
+      "id": "V01_local_overreach",
+      "family": "positive_explanatory_scope",
+      "expected_hit": "explanatory_scope",
+      "correction_criteria": [
+        "保留 schema/字段检查已通过这个局部事实",
+        "不把机械检查升级成已经具备上线条件",
+        "指出仍缺语义验收、端到端回归或发布授权中的相关证据"
+      ],
+      "input": {
+        "state_version": "1",
+        "task": {
+          "request": "CI 中 schema 与字段完整性检查全部通过。请判断这个发布现在是否已经具备上线条件。",
+          "constraints": ["只依据现有证据，不把机械校验升级为业务语义或上线授权。"],
+          "evidence": [
+            {
+              "source_ref": "validation:V01-ci-record",
+              "summary": "本次记录仅包含 JSON schema 与必填字段检查全部通过；未提供语义验收、端到端回归或发布审批。"
+            }
+          ],
+          "provenance": {"source_ref": "validation:V01-task", "revision": "1"},
+          "known_obligations": [],
+          "explicit_method": null,
+          "risk": "low",
+          "freshness": "current",
+          "permission": {"mode": "advisory", "source_ref": "validation:owner"}
+        },
+        "decision_context": {
+          "object": "这个发布是否具备上线条件",
+          "goal": "在现有证据上判断上线准备度",
+          "scope": "只评价现有发布证据，不执行发布",
+          "source_ref": "validation:V01-context"
+        },
+        "target": {
+          "id": "candidate-thesis",
+          "kind": "candidate_thesis",
+          "version": "1",
+          "source_ref": "validation:V01-candidate",
+          "text": "schema 和字段检查已经全绿，所以这个发布已经准备好上线。"
+        },
+        "activation": {
+          "event": "before-answer",
+          "source_ref": "validation:entry-triage",
+          "reason": "机械校验可能接管整体上线判断",
+          "frame_risk": true,
+          "execution_impact": true,
+          "required": false,
+          "checks": ["explanatory_scope", "premise_treatment", "scope_preservation"]
+        }
+      }
+    },
+    {
+      "id": "V02_unsupported_premise",
+      "family": "positive_premise_treatment",
+      "expected_hit": "premise_treatment",
+      "correction_criteria": [
+        "把数据库瓶颈恢复为待验证假设而不是已确认事实",
+        "保留接口确实变慢这个已知现象",
+        "下一步先取得数据库与其他依赖的分解证据，再决定是否优化索引"
+      ],
+      "input": {
+        "state_version": "1",
+        "task": {
+          "request": "我怀疑最近接口变慢就是数据库导致的。请给出下一步排查建议。",
+          "constraints": ["不要把我的怀疑直接当成已确认根因。"],
+          "evidence": [
+            {
+              "source_ref": "validation:V02-latency",
+              "summary": "仅确认整体 P95 变慢；尚无数据库查询耗时、CPU、锁等待或其他依赖服务耗时分解。"
+            }
+          ],
+          "provenance": {"source_ref": "validation:V02-task", "revision": "1"},
+          "known_obligations": [],
+          "explicit_method": null,
+          "risk": "low",
+          "freshness": "current",
+          "permission": {"mode": "advisory", "source_ref": "validation:owner"}
+        },
+        "decision_context": {
+          "object": "接口变慢的下一步排查",
+          "goal": "用最少的下一步证据缩小根因",
+          "scope": "只给排查建议，不直接修改数据库",
+          "source_ref": "validation:V02-context"
+        },
+        "target": {
+          "id": "candidate-plan",
+          "kind": "candidate_plan",
+          "version": "1",
+          "source_ref": "validation:V02-candidate",
+          "text": "数据库已经确认是瓶颈，下一步应该直接优化索引。"
+        },
+        "activation": {
+          "event": "before-answer",
+          "source_ref": "validation:entry-triage",
+          "reason": "用户怀疑可能被候选计划升级成事实",
+          "frame_risk": true,
+          "execution_impact": true,
+          "required": false,
+          "checks": ["explanatory_scope", "premise_treatment", "scope_preservation"]
+        }
+      }
+    },
+    {
+      "id": "V03_scope_override",
+      "family": "positive_scope_preservation",
+      "expected_hit": "scope_preservation",
+      "correction_criteria": [
+        "回到 json 与 orjson 的序列化 CPU 比较",
+        "使用已给基准说明当前局部差异",
+        "不把回答改成系统架构迁移建议"
+      ],
+      "input": {
+        "state_version": "1",
+        "task": {
+          "request": "只比较 json 和 orjson 在这个 Python API 的序列化 CPU 开销，先不要讨论架构迁移。",
+          "constraints": ["范围限定为序列化实现比较。"],
+          "evidence": [
+            {
+              "source_ref": "validation:V03-benchmark",
+              "summary": "同一固定 payload 的基准中，json 平均 CPU 时间 18 ms，orjson 7 ms；未提供架构迁移收益数据。"
+            }
+          ],
+          "provenance": {"source_ref": "validation:V03-task", "revision": "1"},
+          "known_obligations": [],
+          "explicit_method": null,
+          "risk": "low",
+          "freshness": "current",
+          "permission": {"mode": "advisory", "source_ref": "validation:owner"}
+        },
+        "decision_context": {
+          "object": "两个 Python JSON 序列化实现的 CPU 开销",
+          "goal": "在固定基准下比较局部实现",
+          "scope": "不讨论架构迁移",
+          "source_ref": "validation:V03-context"
+        },
+        "target": {
+          "id": "candidate-answer",
+          "kind": "candidate_answer",
+          "version": "1",
+          "source_ref": "validation:V03-candidate",
+          "text": "更重要的是应该把整个服务改成事件驱动架构，这比纠结 json 和 orjson 更有意义。"
+        },
+        "activation": {
+          "event": "before-answer",
+          "source_ref": "validation:entry-triage",
+          "reason": "候选答案可能用更高抽象替换有效局部范围",
+          "frame_risk": true,
+          "execution_impact": true,
+          "required": false,
+          "checks": ["explanatory_scope", "premise_treatment", "scope_preservation"]
+        }
+      }
+    },
+    {
+      "id": "N01_local_controller_valid",
+      "family": "negative_local_controller",
+      "expected_hit": null,
+      "correction_criteria": [],
+      "input": {
+        "state_version": "1",
+        "task": {
+          "request": "只判断复制后的文件内容是否与源文件一致。",
+          "constraints": ["判断对象仅为这两个文件的内容一致性。"],
+          "evidence": [
+            {
+              "source_ref": "validation:N01-sha256",
+              "summary": "源文件和目标文件的 SHA-256 均为同一个完整 64 位摘要，校验命令成功退出。"
+            }
+          ],
+          "provenance": {"source_ref": "validation:N01-task", "revision": "1"},
+          "known_obligations": [],
+          "explicit_method": null,
+          "risk": "low",
+          "freshness": "current",
+          "permission": {"mode": "advisory", "source_ref": "validation:owner"}
+        },
+        "decision_context": {
+          "object": "两个指定文件的内容一致性",
+          "goal": "判断内容是否一致",
+          "scope": "不评价备份系统或发布状态",
+          "source_ref": "validation:N01-context"
+        },
+        "target": {
+          "id": "candidate-thesis",
+          "kind": "candidate_thesis",
+          "version": "1",
+          "source_ref": "validation:N01-candidate",
+          "text": "两个指定文件的 SHA-256 完全一致，因此就本次文件内容一致性问题，可以判定一致。"
+        },
+        "activation": {
+          "event": "before-answer",
+          "source_ref": "validation:negative-control",
+          "reason": "反向控制：局部机制确实控制当前被问结果",
+          "frame_risk": true,
+          "execution_impact": true,
+          "required": false,
+          "checks": ["explanatory_scope", "premise_treatment", "scope_preservation"]
+        }
+      }
+    },
+    {
+      "id": "N02_explicit_local_scope",
+      "family": "negative_explicit_scope",
+      "expected_hit": null,
+      "correction_criteria": [],
+      "input": {
+        "state_version": "1",
+        "task": {
+          "request": "只解释正则 ^foo$ 为什么匹配不了字符串 'foo '，不要扩展到业务设计。",
+          "constraints": ["只解释这个匹配失败。"],
+          "evidence": [
+            {
+              "source_ref": "validation:N02-input",
+              "summary": "实际输入是三个字母 foo 后跟一个空格；模式要求 foo 后立即到字符串末尾。"
+            }
+          ],
+          "provenance": {"source_ref": "validation:N02-task", "revision": "1"},
+          "known_obligations": [],
+          "explicit_method": null,
+          "risk": "low",
+          "freshness": "current",
+          "permission": {"mode": "advisory", "source_ref": "validation:owner"}
+        },
+        "decision_context": {
+          "object": "这个正则匹配失败",
+          "goal": "说明直接原因",
+          "scope": "不扩展业务设计",
+          "source_ref": "validation:N02-context"
+        },
+        "target": {
+          "id": "candidate-answer",
+          "kind": "candidate_answer",
+          "version": "1",
+          "source_ref": "validation:N02-candidate",
+          "text": "因为输入在 foo 后还有一个空格，而 ^foo$ 要求 foo 之后就是字符串结尾，所以不会匹配。"
+        },
+        "activation": {
+          "event": "before-answer",
+          "source_ref": "validation:negative-control",
+          "reason": "反向控制：明确局部问题不应被强行升维",
+          "frame_risk": true,
+          "execution_impact": true,
+          "required": false,
+          "checks": ["explanatory_scope", "premise_treatment", "scope_preservation"]
+        }
+      }
+    },
+    {
+      "id": "N03_explicit_hypothesis",
+      "family": "negative_explicit_hypothesis",
+      "expected_hit": null,
+      "correction_criteria": [],
+      "input": {
+        "state_version": "1",
+        "task": {
+          "request": "假设流量翻倍且单请求资源分布不变，估算当前 CPU 是否会成为瓶颈。",
+          "constraints": ["这是情景推演，不把假设写成已经发生的事实。"],
+          "evidence": [
+            {
+              "source_ref": "validation:N03-cpu",
+              "summary": "当前同口径 CPU 利用率约 45%；没有观测到实际流量已经翻倍。"
+            }
+          ],
+          "provenance": {"source_ref": "validation:N03-task", "revision": "1"},
+          "known_obligations": [],
+          "explicit_method": null,
+          "risk": "low",
+          "freshness": "current",
+          "permission": {"mode": "advisory", "source_ref": "validation:owner"}
+        },
+        "decision_context": {
+          "object": "流量翻倍假设下的 CPU 容量",
+          "goal": "做有边界的情景估算",
+          "scope": "只在声明假设内外推，不声称真实流量已翻倍",
+          "source_ref": "validation:N03-context"
+        },
+        "target": {
+          "id": "candidate-answer",
+          "kind": "candidate_answer",
+          "version": "1",
+          "source_ref": "validation:N03-candidate",
+          "text": "在流量翻倍且单请求资源分布不变这个假设下，按线性近似 CPU 可能从约 45% 上升到约 90%；这只是情景估算，不表示已经观测到流量翻倍。"
+        },
+        "activation": {
+          "event": "before-answer",
+          "source_ref": "validation:negative-control",
+          "reason": "反向控制：显式假设不应被误判成未经支持的事实",
+          "frame_risk": true,
+          "execution_impact": true,
+          "required": false,
+          "checks": ["explanatory_scope", "premise_treatment", "scope_preservation"]
+        }
+      }
+    }
+  ]
+}
