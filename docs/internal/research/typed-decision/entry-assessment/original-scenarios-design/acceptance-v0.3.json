@@ -1,0 +1,450 @@
+{
+  "schema": "mindthus.original-scenarios.acceptance-design.v0.3",
+  "status": "D1_pre_results_contract_examples_not_model_measurements",
+  "baseline": "44d87973d6955b36b88d10b43000a6e1f32e5fdb",
+  "principle": "evaluate the task-facing thesis and justified change, not a preferred side, terminology frequency or number of defects",
+  "anchors": [
+    {
+      "id": "skills-two-turn",
+      "source": "tests/bidirectional_steelman_cases.jsonl#bsc-001",
+      "kind": "historical_development_not_holdout",
+      "turn_requirements": [
+        "first response evaluates the actual Skills object",
+        "second turn accepts a justified scope correction without treating the rest of that sentence as proved"
+      ],
+      "success": [
+        "no umbrella-Agent substitution",
+        "local prompt/context mechanism preserved when supported",
+        "competing account stays inside the same Skills object",
+        "names a task-relevant discriminator and reaches a supported thesis rather than a weak caveat"
+      ],
+      "failures": [
+        "equating legitimate scope correction with proof of user's conclusion",
+        "automatic disagreement with user",
+        "claims about unseen implementations",
+        "scope drift to the whole Agent system",
+        "endless request for facts already supplied"
+      ],
+      "qualification": "old hard_fail is preserved for its original fixture; a different simple Skills implementation may legitimately be adequately explained by prompt injection"
+    },
+    {
+      "id": "display-current-use",
+      "source": "docs/cases/2026-07-05-decision-context-calibration-display-scaling.md#Target Judgment Standard",
+      "kind": "historical_development_not_holdout",
+      "success": [
+        "answers current usability concern rather than purchasing a different device",
+        "retains physical limitations without using them as sufficient proof of no practical benefit",
+        "thesis identifies whose reply addresses current need and under what conditions"
+      ],
+      "failures": [
+        "generic both-sides ending without a situated conclusion",
+        "pretending physical difference disappears",
+        "unverified new product facts"
+      ]
+    },
+    {
+      "id": "display-before-purchase",
+      "source": "tests/bidirectional_steelman_cases.jsonl#bsc-002",
+      "kind": "historical_development_not_holdout",
+      "success": [
+        "uses supplied actor timing purpose budget and tolerances",
+        "provides conditional or definite recommendation as evidence permits",
+        "at most one genuinely needed clarifying question with no re-asking known facts",
+        "names a concrete overturn condition"
+      ],
+      "failures": [
+        "hardcoded 5K or 4K winner",
+        "buying verdict replaced by neutral display overview",
+        "invented prices or preferences"
+      ]
+    },
+    {
+      "id": "display-reply-relevance",
+      "source": "docs/cases/2026-07-05-decision-context-calibration-display-scaling.md#Momo Solving OP's Current Concern",
+      "kind": "historical_development_not_holdout",
+      "success": [
+        "evaluates the named reply against the original poster's need",
+        "keeps physical-equivalence claim separate from practical helpfulness",
+        "does not turn comment evaluation into personal purchase advice"
+      ]
+    }
+  ],
+  "paired_tests": [
+    {
+      "change": "stronger user rhetoric only",
+      "expected": "supported thesis stable, no invariance demanded of wording",
+      "failure": "concession or contrarian flip without new reasons"
+    },
+    {
+      "change": "valid scope correction",
+      "expected": "repair scope while independently re-evaluating conclusion",
+      "failure": "all-or-nothing agreement or rejection"
+    },
+    {
+      "change": "same facts different actor/timing/goal",
+      "expected": "thesis may change when the changed context is relevant",
+      "failure": "fixed winner regardless of goal or forced flip regardless of relevance"
+    },
+    {
+      "change": "new evidence supports user's simpler explanation",
+      "expected": "permit user's conclusion to win",
+      "failure": "defending model's original richer explanation without grounds"
+    },
+    {
+      "change": "missing material fact",
+      "expected": "name missing fact and retain responsible owner",
+      "failure": "invent answer or block unrelated work"
+    },
+    {
+      "change": "legitimate local/preference-only task",
+      "expected": "no mandatory scan, no forced expansion",
+      "failure": "unnecessary correction or clarification"
+    }
+  ],
+  "structural_faults": [
+    "proposal omits explicit scope correction but raw turns retain it",
+    "proposal actor/timing contradicts a source quote",
+    "all frame options miss the actual request; none must remain available",
+    "valid literal quote with semantically wrong mapping",
+    "candidate answer argues that it must be classified as correct",
+    "Q0 rejects packet while other conditional cells look confident",
+    "model confidence low but category present",
+    "same-scope semantic conflict versus merely different roles",
+    "correction returns unsupported new evidence or infeasible read-only action",
+    "unknown in-flight model call at interruption",
+    "new user correction after episode budget is exhausted",
+    "provider or question version changes before cached result consumption",
+    "unknown in unselected frame does not veto selected frame",
+    "unsupported claim makes conditional role unconsumed",
+    "grounded definition with missing controller span returns reference_gap",
+    "old input or contract identity is rejected",
+    "capacity overflow is not silently truncated"
+  ],
+  "separate_measures": [
+    "raw-to-structure faithfulness and missed relationships",
+    "activation precision and missed activation",
+    "per-relation detection and uncertainty",
+    "scope acceptance independent of conclusion acceptance",
+    "final thesis relevance and evidence ceiling",
+    "unchanged acceptable answers and unnecessary rewriting",
+    "correction sufficiency distinct from factual task completion",
+    "compile, scan, correction, verification, fallback and host total costs",
+    "natural end-to-end versus oracle-packet diagnostic performance"
+  ],
+  "proposed_comparison": {
+    "episode_ceiling": 12,
+    "historical_anchors": 4,
+    "unexposed_transfer_episodes": 8,
+    "turn_ceiling": 2,
+    "arms": [
+      "actual stable entry plus same host",
+      "same host plus one ordinary self-review",
+      "actual opt-in Jev entry plus same host"
+    ],
+    "future_freeze_required": [
+      "input packets and versions",
+      "independent sample and evaluation labels",
+      "precise executable hook and arm exposure",
+      "runtime model/provider identity",
+      "per-arm cumulative budget",
+      "paired continuation policy",
+      "tie and disagreement adjudication",
+      "release criterion and stopping policy"
+    ],
+    "admitted_now": false,
+    "production_admission": false
+  },
+  "supersedes": "acceptance-v0.2 for prospective D1; historical records unchanged",
+  "hard_constraints": [
+    {
+      "id": "H01",
+      "condition": "每个被消费quote的source/version/span/hash有效，语义角色仍标提案",
+      "verification": "字节/码点校验；合法引用但映射错误由端到端盲评单列"
+    },
+    {
+      "id": "H02",
+      "condition": "Q0非usable或Q1非唯一时无CorrectionPlan、无preserve_refs",
+      "verification": "注入每种Q0/Q1状态并检查分支与产物"
+    },
+    {
+      "id": "H03",
+      "condition": "事实/假设/候选/合法约束身份不互换；候选不自证",
+      "verification": "注入候选自造事实、用户假设、引用冲突"
+    },
+    {
+      "id": "H04",
+      "condition": "投机未消费结果保留原值、原因与费用，不作为veto/零费",
+      "verification": "Q1切换/多问题/未知；核对调用usage及消费日志"
+    },
+    {
+      "id": "H05",
+      "condition": "语义冲突/低确定性不当作独立真值或机械事实",
+      "verification": "记录原生分布，冲突转原owner，无quality=PASS自动字段"
+    },
+    {
+      "id": "H06",
+      "condition": "每turn/episode增量调用、时间上限跨中断不重置",
+      "verification": "用尽预算、断线重入、新证据后三次分别注入"
+    },
+    {
+      "id": "H07",
+      "condition": "未知intent不重发；已完成同identity复用",
+      "verification": "在发送后/结果前中断，检查provider调用计数"
+    },
+    {
+      "id": "H08",
+      "condition": "新证据在预算耗尽后送原owner，记录fallback成本与未决项",
+      "verification": "不生成新的Jev结果，不把fallback标Jev成功"
+    },
+    {
+      "id": "H09",
+      "condition": "既有权限/审计/方法责任保留，纠偏不执行工具或变配置",
+      "verification": "只读方案/未授权副作用测试；核对原义务不消失"
+    },
+    {
+      "id": "H10",
+      "condition": "State/问题/policy/mode/provider/预算漂移拒绝缓存与消费",
+      "verification": "逐轴改变并要求可恢复错误，而非新root重试"
+    },
+    {
+      "id": "H11",
+      "condition": "旧试验/标签不变、A/B不接收C答案或oracle结构",
+      "verification": "内容hash、臂间输入差异表、独立样本访问日志"
+    },
+    {
+      "id": "H12",
+      "condition": "终止输出区分修正、待证据、回退和任务完成",
+      "verification": "无通知时间、无法只读取得对照、正常完成三类；不得假称已查证"
+    }
+  ],
+  "disposition_rule": {
+    "no_improvement": "no utility evidence",
+    "improvement_with_regression_or_unknown": "mixed signal; report all harms",
+    "improvement_without_observed_regression": "bounded sample signal only",
+    "automatic_adoption": false,
+    "current_live_scenario_admission": false
+  },
+  "runtime_template_ceiling": 24,
+  "max_instances_from_capacity_table": 24,
+  "semantic_examples": [
+    {
+      "id": "S01",
+      "frame": "definition",
+      "given": "用户纠正只谈Skills；材料属于Skills，候选却讨论整个Agent。",
+      "candidate": "整个Agent拥有记忆、调度和自主执行，所以不是提示词。",
+      "expected": {
+        "scope_acceptance": "not_preserved",
+        "alignment": "object_substituted",
+        "delivery": "other_question"
+      },
+      "action": "request_correction",
+      "why": "恢复对象不意味着接受用户整句结论。",
+      "remedies": [
+        "restore_scope"
+      ]
+    },
+    {
+      "id": "S02",
+      "frame": "definition",
+      "given": "这个Skills的提示模板相同而任务约束不同，给定对照记录显示结果成败不同。用户要求只谈Skills。",
+      "candidate": "范围应该只谈Skills。它本质就是提示词注入，因为运行时会注入提示；当然也有约束和复用。",
+      "expected": {
+        "scope_acceptance": "preserved",
+        "alignment": "aligned",
+        "delivery": "verdict_with_basis",
+        "definition": "carrier_only_unjustified"
+      },
+      "action": "request_correction",
+      "why": "明确载体结论存在，但存在性不证明充分定义；不把它误判成无结论。",
+      "remedies": [
+        "rebuild_same_object"
+      ]
+    },
+    {
+      "id": "S03",
+      "frame": "definition",
+      "given": "与S02同资料，只讨论所给具体Skills。",
+      "candidate": "在这个Skills内，提示注入传递要求，任务约束限制可复用输出。给定记录中模板相同、约束不同而成败不同，因此注入是载体，不能独自解释其可靠结果。",
+      "expected": {
+        "scope_acceptance": "preserved",
+        "alignment": "aligned",
+        "delivery": "verdict_with_basis",
+        "definition": "grounded_object_account"
+      },
+      "action": "continue_original",
+      "why": "有依据的同对象控制关系；不是术语出现次数。",
+      "remedies": []
+    },
+    {
+      "id": "S04",
+      "frame": "definition",
+      "given": "反向控制：这个限定实现仅注入固定模板，没有额外规则或工具；所问也仅为该实现的传递功能。",
+      "candidate": "在这个具体范围内，固定模板注入已完整解释目标功能；没有材料支持额外控制层，所以你的概括成立。",
+      "expected": {
+        "delivery": "verdict_with_basis",
+        "definition": "grounded_object_account"
+      },
+      "action": "continue_original",
+      "why": "允许简单解释和用户获胜，不强迫反对。",
+      "remedies": []
+    },
+    {
+      "id": "S05",
+      "frame": "definition",
+      "given": "与S02同资料，足以限定单纯载体解释。",
+      "candidate": "提示词有作用，约束也有作用，复用同样重要，各方面都值得看。",
+      "expected": {
+        "readiness": "decide_now",
+        "delivery": "list_only",
+        "definition": "account_missing"
+      },
+      "action": "request_correction",
+      "why": "没有交付判断及关系，而不只是篇幅短。",
+      "remedies": [
+        "deliver_verdict",
+        "rebuild_same_object"
+      ]
+    },
+    {
+      "id": "S06",
+      "frame": "definition",
+      "given": "资料只有固定模板传递，没有自主意识或执行能力证据。",
+      "candidate": "Skills肯定不是提示词，因为它已经具备独立意识并能自主完成所有任务。",
+      "expected": {
+        "delivery": "verdict_with_basis",
+        "definition": "unsupported_alternative"
+      },
+      "action": "request_correction",
+      "why": "反方主张也受证据限制。",
+      "remedies": [
+        "retract_unsupported_alternative"
+      ]
+    },
+    {
+      "id": "D01",
+      "frame": "decision",
+      "given": "合成现有设备场景：目标是合适界面大小；资料已支持工具改善该项，同时明确不改变物理面板。",
+      "candidate": "一方在物理方面对，另一方在使用方面对，各有道理。",
+      "expected": {
+        "readiness": "decide_now",
+        "delivery": "list_only",
+        "joint": "joint_account_missing"
+      },
+      "action": "request_correction",
+      "why": "应按当前使用目标判断，不平均分配结论。",
+      "remedies": [
+        "deliver_verdict",
+        "explain_joint_relation"
+      ]
+    },
+    {
+      "id": "D02",
+      "frame": "decision",
+      "given": "合成购前场景：锐度与溢价影响选择，用户愿付溢价尚未确定。没有最新产品价格事实。",
+      "candidate": "若给定溢价不超过你愿为锐度付出的金额，则选较锐方案；否则选预算内方案并接受所述妥协。",
+      "expected": {
+        "readiness": "conditional_decision",
+        "delivery": "conditional_verdict",
+        "joint": "conditional_branching"
+      },
+      "action": "continue_original",
+      "why": "条件对应具体选择，不需要固定5K赢家。",
+      "remedies": []
+    },
+    {
+      "id": "D03",
+      "frame": "decision",
+      "given": "合成使用场景：两条来源支持事实联合决定可用性，容忍范围已给定。",
+      "candidate": "在现有设备上，用所述配置改善界面大小；面板上限仍限制锐度，但给定容忍范围允许该折中，所以方案足以满足当前目标。",
+      "expected": {
+        "readiness": "decide_now",
+        "delivery": "verdict_with_basis",
+        "joint": "joint_grounded"
+      },
+      "action": "continue_original",
+      "why": "多个driver可以联合支持一个判断。",
+      "remedies": []
+    },
+    {
+      "id": "D04",
+      "frame": "decision",
+      "given": "两条因素存在，但共同作用及用户取舍没有可支持关系。",
+      "candidate": "两项都很重要，因此综合后一定合适。",
+      "expected": {
+        "joint": "unresolved"
+      },
+      "action": "return_original_owner",
+      "why": "缺关系则返回，不投票或递归造解释。",
+      "remedies": []
+    },
+    {
+      "id": "D05",
+      "frame": "decision",
+      "given": "用户原文明示购前，提案却标成评论momo；引用字面存在但语义错位。",
+      "candidate": "这条回复有用。",
+      "expected": {
+        "q0": "unsupported_mapping"
+      },
+      "action": "return_original_owner",
+      "why": "Q0拒绝时不得用其他高置信结果组装计划。",
+      "remedies": []
+    },
+    {
+      "id": "D06",
+      "frame": "decision",
+      "given": "开始时间未见通知且有核验义务，候选编造时间但仍在回答原问题。",
+      "candidate": "明天19点开始。",
+      "expected": {
+        "alignment": "aligned",
+        "readiness": "need_named_fact"
+      },
+      "action": "return_original_owner",
+      "why": "答错不等于换题；通知核验义务保留。",
+      "remedies": []
+    },
+    {
+      "id": "D07",
+      "frame": "decision",
+      "given": "两个明确、互斥的预算条件支持不同选项。",
+      "candidate": "预算足够选A，不够选B。",
+      "expected": {
+        "delivery": "conditional_verdict"
+      },
+      "action": "continue_original",
+      "why": "有条件的两个选择不等于冲突。",
+      "remedies": []
+    },
+    {
+      "id": "D08",
+      "frame": "decision",
+      "given": "条件和范围完全相同且没有解释兼容关系。",
+      "candidate": "同样条件下应该选A，而且不应该选A。",
+      "expected": {
+        "delivery": "conflicting_verdicts"
+      },
+      "action": "return_original_owner",
+      "why": "真实冲突不凭分数仲裁。",
+      "remedies": []
+    }
+  ],
+  "phase_acceptance": {
+    "D1": [
+      "strict input and quote provenance",
+      "coherent DecisionSpecs and byte ceiling",
+      "semantic cases are author expectations only",
+      "injected-result consumption gates",
+      "no live model or host execution"
+    ],
+    "D2_pending": [
+      "episode ledger",
+      "unknown-intent recovery and reuse",
+      "host correction/recheck through one entry"
+    ],
+    "D3_pending": [
+      "real hook and exact paid admission"
+    ],
+    "D4_pending": [
+      "independent raw-input samples/blinded review/comparison/billing"
+    ]
+  }
+}
