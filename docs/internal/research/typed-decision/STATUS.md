@@ -1,12 +1,24 @@
 # Typed Decision — recovery entry
 
 Active branch: `experiment/typed-decision-runtime`.
-Current remote experiment HEAD before evidence closeout: `b3b4f8df78584ce5c49bcf05a51a4009c5682387`.
+Integration evidence checkpoint: `e8b36184d8b5de550a41a1c61b87ae2e9d298e4a`.
 Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current C01 completion recovery 2 — N03 and fresh E01 integration gaps closed
+## Current C01 formal comparison — recovered to pre-results review admission
+
+Task `tsk_9fba19b015e7e9d7`, step `freeze`. See [exact recovery checkpoint](formal-abc/RECOVERY.md)
+and [preflight evidence](formal-abc/recovery-preflight.json). Candidate commit `7964403`
+contains 18 proposed cases, not a qualified independent holdout. No GLM review result or
+formal A/B/C campaign was observed; the preceding tool call was platform-blocked.
+The blind-packet author-family leak is fixed with seven offline checks; original case
+bytes, labels and C01 runtime remain unchanged. Prepared packet is not a sent request.
+Next: finish pre-results review/admission, bind genuine original-A and comparable arms,
+then freeze budgets and task/value criteria before inference. Reuse completed Recovery-2;
+no transport retry or historical model rerun is required. #211 stays unqualified.
+
+## Previous C01 completion recovery 2 — N03 and fresh E01 integration gaps closed
 
 [Protocol](c01-completion/recovery-2/protocol.md),
 [disposition](c01-completion/recovery-2/disposition.md),

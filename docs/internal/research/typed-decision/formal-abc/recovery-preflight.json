@@ -1,0 +1,54 @@
+{
+  "schema": "mindthus.c01-formal-abc-recovery-preflight.v1",
+  "recovered_local_commit": "796440312789a56c1cdfac876199d7c4729924ae",
+  "remote_at_recovery": "e8b36184d8b5de550a41a1c61b87ae2e9d298e4a",
+  "main": "1527f32b99c375db9ff73f80812c644686a6576a",
+  "current_step": "freeze; candidate review admission pending",
+  "review_result_observed": false,
+  "formal_abc_observed": false,
+  "runtime_digest": "d8c9a6cdc8cae8f8410fdc02881a3f3c7d1d2fe7e4cde1f0c38fa6c5ef673801",
+  "runtime_changed": false,
+  "candidate_count": 18,
+  "candidate_sha256": "47d71c5dc4005a12e551f811881d17122252f874439c459be6ca3c27d4751974",
+  "candidate_bytes_changed": false,
+  "new_offline_tests": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0
+  },
+  "new_model_calls": 0,
+  "temporary_skill_env_at_recovery": "empty; metadata-only env_list",
+  "sessions_at_recovery": 0,
+  "prepared_packet": {
+    "path": "/srv/agentdock/tmp/mindthus-c01-formal-review-packet-v2",
+    "payload_sha256": "4bdd448ac978edb707fb5c4a6938889a217fc9da59b9d0464a2cdeecf857f345",
+    "status": "prepared_not_sent",
+    "model_facing_case_keys": [
+      "id",
+      "context"
+    ]
+  },
+  "source_sha256": {
+    "docs/internal/research/typed-decision/formal-abc/holdout-candidates.json": "47d71c5dc4005a12e551f811881d17122252f874439c459be6ca3c27d4751974",
+    "docs/internal/research/typed-decision/formal-abc/label-review-protocol.md": "eafd3682f08e8b9923638aad859f83817de81c7915d7c2f663004f88494661ae",
+    "docs/internal/research/typed-decision/formal-abc/review_packet.py": "ecff1302c21beb4962a6af421455429109dd4b2c22a46fef9965b87349b54e69",
+    "docs/internal/research/typed-decision/formal-abc/offline_check.py": "a3f68b79b6bdb5ae465aef49ad5d0d69c8bc862e27e56191499b12168daa26f3",
+    "skills/using-mindthus/SKILL.md": "9eb89affdbd468d40f0c222d085492193a8a81b99f05a56da1bc515aefbeee19",
+    "skills/3l5s/SKILL.md": "fe472b01eeaf724c047f6db486d0f860b82e5b47be2d4f1b5ebf3376e839cbb1",
+    "skills/sra/SKILL.md": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514",
+    "skills/edsp/SKILL.md": "4de72a21f227b77711cb8f48212e8f3cb42d5b3b0cd1b911ca3284aad40e240c",
+    "skills/sela/SKILL.md": "71b34d7ae2b6312c41ed904dba00cc9bea6615d6e73a537ac20e5cd29fb1b9ad",
+    "skills/mpg/SKILL.md": "1a8e4e5f7a382e24a266befd3b9f58b329253a0ecf49e55b0e9f5690eccf6bc0",
+    "skills/wae/SKILL.md": "f5ec807d2bfe91847671eb61d5150b43c464cda378bd2dbb8b7e91db372c7496",
+    "skills/tvg/SKILL.md": "f1ede50d063ba72dc39e9f13c0721a079f31c58c892f486675126472bf67e7de",
+    "skills/tplan/SKILL.md": "dbd00b73b2c965c5a687cb12602874226c87e07f9695354f05683a832761ed96"
+  },
+  "qualification": false,
+  "pending": [
+    "Authorized label-review execution with immutable intent/outcome before transmission",
+    "Task-family independence and pre-result label/metric adjudication",
+    "Genuine original-A host/plugin/model/tool configuration and carrier evidence",
+    "Matched B/C host configuration, all-arm budget and task-quality/value gates",
+    "Pre-admitted single evaluation; no holdout-driven semantic tuning"
+  ]
+}
