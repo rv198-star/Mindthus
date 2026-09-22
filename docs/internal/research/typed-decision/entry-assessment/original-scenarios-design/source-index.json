@@ -1,0 +1,73 @@
+{
+  "schema": "mindthus.design-audit-source-index.v1",
+  "base_commit": "fc18ef22b90438bc947e1047ab4c57ca7162dc7e",
+  "sources": [
+    {
+      "path": "tests/bidirectional_steelman_cases.jsonl",
+      "sha256": "566a01bf5e078214b5e977bbc7d95e5edba9022c77beb6c8e49c13f25e4a6941",
+      "start_line": 1,
+      "end_line": 2
+    },
+    {
+      "path": "docs/cases/2026-07-05-decision-context-calibration-display-scaling.md",
+      "sha256": "8913cfb47789eac1293a432180cbdb978a4114ac6414a09b3c56f1075c73d44b",
+      "start_line": 1,
+      "end_line": 224
+    },
+    {
+      "path": "docs/methodologies/primitives/frame-fitness-check.md",
+      "sha256": "441a1339773de2c26a99fe8ede7302ac0bdf185a5bc6f624ea6bfb4cea20781f",
+      "start_line": 1,
+      "end_line": 110
+    },
+    {
+      "path": "docs/methodologies/primitives/whole-elephant-protocol.md",
+      "sha256": "2995f919c2cfc70a22fb4e7f4b660b510f959fa159b156a0e63a55233ce1e2f9",
+      "start_line": 1,
+      "end_line": 364
+    },
+    {
+      "path": "docs/methodologies/primitives/decision-context-calibration.md",
+      "sha256": "506df8ecb01eeec891a7bb4368f9e9f5b703d7afca5c18a0e48e5a963fdd53b3",
+      "start_line": 1,
+      "end_line": 66
+    },
+    {
+      "path": "docs/methodologies/primitives/aspect-ownership.md",
+      "sha256": "51ed019cbcc93ff5a38cf24c129fc3773edeb33ddda0b578e65b932d6a2dbae0",
+      "start_line": 1,
+      "end_line": 52
+    },
+    {
+      "path": "docs/internal/research/bidirectional-steelman-convergence.md",
+      "sha256": "dbaae45c8e2d2d1bf9e36833e0f970ab87b6fba1be3c87b7a08e4761b86a2ed2",
+      "start_line": 1,
+      "end_line": 176
+    },
+    {
+      "path": "docs/methodologies/typed-decision-principles.md",
+      "sha256": "1f7094062d9594cad3d79a6b8adaf1cb3191bdcf8096f6f3f690e488f9f8f186",
+      "start_line": 1,
+      "end_line": 217
+    },
+    {
+      "path": "docs/internal/research/typed-decision/entry-assessment/boundary-ablation-v2/disposition.md",
+      "sha256": "f0db565d73be923646556b52c840adaa14f5aa3a00b09c85206ef21142a81486",
+      "start_line": 1,
+      "end_line": 114
+    },
+    {
+      "path": "experiments/typed_decision/assessment.py",
+      "sha256": "1cc9cabeeeb287664ac19212ad941a9077369af835e3e88a89b0f0ce0db754f2",
+      "start_line": 1,
+      "end_line": 120
+    },
+    {
+      "path": "experiments/typed_decision/entry.py",
+      "sha256": "9c852bf6ca18e7cef4e7b53e0cdfc66b0526333b0d6d36bc8a62767e7eb20c48",
+      "start_line": 155,
+      "end_line": 263
+    }
+  ],
+  "source_packet_sha256": "e66716c3353cbb5c1b72365a1be4173f5833ae47de4cfecbac4e23e7ed0be04f"
+}
