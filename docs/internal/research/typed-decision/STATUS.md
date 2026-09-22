@@ -26,8 +26,8 @@ Owner explicitly invoked TPlan to finish #209–#212 in order. Runtime:
 Installed skill runtime is pinned at `mindthus/1.9.1/skills/tplan`; human_in_loop=0,
 risk_tolerance=25, resource_sufficiency=50. Failure observability is repaired at `b945c40c5`, verified with 79 targeted tests,
 1163 full-suite tests (7 skipped), and 19 official calls. Shared risk R1 is resolved for
-future observation; the lost original response remains unknown. Active work is the one
-allowed C01 semantic revision has finished and failed its frozen stop rule. See
+future observation; the lost original response remains unknown. The one allowed C01
+semantic revision finished and failed its frozen stop rule. See
 `c01-v2-disposition.md`. C02 then completed its first frozen development run and stopped
 on contract/label validity defects; see `c02-disposition.md`. The TPlan Mission is now
 `abandoned` (bounded stop, not completed acceptance). #211/#212 full value acceptance
@@ -37,14 +37,16 @@ A named source-only technical recovery adds safe validation codes and whitelist 
 wire evidence without changing C01 questions/labels/validators or Engine/Provider
 abstraction. See `c01-v2-technical-recovery.md`. The recovery manifest is prepared at
 `/Users/william/Documents/Codex/2026-09-22/mindthus-c01-typesafe-recovery-1/campaign.json`.
-Its final regression/live outcome must be read from the Mission checkpoint on resume;
+Its completed regression/live outcome is recorded below and in the disposition;
 do not resubmit or regenerate a trial root to bypass an existing record.
 
 ## Goal and boundaries
 
 Complete #211 C01 in sequence: contract correction, offline verification, frozen Chinese
 development, official TypeSafe semantic trial, at most one bounded semantic revision,
-independent holdout once, then A/B/C. #212 stays conditional and unstarted. Keep formal
+independent holdout once, then A/B/C. This is the intended sequence, not completed
+acceptance. C01 stopped; #212 was conditionally admitted and C02 also stopped after
+its first development run. Keep formal
 main, Engine/Provider architecture, #112 HOLD and #207 unchanged. No generic graph platform
 or dynamic designer. Confidence, interface compatibility and schema tests confer no
 behavioral qualification or execution permission.
@@ -127,7 +129,8 @@ in response to this observation. No OCI command was executed.
 `c01-v2-development-freeze.json` binds 26 Chinese synthetic cases in 13 paired families,
 all relevant canonical SKILL sources, the graph, source and semantic plan. Expected labels
 are separate author judgments. Official development was attempted and stopped on a
-technical validation failure; semantic revisions used: 0/1. Holdout has not been created/frozen or evaluated.
+technical validation failure; at that historical checkpoint revisions used were 0/1.
+Current C01 revisions used are 1/1 (see below). Holdout has not been created/frozen or evaluated.
 
 Technical recovery 1 stopped at D09 after 19 calls: D01–D08 matched their frozen entry,
 route and selected-owner labels; D09 returned direct execution instead of the expected
@@ -141,7 +144,7 @@ The competing simple-synthesis interpretation of D09 is documented; labels are n
 infallible. Cases/labels/criteria thresholds remain identical. See `c01-v2-r1-review.md`
 and `c01-v2-r1-development-freeze.json` (graph 2.1). Original freeze remains historical.
 
-The final regression passed: 1163 tests, 7 skipped. Revision-1 development ran once at:
+The final regression ran 1163 tests: 1156 successful, 7 skipped, no failures/errors. Revision-1 development ran once at:
 `/Users/william/Documents/Codex/2026-09-22/mindthus-c01-typesafe-semantic-r1`.
 It stopped at D09 on the same hard-judgment/direct label mismatch, after 19 calls and
 9 observed cases. See `c01-v2-typesafe-semantic-r1.json`; all original artifacts remain.
@@ -168,11 +171,11 @@ synthetic development cases across operating-instruction/design-explanation purp
 each including thin/adequate/missing-evidence/redundant/conflict/outside-scope examples.
 Standards and labels are author-created, not independent human adjudication.
 
-91 targeted tests and lifecycle 80/80 passed. Final-source full regression passed
-1175 tests with 7 optional-dependency skips; see `verification-c02-engineering.json`.
+91 targeted tests and lifecycle 80/80 passed. Final-source full regression ran
+1175 total tests: 1168 successful, 7 skipped, no failures/errors; see `verification-c02-engineering.json`.
 The full log is `/Users/william/Documents/Codex/2026-09-22/mindthus-jev-issues/c02-final-full-suite.log`.
-Do not rerun unchanged passed checks. A previous intermediate full suite passed 1173
-tests with 7 skips; it predates the final trial driver and two final checks.
+Do not rerun unchanged passed checks. A previous intermediate full suite ran 1173
+tests (1166 successful, 7 skipped); it predates the final trial driver and two final checks.
 
 Official development root is prepared at
 `/Users/william/Documents/Codex/2026-09-22/mindthus-c02-typesafe-dev-1`:
@@ -192,6 +195,20 @@ They describe lifecycle and observed telemetry only; inference accounting is als
 recorded in the two pilot observation reports. A new experimental proposal would need
 independent adjudication of disputed standards and a new data/protocol identity, not
 a reset of either stopped campaign. Preserve all original evidence.
+
+## Independent reconsideration — 2026-09-22
+
+Three independent AI contexts completed two-round written review; this is not human or
+cross-model adjudication. See [meeting minutes](independent-review-2026-09-22/README.md)
+and the six preserved reviewer opinions. Both old protocols remain NOT PASSED; no new
+calls, code changes, relabeling, holdout, or A/B/C promotion occurred during review.
+D09's canonical ambiguity, C02 redundancy-label validity, and action necessity limit
+attribution to engine failure. Source sufficiency does not establish changed-artifact
+fidelity; original TVG owner retains that audit responsibility, not yet live-tested.
+Stopping the current qualification campaigns does not prove the research direction
+has failed. C02's unused 0/1 revision is optional, not an obligation to keep tuning.
+Next research work should first clarify standards with offline counterexamples; changed
+standards/labels need a new protocol/data identity. Original Mission remains historical.
 
 ## Resume discipline
 

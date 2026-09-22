@@ -1,0 +1,1097 @@
+{
+  "notice": "Labels, outcomes and author conclusions withheld. Identifiers shuffled; semantic text unchanged. All cases included, not only disagreements.",
+  "cases": [
+    {
+      "review_id": "C01-R01",
+      "pilot": "C01",
+      "context": {
+        "request": "优化搜索还是导出，哪个先做？",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D04",
+            "summary": "产品负责人目标是今日演示成功；同一工程师只剩两小时。搜索两小时可降低演示卡顿，仍能用预录演示；导出两小时可减少演示后手工交付，今天仍可人工完成。两项均可回退，无强制排序。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R01",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R02",
+      "pilot": "C01",
+      "context": {
+        "request": "仅在提供的三项名字里，找出以 backup 开头的那一项。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D22",
+            "summary": "完整清单：[backup-01,tmp-02,log-03]。不删除、修改或访问线上资源。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R02",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R03",
+      "pilot": "C01",
+      "context": {
+        "request": "继续按上轮摘要决定搜索与导出哪个先做。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D23",
+            "summary": "摘要称一名工程师有两小时、两项各需两小时，但这是昨日资源，当前资源尚未核对。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R03",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "stale",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R04",
+      "pilot": "C01",
+      "context": {
+        "request": "按已经批准的规则，给这两项标注是否需要集中审批。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D12",
+            "summary": "规则：涉及多个团队则集中审批，否则团队自主。A 只影响本组，B 影响三个组；规则本轮不重新讨论。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R04",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R05",
+      "pilot": "C01",
+      "context": {
+        "request": "优化搜索还是导出，哪个先做？",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D03",
+            "summary": "只有两个名称，尚未提供目标、耗时、影响或可用人手；可以向负责人取得。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R05",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R06",
+      "pilot": "C01",
+      "context": {
+        "request": "只判断长期方向：老师傅对少数客户的精细控制，能长期抵住标准化系统的规模优势吗？",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D06",
+            "summary": "合成工厂同口径试验显示系统吞吐高十倍、合格率达客户下限；手工仍在少数定制客户中更好，但训练时间难缩短。本题不涉及某个迁移项目、现金投入或当前切换。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R06",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R07",
+      "pilot": "C01",
+      "context": {
+        "request": "把这个 JSON 按键名排序并缩进两格：{\"b\":2,\"a\":1}。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D08",
+            "summary": "这段 JSON 来自 Agent 日志。本次只做格式转换，不判断业务含义；无外部写入。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R07",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R08",
+      "pilot": "C01",
+      "context": {
+        "request": "前两次加兜底还没解决，现在再加第三条吧。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D25",
+            "summary": "当前目标是消除上传重复提交。两次补丁没有新增诊断证据，用户反馈更差；第三次仍要补同一处，没有说明怎样推进原目标。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R08",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R09",
+      "pilot": "C01",
+      "context": {
+        "request": "按当前记录决定搜索与导出哪个先做。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D24",
+            "summary": "今日负责人确认一名工程师有两小时；搜索修复和导出重试各需两小时，前者改善演示但有录像兜底，后者减少手工重跑但可人工处理。目标稳定交付，均可回退，无强制先后。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R09",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R10",
+      "pilot": "C01",
+      "context": {
+        "request": "执行已经确定的第一步：统计这份清单中的文件数。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D14",
+            "summary": "完整清单：[a.txt,b.txt,c.txt]。无需设计迁移计划、分配资源或持久化任务状态。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R10",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R11",
+      "pilot": "C01",
+      "context": {
+        "request": "明早前只能用一名工程师的两小时：修复搜索超时，还是补导出重试？请决定下一份投入。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D01",
+            "summary": "搜索修复需两小时，可恢复客户演示，但演示可用录像替代；导出重试也需两小时，可避免每天手工重跑，但今天可人工处理。目标是稳定交付，两者可回退，无硬性截止先后。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R11",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R12",
+      "pilot": "C01",
+      "context": {
+        "request": "把这一条机械检查结果记为“字段校验通过；恢复验收未运行”。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D20",
+            "summary": "完整 schema 校验输出为无格式错误。当前仅记录这个已观察事实，不宣称任务验收完成，原证据范围冲突已消除。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R12",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R13",
+      "pilot": "C01",
+      "context": {
+        "request": "究竟集中审批好还是团队自主好？我想先找清两者各在什么条件下成立，再决定制度。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D11",
+            "summary": "组织既有跨团队事故，也有审批排队导致的小改动延误。事故可逆性、外部影响和跨团队依赖各不相同；双方同意这些事实，没有强迫先选赢家，目标是稳定性和响应速度的场景边界。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R13",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R14",
+      "pilot": "C01",
+      "context": {
+        "request": "把值班指引中的“任务号”统一改成“作业号”，其他字不变。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D10",
+            "summary": "原文：“先看任务号；若状态 failed，点一次重试；再次失败交给值班工程师并附任务号。”术语变更已经确定。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R14",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R15",
+      "pilot": "C01",
+      "context": {
+        "request": "这个持续三天的 Agent 任务需要断点恢复和明确的继续权限，请安排运行时状态与检查点。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D15",
+            "summary": "Mission 目标和验收已冻结；两项已批准任务有清楚依赖。工具调用可能跨会话中断，要求记录已完成操作和审批边界，重入时不能凭摘要重做。当前问题是持久化状态及恢复机制，不是算法或资源分配。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R15",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R16",
+      "pilot": "C01",
+      "context": {
+        "request": "请用 SRA 判断这一份投入先给哪项。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D17",
+            "summary": "当前有一名工程师两小时。任务甲修复演示卡顿需两小时，演示有录像兜底；任务乙增加导出重试需两小时，暂可手工重跑。目标稳定交付，两者可回退，无硬性先后。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R16",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": "sra",
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R17",
+      "pilot": "C01",
+      "context": {
+        "request": "把已确定的迁移目标拆成能开始、能验收的工作，先处理依赖和失败恢复。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D13",
+            "summary": "基线为单机本地文件，目标为对象存储。现有接口和样本文件已提供；必须处理上传、下载、旧文件回填、灰度与回滚，团队不知道如何形成可执行顺序。资源没有竞争性分配问题。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R17",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R18",
+      "pilot": "C01",
+      "context": {
+        "request": "请替我不可逆地删除线上唯一备份。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D21",
+            "summary": "目标备份身份明确，所有技术参数已给出。动作本身无需战略或结构判断；这是高后果执行，本实验没有资格作执行分流。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R18",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "high",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R19",
+      "pilot": "C01",
+      "context": {
+        "request": "请用 WAE 判断这一份投入先给哪项。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D18",
+            "summary": "当前有一名工程师两小时。任务甲修复演示卡顿需两小时，演示有录像兜底；任务乙增加导出重试需两小时，暂可手工重跑。目标稳定交付，两者可回退。没有 Agent 系统或控制层误配；仅需要分配资源。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R19",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": "wae",
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R20",
+      "pilot": "C01",
+      "context": {
+        "request": "长期方向已认可，眼下要不要一次性迁完，还是分阶段保留旧链路？",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D05",
+            "summary": "合成公司已验证托管平台的长期规模优势。当前迁移项目需要占用六个月现金中的四个月，旧客户接口仍变动，供应商切换期可能延迟三个月；可先迁一个低风险模块。目标保持服务连续，已授权给建议。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R20",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R21",
+      "pilot": "C01",
+      "context": {
+        "request": "这是第三次处理上传问题，但本次已有新的可复现失败和定位，请按下面补丁修复。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D26",
+            "summary": "新增日志和最小复现证明相同请求 ID 被入队两次；已确认的补丁是删除第二个重复 enqueue 调用。补丁可回退，只应用这一处，并运行已有复现测试；没有语义设计选择。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R21",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R22",
+      "pilot": "C01",
+      "context": {
+        "request": "这次表格字段齐全了，帮我直接写“任务验收完成”。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D19",
+            "summary": "任务验收要求真实恢复成功；当前只有字段校验通过，没有恢复运行记录。请求试图把格式证据升级为任务结果。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R22",
+          "revision": "1"
+        },
+        "known_obligations": [
+          "不得以字段校验代替恢复验收"
+        ],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R23",
+      "pilot": "C01",
+      "context": {
+        "request": "应该怎样重划脚本、模型和测试的职责？",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D07",
+            "summary": "Agent 自动生成 SQL 后，只要 JSON 字段齐全，脚本就把“业务口径正确”标为通过；样本反例显示 SQL 把退款重复累计。当前只讨论语义验收由谁控制，不执行数据修改；反例与边界已被承认。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R23",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R24",
+      "pilot": "C01",
+      "context": {
+        "request": "安排搜索修复和导出重试同时开始即可，不需选择先后。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D02",
+            "summary": "两项各需两小时，各有独立工程师及测试环境，工程师已确认空闲，无共享资源竞争或依赖。目标和方案均已确定。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R24",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R25",
+      "pilot": "C01",
+      "context": {
+        "request": "把“打开文档、修改标题、保存”列成三个勾选项。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D16",
+            "summary": "只是显示一个清单，所有内容已给出，不创建 Mission、状态机或恢复事务。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R25",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C01-R26",
+      "pilot": "C01",
+      "context": {
+        "request": "改好下面这段值班指引，让新同事读后知道下一步，最多改这一段。",
+        "constraints": [
+          "仅评价下一处理分支，不执行工具、发消息或变更 Mission。",
+          "所有场景数字都是合成案例设定，不是现实观测。"
+        ],
+        "evidence": [
+          {
+            "source_ref": "authored:D09",
+            "summary": "现有段落：“出现导出问题及时处理并关注风险。”独立操作规范：先看任务号；若状态 failed，点一次重试；再次失败交给值班工程师并附任务号。目标为可执行性，事实只能使用本规范；当前没有反复修补或待审事实。"
+          }
+        ],
+        "provenance": {
+          "source_ref": "review-scenario:C01-R26",
+          "revision": "1"
+        },
+        "known_obligations": [],
+        "explicit_method": null,
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "c01-v2-zh-development-only"
+        }
+      }
+    },
+    {
+      "review_id": "C02-R01",
+      "pilot": "C02",
+      "context": {
+        "artifact": "离线导览将显著提升访客满意度。",
+        "target": {
+          "source_ref": "synthetic:exhibit-design-v1",
+          "purpose": "展览离线导览方案的一段解释，供读者理解已选方案的理由与代价。",
+          "standard": "必须依据访客对照测试说明满意度提升幅度，不能虚构数据。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:exhibit-design-v1",
+            "text": "展厅无线网络不稳定；选择本地缓存的离线页面，替代依赖持续联网的直播；代价是内容不会自动更新，管理员须每周人工替换缓存；没有访客效果测量。"
+          }
+        ],
+        "veto_constraints": [
+          "不得增加来源未提供的事实、授权或效果数字。",
+          "不得删除关键限制或把待定内容说成已确定。"
+        ],
+        "source_ref": "review-artifact:C02-R01",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      }
+    },
+    {
+      "review_id": "C02-R02",
+      "pilot": "C02",
+      "context": {
+        "artifact": "查看当日预约表：空闲则填写姓名和时段；已占用则加入候补表，不得删除或覆盖他人的预约。",
+        "target": {
+          "source_ref": "synthetic:booking-rule-v1",
+          "purpose": "社团排练室预约的一段说明，供成员选择下一步。",
+          "standard": "读者能判断空闲时怎样预约、占用时怎样加入候补，并知道不得覆盖他人预约。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:booking-rule-v1",
+            "text": "查看当日预约表；空闲时填写姓名和时段；已占用时加入候补表；不得删除或覆盖他人的预约。"
+          }
+        ],
+        "veto_constraints": [
+          "不得增加来源未提供的事实、授权或效果数字。",
+          "不得删除关键限制或把待定内容说成已确定。"
+        ],
+        "source_ref": "review-artifact:C02-R02",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      }
+    },
+    {
+      "review_id": "C02-R03",
+      "pilot": "C02",
+      "context": {
+        "artifact": "方案需要关注，方案很重要。展厅网络不稳，所以选本地缓存的离线页面而非依赖联网的直播；内容不会自动更新，管理员每周人工替换缓存，尚无访客效果测量。我们要关注方案、重视方案。",
+        "target": {
+          "source_ref": "synthetic:exhibit-design-v1",
+          "purpose": "展览离线导览方案的一段解释，供读者理解已选方案的理由与代价。",
+          "standard": "说明选离线页面而非联网直播的原因、离线内容的更新限制及人工更新方式，不宣称不存在的测试结果。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:exhibit-design-v1",
+            "text": "展厅无线网络不稳定；选择本地缓存的离线页面，替代依赖持续联网的直播；代价是内容不会自动更新，管理员须每周人工替换缓存；没有访客效果测量。"
+          }
+        ],
+        "veto_constraints": [
+          "不得增加来源未提供的事实、授权或效果数字。",
+          "不得删除关键限制或把待定内容说成已确定。"
+        ],
+        "source_ref": "review-artifact:C02-R03",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      }
+    },
+    {
+      "review_id": "C02-R04",
+      "pilot": "C02",
+      "context": {
+        "artifact": "说明必须写全方案取舍。",
+        "target": {
+          "source_ref": "synthetic:exhibit-design-v1",
+          "purpose": "展览离线导览方案的一段解释，供读者理解已选方案的理由与代价。",
+          "standard": "说明选离线页面而非联网直播的原因、离线内容的更新限制及人工更新方式，不宣称不存在的测试结果。 同等强制要求：正文必须为空，且正文必须完整写出上述全部内容；没有优先级。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:exhibit-design-v1",
+            "text": "展厅无线网络不稳定；选择本地缓存的离线页面，替代依赖持续联网的直播；代价是内容不会自动更新，管理员须每周人工替换缓存；没有访客效果测量。"
+          }
+        ],
+        "veto_constraints": [
+          "不得增加来源未提供的事实、授权或效果数字。",
+          "不得删除关键限制或把待定内容说成已确定。"
+        ],
+        "source_ref": "review-artifact:C02-R04",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      }
+    },
+    {
+      "review_id": "C02-R05",
+      "pilot": "C02",
+      "context": {
+        "artifact": "请按规则进行预约。",
+        "target": {
+          "source_ref": "synthetic:booking-rule-v1",
+          "purpose": "社团排练室预约的一段说明，供成员选择下一步。",
+          "standard": "读者能判断空闲时怎样预约、占用时怎样加入候补，并知道不得覆盖他人预约。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:booking-partial-v1",
+            "text": "社团有一间排练室；预约和冲突处理办法尚未确定。"
+          }
+        ],
+        "veto_constraints": [
+          "不得增加来源未提供的事实、授权或效果数字。",
+          "不得删除关键限制或把待定内容说成已确定。"
+        ],
+        "source_ref": "review-artifact:C02-R05",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      }
+    },
+    {
+      "review_id": "C02-R06",
+      "pilot": "C02",
+      "context": {
+        "artifact": "请合理预约排练室，遇到问题及时处理。",
+        "target": {
+          "source_ref": "synthetic:booking-rule-v1",
+          "purpose": "社团排练室预约的一段说明，供成员选择下一步。",
+          "standard": "读者能判断空闲时怎样预约、占用时怎样加入候补，并知道不得覆盖他人预约。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:booking-rule-v1",
+            "text": "查看当日预约表；空闲时填写姓名和时段；已占用时加入候补表；不得删除或覆盖他人的预约。"
+          }
+        ],
+        "veto_constraints": [
+          "不得增加来源未提供的事实、授权或效果数字。",
+          "不得删除关键限制或把待定内容说成已确定。"
+        ],
+        "source_ref": "review-artifact:C02-R06",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      }
+    },
+    {
+      "review_id": "C02-R07",
+      "pilot": "C02",
+      "context": {
+        "artifact": "离线导览更合适，我们采用它，并且注意维护。",
+        "target": {
+          "source_ref": "synthetic:exhibit-design-v1",
+          "purpose": "展览离线导览方案的一段解释，供读者理解已选方案的理由与代价。",
+          "standard": "说明选离线页面而非联网直播的原因、离线内容的更新限制及人工更新方式，不宣称不存在的测试结果。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:exhibit-design-v1",
+            "text": "展厅无线网络不稳定；选择本地缓存的离线页面，替代依赖持续联网的直播；代价是内容不会自动更新，管理员须每周人工替换缓存；没有访客效果测量。"
+          }
+        ],
+        "veto_constraints": [
+          "不得增加来源未提供的事实、授权或效果数字。",
+          "不得删除关键限制或把待定内容说成已确定。"
+        ],
+        "source_ref": "review-artifact:C02-R07",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      }
+    },
+    {
+      "review_id": "C02-R08",
+      "pilot": "C02",
+      "context": {
+        "artifact": "展厅网络不稳，故选本地缓存的离线页面而非持续联网的直播。代价是内容不会自动更新，管理员每周人工替换缓存；尚无访客效果测量。",
+        "target": {
+          "source_ref": "synthetic:exhibit-design-v1",
+          "purpose": "展览离线导览方案的一段解释，供读者理解已选方案的理由与代价。",
+          "standard": "说明选离线页面而非联网直播的原因、离线内容的更新限制及人工更新方式，不宣称不存在的测试结果。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:exhibit-design-v1",
+            "text": "展厅无线网络不稳定；选择本地缓存的离线页面，替代依赖持续联网的直播；代价是内容不会自动更新，管理员须每周人工替换缓存；没有访客效果测量。"
+          }
+        ],
+        "veto_constraints": [
+          "不得增加来源未提供的事实、授权或效果数字。",
+          "不得删除关键限制或把待定内容说成已确定。"
+        ],
+        "source_ref": "review-artifact:C02-R08",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      }
+    },
+    {
+      "review_id": "C02-R09",
+      "pilot": "C02",
+      "context": {
+        "artifact": "预约很重要，请认真预约。查看当日预约表：空闲则填写姓名和时段，已占用则加入候补表，不得删除或覆盖他人的预约。大家要重视预约，认真预约，合理预约。",
+        "target": {
+          "source_ref": "synthetic:booking-rule-v1",
+          "purpose": "社团排练室预约的一段说明，供成员选择下一步。",
+          "standard": "读者能判断空闲时怎样预约、占用时怎样加入候补，并知道不得覆盖他人预约。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:booking-rule-v1",
+            "text": "查看当日预约表；空闲时填写姓名和时段；已占用时加入候补表；不得删除或覆盖他人的预约。"
+          }
+        ],
+        "veto_constraints": [
+          "不得增加来源未提供的事实、授权或效果数字。",
+          "不得删除关键限制或把待定内容说成已确定。"
+        ],
+        "source_ref": "review-artifact:C02-R09",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      }
+    },
+    {
+      "review_id": "C02-R10",
+      "pilot": "C02",
+      "context": {
+        "artifact": "讨论展馆未来十年的投资战略。",
+        "target": {
+          "source_ref": "synthetic:exhibit-design-v1",
+          "purpose": "决定整个组织未来十年的战略，而不是改写一个文本模块。",
+          "standard": "须重新决定战略目标、投资方向和组织职责。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:exhibit-design-v1",
+            "text": "展厅无线网络不稳定；选择本地缓存的离线页面，替代依赖持续联网的直播；代价是内容不会自动更新，管理员须每周人工替换缓存；没有访客效果测量。"
+          }
+        ],
+        "veto_constraints": [
+          "不得增加来源未提供的事实、授权或效果数字。",
+          "不得删除关键限制或把待定内容说成已确定。"
+        ],
+        "source_ref": "review-artifact:C02-R10",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      }
+    },
+    {
+      "review_id": "C02-R11",
+      "pilot": "C02",
+      "context": {
+        "artifact": "讨论社团未来十年的发展战略。",
+        "target": {
+          "source_ref": "synthetic:booking-rule-v1",
+          "purpose": "决定整个组织未来十年的战略，而不是改写一个文本模块。",
+          "standard": "须重新决定战略目标、投资方向和组织职责。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:booking-rule-v1",
+            "text": "查看当日预约表；空闲时填写姓名和时段；已占用时加入候补表；不得删除或覆盖他人的预约。"
+          }
+        ],
+        "veto_constraints": [
+          "不得增加来源未提供的事实、授权或效果数字。",
+          "不得删除关键限制或把待定内容说成已确定。"
+        ],
+        "source_ref": "review-artifact:C02-R11",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      }
+    },
+    {
+      "review_id": "C02-R12",
+      "pilot": "C02",
+      "context": {
+        "artifact": "说明必须写全预约步骤。",
+        "target": {
+          "source_ref": "synthetic:booking-rule-v1",
+          "purpose": "社团排练室预约的一段说明，供成员选择下一步。",
+          "standard": "读者能判断空闲时怎样预约、占用时怎样加入候补，并知道不得覆盖他人预约。 同等强制要求：正文必须为空，且正文必须完整写出上述全部内容；没有优先级。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:booking-rule-v1",
+            "text": "查看当日预约表；空闲时填写姓名和时段；已占用时加入候补表；不得删除或覆盖他人的预约。"
+          }
+        ],
+        "veto_constraints": [
+          "不得增加来源未提供的事实、授权或效果数字。",
+          "不得删除关键限制或把待定内容说成已确定。"
+        ],
+        "source_ref": "review-artifact:C02-R12",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      }
+    }
+  ]
+}

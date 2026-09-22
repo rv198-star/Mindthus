@@ -1,0 +1,484 @@
+[
+  {
+    "review_id": "C01-R01",
+    "original_id": "D04",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "clear",
+      "owner": "sra",
+      "applicable": "yes",
+      "route": "intervene"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "补齐目标、候选作用和真实资源竞争，入口从补信息转为分配判断。"
+  },
+  {
+    "review_id": "C01-R02",
+    "original_id": "D22",
+    "expected": {
+      "entry_mode": "direct_execution",
+      "unresolved_obligation": "clear",
+      "owner": null,
+      "applicable": null,
+      "route": "direct_execute"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "近邻对象仍是备份，但转成低风险确定性匹配后应直接执行。"
+  },
+  {
+    "review_id": "C01-R03",
+    "original_id": "D23",
+    "expected": {
+      "entry_mode": null,
+      "unresolved_obligation": null,
+      "owner": null,
+      "applicable": null,
+      "route": "original_path"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "D0 检查陈旧快照，不询问模型；先回原路径获取新状态。"
+  },
+  {
+    "review_id": "C01-R04",
+    "original_id": "D12",
+    "expected": {
+      "entry_mode": "direct_execution",
+      "unresolved_obligation": "clear",
+      "owner": null,
+      "applicable": null,
+      "route": "direct_execute"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "结构与规则已确定；执行映射即可，不再讨论二选一。"
+  },
+  {
+    "review_id": "C01-R05",
+    "original_id": "D03",
+    "expected": {
+      "entry_mode": "acquire_information",
+      "unresolved_obligation": "clear",
+      "owner": null,
+      "applicable": null,
+      "route": "acquire_information"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "不可凭任务名发明比较事实与资源，不应加载 SRA。"
+  },
+  {
+    "review_id": "C01-R06",
+    "original_id": "D06",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "clear",
+      "owner": "sela",
+      "applicable": "yes",
+      "route": "intervene"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "对象是系统效率与局部优势的方向关系，尚无具体承载动作。"
+  },
+  {
+    "review_id": "C01-R07",
+    "original_id": "D08",
+    "expected": {
+      "entry_mode": "direct_execution",
+      "unresolved_obligation": "clear",
+      "owner": null,
+      "applicable": null,
+      "route": "direct_execute"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "相同 Agent/JSON 词汇，没有控制权误配，仅确定性格式化。"
+  },
+  {
+    "review_id": "C01-R08",
+    "original_id": "D25",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "present",
+      "owner": null,
+      "applicable": null,
+      "route": "llm_fallback"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "第三次同局部、负反馈、无证据增益；先保留反螺旋义务，不能直接再改或强选 owner。"
+  },
+  {
+    "review_id": "C01-R09",
+    "original_id": "D24",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "clear",
+      "owner": "sra",
+      "applicable": "yes",
+      "route": "intervene"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "新快照绑定当前资源，再判断分配；恢复不能重用昨日结果。"
+  },
+  {
+    "review_id": "C01-R10",
+    "original_id": "D14",
+    "expected": {
+      "entry_mode": "direct_execution",
+      "unresolved_obligation": "clear",
+      "owner": null,
+      "applicable": null,
+      "route": "direct_execute"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "同一迁移背景中，一个已明确步骤无需重开拆解。"
+  },
+  {
+    "review_id": "C01-R11",
+    "original_id": "D01",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "clear",
+      "owner": "sra",
+      "applicable": "yes",
+      "route": "intervene"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "候选可判断、同一时间池真实竞争；存在价值取舍。"
+  },
+  {
+    "review_id": "C01-R12",
+    "original_id": "D20",
+    "expected": {
+      "entry_mode": "direct_execution",
+      "unresolved_obligation": "clear",
+      "owner": null,
+      "applicable": null,
+      "route": "direct_execute"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "同一证据范围已经明确，不需无谓阻断。"
+  },
+  {
+    "review_id": "C01-R13",
+    "original_id": "D11",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "clear",
+      "owner": "edsp",
+      "applicable": "yes",
+      "route": "intervene"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "需要建立结构坐标；不存在仅靠补一个数字就能结束的缺口。"
+  },
+  {
+    "review_id": "C01-R14",
+    "original_id": "D10",
+    "expected": {
+      "entry_mode": "direct_execution",
+      "unresolved_obligation": "clear",
+      "owner": null,
+      "applicable": null,
+      "route": "direct_execute"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "同一指引、同一产物，任务只是精确替换，不能因文档存在就唤醒 TVG。"
+  },
+  {
+    "review_id": "C01-R15",
+    "original_id": "D15",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "clear",
+      "owner": "tplan",
+      "applicable": "yes",
+      "route": "intervene"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "需要 durable Mission 状态和恢复/权限控制，符合运行时对象。"
+  },
+  {
+    "review_id": "C01-R16",
+    "original_id": "D17",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "clear",
+      "owner": "sra",
+      "applicable": "yes",
+      "route": "intervene"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "显式调用保留，且存在实际共享资源竞争。"
+  },
+  {
+    "review_id": "C01-R17",
+    "original_id": "D13",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "clear",
+      "owner": "3l5s",
+      "applicable": "yes",
+      "route": "intervene"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "问题明确但过大、缺可执行分解，单层 BTGSB 可直接主导。"
+  },
+  {
+    "review_id": "C01-R18",
+    "original_id": "D21",
+    "expected": {
+      "entry_mode": "unclear",
+      "unresolved_obligation": "clear",
+      "owner": null,
+      "applicable": null,
+      "route": "llm_fallback"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "既非低风险直接任务，也无信息获取或方法判断可解决的当前对象；使用明确 no-match。"
+  },
+  {
+    "review_id": "C01-R19",
+    "original_id": "D18",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "clear",
+      "owner": "wae",
+      "applicable": "no",
+      "route": "llm_fallback"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "明确方法约束不能制造 WAE 前提；应读全文后拒绝适用，交回原 agent。"
+  },
+  {
+    "review_id": "C01-R20",
+    "original_id": "D05",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "clear",
+      "owner": "mpg",
+      "applicable": "yes",
+      "route": "intervene"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "方向已有支持；行动者、载体、暴露和路径波动共同决定承载姿态。"
+  },
+  {
+    "review_id": "C01-R21",
+    "original_id": "D26",
+    "expected": {
+      "entry_mode": "direct_execution",
+      "unresolved_obligation": "clear",
+      "owner": null,
+      "applicable": null,
+      "route": "direct_execute"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "次数相近，但新证据已支持明确修复，不能机械把第三次都判成无效螺旋。"
+  },
+  {
+    "review_id": "C01-R22",
+    "original_id": "D19",
+    "expected": {
+      "entry_mode": "acquire_information",
+      "unresolved_obligation": "present",
+      "owner": null,
+      "applicable": null,
+      "route": "llm_fallback"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "除补运行证据外，还必须保留 claim ceiling 义务，阻止写成验收通过。"
+  },
+  {
+    "review_id": "C01-R23",
+    "original_id": "D07",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "clear",
+      "owner": "wae",
+      "applicable": "yes",
+      "route": "intervene"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "Agentic 系统内，结构校验错误承担语义真相裁决。"
+  },
+  {
+    "review_id": "C01-R24",
+    "original_id": "D02",
+    "expected": {
+      "entry_mode": "direct_execution",
+      "unresolved_obligation": "clear",
+      "owner": null,
+      "applicable": null,
+      "route": "direct_execute"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "删除共同资源竞争后，只剩已指定的并行安排。"
+  },
+  {
+    "review_id": "C01-R25",
+    "original_id": "D16",
+    "expected": {
+      "entry_mode": "direct_execution",
+      "unresolved_obligation": "clear",
+      "owner": null,
+      "applicable": null,
+      "route": "direct_execute"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "清单形式本身不是 Mission runtime。"
+  },
+  {
+    "review_id": "C01-R26",
+    "original_id": "D09",
+    "expected": {
+      "entry_mode": "mindthus_intervention",
+      "unresolved_obligation": "clear",
+      "owner": "tvg",
+      "applicable": "yes",
+      "route": "intervene"
+    },
+    "source_file": "c01-v2-zh-development.json",
+    "rationale": "已有有边界的薄产物，独立目标和证据足够，需定向强化。"
+  },
+  {
+    "review_id": "C02-R01",
+    "original_id": "C02D09",
+    "expected": {
+      "utility": "deficit",
+      "support": "missing",
+      "action": null,
+      "route": "acquire_information"
+    },
+    "source_file": "c02-zh-development.json",
+    "rationale": null
+  },
+  {
+    "review_id": "C02-R02",
+    "original_id": "C02D02",
+    "expected": {
+      "utility": "adequate",
+      "support": "sufficient",
+      "action": "leave_unchanged",
+      "route": "original_exit_owner"
+    },
+    "source_file": "c02-zh-development.json",
+    "rationale": null
+  },
+  {
+    "review_id": "C02-R03",
+    "original_id": "C02D10",
+    "expected": {
+      "utility": "deficit",
+      "support": "sufficient",
+      "action": "compact_preserve",
+      "route": "rewrite_candidate"
+    },
+    "source_file": "c02-zh-development.json",
+    "rationale": null
+  },
+  {
+    "review_id": "C02-R04",
+    "original_id": "C02D11",
+    "expected": {
+      "utility": "conflict",
+      "support": null,
+      "action": null,
+      "route": "original_exit_owner"
+    },
+    "source_file": "c02-zh-development.json",
+    "rationale": null
+  },
+  {
+    "review_id": "C02-R05",
+    "original_id": "C02D03",
+    "expected": {
+      "utility": "deficit",
+      "support": "missing",
+      "action": null,
+      "route": "acquire_information"
+    },
+    "source_file": "c02-zh-development.json",
+    "rationale": null
+  },
+  {
+    "review_id": "C02-R06",
+    "original_id": "C02D01",
+    "expected": {
+      "utility": "deficit",
+      "support": "sufficient",
+      "action": "make_actionable",
+      "route": "rewrite_candidate"
+    },
+    "source_file": "c02-zh-development.json",
+    "rationale": null
+  },
+  {
+    "review_id": "C02-R07",
+    "original_id": "C02D07",
+    "expected": {
+      "utility": "deficit",
+      "support": "sufficient",
+      "action": "explain_tradeoff",
+      "route": "rewrite_candidate"
+    },
+    "source_file": "c02-zh-development.json",
+    "rationale": null
+  },
+  {
+    "review_id": "C02-R08",
+    "original_id": "C02D08",
+    "expected": {
+      "utility": "adequate",
+      "support": "sufficient",
+      "action": "leave_unchanged",
+      "route": "original_exit_owner"
+    },
+    "source_file": "c02-zh-development.json",
+    "rationale": null
+  },
+  {
+    "review_id": "C02-R09",
+    "original_id": "C02D04",
+    "expected": {
+      "utility": "deficit",
+      "support": "sufficient",
+      "action": "compact_preserve",
+      "route": "rewrite_candidate"
+    },
+    "source_file": "c02-zh-development.json",
+    "rationale": null
+  },
+  {
+    "review_id": "C02-R10",
+    "original_id": "C02D12",
+    "expected": {
+      "utility": "outside_scope",
+      "support": null,
+      "action": null,
+      "route": "original_exit_owner"
+    },
+    "source_file": "c02-zh-development.json",
+    "rationale": null
+  },
+  {
+    "review_id": "C02-R11",
+    "original_id": "C02D06",
+    "expected": {
+      "utility": "outside_scope",
+      "support": null,
+      "action": null,
+      "route": "original_exit_owner"
+    },
+    "source_file": "c02-zh-development.json",
+    "rationale": null
+  },
+  {
+    "review_id": "C02-R12",
+    "original_id": "C02D05",
+    "expected": {
+      "utility": "conflict",
+      "support": null,
+      "action": null,
+      "route": "original_exit_owner"
+    },
+    "source_file": "c02-zh-development.json",
+    "rationale": null
+  }
+]
