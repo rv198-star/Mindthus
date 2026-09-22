@@ -30,6 +30,12 @@ def prepare(repo, provider, freeze_path=None):
             name=str(path.relative_to(repo))
             require(path.is_file() and name in freeze['files'], 'unbound or missing method translation')
             require(bool(path.read_text().strip()), 'empty method translation')
+    stage_limits=Limits(**freeze.get('limits',asdict(LIMITS)))
+    stage_limits.validate()
+    excluded=freeze.get('excluded_case_ids',[])
+    require(set(excluded)<=set(c['id'] for c in cases),'unknown excluded case')
+    prior=freeze.get('prior_series_attempts',0)
+    require(2*stage_limits.max_calls+prior<=192,'recovery exceeds original series allocation')
     admissions={}
     for arm,root in roots.items():
         allowlist=set()
@@ -45,15 +51,16 @@ def prepare(repo, provider, freeze_path=None):
                 return {s.id:DecisionResult('ok',values[s.id]) for s in specs}
             def finish(self,*_):return None
         for case in cases:
+            if case['id'] in excluded:continue
             for owner in sorted(c01.METHODS):c01.run(Collector(owner),case[arm],root)
         admissions[arm]={'scope':'c01-language-diagnostic-v1-'+arm,'implementation':implementation_digest(),
-            'provider_configuration':provider_configuration(provider),'limits':asdict(LIMITS),
-            'request_allowlist':sorted(allowlist),'max_cost_usd':96*RESERVE_PER_CALL,
+            'provider_configuration':provider_configuration(provider),'limits':asdict(stage_limits),
+            'request_allowlist':sorted(allowlist),'max_cost_usd':stage_limits.max_calls*RESERVE_PER_CALL,
             'reserve_per_call_usd':RESERVE_PER_CALL,'freeze_sha256':sha(repo/freeze_path),
             'authorization_ref':'Owner: revised steps1-4 with faithful English translation; language-diagnostic/protocol.md'}
-    manifest={'admissions':admissions,'case_ids':[c['id'] for c in cases],'max_total_calls':192,
-        'reserved_ceiling_usd':192*RESERVE_PER_CALL,'total_ceiling_usd':.55,
-        'historical_attempts':85,'historical_reserved_usd':.22848,'semantic_revisions':0,
+    manifest={'admissions':admissions,'case_ids':[c['id'] for c in cases],'max_total_calls':2*stage_limits.max_calls,'excluded_case_ids':excluded,'prior_series_attempts':prior,
+        'reserved_ceiling_usd':(2*stage_limits.max_calls+prior)*RESERVE_PER_CALL,'total_ceiling_usd':.55,
+        'historical_attempts':85+prior,'historical_reserved_usd':.22848+prior*RESERVE_PER_CALL,'semantic_revisions':0,
         'retry_policy':'none','source_language':'Chinese/mixed','comparison':'English derived execution view',
         'purpose':'paired synthetic development diagnostic, no production/holdout/ABC qualification'}
     return manifest,cases,roots
@@ -96,14 +103,24 @@ def run(repo,series,provider,manifest,*,freeze_path=None):
     require(current==manifest,'language admission changed')
     for arm in roots:
         require(read_record(series/arm/'campaign.json')==manifest['admissions'][arm],'language arm changed')
-    original=provider.transport;rows=[];stop=None;last={};resolved=None
+    original=provider.transport;original_validator=provider.validate_runtime
+    def shared_validator(runtime):
+        original_validator(runtime)
+        lock=series/'shared-runtime.json'
+        if lock.exists():
+            require(read_record(lock)==runtime.to_dict(),'resolved runtime drift within trial')
+        else:write_once(lock,runtime.to_dict())
+    provider.validate_runtime=shared_validator
+    cases=[c for c in cases if c['id'] not in manifest['excluded_case_ids']]
+    original_count=len(manifest['case_ids'])
+    rows=[];stop=None;last={};resolved=None
     try:
         for index,case in enumerate(cases):
             arms=('source','english') if index%2==0 else ('english','source')
             for arm in arms:
                 root=series/arm;admission=manifest['admissions'][arm]
                 provider.transport=observed_transport(root,original)
-                with Session(root,provider,scope=admission['scope'],limits=LIMITS,live_admission=admission) as session:
+                with Session(root,provider,scope=admission['scope'],limits=Limits(**admission['limits']),live_admission=admission) as session:
                     report=c01.run(session,case[arm],roots[arm])
                 last[arm]=report;r=report['result']
                 observed={k:r.get(k) for k in ('entry_mode','route','owner')}
@@ -138,9 +155,10 @@ def run(repo,series,provider,manifest,*,freeze_path=None):
                     'action':'continue frozen coverage regardless of ordinary semantic mismatch'})
             if stop:break
         attempts={arm:len(list((series/arm/'calls').glob('*/intent.json'))) for arm in roots}
-        require(sum(attempts.values())<=192,'language total call cap exceeded')
+        require(sum(attempts.values())<=manifest['max_total_calls'],'language total call cap exceeded')
         summary={'analysis':summarize(rows),'rows':rows,'stop_reason':stop,'completed_views':len(rows),
-            'planned_views':64,'unrun':[{'case_id':c['id'],'arm':a} for c in cases for a in roots
+            'planned_views':2*len(cases),'original_planned_views':2*original_count,
+            'excluded_case_ids':manifest['excluded_case_ids'],'unrun':[{'case_id':c['id'],'arm':a} for c in cases for a in roots
                 if not any(r['case_id']==c['id'] and r['arm']==a for r in rows)],
             'attempts':attempts,'total_attempts':sum(attempts.values()),
             'reserved_usd':sum(attempts.values())*RESERVE_PER_CALL,
@@ -153,4 +171,6 @@ def run(repo,series,provider,manifest,*,freeze_path=None):
             'qualification':'development diagnostic only','holdout':'not_run','abc':'not_run'}
         write_once(series/'summary.json',summary)
         return summary
-    finally:provider.transport=original
+    finally:
+        provider.transport=original
+        provider.validate_runtime=original_validator

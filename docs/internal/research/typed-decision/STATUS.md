@@ -5,6 +5,19 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Named backup recovery — frozen, live pending
+
+Original authorization permits OpenRouter backup. Public models GET returned200 while
+native API and GitHub TLSfailed. [Backup amendment](language-diagnostic/backup-recovery.md)
+binds31remaining pairs L02–L32; L01 excluded from both views before backup inference and
+remains native-transport unknown. Same bilingual cases/contracts/labels, no C01 semantic edit.
+Both views use OpenRouterJevProvider, with first observed snapshot locked across all batches.
+Original192call/USD0.55 cap retained: native1 +backup at most190calls. No more recovery on
+technical failure.120targeted;full1204=1197success+7skipped. Mission resumed within existing
+backup authority. Native block below is historical; native trial stays terminal.
+Backup root: `/Users/william/Documents/Codex/2026-09-22/mindthus-c01-language-diagnostic/backup-trial`.
+Freeze: language-diagnostic/backup-freeze.json. No backup inference yet.
+
 ## C01 paired language diagnostic — BLOCKED by connection/TLS failure
 
 Steps1–2 complete:32 new frozen Chinese/English pairs,9full canonical English derived

@@ -388,23 +388,29 @@ class LanguageTrialTests(unittest.TestCase):
             'graph':c01.GRAPH,'files':{name:sha(self.repo/name) for name in names}}))
         self.network=[]
 
-    def execute(self, fail=False, mismatch=False):
+    def execute(self, fail=False, mismatch=False, backup=False, drift=False):
         from unittest.mock import patch
-        from experiments.typed_decision.providers import TypeSafeJevProvider,ProviderError
+        from experiments.typed_decision.providers import TypeSafeJevProvider,OpenRouterJevProvider,ProviderError
         from experiments.typed_decision.session import write_once
         def transport(url,headers,body,timeout):
             self.network.append(body)
             if fail:raise ProviderError('transport_failure')
             values={'entry_mode':'acquire_information' if mismatch else 'direct_execution',
                     'unresolved_obligation':'clear'}
-            return {'model':'jev-1.13.0','answers':{k:{'type':'choice','choice':values[k],
+            return {'model':('typesafe/jev-1.13-20260918' if drift and len(self.network)>1 else
+                'typesafe/jev-1.13-20260917') if backup else 'jev-1.13.0','provider':'TypeSafe','answers':{k:{'type':'choice','choice':values[k],
                 'probabilities':{v:float(v==values[k]) for v in q['criteria']},'confidence':1.0}
                 for k,q in body['questions'].items()},'usage':{'input_tokens':10,'output_tokens':1}}
-        provider=TypeSafeJevProvider(transport=transport)
+        provider=(OpenRouterJevProvider if backup else TypeSafeJevProvider)(transport=transport)
+        if backup:
+            p=self.docs/'freeze.json';f=json.loads(p.read_text())
+            f.update(excluded_case_ids=['F00'],prior_series_attempts=1,
+                     limits={'max_calls':95,'max_seconds':300,'max_request_bytes':98304})
+            p.write_text(json.dumps(f))
         manifest,_,_=self.trial.prepare(self.repo,provider)
         root=Path(self.temp.name)/'trial';write_once(root/'campaign.json',manifest)
         for arm,admission in manifest['admissions'].items():write_once(root/arm/'campaign.json',admission)
-        with patch.dict('os.environ',{'TYPESAFE_API_KEY':'fixture-only'}):
+        with patch.dict('os.environ',{'TYPESAFE_API_KEY':'fixture-only','OPENROUTER_API_KEY':'fixture-only'}):
             result=self.trial.run(self.repo,root,provider,manifest)
         return result,root,provider,manifest
 
@@ -429,6 +435,22 @@ class LanguageTrialTests(unittest.TestCase):
         self.assertEqual(result['total_attempts'],1)
         self.assertEqual(result['stop_reason'],'technical_failure')
         self.assertEqual(len(result['unrun']),63)
+
+    def test_backup_excludes_unknown_native_case_and_shares_original_budget(self):
+        result,root,provider,manifest=self.execute(backup=True)
+        self.assertEqual(result['planned_views'],62)
+        self.assertEqual(result['total_attempts'],60)
+        self.assertEqual(result['excluded_case_ids'],['F00'])
+        self.assertEqual(result['analysis']['complete_pairs'],31)
+        self.assertEqual(manifest['prior_series_attempts'],1)
+        self.assertLessEqual(manifest['max_total_calls']+manifest['prior_series_attempts'],192)
+        self.assertTrue((root/'shared-runtime.json').exists())
+
+    def test_backup_cross_view_snapshot_drift_stops_at_second_batch(self):
+        result,*_=self.execute(backup=True,drift=True)
+        self.assertEqual(result['total_attempts'],2)
+        self.assertEqual(result['stop_reason'],'technical_failure')
+        self.assertEqual(len(self.network),2)
 
     def test_unbound_translation_rejected_before_any_call(self):
         from experiments.typed_decision.providers import TypeSafeJevProvider
