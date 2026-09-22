@@ -1,11 +1,50 @@
 # Typed Decision — recovery entry
 
 Active branch: `experiment/typed-decision-runtime`.
-Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
-Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
+Current remote experiment HEAD before evidence closeout: `b3b4f8df78584ce5c49bcf05a51a4009c5682387`.
+Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`.
+Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current C01 complete path — code delivered; live full-path acceptance incomplete
+## Current C01 completion recovery 2 — N03 and fresh E01 integration gaps closed
+
+[Protocol](c01-completion/recovery-2/protocol.md),
+[disposition](c01-completion/recovery-2/disposition.md),
+[observation](c01-completion/recovery-2/observation.json) and
+[verification](c01-completion/recovery-2/verification.json).
+
+Owner supplied a CPA credential and authorized `deepseek-v4.1-flash` primary with
+`glm-5.3-flash` backup only for technical failure. Credential material is stored only in
+encrypted NexusDock Private Notes. OCI read-only diagnostics first established DNS/TLS success
+and that `Mindthus-C01-integration/1` reaches the CPA auth layer (401 Missing API key), while
+default urllib UA remains Cloudflare 403/code1010. This new fact justified a separate recovery
+identity; all previous terminal records remain unchanged.
+
+Pre-live source `b3b4f8df78584ce5c49bcf05a51a4009c5682387` froze only N03 host recovery plus
+one fresh E01 TypeSafe-Jev→handoff→CPA chain. Offline backup controls PASS; typed-decision/review
+145 PASS; full repository 1229 tests with 0 failures/errors and 5 skips; lifecycle81/81.
+
+Live result:
+- N03: DeepSeek primary completed in2.473s,474prompt/94completion tokens; GLM not invoked.
+  Answer did not invent time/location and asked the responsible person for the missing facts.
+  The historical Jev N03 false block remains unchanged.
+- E01: official TypeSafe Jev1.13.0 used3 new calls, resolved `intervene/wae`,
+  10363input/235output tokens and1.935s inference; DeepSeek host completed in3.015s,
+  2803prompt/188completion tokens; GLM not invoked. The answer correctly separates mechanical
+  schema completeness from evidence/semantic support and leaves the latter to an evidence-aware
+  semantic owner.
+- Offline cached reentry used zero network calls and reproduced `intervene/wae`.
+- 22 immutable live files are hash-bound; exact secret scan PASS; temporary Skill env was cleared.
+
+Thus the two named gaps from the previous completion attempt are closed: N03 now has a host answer
+and E01 now has a genuine fresh full-path observation. This is still **not #211 qualification**:
+L27/L28 historical presentation leakage remains; no independent holdout, genuine current original-A /
+formal A/B/C value comparison, native host skill-load proof, net-value result or production adoption.
+Do not rerun recovery-2. The next decision is whether to spend effort on those remaining acceptance/value
+gates, not another transport retry or semantic prompt loop. #212 remains separately bounded by its own
+historical stop/evidence.
+
+## Previous C01 complete path — code delivered; live full-path acceptance incomplete
 
 [Disposition](c01-completion/disposition.md), [observations](c01-completion/observation.json),
 [verification](c01-completion/verification.json). Entry source9d1f97774; CPA User-Agent recovery0675cc304.

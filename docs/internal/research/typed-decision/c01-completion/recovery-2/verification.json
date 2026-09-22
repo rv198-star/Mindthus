@@ -1,0 +1,78 @@
+{
+  "schema": "mindthus.c01-completion-recovery-2-verification.v1",
+  "source_commit": "b3b4f8df78584ce5c49bcf05a51a4009c5682387",
+  "preflight": {
+    "offline_control": "PASS",
+    "typed_decision_and_review_tests": {
+      "total": 145,
+      "status": "PASS"
+    },
+    "full_suite": {
+      "total": 1229,
+      "failed": 0,
+      "skipped": 5,
+      "log_sha256": "24cc13c5ff8c105da0a91562132ed64fb8523d8a74f14eca068be711eb20f227"
+    },
+    "lifecycle": "81/81",
+    "diff_check": "PASS",
+    "tracked_secret_scan": "PASS"
+  },
+  "read_only_connectivity_before_admission": {
+    "dns": "PASS",
+    "tls": "TLSv1.3",
+    "default_urllib_user_agent": "HTTP403 Cloudflare code1010",
+    "mindthus_user_agent": "HTTP401 JSON Missing API key",
+    "interpretation": "OCI path reached CPA authentication layer; does not rewrite historical transport-failure evidence."
+  },
+  "live": {
+    "n03_primary": "complete",
+    "n03_backup_invoked": false,
+    "e01_routing": "complete; intervene/wae",
+    "e01_host_primary": "complete",
+    "e01_backup_invoked": false,
+    "typesafe_resolved_model": "jev-1.13.0",
+    "exact_secret_scan": "PASS",
+    "temporary_skill_environment": "cleared"
+  },
+  "cached_reentry": {
+    "status": "PASS",
+    "network_calls": 0,
+    "route": "intervene",
+    "owner": "wae"
+  },
+  "record_integrity": {
+    "count": 22,
+    "hashes": {
+      "E01-primary/.chain-lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "E01-primary/handoff.json": "5f8c220ec30c4066b8cf12c98fec0610bdc24169b06cf760b0139141ac9b110e",
+      "E01-primary/host/intent.json": "0c8d6aff5007ea4b10b8ce5bca679bbfdc8da321fdb5a2539d53d58c33266693",
+      "E01-primary/host/outcome.json": "8485f3dac3dd5b33ec4e865eb008933abc9b1a105c6b8df0a3798355d45fa55c",
+      "E01-primary/manifest.json": "5aa98dc7d76a722c76d1f5df608b21c03a7b897ba37c5dbaf2905d5195196066",
+      "E01-primary/routing/.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "E01-primary/routing/calls/582548c42628920d6b405ec3c2c782812d54838ed12a7fb6511ab8bf77bb46f6/intent.json": "1e298ff7e3a2fd25aa505632b259a3956125e58f10105b697cdbeb94a5f7dce8",
+      "E01-primary/routing/calls/582548c42628920d6b405ec3c2c782812d54838ed12a7fb6511ab8bf77bb46f6/outcome.json": "eda05af2f37f358f3cbbcb5f8f041dfa75d04015782c8978462026612d0d0a48",
+      "E01-primary/routing/calls/bb27d579e6cde7041df04f10c276f832a5c4a42a3511bd7f8108a85edc5391b9/intent.json": "144554ccf3904289a32b4a9e1624299fc48e80fe372d6b75b894e8c58402429d",
+      "E01-primary/routing/calls/bb27d579e6cde7041df04f10c276f832a5c4a42a3511bd7f8108a85edc5391b9/outcome.json": "60516dd16c4db8c937e0120019789a253c3aa5a4190448e764c651f6ce2ed468",
+      "E01-primary/routing/calls/d425f578271b34c6162a2996ff522f8835de56be986d277c45ce5e4ccb325ac7/intent.json": "0bf79aa441c6f1db942062e88a83b968b7ead161e715a6d1da24f2b74704342c",
+      "E01-primary/routing/calls/d425f578271b34c6162a2996ff522f8835de56be986d277c45ce5e4ccb325ac7/outcome.json": "90c53ded9edeb43061ec1cdfa7c506b0a9f47613d5705c1077550c48a6e3ee39",
+      "E01-primary/routing/policy.json": "39762fc04aa238af7bea4156f5a0fd7a96231b7577b5bbfcd747cfe36de3a7ea",
+      "E01-primary/routing/resolved-runtime.json": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "E01-primary/routing/runs/70c5e558a285ae610a1589f3211bc03907803d213756598b4ebc30f81186ae0d.json": "6edcae4e0bd56ec6840d3d36ad759f5eabb5572387d1d299cc1e294841f5ccd4",
+      "E01-primary/summary.json": "c708c53d74d4da37413f335e62995cb6d75d688d1872d2ec2b14b81848a8ef10",
+      "E01-summary.json": "7eabc5b5849df7e54d3eede307065dc7934af1fe23ef164e7a9f1eb312d07c5d",
+      "N03-host/primary/intent.json": "94dc3802db8f0e5a8c6d4ecbdd69eb88ace9f2af382f8a3cbfcd14790551861c",
+      "N03-host/primary/outcome.json": "1c81ad6775863f76d26abe51f658ee1243faa89e00b780812b324a647682cb27",
+      "N03-summary.json": "969954588af0a71f1e2567d3cffd89a8cd2e9e51b184bee6c6f769f45c52eb40",
+      "manifest.json": "f91ef172d6280ee46678f0515f7d70fbbed9d679b1b5d73a185b4552356c0111",
+      "summary.json": "47503d3157cc3528fc710b602861379b05bf50d10113ca13c9a82d327e6318f5"
+    }
+  },
+  "qualification": false,
+  "remaining_gates": [
+    "L27/L28 historical presentation defect remains; this recovery did not rerun them.",
+    "No independent holdout.",
+    "No genuine current original-A/formal A/B/C value comparison.",
+    "Native host skill loading remains unobserved.",
+    "Net-value and production-adoption evidence remain incomplete."
+  ]
+}

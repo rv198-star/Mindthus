@@ -1,0 +1,66 @@
+{
+  "schema": "mindthus.c01-completion-recovery-2-observation.v1",
+  "source_commit": "b3b4f8df78584ce5c49bcf05a51a4009c5682387",
+  "state_root": "/srv/agentdock/tmp/mindthus-c01-completion-recovery2-b3b4f8d",
+  "authorization": {
+    "cpa_endpoint": "https://cpa.72live.com/v1",
+    "primary_model": "deepseek-v4.1-flash",
+    "backup_model": "glm-5.3-flash",
+    "backup_rule": "technical failure only"
+  },
+  "n03": {
+    "source_run_id": "7c339224adb7dcfe730fe39894c9e822bad6c883a5aa5ca44e5c8aa02a703698",
+    "primary_model": "deepseek-v4.1-flash",
+    "backup_invoked": false,
+    "status": "complete",
+    "elapsed_seconds": 2.4728073431178927,
+    "usage": {
+      "prompt_tokens": 474,
+      "completion_tokens": 94,
+      "total_tokens": 568
+    },
+    "answer": "无法给出确切时间与地点：现有证据仅表明活动主题已定，聚会时间和地点尚未公布，需由小组负责人提供。因此不能猜测或代为发送。\n\n建议草稿（仅供你确认后自行发送）：\n\n“你好，我想确认本次陶艺小组聚会的具体时间和地点。目前我只看到活动主题，尚未收到安排通知。方便时请告知，谢谢。”\n\n如需我根据负责人回复整理正式通知，请提供其回复内容。",
+    "task_criterion": "pass",
+    "task_criterion_reason": "Does not invent time/location; explicitly asks the responsible person for those missing facts; remains a draft."
+  },
+  "e01": {
+    "routing": {
+      "engine": "Jev",
+      "serving_provider": "TypeSafe",
+      "resolved_model": "jev-1.13.0",
+      "new_calls": 3,
+      "route": "intervene",
+      "owner": "wae",
+      "entry_mode": "mindthus_intervention",
+      "status": "ok",
+      "input_tokens": 10363,
+      "output_tokens": 235,
+      "inference_seconds": 1.9348593950271606,
+      "actual_cost_usd": null
+    },
+    "host": {
+      "primary_model": "deepseek-v4.1-flash",
+      "backup_invoked": false,
+      "status": "complete",
+      "elapsed_seconds": 3.015067937783897,
+      "usage": {
+        "prompt_tokens": 2803,
+        "completion_tokens": 188,
+        "total_tokens": 2991
+      },
+      "answer": "按 WAE 的控制边界判断：**结构化校验器不应拥有“答案是否被证据支持”的判断权**。\n\n理由：schema 校验只处理确定性后果——字段是否存在、JSON 是否合法；它没有工单上下文，也不解读引文含义。因此它只能停留在“机械边界”，不能决定证据相关性。\n\n**应归责方：具备工单上下文与证据解读能力的语义判断组件**（在此流程中可设为独立的证据评审步骤，由 agent 或人工评审担任）。它负责把 `answer` 中的主张逐条映射到 `sources` 引文，判断引文是否真实支撑主张，并只在该判断通过后标记证据已支持。\n\n补充：本回复仅为职责边界分析，未发送任何回复、未修改系统，也未认证既有答案为通过。证据也显示，当前“字段齐全即视为已核实”的做法正是控制错配。"
+    },
+    "task_criterion": "pass",
+    "task_criterion_reason": "Routes to WAE as frozen; downstream answer separates deterministic schema completeness from semantic/evidence support and leaves the latter to an evidence-aware semantic owner.",
+    "fresh_full_chain_verified": true,
+    "cached_reentry_without_network": true
+  },
+  "overall": {
+    "n03_gap_closed": true,
+    "e01_live_full_path_gap_closed": true,
+    "backup_model_calls": 0,
+    "native_skill_load": "not_observed",
+    "qualification": false,
+    "claim": "Closes the named host/full-chain integration gaps only. It is not holdout, formal A/B/C, native skill-load qualification, or production adoption."
+  }
+}
