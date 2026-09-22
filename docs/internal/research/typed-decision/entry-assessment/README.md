@@ -1,5 +1,11 @@
 # C01-next I1 — scoped entry assessment and one correction
 
+**Question-set successor v2:** existing P1/P2 boundaries are clarified under the
+[bounded ablation protocol](boundary-ablation-v2/protocol.md). P3 text and the I1
+execution mechanics stay intact; version/input checks reject cross-contract correction.
+The six-case evidence below remains version 1 and is not rebound to the new questions.
+No default Skill activation or production qualification follows from this revision.
+
 Status: **implemented opt-in engineering slice; small live development validation completed; no production qualification**.
 Design authority: [entry assessment design 0.1](../using-mindthus-assessment-design.md)
 and [ten-rule manual 1.1](../../../../methodologies/typed-decision-principles.md).

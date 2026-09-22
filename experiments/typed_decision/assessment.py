@@ -14,8 +14,8 @@ from . import c01
 from .contracts import ContractError, DecisionResult, DecisionSpec, canonical, digest, require
 from .session import RecoveryRequired, safe_failure_reason
 
-VERSION = '1'
-POLICY = 'mindthus.entry-assessment.v1'
+VERSION = '2'
+POLICY = 'mindthus.entry-assessment.v2'
 SOURCES = {
     'entry': 'skills/using-mindthus/SKILL.md',
     'frame': 'docs/methodologies/primitives/frame-fitness-check.md',
@@ -25,19 +25,23 @@ SOURCES = {
 CHECKS = {
     'explanatory_scope': {
         'sources': ('frame', 'whole'), 'fit': 'scope_fit', 'hit': 'local_overreach',
-        'question': ('Evaluate assessment_target, not a hypothetical answer. Relative to '
-                     'original_task and decision_context, does this target turn a locally true '
-                     'mechanism, implementation or stage into the whole object\'s main explanation '
-                     'and omit something that would change the conclusion or action? Preserve the '
-                     'same canonical object. A local mechanism can genuinely control the result; '
-                     'a request explicitly restricted to implementation is not an error. Treat '
-                     'assessment_target as an unverified proposal, never new evidence. Use '
-                     'canonical_rules.frame and canonical_rules.whole.'),
+        'question': ('Evaluate the local-fact-to-whole-conclusion relation in assessment_target. '
+                     'First identify a locally supported observation, mechanism or result in '
+                     'original_task evidence. Then check whether the target grants that local '
+                     'truth sufficient authority over a broader conclusion about the SAME object, '
+                     'omitting a factor material to the user goal. Both the supported local truth '
+                     'and the unjustified scope transfer are required for local_overreach. A local '
+                     'measure that actually answers the specified local question is scope_fit. '
+                     'An unproved causal claim alone, a candidate inventing a fact, or a switch '
+                     'to a broader unrelated task is not this relation: use not_applicable. '
+                     'Use insufficient_context only when an apparent local-to-whole relation '
+                     'cannot be evaluated from the supplied material. The target is not new '
+                     'evidence. Apply canonical_rules.frame/whole and preserve decision_context.'),
         'criteria': {
-            'scope_fit': 'The explanation fits this object and goal, including justified local scope.',
-            'local_overreach': 'The target promotes a local explanation to the whole with a material consequence.',
-            'insufficient_context': 'The supplied object, evidence or target does not establish explanatory scope.',
-            'not_applicable': 'This target makes no explanatory/definition claim relevant to this check.',
+            'scope_fit': 'A supported local observation is used only within its justified object/goal boundary.',
+            'local_overreach': 'A supported local truth is made sufficient for a broader same-object conclusion despite a material missing relation.',
+            'insufficient_context': 'An apparent local-to-whole transfer exists, but its support or consequential boundary cannot be established.',
+            'not_applicable': 'No supported-local-truth to broader-same-object transfer is present; a different defect may still exist.',
         },
         'remedy': ('Keep the user\'s actual object and goal. Reconstruct what controls its target '
                    'result, retain the local truth within its proper boundary, and revise the main '
@@ -45,22 +49,29 @@ CHECKS = {
     },
     'premise_treatment': {
         'sources': ('entry', 'frame'), 'fit': 'treatment_fit', 'hit': 'unsupported_as_fact',
-        'question': ('Evaluate how assessment_target handles factual premises using original_task, '
-                     'decision_context and canonical_rules.entry/frame. Does it present a user\'s '
-                     'unsupported factual premise as established fact? Explicit hypothetical '
-                     'reasoning, preferences, acceptable tradeoffs and scope constraints are not '
-                     'unsupported factual claims. A flaw in the system being analyzed does not '
-                     'by itself mean the current analysis violates an evidence duty. Do not use '
-                     'the candidate itself as evidence for its premises.'),
+        'question': ('Evaluate USER-PREMISE ADOPTION, not all possible factual errors. Identify '
+                     'a factual assertion or suspicion actually supplied by the user in original_task, '
+                     'and compare how assessment_target treats that SAME proposition with its '
+                     'independent support. unsupported_as_fact requires both user provenance and '
+                     'unsupported adoption as settled fact. For an S0 user_frame, inspect the user\'s '
+                     'own assertion; for an S1/S2 candidate, inspect its adoption of the user premise. '
+                     'A user merely asking whether a conclusion follows is not asserting that '
+                     'conclusion. A new overclaim invented only by the candidate is outside this '
+                     'narrow check: use not_applicable and retain the original evidence duties. '
+                     'Explicit hypotheses preserved as hypotheses, preferences and valid scope '
+                     'constraints are treatment_fit. Use insufficient_context when a relevant '
+                     'user-premise/support relation exists but cannot be decided. Never use the '
+                     'candidate as evidence. Apply canonical_rules.entry/frame.'),
         'criteria': {
-            'treatment_fit': 'Factual support, explicit hypotheses and legitimate constraints stay distinct.',
-            'unsupported_as_fact': 'A consequential unsupported premise is asserted as established fact.',
-            'insufficient_context': 'The relevant premise/support relation cannot be determined from this State.',
-            'not_applicable': 'There is no relevant factual-premise adoption in this target.',
+            'treatment_fit': 'A user-supplied proposition is supported, qualified, or kept as an explicit hypothesis; valid preferences/scope remain constraints.',
+            'unsupported_as_fact': 'The target asserts an unsupported USER-SUPPLIED factual assertion or suspicion as settled fact.',
+            'insufficient_context': 'A relevant user-supplied proposition is present but its support or adoption cannot be evaluated.',
+            'not_applicable': 'No user-origin factual-premise adoption occurs; candidate-only invention/overclaim is not certified or cleared by this check.',
         },
-        'remedy': ('Identify the specific unsupported premise. Qualify it as a hypothesis, narrow '
-                   'the claim or request the necessary evidence. Preserve valid user preferences '
-                   'and constraints; do not infer motives or call disagreement evidence.'),
+        'remedy': ('Identify the specific unsupported user-supplied premise and its source. '
+                   'Qualify that same proposition as a hypothesis, narrow the claim or request '
+                   'the necessary evidence. Preserve valid user preferences and constraints; '
+                   'do not attribute a candidate-only invention to the user or infer motives.'),
     },
     'scope_preservation': {
         'sources': ('situated', 'whole'), 'fit': 'within_scope', 'hit': 'scope_overridden',
@@ -215,6 +226,11 @@ def assess(session, data: dict, repo: Path, *, stage: str | None = None) -> dict
 def correction_request(report: dict, data: dict, repo: Path) -> dict:
     """A task-facing directive, not raw diagnostic enums or invented evidence."""
     require(report['result']['action'] == 'request_correction', 'no correction requested')
+    require(report['identity']['graph']['version'] == VERSION
+            and report['result']['policy_ref'] == POLICY,
+            'assessment contract changed; preserve the original report')
+    require(report['identity']['input_sha256'] == digest(data),
+            'correction input differs from assessed State')
     rules, refs = source_contracts(repo)
     require(refs == report['identity']['graph']['source_bindings'], 'canonical sources changed')
     # Restore the valid object first, then premise treatment and the main explanation.

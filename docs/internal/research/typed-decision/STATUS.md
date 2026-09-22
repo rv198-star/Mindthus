@@ -6,7 +6,21 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — six-case live validation reviewed and archived; retain experimental
+## Current successor — P1/P2 boundary v2 and bounded physical question ablation
+
+Owner approved the existing-question boundary/marginal-value successor after the six-case
+closeout. Task: `tsk_b6b77338b7f10bf1`. Baseline: `c1500da7d4f051420f73ae323c341a9db34b6142`.
+Read [the pre-results protocol](entry-assessment/boundary-ablation-v2/protocol.md).
+P1 requires supported local truth promoted to a broader same-object conclusion; P2 requires
+unsupported user-origin premise adoption; P3 text is unchanged. The question-set/policy is v2;
+old report/input versions cannot be consumed by the new correction instructions.
+Eight new authored controls compare full, drop-P1, drop-P2 and drop-P3 with identical State.
+The no-check reference retains the existing candidate and evidence duties, not original-A.
+Physical reduced-question calls and zero-call output projection are reported separately.
+No new question bank, default activation, old-batch replay or production claim. New live
+execution requires this successor's committed source/freeze and completed offline preflight.
+
+## Previous checkpoint — six-case live validation reviewed and archived; retain experimental
 
 The terminal development batch is bound to source
 `a0a32c989bf9445e69e4b9abfce88a83380f1be7` and admission freeze
