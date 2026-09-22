@@ -5,6 +5,23 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current state — proxy restored; 14 pairs measured, response validation blocked
+
+User instructed changing proxy and continuing. Explicit process HTTP(S) proxy127.0.0.1:7890
+restored TypeSafe inference; no global setting/source change. Freeze09df47726 and
+[disposition](language-diagnostic/proxy-disposition.md), [observations](language-diagnostic/proxy-observation.json).
+45calls:44accepted,1response rejected;14valid pairs L03–L16. Same-pair source13/14,
+English11/14;10both-correct/1English-only/3source-only. No overall language claim.
+L17/source failed distribution normalization: J2 probabilities0.93+0.05+0.01=0.99.
+Official docs specify sum1 without documented precision tolerance; rounding unconfirmed.
+Do not normalize silently, relax contract or retry this terminal root.31recovery views unrun;
+L01/L02 oldunknown attempts preserved. New wire usage141059input/3948output, estimate
+USD0.005924478; actualbilling unknown. Series47attempts/reserveUSD0.126336;
+historical132/reserveUSD0.354816. C02/holdout/ABC not run. No semantic revision.
+Same source:120targeted,1204full (1197success+7skip),81/81lifecycle; no redundant reruns.
+Next prerequisite: justified response-precision policy/provider fix before bounded continuation.
+Previous checkpoints below are historical, not instructions to rerun a terminal script.
+
 ## Final current state — steps1–2 ready; live diagnosis BLOCKED
 
 See [final disposition](language-diagnostic/backup-disposition.md),
