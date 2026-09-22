@@ -1,0 +1,18 @@
+{
+  "schema": "mindthus.c01-label-review-attempt.v1",
+  "admission_commit": "1f8889c95ba075c56d2db77eb5506bd40f45dc5a",
+  "model": "glm-5.3-flash",
+  "endpoint": "https://cpa.72live.com/v1/chat/completions",
+  "transport_path": "NexusDock.exec_command; direct approved process environment, no alternate secret transfer",
+  "status": "platform_tool_rejected_before_command",
+  "provider_response_observed": false,
+  "trial_root_observed": false,
+  "provider_intent_observed": false,
+  "provider_outcome_observed": false,
+  "new_model_calls_observed": 0,
+  "subsequent_transport_retry": false,
+  "alternate_credential_path_used": false,
+  "review_labels_available": false,
+  "next_admission_requires": "platform-permitted authorized call; do not replay or bypass blocked tool calls",
+  "note": "Tool-level rejection is not Jev/GLM semantic failure or CPA outage."
+}

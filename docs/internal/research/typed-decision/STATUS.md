@@ -6,6 +6,22 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current formal evaluation — executable review and baseline preflight; live review blocked
+
+Current recovery entry: [formal-abc/RECOVERY.md](formal-abc/RECOVERY.md).
+Function source `ae96281f`: task-facing handoff no longer serializes the diagnostic proposal;
+rejection, uncertainty, failure, original task and full method contracts are preserved.
+C01 graph4 and provider semantics unchanged; live wording effectiveness not yet tested.
+New label-review executor frozen at `1f8889c95`, 10 controls plus7 blind-packet tests PASS.
+Its direct CPA invocation was blocked by platform safety before command execution; no
+review result or new model call observed. No alternative credential path used.
+Genuine main1527f32 Mindthus1.10.1 plugin installed/enabled in isolated Codex profile,
+290 files exact. Codex rejects chat wire API; responses config parses but CPA Responses
+compatibility and actual native task execution remain unverified. No surrogate original-A.
+25 handoff/host tests and fresh full1235 (1230 success/5skip) PASS; lifecycle81/81.
+18 candidates remain provisional; checked/final owner scoring separated; H14 not no-match.
+No formal ABC admission or qualification. Preserve all old terminal trials.
+
 ## Current C01 formal comparison — recovered to pre-results review admission
 
 Task `tsk_9fba19b015e7e9d7`, step `freeze`. See [exact recovery checkpoint](formal-abc/RECOVERY.md)

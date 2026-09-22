@@ -1,0 +1,34 @@
+{
+  "schema": "mindthus.c01-task-facing-handoff-evidence.v1",
+  "runtime_sha256": "3a6f41feee22d4ab0524e427bb179f5810c0c6dec56989305bb864180e8845bf",
+  "semantic_graph_changed": false,
+  "J1_J2_J4_J5_changed": false,
+  "engine_provider_changed": false,
+  "audited_bundle_schema_changed": false,
+  "public_host_view_changed": true,
+  "candidate_or_label_changed": false,
+  "live_presentation_feedback": "not_run",
+  "offline_handoff_host_checks": {
+    "total": 25,
+    "failed": 0,
+    "new_tests": 6
+  },
+  "old_live_trials": "preserved; no rerun; their old frozen runtime intentionally differs",
+  "source_commit": "ae96281f4625e9729007dd4d36e838fa26477dd4",
+  "full_suite": {
+    "total": 1235,
+    "successful": 1230,
+    "skipped": 5,
+    "failed": 0,
+    "exit_code": 0,
+    "test_runner_seconds": 133.205,
+    "log_sha256": "ca30628e838a6a0cacfebbd5a3a8421f660af11ce7bfcfb0fd804a7b1445232c"
+  },
+  "additional_review_tests": {
+    "single_call_controls": 10,
+    "blind_packet_controls": 7,
+    "failed": 0
+  },
+  "lifecycle": "81/81",
+  "changed_source_secret_scan": "PASS; existing unchanged TPlan secret-shaped rejection fixture is historical test data"
+}

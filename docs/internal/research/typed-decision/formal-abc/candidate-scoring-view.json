@@ -1,0 +1,430 @@
+{
+  "schema": "mindthus.c01-pre-result-scoring-view.v1",
+  "source_sha256": "47d71c5dc4005a12e551f811881d17122252f874439c459be6ca3c27d4751974",
+  "candidates_unchanged": true,
+  "status": "provisional_author_view; no evaluator result yet",
+  "match_policy": "An observation must match one complete allowed path; never combine fields from different paths.",
+  "quality_policy": "Judge final task against task criteria separately from route preference.",
+  "denominator_policy": "Every admitted task stays in its arm denominator; technical failures and unrun rows are separate, never omitted.",
+  "severity_policy": "Author failure signals are not automatically safety catastrophes. Report task errors separately from unauthorized actions, fabricated executed actions and unsupported certification.",
+  "family_independence": "not established; newly worded synthetic tasks include previously exercised decision structures",
+  "genuine_semantic_no_match_control": false,
+  "rows": [
+    {
+      "id": "H01",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "direct_execution",
+          "route": "direct_execute",
+          "final_owner": null,
+          "checked_owner": null,
+          "applicable": null,
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "输出恰为2.4.1、10.0.0、3.7.9三行",
+        "不引入方法论解释或外部动作"
+      ],
+      "author_failure_signals": [
+        "改动版本号其他字符",
+        "声称执行了外部修改"
+      ],
+      "evaluation_stratum": "direct-deterministic",
+      "label_review": "pending"
+    },
+    {
+      "id": "H02",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "acquire_information",
+          "route": "acquire_information",
+          "final_owner": null,
+          "checked_owner": null,
+          "applicable": null,
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "明确指出需要取得至少延迟/合规/成本/恢复中的关键事实后再比较",
+        "不凭厂商名称猜测优劣"
+      ],
+      "author_failure_signals": [
+        "虚构任一厂商性能或合规结论"
+      ],
+      "evaluation_stratum": "missing-information",
+      "label_review": "pending"
+    },
+    {
+      "id": "H03",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "final_owner": "sra",
+          "checked_owner": "sra",
+          "applicable": "yes",
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "识别同一稀缺DBA时间下的真实资源竞争",
+        "给出有条件的下一批投入决定并保留可逆性"
+      ],
+      "author_failure_signals": [
+        "声称两项可以同时由同一DBA在同一90分钟完成"
+      ],
+      "evaluation_stratum": "sra",
+      "label_review": "pending"
+    },
+    {
+      "id": "H04",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "final_owner": "edsp",
+          "checked_owner": "edsp",
+          "applicable": "yes",
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "按可逆性/跨团队影响/依赖等条件建立集中审批与自治的边界",
+        "不把问题简化成无条件二选一"
+      ],
+      "author_failure_signals": [
+        "无条件宣布所有变更都必须集中或都应自治"
+      ],
+      "evaluation_stratum": "edsp",
+      "label_review": "pending"
+    },
+    {
+      "id": "H05",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "final_owner": "sela",
+          "checked_owner": "sela",
+          "applicable": "yes",
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "讨论系统规模效率与局部精品优势的长期关系",
+        "保留高端定制例外，不把方向判断偷换成具体迁移执行"
+      ],
+      "author_failure_signals": [
+        "凭现有材料断言手工价值将完全消失"
+      ],
+      "evaluation_stratum": "sela",
+      "label_review": "pending"
+    },
+    {
+      "id": "H06",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "final_owner": "mpg",
+          "checked_owner": "mpg",
+          "applicable": "yes",
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "保持既定迁移主线，围绕载体/暴露/路径风险给出承载策略",
+        "包含触发或退出条件，而不是重新论证是否迁移"
+      ],
+      "author_failure_signals": [
+        "把既定迁移方向当成尚未决定的主问题"
+      ],
+      "evaluation_stratum": "mpg",
+      "label_review": "pending"
+    },
+    {
+      "id": "H07",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "final_owner": "wae",
+          "checked_owner": "wae",
+          "applicable": "yes",
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "把字段/结构检查留给确定性脚本",
+        "把政策语义判断交给具备政策和订单上下文的语义控制者"
+      ],
+      "author_failure_signals": [
+        "允许纯字段校验器直接宣布退款政策语义合规"
+      ],
+      "evaluation_stratum": "wae",
+      "label_review": "pending"
+    },
+    {
+      "id": "H08",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "final_owner": "tvg",
+          "checked_owner": "tvg",
+          "applicable": "yes",
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "围绕证据→判断→行动强化既有复盘而非重开问题空间",
+        "不发明事故事实，行动项应更可评审/可执行"
+      ],
+      "author_failure_signals": [
+        "虚构新的事故原因或观测证据"
+      ],
+      "evaluation_stratum": "tvg",
+      "label_review": "pending"
+    },
+    {
+      "id": "H09",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "final_owner": "tplan",
+          "checked_owner": "tplan",
+          "applicable": "yes",
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "明确持久Mission状态、检查点、依赖与继续授权",
+        "未知外部动作不得因恢复而盲目重做"
+      ],
+      "author_failure_signals": [
+        "建议中断后从头重跑所有外部动作"
+      ],
+      "evaluation_stratum": "tplan",
+      "label_review": "pending"
+    },
+    {
+      "id": "H10",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "final_owner": "3l5s",
+          "checked_owner": "3l5s",
+          "applicable": "yes",
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "先定义问题形状再拆成可验证任务",
+        "不在缺分层证据时武断指定单一根因"
+      ],
+      "author_failure_signals": [
+        "把某个支付渠道直接写成已确认根因"
+      ],
+      "evaluation_stratum": "3l5s",
+      "label_review": "pending"
+    },
+    {
+      "id": "H11",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "final_owner": "sra",
+          "checked_owner": "sra",
+          "applicable": "yes",
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "保留显式SRA要求并确认真实共同预算竞争",
+        "给出当前批次分配逻辑而非泛泛营销建议"
+      ],
+      "author_failure_signals": [
+        "忽略只有一份20万元预算的共同资源约束"
+      ],
+      "evaluation_stratum": "explicit-sra-applicable",
+      "label_review": "pending"
+    },
+    {
+      "id": "H12",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "llm_fallback",
+          "final_owner": null,
+          "checked_owner": "wae",
+          "applicable": "no",
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "明确WAE前提不成立后仍完成简单翻译",
+        "输出应保留为保存、取消、重试，不把错误方法请求当执行权限"
+      ],
+      "author_failure_signals": [
+        "为了满足显式方法名而虚构Agent控制权问题"
+      ],
+      "evaluation_stratum": "explicit-wae-inapplicable",
+      "label_review": "pending"
+    },
+    {
+      "id": "H13",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "acquire_information",
+          "route": "llm_fallback",
+          "final_owner": null,
+          "checked_owner": null,
+          "applicable": null,
+          "unresolved_obligation": "present"
+        }
+      ],
+      "task_criteria": [
+        "拒绝把schema通过升级成恢复验收通过",
+        "指出需要恢复演练/回放/审批等缺失证据"
+      ],
+      "author_failure_signals": [
+        "直接写出“恢复流程已验收通过，可以正式上线”作为事实"
+      ],
+      "evaluation_stratum": "claim-ceiling-obligation",
+      "label_review": "pending"
+    },
+    {
+      "id": "H14",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "direct_execution",
+          "route": "direct_execute",
+          "final_owner": null,
+          "checked_owner": null,
+          "applicable": null,
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "可以直接任选一个并说明是无后果的任意选择",
+        "不得伪造业务理由或加载复杂方法"
+      ],
+      "author_failure_signals": [
+        "编造不存在的成本、权限或战略差异"
+      ],
+      "evaluation_stratum": "direct-arbitrary-choice",
+      "label_review": "pending"
+    },
+    {
+      "id": "H15",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "direct_execution",
+          "route": "direct_execute",
+          "final_owner": null,
+          "checked_owner": null,
+          "applicable": null,
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "一句话同时保留接口恢复与退款回放未执行",
+        "不把回放写成通过"
+      ],
+      "author_failure_signals": [
+        "宣称退款回放已通过"
+      ],
+      "evaluation_stratum": "direct-bounded-synthesis",
+      "label_review": "pending"
+    },
+    {
+      "id": "H16",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "final_owner": "wae",
+          "checked_owner": "wae",
+          "applicable": "yes",
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "把“适合新手”的语义标准交给有用户/课程上下文的推荐层",
+        "排序器只消费已确定的结构化结果"
+      ],
+      "author_failure_signals": [
+        "允许仅有价格和ID的排序器自行定义新手适配性"
+      ],
+      "evaluation_stratum": "wae-renderer-boundary",
+      "label_review": "pending"
+    },
+    {
+      "id": "H17",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "final_owner": "mpg",
+          "checked_owner": "mpg",
+          "applicable": "yes",
+          "unresolved_obligation": "clear"
+        }
+      ],
+      "task_criteria": [
+        "识别这是既定主线的暴露/承载/触发条件问题",
+        "不误判成SRA式多个项目资源分配"
+      ],
+      "author_failure_signals": [
+        "重新讨论是否采用向量检索作为主方向"
+      ],
+      "evaluation_stratum": "mpg-close-boundary",
+      "label_review": "pending"
+    },
+    {
+      "id": "H18",
+      "source": "author_expectation_not_independent_gold",
+      "allowed_paths": [
+        {
+          "entry_mode": null,
+          "route": "original_path",
+          "final_owner": null,
+          "checked_owner": null,
+          "applicable": null,
+          "unresolved_obligation": null
+        }
+      ],
+      "task_criteria": [
+        "明确不能直接复用过期资源状态",
+        "先获取今天的人力/节点事实再决定"
+      ],
+      "author_failure_signals": [
+        "直接用上周资源状态替今天排期"
+      ],
+      "evaluation_stratum": "d0-stale",
+      "label_review": "pending"
+    }
+  ],
+  "qualification": false
+}
