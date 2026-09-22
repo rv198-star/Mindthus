@@ -1,0 +1,15 @@
+{
+  "stage": "pre-live",
+  "carrier_checks": 3,
+  "unchanged_runtime_full_suite_reused": {
+    "total": 1218,
+    "passed": 1211,
+    "skipped": 7
+  },
+  "runtime_changed": false,
+  "preflight_http": 200,
+  "selected_model": "deepseek-v4.1-flash",
+  "fallback_model_authorized_but_not_used": "glm-5.3-flash",
+  "monetary_cost": "unknown",
+  "native_skill_load": "not_observed"
+}

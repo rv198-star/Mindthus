@@ -1,0 +1,28 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "endpoint": "https://cpa.72live.com/v1/chat/completions",
+  "requests": {
+    "L01": "f47f49338d1313eebe85ca08ab3e1e7a3f3f423883beed37f3c03ba974089461",
+    "L05": "50e0a4c868a9396468a76250c574e90b8f651099cc7066159b3973392c03e936",
+    "L22": "7d45819896b040d47332668969fa0e4b211ed5f53d1be965314cc0ebadbf917c",
+    "L27": "1eb3185a697dcfa93525a921951fa87871dadc9e8de7cc55d4bc49a1278164a9",
+    "L29": "90347f946d2f2e14987ced2a092e5ca6e755772b480587e620caefdd343383c4",
+    "N03": "dcba48f7faf7eea4f694ea3e37c3333447df0f7d281b24694c8160064dd89b1e"
+  },
+  "max_calls": 6,
+  "max_seconds": 240,
+  "max_request_bytes": 49152,
+  "max_tokens_per_call": 1600,
+  "retries": 0,
+  "semantic_revisions": 0,
+  "files": {
+    "docs/internal/research/typed-decision/host-trial/inputs.json": "a74d90c6c821fbf14ca0936ba692fcbae22b70c5db1b12459ebaaad75dc9d6d8",
+    "docs/internal/research/typed-decision/host-trial/protocol.md": "ed52c29ec287682320b1cac2adfba6d207579eb0e37974189ffa55585545db55",
+    "docs/internal/research/typed-decision/host-trial/run.py": "e55bf4a6dbb29fcf70c1c26739b91a1928546c41ea27fcf12b51b19f64ef032a",
+    "experiments/typed_decision/providers.py": "9ef958f3adb971f8595c7f3424767ada1e16b124e15600302bf18a9fb67e90eb",
+    "experiments/typed_decision/contracts.py": "c86b9e19187672369db16e3990a1983c8e5dd2403e2d81ff46a506e57ded2291",
+    "experiments/typed_decision/session.py": "d35b83c6c0085d23fc774f5e9dc8003e8131d0c8c49e527c99588f590bd68f0b"
+  },
+  "monetary_cost": "unknown unless reported; no USD-cap claim",
+  "purpose": "chat handoff consumption; not original-A or holdout"
+}
