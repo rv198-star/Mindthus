@@ -5,7 +5,28 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current C01 complete path — implementation ready, fixed feedback pending
+## Current C01 complete path — code delivered; live full-path acceptance incomplete
+
+[Disposition](c01-completion/disposition.md), [observations](c01-completion/observation.json),
+[verification](c01-completion/verification.json). Entry source9d1f97774; CPA User-Agent recovery0675cc304.
+Fixed5: L27/L28 rejected-method explanations and L22 task criteriaPASS; N03transport failure;
+E01freshroute+host unrun. Thus3pass/1technical/1unrun, not overall3/3. L27/L28 also expose internal
+fields against host presentation instruction; retain this defect,0prompt tuning. No newJev call.
+Initialbatch:1CPA HTTP403 and4unrun. Read-only UA differential403vs401 identified omitted prior
+successful client identifier. One named technical recovery:3complete responses thenN03transport
+failure,15.655sec; terminal with no further retry/GLM. Originalfreeze/trial preserved.
+5CPA attempts overall(3complete/2technical),known8289input/394output; failedusage and allcharges unknown.
+Historical attempts299 across different studies. Finalfull1229(1222success/7skip),81/81lifecycle,
+2driver checks beforelive;19immutableJSON verified,5localintents resolved,externalfailed outcome unknown.
+Exact-key scans and recoveryfreezePASS,credentialprocesses exited. E1/E2 boundeddelivery supported;
+E3actual fresh full-chain evidence absent. This Mission stops incomplete, not completed qualification.
+Runtime `/Users/william/Documents/Codex/2026-09-22/mindthus-c01-completion/mission` is blocked;
+E1/E2 acceptance and E3 failure recorded through scripts; terminal report/SVG rendered.
+Complete path/cachedreentry proven with mocks only. #211unqualified/#212conditional,mainunchanged.
+Next evidence gap is genuineE01chain and missingN03host result after a separately justified technical
+recovery; do not rerun terminalbatches. No autonomous platform expansion or semantic prompt loop.
+
+## Previous C01 complete path — implementation ready, fixed feedback pending
 
 Owner requested uninterrupted continuation. [Runnable entry](c01-completion/README.md),
 [fixed protocol](c01-completion/protocol.md). Handoffv2 retains verified J5 candidate contract and

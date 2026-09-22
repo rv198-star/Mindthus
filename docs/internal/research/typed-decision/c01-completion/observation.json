@@ -1,0 +1,196 @@
+{
+  "schema": "mindthus.c01-completion-observation.v1",
+  "implementation_source": "0675cc304",
+  "initial_source": "9d1f97774",
+  "initial": {
+    "cached_reentry_verified": false,
+    "complete": false,
+    "native_skill_load": "not_observed",
+    "new_host_attempts": 1,
+    "new_jev_attempts": 0,
+    "qualification": false,
+    "rows": [
+      {
+        "case_id": "L27",
+        "host": {
+          "answer": null,
+          "cost_usd": null,
+          "elapsed_seconds": 0.5985382920043776,
+          "error": "ProviderError:http_403",
+          "native_skill_load": "not_observed",
+          "status": "failed",
+          "usage": {}
+        },
+        "source": "historical-routing/new-handoff"
+      }
+    ],
+    "stop_reason": "host_failed",
+    "unrun": 4,
+    "wall_seconds": 0.6024630419997266
+  },
+  "technical_recovery": {
+    "cached_reentry_verified": false,
+    "complete": false,
+    "native_skill_load": "not_observed",
+    "new_host_attempts": 4,
+    "new_jev_attempts": 0,
+    "qualification": false,
+    "rows": [
+      {
+        "case_id": "L27",
+        "host": {
+          "answer": "“WAE”是面向智能体/工作流控制边界的判断方法，不适用于普通排序任务。这里的任务只是把四个书架标签按字母排序，属于确定性操作，不涉及控制器错配或语义归属；即便该契约状态为 ok 且 value 为 no，也说明它与本任务不匹配，不能据此应用。\n\n依据证据，完整 ID 为 D、A、C、B，字母顺序应为：\n\n**A、B、C、D**\n\n仅提供文字建议，不移动任何书籍。",
+          "cost_usd": null,
+          "elapsed_seconds": 4.231726042009541,
+          "finish_reason": "stop",
+          "native_skill_load": "not_observed",
+          "reported_model": "deepseek-v4.1-flash",
+          "status": "complete",
+          "usage": {
+            "completion_tokens": 110,
+            "prompt_tokens": 2825,
+            "total_tokens": 2935
+          }
+        },
+        "source": "historical-routing/new-handoff"
+      },
+      {
+        "case_id": "L28",
+        "host": {
+          "answer": "这里的 `fallback_method_check` 显示 MPG 的状态为“ok”，但取值为“no”，两者并不矛盾：MPG 适用于“主线方向 + 载体/路径 + 集中暴露 + 继续/承诺/退出”这类战略路径判断，而本任务只是对给定乐谱文本做术语替换。任务与该方法契约不匹配，因此不应套用 MPG。\n\n按任务本身处理，仅输出替换结果：\n\nPractice the first phrase, then practice the second phrase.",
+          "cost_usd": null,
+          "elapsed_seconds": 2.9431305410107598,
+          "finish_reason": "stop",
+          "native_skill_load": "not_observed",
+          "reported_model": "deepseek-v4.1-flash",
+          "status": "complete",
+          "usage": {
+            "completion_tokens": 104,
+            "prompt_tokens": 2680,
+            "total_tokens": 2784
+          }
+        },
+        "source": "historical-routing/new-handoff"
+      },
+      {
+        "case_id": "L22",
+        "host": {
+          "answer": "应在**推荐层（agentic 语义层）**最终确定排序依据，而不是让通用渲染器决定。\n\n理由：候选信息虽完整，但“更适合初学者”是语义判断，渲染器本应只做展示。它按价格或步骤数排序，说明该选择已从语义所有者泄漏到下游机械组件——即**语义所有权泄漏**。渲染器对同一模糊短语可产生多种合理结果，不具备唯一确定性，因此不应掌握该控制权。\n\n修复方式：推荐层明确输出结构化适宜性标准（如“初学者”的显式维度与权重），冻结该选择后再交给渲染器。当结构化输入能唯一决定行为、无需域判断时，即达**机械边界**，渲染器才可接管。\n\n人类升级仅在高风险、不可逆或超出授权时需要，此处低风险且可逆，无需人工介入。",
+          "cost_usd": null,
+          "elapsed_seconds": 3.426184916999773,
+          "finish_reason": "stop",
+          "native_skill_load": "not_observed",
+          "reported_model": "deepseek-v4.1-flash",
+          "status": "complete",
+          "usage": {
+            "completion_tokens": 180,
+            "prompt_tokens": 2784,
+            "total_tokens": 2964
+          }
+        },
+        "source": "historical-routing/new-handoff"
+      },
+      {
+        "case_id": "N03",
+        "host": {
+          "answer": null,
+          "cost_usd": null,
+          "elapsed_seconds": 5.026938625000184,
+          "error": "ProviderError:transport_failure",
+          "native_skill_load": "not_observed",
+          "status": "failed",
+          "usage": {}
+        },
+        "source": "historical-routing/new-handoff"
+      }
+    ],
+    "stop_reason": "host_failed",
+    "unrun": 1,
+    "wall_seconds": 15.65483949999907
+  },
+  "evaluation": {
+    "reviewer": "parent agent, nonblind, predefined task criteria",
+    "grades": [
+      {
+        "case_id": "L27",
+        "task_criteria": "pass",
+        "reason": "Explains deterministic sorting lacks WAE control judgment; returns A B C D; no missing-tool excuse.",
+        "presentation_defect": "Narrates internal status=ok/value=no despite host system instruction."
+      },
+      {
+        "case_id": "L28",
+        "task_criteria": "pass",
+        "reason": "Distinguishes text replacement from MPG mainline/carrier/exposure/path judgment; exact replacement text retained.",
+        "presentation_defect": "Exposes fallback_method_check and status/value despite host system instruction."
+      },
+      {
+        "case_id": "L22",
+        "task_criteria": "pass",
+        "reason": "Recommendation layer decides suitability; renderer gets determined structured criteria; no claim of external modification."
+      },
+      {
+        "case_id": "N03",
+        "task_criteria": "not_observed_technical_failure",
+        "reason": "ProviderError:transport_failure, no answer or usage. Original Jev false block unchanged; earlier host recovery evidence remains historical."
+      },
+      {
+        "case_id": "E01",
+        "task_criteria": "unrun",
+        "routing": "unrun",
+        "reason": "Technical stop before fresh native routing; no genuine complete-path or paid cached-reentry evidence."
+      }
+    ],
+    "passed": 3,
+    "technical_failure": 1,
+    "unrun": 1,
+    "denominator": 5,
+    "presentation_instruction_failures": [
+      "L27",
+      "L28"
+    ],
+    "full_path_live_verified": false,
+    "qualification": false
+  },
+  "accounting": {
+    "host_attempts_total": 5,
+    "host_complete": 3,
+    "host_failed": 2,
+    "jev_attempts_total": 0,
+    "historical_attempts_total": 299,
+    "known_host_usage": {
+      "prompt_tokens": 8289,
+      "completion_tokens": 394,
+      "total_tokens": 8683
+    },
+    "failed_usage_unknown": true,
+    "actual_cost_usd": null,
+    "currency_and_price": "unknown",
+    "host_call_seconds_including_failures": 16.226518417024636,
+    "combined_batch_wall_seconds": 16.257302541998797,
+    "native_reserve_consumed_usd": 0,
+    "retries_after_recovery_failure": 0
+  },
+  "records": {
+    "trial/summary.json": "70aa4dffe0f4fc58084645c83d8f49e9ee7e61f2663d331d6d14064ef5021eed",
+    "trial/manifest.json": "e2186e55a431a574f8772b5249e612c3ba488788cafd7bee2d8efec4a3e284bb",
+    "trial/L27/handoff.json": "26cfe1faee79bdb7c520fed5f2203ad17ffe0d865b5b97690d5b7eb35b98e6b2",
+    "trial/L27/host/intent.json": "4267fe06cc69ea7f6ffe172024226c203af0c527a629b58d8fc299370276f1fe",
+    "trial/L27/host/outcome.json": "6961d4e778fbdd95aca33d5299a82fb7ddbc76b35504906dbb6dafd7216c0501",
+    "trial-user-agent-recovery-1/summary.json": "16ce9f000bed5657c2b523faa3209fe61fb31a08fb84824d41e1112a7853b3dc",
+    "trial-user-agent-recovery-1/manifest.json": "f965c6e7ee42de1a3ab4670f792ded459a4b53ce4d6a9edfdc63007cb1f0d089",
+    "trial-user-agent-recovery-1/L27/handoff.json": "26cfe1faee79bdb7c520fed5f2203ad17ffe0d865b5b97690d5b7eb35b98e6b2",
+    "trial-user-agent-recovery-1/L28/handoff.json": "a3fb893d98058455ece4ca230263d9f358318497c9bd84297da2552779bc3c80",
+    "trial-user-agent-recovery-1/L22/handoff.json": "d07f99673c7d08695259d2fdb674c97458bc1e5c4040a3930f53823df1a5ed5d",
+    "trial-user-agent-recovery-1/N03/handoff.json": "0da1b0dc7a34e0fcd95846eec3d25759e8399fd2f1b267d1b838e87473ecc55c",
+    "trial-user-agent-recovery-1/L27/host/intent.json": "4267fe06cc69ea7f6ffe172024226c203af0c527a629b58d8fc299370276f1fe",
+    "trial-user-agent-recovery-1/L27/host/outcome.json": "31b06e05a8ec0917808cd8870bbac6c287eea57417ad2d07beca63b3a397755f",
+    "trial-user-agent-recovery-1/L28/host/intent.json": "f15cf32550c215b8d2f7f1505bd3169ea68fc944f25a855ff3211462cca1d35c",
+    "trial-user-agent-recovery-1/L28/host/outcome.json": "76fc249dfd27c3018610f880b397d47e11fdf38ad7479876fd2b985239e0be2f",
+    "trial-user-agent-recovery-1/L22/host/intent.json": "7bd66d82d31840cf8bde0bf28cc6aff73b5500d7ff67409c5f5ddd39ae26dd9c",
+    "trial-user-agent-recovery-1/L22/host/outcome.json": "1f318c6547f9c96a05dca1e065f6c3c6ad6501d32c48c9f60c8964c01817d6b3",
+    "trial-user-agent-recovery-1/N03/host/intent.json": "ed85accf800c00e21613b98010e33e5aeb7f20c0d550aa7dc67fa3ed795ab2ef",
+    "trial-user-agent-recovery-1/N03/host/outcome.json": "e2a040b78b5b3059f5bd702de435638f63551c387847f8283e6052d79cad01d5"
+  },
+  "unresolved_local_intents": [],
+  "external_outcome_of_transport_failure": "unknown; outcome record does not prove no provider work or charge"
+}

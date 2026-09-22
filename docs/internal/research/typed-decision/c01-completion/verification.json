@@ -1,5 +1,5 @@
 {
-  "stage": "technical-recovery-pre-live",
+  "stage": "terminal-feedback-incomplete",
   "boundary_and_chain_tests": 19,
   "full_suite": {
     "total": 1229,
@@ -8,7 +8,7 @@
   },
   "lifecycle": "81/81",
   "batch_driver_checks": 2,
-  "freeze": "PASS",
+  "freeze": "recovery-freeze PASS; original freeze retained as historical",
   "graph_semantics_changed": false,
   "qualification": false,
   "tests_confirmed_before_live": true,
@@ -22,5 +22,24 @@
   },
   "recovery_batch_driver_checks": 2,
   "recovery_lifecycle": "81/81",
-  "recovery_tests_confirmed_before_live": true
+  "recovery_tests_confirmed_before_live": true,
+  "implementation_source": "0675cc304",
+  "record_integrity": {
+    "count": 19,
+    "status": "PASS",
+    "unresolved_local_intents": 0
+  },
+  "pre_and_post_exact_key_scans": "PASS for both workers",
+  "credential_process": "exited",
+  "live_full_path": false,
+  "live_cached_reentry": false,
+  "offline_cached_reentry": "PASS",
+  "task_criteria": {
+    "passed": 3,
+    "technical_failure": 1,
+    "unrun": 1,
+    "total": 5
+  },
+  "external_failed_request_cost": "unknown",
+  "main": "unchanged"
 }
