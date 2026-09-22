@@ -1,0 +1,80 @@
+{
+  "schema": "mindthus.original-scenarios.design-audit-summary.v1",
+  "baseline": "fc18ef22b90438bc947e1047ab4c57ca7162dc7e",
+  "draft_commit": "59c9e7c4be2e1ece12dd3b53c7e91ace34d0b476",
+  "revision_commit": "1e587da281a03eaca77524d7e665b9a480782caa",
+  "active_design": "design-v0.2.md",
+  "active_acceptance": "acceptance-v0.2.json",
+  "task_delivery": "design_and_bounded_audits_completed",
+  "design_disposition": "REVISE / implementation-contract gaps retained",
+  "runtime_implementation_changed": false,
+  "paid_scenario_admitted": false,
+  "production_admitted": false,
+  "new_jev_scenario_calls": 0,
+  "independence": "two fresh same-model contexts per round; no sibling verdict input; second round sees fixed original findings; not statistical independence or human audit",
+  "reviews": [
+    {
+      "round": 1,
+      "reviewer": "A",
+      "verdict": "REVISE",
+      "status": "complete",
+      "model": "deepseek-v4.1-flash",
+      "input_tokens": 31835,
+      "output_tokens": 3004,
+      "elapsed_seconds": 19.300751184113324,
+      "review_ref": "round-1/A/review.md"
+    },
+    {
+      "round": 1,
+      "reviewer": "B",
+      "verdict": "REVISE",
+      "status": "complete",
+      "model": "deepseek-v4.1-flash",
+      "input_tokens": 31834,
+      "output_tokens": 2173,
+      "elapsed_seconds": 14.729340368881822,
+      "review_ref": "round-1/B/review.md"
+    },
+    {
+      "round": 2,
+      "reviewer": "A",
+      "verdict": "REVISE",
+      "status": "complete",
+      "model": "deepseek-v4.1-flash",
+      "input_tokens": 42765,
+      "output_tokens": 4435,
+      "elapsed_seconds": 25.105874189175665,
+      "review_ref": "round-2/A/review.md"
+    },
+    {
+      "round": 2,
+      "reviewer": "B",
+      "verdict": "REVISE",
+      "status": "complete",
+      "model": "deepseek-v4.1-flash",
+      "input_tokens": 42764,
+      "output_tokens": 4330,
+      "elapsed_seconds": 25.30252466071397,
+      "review_ref": "round-2/B/review.md"
+    }
+  ],
+  "model_calls": 4,
+  "input_tokens": 149198,
+  "output_tokens": 13942,
+  "summed_request_seconds": 84.43849040288478,
+  "actual_cost_usd": null,
+  "credential_scan": {
+    "exact_credential_scan": "PASS",
+    "files": 1470,
+    "hit_count": 0,
+    "scope": "current tracked repository plus both audit round JSON records; one authorized CPA secret"
+  },
+  "unresolved_external_intents": 0,
+  "implementation_digest": "52c0ba1478057b74587720daad2a6cf4cf5b09636d9d504f8bd3300a6743a70e",
+  "remaining_gates": [
+    "G1 explicit thesis/definition delivery and scope-correction bindings",
+    "G2 joint decision drivers and conditional/unresolved exit",
+    "G3 profile units, field mappings and future evaluation freeze"
+  ],
+  "scope": "future implementation not begun; no old batches replayed; #211 open"
+}

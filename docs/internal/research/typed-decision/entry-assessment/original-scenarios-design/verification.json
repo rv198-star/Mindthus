@@ -1,0 +1,40 @@
+{
+  "schema": "mindthus.original-scenarios.design-audit-verification.v1",
+  "baseline": "fc18ef22b90438bc947e1047ab4c57ca7162dc7e",
+  "runtime_digest": "52c0ba1478057b74587720daad2a6cf4cf5b09636d9d504f8bd3300a6743a70e",
+  "runtime_skills_tests_scripts_unchanged": true,
+  "source_files_verified": 11,
+  "frozen_rounds_verified": 2,
+  "archived_wrapped_records_verified": 8,
+  "real_reviews": 4,
+  "unresolved_intents": 0,
+  "new_jev_scenario_calls": 0,
+  "design_verdict": "REVISE",
+  "not_independent_human_or_statistical_audit": true,
+  "documentation_checks": {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.test_method_layering_contract",
+      "tests.test_bidirectional_steelman_contract",
+      "-q"
+    ],
+    "exit_code": 0,
+    "log_sha256": "b9a86240e14c726a3d6e380f1005fedf0db4b7c4414b53cd00d7c883d08601e8",
+    "run": 8
+  },
+  "transport_controls": "completed record reuse and unresolved intent rejection verified offline before first audit; no network",
+  "full_runtime_suite": "not rerun; runtime unchanged; retain fc18ef2 evidence",
+  "credential_scan_ref": "credential-scan.json",
+  "local_links_verified": 14,
+  "link_scope": "authored design/readme/gates; copied source-packet links remain relative to original paths listed in source-index",
+  "verification_note": "Initial link traversal treated verbatim source excerpts as relocated docs and failed; corrected verification scope without editing frozen source packet.",
+  "status": "PASS for integrity/structural checks; design audit remains REVISE",
+  "temporary_skill_environment": "env_list returned zero items after review",
+  "final_design_asset_pattern_scan": "PASS",
+  "diff_check": {
+    "authored_changes": "PASS",
+    "verbatim_model_markdown": "retained original two-space Markdown line endings; excluded from whitespace lint, immutable JSON outcomes and review text match"
+  }
+}

@@ -6,7 +6,29 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — boundary v2 and physical question ablation complete; retain experimental
+## Current checkpoint — original Skills / 4K design and independent audit; REVISE
+
+Owner restored the original hard scenarios as the main acceptance target: two-turn Skills
+object correction without automatic conclusion concession; situated 4K current-use,
+purchase and reply-relevance judgments without an unowned both-sides ending.
+Read [the design/audit entry](entry-assessment/original-scenarios-design/README.md),
+[active design v0.2](entry-assessment/original-scenarios-design/design-v0.2.md), and
+[implementation gates](entry-assessment/original-scenarios-design/implementation-gates.md).
+
+Two fresh CPA DeepSeek review contexts examined frozen v0.1 and each performed one focused
+v0.2 follow-up. All four real reports say REVISE; no consensus implementation approval is
+claimed. Same-model context separation is not statistical independence or human audit.
+All requests/outcomes and source hashes are archived; no Jev scenario calls or runtime edits.
+G1 thesis/definition delivery and G2 joint-driver conditional decisions need contract examples
+before D1 prompt freeze. G3 covers explicit budget units/profile mapping and later evaluation.
+Author adjudication rejects unsupported audit prescriptions; original verdicts remain intact.
+
+This bounded design/audit task is complete, not the feature implementation. No third audit
+round or new paid scene trial is admitted. Preserve old six/eight-case terminal evidence;
+do not drift back into isolated P3 tuning. #211 stays OPEN, #212 and main unchanged.
+Task: `tsk_2bfdada6228fc895`. Evidence: [audit summary](entry-assessment/original-scenarios-design/audit-summary.json).
+
+## Previous checkpoint — boundary v2 and physical question ablation complete; retain experimental
 
 Task `tsk_b6b77338b7f10bf1` delivered the Owner-approved boundary/marginal-value successor.
 Source `d4b69b0`; freeze `06185252c97aeece76aa16a1f703079d61d38d55`; baseline `c1500da7`.

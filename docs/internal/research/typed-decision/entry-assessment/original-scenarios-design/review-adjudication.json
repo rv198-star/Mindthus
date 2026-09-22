@@ -1,0 +1,80 @@
+{
+  "schema": "mindthus.original-scenarios.second-review-adjudication.v1",
+  "review_verdicts_preserved": true,
+  "author_overrides_not_independent_pass": true,
+  "final_disposition": "Do not freeze D1 prompts until G1/G2 acceptance content is completed; no further audit calls in this task",
+  "items": [
+    {
+      "id": "A-V1",
+      "disposition": "partial_accept",
+      "followup": "G1",
+      "rationale": "Add discriminating commitments/examples. A qualified explicit conclusion is not list-only; no lexical first-sentence gate."
+    },
+    {
+      "id": "A-V2",
+      "disposition": "reject_required_truth_independence_accept_risk",
+      "followup": "H01/H03",
+      "rationale": "Q0 compares original data to a labeled proposal. Failure is a model failure to measure, not permission to certify truth; generated hashes or repeated extraction do not prove semantic independence."
+    },
+    {
+      "id": "A-V3",
+      "disposition": "partial_accept",
+      "followup": "G1",
+      "rationale": "Bind definition_delivery when definition frame has an existing candidate, independent of scope acceptance; require content evidence, not a predetermined anti-carrier answer."
+    },
+    {
+      "id": "A-V4",
+      "disposition": "accept_field_mapping",
+      "followup": "G3",
+      "rationale": "Clarify requests/questions/seconds and exact profile fields. Exhausted branch returns new raw evidence to host with zero new Jev."
+    },
+    {
+      "id": "A-V5",
+      "disposition": "already_explicit_improve_entry_navigation",
+      "followup": "README.md",
+      "rationale": "finding-disposition already gives precedence and includes active_acceptance v0.2. Preserve old packets; make current reader entry explicit."
+    },
+    {
+      "id": "A-V6",
+      "disposition": "defer_to_future_benchmark_freeze",
+      "followup": "D4",
+      "rationale": "No adoption follows any small-sample count. Future paired table must separate harm and missing judgments; design-audit budget not benchmark budget."
+    },
+    {
+      "id": "B-F1",
+      "disposition": "partial_accept_reject_false_support_premise",
+      "followup": "G1",
+      "rationale": "Visible object/control relation improves testability. Presence of injection does not prove essence; a removal test establishes at most necessity, not sufficient explanation."
+    },
+    {
+      "id": "B-F2",
+      "disposition": "partial_accept_reject_single_factor_and_recursion",
+      "followup": "G2",
+      "rationale": "Need joint/conditional/unresolved examples. Multiple supported factors are legal. Do not recurse to Q0/Q1 or require a statistically independent final host."
+    },
+    {
+      "id": "B-F3",
+      "disposition": "reject_blanket_reporting_ban_keep_claim_ceiling",
+      "followup": "D4",
+      "rationale": "Finite paired counts can be reported descriptively with all harms and costs; no general superiority or adoption is implied."
+    },
+    {
+      "id": "B-F4",
+      "disposition": "reject_keyword_necessity_accept_fault_test",
+      "followup": "H01/H03",
+      "rationale": "Literal reference verification cannot prove semantic mapping; do not mandate keyword gates for implicit constraints."
+    },
+    {
+      "id": "B-F5",
+      "disposition": "accept_unit_field_clarity",
+      "followup": "G3",
+      "rationale": "A request is one provider call/batch; a question is an instance. No semantic conflict between 24 questions/request and seven requests/episode."
+    },
+    {
+      "id": "B-F6",
+      "disposition": "partial_accept_examples_not_mechanical_truth",
+      "followup": "G1",
+      "rationale": "Need explicit mixed-case examples; a conditional conclusion excludes list-only by definition, so do not count an apparent overlap as a measured model failure."
+    }
+  ]
+}
