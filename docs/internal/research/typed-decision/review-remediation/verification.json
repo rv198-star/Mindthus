@@ -1,0 +1,47 @@
+{
+  "scope": "offline engineering and contract remediation; no model/behavior/value qualification",
+  "baseline": "26c3f5e7227479768fd1b068c8b17358c061804a",
+  "targeted": {
+    "total": 105,
+    "successful": 105,
+    "skipped": 0
+  },
+  "full_suite": {
+    "total": 1189,
+    "successful": 1182,
+    "skipped": 7,
+    "failures": 0,
+    "errors": 0
+  },
+  "test_lifecycle": {
+    "executable_files": 81,
+    "registered": 81,
+    "status": "valid"
+  },
+  "initial_failure": "Two lifecycle-registry assertions failed because new test file was not registered; fixed registration, retained first log, final complete suite passed.",
+  "live_calls": 0,
+  "semantic_qualification": false,
+  "host_cost": "unknown",
+  "old_research_files_unchanged": true,
+  "original_review_packet_hashes_verified": 287,
+  "engine_provider_session_canonical_unchanged": true,
+  "vendor_leakage_scan": "PASS",
+  "credential_pattern_scan": "PASS",
+  "logs_root": "/Users/william/Documents/Codex/2026-09-22/mindthus-jev-review-remediation",
+  "log_sha256": {
+    "targeted-final.log": "6a4f0d71d0cfc54fbb70210e519af028442c4e694cdf7318cb7294cd55ff168a",
+    "full-suite.log": "65fabd5d5f6d127de8a2ca95472748d3101ecdec586bcd03c3e7b3950478ce88",
+    "lifecycle.log": "ac26365e6bce84bed223ebee51cdb4d0144d98e7f02a82a4e4347c1cf0c48539",
+    "full-suite-before-registration.log": "04836ea5b05e4bc3f4b38c7b753241768330bb6b31892d3ba78b74990cce3ea3"
+  },
+  "source_sha256": {
+    "experiments/typed_decision/c01.py": "05e564a5a49e648efca6b754b4291077da93f79cf8c09bd73bd1e30adb9c67ea",
+    "experiments/typed_decision/c02.py": "13476e3c1718d4d7e0b5cf195a648127d1815b33aa42d89a229715f600a80590",
+    "tests/test_typed_decision.py": "133769be0056534d1c3d75183c80890f64ac5a64acd53a1149a8e560b5d1dda9",
+    "tests/test_typed_decision_review.py": "607b5ca162fabd9b85dab46840ef93d9b983f143fe4bc2b6b90f51a63f189c6b",
+    "tests/test-lifecycle-registry.json": "12de24adb2a924cb848e2c94f795efa18ddbd87a9e79241127a4e0e22b5c67bd",
+    "docs/internal/research/typed-decision/review-remediation/c02-contract-v2.json": "2650dff7c0a8deae23ec5781f7ebb01dfb48aa8e14878849f6a43950cb700952",
+    "docs/internal/research/typed-decision/review-remediation/cases.json": "8b456a8035ea52b709e731a947ef2618317090b4cabc4f2d87760a4790548498",
+    "docs/internal/research/typed-decision/review-remediation/standards.json": "13269279d63f1ad0e9b0b1b3e61ef1b36abb01a60ef50de932c47c199a5970bc"
+  }
+}

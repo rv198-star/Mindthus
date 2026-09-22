@@ -153,11 +153,13 @@
     {
       "test_id": "typed-decision-c01-experiment",
       "paths": [
-        "tests/test_typed_decision.py"
+        "tests/test_typed_decision.py",
+        "tests/test_typed_decision_review.py"
       ],
       "owner": "runtime",
       "protects": [
-        "opt-in typed result integrity, canonical projection, provider adapters, bounded inference journal, C01 dependency and source-binding contracts"
+        "opt-in typed result integrity, canonical projection, provider adapters, bounded inference journal, C01 dependency and source-binding contracts",
+        "C01 v3 and C02 v2 review-remediation: same-State planning, joint consistency, artifact fidelity handoff, historical qualification isolation"
       ],
       "introduced_by": "issues #209 #211",
       "lifecycle_status": "active_regression",

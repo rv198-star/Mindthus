@@ -738,6 +738,18 @@ class LiveCarrierTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
+        # Exercise the historical carrier mechanics with an explicitly synthetic
+        # current-source freeze. Production FREEZE remains immutable and rejects v3.
+        self.historical_freeze = campaign.FREEZE
+        freeze = json.loads((ROOT / self.historical_freeze).read_text())
+        freeze['graph'] = c01.GRAPH
+        freeze['file_sha256'] = {name: campaign.sha(ROOT / name)
+                                 for name in freeze['file_sha256']}
+        test_freeze = self.root / 'test-only-freeze.json'
+        test_freeze.write_text(json.dumps(freeze))
+        self.freeze_patch = patch.object(campaign, 'FREEZE', test_freeze)
+        self.freeze_patch.start()
+        self.addCleanup(self.freeze_patch.stop)
         self.network = []
         self.env = patch.dict(os.environ, {'TYPESAFE_API_KEY': 'fixture-only-credential'})
         self.env.start()
@@ -833,6 +845,12 @@ class LiveCarrierTests(unittest.TestCase):
         with patch.object(Path, 'read_text', poison_labels):
             unlabeled, _ = campaign.prepare(ROOT, provider)
         self.assertEqual(unlabeled, manifest)
+
+    def test_historical_c01_freeze_rejects_v3_without_transport(self):
+        with patch.object(campaign, 'FREEZE', self.historical_freeze):
+            with self.assertRaisesRegex(ContractError, 'frozen source/data changed'):
+                campaign.prepare(ROOT, TypeSafeJevProvider())
+        self.assertEqual(self.network, [])
 
     def test_prepare_rejects_changed_freeze_source(self):
         with patch.object(campaign, 'sha', return_value='b' * 64), self.assertRaises(ContractError):
@@ -995,27 +1013,28 @@ class LiveCarrierTests(unittest.TestCase):
 class C02Tests(unittest.TestCase):
     def setUp(self):
         docs = ROOT / 'docs/internal/research/typed-decision'
-        self.contract = json.loads((docs / 'c02-local-contract.json').read_text())
+        self.contract = json.loads((docs / 'review-remediation/c02-contract-v2.json').read_text())
         self.data = json.loads((docs / 'c02-zh-development.json').read_text())['cases'][0]['context']
         self.data['tvg_contract'] = (ROOT / 'skills/tvg/SKILL.md').read_text()
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.answers = {'utility': 'deficit', 'support': 'sufficient', 'action': 'make_actionable',
-                        'recheck_utility': 'adequate', 'recheck_support': 'sufficient'}
+                        'recheck_utility': 'adequate', 'recheck_fidelity': 'faithful'}
 
     def session(self, answers=None):
         return Session(self.root, FixtureProvider(answers or self.answers), scope='c02-offline')
 
-    def test_shared_batch_then_real_dependency(self):
+    def test_independent_choices_share_one_batch(self):
         with self.session() as s:
             report = c02.plan(s, self.data, self.contract)
-            self.assertEqual(s.provider.calls, [['utility', 'support'], ['action']])
+            self.assertEqual(s.provider.calls, [['utility', 'support', 'action']])
             self.assertEqual(report['result']['action'], 'make_actionable')
             self.assertEqual(report['result']['consumption'], 'not_executed')
             self.assertIsNone(report['result']['exit_state'])
-            second = read_record(self.root / 'calls' / s.records[1]['call_key'] / 'intent.json')
-            self.assertIn('weaknesses', second['identity']['questions'][0]['required_context'])
+            first = read_record(self.root / 'calls' / s.records[0]['call_key'] / 'intent.json')
+            self.assertTrue(all('weaknesses' not in q['required_context']
+                                for q in first['identity']['questions']))
 
     def test_missing_evidence_never_selects_rewrite(self):
         with self.session({**self.answers, 'support': 'missing'}) as s:
@@ -1025,7 +1044,7 @@ class C02Tests(unittest.TestCase):
             with self.assertRaises(ContractError):
                 c02.begin_rewrite(s, report, self.data, self.contract, 'test-generator')
 
-    def test_scope_or_target_conflict_returns_without_action(self):
+    def test_scope_or_target_conflict_discards_speculative_action(self):
         for value in ('outside_scope', 'conflict', 'unclear'):
             with self.subTest(value=value), tempfile.TemporaryDirectory() as root:
                 with Session(Path(root), FixtureProvider({**self.answers, 'utility': value}), scope=value) as s:
@@ -1049,13 +1068,13 @@ class C02Tests(unittest.TestCase):
                     self.assertEqual(report['result']['route'], 'original_exit_owner')
                     self.assertIsNone(report['result']['exit_state'])
 
-    def test_resume_reuses_both_local_batches(self):
+    def test_resume_reuses_planning_batch(self):
         with self.session() as s:
             original = c02.plan(s, self.data, self.contract)
         with self.session() as s:
             resumed = c02.plan(s, self.data, self.contract)
             self.assertEqual(original['run_id'], resumed['run_id'])
-            self.assertEqual((s.calls_made, s.calls_reused), (0, 2))
+            self.assertEqual((s.calls_made, s.calls_reused), (0, 1))
 
     def test_generation_intent_blocks_blind_retry(self):
         with self.session() as s:
@@ -1071,12 +1090,12 @@ class C02Tests(unittest.TestCase):
             c02.record_rewrite(s, report['run_id'], 'fixture output, not semantic evidence',
                 generation_evidence='offline-fixture', usage={'input_tokens': None, 'output_tokens': None, 'cost_usd': None})
             checked = c02.recheck(s, report, self.data, self.contract)
-            self.assertEqual(s.calls_made, 3)
+            self.assertEqual(s.calls_made, 2)
             self.assertEqual(checked['result']['route'], 'original_exit_owner')
             self.assertIsNone(checked['result']['exit_state'])
             again = c02.recheck(s, report, self.data, self.contract)
             self.assertEqual(again['run_id'], checked['run_id'])
-            self.assertEqual(s.calls_made, 3)
+            self.assertEqual(s.calls_made, 2)
             with self.assertRaisesRegex(ContractError, 'second rewrite'):
                 c02.record_rewrite(s, report['run_id'], 'another output', generation_evidence='offline-fixture',
                     usage={'input_tokens': None, 'output_tokens': None, 'cost_usd': None})
@@ -1098,19 +1117,18 @@ class C02Tests(unittest.TestCase):
         with self.assertRaises(ContractError):
             c02.specs(bad)
 
-    def test_c02_live_admission_is_exact_and_label_independent(self):
+    def test_old_live_campaign_rejects_new_implementation(self):
         from experiments.typed_decision import c02_trial
-        provider = TypeSafeJevProvider()
-        manifest, design, cases = c02_trial.prepare(ROOT, provider)
-        self.assertEqual(len(manifest['admission']['request_allowlist']), 36)
-        self.assertEqual(manifest['admission']['max_cost_usd'], 24 * campaign.RESERVE_PER_CALL)
-        changed = copy.deepcopy(cases)
-        for case in changed:
-            case['expected'] = {'arbitrary': 'must not affect egress'}
-            case['category'] = 'label-only'
-        with patch.object(c02_trial, 'inputs', return_value=(design, changed)):
-            other, _, _ = c02_trial.prepare(ROOT, provider)
-        self.assertEqual(other['admission'], manifest['admission'])
+        with self.assertRaisesRegex(ContractError, 'frozen source changed'):
+            c02_trial.prepare(ROOT, TypeSafeJevProvider())
+
+    def test_planning_projection_excludes_labels_and_upstream_answers(self):
+        from experiments.typed_decision.contracts import project_context
+        questions = c02.specs(self.contract)
+        view = project_context(questions, self.data)
+        poisoned = {**self.data, 'expected': 'secret-gold', 'rationale': 'secret-gold',
+                    'weaknesses': {'utility': 'deficit'}}
+        self.assertEqual(view, project_context(questions, poisoned))
 
     def test_rewrite_id_cannot_escape_journal(self):
         with self.assertRaises(ContractError):

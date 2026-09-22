@@ -5,6 +5,35 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current development after review — C01 v3 / C02 v2
+
+Owner authorized implementing the independent-review recommendations. See
+[revision design and limits](review-remediation/README.md),
+[follow-up review](review-remediation/REVIEW.md), and
+[verification](review-remediation/verification.json).
+Current source is C01 graph 3 / C02 graph 2; all older sections below describe historical
+qualification runs. Historical source is recoverable at `26c3f5e72`; old data, freeze
+manifests, scores and observations remain unchanged. Their hashes intentionally reject
+the new source; do not update old freezes to admit it.
+
+C01 no longer treats an existing weak artifact as sufficient reason for intervention.
+C02 plans utility/support/action in one State batch, returns incompatible answers to
+the original owner, and rechecks utility/fidelity on a new artifact. Final TVG exit
+remains host-owned. Engine/Provider/Session and canonical method contracts are unchanged.
+New cases are public development diagnostics: 4 C01, 8 C02, and 6 fidelity specimens
+from 2 parent cases. N01 has canonical alternatives but unresolved contract gold;
+N10 support is unscored. None is holdout or a new live acceptance set.
+
+Offline verification: 105 targeted tests successful; full suite 1189 total = 1182
+successful + 7 skipped, no failures/errors; lifecycle 81/81. First full run exposed an
+unregistered test file; registration was fixed and the full suite rerun successfully.
+No new live calls. No behavioral qualification or cost-saving claim.
+The remediation TPlan Mission is separate at
+`/Users/william/Documents/Codex/2026-09-22/mindthus-jev-review-remediation/mission`;
+it is completed for offline remediation, not for #211/#212 semantic/value acceptance.
+Next experimental admission still needs resolved scoring standards, a new frozen
+protocol/data identity and exact budget/request admission. Do not resume old campaigns.
+
 ## Current local workspace
 
 Workspace: `/Users/william/Projects/Github/Mindthus`.

@@ -1,0 +1,657 @@
+{
+  "schema_version": "mindthus.review-remediation-cases.v1",
+  "evidence_kind": "synthetic_development_diagnostic",
+  "label_provenance": "New scenario proposals from independent-context review_labels; structured by implementing host before any Jev observation. Not human truth; all public cases excluded from holdout.",
+  "c01": [
+    {
+      "id": "N01",
+      "context": {
+        "constraints": [],
+        "evidence": [
+          {
+            "source_ref": "synthetic:N01",
+            "summary": "工具周日18点前归还门卫；损坏时附纸条说明；不得自行维修。规则和用途已确定。"
+          }
+        ],
+        "known_obligations": [],
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:offline-only"
+        },
+        "request": "把“借后妥善处理”改成新住户能照做的一句话。",
+        "provenance": {
+          "source_ref": "synthetic:N01",
+          "revision": "1"
+        }
+      },
+      "rationale": "完整规则下直接合成与轻量TVG修复均有依据；禁止作为必须介入的唯一gold。",
+      "scoring_class": "set_valued",
+      "canonical_accepted": [
+        {
+          "entry_mode": "direct_execution",
+          "route": "direct_execute",
+          "owner": null
+        },
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "owner": "tvg"
+        }
+      ],
+      "contract_accepted": null,
+      "task_value": "not_observed",
+      "contract_adjudication": "unresolved: applicability of light TVG alone does not prove v3 consequential-judgment precondition; exclude from unique contract gold and live acceptance until adjudicated."
+    },
+    {
+      "id": "N02",
+      "context": {
+        "constraints": [],
+        "evidence": [
+          {
+            "source_ref": "synthetic:N02",
+            "summary": "已批准替换；原文：工具周日18点前归还门卫；损坏时附纸条说明；不得自行维修。"
+          }
+        ],
+        "known_obligations": [],
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:offline-only"
+        },
+        "request": "把指引中的“门卫”替换成“服务台”，其他文字不变。",
+        "provenance": {
+          "source_ref": "synthetic:N02",
+          "revision": "1"
+        }
+      },
+      "rationale": "只有已批准字面替换，没有未解决判断。",
+      "scoring_class": "unique",
+      "canonical_accepted": [
+        {
+          "entry_mode": "direct_execution",
+          "route": "direct_execute",
+          "owner": null
+        }
+      ],
+      "contract_accepted": [
+        {
+          "entry_mode": "direct_execution",
+          "route": "direct_execute",
+          "owner": null
+        }
+      ],
+      "task_value": "not_observed"
+    },
+    {
+      "id": "N03",
+      "context": {
+        "constraints": [],
+        "evidence": [
+          {
+            "source_ref": "synthetic:N03",
+            "summary": "归还时间、地点及损坏处理办法尚未决定，可问管理员。"
+          }
+        ],
+        "known_obligations": [],
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:offline-only"
+        },
+        "request": "给新住户写工具归还指引。",
+        "provenance": {
+          "source_ref": "synthetic:N03",
+          "revision": "1"
+        }
+      },
+      "rationale": "须取得管理员规则；不能虚构制度。",
+      "scoring_class": "unique",
+      "canonical_accepted": [
+        {
+          "entry_mode": "acquire_information",
+          "route": "acquire_information",
+          "owner": null
+        }
+      ],
+      "contract_accepted": [
+        {
+          "entry_mode": "acquire_information",
+          "route": "acquire_information",
+          "owner": null
+        }
+      ],
+      "task_value": "not_observed"
+    },
+    {
+      "id": "N04",
+      "context": {
+        "constraints": [],
+        "evidence": [
+          {
+            "source_ref": "synthetic:N04",
+            "summary": "两项各需一小时，目标是活动顺利。修表可减排队，纸表能备用；核物资可减漏带，现场能补领。"
+          }
+        ],
+        "known_obligations": [],
+        "risk": "low",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:offline-only"
+        },
+        "request": "活动前只能投入一个志愿者小时，修签到表和核物资先做哪个？",
+        "provenance": {
+          "source_ref": "synthetic:N04",
+          "revision": "1"
+        }
+      },
+      "rationale": "存在同一稀缺资源的真实取舍；不预设最终获胜事项。",
+      "scoring_class": "unique",
+      "canonical_accepted": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "owner": "sra"
+        }
+      ],
+      "contract_accepted": [
+        {
+          "entry_mode": "mindthus_intervention",
+          "route": "intervene",
+          "owner": "sra"
+        }
+      ],
+      "task_value": "not_observed"
+    }
+  ],
+  "c02": [
+    {
+      "id": "N05",
+      "context": {
+        "artifact": "出示号码牌取回衣物；遗失号码牌时到服务台核对登记信息；不得自行翻找。",
+        "target": {
+          "source_ref": "synthetic:cloakroom-rule-2",
+          "purpose": "访客取回寄存衣物时选择下一步。",
+          "standard": "说明持牌领取、遗失牌到服务台核对登记的分支，以及不得自行翻找。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:cloakroom-rule-2",
+            "text": "出示号码牌取回衣物；遗失号码牌时到服务台核对登记信息；不得自行翻找。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N05",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "accepted": [
+        {
+          "utility": "adequate",
+          "support": "sufficient",
+          "action": "leave_unchanged",
+          "route": "original_exit_owner"
+        }
+      ],
+      "scoring_class": "unique",
+      "rationale": "三个读者任务要素齐全，无已建立用途缺口。"
+    },
+    {
+      "id": "N06",
+      "context": {
+        "artifact": "请认真取回衣物。出示号码牌取回衣物；遗失号码牌时到服务台核对登记信息；不得自行翻找。感谢大家配合。",
+        "target": {
+          "source_ref": "synthetic:cloakroom-rule-2",
+          "purpose": "访客取回寄存衣物时选择下一步。",
+          "standard": "说明持牌领取、遗失牌到服务台核对登记的分支，以及不得自行翻找。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:cloakroom-rule-2",
+            "text": "出示号码牌取回衣物；遗失号码牌时到服务台核对登记信息；不得自行翻找。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N06",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "accepted": [
+        {
+          "utility": "adequate",
+          "support": "sufficient",
+          "action": "leave_unchanged",
+          "route": "original_exit_owner"
+        }
+      ],
+      "scoring_class": "unique",
+      "rationale": "套话不遮蔽规则，无篇幅限制或取用失败证据，不凭冗余判deficit。"
+    },
+    {
+      "id": "N07",
+      "context": {
+        "artifact": "出示号码牌取回衣物；不得自行翻找。",
+        "target": {
+          "source_ref": "synthetic:cloakroom-rule-2",
+          "purpose": "访客取回寄存衣物时选择下一步。",
+          "standard": "说明持牌领取、遗失牌到服务台核对登记的分支，以及不得自行翻找。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:cloakroom-rule-2",
+            "text": "出示号码牌取回衣物；遗失号码牌时到服务台核对登记信息；不得自行翻找。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N07",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "accepted": [
+        {
+          "utility": "deficit",
+          "support": "sufficient",
+          "action": "make_actionable",
+          "route": "rewrite_candidate"
+        }
+      ],
+      "scoring_class": "unique",
+      "rationale": "缺少遗失牌分支，来源有明确规则。"
+    },
+    {
+      "id": "N08",
+      "context": {
+        "artifact": "出示号码牌取回衣物；不得自行翻找。",
+        "target": {
+          "source_ref": "synthetic:cloakroom-rule-unresolved-2-target",
+          "purpose": "访客取回寄存衣物时选择下一步。",
+          "standard": "说明持牌领取、遗失牌到服务台核对登记的分支，以及不得自行翻找。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:cloakroom-rule-unresolved-2",
+            "text": "出示号码牌可领取；不得自行翻找；遗失号码牌的处理办法尚未确定。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N08",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "accepted": [
+        {
+          "utility": "deficit",
+          "support": "missing",
+          "action": "abstain",
+          "route": "acquire_information"
+        }
+      ],
+      "scoring_class": "unique",
+      "rationale": "来源尚未确定遗失处理；目标可满足但目前缺规则，不是目标冲突。"
+    },
+    {
+      "id": "N09",
+      "context": {
+        "artifact": "新路线明显缩短了学生通勤时间。",
+        "target": {
+          "source_ref": "synthetic:walking-report-2",
+          "purpose": "据本校前后测量记录说明通勤时间变化。",
+          "standard": "据本校前后测量报告缩短的分钟数，保留测量范围，不编造结果。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:walking-report-2",
+            "text": "现有路线图，尚未计时，没有前后测量记录。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N09",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "accepted": [
+        {
+          "utility": "deficit",
+          "support": "missing",
+          "action": "abstain",
+          "route": "acquire_information"
+        }
+      ],
+      "scoring_class": "unique",
+      "rationale": "目标一致但缺本校测量；不得以愿望证明事实。"
+    },
+    {
+      "id": "N10",
+      "context": {
+        "artifact": "本校合成测量记录：同一组学生原路线12分钟，新路线9分钟。",
+        "target": {
+          "source_ref": "synthetic:walking-measured-conflict-2-target",
+          "purpose": "据本校前后测量记录说明通勤时间变化。",
+          "standard": "同等强制要求：正文必须含测得的分钟数；正文不得含任何数字或数字文字。无优先级，必须同时满足。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:walking-measured-conflict-2",
+            "text": "合成场景假设：同一组学生原路线12分钟、新路线9分钟。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N10",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "accepted": [
+        {
+          "utility": "conflict",
+          "support": null,
+          "action": "abstain",
+          "route": "original_exit_owner"
+        }
+      ],
+      "scoring_class": "unique",
+      "rationale": "同等强制目标要求报告分钟数又禁止所有数字及数字文字，须目标owner裁定；support不评分。"
+    },
+    {
+      "id": "N11",
+      "context": {
+        "artifact": "因为部分住户不用群聊，社区选择楼道纸质通知，替代仅在群聊发布。纸张无法自动更新；时间变更后管理员须人工替换。",
+        "target": {
+          "source_ref": "synthetic:notice-design-2",
+          "purpose": "解释社区为何选纸质停水通知及其限制。",
+          "standard": "说清纸质通知相对群聊的选择理由、无法自动更新的限制与管理员人工更换方式；不虚构效果测量。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:notice-design-2",
+            "text": "部分住户不用群聊；已选择楼道纸质通知以便这些住户看到，替代仅在群聊发布。纸张无法自动更新；时间变更后管理员须人工替换。没有触达率测量。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N11",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "accepted": [
+        {
+          "utility": "adequate",
+          "support": "sufficient",
+          "action": "leave_unchanged",
+          "route": "original_exit_owner"
+        }
+      ],
+      "scoring_class": "unique",
+      "rationale": "选择、替代项、理由、限制与补救完整。"
+    },
+    {
+      "id": "N12",
+      "context": {
+        "artifact": "社区选择楼道纸质通知，纸张无法自动更新；时间变更后管理员须人工替换。",
+        "target": {
+          "source_ref": "synthetic:notice-design-2",
+          "purpose": "解释社区为何选纸质停水通知及其限制。",
+          "standard": "说清纸质通知相对群聊的选择理由、无法自动更新的限制与管理员人工更换方式；不虚构效果测量。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:notice-design-2",
+            "text": "部分住户不用群聊；已选择楼道纸质通知以便这些住户看到，替代仅在群聊发布。纸张无法自动更新；时间变更后管理员须人工替换。没有触达率测量。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N12",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "accepted": [
+        {
+          "utility": "deficit",
+          "support": "sufficient",
+          "action": "explain_tradeoff",
+          "route": "rewrite_candidate"
+        }
+      ],
+      "scoring_class": "unique",
+      "rationale": "缺为什么选纸质而非仅群聊，来源有理由；不是要求另发明策略。"
+    }
+  ],
+  "fidelity_counterexamples": [
+    {
+      "id": "N05-control",
+      "parent_case_id": "N05",
+      "context": {
+        "artifact": "出示号码牌取回衣物；遗失号码牌时到服务台核对登记信息；不得自行翻找。",
+        "target": {
+          "source_ref": "synthetic:cloakroom-rule-2",
+          "purpose": "访客取回寄存衣物时选择下一步。",
+          "standard": "说明持牌领取、遗失牌到服务台核对登记的分支，以及不得自行翻找。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:cloakroom-rule-2",
+            "text": "出示号码牌取回衣物；遗失号码牌时到服务台核对登记信息；不得自行翻找。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N05",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "expected_source_support": "sufficient",
+      "expected_fidelity": "faithful",
+      "rationale": "完整的来源支撑与条件保留对照。"
+    },
+    {
+      "id": "N05-invent",
+      "parent_case_id": "N05",
+      "context": {
+        "artifact": "出示号码牌取回衣物；遗失号码牌时到服务台核对登记信息；不得自行翻找。实测所有访客都在一分钟内找到了衣物。",
+        "target": {
+          "source_ref": "synthetic:cloakroom-rule-2",
+          "purpose": "访客取回寄存衣物时选择下一步。",
+          "standard": "说明持牌领取、遗失牌到服务台核对登记的分支，以及不得自行翻找。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:cloakroom-rule-2",
+            "text": "出示号码牌取回衣物；遗失号码牌时到服务台核对登记信息；不得自行翻找。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N05",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "expected_source_support": "sufficient",
+      "expected_fidelity": "violation",
+      "rationale": "添加来源未测量的效果断言。"
+    },
+    {
+      "id": "N05-omit",
+      "parent_case_id": "N05",
+      "context": {
+        "artifact": "出示号码牌取回衣物；遗失号码牌时到服务台核对登记信息；",
+        "target": {
+          "source_ref": "synthetic:cloakroom-rule-2",
+          "purpose": "访客取回寄存衣物时选择下一步。",
+          "standard": "说明持牌领取、遗失牌到服务台核对登记的分支，以及不得自行翻找。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:cloakroom-rule-2",
+            "text": "出示号码牌取回衣物；遗失号码牌时到服务台核对登记信息；不得自行翻找。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N05",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "expected_source_support": "sufficient",
+      "expected_fidelity": "violation",
+      "rationale": "删除用途必需限制；目标和来源未变。"
+    },
+    {
+      "id": "N11-control",
+      "parent_case_id": "N11",
+      "context": {
+        "artifact": "因为部分住户不用群聊，社区选择楼道纸质通知，替代仅在群聊发布。纸张无法自动更新；时间变更后管理员须人工替换。",
+        "target": {
+          "source_ref": "synthetic:notice-design-2",
+          "purpose": "解释社区为何选纸质停水通知及其限制。",
+          "standard": "说清纸质通知相对群聊的选择理由、无法自动更新的限制与管理员人工更换方式；不虚构效果测量。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:notice-design-2",
+            "text": "部分住户不用群聊；已选择楼道纸质通知以便这些住户看到，替代仅在群聊发布。纸张无法自动更新；时间变更后管理员须人工替换。没有触达率测量。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N11",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "expected_source_support": "sufficient",
+      "expected_fidelity": "faithful",
+      "rationale": "完整的来源支撑与条件保留对照。"
+    },
+    {
+      "id": "N11-invent",
+      "parent_case_id": "N11",
+      "context": {
+        "artifact": "因为部分住户不用群聊，社区选择楼道纸质通知，替代仅在群聊发布。纸张无法自动更新；时间变更后管理员须人工替换。实测住户触达率已达百分之百。",
+        "target": {
+          "source_ref": "synthetic:notice-design-2",
+          "purpose": "解释社区为何选纸质停水通知及其限制。",
+          "standard": "说清纸质通知相对群聊的选择理由、无法自动更新的限制与管理员人工更换方式；不虚构效果测量。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:notice-design-2",
+            "text": "部分住户不用群聊；已选择楼道纸质通知以便这些住户看到，替代仅在群聊发布。纸张无法自动更新；时间变更后管理员须人工替换。没有触达率测量。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N11",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "expected_source_support": "sufficient",
+      "expected_fidelity": "violation",
+      "rationale": "添加来源未测量的效果断言。"
+    },
+    {
+      "id": "N11-omit",
+      "parent_case_id": "N11",
+      "context": {
+        "artifact": "因为部分住户不用群聊，社区选择楼道纸质通知，替代仅在群聊发布。",
+        "target": {
+          "source_ref": "synthetic:notice-design-2",
+          "purpose": "解释社区为何选纸质停水通知及其限制。",
+          "standard": "说清纸质通知相对群聊的选择理由、无法自动更新的限制与管理员人工更换方式；不虚构效果测量。"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:notice-design-2",
+            "text": "部分住户不用群聊；已选择楼道纸质通知以便这些住户看到，替代仅在群聊发布。纸张无法自动更新；时间变更后管理员须人工替换。没有触达率测量。"
+          }
+        ],
+        "veto_constraints": [
+          "不编造事实或效果测量",
+          "不删除关键条件、例外及限制"
+        ],
+        "source_ref": "synthetic:artifact-N11",
+        "freshness": "current",
+        "permission": {
+          "mode": "advisory",
+          "scope": "one_synthetic_text_module"
+        }
+      },
+      "expected_source_support": "sufficient",
+      "expected_fidelity": "violation",
+      "rationale": "删除用途必需限制；目标和来源未变。"
+    }
+  ]
+}

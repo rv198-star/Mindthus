@@ -4,10 +4,11 @@ from __future__ import annotations
 from .contracts import ContractError, DecisionSpec, digest, require
 from .session import RecoveryRequired, read_record, write_once
 
-GRAPH = {'id': 'mindthus.c02', 'version': '1', 'dependencies': {
-    'L0': [], 'D0': ['L0'], 'J1': ['D0'], 'J2': ['D0'],
-    'M1': ['J1', 'J2'], 'J3': ['M1'], 'L1': ['J3'],
-    'J4': ['L1'], 'J5': ['L1'], 'exit_owner': ['J4', 'J5']}}
+GRAPH = {'id': 'mindthus.c02', 'version': '2', 'dependencies': {
+    'L0': [], 'D0': ['L0'], 'utility': ['D0'], 'support': ['D0'],
+    'action': ['D0'], 'consume': ['utility', 'support', 'action'],
+    'rewrite': ['consume'], 'recheck_utility': ['rewrite'],
+    'recheck_fidelity': ['rewrite'], 'exit_owner': ['recheck_utility', 'recheck_fidelity']}}
 READS = ('artifact', 'target', 'evidence', 'veto_constraints', 'tvg_contract')
 ACTIONS = frozenset({'make_actionable', 'explain_tradeoff', 'compact_preserve',
                      'leave_unchanged', 'abstain'})
@@ -47,34 +48,33 @@ def input_problem(data):
 
 
 def specs(contract, *, recheck=False):
-    """LLM-designed, frozen questions are inputs; no automatic designer service."""
-    require(set(contract) == {'version', 'design_source_ref', 'utility', 'support', 'action'},
-            'invalid C02 design shape')
-    require(isinstance(contract['version'], str) and bool(contract['version'])
-            and isinstance(contract['design_source_ref'], str) and bool(contract['design_source_ref']),
-            'missing design identity')
-    result = []
-    for name in ('utility', 'support'):
+    """Version 2: same-State speculative planning, changed-artifact fidelity check."""
+    require(isinstance(contract, dict) and set(contract) == {
+        'version', 'design_source_ref', 'utility', 'support', 'action', 'fidelity'},
+        'invalid C02 design shape')
+    require(contract['version'] == '2' and isinstance(contract['design_source_ref'], str)
+            and bool(contract['design_source_ref'].strip()), 'unsupported C02 design identity')
+    choices = {
+        'utility': {'adequate', 'deficit', 'outside_scope', 'conflict', 'unclear'},
+        'support': {'sufficient', 'missing', 'conflict', 'unclear'},
+        'action': ACTIONS, 'fidelity': {'faithful', 'violation', 'unclear'}}
+    validated = {}
+    for name, expected in choices.items():
         item = contract[name]
-        require(isinstance(item, dict) and set(item) == {'question', 'criteria'}, 'invalid C02 question')
-        expected = {'adequate', 'deficit', 'outside_scope', 'conflict', 'unclear'} if name == 'utility' else {
-            'sufficient', 'missing', 'conflict', 'unclear'}
-        require(set(item['criteria']) == expected, 'C02 policy/answer mismatch')
-        s = DecisionSpec(('recheck_' if recheck else '') + name, item['question'], item['criteria'],
-                         READS, version=contract['version'], policy_ref='c02-one-local-rewrite-v1',
-                         fallback_ref='original-tvg-exit-owner')
-        s.validate()
-        result.append(s)
-    action = contract['action']
-    require(isinstance(action, dict) and set(action) == {'question', 'criteria'}
-            and set(action['criteria']) == ACTIONS, 'invalid C02 action candidates')
-    DecisionSpec('action', action['question'], action['criteria'], READS + ('weaknesses',),
-                 version=contract['version']).validate()
-    return result
+        require(isinstance(item, dict) and set(item) == {'question', 'criteria'}
+                and isinstance(item['criteria'], dict) and set(item['criteria']) == expected,
+                'C02 policy/answer mismatch')
+        spec = DecisionSpec(('recheck_' if recheck else '') + name, item['question'],
+            item['criteria'], READS, version=contract['version'],
+            policy_ref='c02-one-local-rewrite-v2', fallback_ref='original-tvg-exit-owner')
+        spec.validate()
+        validated[name] = spec
+    return [validated[name] for name in (
+        ('utility', 'fidelity') if recheck else ('utility', 'support', 'action'))]
 
 
 def plan(session, data, contract):
-    """J1/J2 share State; their results are real input dependencies of J3."""
+    """Independent questions share State; code consumes only consistent answers."""
     questions = specs(contract)
     graph = {**GRAPH, 'design_sha256': digest(contract)}
 
@@ -89,23 +89,24 @@ def plan(session, data, contract):
     view = {key: data[key] for key in READS}
     try:
         answers = session.evaluate(questions, view)
+        judgments = {k: v.value for k, v in answers.items() if v.status == 'ok'}
         if any(a.status != 'ok' for a in answers.values()):
-            return finish('original_exit_owner', 'local_judgment_unavailable')
-        judgments = {k: v.value for k, v in answers.items()}
+            return finish('original_exit_owner', 'local_judgment_unavailable', judgments=judgments)
         if judgments['utility'] in ('outside_scope', 'conflict', 'unclear'):
             return finish('original_exit_owner', 'scope_or_target_unresolved', judgments=judgments)
+        if judgments['support'] == 'missing':
+            return finish('acquire_information', 'evidence_missing', judgments=judgments)
         if judgments['support'] != 'sufficient':
-            return finish('acquire_information', 'evidence_not_established', judgments=judgments)
-        choice = contract['action']
-        action_spec = DecisionSpec('action', choice['question'], choice['criteria'], READS + ('weaknesses',),
-            version=contract['version'], policy_ref='c02-one-local-rewrite-v1',
-            fallback_ref='original-tvg-exit-owner')
-        chosen = session.evaluate([action_spec], {**view, 'weaknesses': judgments})['action']
-        if chosen.status != 'ok' or chosen.value == 'abstain':
-            return finish('original_exit_owner', 'no_supported_action', judgments=judgments)
-        if chosen.value == 'leave_unchanged':
-            return finish('original_exit_owner', 'no_local_rewrite', chosen.value, judgments)
-        return finish('rewrite_candidate', 'bounded_action_selected', chosen.value, judgments)
+            return finish('original_exit_owner', 'source_basis_unresolved', judgments=judgments)
+        action = judgments['action']
+        if action == 'abstain':
+            return finish('original_exit_owner', 'no_supported_action', action, judgments)
+        if judgments['utility'] == 'adequate':
+            reason = 'no_local_rewrite' if action == 'leave_unchanged' else 'inconsistent_local_judgments'
+            return finish('original_exit_owner', reason, action, judgments)
+        if action == 'leave_unchanged':
+            return finish('original_exit_owner', 'inconsistent_local_judgments', action, judgments)
+        return finish('rewrite_candidate', 'bounded_gap_repair_selected', action, judgments)
     except (ContractError, RecoveryRequired):
         return finish('original_exit_owner', 'contract_budget_or_recovery_failure')
 
@@ -171,11 +172,17 @@ def recheck(session, report, data, contract, *, rewrite_root=None):
     updated = {**data, 'artifact': parent['artifact'], 'source_ref': 'rewrite:' + parent['artifact_sha256']}
     view = {key: updated[key] for key in READS}
     answers = session.evaluate(questions, view)
-    # All judgments in this small graph read the artifact, so both are affected.
-    # Original local judgments remain journaled; no unrelated source is re-evaluated.
+    # The changed artifact affects usefulness and fidelity. Source sufficiency is
+    # not an artifact-fidelity question and is not re-scored on unchanged sources.
+    statuses_ok = all(answer.status == 'ok' for answer in answers.values())
+    reason = ('artifact_review_unavailable' if not statuses_ok else
+              'artifact_fidelity_violation' if answers['recheck_fidelity'].value == 'violation' else
+              'artifact_review_unresolved' if answers['recheck_fidelity'].value == 'unclear' else
+              'artifact_target_not_met' if answers['recheck_utility'].value != 'adequate' else
+              'one_rewrite_and_recheck_complete')
     return session.finish({**GRAPH, 'design_sha256': digest(contract),
                            'parent_run_id': report['run_id']}, updated, {
-        'route': 'original_exit_owner', 'reason': 'one_rewrite_and_recheck_complete',
+        'route': 'original_exit_owner', 'reason': reason,
         'judgments': {k: {'status': v.status, 'value': v.value} for k, v in answers.items()},
         'artifact_sha256': parent['artifact_sha256'], 'exit_owner': 'original-tvg-agent',
         'exit_state': None})
