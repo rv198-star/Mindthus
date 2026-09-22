@@ -19,8 +19,11 @@ is a bounded optional exception, not a prerequisite or recursive runtime.
 The approved manual1.1 first slice is now implemented as opt-in `assessment.py` and
 `entry.py`: P1–P3 batched checks, a scoped matrix, one host-owned correction, one recheck
 and optional unchanged-C01 continuation. See [implementation](entry-assessment/README.md).
-This is new engineering functionality, not a new live holdout or production qualification.
-The previous formal A/B/C remains paused; #212 is not restarted.
+The first six-case live development validation is also complete:3/3 required positives,
+0/3 reverse-control defect hits, three one-shot corrections and three clear rechecks.
+See [live disposition](entry-assessment/live-validation/disposition.md). This remains
+development evidence, not a live holdout or production qualification. The previous
+formal A/B/C remains paused; #212 is not restarted.
 
 ## Mainline
 Read `STATUS.md` to resume; `standard.md` for the provider-neutral contract; `portfolio.md` for the frozen candidate rationale; `implementation.md` and `protocol.json` for the exact delivered slice and remaining live gates.

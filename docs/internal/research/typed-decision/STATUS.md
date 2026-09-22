@@ -6,7 +6,40 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current implementation — C01-next I1 executable, offline verified
+## Current live validation — P1/P2/P3 bounded development objective PASS; not qualified
+
+The first live check-and-correction development batch is frozen at source
+`a0a32c989bf9445e69e4b9abfce88a83380f1be7` and request-identity freeze
+`c32829eeafe7c789c62508c68adf7bbc7ae38e2d`. See
+[protocol](entry-assessment/live-validation/protocol.md),
+[observation](entry-assessment/live-validation/observation.json) and
+[disposition](entry-assessment/live-validation/disposition.md).
+
+Six authored Chinese controls ran once:3 positive known failure modes +3 reverse controls.
+Official TypeSafe Jev1.13.0 detected the required positive dimension3/3 and produced0/3
+negative-case defect hits. Three detector hits each triggered exactly one CPA
+`deepseek-v4.1-flash` correction and exactly one Jev recheck; all three corrections
+met their three preregistered criteria in author review, and all rechecks cleared P1/P2/P3
+with no unresolved result. No retry, model substitution, semantic revision or unknown intent.
+Jev:9 batches,84821input/1633output,6.496sec summed inference; CPA:3 calls,
+1645prompt/225completion,5.646sec. Neither provider returned a trusted monetary cost field.
+
+Positive cases also produced plausible cross-hits, so P1/P2/P3 are not treated as independent
+votes or scores. Two margins are retained for later stress: N01 P2 had only moderate separation
+and V01 P3 was highly uncertain without causing a defect action. Exact credential-value scan of
+the repository plus live root PASS;77 immutable run files/267250 bytes are summarized by evidence
+manifest digest `b9c8dab75222acc25084f23b122ca2dca06254679f4ac82f7c385373786d33b8`;
+unresolved intents=0.
+
+Disposition: retain the three-check slice as **development evidence only**. Do not add more
+questions yet, do not enable it as default `using-mindthus`, do not call the same-model recheck
+independent truth, and do not restart superseded graph4 formal A/B/C. Next evidence should stress
+the existing three questions with more varied/less-authored controls and ablation before any new
+holdout or task-level admission comparison. #211 remains OPEN/unqualified; main remains
+`1527f32b99c375db9ff73f80812c644686a6576a`. Active validation task:
+`tsk_45696fa2a9169dfe`.
+
+## Previous implementation — C01-next I1 executable, offline verified
 
 Source `6be53766a14c7208b5e499e74c963f8cf3b66f8f` implements the approved three-check/one-correction slice.
 See [entry-assessment/README.md](entry-assessment/README.md) and

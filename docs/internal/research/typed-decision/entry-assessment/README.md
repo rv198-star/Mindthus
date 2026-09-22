@@ -1,6 +1,6 @@
 # C01-next I1 — scoped entry assessment and one correction
 
-Status: **implemented opt-in engineering slice; no live semantic/value qualification**.
+Status: **implemented opt-in engineering slice; small live development validation completed; no production qualification**.
 Design authority: [entry assessment design 0.1](../using-mindthus-assessment-design.md)
 and [ten-rule manual 1.1](../../../../methodologies/typed-decision-principles.md).
 Implementation baseline: `c164e98692ddea70e939b74908c01cc1beb83762`. Issue: #211.
@@ -138,11 +138,18 @@ not be rebound or rerun under the new digest.
 The required tests cover no-candidate/no-trigger paths, explicit scope controls, raw
 State/candidate separation, simultaneous P1/P3 signals, unknown/failure states, original
 obligations, one correction, one recheck, crash/reentry and old-router continuation.
-Historical corrected/uncorrected language examples here are synthetic fixture outputs,
-not new held-out results. Existing method files, graph4, Provider, Session and historical
-trial artifacts remain unchanged. Formal A/B/C stays paused and #212 is not restarted.
+Existing method files, graph4, Provider, Session and historical trial artifacts remain
+unchanged. Formal A/B/C stays paused and #212 is not restarted.
 
-Next: freeze a small, bounded **live check-and-correction** protocol with positive and
-reverse controls. Measure actual detection/false positives and corrected task quality
-before claiming semantic benefit or enabling a default entry hook. The next work is not
-another architecture rewrite or a full 40-question scan.
+The first bounded live development batch is now complete; see
+[live protocol](live-validation/protocol.md),
+[observation](live-validation/observation.json) and
+[disposition](live-validation/disposition.md). Across six authored controls, required
+positive detection was3/3, negative-case defect hits0/3, three bounded corrections completed,
+and their one allowed recheck cleared all three dimensions. This is development evidence,
+not an independent holdout or production qualification.
+
+Next evidence should stress the same P1/P2/P3 contracts on more varied/less-authored cases
+and use ablation/negative controls to determine whether their cross-hits add independent
+downstream value. Do not expand the question set, enable a default entry hook, or reopen the
+old graph4 formal A/B/C merely because this small batch passed.

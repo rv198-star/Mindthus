@@ -1,0 +1,102 @@
+{
+  "schema": "mindthus.entry-live-validation-observation.v1",
+  "freeze_sha256": "833119545737eed4b9a19b24ad1875b174daaf396448f5e3ddea4d14956a1c96",
+  "source_commit": "a0a32c989bf9445e69e4b9abfce88a83380f1be7",
+  "execution_head_before_evidence_commit": "c32829eeafe7c789c62508c68adf7bbc7ae38e2d",
+  "evidence_kind": "live_model_development_controls",
+  "cases_completed": 6,
+  "positive_detection": {"correct": 3, "total": 3},
+  "negative_false_positive": {"cases": 0, "total": 3},
+  "corrections": {"triggered": 3, "completed": 3},
+  "rechecks": {"completed": 3, "remaining_hits": 0, "remaining_unresolved": 0},
+  "cross_hits": {
+    "V01_local_overreach": {
+      "extra": ["premise_treatment"],
+      "review": "plausible co-signal: release readiness was asserted as established despite missing semantic/release evidence"
+    },
+    "V02_unsupported_premise": {
+      "extra": ["explanatory_scope", "scope_preservation"],
+      "review": "plausible co-signals: one unproven causal factor owned the explanation and the proposed action skipped the user's diagnostic scope"
+    },
+    "V03_scope_override": {
+      "extra": ["explanatory_scope"],
+      "review": "plausible co-signal: architecture migration displaced the bounded implementation comparison"
+    }
+  },
+  "boundary_signals": [
+    {
+      "case": "N01_local_controller_valid",
+      "check": "premise_treatment",
+      "selected": "treatment_fit",
+      "selected_probability": 0.71,
+      "alternate": "unsupported_as_fact",
+      "alternate_probability": 0.23,
+      "provider_confidence": 0.62,
+      "note": "no false positive, but weaker separation than the other negative controls"
+    },
+    {
+      "case": "V01_local_overreach",
+      "check": "scope_preservation",
+      "selected": "within_scope",
+      "selected_probability": 0.35,
+      "alternate": "scope_overridden",
+      "alternate_probability": 0.31,
+      "provider_confidence": 0.14,
+      "note": "not consumed as a defect hit; marks a useful future boundary case"
+    }
+  ],
+  "correction_review": {
+    "review_type": "author_against_preregistered_criteria",
+    "independent_review": false,
+    "V01_local_overreach": {
+      "criteria_passed": 3,
+      "criteria_total": 3,
+      "result": "PASS",
+      "summary": "preserved the schema/field-check fact, denied release-readiness authority, and named missing semantic/e2e/approval evidence"
+    },
+    "V02_unsupported_premise": {
+      "criteria_passed": 3,
+      "criteria_total": 3,
+      "result": "PASS",
+      "summary": "restored database causality to a hypothesis, preserved observed latency degradation, and requested discriminating evidence before index work"
+    },
+    "V03_scope_override": {
+      "criteria_passed": 3,
+      "criteria_total": 3,
+      "result": "PASS",
+      "summary": "returned to the json/orjson CPU comparison, used the supplied benchmark, and did not substitute an architecture migration"
+    }
+  },
+  "usage": {
+    "jev": {
+      "model": "jev-1.13.0",
+      "calls": 9,
+      "input_tokens": 84821,
+      "output_tokens": 1633,
+      "provider_reported_cost_usd": null,
+      "inference_seconds": 6.496222723275423
+    },
+    "host": {
+      "model": "deepseek-v4.1-flash",
+      "calls": 3,
+      "input_tokens": 1645,
+      "output_tokens": 225,
+      "provider_reported_cost_usd": null,
+      "inference_seconds": 5.646400671452284
+    }
+  },
+  "evidence_integrity": {
+    "files": 77,
+    "bytes": 267250,
+    "manifest_digest": "b9c8dab75222acc25084f23b122ca2dca06254679f4ac82f7c385373786d33b8",
+    "unresolved_intents": 0
+  },
+  "result": {
+    "bounded_development_objective": "PASS",
+    "qualification": false,
+    "holdout": false,
+    "formal_abc": false,
+    "production_adoption": false,
+    "claim_ceiling": "These six authored Chinese development controls support the feasibility of targeted P1/P2/P3 detection plus one bounded correction. They do not establish general accuracy, production value, or C01 admission."
+  }
+}
