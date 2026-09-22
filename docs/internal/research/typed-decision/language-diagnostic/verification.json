@@ -1,0 +1,21 @@
+{
+  "implementation": "06d1f2fef4ba267c14a9ce7346f8324d529355e515ec8cc076929a0e59a0d6f9",
+  "freeze_valid": true,
+  "targeted_successful": 118,
+  "full_total": 1202,
+  "full_successful": 1195,
+  "full_skipped": 7,
+  "failures": 0,
+  "errors": 0,
+  "lifecycle": "81/81",
+  "wrapped_json_integrity": "PASS",
+  "wrapped_json_count": 10,
+  "exact_key_scan": "PASS",
+  "scanned_files": 40,
+  "log_sha256": {
+    "targeted.log": "dbd2c2cc3ebf8e12a9204d194ee6338f12d32397cf3344bb81d13cf22df53604",
+    "full-suite.log": "dd02a56b00b28c3ba3b04fdf7b54e01374a01803a67019b3acecaf10504ca177",
+    "lifecycle.log": "ac26365e6bce84bed223ebee51cdb4d0144d98e7f02a82a4e4347c1cf0c48539",
+    "native.log": "2bd6f9f3f6aee6ce619f01ccdca1177b7d8124be83cb8d34ca6d4add4402f466"
+  }
+}
