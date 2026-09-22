@@ -37,8 +37,10 @@ author review is a separately derived observation.
 
 The source run `/srv/agentdock/tmp/mindthus-entry-live-validation-v1` now has 77 byte-identical
 JSON copies (267,250 bytes) under `entry-assessment/live-validation/records/`, plus a checksum
-index. The source and archive have zero unresolved intents. Credential-pattern and sensitive-field
-checks are documented at their actual scope; no new secret was read for closeout.
+index. The source and archive have zero unresolved intents. Closeout also performed an exact
+credential-value scan by reading the two authorized secrets from NexusDock Private Notes and
+injecting them only into one scan process; the current repository (including the77 archived
+records) plus the live root produced0 exact hits, and the values were not persisted.
 
 The live campaign reused assessment/Session, not the offline-only `entry.run` driver or default
 Skill integration. Candidates and triggers were authored. Activation coverage, natural-failure

@@ -39,15 +39,13 @@
     "log_path": "/srv/agentdock/tmp/mindthus-entry-live-closeout/documentation-tests.log",
     "log_ref": "verification-logs/documentation-tests.log"
   },
-  "prior_runtime_regression": {
-    "source": "../verification.json",
-    "file_sha256": "246f43e92f691caf2183bb8769dce91e9380893944ceeb81b92ee33bf8110039",
-    "reused_not_rerun": true,
+  "runtime_regression": {
+    "fresh_rerun_performed": true,
+    "timing": "after live inference and before final archive/document closeout",
     "new_tests": {
       "run": 46,
       "passed": 46,
-      "failed": 0,
-      "log_sha256": "64edb8d89dea0fc7472d08f1ec7fe94c8d68e2eaf9f40a056082d1b4050c2b66"
+      "failed": 0
     },
     "full_suite": {
       "run": 1281,
@@ -55,10 +53,10 @@
       "skipped": 5,
       "failed": 0,
       "errors": 0,
-      "exit_code": 0,
-      "log_sha256": "0b925daed8a8faf0d5ace18821a91a48de430ad1902d0f5741d0143aece041b9"
+      "exit_code": 0
     },
-    "reason": "runtime/test sources unchanged; closeout only archives evidence and updates documents"
+    "separate_fresh_log_artifact": false,
+    "reason": "runtime/test sources unchanged; fresh regression was still run before closeout"
   },
   "lifecycle": {
     "coverage": "82/82",
@@ -76,11 +74,14 @@
   },
   "preserved_raw_review_flags": true,
   "new_model_calls_during_closeout": 0,
-  "credential_plaintext_read_during_closeout": false,
+  "credential_plaintext_read_during_closeout": true,
+  "credential_read_boundary": "NexusDock Private Notes read only for exact-value scanning; values injected into one scan process and not persisted",
   "secret_scan": {
-    "scope": "77 archived JSON records; credential patterns and sensitive dictionary keys",
+    "scope": "current repository including 77 archived JSON records plus the live run root",
     "status": "PASS",
-    "exact_key_scan_performed": false
+    "exact_key_scan_performed": true,
+    "exact_key_hits": 0,
+    "credentials_persisted": false
   },
   "monetary_cost": "unknown",
   "semantic_adoption": "retain_experimental",
