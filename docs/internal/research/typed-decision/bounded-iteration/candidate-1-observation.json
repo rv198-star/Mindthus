@@ -1,0 +1,594 @@
+{
+  "source_commit": "d3bd6c2c4",
+  "summary": {
+    "attempts": 6,
+    "candidate_2_may_be_considered": true,
+    "candidate_2_requires": "specific new root-cause evidence; never automatic",
+    "controls_preserved": true,
+    "estimated_input_cost_usd": 0.0009741060000000001,
+    "failure_families_repaired": 2,
+    "full_development": "not_run",
+    "holdout": "not_run",
+    "host_cost": "unknown",
+    "passed": false,
+    "reserved_usd": 0.016128,
+    "resolved_runtimes": [
+      {
+        "model": "jev-1.13.0",
+        "provider": "TypeSafe"
+      }
+    ],
+    "rows": [
+      {
+        "call_keys": [
+          "f84ad3ccdab69b0f456da5d37c3aee367bc24c694dcf7866b16c2858c1273c08"
+        ],
+        "case_id": "N04",
+        "kind": "applicability_node_only",
+        "observed": {
+          "applicable": "yes"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "observed": {
+            "applicable": "yes"
+          },
+          "whole_graph": false
+        },
+        "run_id": "fd589c5fc14326413a3495303b25d8f63e1d056033202688788fd811c8a08b82",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "applicable": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "call_keys": [
+          "4b74d3c8dde8f71397ea44ae87f8486ba882d66adf4e4ac859b13f0d43c09077"
+        ],
+        "case_id": "N02",
+        "kind": "applicability_node_only",
+        "observed": {
+          "applicable": "no"
+        },
+        "result": {
+          "consumption": "not_executed",
+          "observed": {
+            "applicable": "no"
+          },
+          "whole_graph": false
+        },
+        "run_id": "aaff665b6a6d7e24cf46ce42efb05ee66b82c33896291ac22b4a6a89c83735ae",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "applicable": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "call_keys": [
+          "72ea564cb47c0f7ce492f059ab14cf2f16b600722e6a3845768c6ed09dbcc3ce"
+        ],
+        "case_id": "N07",
+        "kind": "c02_plan",
+        "observed": {
+          "action": "make_actionable",
+          "route": "rewrite_candidate",
+          "support": "sufficient",
+          "utility": "deficit"
+        },
+        "result": {
+          "action": "make_actionable",
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "action": "make_actionable",
+            "support": "sufficient",
+            "utility": "deficit"
+          },
+          "reason": "bounded_gap_repair_selected",
+          "route": "rewrite_candidate"
+        },
+        "run_id": "ae72056207ebe963971fcf98e53ac4f5fd291e2f6679c5081e90e1e84ffa2587",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "action": true,
+            "route": true,
+            "support": true,
+            "utility": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "call_keys": [
+          "0a11d5631f4d008c4aeda99f72d2ee348f7bddf870ec7d57977c5cd49f6d7c1c"
+        ],
+        "case_id": "N08",
+        "kind": "c02_plan",
+        "observed": {
+          "action": "abstain",
+          "route": "acquire_information",
+          "support": "missing",
+          "utility": "deficit"
+        },
+        "result": {
+          "action": null,
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "action": "abstain",
+            "support": "missing",
+            "utility": "deficit"
+          },
+          "reason": "evidence_missing",
+          "route": "acquire_information"
+        },
+        "run_id": "cb3b2bca02f59ecf1df3147b7a483fcaf0d2f3c58a3945ff58d01f7618aedba7",
+        "score": {
+          "abstentions": [
+            "action"
+          ],
+          "fields": {
+            "action": true,
+            "route": true,
+            "support": true,
+            "utility": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "call_keys": [
+          "e6b40b5c2db33c5403918bb9938c8b5ac4e394539d6639e241c5fd98eee40596"
+        ],
+        "case_id": "N11",
+        "kind": "c02_plan",
+        "observed": {
+          "action": "leave_unchanged",
+          "route": "original_exit_owner",
+          "support": "sufficient",
+          "utility": "adequate"
+        },
+        "result": {
+          "action": "leave_unchanged",
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "action": "leave_unchanged",
+            "support": "sufficient",
+            "utility": "adequate"
+          },
+          "reason": "no_local_rewrite",
+          "route": "original_exit_owner"
+        },
+        "run_id": "f9941940a76cc70ba3e28107f2c594ba9dc742bb83ab78dd257e3893af94e0f1",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "action": true,
+            "route": true,
+            "support": true,
+            "utility": true
+          },
+          "joint": true
+        }
+      },
+      {
+        "call_keys": [
+          "c8e6efc49e6eb3d5fba276be0ba2b29a09b82cf42964cf4d6329da055bafaae5"
+        ],
+        "case_id": "N12",
+        "kind": "c02_plan",
+        "observed": {
+          "action": "leave_unchanged",
+          "route": "original_exit_owner",
+          "support": "sufficient",
+          "utility": "adequate"
+        },
+        "result": {
+          "action": "leave_unchanged",
+          "consumption": "not_executed",
+          "exit_owner": "original-tvg-agent",
+          "exit_state": null,
+          "judgments": {
+            "action": "leave_unchanged",
+            "support": "sufficient",
+            "utility": "adequate"
+          },
+          "reason": "no_local_rewrite",
+          "route": "original_exit_owner"
+        },
+        "run_id": "26b0e79b95ea1c6e2a3eb69bb9a35804722c73353a9af2e13b8d95a930dc7894",
+        "score": {
+          "abstentions": [],
+          "fields": {
+            "action": false,
+            "route": false,
+            "support": true,
+            "utility": false
+          },
+          "joint": false
+        }
+      }
+    ],
+    "series_budget": {
+      "prior_attempts": 0,
+      "reserved_total_ceiling_usd": 0.016128,
+      "stage_max_calls": 6
+    },
+    "stop_reason": null,
+    "totals": {
+      "abstentions": [
+        {
+          "case_id": "N08",
+          "fields": [
+            "action"
+          ]
+        }
+      ],
+      "fields": {
+        "action": {
+          "matched": 3,
+          "scored": 4
+        },
+        "applicable": {
+          "matched": 2,
+          "scored": 2
+        },
+        "route": {
+          "matched": 3,
+          "scored": 4
+        },
+        "support": {
+          "matched": 4,
+          "scored": 4
+        },
+        "utility": {
+          "matched": 3,
+          "scored": 4
+        }
+      },
+      "joint": {
+        "matched": 5,
+        "scored": 6
+      }
+    },
+    "trial_usage": {
+      "cost_usd": null,
+      "input_tokens": 23193,
+      "output_tokens": 780
+    }
+  },
+  "node_observations": [
+    {
+      "case_id": "N04",
+      "call_key": "f84ad3ccdab69b0f456da5d37c3aee367bc24c694dcf7866b16c2858c1273c08",
+      "results": {
+        "applicable": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.73,
+            "probabilities": {
+              "no": 0.15,
+              "unclear": 0.03,
+              "yes": 0.82
+            },
+            "source": "provider_distribution"
+          },
+          "value": "yes"
+        }
+      },
+      "resolved_runtime": {
+        "model": "jev-1.13.0",
+        "provider": "TypeSafe"
+      },
+      "elapsed_seconds": 1.6924764590003178
+    },
+    {
+      "case_id": "N02",
+      "call_key": "4b74d3c8dde8f71397ea44ae87f8486ba882d66adf4e4ac859b13f0d43c09077",
+      "results": {
+        "applicable": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 1.0,
+            "probabilities": {
+              "no": 1.0,
+              "unclear": 0.0,
+              "yes": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "no"
+        }
+      },
+      "resolved_runtime": {
+        "model": "jev-1.13.0",
+        "provider": "TypeSafe"
+      },
+      "elapsed_seconds": 1.2708587079978315
+    },
+    {
+      "case_id": "N07",
+      "call_key": "72ea564cb47c0f7ce492f059ab14cf2f16b600722e6a3845768c6ed09dbcc3ce",
+      "results": {
+        "action": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "abstain": 0.01,
+              "compact_preserve": 0.0,
+              "explain_tradeoff": 0.01,
+              "leave_unchanged": 0.0,
+              "make_actionable": 0.98
+            },
+            "source": "provider_distribution"
+          },
+          "value": "make_actionable"
+        },
+        "support": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "conflict": 0.0,
+              "missing": 0.01,
+              "sufficient": 0.99,
+              "unclear": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "sufficient"
+        },
+        "utility": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 1.0,
+            "probabilities": {
+              "adequate": 0.0,
+              "conflict": 0.0,
+              "deficit": 1.0,
+              "outside_scope": 0.0,
+              "unclear": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "deficit"
+        }
+      },
+      "resolved_runtime": {
+        "model": "jev-1.13.0",
+        "provider": "TypeSafe"
+      },
+      "elapsed_seconds": 0.8254289159958716
+    },
+    {
+      "case_id": "N08",
+      "call_key": "0a11d5631f4d008c4aeda99f72d2ee348f7bddf870ec7d57977c5cd49f6d7c1c",
+      "results": {
+        "action": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "abstain": 0.99,
+              "compact_preserve": 0.0,
+              "explain_tradeoff": 0.0,
+              "leave_unchanged": 0.0,
+              "make_actionable": 0.01
+            },
+            "source": "provider_distribution"
+          },
+          "value": "abstain"
+        },
+        "support": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.96,
+            "probabilities": {
+              "conflict": 0.0,
+              "missing": 0.97,
+              "sufficient": 0.02,
+              "unclear": 0.01
+            },
+            "source": "provider_distribution"
+          },
+          "value": "missing"
+        },
+        "utility": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 1.0,
+            "probabilities": {
+              "adequate": 0.0,
+              "conflict": 0.0,
+              "deficit": 1.0,
+              "outside_scope": 0.0,
+              "unclear": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "deficit"
+        }
+      },
+      "resolved_runtime": {
+        "model": "jev-1.13.0",
+        "provider": "TypeSafe"
+      },
+      "elapsed_seconds": 0.7786209589976352
+    },
+    {
+      "case_id": "N11",
+      "call_key": "e6b40b5c2db33c5403918bb9938c8b5ac4e394539d6639e241c5fd98eee40596",
+      "results": {
+        "action": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.87,
+            "probabilities": {
+              "abstain": 0.02,
+              "compact_preserve": 0.02,
+              "explain_tradeoff": 0.06,
+              "leave_unchanged": 0.9,
+              "make_actionable": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "leave_unchanged"
+        },
+        "support": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "conflict": 0.0,
+              "missing": 0.01,
+              "sufficient": 0.99,
+              "unclear": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "sufficient"
+        },
+        "utility": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.94,
+            "probabilities": {
+              "adequate": 0.96,
+              "conflict": 0.0,
+              "deficit": 0.04,
+              "outside_scope": 0.0,
+              "unclear": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "adequate"
+        }
+      },
+      "resolved_runtime": {
+        "model": "jev-1.13.0",
+        "provider": "TypeSafe"
+      },
+      "elapsed_seconds": 1.004314207995776
+    },
+    {
+      "case_id": "N12",
+      "call_key": "c8e6efc49e6eb3d5fba276be0ba2b29a09b82cf42964cf4d6329da055bafaae5",
+      "results": {
+        "action": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.41,
+            "probabilities": {
+              "abstain": 0.04,
+              "compact_preserve": 0.04,
+              "explain_tradeoff": 0.37,
+              "leave_unchanged": 0.53,
+              "make_actionable": 0.02
+            },
+            "source": "provider_distribution"
+          },
+          "value": "leave_unchanged"
+        },
+        "support": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "conflict": 0.0,
+              "missing": 0.01,
+              "sufficient": 0.99,
+              "unclear": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "sufficient"
+        },
+        "utility": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.42,
+            "probabilities": {
+              "adequate": 0.53,
+              "conflict": 0.0,
+              "deficit": 0.46,
+              "outside_scope": 0.0,
+              "unclear": 0.01
+            },
+            "source": "provider_distribution"
+          },
+          "value": "adequate"
+        }
+      },
+      "resolved_runtime": {
+        "model": "jev-1.13.0",
+        "provider": "TypeSafe"
+      },
+      "elapsed_seconds": 1.0662169169954723
+    }
+  ],
+  "file_sha256": {
+    "calls/0a11d5631f4d008c4aeda99f72d2ee348f7bddf870ec7d57977c5cd49f6d7c1c/intent.json": "bc16d97a9645a443b76fdd934bbd09f5270ba816fbfd78123b9297353ce0afae",
+    "calls/0a11d5631f4d008c4aeda99f72d2ee348f7bddf870ec7d57977c5cd49f6d7c1c/outcome.json": "ac4389c016fcc47cb841ac5d9d7a25111489665d7b2d368d5fe9b9695c359488",
+    "calls/4b74d3c8dde8f71397ea44ae87f8486ba882d66adf4e4ac859b13f0d43c09077/intent.json": "e5eb8b4124a2fc784ff3dad8140cef568f3d7456b5fc369b99d00378b1af3692",
+    "calls/4b74d3c8dde8f71397ea44ae87f8486ba882d66adf4e4ac859b13f0d43c09077/outcome.json": "712997b947b81093b55feb59eb8b07183000783771c14bc946f1a304c788f39b",
+    "calls/72ea564cb47c0f7ce492f059ab14cf2f16b600722e6a3845768c6ed09dbcc3ce/intent.json": "322e52d19d813dbe676bc37899bbd5499fdc0af33a7ff8681a685be2cb0b6269",
+    "calls/72ea564cb47c0f7ce492f059ab14cf2f16b600722e6a3845768c6ed09dbcc3ce/outcome.json": "ff332a93913821c02c505888f9458ebda732ffc75e9b61dbf74ef7a759059c97",
+    "calls/c8e6efc49e6eb3d5fba276be0ba2b29a09b82cf42964cf4d6329da055bafaae5/intent.json": "15526e97e763b37c5784843b877976e0c5b75f5cf2b28e2ee5c0907f0ab73f9d",
+    "calls/c8e6efc49e6eb3d5fba276be0ba2b29a09b82cf42964cf4d6329da055bafaae5/outcome.json": "3ec9a5bfe9501dc878ef16d8c2d1412b78ee6cd3fe7656fcd5a7fbf5b69110b0",
+    "calls/e6b40b5c2db33c5403918bb9938c8b5ac4e394539d6639e241c5fd98eee40596/intent.json": "ec0d43e403b532a13d298b35aeffe5e449d61f9a9de89f999b51d03c0f1bdcc8",
+    "calls/e6b40b5c2db33c5403918bb9938c8b5ac4e394539d6639e241c5fd98eee40596/outcome.json": "726940051e5f19a6e7ff152c41242c96fa27d4f7e0e49bfcb44f78c8a4fe1e19",
+    "calls/f84ad3ccdab69b0f456da5d37c3aee367bc24c694dcf7866b16c2858c1273c08/intent.json": "3825248ce9ae21d2ce43a22f7156504e532b8f28b389cef88e04c8763f0da9e3",
+    "calls/f84ad3ccdab69b0f456da5d37c3aee367bc24c694dcf7866b16c2858c1273c08/outcome.json": "10ec3549483bbd7a137a97e9821789d2317f922f9aa84b85e4abd7f5de86f2a6",
+    "campaign.json": "2036968e26acd19cc4376bc8e58fe5c29cfb3c233a7c9d87b7ea7fb31be4fb70",
+    "policy.json": "137f85930451b1120db2c7274a2e643dfe365851e88aa1de092e45deef488b88",
+    "resolved-runtime.json": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+    "rows/N02.json": "a12ec30b944eee566a29262d1c49f3aa8d6f67fb0bac055fbd2551661c0f6f81",
+    "rows/N04.json": "d241021a49ac0a30ddd95bb65e202bd1526a0a82e06b6ea6320359ebe5ae58bb",
+    "rows/N07.json": "4e6eb59bafb335ac011b2233cca93fb7e015fc921b5d5ecc2b99cbccf5222079",
+    "rows/N08.json": "bf540ca689bf07863c3cf1e144a8782cb7f3c79bc25775a01d5b03b50245e6b9",
+    "rows/N11.json": "bea294c40898c12f9cd1e081cf0e8b807165fff8d37077dc4a7dc79242b66830",
+    "rows/N12.json": "3a0eb51b5ef7d923de8d87aee9ca1826330fdf35d20ee6dbdaa5793cea628068",
+    "runs/26b0e79b95ea1c6e2a3eb69bb9a35804722c73353a9af2e13b8d95a930dc7894.json": "000eb5b763dcfc241cd36e346fc637f6eaccb56304038198d95c2367cbf5de7d",
+    "runs/aaff665b6a6d7e24cf46ce42efb05ee66b82c33896291ac22b4a6a89c83735ae.json": "f0391d11866d86d7edf789de9c2154c5f9e6a32410cd02d3a776eefabb760818",
+    "runs/ae72056207ebe963971fcf98e53ac4f5fd291e2f6679c5081e90e1e84ffa2587.json": "b70f1de75e8bf0aed88dc23655dabde303c75438211a333a201b86d41d07dd1b",
+    "runs/cb3b2bca02f59ecf1df3147b7a483fcaf0d2f3c58a3945ff58d01f7618aedba7.json": "d879cb569bef45140f1bd230a838342b55159ddcd90a753b1099ea91dfb4c361",
+    "runs/f9941940a76cc70ba3e28107f2c594ba9dc742bb83ab78dd257e3893af94e0f1.json": "88665255b1878ed2fba0b2ef615d3f72a9a2df477b426e8512708e86154ad283",
+    "runs/fd589c5fc14326413a3495303b25d8f63e1d056033202688788fd811c8a08b82.json": "9863f8ee295dd6d298c966c7f9949654dc3bdf9de7685e4f59fe6f5acefddb02",
+    "summary.json": "ac5f47ad35ef58c48e8bd1e9f84285e77e4b1814b9ba9d8ce7d11b679a02d069",
+    "wire/1575864bc15b5020a4d5ebc862ceb817cf287d9e6a6f86fd166c585425652bff.json": "b3a3b504d70493c6d9d4fb11823e6583d9c547f6512a1f35dc88f518ed2ed5c3",
+    "wire/4e0398f1378d65b5d25a0a3c1a0499a284e060948d0d83dc5677c5d19edcf2d6.json": "4f1217d4763f3578f2022702672aa6e79d1b97c6b0bd8574fc6985a30038449d",
+    "wire/4fd08aa2b084904d78b72af061478e33d6b9ecadf075bf6463643b3712fa6f18.json": "8f7ae1077fcaa309735d9507b2db867c161b45427e6caa9ebbe4c3646fed3e1f",
+    "wire/7b387a61b56f87ef0217237451745a6868a71cc6f1c5ca494897a00753caa0db.json": "c2611d7588116b9fe74dfec56a728eb9e5c1a034c6864e9bcd25326cae9fefb7",
+    "wire/b1ce5a7fc2ce7328e0cc3e4c02ad1ace717efe8f23a8e3dd661529a115bccef1.json": "416cdf8f5c92d4af6d08afa60fa3780d2c2f37d20cd8e4e58ca621c88966659f",
+    "wire/d2cd92d10b075c70c128aa94253a71b7dc0d672cc39fdcbd4d4374dc222d59c0.json": "d9eebfef297546a98c49830280ae6d576e8af71984185c7265d77bd359278291"
+  },
+  "wrapper_integrity": "PASS",
+  "raw_root": "/Users/william/Documents/Codex/2026-09-22/mindthus-jev-bounded-iteration/candidate-1-screen",
+  "interpretation": "local probes only, C01 probes not whole-graph runs; failure causes remain hypotheses"
+}

@@ -5,18 +5,22 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Bounded iteration — candidate 1 frozen, screen pending
+## Bounded iteration — stopped after candidate 1 (5/6)
 
 Owner authorized optimizing iteration until predefined pass or anti-spiral stop. New
 [protocol](bounded-iteration/protocol.md) preserves all older failed campaigns and labels.
-Candidate1: C01 applicability checks method entry rather than completed method output;
-C02 distinguishes artifact coverage, target demands and source-supported repair.
-Six exact local probes precede full development; max2 justified candidates, any correct
-control regression or full-development failure stops. Series max60 calls / USD0.17.
-Independent prefreeze review and114 targeted checks passed; no live calls yet in this series.
-Freeze: bounded-iteration/candidate-1-freeze.json. Trial/Mission base:
-`/Users/william/Documents/Codex/2026-09-22/mindthus-jev-bounded-iteration`.
-Old reviewed run's zero-revision stop remains historical. main and canonical methods unchanged.
+See [disposition](bounded-iteration/disposition.md), [observations](bounded-iteration/candidate-1-observation.json),
+and [verification](bounded-iteration/verification.json). Source freeze commit `d3bd6c2c4`.
+Official TypeSafe6 calls, jev-1.13.0, 5/6 joint; two failure families improved, all3
+correct controls retained. N12 still missed a reason absent from artifact. No new root-cause
+evidence justified candidate2; independent evidence review and parent agreed to STOP.
+No full-development run, actual generation, holdout or A/B/C. Candidate1 is research only.
+114 targeted tests; full1198 =1191 successful+7 skipped, lifecycle81/81; exact-key scanPASS.
+23193 input /780 output; input-price estimateUSD0.000974106, reserveUSD0.016128; host/billing unknown.
+Total historical85 attempts, reserveUSD0.228480, old unknown usage preserved.
+Trial/Mission base: `/Users/william/Documents/Codex/2026-09-22/mindthus-jev-bounded-iteration`.
+Do not reuse the unspent candidate or call budget to resume tuning without new evidence.
+Canonical methods, Engine/Provider/Session and main unchanged. Old sections remain historical.
 
 ## Reviewed live development r1 — completed, planning gates not met
 
