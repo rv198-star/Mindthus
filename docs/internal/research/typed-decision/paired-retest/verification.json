@@ -1,0 +1,25 @@
+{
+  "freeze_valid": true,
+  "runtime_unchanged": true,
+  "wrapped_integrity": "PASS",
+  "wrapped_files": 678,
+  "views": 64,
+  "complete_semantic_pairs": 30,
+  "D0_pairs": 2,
+  "calls": 94,
+  "stop_reason": null,
+  "actual_wall_under_1200": true,
+  "failed_cost_reserve_issue_triggered": false,
+  "abstention_schema_counts_added": true,
+  "qualification": false,
+  "exact_key_scan": "PASS",
+  "scanned_files": 699,
+  "source_freeze_commit": "da088beec",
+  "engineering_checks": {
+    "carrier_offline": 4,
+    "targeted": 124,
+    "full": 1208,
+    "full_successful": 1201,
+    "skipped": 7
+  }
+}

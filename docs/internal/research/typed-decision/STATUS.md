@@ -5,7 +5,25 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current paired retest — protocol frozen; live comparison pending
+## Current paired retest — complete; main score tied, qualification unproven
+
+[Results and adjudication](paired-retest/disposition.md), [observations](paired-retest/observation.json)
+and [verification](paired-retest/verification.json). Frozen sourceda088beec; all32 English pairs
+completed,30 semantic+2D0,94 calls,0 technical failures or unrun views. B Sonnet4.6/Anthropic via
+OpenRouter and C Jev1.13.0/TypeSafe each25/30 final(route,owner),each23/30 old joint. Predesignated
+22-case sensitivity B20/22 C21/22. Main paired23 both,2 B-only,2 C-only,3 neither. Not equivalence,
+superiority, noninferiority or production qualification. Three shared mismatches were preflagged
+necessity-label disputes; no old labels changed. Sonnet is a comparator, not the original host.
+OpenRouter returned costUSD0.54983313; Jev input-price estimateUSD0.006026664, actual cost unknown.
+Budget-accountedUSD0.67348113 underUSD4; wall258.137sec. Host/translation/design costs unknown.
+678 wrappedJSON integrity and exact-key scanPASS; freeze/runtime unchanged;4 carrier checks,
+124 targeted,1208 full(1201 success/7skip) before inference. Audit caveats preserved in report.
+Keep C01/Jev research candidate; no evidence-based reason to abandon it on previous unilateral scores.
+Next priority is task-level acceptance and a genuine original-A/held-out comparison design, not
+another unilateral prompt loop. This retest is terminal; do not rerun its launcher. No automatic
+holdout/ABC/C02 run, no adopted behavior, main unchanged. New94 attempts; historical total267.
+
+## Previous paired retest — protocol frozen; live comparison pending
 
 Owner explicitly requested redesign and retesting. [Protocol](paired-retest/protocol.md) and
 [freeze](paired-retest/freeze.json) define fresh English same-graph B/C development comparison:
