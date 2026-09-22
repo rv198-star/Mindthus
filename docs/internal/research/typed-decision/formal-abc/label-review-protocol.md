@@ -83,3 +83,22 @@ Before final scoring admission, resolve these existing distinctions explicitly:
   configuration, not a new prompt-only stand-in. An installed Codex binary alone is
   not this evidence. Keep task quality, method preference and safety/authority failures
   separate when freezing the eventual admission and scoring rules.
+
+## Executable admission v1
+
+`label_review.py` builds the blind payload from `review_packet.py`, freezes the exact
+request hash and source digests, and records intent before one CPA request. The earlier
+blocked inline tool attempt is not relabeled a provider failure. This new admission uses
+the corrected blind payload and the ordinary authorized tool path; a platform rejection
+ends this attempt without credential rerouting or alternate transport.
+
+Reviewer output separates final `owner` from `checked_owner`. The latter may name a
+rejected method while final owner remains null. Judgments and bounded original content
+are preserved before comparison; invalid JSON is not semantically repaired or retried.
+Credentials are process environment only and are excluded from every persisted record.
+10 additional offline controls passed, including unknown-intent and completed-result
+reentry. Runtime and historical source/observations remain unchanged.
+
+This is a blinded AI label review, not proof that these author-created, partly repeated
+problem families are independently sampled. All 18 candidates remain in the review;
+no post-result cherry-picking. Task acceptability and routing preferences are separate.
