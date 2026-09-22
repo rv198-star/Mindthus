@@ -5,6 +5,18 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current portfolio reassessment — C03 first conditional candidate, C07 second
+
+Owner requested reassessing the original eight candidates. [Updated ranking](portfolio.md) and
+[reasoning](portfolio-reassessment-2026-09-22.md). C01/C02 stop decision remains effective.
+C03 claim–evidence relation is the first candidate for real-use/material assessment, not a qualified
+or launched pilot. C07 bounded message classification is second only if an independent host
+triage burden exists; no authority transfer. C04/C05/C06/C08 remain deferred.
+C03–C08 have no new live results. No new cases, source edits, inference budget or API calls here.
+Do not turn candidate priority into launch permission: confirm existing authorized material,
+repeat workload and labelability first; do not invent a use case or auto-start another candidate.
+Historical stop and diagnostic records below remain intact. Main unchanged; tests not rerun for docs.
+
 ## Current adjudication — stop current Jev routing/planning investment
 
 Owner requested independent review and a continue/abandon verdict. Three AI contexts reviewed
