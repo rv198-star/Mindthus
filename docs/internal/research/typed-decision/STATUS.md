@@ -5,6 +5,31 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Reviewed live development r1 — completed, planning gates not met
+
+Owner requested completing tests before resolving GitHub connectivity. Source `9b4e0acc8`;
+see [protocol](review-remediation/live-protocol.md), [observations](review-remediation/live-observation.json),
+and [disposition](review-remediation/live-disposition.md).
+All 17 prelisted items ran once (N01 excluded beforehand); 19 official TypeSafe calls,
+resolved model `jev-1.13.0`, no technical failure or drift, no unrun/ad hoc retry.
+C01: joint2/3, entry3/3; N04 selected SRA then applicability=unclear, not a wrong owner.
+C02: joint6/8, route7/8, utility7/8, raw action6/8, support7/7 (N10 unscored).
+Fixed-artifact fidelity:6/6 from two parent scenarios; not real generated artifacts.
+N08 unsupported action was blocked by correct missing-source routing; N12 missed a
+required reason. Original summary remains intact; supplemental node observations expose
+N04's inner abstention and distinguish selected owner from final handoff owner.
+
+Both planning gates unmet; actual generation, holdout and A/B/C were NOT admitted.
+This protocol permits zero semantic revisions. Do not rerun or alter labels/thresholds.
+61212 input/2481 output tokens; 22.368 inference seconds; input-price estimate
+USD0.002570904, actual billing and host costs unknown; reserved USD0.051072.
+All 95 trial JSON wrappers and exact-key scan passed. Source freeze remains unchanged.
+Trial: `/Users/william/Documents/Codex/2026-09-22/mindthus-jev-reviewed-development/trial`.
+Mission: `/Users/william/Documents/Codex/2026-09-22/mindthus-jev-reviewed-development/mission`.
+New carrier tests:112 targeted; full1196 total=1189 successful+7 skipped; lifecycle81/81.
+Read existing evidence, do not rerun unchanged checks. Current planning remains unqualified;
+new research needs a named new hypothesis, not automatic continuation of this campaign.
+
 ## Current development after review — C01 v3 / C02 v2
 
 Owner authorized implementing the independent-review recommendations. See
