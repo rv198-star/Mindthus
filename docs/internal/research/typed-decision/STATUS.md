@@ -5,6 +5,19 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Bounded iteration — candidate 1 frozen, screen pending
+
+Owner authorized optimizing iteration until predefined pass or anti-spiral stop. New
+[protocol](bounded-iteration/protocol.md) preserves all older failed campaigns and labels.
+Candidate1: C01 applicability checks method entry rather than completed method output;
+C02 distinguishes artifact coverage, target demands and source-supported repair.
+Six exact local probes precede full development; max2 justified candidates, any correct
+control regression or full-development failure stops. Series max60 calls / USD0.17.
+Independent prefreeze review and114 targeted checks passed; no live calls yet in this series.
+Freeze: bounded-iteration/candidate-1-freeze.json. Trial/Mission base:
+`/Users/william/Documents/Codex/2026-09-22/mindthus-jev-bounded-iteration`.
+Old reviewed run's zero-revision stop remains historical. main and canonical methods unchanged.
+
 ## Reviewed live development r1 — completed, planning gates not met
 
 Owner requested completing tests before resolving GitHub connectivity. Source `9b4e0acc8`;

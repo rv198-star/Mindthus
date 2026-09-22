@@ -9,7 +9,7 @@ from .contracts import ContractError, DecisionSpec, require
 from .session import RecoveryRequired
 
 METHODS = frozenset({'3l5s', 'sra', 'edsp', 'sela', 'mpg', 'wae', 'tvg', 'tplan'})
-GRAPH = {'id': 'mindthus.c01', 'version': '3', 'dependencies': {
+GRAPH = {'id': 'mindthus.c01', 'version': '3.1', 'dependencies': {
     'D0': [], 'J1': ['D0'], 'J2': ['D0'],
     'M1': ['J1', 'J2'], 'J4': ['M1'], 'L1': ['J4'], 'J5': ['L1'], 'M2': ['J5']}}
 
@@ -191,14 +191,20 @@ def run(session, data: dict, repo: Path) -> dict:
         graph['selected_method_sha256'] = hashlib.sha256(method.encode()).hexdigest()
         applicability = {**base, 'selected_owner': owner, 'method_contract': method,
                          'entry_mode': entry_mode}
-        spec = DecisionSpec('applicable', 'Given selected_owner and method_contract, are its real '
-                            'preconditions met by the current task? An explicit method request remains '
-                            'a constraint, not proof of preconditions. Check this specific owner, '
-                            'including its boundaries; do not waive evidence or authority.',
-                            {'yes': 'The named owner applies and its mandatory preconditions hold.',
-                             'no': 'A named prerequisite or domain boundary is violated.',
-                             'unclear': 'Evidence is insufficient or competing obligations remain.'},
-                            tuple(applicability), version='2')
+        spec = DecisionSpec('applicable', 'Is selected_owner an appropriate next method to BEGIN '
+                            'handling this task under method_contract? Check its entry conditions and '
+                            'domain boundaries, not whether its eventual analysis/output is already '
+                            'complete. Missing values the method is meant to elicit or judge do not '
+                            'by themselves make it inapplicable. A truly absent entry prerequisite or '
+                            'out-of-domain object still rules it out. Explicit requests do not prove '
+                            'applicability or grant authority.',
+                            {'yes': 'The task has the decision object and entry conditions this method '
+                             'addresses; beginning its analysis fits. The final decision may remain unresolved.',
+                             'no': 'The task lacks an actual entry prerequisite or falls outside the '
+                             'method domain; this is not merely unfinished method output.',
+                             'unclear': 'The supplied facts do not establish whether an entry prerequisite '
+                             'holds, or an unresolved obligation prevents starting this method.'},
+                            tuple(applicability), version='3.1')
         checked = session.evaluate([spec], applicability)['applicable']
         if checked.status != 'ok' or checked.value != 'yes':
             return finish('llm_fallback', 'selected_owner_not_established',

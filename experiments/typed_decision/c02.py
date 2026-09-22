@@ -52,7 +52,7 @@ def specs(contract, *, recheck=False):
     require(isinstance(contract, dict) and set(contract) == {
         'version', 'design_source_ref', 'utility', 'support', 'action', 'fidelity'},
         'invalid C02 design shape')
-    require(contract['version'] == '2' and isinstance(contract['design_source_ref'], str)
+    require(contract['version'] in ('2', '2.1') and isinstance(contract['design_source_ref'], str)
             and bool(contract['design_source_ref'].strip()), 'unsupported C02 design identity')
     choices = {
         'utility': {'adequate', 'deficit', 'outside_scope', 'conflict', 'unclear'},

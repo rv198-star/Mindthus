@@ -310,5 +310,53 @@ class ReviewedTrialTests(unittest.TestCase):
         self.assertIsNone(result['trial_usage']['cost_usd'])
 
 
+class BoundedScreenTests(unittest.TestCase):
+    def test_six_probe_transport_and_series_accounting(self):
+        from unittest.mock import patch
+        from experiments.typed_decision import bounded_screen as screen, review_trial
+        from experiments.typed_decision.providers import TypeSafeJevProvider
+        from experiments.typed_decision.session import implementation_digest, write_once
+        from experiments.typed_decision.campaign import sha
+        from experiments.typed_decision.contracts import digest
+        with tempfile.TemporaryDirectory() as tmp:
+            series=Path(tmp);root=series/'candidate-1-screen'
+            candidate=DOCS.parent/'bounded-iteration/c02-candidate-1.json'
+            freeze=series/'freeze.json'
+            freeze.write_text(json.dumps({'implementation':implementation_digest(),
+                'candidate_contract':str(candidate), 'file_sha256':{str(candidate):sha(candidate)}}))
+            contract=json.loads(candidate.read_text());_,cases=review_trial.inputs(ROOT)
+            probes=screen.items(ROOT,contract,cases)
+            expected={digest(project_context(p['specs'],p['context'])):p['accepted'][0] for p in probes}
+            sent=[]
+            def transport(url,headers,body,timeout):
+                sent.append(body)
+                values=expected[digest(body['state'])]
+                return {'model':'jev-1.13.0','answers':{key:{'type':'choice','choice':values[key],
+                    'probabilities':{v:float(v==values[key]) for v in q['criteria']},'confidence':1.0}
+                    for key,q in body['questions'].items()},'usage':{'input_tokens':10,'output_tokens':1}}
+            provider=TypeSafeJevProvider(transport=transport)
+            manifest,_,_=screen.prepare(ROOT,provider,freeze)
+            write_once(root/'campaign.json',manifest)
+            with patch.dict('os.environ',{'TYPESAFE_API_KEY':'fixture-only'}):
+                result=screen.run(ROOT,series,root,provider,freeze,manifest)
+            self.assertTrue(result['passed']);self.assertEqual(len(sent),6)
+            self.assertEqual([list(b['questions']) for b in sent[:2]],[['applicable'],['applicable']])
+            self.assertTrue(all(not {'accepted','rationale','expected'} & set(b['state']) for b in sent))
+            self.assertEqual(screen.series_admission(series,23)['prior_attempts'],6)
+            with self.assertRaisesRegex(ContractError,'cap exceeded'):screen.series_admission(series,55)
+            with self.assertRaises(ContractError):screen.run(ROOT,series,root,provider,freeze,manifest)
+            self.assertEqual(len(sent),6)
+
+    def test_unresolved_or_failed_prior_attempt_blocks_new_stage(self):
+        from experiments.typed_decision import bounded_screen as screen
+        from experiments.typed_decision.session import write_once
+        with tempfile.TemporaryDirectory() as tmp:
+            series=Path(tmp);call=series/'old'/'calls'/'one'
+            write_once(call/'intent.json',{'test':'unknown attempt'})
+            with self.assertRaisesRegex(ContractError,'unresolved'):screen.series_admission(series,6)
+            write_once(call/'outcome.json',{'results':{'x':{'status':'provider_error'}}})
+            with self.assertRaisesRegex(ContractError,'technical failure'):screen.series_admission(series,6)
+
+
 if __name__ == '__main__':
     unittest.main()

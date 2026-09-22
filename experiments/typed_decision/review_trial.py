@@ -53,12 +53,16 @@ def inputs(repo):
     return contract, cases
 
 
-def prepare(repo, provider):
-    freeze = json.loads((repo / FREEZE).read_text())
+def prepare(repo, provider, *, freeze_path=None):
+    freeze_path = freeze_path or FREEZE
+    freeze = json.loads((repo / freeze_path).read_text())
     require(freeze['implementation'] == implementation_digest(), 'reviewed runtime changed')
     for name, expected in freeze['file_sha256'].items():
         require(sha(repo / name) == expected, 'reviewed frozen file changed:' + name)
     contract, cases = inputs(repo)
+    if freeze.get('candidate_contract'):
+        require(freeze['candidate_contract'] in freeze['file_sha256'], 'unbound candidate contract')
+        contract = json.loads((repo / freeze['candidate_contract']).read_text())
     selected = [c for c in cases['c01'] if c['contract_accepted'] is not None]
     require([c['id'] for c in selected] == ['N02', 'N03', 'N04'], 'reviewed C01 population changed')
     require([c['id'] for c in cases['c02']] == ['N05','N06','N07','N08','N09','N10','N11','N12'],
@@ -82,11 +86,11 @@ def prepare(repo, provider):
         allowlist.add(request_key(c02.specs(contract), case['context']))
     for case in cases['fidelity_counterexamples']:
         allowlist.add(request_key(c02.specs(contract, recheck=True), case['context']))
-    admission = {'scope':SCOPE, 'implementation':implementation_digest(),
+    admission = {'scope':freeze.get('scope', SCOPE), 'implementation':implementation_digest(),
         'provider_configuration':provider_configuration(provider), 'limits':asdict(LIMITS),
         'request_allowlist':sorted(allowlist), 'max_cost_usd':23 * RESERVE_PER_CALL,
-        'reserve_per_call_usd':RESERVE_PER_CALL, 'freeze_sha256':sha(repo / FREEZE),
-        'authorization_ref':'Owner: continue testing; review-remediation/live-protocol.md r1'}
+        'reserve_per_call_usd':RESERVE_PER_CALL, 'freeze_sha256':sha(repo / freeze_path),
+        'authorization_ref':freeze.get('authorization_ref', 'Owner: continue testing; review-remediation/live-protocol.md r1')}
     manifest = {'admission':admission, 'c01_ids':[c['id'] for c in selected],
         'c02_ids':[c['id'] for c in cases['c02']],
         'fidelity_ids':[c['id'] for c in cases['fidelity_counterexamples']],
@@ -95,15 +99,17 @@ def prepare(repo, provider):
         'semantic_revisions_allowed':0, 'retry_policy':'none', 'series_call_cap':25,
         'series_reserved_usd':25 * RESERVE_PER_CALL, 'series_ceiling_usd':.07,
         'historical_attempts':60, 'historical_reserved_usd':.161280}
+    if freeze.get('series'):
+        manifest.update(freeze['series'])
     return manifest, contract, cases
 
 
-def run(repo, root, provider, manifest, contract, cases):
+def run(repo, root, provider, manifest, contract, cases, *, freeze_path=None):
     require(provider.is_live, 'actual or explicitly injected live transport required')
     require(read_record(root / 'campaign.json') == manifest, 'reviewed manifest changed')
     require(not (root / 'summary.json').exists(), 'reviewed trial already finished')
     # Revalidate source, labels and exact admission before sending anything.
-    current, current_contract, current_cases = prepare(repo, provider)
+    current, current_contract, current_cases = prepare(repo, provider, freeze_path=freeze_path)
     require(contract == current_contract and cases == current_cases, 'reviewed inputs changed')
     require(current == manifest, 'reviewed admission changed')
     original = provider.transport
@@ -116,7 +122,7 @@ def run(repo, root, provider, manifest, contract, cases):
     todo += [('fidelity',c) for c in cases['fidelity_counterexamples']]
     try:
         for group, case in todo:
-            with Session(root, provider, scope=SCOPE, limits=LIMITS,
+            with Session(root, provider, scope=manifest['admission']['scope'], limits=LIMITS,
                          live_admission=manifest['admission']) as session:
                 if group == 'c01':
                     report = c01.run(session, case['context'], repo)
@@ -173,7 +179,7 @@ def run(repo, root, provider, manifest, contract, cases):
         observed_ids = {r['case_id'] for group in rows.values() for r in group}
         calls = len(list((root/'calls').glob('*/intent.json')))
         usage = last.get('trial_usage',{})
-        summary = {'scope':SCOPE,'rows':rows,'totals':totals,'local_gates':gates,
+        summary = {'scope':manifest['admission']['scope'],'rows':rows,'totals':totals,'local_gates':gates,
             'stop_reason':stop,'observed_cases':len(observed_ids),'planned_cases':17,
             'unrun':[c['id'] for _,c in todo if c['id'] not in observed_ids],
             'excluded':manifest['excluded'],'attempts':calls,'reserved_usd':calls*RESERVE_PER_CALL,
