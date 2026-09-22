@@ -1,0 +1,177 @@
+{
+  "translator": "independent AI context review_contract; parent applied and checked complete substitution",
+  "qualification": "derived full-source translation, not canonical mutation",
+  "records": {
+    "skills/using-mindthus/SKILL.md": {
+      "source_sha256": "9eb89affdbd468d40f0c222d085492193a8a81b99f05a56da1bc515aefbeee19",
+      "translation_path": "docs/internal/research/typed-decision/language-diagnostic/english/skills/using-mindthus/SKILL.md",
+      "translation_sha256": "819bcf5e05f6040a879a85735b357cbea81f965477fcc8bfb54b0fdfdc1a6587",
+      "replacements": {
+        "真相优先": "Truth First",
+        "前置校准": "Premise Calibration",
+        "真实对象": "the actual object",
+        "底层约束": "underlying constraints",
+        "目标函数": "the objective function",
+        "直接执行": "Direct Execution",
+        "信息补全": "Information Acquisition",
+        "Mindthus 介入": "Mindthus Intervention",
+        "输入定框审计": "Input Framing Audit",
+        "强约束入口协议": "Mandatory Entry Protocol",
+        "在进入判断之前，先检查当前问题是否已经被提问方式绑到错误层级": "Before beginning judgment, first check whether the way the question is posed has already bound the current problem to the wrong level",
+        "定框适配检查": "Frame Fitness Check",
+        "原始有效提示词合同": "Original Valid Prompt Contract",
+        "入口分诊": "Entry Triage",
+        "局部真相捕获": "Partial Truth Capture",
+        "三根硬支柱": "Three Mandatory Pillars",
+        "主判断收束": "Core Judgment Consolidation",
+        "定义权裁决": "Definition Authority Adjudication",
+        "审计默认内隐": "Audit Hidden By Default",
+        "都像对": "both seem right",
+        "方法引用边界": "Method Reference Boundary",
+        "反螺旋入口": "Anti-Spiral Entry",
+        "切面主导权矩阵": "Aspect Ownership Matrix",
+        "上下文注入口": "Context Injection Point",
+        "判断约束识别": "Judgment Constraint Recognition",
+        "施压面检查": "Pressure Surface Check",
+        "非精准量化显影": "Approximate Quantified Mapping",
+        "方法仲裁": "Method Arbitration",
+        "执行影响": "Execution Impact"
+      }
+    },
+    "skills/3l5s/SKILL.md": {
+      "source_sha256": "fe472b01eeaf724c047f6db486d0f860b82e5b47be2d4f1b5ebf3376e839cbb1",
+      "translation_path": "docs/internal/research/typed-decision/language-diagnostic/english/skills/3l5s/SKILL.md",
+      "translation_sha256": "ee5d6023e9e02a1c62b76f4fd958432d65a4ba14ed9bbec28d2342826c6b84f3",
+      "replacements": {
+        "核心判断": "Core Judgment",
+        "三层五步": "Three Layers and Five Steps",
+        "基 -> 标 -> 差 -> 策 -> 拆": "Baseline -> Target -> Gap -> Strategy -> Breakdown",
+        "一句话：": "In one sentence:",
+        "不清楚问题时，先把信号变成可证伪的问题；问题太大时，再把问题变成可验证的行动。": "When the problem is unclear, first turn signals into a falsifiable problem; when the problem is too large, turn it into verifiable actions.",
+        "主路径": "Mainline",
+        "选择形态": "Choose The Form",
+        "主用法": "Main Use Cases",
+        "从属补漏": "Supporting Guardrails",
+        "工单默认姿态": "Default Approach In Work Items",
+        "脚本辅助边界": "Script Assistance Boundary",
+        "边界": "Boundaries",
+        "支撑材料": "Supporting Resources"
+      }
+    },
+    "skills/sra/SKILL.md": {
+      "source_sha256": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514",
+      "translation_path": "docs/internal/research/typed-decision/language-diagnostic/english/skills/sra/SKILL.md",
+      "translation_sha256": "9c8b82e1ed44bb477bcb5af207bfa69c4a53dddfc09676f040838f2715e8e541",
+      "replacements": {
+        "稀缺资源优先分配": "Priority Allocation of Scarce Resources",
+        "以足够低的判断成本，先保护目标成立所必需的投入，": "At a sufficiently low judgment cost, first protect the investment necessary for the objective to remain achievable,",
+        "再把下一份资源分给当前风险调整后边际价值最高的用途。": "then allocate the next tranche of resources to the use with the highest current risk-adjusted marginal value.",
+        "先生存、再图强": "First secure viability, then pursue greater strength",
+        "收缩找出不能删的；回补决定下一份值得加的。": "Contraction identifies what cannot be removed; replenishment determines where the next increment is worth adding."
+      }
+    },
+    "skills/edsp/SKILL.md": {
+      "source_sha256": "4de72a21f227b77711cb8f48212e8f3cb42d5b3b0cd1b911ca3284aad40e240c",
+      "translation_path": "docs/internal/research/typed-decision/language-diagnostic/english/skills/edsp/SKILL.md",
+      "translation_sha256": "74752ef4c5ce812e3fd2eb02a09361710b2394d7449c43f62ccfca384297c589",
+      "replacements": {
+        "极限推演 + 场景投影": "Extreme Deduction + Scenario Projection",
+        "极限推演先建骨架；场景投影只是补充用法。": "Extreme Deduction first builds the structural skeleton; Scenario Projection is only a supplementary application.",
+        "主路径": "Mainline",
+        "从属补漏": "Supporting Guardrails",
+        "边界": "Boundaries",
+        "支撑材料": "Supporting Resources"
+      }
+    },
+    "skills/sela/SKILL.md": {
+      "source_sha256": "71b34d7ae2b6312c41ed904dba00cc9bea6615d6e73a537ac20e5cd29fb1b9ad",
+      "translation_path": "docs/internal/research/typed-decision/language-diagnostic/english/skills/sela/SKILL.md",
+      "translation_sha256": "62bcd1d98555ac9bc4ede44a99f2603b0b511cfd1b1860886eb2e0935d23681e",
+      "replacements": {
+        "系统效率碾压局部优势": "System Efficiency Overwhelms Local Advantage",
+        "主路径": "Mainline",
+        "从属补漏": "Supporting Guardrails",
+        "时机检查": "Timing Check",
+        "临时保留": "to be retained temporarily",
+        "锁死未来": "lock in the future",
+        "行动窗口": "action window",
+        "边界": "Boundaries",
+        "支撑材料": "Supporting Resources"
+      }
+    },
+    "skills/mpg/SKILL.md": {
+      "source_sha256": "1a8e4e5f7a382e24a266befd3b9f58b329253a0ecf49e55b0e9f5690eccf6bc0",
+      "translation_path": "docs/internal/research/typed-decision/language-diagnostic/english/skills/mpg/SKILL.md",
+      "translation_sha256": "8ae81df5090faa3188e100af2a942edf1845263834ab21e81b4c2a2d7d8a4fb2",
+      "replacements": {
+        "核心判断": "Core Judgment",
+        "MPG / Mainline-Path Game（主线-路径博弈）处理的不是“主趋势是否存在”，而是：": "MPG / Mainline-Path Game (Mainline-Path Game) addresses not \"whether the main trend exists,\" but:",
+        "看对主线，不等于穿过路径。": "Correctly identifying the mainline does not mean successfully traversing the path.",
+        "长期保留内部模型能力是对的，但当前全栈自建平台这条路不该继续。": "Retaining internal model capabilities over the long term is the right direction, but the current path of building a full-stack platform in-house should not continue.",
+        "主线承载方案": "Path-Carrying Strategy",
+        "主路径": "Mainline",
+        "稀缺资源": "scarce resource",
+        "最纯载体": "purest carrier",
+        "先讲人话": "Use Plain Language First",
+        "先给人看的判断，再给机器看的字段。": "Present the judgment for people first, then the fields for machines.",
+        "一句话判断": "a one-sentence judgment",
+        "为什么": "why",
+        "怎么办": "what to do",
+        "校准字段": "calibration fields",
+        "普通人能复述": "something an ordinary person can restate",
+        "推演耐久性": "Reasoning Durability",
+        "当时信息面": "information available at the time",
+        "结果不准不必然失败；信息不全时，触发条件比预测命中更重要。": "An inaccurate outcome prediction does not necessarily mean failure; when information is incomplete, trigger conditions matter more than prediction accuracy.",
+        "主线-路径显影层": "Mainline-Path Visibility Layer",
+        "非精准量化显影": "Approximate Quantified Mapping",
+        "数字是假设，关系才是重点。": "The numbers are assumptions; the relationships are what matter.",
+        "显影快照": "visibility snapshot",
+        "从属补漏": "Supporting Guardrails",
+        "边界": "Boundaries",
+        "支撑材料": "Supporting Resources"
+      }
+    },
+    "skills/wae/SKILL.md": {
+      "source_sha256": "f5ec807d2bfe91847671eb61d5150b43c464cda378bd2dbb8b7e91db372c7496",
+      "translation_path": "docs/internal/research/typed-decision/language-diagnostic/english/skills/wae/SKILL.md",
+      "translation_sha256": "2a8c6d0b8b9f41012f2e7f4c4ed4855165dd67a444cc44130e2043908dc4070e",
+      "replacements": {
+        "核心判断": "Core Judgment",
+        "主路径": "Mainline",
+        "使用场景": "When To Use",
+        "最小检查": "Minimal Check",
+        "升级判断": "Escalated Judgment",
+        "所有权闭合": "Ownership Closure",
+        "从属补漏": "Supporting Guardrails",
+        "风险调制": "Risk Modulation",
+        "人类兜底": "Human Fallback",
+        "指令与数据边界": "Instruction/Data Boundary",
+        "硬边界": "Hard Boundary",
+        "边界": "Boundaries",
+        "支撑材料": "Supporting Resources"
+      }
+    },
+    "skills/tvg/SKILL.md": {
+      "source_sha256": "f1ede50d063ba72dc39e9f13c0721a079f31c58c892f486675126472bf67e7de",
+      "translation_path": "docs/internal/research/typed-decision/language-diagnostic/english/skills/tvg/SKILL.md",
+      "translation_sha256": "ca0947d7e37920971a1bc986bde254e9493db1324d836c4bbac482435c88a5ee",
+      "replacements": {
+        "主路径": "Mainline",
+        "从属补漏": "Supporting Guardrails",
+        "边界": "Boundaries"
+      }
+    },
+    "skills/tplan/SKILL.md": {
+      "source_sha256": "dbd00b73b2c965c5a687cb12602874226c87e07f9695354f05683a832761ed96",
+      "translation_path": "docs/internal/research/typed-decision/language-diagnostic/english/skills/tplan/SKILL.md",
+      "translation_sha256": "1bfaab186574f4a348cb9dba81bca8e8f441444cff2b1276e0c530b1d0085db2",
+      "replacements": {
+        "核心判断": "Core Judgment",
+        "主路径": "Mainline",
+        "从属补漏": "Supporting Guardrails",
+        "边界": "Boundaries",
+        "支撑材料": "Supporting Resources"
+      }
+    }
+  }
+}

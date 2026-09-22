@@ -5,6 +5,19 @@ Remote base HEAD: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (GitHub API rechecked).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## C01 paired language diagnostic — frozen, live pending
+
+User authorized revised steps1–4: fixed C01, broader32-case coverage, full-path observation,
+then evidence-based disposition. See [protocol](language-diagnostic/protocol.md) and
+[freeze](language-diagnostic/freeze.json). All32 new source/English pairs frozen before calls;
+30 semantic plus2 mechanical-D0 cases,8strata. L13/L16 accept direct or EDSP; L29 preserves
+known obligation with two entry readings. Independent translator saw source-only inputs.
+Full9canonical English derived files prepared; C01 graph/questions/policy remain unchanged.
+118 targeted;1202 full=1195successful+7skipped; lifecycle81/81. No live calls yet.
+Series max192calls /USD0.55; no retry or same-source tuning; technical/authority stops only.
+Trial/Mission base: `/Users/william/Documents/Codex/2026-09-22/mindthus-c01-language-diagnostic`.
+C02, holdout and A/B/C unstarted in this study. Historical85attempts remain preserved.
+
 ## Language boundary reassessment — next evidence priority
 
 User identified Chinese input as a possible mismatch. Official model docs confirm English

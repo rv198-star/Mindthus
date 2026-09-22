@@ -1,0 +1,93 @@
+---
+name: edsp
+description: "Use when an ambiguous qualitative judgment needs Extreme Deduction and optional Scenario Projection: push variables to extremes, build a structural coordinate system, diagnose malformed propositions, then project concrete scenarios when needed."
+---
+
+# EDSP / Extreme Deduction + Scenario Projection
+
+## Core Claim
+
+`EDSP` means:
+
+> `Extreme Deduction + Scenario Projection`
+>
+> `Extreme Deduction + Scenario Projection`
+
+Extreme Deduction is the core method. It turns fuzzy continuous ambiguity into a discrete structural coordinate system by pushing key variables to extremes, collapsing possible outcomes, and reading real-world drift.
+
+Short rule:
+
+> Extreme Deduction first builds the structural skeleton; Scenario Projection is only a supplementary application.
+
+Scenario Projection remains available as a supplement when a concrete scenario must be placed inside the coordinate system built by Extreme Deduction.
+
+## Mainline / Mainline
+
+### When To Use
+
+Use this skill when facing questions like:
+
+- `A also seems right, B also seems right; which is actually better?`
+- `Is this a real binary choice, or is the question malformed?`
+- `Should this be decided structurally, or by scenario boundary?`
+- `Which option is becoming the natural mainline under current drift?`
+
+Do not use it to replace evidence acquisition, domain research, runtime proof, or stakeholder judgment when those are the actual missing inputs.
+When a prompt forces A/B but the dimensions or risk boundaries are unstable, the first
+sentence must diagnose the malformed binary and withhold a winner. Do not name a
+provisional winner merely because the user says to choose first; any conservative
+operating default follows the structural diagnosis and is not the answer to which side
+is right.
+When the prompt asks who is right for an active buy/use/commit decision, first name
+which frame owns that current decision. Do not open with a balanced "both sides are
+right" abstraction unless the user's value tradeoff truly owns the choice.
+
+### Operating Flow
+
+1. Ask whether the active uncertainty is structural or scenario-specific.
+2. If structural, run `Extreme Deduction`:
+   - decompose driving variables
+   - push variables to extremes
+   - collapse outcomes into discrete poles
+   - read real-world drift
+   - produce positioning or diagnose a malformed proposition
+3. Run the `Multi-Role Challenge` inside the same agent before accepting the L1 skeleton:
+   - `Builder`: proposes the dimensions, extremes, collapsed outcomes, and drift prior
+   - `Challenger`: attacks missed variables, duplicated dimensions, weak extremes, forced collapse, and biased drift reading
+   - `Synthesizer`: keeps, rebuilds, or rejects the coordinate system
+4. If Extreme Deduction creates a stable coordinate system and a concrete choice remains, run `Scenario Projection`.
+5. Output the choice guidance, boundary conditions, and what evidence could overturn it.
+
+## Guardrails / Supporting Guardrails
+
+### Stop Conditions
+
+Stop after Extreme Deduction if the task only needs structural judgment, proposition diagnosis, trend identification, or a finding that the original binary is synthetic.
+
+Run Scenario Projection only when a concrete scenario must be selected inside a stable Extreme Deduction coordinate system.
+
+### Multi-Role Challenge
+
+Use `single-agent multi-role` pressure by default for non-trivial EDSP runs. The
+point is not theatrics; it protects L1 from a clean but wrong skeleton.
+
+Boundary: do not run Scenario Projection if `Challenger` finds a missed decisive variable,
+duplicated dimension, under-pushed extreme, forced outcome collapse, or biased drift
+reading. `Synthesizer` must rebuild L1 or state that EDSP cannot decide yet.
+
+For very high-impact or long-term decisions, separate agents are an escalation option, not the default.
+
+## Boundaries / Boundaries
+
+- Do not use EDSP to replace evidence acquisition, domain research, runtime proof, or stakeholder judgment.
+- Do not run Scenario Projection before Extreme Deduction has produced a stable coordinate system.
+- If the output becomes elegant but does not improve a decision, treat the method use as failed.
+- If candidate structure is already stable and several valid actions compete for one shared scarce resource, use SRA for allocation; EDSP only stabilizes a malformed proposition or comparison axis.
+
+## Runtime Support / Supporting Resources
+
+Read `resources/methodology.md` when you need the detailed EDSP procedure, anti-patterns, or examples of coordinate-system failure.
+
+- `resources/fidelity-contract.md` — EDSP fidelity contract for v0.9.
+- `templates/fidelity-output.json` — example v0.9 fidelity output shape.
+- `scripts/validate_edsp_output.py` — validate fidelity contract output shape with the shared core.

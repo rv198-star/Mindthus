@@ -358,5 +358,87 @@ class BoundedScreenTests(unittest.TestCase):
             with self.assertRaisesRegex(ContractError,'technical failure'):screen.series_admission(series,6)
 
 
+class LanguageTrialTests(unittest.TestCase):
+    def setUp(self):
+        from experiments.typed_decision import language_trial
+        from experiments.typed_decision.session import implementation_digest
+        from experiments.typed_decision.campaign import sha
+        import shutil
+        self.trial=language_trial
+        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
+        self.repo=Path(self.temp.name)/'repo';self.repo.mkdir()
+        self.docs=self.repo/language_trial.DOCS;self.docs.mkdir(parents=True)
+        names=[]
+        for owner in c01.METHODS | {'using-mindthus'}:
+            for prefix,source in [(Path(),ROOT), (language_trial.DOCS/'english',ROOT/language_trial.DOCS/'english')]:
+                name=prefix/'skills'/owner/'SKILL.md';dest=self.repo/name
+                dest.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(source/'skills'/owner/'SKILL.md',dest);names.append(str(name))
+        cases=[]
+        for i in range(32):
+            data={'request':'Sort A and B alphabetically.','constraints':[], 'known_obligations':[],
+                'evidence':[],'provenance':{'source_ref':f'fixture:{i}','revision':'1'},'risk':'low',
+                'freshness':'stale' if i==31 else 'current','permission':{'mode':'advisory','source_ref':'fixture'}}
+            cases.append({'id':f'F{i:02}','family':'fixture','source':data,'english':copy.deepcopy(data),
+                'accepted':[{'route':'original_path' if i==31 else 'direct_execute',
+                             'entry_mode':None if i==31 else 'direct_execution','owner':None}]})
+        (self.docs/'cases.json').write_text(json.dumps({'cases':cases}))
+        names.append(str(language_trial.DOCS/'cases.json'))
+        (self.docs/'freeze.json').write_text(json.dumps({'implementation':implementation_digest(),
+            'graph':c01.GRAPH,'files':{name:sha(self.repo/name) for name in names}}))
+        self.network=[]
+
+    def execute(self, fail=False, mismatch=False):
+        from unittest.mock import patch
+        from experiments.typed_decision.providers import TypeSafeJevProvider,ProviderError
+        from experiments.typed_decision.session import write_once
+        def transport(url,headers,body,timeout):
+            self.network.append(body)
+            if fail:raise ProviderError('transport_failure')
+            values={'entry_mode':'acquire_information' if mismatch else 'direct_execution',
+                    'unresolved_obligation':'clear'}
+            return {'model':'jev-1.13.0','answers':{k:{'type':'choice','choice':values[k],
+                'probabilities':{v:float(v==values[k]) for v in q['criteria']},'confidence':1.0}
+                for k,q in body['questions'].items()},'usage':{'input_tokens':10,'output_tokens':1}}
+        provider=TypeSafeJevProvider(transport=transport)
+        manifest,_,_=self.trial.prepare(self.repo,provider)
+        root=Path(self.temp.name)/'trial';write_once(root/'campaign.json',manifest)
+        for arm,admission in manifest['admissions'].items():write_once(root/arm/'campaign.json',admission)
+        with patch.dict('os.environ',{'TYPESAFE_API_KEY':'fixture-only'}):
+            result=self.trial.run(self.repo,root,provider,manifest)
+        return result,root,provider,manifest
+
+    def test_complete_paired_fixture_separates_d0_and_never_egresses_labels(self):
+        result,root,provider,manifest=self.execute()
+        self.assertEqual(result['completed_views'],64)
+        self.assertEqual(result['total_attempts'],62)
+        self.assertEqual(result['analysis']['paired_joint'],{'both_correct':32})
+        self.assertEqual(result['analysis']['semantic_paired_joint'],{'both_correct':31})
+        for body in self.network:self.assertFalse({'accepted','family','rationale'} & set(body['state']))
+        with self.assertRaises(ContractError):self.trial.run(self.repo,root,provider,manifest)
+        self.assertEqual(len(self.network),62)
+
+    def test_semantic_mismatch_collects_all_pairs(self):
+        result,*_=self.execute(mismatch=True)
+        self.assertEqual(result['completed_views'],64)
+        self.assertIsNone(result['stop_reason'])
+        self.assertEqual(result['analysis']['semantic_paired_joint'],{'neither':31})
+
+    def test_technical_failure_stops_both_views(self):
+        result,*_=self.execute(fail=True)
+        self.assertEqual(result['total_attempts'],1)
+        self.assertEqual(result['stop_reason'],'technical_failure')
+        self.assertEqual(len(result['unrun']),63)
+
+    def test_unbound_translation_rejected_before_any_call(self):
+        from experiments.typed_decision.providers import TypeSafeJevProvider
+        path=self.docs/'freeze.json';freeze=json.loads(path.read_text())
+        del freeze['files'][str(self.trial.DOCS/'english/skills/tvg/SKILL.md')]
+        path.write_text(json.dumps(freeze))
+        with self.assertRaisesRegex(ContractError,'unbound or missing'):
+            self.trial.prepare(self.repo,TypeSafeJevProvider())
+        self.assertEqual(self.network,[])
+
+
 if __name__ == '__main__':
     unittest.main()

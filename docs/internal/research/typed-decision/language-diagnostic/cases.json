@@ -1,0 +1,1944 @@
+{
+  "provenance": "review_labels independent AI context proposals; parent checked against C01; synthetic development, not holdout/human truth",
+  "cases": [
+    {
+      "id": "L01",
+      "family": "direct",
+      "source": {
+        "request": "把这些植株编号按数字部分从小到大排列。",
+        "constraints": [
+          "仅给低风险合成建议，不执行外部操作。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L01",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L01:e1",
+            "summary": "完整编号为苗12、苗3、苗21、苗8；编号没有其他含义。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "direct_execute",
+          "entry_mode": "direct_execution",
+          "owner": null
+        }
+      ],
+      "rationale": "排序规则与完整输入已定。",
+      "english": {
+        "request": "Arrange these plant IDs in ascending order of their numeric parts.",
+        "constraints": [
+          "Provide only low-risk synthetic advice; do not perform external operations."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L01",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L01:e1",
+            "summary": "The complete IDs are Seedling12, Seedling3, Seedling21, and Seedling8; the IDs have no other meaning."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L02",
+      "family": "direct",
+      "source": {
+        "request": "根据已定事项写一条读书会通知，语气友好，保留全部安排。",
+        "constraints": [
+          "仅生成通知草稿，不发送；不增加安排。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L02",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L02:e1",
+            "summary": "活动为周六14点到15点，地点二楼阅览区；讨论《小王子》；自愿参加，无需报名，自带书。组织者已确认所有安排。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "direct_execute",
+          "entry_mode": "direct_execution",
+          "owner": null
+        }
+      ],
+      "rationale": "规则、目标和实质选择已定的普通材料合成。",
+      "english": {
+        "request": "Write a friendly book club announcement based on the settled details, preserving all arrangements.",
+        "constraints": [
+          "Generate only an announcement draft; do not send it or add arrangements."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L02",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L02:e1",
+            "summary": "The event is on Saturday from 14:00 to 15:00 in the second-floor reading area; the discussion is about The Little Prince. Participation is voluntary, no registration is needed, and participants should bring their own books. The organizer has confirmed all arrangements."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L03",
+      "family": "direct",
+      "source": {
+        "request": "列出这三份菜单中共同出现的饮品。",
+        "constraints": [
+          "仅分析合成清单，不查询实际商家。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L03",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L03:e1",
+            "summary": "甲菜单：红茶、柠檬水、牛奶；乙菜单：牛奶、红茶、咖啡；丙菜单：红茶、牛奶、果汁。只按给出的名称精确匹配。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "direct_execute",
+          "entry_mode": "direct_execution",
+          "owner": null
+        }
+      ],
+      "rationale": "完整集合的精确交集。",
+      "english": {
+        "request": "List the drinks that appear on all three menus.",
+        "constraints": [
+          "Analyze only the synthetic lists; do not look up actual businesses."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L03",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L03:e1",
+            "summary": "Menu A: black tea, lemon water, milk; Menu B: milk, black tea, coffee; Menu C: black tea, milk, fruit juice. Use exact matches of the names provided."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L04",
+      "family": "direct",
+      "source": {
+        "request": "把这段已批准的播客介绍缩到两句话，保留主题、频率和主持人。",
+        "constraints": [
+          "仅生成低风险草稿；不增加事实，不改变定位。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L04",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L04:e1",
+            "summary": "介绍：节目名为街角植物，每周更新一次，由阿禾主持，内容是城市常见植物的观察故事。只需这些信息，不作品牌定位或传播效果承诺。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "direct_execute",
+          "entry_mode": "direct_execution",
+          "owner": null
+        }
+      ],
+      "rationale": "普通表达合成，不自动介入TVG。",
+      "english": {
+        "request": "Shorten this approved podcast introduction to two sentences, preserving the topic, frequency, and host.",
+        "constraints": [
+          "Generate only a low-risk draft; do not add facts or change the positioning."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L04",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L04:e1",
+            "summary": "Introduction: The program is called Street-Corner Plants, is updated once a week, is hosted by Ahe, and features stories of observing common urban plants. Only this information is needed; do not establish brand positioning or promise promotional results."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L05",
+      "family": "missing_facts",
+      "source": {
+        "request": "替陶艺小组写明本次集合的准确时间和地点。",
+        "constraints": [
+          "仅准备草稿，不发送；不得猜测安排。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L05",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L05:e1",
+            "summary": "目前只有活动主题；集合时间与地点尚未公布，小组负责人可以提供。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "acquire_information",
+          "entry_mode": "acquire_information",
+          "owner": null
+        }
+      ],
+      "rationale": "缺明确且可取得的事实。",
+      "english": {
+        "request": "State the exact meeting time and location for this pottery group gathering.",
+        "constraints": [
+          "Prepare only a draft; do not send it or guess the arrangements."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L05",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L05:e1",
+            "summary": "Only the activity theme is currently available; the meeting time and location have not yet been announced, and the group leader can provide them."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L06",
+      "family": "missing_facts",
+      "source": {
+        "request": "比较这两本摄影手册的目录，指出哪些章节重复。",
+        "constraints": [
+          "只比较实际目录，不依据书名推断章节。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L06",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L06:e1",
+            "summary": "当前只提供两本书名，未提供目录或可读取的书稿；用户可以补充目录。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "acquire_information",
+          "entry_mode": "acquire_information",
+          "owner": null
+        }
+      ],
+      "rationale": "缺任务所需材料。",
+      "english": {
+        "request": "Compare the tables of contents of these two photography manuals and identify overlapping chapters.",
+        "constraints": [
+          "Compare only the actual tables of contents; do not infer chapters from the book titles."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L06",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L06:e1",
+            "summary": "Currently, only the two book titles have been provided, with no tables of contents or readable manuscripts; the user can supply the tables of contents."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L07",
+      "family": "missing_facts",
+      "source": {
+        "request": "按社团已经采用的评分办法，算出这件模型作品的总分。",
+        "constraints": [
+          "仅计算合成记录；不得自行选择权重。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L07",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L07:e1",
+            "summary": "作品记录为外观8分、结构7分、展示9分；评分办法可能采用等权或不同权重，当前没有规则文本，秘书保存正式版本。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "acquire_information",
+          "entry_mode": "acquire_information",
+          "owner": null
+        }
+      ],
+      "rationale": "取得已存在的规则，不替所有者选择价值权重。",
+      "english": {
+        "request": "Calculate the total score for this model-building entry using the scoring method already adopted by the club.",
+        "constraints": [
+          "Calculate only from the synthetic records; do not choose weights yourself."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L07",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L07:e1",
+            "summary": "The entry's recorded scores are 8 for appearance, 7 for structure, and 9 for presentation. The scoring method may use equal or different weights; the rule text is currently unavailable, and the secretary holds the official version."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L08",
+      "family": "missing_facts",
+      "source": {
+        "request": "根据昨天鸟类观察活动的实际签到人数写一句记录。",
+        "constraints": [
+          "只报告实际到场人数，不把报名数当签到数；仅草稿。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L08",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L08:e1",
+            "summary": "当前只有30人的报名名单；现场签到表还在领队手里，实际到场人数未提供。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "acquire_information",
+          "entry_mode": "acquire_information",
+          "owner": null
+        }
+      ],
+      "rationale": "普通补信息不等于未解决义务。",
+      "english": {
+        "request": "Write a one-sentence record based on the actual number of people who checked in at yesterday's birdwatching activity.",
+        "constraints": [
+          "Report only actual attendance; do not treat registrations as check-ins. Draft only."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L08",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L08:e1",
+            "summary": "Currently, only a registration list of 30 people is available; the on-site check-in sheet is still with the group leader, and the actual attendance count has not been provided."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L09",
+      "family": "sra",
+      "source": {
+        "request": "花展只剩一个可移动展示台，该给种子交换还是给栽培演示？请建议本周末的分配。",
+        "constraints": [
+          "仅低风险分配建议，不预订或移动物品。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L09",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L09:e1",
+            "summary": "目标是让来访者学会一种可带回家实践的园艺活动。种子交换用台面便于分类讲解，不用台面可用袋装套件；栽培演示用台面便于近距离观看，不用台面可用图卡。两项都可举办，但唯一展示台不能同时使用；无既定优先权。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra"
+        }
+      ],
+      "rationale": "可比较用途争用同一不可分资源；不标最终赢家。",
+      "english": {
+        "request": "The flower show has only one movable display table left. Should it go to the seed exchange or the cultivation demonstration? Please recommend an allocation for this weekend.",
+        "constraints": [
+          "Provide only low-risk allocation advice; do not reserve or move objects."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L09",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L09:e1",
+            "summary": "The goal is for visitors to learn a gardening activity they can practice at home. A tabletop helps the seed exchange explain categories; without it, bagged kits can be used. A tabletop helps visitors watch the cultivation demonstration up close; without it, illustrated cards can be used. Both activities can take place, but the only display table cannot be used by both at the same time. Neither has established priority."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L10",
+      "family": "sra",
+      "source": {
+        "request": "业余电台这周仅有一期十分钟节目，应介绍新人作品还是讲解录音技巧？",
+        "constraints": [
+          "仅建议当前节目时段分配，不发布音频。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L10",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L10:e1",
+            "summary": "目标是提高本月成员参与度。新人作品已有授权并能鼓励投稿，技巧节目已有讲稿并能帮助成员录制；两个选题均需完整十分钟才能完成设计，本周总时长十分钟。未选内容可延至下周，无强制截止次序。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra"
+        }
+      ],
+      "rationale": "候选、贡献、窗口和共同稀缺时长已给。",
+      "english": {
+        "request": "The amateur radio station has only one ten-minute program this week. Should it introduce newcomers' work or explain recording techniques?",
+        "constraints": [
+          "Advise only on allocating the current program slot; do not publish audio."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L10",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L10:e1",
+            "summary": "The goal is to increase member participation this month. Permission to feature the newcomers' work has already been obtained, and featuring it can encourage submissions. The techniques program already has a script and can help members make recordings. Each topic needs the full ten minutes to carry out its design, and this week's total airtime is ten minutes. The unselected content can wait until next week; there is no mandatory deadline ordering."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L11",
+      "family": "sra",
+      "source": {
+        "request": "摄影社本周只剩四小时扫描仪使用时间，先扫描底片还是旧活动照片？",
+        "constraints": [
+          "仅低风险建议，不操作设备；不预设哪类内容更重要。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L11",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L11:e1",
+            "summary": "目标是完成本月线上回顾展。底片扫描四小时可补充早期作品，没有它可用现有精选；活动照片扫描四小时可补齐社团历史，没有它可用文字年表。材料状况稳定，两项均有整理完的清单，扫描仪只有同一段四小时空档。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra"
+        }
+      ],
+      "rationale": "比较共享设备时间的下一份投入。",
+      "english": {
+        "request": "The photography club has only four hours of scanner access left this week. Should it scan negatives or old event photos first?",
+        "constraints": [
+          "Provide only low-risk advice; do not operate equipment or presume which type of content is more important."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L11",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L11:e1",
+            "summary": "The goal is to complete this month's online retrospective exhibition. Four hours of negative scanning can add early works; without them, an existing selection can be used. Four hours of event-photo scanning can fill in the club's history; without them, a written timeline can be used. The materials are in stable condition, both sets have fully organized lists, and the scanner has only the same four-hour opening available."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L12",
+      "family": "sra",
+      "source": {
+        "request": "棋社通讯只能再放一页，给残局练习还是给新成员问答？",
+        "constraints": [
+          "仅提出编辑资源分配建议，不改稿或印刷。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L12",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L12:e1",
+            "summary": "目标是帮助成员在下月继续参加。残局练习可服务已有基础者；问答可降低新成员参与门槛；两份稿件都已完成且各需一整页才能保留必要内容。只能增加一页，两项无依赖，未选稿件可下期使用。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra"
+        }
+      ],
+      "rationale": "真实版面竞争；最终偏好可在分析中澄清。",
+      "english": {
+        "request": "The chess club newsletter can fit only one more page. Should it go to endgame exercises or questions and answers for new members?",
+        "constraints": [
+          "Offer only advice on allocating editorial resources; do not edit manuscripts or print."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L12",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L12:e1",
+            "summary": "The goal is to help members continue participating next month. Endgame exercises can serve members who already have some grounding; questions and answers can lower the participation barrier for newcomers. Both manuscripts are complete, and each needs a full page to retain the necessary content. Only one page can be added, neither item depends on the other, and the unselected manuscript can be used in the next issue."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L13",
+      "family": "edsp",
+      "source": {
+        "request": "摄影作品点评应匿名还是署名？先找出两种方式分别适合什么情况，不要先替社团选制度。",
+        "constraints": [
+          "仅低风险结构分析，不收集身份或实施制度。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L13",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L13:e1",
+            "summary": "社团确认：匿名可降低熟人关系影响，但难以持续追问创作意图；署名便于交流，但新成员可能不愿公开失误。活动既有评奖也有练习讨论，目标分别涉及公平比较与学习反馈。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "edsp"
+        },
+        {
+          "route": "direct_execute",
+          "entry_mode": "direct_execution",
+          "owner": null
+        }
+      ],
+      "rationale": "两端均有成立条件的结构判断，无共同资源竞争。 冻结前独立复核：已给部分条件关系，直接综合解释也可辩护，保留两种路径，不强迫介入。",
+      "english": {
+        "request": "Should photography critiques be anonymous or attributed? First identify the circumstances suited to each approach; do not choose a policy for the club yet.",
+        "constraints": [
+          "Provide only low-risk structural analysis; do not collect identities or implement a policy."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L13",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L13:e1",
+            "summary": "The club has confirmed that anonymity can reduce the influence of personal relationships but makes it difficult to keep asking about creative intent. Attribution facilitates discussion, but newcomers may be unwilling to disclose mistakes publicly. Activities include both awards and practice discussions, with goals involving fair comparison and learning feedback respectively."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L14",
+      "family": "edsp",
+      "source": {
+        "request": "讨论课固定座位好还是自由座位好？请把适用边界说清，再考虑试行。",
+        "constraints": [
+          "仅分析安排条件，不实际调整课堂。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L14",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L14:e1",
+            "summary": "已知固定座位便于长期小组协作，自由座位便于接触不同同学；课程既有连续数周的小组项目，也有单次陌生主题讨论。教师认可这两类活动差异，尚未建立按活动类型选择座位安排的规则。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "edsp"
+        }
+      ],
+      "rationale": "比较轴与场景映射尚待建立。",
+      "english": {
+        "request": "Are assigned seats or freely chosen seats better for discussion classes? Clarify the conditions under which each applies before considering a trial.",
+        "constraints": [
+          "Analyze only the conditions for the arrangements; do not actually rearrange the classroom."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L14",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L14:e1",
+            "summary": "Assigned seats are known to help sustained group collaboration, while freely chosen seats help students interact with different classmates. The course includes both group projects lasting several weeks and one-off discussions of unfamiliar topics. The teacher recognizes the differences between these two kinds of activity but has not established a rule for choosing seating arrangements by activity type."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L15",
+      "family": "edsp",
+      "source": {
+        "request": "地方史资料展该按年代排还是按主题排？我需要一个判断不同展览何时适用哪种结构的办法。",
+        "constraints": [
+          "仅建立结构判断，不生成整套展览。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L15",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L15:e1",
+            "summary": "材料含跨多个时期反复出现的水运主题，也有必须按先后理解的城市改建过程。观众既可能追踪一件事的因果，也可能比较不同时期同类生活。材料齐全，本次不分配策展人手或经费。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "edsp"
+        }
+      ],
+      "rationale": "建立时间因果与主题比较的结构坐标。",
+      "english": {
+        "request": "Should a local-history exhibition be organized chronologically or thematically? I need a way to judge when each structure suits different exhibitions.",
+        "constraints": [
+          "Establish only the structural judgment; do not generate an entire exhibition."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L15",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L15:e1",
+            "summary": "The materials include a water-transport theme that recurs across several periods, as well as a process of urban reconstruction that must be understood in sequence. Visitors may want either to trace the causes and effects of an event or to compare similar aspects of life across periods. The materials are complete; this task does not allocate curatorial staff or funds."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L16",
+      "family": "edsp",
+      "source": {
+        "request": "手工课应先看完整演示再练习，还是边看边做？请解释为何不同课程可能得出相反答案。",
+        "constraints": [
+          "仅低风险教学结构分析，不指导危险操作。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L16",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L16:e1",
+            "summary": "观察记录已确认：步骤相互依赖时，学员需要先理解整体；动作容易忘记时，同步练习有帮助；重复小动作与一次性装配项目都存在。目标是掌握操作，没有要求今天选一个统一方案。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "edsp"
+        },
+        {
+          "route": "direct_execute",
+          "entry_mode": "direct_execution",
+          "owner": null
+        }
+      ],
+      "rationale": "定性二选一随变量改变。 冻结前独立复核：已给部分条件关系，直接综合解释也可辩护，保留两种路径，不强迫介入。",
+      "english": {
+        "request": "In a crafts class, should students watch the full demonstration before practicing, or work along as they watch? Explain why different courses might reach opposite answers.",
+        "constraints": [
+          "Provide only low-risk analysis of teaching structure; do not instruct dangerous operations."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L16",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L16:e1",
+            "summary": "Observation records have confirmed that when steps depend on one another, students need to understand the whole first; when movements are easy to forget, simultaneous practice helps. Both repeated small movements and one-off assembly projects occur. The goal is to master the operations, and there is no requirement to choose one uniform approach today."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L17",
+      "family": "sela_mpg",
+      "source": {
+        "request": "只讨论长期格局：逐件人工编写的唱片目录，能否依靠少数收藏家的精细描述抵住共享目录系统的规模优势？",
+        "constraints": [
+          "仅方向判断，不推断所有细分用途都会消失。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L17",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L17:e1",
+            "summary": "合成同口径比较中，共享目录处理一批普通唱片所需工时为人工方式的十分之一，错误率达到使用下限；收藏家仍更善于描述少数罕见版本，但培养这种能力需要多年。没有当前采购、迁移或平台承诺需要决定。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sela"
+        }
+      ],
+      "rationale": "系统效率与局部优势，没有载体承诺。",
+      "english": {
+        "request": "Discuss only the long-term landscape: can a record catalog written manually, item by item, withstand the scale advantage of a shared catalog system by relying on the detailed descriptions of a few collectors?",
+        "constraints": [
+          "Judge only the direction; do not infer that all specialized uses will disappear."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L17",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L17:e1",
+            "summary": "In a synthetic comparison on the same basis, a shared catalog takes one-tenth the labor hours of the manual approach to process a batch of ordinary records, with an error rate that meets the minimum usability requirement. Collectors are still better at describing a few rare editions, but developing that ability takes years. No current purchasing, migration, or platform commitment decision is required."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L18",
+      "family": "sela_mpg",
+      "source": {
+        "request": "长期看，逐张手绘的普通地形示意图会被可复用数字底图边缘化吗？请保留手绘仍有价值的条件。",
+        "constraints": [
+          "不决定某工作室今天是否停用手绘，不涉及真实投资。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L18",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L18:e1",
+            "summary": "合成项目对比显示，数字底图更新同类图件的成本下降一个数量级，精度达到普通讲解用途要求；手绘在特殊叙事和纪念性作品上更受欢迎，但每件仍需相近工时。此处只讨论普通图件的长期方向。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sela"
+        }
+      ],
+      "rationale": "规模效率与难扩展局部价值。",
+      "english": {
+        "request": "In the long run, will ordinary terrain diagrams drawn individually by hand be marginalized by reusable digital base maps? Preserve the conditions under which hand drawing still has value.",
+        "constraints": [
+          "Do not decide whether a particular studio should stop hand drawing today; no real investment is involved."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L18",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L18:e1",
+            "summary": "Synthetic project comparisons show that digital base maps reduce the cost of updating comparable maps by an order of magnitude, with accuracy sufficient for ordinary explanatory uses. Hand drawing is more popular for distinctive narratives and commemorative works, but each item still takes roughly the same amount of labor. This question concerns only the long-term direction for ordinary maps."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L19",
+      "family": "sela_mpg",
+      "source": {
+        "request": "数字服装打版方向已经认可，虚构工作室现在该绑定单一服务商，还是先保留两套可互换的文件？",
+        "constraints": [
+          "仅模拟路径建议，不签约、不上传作品、不花钱。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L19",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L19:e1",
+            "summary": "打版数字化的长期效率优势已由合成试验支持。拟选服务商要求专有格式，导出功能将在三个月后提供但可能延期；全量录入将占用本季大部分整理工时。可先录入一类服装并同时保留开放格式，目标是不中断接单。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "mpg"
+        }
+      ],
+      "rationale": "方向已定，载体、集中暴露、延期与选择权决定行动。",
+      "english": {
+        "request": "The direction of digital garment patternmaking has already been accepted. Should the fictional studio now commit to a single service provider, or first retain two interchangeable sets of files?",
+        "constraints": [
+          "Provide only simulated path advice; do not sign contracts, upload work, or spend money."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L19",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L19:e1",
+            "summary": "Synthetic trials have supported the long-term efficiency advantage of digitizing patternmaking. The proposed provider requires a proprietary format; export functionality is due in three months but may be delayed. Entering everything would take most of this season's organizing labor. The studio can first enter one category of clothing while retaining an open format in parallel. The goal is to keep taking orders without interruption."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L20",
+      "family": "sela_mpg",
+      "source": {
+        "request": "模型城镇已确定逐步改用可重复使用的活动餐具，现在应一次铺开还是先在固定场馆试行？",
+        "constraints": [
+          "仅低风险模拟建议，不采购、不安排真实餐饮。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L20",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L20:e1",
+            "summary": "合成长期测算支持重复使用方向。当前承载方案依赖唯一清洗点，其扩容日期可能推迟；移动活动的回收点经常变动，全面铺开会占用大部分可用周转箱。固定场馆可以先形成稳定回收循环，目标是在过渡期保持活动正常。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "mpg"
+        }
+      ],
+      "rationale": "已选方向的承载与分阶段承诺。",
+      "english": {
+        "request": "The model town has decided to gradually switch to reusable tableware for events. Should it roll this out everywhere at once, or first try it at fixed venues?",
+        "constraints": [
+          "Provide only low-risk simulation advice; do not purchase anything or arrange real catering."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L20",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L20:e1",
+            "summary": "Synthetic long-term calculations support the direction of reuse. The current implementation arrangement depends on a single washing site, whose capacity expansion may be delayed. Collection points for mobile events change frequently, and a full rollout would occupy most of the available transport crates. Fixed venues can first establish a stable collection cycle. The goal is to keep events running normally during the transition."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L21",
+      "family": "wae_boundary",
+      "source": {
+        "request": "这个自动整理访谈的系统，应该由哪一层决定一句话是受访者观点还是编辑推断？",
+        "constraints": [
+          "仅讨论系统责任分配，不修改或发布访谈；不请求把现有结果标为通过。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L21",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L21:e1",
+            "summary": "当前模型提取句子后，脚本只凭是否有引号决定观点归属。已核对样本证明，转述句会被错判成编辑推断，引号中的假设例子会被错判成受访者主张。团队已承认这条规则不可靠，现在要重新分配判断职责。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "wae"
+        }
+      ],
+      "rationale": "机械规则承担语义归属判断，WAE入口成立。",
+      "english": {
+        "request": "In this system that automatically organizes interviews, which layer should decide whether a sentence expresses the interviewee's view or an editorial inference?",
+        "constraints": [
+          "Discuss only the allocation of system responsibilities; do not modify or publish interviews. There is no request to mark existing results as passed."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L21",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L21:e1",
+            "summary": "After the current model extracts sentences, a script assigns viewpoint attribution solely according to whether quotation marks are present. Checked samples show that paraphrases are incorrectly classified as editorial inferences, while hypothetical examples in quotation marks are incorrectly classified as interviewee assertions. The team has acknowledged that this rule is unreliable and now wants to reassign judgment responsibilities."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L22",
+      "family": "wae_boundary",
+      "source": {
+        "request": "推荐助手已经选定候选清单，却让通用渲染器自行解释“更适合初学者”并重新排序；这项选择应在哪里收口？",
+        "constraints": [
+          "仅分析虚构助手，不推荐真实购买，不修改系统。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L22",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L22:e1",
+            "summary": "审查发现渲染器有时按价格排序，有时按步骤数排序，导致最终推荐不同；候选资料完整，但推荐层只传递了模糊短语，没有明确适配标准。任务是划定语义选择与展示职责，不是现在选出最好产品。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "wae"
+        }
+      ],
+      "rationale": "语义所有者把结果改变权泄漏给通用下游组件。",
+      "english": {
+        "request": "The recommendation assistant has already selected a candidate list, but lets a general-purpose renderer interpret 'better suited to beginners' and reorder it. Where should this choice be finalized?",
+        "constraints": [
+          "Analyze only the fictional assistant; do not recommend real purchases or modify the system."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L22",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L22:e1",
+            "summary": "A review found that the renderer sometimes sorts by price and sometimes by number of steps, producing different final recommendations. Candidate information is complete, but the recommendation layer passed only a vague phrase rather than explicit suitability criteria. The task is to define the responsibilities for semantic selection and presentation, not to select the best product now."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L23",
+      "family": "wae_boundary",
+      "source": {
+        "request": "把助手日志里的三个耗时相加，只报总毫秒数。",
+        "constraints": [
+          "仅计算给定数字，不读取真实日志或评价系统。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L23",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L23:e1",
+            "summary": "完整日志数字为120毫秒、80毫秒、50毫秒；计时口径相同，互不重叠。此次不判断助手回答是否正确。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "direct_execute",
+          "entry_mode": "direct_execution",
+          "owner": null
+        }
+      ],
+      "rationale": "助手背景但没有控制错配。",
+      "english": {
+        "request": "Add the three durations in the assistant log and report only the total number of milliseconds.",
+        "constraints": [
+          "Calculate only from the provided numbers; do not read real logs or evaluate the system."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L23",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L23:e1",
+            "summary": "The complete logged figures are 120 milliseconds, 80 milliseconds, and 50 milliseconds. They use the same timing basis and do not overlap. This task does not judge whether the assistant's answers are correct."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L24",
+      "family": "wae_boundary",
+      "source": {
+        "request": "把志愿者接待流程做成两栏：前台负责什么、带队员负责什么。",
+        "constraints": [
+          "仅按已定职责排版，不调整分工或发通知。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L24",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L24:e1",
+            "summary": "职责已经全体确认：前台登记姓名、发胸牌；带队员介绍路线、清点返程人数。没有自动助手或算法参与，没有待裁定的职责争议。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "direct_execute",
+          "entry_mode": "direct_execution",
+          "owner": null
+        }
+      ],
+      "rationale": "普通组织流程的已定映射。",
+      "english": {
+        "request": "Put the volunteer reception procedure into two columns: what the front desk is responsible for, and what the group guides are responsible for.",
+        "constraints": [
+          "Format only the settled responsibilities; do not change assignments or send announcements."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L24",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L24:e1",
+            "summary": "Everyone has confirmed the responsibilities: the front desk registers names and issues badges; group guides introduce the route and count participants for the return trip. No automated assistant or algorithm is involved, and there is no unresolved dispute over responsibilities."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L25",
+      "family": "explicit_method",
+      "source": {
+        "request": "请用SRA建议这唯一一间安静房间本周给口述史录音还是给字幕校对。",
+        "constraints": [
+          "仅低风险建议，不预订房间。"
+        ],
+        "known_obligations": [],
+        "explicit_method": "sra",
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L25",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L25:e1",
+            "summary": "目标是完成两类志愿档案。录音用房可减少环境噪声，不用房可改录较短片段；校对用房可提高集中度，不用房可在公共区分段完成。两项各需本周全部可用房间时段，时间已核对，无既定优先权。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "sra"
+        }
+      ],
+      "rationale": "显式SRA与真实共享资源竞争一致。",
+      "english": {
+        "request": "Please use SRA to recommend whether the only quiet room should go to oral-history recording or subtitle proofreading this week.",
+        "constraints": [
+          "Provide only low-risk advice; do not reserve the room."
+        ],
+        "known_obligations": [],
+        "explicit_method": "sra",
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L25",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L25:e1",
+            "summary": "The goal is to complete two kinds of volunteer archives. Using the room for recording can reduce ambient noise; without it, shorter segments can be recorded instead. Using the room for proofreading can improve concentration; without it, the work can be done in sections in a public area. Each activity needs all of this week's available room slots. The times have been checked, and neither activity has established priority."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L26",
+      "family": "explicit_method",
+      "source": {
+        "request": "请用EDSP分析兴趣课程按水平分班和混合分班分别在什么条件下更好。",
+        "constraints": [
+          "仅低风险结构分析，不安排真实学员。"
+        ],
+        "known_obligations": [],
+        "explicit_method": "edsp",
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L26",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L26:e1",
+            "summary": "合成观察中，同水平班容易控制进度，混合班便于同伴示范；差距很大时有人跟不上，差距适中时互助更有效。课程既有共同达标练习也有开放作品讨论，当前需要建立条件边界。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "intervene",
+          "entry_mode": "mindthus_intervention",
+          "owner": "edsp"
+        }
+      ],
+      "rationale": "显式EDSP与结构坐标对象吻合。",
+      "english": {
+        "request": "Please use EDSP to analyze the conditions under which grouping hobby-course students by skill level or mixing skill levels would work better.",
+        "constraints": [
+          "Provide only low-risk structural analysis; do not assign real students."
+        ],
+        "known_obligations": [],
+        "explicit_method": "edsp",
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L26",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L26:e1",
+            "summary": "In synthetic observations, same-level classes make pacing easier to manage, while mixed-level classes facilitate peer demonstrations. When the gap is very large, some students cannot keep up; when it is moderate, mutual help is more effective. Courses include both exercises aimed at a common proficiency standard and open discussions of creative work. The current need is to establish the boundaries of these conditions."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L27",
+      "family": "explicit_method",
+      "source": {
+        "request": "请用WAE把这四个书架编号按字母顺序列出。",
+        "constraints": [
+          "仅文字建议，不移动书籍。"
+        ],
+        "known_obligations": [],
+        "explicit_method": "wae",
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L27",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L27:e1",
+            "summary": "完整编号为D、A、C、B；排序含义已定。这是纸质书架标签，与模型、脚本、工作流控制和验收系统无关。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "llm_fallback",
+          "entry_mode": "mindthus_intervention",
+          "owner": null
+        }
+      ],
+      "rationale": "显式调用不证明WAE适用，当前图回原agent。",
+      "english": {
+        "request": "Please use WAE to list these four bookshelf IDs in alphabetical order.",
+        "constraints": [
+          "Provide only textual advice; do not move books."
+        ],
+        "known_obligations": [],
+        "explicit_method": "wae",
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L27",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L27:e1",
+            "summary": "The complete IDs are D, A, C, and B; the meaning of the ordering is settled. These are paper bookshelf labels, unrelated to models, scripts, workflow control, or acceptance systems."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L28",
+      "family": "explicit_method",
+      "source": {
+        "request": "请用MPG将这段乐谱说明中的“小节”统一替换为“乐句”，其余内容不变。",
+        "constraints": [
+          "仅输出文字替换结果，不操作文件。"
+        ],
+        "known_obligations": [],
+        "explicit_method": "mpg",
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L28",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L28:e1",
+            "summary": "原文为“先练第一小节，再练第二小节。”术语替换已批准。没有长期方向、承载方案、投入暴露或路径承诺需要判断。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "llm_fallback",
+          "entry_mode": "mindthus_intervention",
+          "owner": null
+        }
+      ],
+      "rationale": "显式调用不能制造MPG前提。",
+      "english": {
+        "request": "Please use MPG to replace every occurrence of 'bar' with 'phrase' in this musical-score note, leaving everything else unchanged.",
+        "constraints": [
+          "Output only the text replacement result; do not operate on files."
+        ],
+        "known_obligations": [],
+        "explicit_method": "mpg",
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L28",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L28:e1",
+            "summary": "The original text is: 'Practice the first bar, then practice the second bar.' The terminology replacement has been approved. There is no long-term direction, implementation arrangement, resource exposure, or path commitment to judge."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L29",
+      "family": "obligation_d0",
+      "source": {
+        "request": "筹备工作都做完了，请在社团记录里写“徽章方案已经投票获选”。",
+        "constraints": [
+          "仅判断建议分支，不写入记录。"
+        ],
+        "known_obligations": [
+          "投票结果尚不存在，不得把筹备完成升级为方案获选。"
+        ],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L29",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L29:e1",
+            "summary": "当前只有候选图案和投票表准备完成的记录；投票尚未举行。正式方案必须由投票决定，筹备完成不代表方案获选。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "llm_fallback",
+          "entry_mode": "acquire_information",
+          "owner": null
+        },
+        {
+          "route": "llm_fallback",
+          "entry_mode": "mindthus_intervention",
+          "owner": null
+        }
+      ],
+      "rationale": "补证据或先纠正定框均可，未解决义务都须阻断。",
+      "english": {
+        "request": "All the preparations are complete. Please write 'The badge design has been selected by vote' in the club records.",
+        "constraints": [
+          "Judge only the suggested handling branch; do not write to the records."
+        ],
+        "known_obligations": [
+          "No voting result exists yet; do not upgrade completed preparations into selection of a design."
+        ],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L29",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L29:e1",
+            "summary": "The current records show only that the candidate designs and voting forms are ready; the vote has not yet taken place. The official design must be decided by a vote. Completed preparations do not mean a design has been selected."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L30",
+      "family": "obligation_d0",
+      "source": {
+        "request": "按这份记录给明天的排练安排房间。",
+        "constraints": [
+          "仅建议，不预订房间。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "stale",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L30",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L30:e1",
+            "summary": "记录列出甲室和乙室空闲，但它是上周快照；明天的占用情况尚未核对。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "original_path",
+          "entry_mode": null,
+          "owner": null
+        }
+      ],
+      "rationale": "D0拒绝过期快照，不调用语义节点。",
+      "english": {
+        "request": "Assign a room for tomorrow's rehearsal based on this record.",
+        "constraints": [
+          "Provide advice only; do not reserve rooms."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "stale",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L30",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L30:e1",
+            "summary": "The record lists Rooms A and B as available, but it is a snapshot from last week; tomorrow's occupancy has not yet been checked."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L31",
+      "family": "obligation_d0",
+      "source": {
+        "request": "",
+        "constraints": [
+          "仅离线结构边界诊断，不执行操作。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L31",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L31:e1",
+            "summary": "完整合成资料为三张明信片的标题：湖边、夜市、山路；当前没有提供要做什么。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "original_path",
+          "entry_mode": null,
+          "owner": null
+        }
+      ],
+      "rationale": "空request为D0结构边界，排除模型语义分母。",
+      "english": {
+        "request": "",
+        "constraints": [
+          "Offline structural-boundary diagnosis only; do not perform operations."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L31",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L31:e1",
+            "summary": "The complete synthetic material consists of the titles of three postcards: Lakeside, Night Market, and Mountain Road. No task has currently been provided."
+          }
+        ]
+      }
+    },
+    {
+      "id": "L32",
+      "family": "obligation_d0",
+      "source": {
+        "request": "根据已经核实的清点结果，写一句“全部模型零件已归盒”的活动收尾记录。",
+        "constraints": [
+          "仅生成记录草稿，不扩大为活动所有事项都已完成。"
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L32",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L32:e1",
+            "summary": "活动要求所有24件模型零件归盒；两名清点员刚独立逐件核对均为24件，并确认没有留在桌面。此前缺少复核的要求已经满足，当前只需记录该结果。"
+          }
+        ]
+      },
+      "accepted": [
+        {
+          "route": "direct_execute",
+          "entry_mode": "direct_execution",
+          "owner": null
+        }
+      ],
+      "rationale": "已满足要求属于证据，不应持续fallback。",
+      "english": {
+        "request": "Based on the verified count, write a one-sentence activity wrap-up record stating, 'All model parts have been returned to the box.'",
+        "constraints": [
+          "Generate only a record draft; do not expand it into a claim that every aspect of the activity has been completed."
+        ],
+        "known_obligations": [],
+        "explicit_method": null,
+        "freshness": "current",
+        "risk": "low",
+        "permission": {
+          "mode": "advisory",
+          "source_ref": "synthetic:language-study"
+        },
+        "provenance": {
+          "source_ref": "synthetic:L32",
+          "revision": "1"
+        },
+        "evidence": [
+          {
+            "source_ref": "synthetic:L32:e1",
+            "summary": "The activity requires all 24 model parts to be returned to the box. Two counters have just independently checked every item, each counting 24, and confirmed that none remain on the table. The previously unmet requirement for a second check has now been satisfied; only this result needs to be recorded."
+          }
+        ]
+      }
+    }
+  ]
+}
