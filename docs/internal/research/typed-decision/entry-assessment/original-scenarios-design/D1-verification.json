@@ -1,0 +1,86 @@
+{
+  "schema": "mindthus.relationship-D1-verification.v1",
+  "source_commit": "2a811a69c68dc4361fae62acfdf9371245885865",
+  "design_freeze_commit": "3215b032c8715f6e01b1a792d79f33a72cad671b",
+  "runtime_digest": "fe4ead3c4bace52f5b9111d6dbb88f7f0f451fb8b13d542eba01db12e379fcb9",
+  "source_sha256": {
+    "experiments/typed_decision/relationship_assessment.py": "95ae35483e066704f55eeb7139b970ba7d1b4f03931f9fe98a9b26bb9d9a9bfd",
+    "tests/test_relationship_assessment.py": "2ed96a75d64576d6a2e87e19f1e069710ab354d1194cbc002addebe8b6147a9a",
+    "tests/test-lifecycle-registry.json": "4e1d2f413763592f4b6f5b395d65fbb789f5daf084fcfe1de49f68b972272fc8",
+    "docs/internal/research/typed-decision/entry-assessment/original-scenarios-design/relationship-contracts-v0.3.1.json": "1eacde248a33be576b223ae24c3cfc8a05cb11e2eaf569b85ee5abe371268502",
+    "docs/internal/research/typed-decision/entry-assessment/original-scenarios-design/acceptance-v0.3.json": "0a549abba315b745cc2cfde9443e61849bbcd695e0eadf78246817f75a517abb"
+  },
+  "new_tests": {
+    "run": 43,
+    "passed": 43
+  },
+  "full_suite": {
+    "run": 1324,
+    "passed": 1319,
+    "skipped": 5,
+    "failed": 0,
+    "errors": 0,
+    "seconds": 140.084,
+    "completion_evidence": "OK full-suite log followed by successful lifecycle under set -eu; expired session handle was not rerun"
+  },
+  "lifecycle": "83/83",
+  "log_sha256": {
+    "full-suite.log": "c23ef193ae5d9b5b7cd5503540282f67a4bf36979eb6df4f4de717ef72e6d1d5",
+    "lifecycle.log": "74fb7e45f1c4dc0dd8632b2041fcd41b8acbf163c1654d28bed8873f5b639982"
+  },
+  "design_review": {
+    "model": "deepseek-v4.1-flash",
+    "calls": 1,
+    "verdict": "REVISE",
+    "offline_d1_admitted": true,
+    "usage": {
+      "completion_tokens": 2119,
+      "prompt_tokens": 16121,
+      "total_tokens": 18240
+    },
+    "seconds": 12.641929604113102,
+    "reviewed_version": "0.3",
+    "author_resolved_version": "0.3.1",
+    "followup_independent_review": false
+  },
+  "semantic_examples": {
+    "count": 14,
+    "evidence": "authored expected labels injected into deterministic consumer; no model accuracy inference"
+  },
+  "new_jev_scenario_calls": 0,
+  "new_host_correction_calls": 0,
+  "paid_design_audit_calls": 1,
+  "preserved": [
+    "old assessment v2",
+    "old entry.run",
+    "Provider/Session/C01",
+    "canonical methods",
+    "all terminal 6/8-case evidence",
+    "four old REVISE audits",
+    "main"
+  ],
+  "secret_scan": {
+    "scope": "changed text files and audited response credential-reflection check",
+    "pattern_scan": "PASS",
+    "new_full_exact_key_scan": false
+  },
+  "implemented": [
+    "quote/input validation",
+    "bounded DecisionSpec compiler",
+    "G1/G2 typed-result consumer",
+    "offline Session seam"
+  ],
+  "pending": [
+    "D2 host correction and episode ledger",
+    "D3 live entry admission",
+    "D4 raw-input natural comparison"
+  ],
+  "qualification": false,
+  "default_activation": false,
+  "post_documentation": {
+    "method_layering_tests": 3,
+    "passed": 3,
+    "relative_links_checked": 92,
+    "new_model_calls": 0
+  }
+}

@@ -1,11 +1,20 @@
-# Skills / 4K 入口设计与内部独立审计
+# Skills / 4K 入口：合同完善与 Relationship D1
 
-**当前有效设计：v0.2；审计结论：REVISE，未获实施冻结/付费场景/生产放行。**
+**当前：D1离线实现完成；独立快速设计审计REVISE但允许offline D1，作者局部处置后按v0.3.1开发。不是全面审计PASS或真实效果验证。**
 
-先读 [设计 v0.2](design-v0.2.md) 和 [新版验收表](acceptance-v0.2.json)，再读 [实施前关口](implementation-gates.md)。
-原始 [v0.1](design-v0.1.md) 与 [旧验收表](acceptance-v0.1.json) 只作历史审计基线，当前硬约束以v0.2的H01–H12为准。
+先读 [D1合同处置与实现边界](D1-contract-resolution.md)，再读 [设计v0.3](design-v0.3.md)、
+[实际机器合同v0.3.1](relationship-contracts-v0.3.1.json)、[验收v0.3](acceptance-v0.3.json) 和
+[D1验证](D1-verification.json)。实现源码 `experiments/typed_decision/relationship_assessment.py`。
 
-## 本次交付
+本轮一份真实独立上下文 [快速审计](quick-audit-v03/review.json) 与 [作者处置](quick-audit-v03-disposition.json)
+分别保存；原被审v0.3未修改。43新离线测试、全仓1324项（1319成功/5跳过）通过，生命周期83/83。
+14个语义判例是作者预期，不是Jev实测正确率。本轮没有Jev场景调用或真实宿主纠偏。
+
+**下一步D2**：同一entry.run的显式离线profile、一次宿主纠偏、跨turn/episode账本与恢复；
+D3/D4真实接线、准入和独立效果验证随后另行冻结。旧6/8例不重跑，默认Skill和main不变，#211仍OPEN。
+当前可恢复任务：`tsk_578fb8c8ab5b17bc`。
+
+## 历史 v0.2 交付（原四份审计，已封存）
 
 将 Skills 两轮对象锁与 4K 使用/购前/评论的不同主判断恢复为主验收目标。
 方案区分原文、来源事实、用户约束、宿主提案、候选回答；关系检查形成保留/修正/目标/缺口四类纠偏内容。

@@ -6,7 +6,35 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — original Skills / 4K design and independent audit; REVISE
+## Current checkpoint — relationship D1 implemented; offline only
+
+Source: `2a811a69c68dc4361fae62acfdf9371245885865`; new task `tsk_578fb8c8ab5b17bc`.
+Read [D1 resolution](entry-assessment/original-scenarios-design/D1-contract-resolution.md),
+[active contract](entry-assessment/original-scenarios-design/relationship-contracts-v0.3.1.json),
+[acceptance](entry-assessment/original-scenarios-design/acceptance-v0.3.json) and
+[verification](entry-assessment/original-scenarios-design/D1-verification.json).
+
+User authorized one quick independent acceptance audit and development. The one real CPA
+DeepSeek review returned REVISE with offline_d1_admitted=true. Its frozen v0.3 inputs and
+raw verdict remain unchanged; v0.3.1 is the author's precise branch/byte/provenance resolution,
+not another model PASS. Old four REVISE reviews remain historical. The new audit actually
+received the current acceptance table rather than the old carrier's v0.1 table.
+
+New relationship_assessment.py implements strict raw/proposal/quote validation, at most
+24 ordinary DecisionSpec instances within 48KiB projection, G1/G2 conditional consumption,
+exact target references, and an explicitly offline Session seam. It preserves scope acceptance
+separately from definition sufficiency, permits supported simple mechanisms and joint drivers,
+and returns unresolved/source-conflicting cases without generating a correction plan.
+43 added tests pass; full1324=1319 success+5 skips; lifecycle83/83. The 14 semantic examples
+supply authored/injected labels only; no actual Jev accuracy or native host result is claimed.
+
+NEXT: D2 same-entry explicit offline profile, host correction and cross-turn episode ledger;
+then separately admitted D3 live hook and D4 raw-input/independent comparisons. No new scene
+run, default activation, old terminal-trial replay or main change is authorized by this result.
+Existing assessment v2/entry.run/Provider/Session/C01 and canonical methods are unchanged.
+#211 remains OPEN; this D1 task is at closeout. Design audit calls=1; new Jev/host correction calls=0.
+
+## Previous checkpoint — original Skills / 4K design and independent audit; REVISE
 
 Owner restored the original hard scenarios as the main acceptance target: two-turn Skills
 object correction without automatic conclusion concession; situated 4K current-use,
