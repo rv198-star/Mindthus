@@ -1,0 +1,53 @@
+{
+  "schema": "mindthus.relationship-D3-verification.v1",
+  "source_commit": "6fa33f298ee31703d185e5a4760a8b43fd38d93c",
+  "freeze_commit": "716496e25688ac936c18ed8e292cbb3ddb33689a",
+  "implementation_digest": "446ec674eb5fd4df5e660b72d100d982cf0ed93df0422d382260b16ae34282cb",
+  "freeze_payload_sha256": "d20f559a6319589482791a194d0048911161bb3ff91d2b9f3792c63fa7a82577",
+  "focused": {
+    "run": 173,
+    "success": 173
+  },
+  "full_suite": {
+    "run": 1408,
+    "success": 1403,
+    "skipped": 5,
+    "failed": 0,
+    "seconds": 150.159
+  },
+  "lifecycle": {
+    "covered": 85,
+    "total": 85
+  },
+  "records": {
+    "count": 66,
+    "bytes": 349806,
+    "byte_identical": true,
+    "unresolved_intents": 0
+  },
+  "live_calls": {
+    "Jev_initial": 5,
+    "Jev_recheck": 0,
+    "CPA_organizer": 1,
+    "CPA_corrector": 0
+  },
+  "credential_scan": {
+    "exact_scan_files": 1636,
+    "hits": 0,
+    "evidence_session": "session-756c02e57342a7cdc6d22227",
+    "scope": "then tracked files and live JSON; ephemeral exec env; no persistent Skill env writes"
+  },
+  "public_entry_reentry": {
+    "new_calls": 0,
+    "records_unchanged": true
+  },
+  "real_correction_acceptance": false,
+  "D4_started": false,
+  "logs": {
+    "full-suite.log": "ee23e876a8c65dc6addf7d3c99500b0787bf0afb96221548c9b75687c2612f9c",
+    "focused.log": "ad8fc2e5f6f2fd50441fe295929783af2bb78192b8b329ffb50eb23ec5800df7",
+    "lifecycle.log": "35aa155f38df7fff14c873fc8a956f518ae863e1455e2eaf187df87685de2e22"
+  },
+  "relative_links_checked": 103,
+  "closeout_pattern_scan": "PASS"
+}

@@ -6,22 +6,34 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current work — D3 same-entry live admission and bounded original-scenario validation
+## Current checkpoint — D3 live batch terminal; correction acceptance NOT MET
 
-Task `tsk_8dc1ae88072bbe94`, base `a69216415aaef8069f7449037ad4a64f8eaef32f`.
-Owner authorized advancing D2 to real tests. Read
-[D3 protocol](entry-assessment/original-scenarios-design/D3-live/protocol.md).
-Same entry.run/CLI now has an explicit live_admission seam, D2 episode accounting and
-unchanged D1 questions. New CPA host text/quote adapter and optional raw organizer execute
-under the same entry; actual network transport has a subprocess deadline and no retry.
-Four episodes/six turns are authored development controls, not natural failures or D4.
-The next Skills/display turn binds the actual prior output, but stressed new candidates
-remain authored. One final control starts with proposal=null for real structure generation.
+D3 source `6fa33f2`; freeze `716496e25688ac936c18ed8e292cbb3ddb33689a`.
+Task `tsk_8dc1ae88072bbe94`. Read [D3 disposition](entry-assessment/original-scenarios-design/D3-live/disposition.md)
+and [verification](entry-assessment/original-scenarios-design/D3-live/verification.json).
+Actual public entry.run/CLI + D2 journals + unchanged D1 are now wired to explicitly admitted
+TypeSafe and CPA adapters. Default mode remains offline; default Skill and main unchanged.
 
-20 new D3 + 153 prior focused tests passed; full1408=1403 success+5 skips, zero failures; lifecycle85/85. Pre-call freeze is next.
-No model request has yet been made at this checkpoint. Never rerun a completed/unknown
-external intent; inspect this task and D3-live/freeze.json plus its root before resuming.
-D3 completion will not enable default Skills, update main or grant independent D4 accuracy.
+One frozen four-episode/six-input development batch ended with 5 actual Jev initial calls,
+1 actual CPA organizer call, ZERO host corrections and ZERO Jev rechecks. Four main Skills/
+display turns returned_to_owner because Q0 selected both. The simple-Skills reverse control
+continued unchanged. Raw organizer stopped on ambiguous exact quote: '楼主' appears twice.
+All 6 external intents have outcomes; 66 JSONs are archived byte-identically. Public reentry
+made zero calls and changed zero records. No tuning/retry followed the observed results.
+
+Detailed answers contain useful scope/definition/readiness signals but were UNCONSUMED.
+Counterfactual Q0=usable consumption is a separately labelled offline projection, not model
+truth or successful correction. Input locators were too coarse (including a list-only
+candidate tagged with controller_refs); Q0's exact causal attribution is still unisolated.
+Organizer prompt permits exact quotes while adapter requires uniqueness; repair that contract
+without guessing a match, and evaluate its goal/constraint vs hypothesis mapping separately.
+
+Engineering regression full1408=1403 success+5 skips, focused173 and lifecycle85/85 pass.
+Real D3 correction acceptance FAILED / not met; D4 is unstarted. The host correction adapter
+has offline tests but no successful live invocation in this batch. Do not report D3 completed
+as semantic acceptance, enable default use, bypass Q0, rerun this terminal root, or rewrite
+historical REVISE results. Next work: source/locator proposal fidelity and explicit reference
+disambiguation, followed by a separately frozen admission after repair. #211 remains OPEN.
 
 ## Previous checkpoint — relationship D2 same-entry correction and episode recovery complete; offline only
 

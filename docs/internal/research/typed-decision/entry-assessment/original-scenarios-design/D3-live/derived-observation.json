@@ -1,0 +1,85 @@
+{
+  "schema": "mindthus.relationship-D3-derived-review.v1",
+  "raw_summary_sha256": "28da02d6235e1c58fd9e0c0e1374c97b0ee221442b341c7cfca97e4c70bc6fdf",
+  "record_count": 66,
+  "unresolved_intents": [],
+  "metrics": {
+    "CPA_organizer": {
+      "calls": 1,
+      "input_tokens": 930,
+      "output_tokens": 1134,
+      "seconds": 5.676945972256362,
+      "costs": [
+        null
+      ]
+    },
+    "Jev": {
+      "calls": 5,
+      "input_tokens": 37644,
+      "output_tokens": 3403,
+      "seconds": 1.492282284423709,
+      "costs": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  },
+  "counterfactual_policy_projection": [
+    {
+      "episode": "A",
+      "turn": "1",
+      "kind": "offline_counterfactual_consumption_only",
+      "forced_q0": "usable",
+      "action": "request_correction",
+      "repairs": [
+        "restore_scope",
+        "rebuild_same_object"
+      ]
+    },
+    {
+      "episode": "A",
+      "turn": "2",
+      "kind": "offline_counterfactual_consumption_only",
+      "forced_q0": "usable",
+      "action": "request_correction",
+      "repairs": [
+        "qualify_local_transfer",
+        "rebuild_same_object"
+      ]
+    },
+    {
+      "episode": "B",
+      "turn": "1",
+      "kind": "offline_counterfactual_consumption_only",
+      "forced_q0": "usable",
+      "action": "request_correction",
+      "repairs": [
+        "deliver_verdict"
+      ]
+    },
+    {
+      "episode": "B",
+      "turn": "2",
+      "kind": "offline_counterfactual_consumption_only",
+      "forced_q0": "usable",
+      "action": "request_correction",
+      "repairs": [
+        "qualify_local_transfer",
+        "state_conditions"
+      ]
+    }
+  ],
+  "reentry_new_transport_calls": 0,
+  "reentry_record_hashes_unchanged": true,
+  "real_corrections": 0,
+  "real_rechecks": 0,
+  "semantics_acceptance": false,
+  "default_adoption": false,
+  "author_review_pending": false,
+  "review_ref": "disposition.md",
+  "outcome": "D3_correction_acceptance_not_met",
+  "new_review_model_calls": 0
+}
