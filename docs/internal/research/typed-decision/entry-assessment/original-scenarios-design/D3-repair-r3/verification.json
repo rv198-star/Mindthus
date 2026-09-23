@@ -1,0 +1,50 @@
+{
+  "source_commit": "09e08351162549dd3fe93bddf2ae5ca9967b880c",
+  "freeze_commit": "7660e47dfe8a614d9c56d87cd04ecd22e464d0c3",
+  "freeze_sha256": "a2261857d3e4104aee51ca18e345344f50f54a1aa076bd68947dc0b316562421",
+  "implementation": "efc9fdaefad1831d1cc59c76bcdd32dd70471c883f199b4bbbec7f328c716c84",
+  "focused": {
+    "run": 182,
+    "passed": 182
+  },
+  "full_suite": {
+    "run": 1417,
+    "passed": 1412,
+    "skipped": 5,
+    "failed": 0,
+    "seconds": 147.375
+  },
+  "lifecycle": {
+    "registered": 85,
+    "executable": 85
+  },
+  "reentry": {
+    "new_calls": 0,
+    "all_record_hashes_unchanged": true,
+    "original_documents_unchanged": true,
+    "authority_unchanged": true
+  },
+  "R3_live": {
+    "initial": 7,
+    "recheck": 5,
+    "correction": 5,
+    "organizer": 1
+  },
+  "all_internal_batches_calls": 30,
+  "records_archived": {
+    "r1": 66,
+    "r2": 54,
+    "r3": 147
+  },
+  "unresolved_external_calls": 0,
+  "secret_scan": {
+    "exact_R3_files": 1929,
+    "hits": 0,
+    "credential_scope": "one command environment; no persistent skill env writes"
+  },
+  "logs": {
+    "full-r3.log": "506400b51875e4277a6dae3acd8109631620f12691ee2efba3ff349eb69105cc",
+    "lifecycle-r3.log": "35aa155f38df7fff14c873fc8a956f518ae863e1455e2eaf187df87685de2e22",
+    "focused-r3.log": "31220f8d14e7b5517878c5df618f2f0d868f23903e874287808c01342a7404d8"
+  }
+}

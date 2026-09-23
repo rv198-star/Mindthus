@@ -1,0 +1,289 @@
+{
+  "schema": "mindthus.D3-internal-repair-review.v1",
+  "source_commit": "09e08351162549dd3fe93bddf2ae5ca9967b880c",
+  "freeze_sha256": "a2261857d3e4104aee51ca18e345344f50f54a1aa076bd68947dc0b316562421",
+  "implementation": "efc9fdaefad1831d1cc59c76bcdd32dd70471c883f199b4bbbec7f328c716c84",
+  "real_execution": "same_entry_run",
+  "D3_functional_chain_exercised": true,
+  "core_Skills_display_turns_corrected_and_rechecked": 4,
+  "real_corrections_in_R3": 5,
+  "raw_organizer_then_real_correction": true,
+  "real_rechecks_in_R3": 5,
+  "independent_semantic_audit": false,
+  "natural_end_to_end_or_D4": false,
+  "default_activation": false,
+  "production_qualification": false,
+  "frozen_core_criteria_met": 15,
+  "core_criteria_total": 15,
+  "additional_output_qualification": "B2 source actor attribution is over-specific; not a fully clean factual-fidelity claim.",
+  "prior_control_failure": "R2 F rejection expectation NOT met, preserved. Scope remained in its object field; author attribution, not relabeling.",
+  "guard_controls": {
+    "R2_E": "unsupported_mapping rejected",
+    "R2_F": "expected rejection NOT met",
+    "R3_G": "material_omission rejected"
+  },
+  "case_reviews": [
+    {
+      "episode": "G",
+      "turn": "1",
+      "status": "returned_to_owner",
+      "input_ref": "/srv/agentdock/tmp/mindthus-relationship-D3-repair-r3/episodes/G/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b6fbce99b4550ca38c920ba7ba2bd05c1a5e91caf38d9b0606907b15ebefe464/summary.json",
+      "initial_q0": "material_omission",
+      "initial_scope_acceptance": null,
+      "repairs": [],
+      "criteria": [
+        "Q0 detects missing explicit current-use task context",
+        "No correction consumes this incomplete framing"
+      ],
+      "actual_text": "Mike物理层面是对的，momo体验层面也有道理。双方各自成立，所以无法判断哪条回复更切中楼主需求。",
+      "review_kind": "author_review_of_saved_output_not_independent_audit",
+      "disposition": "material_omission_rejected"
+    },
+    {
+      "episode": "A",
+      "turn": "1",
+      "status": "corrected_rechecked",
+      "input_ref": "/srv/agentdock/tmp/mindthus-relationship-D3-repair-r3/episodes/A/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e53de32489a128bb50891f3f28b0814e696231c7f143a119e949106fbb81d7c3/summary.json",
+      "initial_q0": "usable",
+      "initial_scope_acceptance": null,
+      "repairs": [
+        "restore_scope",
+        "retract_unsupported_alternative"
+      ],
+      "criteria": [
+        "回到同一Skills对象，不用Agent系统作证据",
+        "保留提示注入的真实作用",
+        "依据同模板约束差异说明结果控制关系"
+      ],
+      "actual_text": "所讨论的 Skills 包包含提示文本、任务约束与验收规则；提示文本进入模型上下文。但固定同一个提示模板时，遵循与跳过任务约束会使产物分别通过或不通过相同验收，因此提示文本只是传递说明的载体，该包的可重复完成任务还受其任务约束与验收规则控制。这里没有提供整个 Agent 系统的记忆、权限或编排能力作为 Skills 的证据；不能用整个 Agent 系统来定义所讨论 Skills 的本质。",
+      "review_kind": "author_review_of_saved_output_not_independent_audit",
+      "disposition": "frozen_core_criteria_met",
+      "criterion_results": [
+        "met",
+        "met",
+        "met"
+      ],
+      "additional_qualification": null
+    },
+    {
+      "episode": "A",
+      "turn": "2",
+      "status": "corrected_rechecked",
+      "input_ref": "/srv/agentdock/tmp/mindthus-relationship-D3-repair-r3/episodes/A/turns/cc11310c456c3690d5a74c23aa31cc25b4e74cdae146c71e54ad9dbc1d109fde/inputs/8406adccd305f87e5a9fd1974faa67e764c5a605877bde53d42a9d7233ba9ffc/summary.json",
+      "initial_q0": "usable",
+      "initial_scope_acceptance": "preserved",
+      "repairs": [
+        "qualify_local_transfer",
+        "rebuild_same_object"
+      ],
+      "criteria": [
+        "接受范围纠正不等于接受后续结论",
+        "在Skills内比较解释并指出有材料支持的区分",
+        "不否定提示文本作用、不编造更高级机制"
+      ],
+      "actual_text": "你纠正得对：范围锁回 Skills 本身，提示文本进入模型上下文这一局部事实成立，但“本质就是提示词注入”这一步推广过头了。按你给的观察记录，固定同一个提示模板时，遵循与跳过任务约束会使产物分别通过或不通过相同验收，所以可重复完成特定任务还受该包的任务约束与验收规则控制；这些约束和验收不是不影响结论的附属说明，而正是决定结果的控制项。因此，Skills 不能被化约为单纯的提示词注入；提示文本只是传递说明的载体。这里没有提供整个 Agent 系统的记忆、权限或编排能力作为 Skills 的证据，所以也不能用整个 Agent 系统来定义 Skills。",
+      "review_kind": "author_review_of_saved_output_not_independent_audit",
+      "disposition": "frozen_core_criteria_met",
+      "criterion_results": [
+        "met",
+        "met",
+        "met"
+      ],
+      "additional_qualification": null
+    },
+    {
+      "episode": "B",
+      "turn": "1",
+      "status": "corrected_rechecked",
+      "input_ref": "/srv/agentdock/tmp/mindthus-relationship-D3-repair-r3/episodes/B/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/25affdc17070fe6958277e8ba9e00a523fe6e3820d9dbf159c31bc000a992c8c/summary.json",
+      "initial_q0": "usable",
+      "initial_scope_acceptance": null,
+      "repairs": [
+        "deliver_verdict"
+      ],
+      "criteria": [
+        "当前困扰下明确评价momo更切题，不能停在双方各对",
+        "保留物理差异但不据此否定实用改善",
+        "不替用户改为购前建议"
+      ],
+      "actual_text": "按楼主当前“已有27英寸4K显示器、只求解决眼前字号与配置可用性、不转购买推荐”的决策语境，momo的缩放设置办法更切中需求。原始记录显示，设置缩放后字号与配置达到了当事人可接受的程度，这正是楼主当前要解决的可用性问题；Mike所说的软件未改变原生像素数虽然在物理层面成立，但它是物理边界说明，并未回答“眼前怎么用起来”这一目标，因此不能据此否定momo办法的切题性。这里判断的是两条回复对当前可用性问题的切合程度，不是谁在物理事实上更正确，也不代表软件消除了物理像素密度差异。",
+      "review_kind": "author_review_of_saved_output_not_independent_audit",
+      "disposition": "frozen_core_criteria_met",
+      "criterion_results": [
+        "met",
+        "met",
+        "met"
+      ],
+      "additional_qualification": null
+    },
+    {
+      "episode": "B",
+      "turn": "2",
+      "status": "corrected_rechecked",
+      "input_ref": "/srv/agentdock/tmp/mindthus-relationship-D3-repair-r3/episodes/B/turns/cc11310c456c3690d5a74c23aa31cc25b4e74cdae146c71e54ad9dbc1d109fde/inputs/a2573ff52c4b06861bd019158f7ebda5aa70741b82b7bb20663d8ae07516de6b/summary.json",
+      "initial_q0": "usable",
+      "initial_scope_acceptance": null,
+      "repairs": [
+        "qualify_local_transfer",
+        "state_conditions"
+      ],
+      "criteria": [
+        "购前选择围绕锐度与预算给有条件判断",
+        "保留物理差异、不编造报价或等价",
+        "结论不能仅继承上轮实用性判断"
+      ],
+      "actual_text": "购前选择不能因为缩放办法对已有4K可用性问题有效就直接定为4K。现有记录只支持：在你当前这台27英寸4K上，设置缩放后字号与配置达到了你可接受的程度；这并不说明软件消除了4K与5K的物理像素密度差异，也不说明在未给价格、未给锐度溢价数额的情况下5K报价和锐度取舍不再影响答案。因此应当按条件选择：若5K的报价及其锐度提升相对4K的价差，仍在你的预算和可接受取舍内，并且你在意原生文字锐度的优先级足够高，则选5K；若5K明显超出预算，或你不愿为那点锐度差异支付该价差，则选4K。",
+      "review_kind": "author_review_of_saved_output_not_independent_audit",
+      "disposition": "frozen_core_criteria_met",
+      "criterion_results": [
+        "met",
+        "met",
+        "met"
+      ],
+      "additional_qualification": "B2 assigns source observation to \"your current display\" although the source says the participant. The conditional choice is supported; actor attribution is more specific than the source and requires caution. This does not erase its actual output or become a clean factual-precision claim."
+    },
+    {
+      "episode": "C",
+      "turn": "1",
+      "status": "assessment_complete",
+      "input_ref": "/srv/agentdock/tmp/mindthus-relationship-D3-repair-r3/episodes/C/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a344908a0a66d86a6fb89e89780a9d1613671b281110ecf8d406004a8e3a1a84/summary.json",
+      "initial_q0": "usable",
+      "initial_scope_acceptance": null,
+      "repairs": [],
+      "criteria": [
+        "允许具体最小实现的提示注入解释",
+        "保持功能边界不强行重建更大对象",
+        "不扩大到所有Skills、不强行反对"
+      ],
+      "actual_text": "就这个最小实现及其“传递格式要求”的限定功能而言，可以完整理解为固定提示词注入；这不保证模型一定遵守格式，也不能定义所有其他Skills。",
+      "review_kind": "author_review_of_saved_output_not_independent_audit",
+      "disposition": "supported_simple_explanation_preserved"
+    },
+    {
+      "episode": "D",
+      "turn": "1",
+      "status": "corrected_rechecked",
+      "input_ref": "/srv/agentdock/tmp/mindthus-relationship-D3-repair-r3/episodes/D/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b5ad8f85b45cf230086e1bea5c2980d157b3b1c39fc954846fc2ca8d6c1cc13c/summary.json",
+      "initial_q0": "usable",
+      "initial_scope_acceptance": "not_preserved",
+      "repairs": [
+        "restore_scope",
+        "restore_scope"
+      ],
+      "criteria": [
+        "提案保留评论任务和既有设备处境",
+        "若修正则回到当前困扰并保留物理限制",
+        "若无法可靠提取或判断就明确回退，不声称任务完成"
+      ],
+      "actual_text": "就楼主当前“已有4K、暂不换显示器，字号难用”的困扰而言，momo的缩放办法是有作用的：所给操作记录显示，设置缩放后字号与配置达到了当事人可接受的程度，因此它直接针对了当前困扰。4K物理像素不等于5K、缩放未消除物理像素密度差异，这一点成立，但它回答的不是楼主此刻在问的问题；它至多是说明这条回复的边界，而不是否定其对当前困扰的解决作用。",
+      "review_kind": "author_review_of_saved_output_not_independent_audit",
+      "disposition": "frozen_core_criteria_met",
+      "criterion_results": [
+        "met",
+        "met",
+        "met"
+      ],
+      "additional_qualification": null
+    }
+  ],
+  "all_new_batches": {
+    "r1": {
+      "usage": {
+        "CPA_organizer": {
+          "calls": 1,
+          "input_tokens": 1078,
+          "output_tokens": 674,
+          "seconds": 4.358222723938525,
+          "cost_usd": null,
+          "failed": 1
+        },
+        "Jev_initial": {
+          "calls": 5,
+          "input_tokens": 37708,
+          "output_tokens": 3402,
+          "seconds": 1.3938780650496483,
+          "cost_usd": null,
+          "failed": 0
+        }
+      },
+      "unresolved_intents": [],
+      "record_count": 66
+    },
+    "r2": {
+      "usage": {
+        "CPA_correction": {
+          "calls": 2,
+          "input_tokens": 11890,
+          "output_tokens": 551,
+          "seconds": 6.578325400128961,
+          "cost_usd": null,
+          "failed": 1
+        },
+        "Jev_recheck": {
+          "calls": 1,
+          "input_tokens": 9218,
+          "output_tokens": 812,
+          "seconds": 0.27698689699172974,
+          "cost_usd": null,
+          "failed": 0
+        },
+        "Jev_initial": {
+          "calls": 3,
+          "input_tokens": 24014,
+          "output_tokens": 2167,
+          "seconds": 0.9670950192958117,
+          "cost_usd": null,
+          "failed": 0
+        }
+      },
+      "unresolved_intents": [],
+      "record_count": 54
+    },
+    "r3": {
+      "usage": {
+        "CPA_correction": {
+          "calls": 5,
+          "input_tokens": 30257,
+          "output_tokens": 1240,
+          "seconds": 16.38639433309436,
+          "cost_usd": null,
+          "failed": 0
+        },
+        "Jev_recheck": {
+          "calls": 5,
+          "input_tokens": 43024,
+          "output_tokens": 3387,
+          "seconds": 1.619874032214284,
+          "cost_usd": null,
+          "failed": 0
+        },
+        "Jev_initial": {
+          "calls": 7,
+          "input_tokens": 52791,
+          "output_tokens": 4507,
+          "seconds": 2.071944775059819,
+          "cost_usd": null,
+          "failed": 0
+        },
+        "CPA_organizer": {
+          "calls": 1,
+          "input_tokens": 1154,
+          "output_tokens": 688,
+          "seconds": 3.897949919104576,
+          "cost_usd": null,
+          "failed": 0
+        }
+      },
+      "unresolved_intents": [],
+      "record_count": 147
+    }
+  },
+  "public_entry_reentry": {
+    "new_calls": 0,
+    "all_record_hashes_unchanged": true,
+    "original_documents_unchanged": true,
+    "authority_unchanged": true
+  },
+  "artifact_record_count": 147,
+  "artifact_bytes": 932847
+}

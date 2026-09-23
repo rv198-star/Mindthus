@@ -6,18 +6,28 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current internal iteration — R3 remaining correction and organizer coverage
+## Current checkpoint — D3 core real correction exercised after internal repair
 
-Owner authorizes bounded internal repairs through real tests; task `tsk_1a35f6536ac65d76`.
-R1 is terminal (input repair alone insufficient); R2 is terminal with first real correction but
-failed control expectation F and A1's target_rebind_count error. All records/expectations are
-preserved. R2 E rejected a real wrong goal mapping. F's removed scope was redundantly retained
-in its object field; this is author attribution, not relabeling its failed expectation.
-Read [R3 protocol](entry-assessment/original-scenarios-design/D3-repair-r3/protocol.md).
-R3 keeps D1 v0.3.2/Q0/consumer fixed; CPA host v1.3 makes exact rebind IDs/count explicit,
-including mandatory empty bindings when no target relationship requires them. New G omits
-actual situated-task fields; completed E/F are not rerun. Then original A/B/C/D use public entry.
-Do not reopen old roots, skip checks, discard failures or claim raw end-to-end/production proof.
+Task `tsk_1a35f6536ac65d76`; source `09e08351162549dd3fe93bddf2ae5ca9967b880c`, freeze
+`7660e47dfe8a614d9c56d87cd04ecd22e464d0c3`. Read [R3 disposition](entry-assessment/original-scenarios-design/D3-repair-r3/disposition.md),
+[actual text/author review](entry-assessment/original-scenarios-design/D3-repair-r3/review.json) and
+[verification](entry-assessment/original-scenarios-design/D3-repair-r3/verification.json).
+Skills two turns and display current-use/purchase completed actual check/correction/recheck through
+entry.run. The raw organizer branch also completed; supported simple mechanism remained unchanged.
+R3: 7 turns, 12 Jev requests, 5 CPA corrections, 1 organizer; 147 immutable JSONs; reentry zero calls.
+D3 functional coverage achieved; not natural end-to-end generation or independent/D4 qualification.
+B2 has an over-specific source actor attribution despite meeting the narrow original criteria.
+
+Active D1 contract v0.3.2 separates representation fidelity from candidate correctness; Q0 remains
+mandatory. Generic CPA adapter v1.3 disambiguates repeated quotes and exact rebind IDs. Runtime,
+provider/session, other question semantics and budgets preserved. Old failed D3/R1/R2 records remain.
+R2 E wrong mapping and R3 G missing context rejected; R2 F expected rejection NOT met, retained
+with author diagnosis of redundant scope still present. No perfect per-dimension accuracy claim.
+All internal rounds: 30 real calls and 267 records, including failures. Full1417=1412 success+5skip;
+focused182 and lifecycle85/85 pass. All intents have outcomes; original documents/authority retained.
+Owner authorized internal repairs without per-detail approvals. No current connectivity/interface
+blocker remains. Next product evidence is D4 independent raw-input/ordinary-LLM comparison and
+source-fidelity/net-benefit evaluation. #211 OPEN/unqualified; default Skills and main unchanged.
 
 ## Previous checkpoint — D3 live batch terminal; correction acceptance NOT MET
 
