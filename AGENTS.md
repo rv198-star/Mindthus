@@ -58,6 +58,7 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 新增授权渠道（2026-09-22）：`https://cpa.72live.com/v1` 可使用 `deepseek-v4.1-flash`
 （优先）与 `glm-5.3-flash`（备用）。固定试验中不静默切换模型；密钥不进入源码、Git、
 issue或日志。该授权不解除OpenRouter的仅Jev限制。
+用户补充（2026-09-23）：新的 DS4.1 Flash（deepseek-v4.1-flash）调用显式使用 `reasoning_effort: max` 和启用 thinking。审计、整理、纠偏与执行均适用；配置进入请求身份，禁止静默降档。记录请求配置与服务端可观察确认的区别，旧封存请求和结果不改写。
 
 ## No Abstract Jargon Wall
 

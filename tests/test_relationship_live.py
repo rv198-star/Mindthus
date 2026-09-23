@@ -260,7 +260,7 @@ class QuoteSelectionTests(unittest.TestCase):
             result = org.organize(request, 1)
             self.assertEqual(result['proposal']['refs'][0], rel.quote(self.doc, 5, 7))
             self.assertIn('zero-based', org.wire_body(request)['messages'][0]['content'])
-            self.assertEqual(org.configuration['adapter'], 'cpa-relationship-host.v1.3')
+            self.assertEqual(org.configuration['adapter'], 'cpa-relationship-host.v1.4-max')
 
 
 class RebindRequestTests(unittest.TestCase):

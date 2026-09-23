@@ -153,12 +153,13 @@
     {
       "test_id": "typed-decision-c01-experiment",
       "paths": [
-        "tests/test_typed_decision.py",
-        "tests/test_typed_decision_review.py",
         "tests/test_entry_assessment.py",
         "tests/test_relationship_assessment.py",
+        "tests/test_relationship_live.py",
         "tests/test_relationship_runtime.py",
-        "tests/test_relationship_live.py"
+        "tests/test_route_control.py",
+        "tests/test_typed_decision.py",
+        "tests/test_typed_decision_review.py"
       ],
       "owner": "runtime",
       "protects": [

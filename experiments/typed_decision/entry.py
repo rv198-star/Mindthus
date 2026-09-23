@@ -154,13 +154,23 @@ def _final(root: Path, manifest: dict, initial: dict, final: dict, status: str,
 
 def run(root: Path, provider, data: dict, repo: Path, *, corrector=None,
         correction_owner_ref='original-agent:v1', route=False, mode='assessment-v2',
-        organizer=None, recheck=True, live_admission=None) -> dict:
+        organizer=None, recheck=True, live_admission=None, executor=None, arbitrator=None, artifact_acceptor=None) -> dict:
     """Run an opt-in assessment episode; route only after its scoped gate permits it.
 
 S0 inspects an actual user frame. S1 requires an existing candidate. A corrected
 frame/answer stays a proposal alongside, never in place of, the original request.
 """
-    require(mode in ('assessment-v2', 'relationship-frame.v1'), 'unknown_entry_mode')
+    require(mode in ('assessment-v2', 'relationship-frame.v1', 'route-control.v0.2.1'), 'unknown_entry_mode')
+    if mode == 'route-control.v0.2.1':
+        from . import route_control
+        require(route is False and organizer is None, 'route_control_public_modes_exclusive')
+        require(correction_owner_ref in ('original-agent:v1', data.get('authority', {}).get('owner_ref')),
+                'route_control_owner_mismatch')
+        return route_control.run(root, provider, data, repo, executor=executor, arbitrator=arbitrator,
+                                 corrector=corrector, recheck=recheck, live_admission=live_admission,
+                                 artifact_acceptor=artifact_acceptor)
+    require(executor is None and arbitrator is None and artifact_acceptor is None,
+            'route_control_options_on_legacy_mode')
     if mode == 'relationship-frame.v1':
         from . import relationship_runtime
         require(route is False, 'relationship_mode_does_not_stack_C01_routing')
@@ -311,7 +321,7 @@ def main(argv=None):
     parser.add_argument('--fixture', type=Path, default=Path(__file__).parent / 'fixtures/entry-correction.json')
     parser.add_argument('--state-root', type=Path, required=True)
     parser.add_argument('--route', action='store_true', help='Continue via existing C01; no native skill execution')
-    parser.add_argument('--mode', choices=['assessment-v2', 'relationship-frame.v1'], default='assessment-v2')
+    parser.add_argument('--mode', choices=['assessment-v2', 'relationship-frame.v1', 'route-control.v0.2.1'], default='assessment-v2')
     parser.add_argument('--no-recheck', action='store_true', help='Relationship mode only: return revision without S2')
     parser.add_argument('--live-input', type=Path, help='D3: exact admitted input packet JSON')
     parser.add_argument('--live-admission', type=Path, help='D3: frozen per-episode admission JSON')
@@ -320,13 +330,22 @@ def main(argv=None):
     try:
         if args.live_input is not None or args.live_admission is not None:
             require(args.live_input is not None and args.live_admission is not None
-                    and args.mode == 'relationship-frame.v1', 'explicit_live_input_admission_required')
+                    and args.mode in ('relationship-frame.v1', 'route-control.v0.2.1'), 'explicit_live_input_admission_required')
             from .relationship_live import CPAHost, deadline_post_json
             from .providers import TypeSafeJevProvider
             packet = json.loads(args.live_input.read_bytes())
             admission = json.loads(args.live_admission.read_bytes())
             owner = packet['authority']['owner_ref']
             provider = TypeSafeJevProvider(model='jev-1.13.0', choice_rounding=True, transport=deadline_post_json)
+            if args.mode == 'route-control.v0.2.1':
+                from .route_control_host import CPARouteHost
+                result = run(args.state_root, provider, packet, repo, mode=args.mode, route=args.route,
+                             executor=CPARouteHost(owner, repo) if admission['executor'] else None,
+                             arbitrator=CPARouteHost(owner, repo, arbitrator=True) if admission['arbitrator'] else None,
+                             corrector=CPAHost(owner, repo) if admission['corrector'] else None,
+                             recheck=not args.no_recheck, live_admission=admission)
+                print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
+                return 0
             result = run(args.state_root, provider, packet, repo, mode=args.mode, route=args.route,
                          corrector=CPAHost(owner, repo),
                          organizer=CPAHost(owner, repo, organizer=True) if admission['organizer'] else None,
@@ -334,6 +353,15 @@ def main(argv=None):
             print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
             return 0
         fixture = json.loads(args.fixture.read_text(encoding='utf8'))
+        if args.mode == 'route-control.v0.2.1':
+            from .route_control_host import FixtureRouteHost
+            from .providers import FixtureProvider
+            result = run(args.state_root, FixtureProvider(fixture['answers']), fixture['input'], repo,
+                         mode=args.mode, route=args.route,
+                         executor=FixtureRouteHost(fixture['input']['authority']['owner_ref'], fixture['outputs']),
+                         recheck=not args.no_recheck)
+            print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
+            return 0
         owner = (fixture['input']['authority']['owner_ref'] if args.mode == 'relationship-frame.v1'
                  else 'original-agent:v1')
         hook = ScriptedCorrection(fixture['correction'], identity=owner) if fixture.get('correction') else None

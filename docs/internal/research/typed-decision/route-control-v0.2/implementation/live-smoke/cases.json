@@ -1,0 +1,123 @@
+{
+  "evidence_kind": "authored_development_controls_not_holdout",
+  "cases": [
+    {
+      "id": "single",
+      "packet": {
+        "schema": "mindthus.route-control-input.v1",
+        "episode_id": "route-control-first-live-single",
+        "turn_id": "1",
+        "revision": "1",
+        "documents": [
+          {
+            "id": "U",
+            "revision": "1",
+            "kind": "user",
+            "text": "分析给定客服Agent的退款建议流程，说明错误的批准是在哪里发生的、谁应负责哪项判断。这里只讨论修复设计，不执行退款或发布。"
+          },
+          {
+            "id": "S",
+            "revision": "1",
+            "kind": "source",
+            "text": "这是开发模拟记录，不是实际客户数据：退款草稿由语言模型生成；后续脚本只核对订单号、金额、理由字段非空，就把草稿状态写成已批准。一次模拟中，金额不在政策允许区间的草稿也被批准。客服主管尚未评估该方案。"
+          }
+        ],
+        "authority": {
+          "owner_ref": "mindthus-route-executor",
+          "risk": "low",
+          "mode": "read_only",
+          "known_obligations": []
+        },
+        "issues": [
+          {
+            "id": "I1",
+            "request_ref": {
+              "document_id": "U",
+              "revision": "1",
+              "start": 0,
+              "end": 62,
+              "sha256": "690e7023f50b74b12a654ca5d8ce8669ec67e0a3ab31578a15f19ad2107a911c"
+            },
+            "candidates": [
+              "wae"
+            ],
+            "handling": null,
+            "assessability": null,
+            "attention": true
+          }
+        ],
+        "dependencies": [],
+        "relationship": null,
+        "task_budget": {
+          "max_calls": 1,
+          "max_seconds": 45
+        }
+      },
+      "criteria": [
+        "分开结构校验与政策/授权判断",
+        "不声称脚本检查证明退款合理",
+        "不声称已执行退款或已发布"
+      ]
+    },
+    {
+      "id": "paired_methods",
+      "packet": {
+        "schema": "mindthus.route-control-input.v1",
+        "episode_id": "route-control-first-live-paired_methods",
+        "turn_id": "1",
+        "revision": "1",
+        "documents": [
+          {
+            "id": "U",
+            "revision": "1",
+            "kind": "user",
+            "text": "根据给定试点材料，判断现在是否应该继续扩大对当前知识检索供应商的投入，并说明长期方向与当前选择的关系。只给建议，不替团队签约。"
+          },
+          {
+            "id": "S",
+            "revision": "1",
+            "kind": "source",
+            "text": "这是开发模拟记录：三个相同口径试点中，知识检索系统与专家人工处理的合格率相近，但平均处理时间为人工的约四分之一，规模增大时人力增长更慢。当前供应商近两个月两次长时间停机，全部历史索引只能通过30天导出流程迁走。团队只剩一个季度试点预算，同时有另一家可小规模验证的供应商。后者稳定性尚未验证，长期续约尚未批准。"
+          }
+        ],
+        "authority": {
+          "owner_ref": "mindthus-route-executor",
+          "risk": "low",
+          "mode": "read_only",
+          "known_obligations": []
+        },
+        "issues": [
+          {
+            "id": "I1",
+            "request_ref": {
+              "document_id": "U",
+              "revision": "1",
+              "start": 0,
+              "end": 63,
+              "sha256": "524c0b9e2ce749bdac6eb5d85d364a2fae19359f4e9c19de5af2121c70f61882"
+            },
+            "candidates": [
+              "sela",
+              "mpg"
+            ],
+            "handling": null,
+            "assessability": null,
+            "attention": true
+          }
+        ],
+        "dependencies": [],
+        "relationship": null,
+        "task_budget": {
+          "max_calls": 1,
+          "max_seconds": 45
+        }
+      },
+      "criteria": [
+        "区分可扩展系统方向与当前供应商载体",
+        "行动建议考虑停机/迁移与暴露而非趋势成立就加码",
+        "另一供应商稳定性保持未知，不编造结论",
+        "必要伴随方法实际读取，允许合理同等路径"
+      ]
+    }
+  ]
+}

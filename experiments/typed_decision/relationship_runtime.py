@@ -60,13 +60,18 @@ def _locked(path: Path):
 
 
 class Episode:
-    def __init__(self, root: Path, repo: Path, provider, packet: dict, contract: dict, live_admission=None):
+    def __init__(self, root: Path, repo: Path, provider, packet: dict, contract: dict, live_admission=None,
+                 *, mode=None, profile=None, kinds=None, host_slots=None):
         self.root, self.repo, self.provider = root, repo, provider
+        self.mode = mode or MODE
+        self.profile = relation.clone(PROFILE if profile is None else profile)
+        self.kinds = dict(KINDS if kinds is None else kinds)
+        self.host_slots = host_slots or {"organize": "organizer", "correction": "corrector"}
         self.live_admission = relation.clone(live_admission) if live_admission is not None else None
         self.evidence_kind = "live_model" if self.live_admission is not None else "offline_fixture"
         self.turn_key = digest(packet['turn_id'])
-        self.manifest = {'schema': 'mindthus.relationship-episode.v1', 'mode': MODE,
-                         'episode_id': packet['episode_id'], 'profile': relation.clone(PROFILE),
+        self.manifest = {'schema': 'mindthus.relationship-episode.v1', 'mode': self.mode,
+                         'episode_id': packet['episode_id'], 'profile': relation.clone(self.profile),
                          'implementation': implementation_digest(),
                          'provider': provider_configuration(provider),
                          'owner_ref': packet['authority']['owner_ref'],
@@ -80,7 +85,7 @@ class Episode:
         key = digest(self.manifest['episode_id'])
         try:
             self.stack.enter_context(_locked(registry / (key + '.lock')))
-            binding = {'root': str(self.root), 'episode_id': self.manifest['episode_id'], 'mode': MODE}
+            binding = {'root': str(self.root), 'episode_id': self.manifest['episode_id'], 'mode': self.mode}
             binding_path = registry / (key + '.json')
             if binding_path.exists():
                 require(read_record(binding_path) == binding, 'episode_root_changed')
@@ -107,7 +112,7 @@ class Episode:
         save(self.root / 'resolved-runtime.json', runtime.to_dict())
 
     def tally(self) -> dict:
-        counts = {'judgment': 0, 'correction': 0, 'organize': 0, 'total': 0}
+        counts = dict.fromkeys((*dict.fromkeys(self.kinds.values()), 'total'), 0)
         turn_counts = {k: 0 for k in counts}
         rows, failures = [], []
         intents = sorted(self.root.glob('turns/*/inputs/*/steps/*/calls/*/intent.json'))
@@ -117,7 +122,9 @@ class Episode:
             require(outcome.with_name('intent.json').exists(), 'outcome_without_intent')
         for ip in intents:
             parts = ip.relative_to(self.root).parts
-            kind = KINDS[parts[5]]
+            step_kind = parts[5].split('__', 1)[0]
+            require(step_kind in self.kinds, 'unknown_episode_step_kind')
+            kind = self.kinds[step_kind]
             read_record(ip)
             op = ip.with_name('outcome.json')
             if not op.exists():
@@ -139,7 +146,7 @@ class Episode:
                 if kind == 'judgment' and usage['cost_usd'] is not None and usage['cost_usd'] > cap['reserve_per_jev_usd']:
                     failures.append(str(op.relative_to(self.root)))
                 if kind != 'judgment':
-                    slot = 'organizer' if kind == 'organize' else 'corrector'
+                    slot = self.host_slots[kind]
                     require(out.get('host_configuration') == self.live_admission[slot], 'recorded_host_drift')
             if kind == 'judgment':
                 if any(r['status'] == 'provider_error' for r in out['results'].values()):
@@ -151,14 +158,16 @@ class Episode:
             elif out['status'] != 'complete':
                 failures.append(str(op.relative_to(self.root)))
         return {'counts': counts, 'turn_counts': turn_counts,
-                'seconds': sum(r['seconds'] for r in rows), 'failures': failures,
+                'seconds': sum(r['seconds'] for r in rows if r['kind'] != 'execution'), 'failures': failures,
+                **({'execution_seconds': sum(r['seconds'] for r in rows if r['kind'] == 'execution')}
+                   if 'execution' in counts else {}),
                 'usage': {k: sum(r['usage'][k] for r in rows)
                           if rows and all(r['usage'][k] is not None for r in rows) else None
                           for k in UNKNOWN_USAGE}}
 
     def remaining(self) -> float:
         used = max(self.tally()['seconds'], self.start_seconds + time.monotonic() - self.started)
-        return PROFILE['request_seconds'] - used
+        return self.profile['request_seconds'] - used
 
     def admit(self, kind: str) -> float:
         state = self.tally()
@@ -167,20 +176,25 @@ class Episode:
         counts, turn = state['counts'], state['turn_counts']
         if self.live_admission is not None:
             cap = self.live_admission['ceilings']
-            slot = {'judgment': 'judgments', 'correction': 'corrections', 'organize': 'organize'}[kind]
-            if counts['total'] >= cap['requests'] or counts[kind] >= cap[slot]:
+            slot = {'judgment': 'judgments', 'correction': 'corrections', 'organize': 'organize',
+                    'arbitration': 'arbitrations', 'execution': 'executions'}[kind]
+            if ((kind != 'execution' and counts['total'] - counts.get('execution', 0) >= cap['requests'])
+                    or counts[kind] >= cap[slot]):
                 raise EpisodeStop('live_admission_budget_exhausted')
         ceilings = {'judgment': 'judgments_total', 'correction': 'corrections_total',
-                    'organize': 'structural_organize'}
-        if counts['total'] >= PROFILE['total_requests'] or counts[kind] >= PROFILE[ceilings[kind]]:
+                    'organize': 'structural_organize', 'arbitration': 'arbitrations_total',
+                    'execution': 'executions_total'}
+        if ((kind != 'execution' and counts['total'] - counts.get('execution', 0) >= self.profile['total_requests'])
+                or counts[kind] >= self.profile[ceilings[kind]]):
             raise EpisodeStop('episode_' + kind + '_budget_exhausted')
         turn_ceiling = {'judgment': 'judgments_per_turn', 'correction': 'corrections_per_turn'}
-        if kind in turn_ceiling and turn[kind] >= PROFILE[turn_ceiling[kind]]:
+        if kind in turn_ceiling and turn[kind] >= self.profile[turn_ceiling[kind]]:
             raise EpisodeStop('turn_' + kind + '_budget_exhausted')
-        remaining = self.remaining()
+        remaining = (self.profile['execution_seconds'] - state['execution_seconds']
+                     if kind == 'execution' else self.remaining())
         if remaining <= 0:
             raise EpisodeStop('request_time_budget_exhausted')
-        return min(PROFILE['single_call_seconds'], remaining)
+        return min(self.profile['single_call_seconds'], remaining)
 
 
 class _Provider:
@@ -339,15 +353,17 @@ def revision_packet(request: dict, reply: dict, repo: Path) -> dict:
     return packet
 
 
-def _host(ep: Episode, directory: Path, kind: str, request: dict, hook, validator) -> dict:
+def _host(ep: Episode, directory: Path, kind: str, request: dict, hook, validator,
+          *, operation=None, expected_owner=None) -> dict:
     step = directory / 'steps' / kind
     ip, op = step / 'intent.json', step / 'outcome.json'
-    expected_owner = ep.manifest['owner_ref'] + (':organizer' if kind == 'organize' else '')
-    intent = {'mode': MODE, 'policy': relation.POLICY, 'request_id': request['request_id'],
+    budget_kind = ep.kinds[kind.split('__', 1)[0]]
+    expected_owner = expected_owner or ep.manifest['owner_ref'] + (':organizer' if kind == 'organize' else '')
+    intent = {'mode': ep.mode, 'policy': request.get('policy', relation.POLICY), 'request_id': request['request_id'],
               'request_sha256': digest(request), 'owner_ref': expected_owner,
-              'profile_sha256': digest(PROFILE), 'output_bytes': PROFILE['host_output_bytes']}
+              'profile_sha256': digest(ep.profile), 'output_bytes': ep.profile['host_output_bytes']}
     if ep.live_admission is not None:
-        slot = 'organizer' if kind == 'organize' else 'corrector'
+        slot = ep.host_slots[budget_kind]
         intent['host_configuration'] = ep.live_admission[slot]
         if hook is not None:
             require(hook.configuration == ep.live_admission[slot], 'host_configuration_changed')
@@ -369,17 +385,17 @@ def _host(ep: Episode, directory: Path, kind: str, request: dict, hook, validato
         raise RecoveryRequired('unresolved_host_' + kind)
     require(hook is not None and getattr(hook, 'is_live', None) is (ep.live_admission is not None)
             and hook.identity == expected_owner, 'offline_host_identity_required')
-    timeout = ep.admit(kind)
+    timeout = ep.admit(budget_kind)
     save(ip, intent)
     begin = time.monotonic()
     out = {'status': 'failed', 'reply': None, 'error': None, 'usage': relation.clone(UNKNOWN_USAGE),
-           'mode': MODE, 'policy': relation.POLICY, 'evidence_kind': ep.evidence_kind}
+           'mode': ep.mode, 'policy': request.get('policy', relation.POLICY), 'evidence_kind': ep.evidence_kind}
     try:
         if ep.live_admission is not None:
             hook.last_receipt = None
-        fn = hook.organize if kind == 'organize' else hook.correct
+        fn = getattr(hook, operation) if operation else (hook.organize if kind == 'organize' else hook.correct)
         reply = fn(relation.clone(request), timeout)
-        require(len(canonical(reply)) <= PROFILE['host_output_bytes'], 'host_output_overflow')
+        require(len(canonical(reply)) <= ep.profile['host_output_bytes'], 'host_output_overflow')
         validator(reply)
         require(time.monotonic() - begin <= timeout, 'host_deadline_exceeded')
         out.update(status='complete', reply=relation.clone(reply), usage=relation.clone(reply['usage']))
@@ -394,6 +410,8 @@ def _host(ep: Episode, directory: Path, kind: str, request: dict, hook, validato
             out['transport_receipt'] = relation.clone(receipt)
             out['usage'] = relation.clone(receipt['usage'])
     out['elapsed_seconds'] = time.monotonic() - begin
+    if budget_kind == 'execution':
+        ep.started += out['elapsed_seconds']  # Host work has its own explicit task-time budget.
     return save(op, out)
 
 

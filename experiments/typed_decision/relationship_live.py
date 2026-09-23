@@ -206,8 +206,9 @@ class CPAHost:
         self.last_receipt = None
         contract, self.rules = rel.load_contract(self.repo)
         system = (ORGANIZER_SYSTEM if organizer else CORRECTION_SYSTEM) + '\n' + QUOTE_CONTRACT
-        self.configuration = {'adapter': 'cpa-relationship-host.v1.3', 'owner': self.identity,
+        self.configuration = {'adapter': 'cpa-relationship-host.v1.4-max', 'owner': self.identity,
             'endpoint': ENDPOINT, 'model': MODEL, 'temperature': 0, 'max_tokens': 3500 if organizer else 2000,
+            'reasoning_effort': 'max', 'thinking': {'type': 'enabled'},
             'contract_sha256': digest(contract), 'template_sha256': digest([system, PROPOSAL_SHAPE, ORGANIZER_TYPES]),
             'kind': 'organize' if organizer else 'correction', 'response_format': 'json_object', 'retries': 0}
 
@@ -234,7 +235,8 @@ class CPAHost:
             content = {'request': request, 'canonical_rules': self.rules, 'target_bindings': bindings,
                        'reference_rebinding': {'required_rebind_ids': list(bindings), 'required_count': len(bindings),
                        'rule': 'rebind IDs are ONLY these exact keys, never repair check_ref IDs. If required_count is zero, return rebind: [].'}}
-        return {'model': MODEL, 'temperature': 0, 'max_tokens': self.configuration['max_tokens'],
+        return {'model': MODEL, 'temperature': 0, 'reasoning_effort': 'max',
+                'thinking': {'type': 'enabled'}, 'max_tokens': self.configuration['max_tokens'],
                 'stream': False, 'response_format': {'type': 'json_object'}, 'messages': [
                     {'role': 'system', 'content': (ORGANIZER_SYSTEM if self.organizer else CORRECTION_SYSTEM) + '\n' + QUOTE_CONTRACT + ('' if self.organizer else '\nReference rebinding is distinct from named semantic repairs: copy ONLY reference_rebinding.required_rebind_ids. An empty required_rebind_ids list requires rebind=[]. Never generate binding IDs from check_ref, question IDs or repair_relations.')},
                     {'role': 'user', 'content': canonical(content).decode('utf8')}]}
@@ -262,9 +264,19 @@ class CPAHost:
         _usage(usage)
         require(usage['output_tokens'] is None or usage['output_tokens'] <= self.configuration['max_tokens'], 'host_token_ceiling')
         self.last_receipt = {'requested_model': MODEL, 'reported_model': raw['model'], 'request_sha256': digest(body),
-                             'content': text, 'usage': usage, 'finish_reason': ch[0].get('finish_reason')}
+                             'content': text, 'usage': usage, 'finish_reason': ch[0].get('finish_reason'),
+                             'requested_reasoning_effort': 'max',
+                             'reported_reasoning_effort': raw.get('reasoning_effort'),
+                             'reasoning_tokens': (u.get('completion_tokens_details') or {}).get('reasoning_tokens'),
+                             'reasoning_content_present': bool(msg.get('reasoning_content')),
+                             'reasoning_effective': 'unverified_unless_provider_attested'}
         require(ch[0].get('finish_reason') == 'stop', 'host_incomplete_response')
-        parsed = json.loads(text)
+        # Recover only an exact single markdown envelope, never repair malformed JSON semantics.
+        value = text.strip()
+        if value.startswith('```json\n') and value.endswith('\n```') and value.count('```') == 2:
+            value = value[len('```json\n'):-len('\n```')]
+            self.last_receipt['format_recovery'] = 'exact_single_json_fence'
+        parsed = json.loads(value)
         return parsed, usage, 'cpa:' + digest(self.last_receipt)
 
     def correct(self, request, timeout):
