@@ -6,7 +6,36 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — route control v0.2.1 design fixed; one independent review PASS_WITH_NOTES
+## Current checkpoint — route control implemented; engineering PASS, live integration UNRUN
+
+Task `tsk_2677e755bce6709e`; implementation source `cdfd37ccd307924021543b7fd55681d383fdd8ce`,
+first two-case freeze `4ed58a6cdea684c183de1db7df3e174b0a57a42d`.
+Read [implementation result](route-control-v0.2/implementation/disposition.md),
+[usage/boundaries](route-control-v0.2/implementation/README.md),
+[verification](route-control-v0.2/implementation/verification.json).
+
+The SAME entry.run/CLI now has opt-in route-control.v0.2.1, programmatic canonical reads,
+per-scope commitment/receipt binding, mixed questions, scoped independent objection, source-bound
+coverage reuse and host-accepted artifact dependencies. Existing relationship correction shares
+one parameterized Episode and journal, not nested public modes. Raw source spans and retained
+candidate lists are supplied by the original host; full natural decomposition/candidate discovery
+and a general planner are not implemented. Receipt compliance does not prove semantic fidelity.
+
+Owner requires all NEW DS4.1 Flash calls at max: current CPA execution/arbitration/correction/
+organizing adapters request reasoning_effort=max and thinking enabled; request identities bind it.
+Historical frozen calls remain unchanged. Provider-effective effort is not yet observed.
+51 new controls / 188 focused / full1468(1463 success+5skip) / lifecycle86/86 PASS.
+16 immutable OFFLINE proof records archived; actual method bytes read, zero-call unchanged reentry.
+
+The only attempted live command was blocked by platform safety BEFORE execution. Trial root is
+absent, no provider intent/outcome, both inputs UNRUN and actual model calls=0. Preserve
+[live attempt](route-control-v0.2/implementation/live-smoke/platform-attempt.json); do not bypass
+or convert fixtures into live evidence. Current source/freeze remain reproducible; live work needs
+platform-permitted execution, not model/credential substitution. No unknown supplier call exists.
+NEXT: real integration under permitted execution, then small advice-vs-committed task comparison.
+No all-method qualification/native plugin activation/default enabling; #211 OPEN, main unchanged.
+
+## Previous checkpoint — route control v0.2.1 design fixed; one independent review PASS_WITH_NOTES
 
 Owner confirmed using-mindthus ordinary routing should be committed by typed observations plus a thin policy,
 not freely re-decided by the executing LLM. Keep explicit scoped objections and existing Skills/display

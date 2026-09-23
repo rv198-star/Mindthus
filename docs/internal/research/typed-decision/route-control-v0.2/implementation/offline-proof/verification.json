@@ -1,0 +1,43 @@
+{
+  "evidence_kind": "offline_fixture_not_model_accuracy",
+  "source_commit": "cdfd37ccd307924021543b7fd55681d383fdd8ce",
+  "archive_files": {
+    "manifest.json": "0f2ccea38682a08aa49ddb0cdfc3827587c5bd16abc0ba83c8983b14ef026253",
+    "resolved-runtime.json": "87901f821f9c71639be3b12a417e81e43fa9b8ce78ab7905cc4273c9e57aee37",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/versions/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf.json": "221656fb6ae057058cb42be76410eed60df39b6b51a67e9239af50fd5f1b9be2",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/manifest.json": "221656fb6ae057058cb42be76410eed60df39b6b51a67e9239af50fd5f1b9be2",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/commitment-1.json": "f396d57deba05eeb6a0a1e99f845a955662dc2510295d5f149f9d7b97996a187",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/summary.json": "a39631abd5dc82ee7414045ea322beaea611a0a010c484f176b2bd488b629bf5",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/judgment-contract-loads.json": "2656a222d7627cb2c903ba5856d7cd0d893684691eddf1815220641daed83b20",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/steps/route/policy.json": "3e894c4186ed270ee2635a7c82008c53b9085567774838f0b692c8bd16e151f7",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/steps/route/resolved-runtime.json": "87901f821f9c71639be3b12a417e81e43fa9b8ce78ab7905cc4273c9e57aee37",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/steps/route/calls/215e410c43ff5eb3db48bf3c3b2f6a371b98c35c74fc95f8d8fc263282ec04ae/outcome.json": "88bf016ed312235b5462b84c56849ab39c1b728d12b7e917c0ab955c003aa7b9",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/steps/route/calls/215e410c43ff5eb3db48bf3c3b2f6a371b98c35c74fc95f8d8fc263282ec04ae/intent.json": "3b9e35989d62920f208d18bb9772eea80eb2007829eb9ad1aafb2fbe1dbca877",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/steps/route/runs/60fc79169fb7eeaf8a9852aeacbe21a79432d025a316f80c1e0558f16e879b11.json": "f2d6455688e3d51fd374bd2d4a3eb7688cd997b906d1f084f06106ba5c1cb82c",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/steps/execution__I1__1/request.json": "86bb15d0abff9f2418a5749450f8e6c285a5c8af62c4eff94a427ce7c3c162f7",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/steps/execution__I1__1/outcome.json": "7aed2ccdc2880bd31cd9832034680549add2517967b53aeb7ee0d6329b46c1df",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/steps/execution__I1__1/intent.json": "d062bb7b29c91e148b21f8fde66fcb69875648b0521da9852c24ac6c812b19d4",
+    "turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e5b06f973094c601b4a7794af4f3dd8a6d99d124c36dc9beaac6edc2c3333dce/dispatch/execution__I1__1.json": "eb745679c25713319cc3b28d60e31873a2fea3acbbb0a3864f96da3c18ac1894"
+  },
+  "record_count": 16,
+  "actual_read_methods": [
+    "mpg",
+    "sela"
+  ],
+  "committed_primary": "mpg",
+  "supports": [
+    "sela"
+  ],
+  "fixture_counts": {
+    "judgment": 1,
+    "correction": 0,
+    "organize": 0,
+    "arbitration": 0,
+    "execution": 1,
+    "total": 2
+  },
+  "reentry_new_calls": 0,
+  "reentry_records_unchanged": true,
+  "native_plugin_activation": false,
+  "semantic_accuracy_claimed": false
+}

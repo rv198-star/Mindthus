@@ -1,0 +1,44 @@
+{
+  "scope": "implementation_engineering_and_offline_dispatch_not_live_semantic_acceptance",
+  "source_commit": "cdfd37ccd307924021543b7fd55681d383fdd8ce",
+  "freeze_commit": "4ed58a6cdea684c183de1db7df3e174b0a57a42d",
+  "implementation": "5f7cc835d8e4a38be76640da96378db7d3a4b4e87a847cc78d4e52d396f19e8a",
+  "new_tests": 51,
+  "focused_tests": 188,
+  "full_tests": 1468,
+  "passed": 1463,
+  "skipped": 5,
+  "failures": 0,
+  "full_seconds": 149.763,
+  "test_lifecycle": [
+    86,
+    86
+  ],
+  "offline_proof_records": 16,
+  "offline_reentry_new_calls": 0,
+  "actual_Jev_calls": 0,
+  "actual_CPA_calls": 0,
+  "live_status": "blocked_by_platform_before_execution",
+  "DS_requested_configuration": {
+    "reasoning_effort": "max",
+    "thinking": {
+      "type": "enabled"
+    }
+  },
+  "DS_server_effective_effort": "not_observed",
+  "old_trial_files_changed": false,
+  "default_activation": false,
+  "legacy_modes_retained": true,
+  "known_remaining_scope": [
+    "automatic full candidate discovery",
+    "generated issue proposal pipeline",
+    "all-method semantic validation",
+    "advice-vs-committed task-value comparison",
+    "native plugin activation"
+  ],
+  "log_sha256": {
+    "full-regression.log": "8b6da3fafb9b5480a5c06f4b1ae400bf796ac2f49318af0620a7211770c0f90e",
+    "focused.log": "33204f4fa68f2ca227a1abb747e5b3b64d7c9876f814a7092a46ac74b4ab3860",
+    "lifecycle.log": "219120ca7c85e7b577ed1551d47464934606476851d5b412241e57751d0cc15c"
+  }
+}
