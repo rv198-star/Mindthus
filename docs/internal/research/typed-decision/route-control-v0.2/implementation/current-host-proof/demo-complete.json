@@ -1,0 +1,234 @@
+{
+  "schema": "mindthus.route-control-result.v1",
+  "mode": "route-control.v0.2.1",
+  "route": {
+    "route_id": "f54c802da8945079a7131145a4db1f2d51e6118a1bc69b40eb2d873bc92f6406",
+    "revision": 1,
+    "policy_version": "route-control.v0.2.1",
+    "input_hash": "38779a6c8d9e414561d2a70c51278b4da3aa4e2360d53a8bfe1a5fa7bbd48452",
+    "contract_hashes": {
+      "docs/internal/research/typed-decision/route-control-v0.2/profile.json": "cf57fbeececce81db2cef75290d0cc6f227ec1484625c8cdd5dc31d85c3d83e0",
+      "docs/internal/research/typed-decision/route-control-v0.2/implementation-addendum.json": "f258cf196090108344e89cf9801404b7d80c2ace4a741e80b3c309ec6948077a",
+      "docs/internal/research/typed-decision/mainline-composition-v0.1/questions.json": "8aa2e1c46f15dbdf184301f87dcbdfeb972b3b860300f0a7009d9c04b0c62717",
+      "docs/internal/research/typed-decision/mainline-composition-v0.1/method-bindings.json": "ce43c43f92e423717b49d47e1e907f7a9be61851cc0db520624cdb5981160b2e",
+      "skills/3l5s/SKILL.md": "fe472b01eeaf724c047f6db486d0f860b82e5b47be2d4f1b5ebf3376e839cbb1",
+      "skills/edsp/SKILL.md": "4de72a21f227b77711cb8f48212e8f3cb42d5b3b0cd1b911ca3284aad40e240c",
+      "skills/sela/SKILL.md": "71b34d7ae2b6312c41ed904dba00cc9bea6615d6e73a537ac20e5cd29fb1b9ad",
+      "skills/mpg/SKILL.md": "1a8e4e5f7a382e24a266befd3b9f58b329253a0ecf49e55b0e9f5690eccf6bc0",
+      "skills/sra/SKILL.md": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514",
+      "skills/wae/SKILL.md": "f5ec807d2bfe91847671eb61d5150b43c464cda378bd2dbb8b7e91db372c7496",
+      "skills/tvg/SKILL.md": "f1ede50d063ba72dc39e9f13c0721a079f31c58c892f486675126472bf67e7de",
+      "skills/tplan/SKILL.md": "dbd00b73b2c965c5a687cb12602874226c87e07f9695354f05683a832761ed96"
+    },
+    "per_issue": [
+      {
+        "issue_id": "I1",
+        "mode": "committed",
+        "primary": "wae",
+        "supports": [],
+        "constraints": [],
+        "attention": {
+          "status": "unknown"
+        },
+        "reason": null
+      }
+    ],
+    "mandatory_reads": [
+      "wae"
+    ],
+    "artifact_edges": [],
+    "reuse": [],
+    "unresolved": [],
+    "source_observations": {
+      "M02.I1.wae": {
+        "status": "ok",
+        "value": 0.95,
+        "uncertainty": null,
+        "reason": ""
+      },
+      "M03.I1.wae": {
+        "status": "ok",
+        "value": "primary_candidate",
+        "uncertainty": null,
+        "reason": ""
+      }
+    },
+    "condition_sources": {
+      "I1": {
+        "handling": {
+          "owner_ref": "original-host",
+          "refs": [
+            {
+              "document_id": "U",
+              "end": 49,
+              "revision": "1",
+              "sha256": "cd4e4f46bcf39338b8542ac2aef1609590e359b4abff6dde4cbd199d2228953d",
+              "start": 0
+            }
+          ],
+          "revision": "1",
+          "value": "judge"
+        },
+        "assessability": {
+          "owner_ref": "original-host",
+          "refs": [
+            {
+              "document_id": "U",
+              "end": 49,
+              "revision": "1",
+              "sha256": "cd4e4f46bcf39338b8542ac2aef1609590e359b4abff6dde4cbd199d2228953d",
+              "start": 0
+            }
+          ],
+          "revision": "1",
+          "value": true
+        }
+      }
+    },
+    "claim_ceiling": "routing instruction, not evidence, permission or semantic task acceptance",
+    "mode": "committed",
+    "engine_identity": {
+      "engine": {
+        "family": "fixture",
+        "implementation": "scripted",
+        "model_family": "fixture-v1",
+        "interface_version": "typed-decision.v1"
+      },
+      "serving": {
+        "provider": "offline-fixture",
+        "transport": "in-memory-fixture-v1",
+        "requested_model": "fixture-v1@8004dd2f7878fa71",
+        "endpoint": "memory://fixture/8004dd2f7878fa71e1854a1af891f5ca876021b076488352ebea64fc48808b6f",
+        "adapter_version": "2"
+      },
+      "capabilities": [
+        "assess_proposition",
+        "rate",
+        "select"
+      ]
+    }
+  },
+  "outputs": {
+    "I1": {
+      "route_id": "f54c802da8945079a7131145a4db1f2d51e6118a1bc69b40eb2d873bc92f6406",
+      "revision": 1,
+      "text": "问题不在于字段检查没有做完，而在于它的结论被赋予了不具备的权限：字段齐全只能证明结构条件满足，不能证明字段里的事实成立。\n\n给定记录说门只检查字段存在，语义相反的结果也都能通过。这足以指出结构检查与事实确认之间的控制边界错配，但不足以判定哪份结果真实，也不能据此指认尚未提供的某个代码模块或责任人。\n\n合适的分工是：流程负责检查顺序和确定性的格式条件；语义判断负责解释断言、识别矛盾与证据缺口；证据负责把可接受的事实声明约束到具体来源或观测。结构检查通过应只释放后续检查，不直接释放“事实已验证”的承诺。语义分析也不能仅凭自己的信心把未知写成已验证。\n\n下一步只读检查门的返回状态及其直接消费者：究竟在哪里把“结构合格”提升成了“事实成立”？找到这一步后，将事实确认交回具备相关材料的责任方；下游只消费有依据的确认结果，证据不足保持未决。用于回归的对照应检查语义差异是否真正进入验收，而不是随意指定一份相反结果为真。当前仅作上述分析，没有修改门、补造事实或执行发布。",
+      "methods": [
+        "wae"
+      ],
+      "artifact_sha256": "6ae66c0f59e5d119d8cafc7fdb93263df32386e9cddd6dfcbe37ec1c18d705c6",
+      "accepted_uses": {}
+    }
+  },
+  "pending": {},
+  "reason": null,
+  "relationship": null,
+  "original_input": {
+    "authority": {
+      "known_obligations": [],
+      "mode": "read_only",
+      "owner_ref": "original-host",
+      "risk": "low"
+    },
+    "dependencies": [],
+    "documents": [
+      {
+        "id": "U",
+        "kind": "user",
+        "revision": "1",
+        "text": "请分析给定 Agent 的 schema 门为什么把结构齐全错误地当作事实已验证；先分析，不发布。"
+      },
+      {
+        "id": "S",
+        "kind": "source",
+        "revision": "1",
+        "text": "门只检查字段存在。两个语义相反的结果均被放行，尚未分析职责归属。"
+      }
+    ],
+    "episode_id": "current-agent-receipt-demo-20260923-v1",
+    "issues": [
+      {
+        "assessability": {
+          "owner_ref": "original-host",
+          "refs": [
+            {
+              "document_id": "U",
+              "end": 49,
+              "revision": "1",
+              "sha256": "cd4e4f46bcf39338b8542ac2aef1609590e359b4abff6dde4cbd199d2228953d",
+              "start": 0
+            }
+          ],
+          "revision": "1",
+          "value": true
+        },
+        "attention": false,
+        "candidates": [
+          "wae"
+        ],
+        "handling": {
+          "owner_ref": "original-host",
+          "refs": [
+            {
+              "document_id": "U",
+              "end": 49,
+              "revision": "1",
+              "sha256": "cd4e4f46bcf39338b8542ac2aef1609590e359b4abff6dde4cbd199d2228953d",
+              "start": 0
+            }
+          ],
+          "revision": "1",
+          "value": "judge"
+        },
+        "id": "I1",
+        "request_ref": {
+          "document_id": "U",
+          "end": 49,
+          "revision": "1",
+          "sha256": "cd4e4f46bcf39338b8542ac2aef1609590e359b4abff6dde4cbd199d2228953d",
+          "start": 0
+        }
+      }
+    ],
+    "relationship": null,
+    "revision": "1",
+    "schema": "mindthus.route-control-input.v1",
+    "task_budget": {
+      "max_calls": 6,
+      "max_seconds": 180
+    },
+    "turn_id": "1"
+  },
+  "counts": {
+    "judgment": 1,
+    "correction": 0,
+    "organize": 0,
+    "arbitration": 0,
+    "execution": 1,
+    "total": 2
+  },
+  "usage": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "cost_usd": null
+  },
+  "plugin_request_seconds": 0.00955392885953188,
+  "method_request_seconds": 45,
+  "evidence_kind": "offline_fixture",
+  "control_surface": "programmatic_load_dispatch_receipt",
+  "native_plugin_activation": "not_claimed",
+  "semantic_method_fidelity": "not_verified_by_receipt",
+  "task_complete": false,
+  "qualification": false,
+  "host_transport": "current_agent",
+  "pending_host_requests": [],
+  "reserved_counts": {
+    "judgment": 0,
+    "correction": 0,
+    "organize": 0,
+    "arbitration": 0,
+    "execution": 0,
+    "total": 0
+  },
+  "source_ref": "/srv/agentdock/tmp/mindthus-current-agent-implementation/demo-episode/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/38779a6c8d9e414561d2a70c51278b4da3aa4e2360d53a8bfe1a5fa7bbd48452/summary.json"
+}

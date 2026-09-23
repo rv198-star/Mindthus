@@ -14,6 +14,7 @@ import json
 from . import relationship_assessment as rel, relationship_runtime as rt
 from .contracts import DecisionSpec, canonical, digest, number, provider_configuration, require
 from .session import Limits, RecoveryRequired, Session, implementation_digest, read_record
+from .current_host import AwaitingCurrentAgent, is_current_host
 
 MODE = 'route-control.v0.2.1'
 BASE = 'docs/internal/research/typed-decision/'
@@ -420,7 +421,8 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None, corrector
     for name, hook in hooks.items():
         if hook:
             expected = owner + ':route-arbitrator' if name == 'arbitrator' else owner
-            require(hook.identity == expected and getattr(hook, 'is_live', None) is live, 'route_host_identity')
+            require(hook.identity == expected and (is_current_host(hook) or
+                    getattr(hook, 'is_live', None) is live), 'route_host_identity')
     if arbitrator: require(arbitrator is not executor, 'executor_cannot_self_approve')
     if artifact_acceptor is not None:
         require(artifact_acceptor.identity == owner, 'artifact_acceptance_owner')
@@ -430,6 +432,8 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None, corrector
     with rt.Episode(root, repo, provider, packet, bundle, live_admission, mode=MODE,
                     profile=profile, kinds=STEP_KINDS, host_slots=HOST_SLOTS) as ep:
         directory = root / 'turns' / ep.turn_key / 'inputs' / digest(packet)
+        require(all(x['directory'] == str(directory) for x in ep.tally()['pending_host']),
+                'pending_current_host_input_must_be_resumed')
         binding = {'packet': packet, 'episode_manifest_sha256': digest(ep.manifest), 'recheck': recheck,
                    'hooks': {k: {'identity': h.identity, 'configuration': getattr(h, 'configuration', None)} if h else None
                              for k, h in hooks.items()},
@@ -447,7 +451,9 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None, corrector
                    'plugin_request_seconds': state['seconds'], 'method_request_seconds': state.get('execution_seconds', 0),
                    'evidence_kind': ep.evidence_kind, 'control_surface': 'programmatic_load_dispatch_receipt',
                    'native_plugin_activation': 'not_claimed', 'semantic_method_fidelity': 'not_verified_by_receipt',
-                   'task_complete': False, 'qualification': False}
+                   'task_complete': False, 'qualification': False,
+                   'host_transport': 'current_agent' if is_current_host(executor) else 'callback',
+                   'pending_host_requests': state['pending_host'], 'reserved_counts': state['reserved_counts']}
             if terminal: rt.save(summary, out)
             return {**out, 'source_ref': str(summary if terminal else directory / 'manifest.json')}
         try:
@@ -541,6 +547,8 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None, corrector
                               'issue_id': iid, 'objection': reply['objection'], 'route': route,
                               'original_input': packet, 'method_contracts': compiled.loaded,
                               'instruction': 'Independently check the named objection only. Retain unrelated scopes and permissions.'}
+                        if out.get('host_context_ref'):
+                            ar['executor_context_ref'] = out['host_context_ref']
                         ar['request_id'] = digest(ar)
                         adjudicated = rt._host(ep, directory, 'arbitration', ar, arbitrator,
                                                lambda result: _change(route, iid, result, packet),
@@ -554,5 +562,8 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None, corrector
                 if not progressed:
                     pending.update({i: 'dependency_waiting_or_cycle' for i in waiting}); break
             return finish()
+        except AwaitingCurrentAgent as exc:
+            result = finish('awaiting_current_agent', terminal=False)
+            return {**result, 'status': 'awaiting_current_agent', 'host_request': exc.handoff_path}
         except rt.EpisodeStop as exc:
             return finish(str(exc))

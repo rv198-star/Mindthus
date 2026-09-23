@@ -60,6 +60,8 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 issue或日志。该授权不解除OpenRouter的仅Jev限制。
 用户补充（2026-09-23）：新的 DS4.1 Flash（deepseek-v4.1-flash）调用显式使用 `reasoning_effort: max` 和启用 thinking。审计、整理、纠偏与执行均适用；配置进入请求身份，禁止静默降档。记录请求配置与服务端可观察确认的区别，旧封存请求和结果不改写。
 
+产品宿主边界（2026-09-23）：正常路由/具名纠偏复用当前 Agent；CPA/DeepSeek 仅为显式选择的实验或可选适配器，不是产品必需依赖。宿主交接遵循 `docs/internal/research/typed-decision/route-control-v0.2/implementation/current-host.md`，使用同一个 episode、有效路由版本与回执；没有 CPA Key 不得隐式调用或降级到 CPA。DS max 要求仅在确实选择该模型时适用。
+
 ## No Abstract Jargon Wall
 
 不要堆 Mindthus 术语。先讲清“这对你意味着什么”，再讲方法名。

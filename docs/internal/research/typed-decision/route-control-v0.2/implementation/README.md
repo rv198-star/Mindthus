@@ -2,11 +2,15 @@
 
 This is an opt-in implementation of commitment / programmatic loading / bound execution / scoped objection through the existing `entry.run`, not a new planner. The default Skill, original C01 and old public modes remain unchanged. No global accuracy or native plugin activation claim follows from engineering tests.
 
-## Use
+## Current host
+
+The route-control CLI now defaults to the current Agent, without an additional LLM API key. See [current-host integration](current-host.md) for the request/response protocol and resumable execution. CPA is available only through explicit `--host cpa` in an admitted live experiment.
+
+## Explicit offline replay
 
 ```bash
 python3 -m experiments.typed_decision.entry \
-  --mode route-control.v0.2.1 \
+  --mode route-control.v0.2.1 --host fixture \
   --fixture experiments/typed_decision/fixtures/route-control.json \
   --state-root /absolute/path/outside/repository/unique-episode
 ```

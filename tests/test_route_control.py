@@ -300,7 +300,7 @@ class RouteTests(unittest.TestCase):
         value=json.loads(path.read_text());value['input']['episode_id']='cli-'+self.base.name
         fp=self.base/'fixture.json';fp.write_text(json.dumps(value))
         command=['python3','-m','experiments.typed_decision.entry','--mode',rc.MODE,
-                 '--fixture',str(fp),'--state-root',str(self.root)]
+                 '--fixture',str(fp),'--state-root',str(self.root),'--host','fixture']
         env=dict(__import__('os').environ,HOME=str(self.base))
         a=subprocess.run(command,cwd=REPO,env=env,text=True,capture_output=True,check=True)
         b=subprocess.run(command,cwd=REPO,env=env,text=True,capture_output=True,check=True)

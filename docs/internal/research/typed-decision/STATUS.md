@@ -6,7 +6,35 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — route control implemented; engineering PASS, live integration UNRUN
+## Current checkpoint — current-Agent host port implemented; CPA optional, engineering verified
+
+Task `tsk_194ec4de860d5889`, base `4928335ac4a534ec2a764119aef2c6b290531e61`.
+Read [current-host usage](route-control-v0.2/implementation/current-host.md),
+[delivery and limits](route-control-v0.2/implementation/current-host-proof/disposition.md), and
+[verification](route-control-v0.2/implementation/current-host-proof/verification.json).
+
+route-control CLI defaults to current-agent, with persisted request/response handoff for execution,
+correction and isolated arbitration. CPA and injected fixture answers require explicit --host selection.
+The current-Agent port has no extra LLM credential/client and is independent of decision-provider liveness.
+It reuses the same Episode/Session, loaded method bytes, source/version validation and budgets. Pending
+local work reserves an existing slot, reentry does not rejudge/reissue, and matching validated responses
+complete the same request. Unknown supplier calls still require reconciliation, not resend.
+
+28 new tests, 261 focused, full1496 (1491 success + 5 skip), lifecycle87/87 passed. A current-conversation
+Agent read the exported WAE contract and supplied the method answer with all model API keys unset;
+the input had no injected answer text. The judgment was explicitly offline_fixture, the host response
+was current_agent_submission, and 18 immutable JSON records were archived. Reentry preserves values
+and record bytes; no new external model calls. This is host integration, not new live Jev accuracy.
+
+Canonical methods/questions and old freezes are unchanged; DS max remains conditional on explicitly
+selecting that model. The old platform-blocked live batch remains UNRUN, not bypassed. New runtime
+identity needs a new permitted admission for later live work. No default Skill/native-all-host installation
+or general task qualification claim; #211 OPEN, main unchanged. Artifact acceptance remains host-owned;
+arbitration context separation is an explicit host responsibility, not proven by a context-id string.
+NEXT: permitted small real Jev + current-Agent end-to-end and advice-vs-committed comparisons;
+CPA is not a prerequisite for that product path. Keep the current profile, do not rebuild the router.
+
+## Previous checkpoint — route control implemented; engineering PASS, live integration UNRUN
 
 Task `tsk_2677e755bce6709e`; implementation source `cdfd37ccd307924021543b7fd55681d383fdd8ce`,
 first two-case freeze `4ed58a6cdea684c183de1db7df3e174b0a57a42d`.

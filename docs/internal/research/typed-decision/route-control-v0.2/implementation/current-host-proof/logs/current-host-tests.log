@@ -1,0 +1,14 @@
+======================================================================
+ERROR: test_display_correction_uses_same_host_without_CPA (tests.test_current_host.CurrentHostTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/projects/Mindthus/tests/test_current_host.py", line 188, in test_display_correction_uses_same_host_without_CPA
+    self._relationship(display=True);h=self.handoff(self.run_entry());self.assertEqual(h['role'],'correction')
+  File "/srv/agentdock/projects/Mindthus/tests/test_current_host.py", line 42, in handoff
+    self.assertEqual(result['status'], 'awaiting_current_agent')
+KeyError: 'status'
+
+----------------------------------------------------------------------
+Ran 27 tests in 3.020s
+
+FAILED (errors=1)

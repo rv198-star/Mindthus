@@ -115,6 +115,8 @@ class Episode:
         counts = dict.fromkeys((*dict.fromkeys(self.kinds.values()), 'total'), 0)
         turn_counts = {k: 0 for k in counts}
         rows, failures = [], []
+        pending_host = []
+        reserved = dict.fromkeys(counts, 0); turn_reserved = dict.fromkeys(counts, 0)
         intents = sorted(self.root.glob('turns/*/inputs/*/steps/*/calls/*/intent.json'))
         intents += sorted(self.root.glob('turns/*/inputs/*/steps/*/intent.json'))
         # Orphan results would make budget accounting untrustworthy.
@@ -125,9 +127,18 @@ class Episode:
             step_kind = parts[5].split('__', 1)[0]
             require(step_kind in self.kinds, 'unknown_episode_step_kind')
             kind = self.kinds[step_kind]
-            read_record(ip)
+            intent = read_record(ip)
             op = ip.with_name('outcome.json')
             if not op.exists():
+                from .current_host import pending_request
+                if pending_request(intent, ip.parent):
+                    require(self.mode == 'route-control.v0.2.1', 'current_host_on_legacy_episode')
+                    reserved[kind] += 1; reserved['total'] += 1
+                    if parts[1] == self.turn_key:
+                        turn_reserved[kind] += 1; turn_reserved['total'] += 1
+                    pending_host.append({'directory': str(ip.parent.parent.parent),
+                                         'request_id': intent['request_id'], 'kind': kind})
+                    continue
                 raise RecoveryRequired('unresolved_relationship_call:' + str(ip.relative_to(self.root)))
             out = read_record(op)
             require(out.get('evidence_kind') == self.evidence_kind, 'unexpected_evidence_kind')
@@ -158,6 +169,7 @@ class Episode:
             elif out['status'] != 'complete':
                 failures.append(str(op.relative_to(self.root)))
         return {'counts': counts, 'turn_counts': turn_counts,
+                'pending_host': pending_host, 'reserved_counts': reserved, 'reserved_turn_counts': turn_reserved,
                 'seconds': sum(r['seconds'] for r in rows if r['kind'] != 'execution'), 'failures': failures,
                 **({'execution_seconds': sum(r['seconds'] for r in rows if r['kind'] == 'execution')}
                    if 'execution' in counts else {}),
@@ -173,7 +185,8 @@ class Episode:
         state = self.tally()
         if state['failures']:
             raise EpisodeStop('terminal_technical_failure')
-        counts, turn = state['counts'], state['turn_counts']
+        counts = {k: v + state['reserved_counts'][k] for k, v in state['counts'].items()}
+        turn = {k: v + state['reserved_turn_counts'][k] for k, v in state['turn_counts'].items()}
         if self.live_admission is not None:
             cap = self.live_admission['ceilings']
             slot = {'judgment': 'judgments', 'correction': 'corrections', 'organize': 'organize',
@@ -359,6 +372,9 @@ def _host(ep: Episode, directory: Path, kind: str, request: dict, hook, validato
     ip, op = step / 'intent.json', step / 'outcome.json'
     budget_kind = ep.kinds[kind.split('__', 1)[0]]
     expected_owner = expected_owner or ep.manifest['owner_ref'] + (':organizer' if kind == 'organize' else '')
+    from .current_host import is_current_host, host_call
+    if is_current_host(hook):
+        return host_call(ep, directory, kind, request, hook, validator, expected_owner)
     intent = {'mode': ep.mode, 'policy': request.get('policy', relation.POLICY), 'request_id': request['request_id'],
               'request_sha256': digest(request), 'owner_ref': expected_owner,
               'profile_sha256': digest(ep.profile), 'output_bytes': ep.profile['host_output_bytes']}

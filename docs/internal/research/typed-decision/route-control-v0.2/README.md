@@ -24,3 +24,8 @@
 在现有entry.run中实现最小commitment/dispatch/objection接线与单预算关系纠偏复用，先做相关工程控制，再小批比较建议式和约束式的真实任务结果。轻微、可恢复偏差可记录；必要判断持续漏掉或错误路由固化则修复或缩小自动提交范围。不得以再造校准/审计平台代替实现。
 
 被审源提交：`9054cb3a29ca105ee7ca9d6432be19c7b4592c3e`；父版本`bba7256`。独立评审为设计意见，非业务准确率、方法实际执行或默认采用证据。#211保持OPEN。
+
+## 当前宿主接入
+
+[当前Agent使用与恢复](implementation/current-host.md)已落地；CPA仅显式实验后端。
+[工程与实际宿主回执证据](implementation/current-host-proof/disposition.md)区分夹具判断、当前会话回答及尚未进行的真实Jev验收。

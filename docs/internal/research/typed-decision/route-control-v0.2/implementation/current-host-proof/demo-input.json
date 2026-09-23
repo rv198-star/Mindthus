@@ -1,0 +1,83 @@
+{
+  "evidence_kind": "offline_fixture",
+  "input": {
+    "schema": "mindthus.route-control-input.v1",
+    "episode_id": "current-agent-receipt-demo-20260923-v1",
+    "turn_id": "1",
+    "revision": "1",
+    "documents": [
+      {
+        "id": "U",
+        "kind": "user",
+        "revision": "1",
+        "text": "请分析给定 Agent 的 schema 门为什么把结构齐全错误地当作事实已验证；先分析，不发布。"
+      },
+      {
+        "id": "S",
+        "kind": "source",
+        "revision": "1",
+        "text": "门只检查字段存在。两个语义相反的结果均被放行，尚未分析职责归属。"
+      }
+    ],
+    "authority": {
+      "owner_ref": "original-host",
+      "risk": "low",
+      "mode": "read_only",
+      "known_obligations": []
+    },
+    "issues": [
+      {
+        "id": "I1",
+        "request_ref": {
+          "document_id": "U",
+          "revision": "1",
+          "start": 0,
+          "end": 49,
+          "sha256": "cd4e4f46bcf39338b8542ac2aef1609590e359b4abff6dde4cbd199d2228953d"
+        },
+        "candidates": [
+          "wae"
+        ],
+        "handling": {
+          "value": "judge",
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "U",
+              "revision": "1",
+              "start": 0,
+              "end": 49,
+              "sha256": "cd4e4f46bcf39338b8542ac2aef1609590e359b4abff6dde4cbd199d2228953d"
+            }
+          ]
+        },
+        "assessability": {
+          "value": true,
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "U",
+              "revision": "1",
+              "start": 0,
+              "end": 49,
+              "sha256": "cd4e4f46bcf39338b8542ac2aef1609590e359b4abff6dde4cbd199d2228953d"
+            }
+          ]
+        },
+        "attention": false
+      }
+    ],
+    "dependencies": [],
+    "relationship": null,
+    "task_budget": {
+      "max_calls": 6,
+      "max_seconds": 180
+    }
+  },
+  "answers": {
+    "M02.I1.wae": 0.95,
+    "M03.I1.wae": "primary_candidate"
+  }
+}
