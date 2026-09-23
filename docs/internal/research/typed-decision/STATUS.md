@@ -6,14 +6,17 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current internal iteration — D3 input/reference repair
+## Current internal iteration — R2 representation/candidate boundary
 
-Owner explicitly authorizes routine internal repairs and bounded successor verification without
-per-detail approval. Task `tsk_1a35f6536ac65d76`; baseline `6f42c2b`. Preserve the original failed
-D3 records and historical review verdicts. Read [R1 protocol](entry-assessment/original-scenarios-design/D3-repair-r1/protocol.md).
-R1 corrects exact input annotations and generic repeated-quote selection; D1/Q0 remain unchanged.
-Freeze before calls; no reopening terminal roots, hidden retries, forced Q0 or relaxed truth gates.
-The ultimate target is real Skills/4K correction, not merely another completed test batch.
+Owner authorizes internal repairs without per-detail approval; task `tsk_1a35f6536ac65d76`.
+Baseline `6f42c2b`; R1 source d812dd5/freeze80612f3 is terminal and archived. Precise references
+alone left four Q0 rejections. Organizer quotes now resolve, but three claim slots violate the
+fixed two-slot contract. Read [R2 protocol](entry-assessment/original-scenarios-design/D3-repair-r2/protocol.md).
+Active contract v0.3.2 clarifies representation fidelity versus represented candidate correctness;
+Q0 remains mandatory with all reject/unknown options. Other D1 questions, consumer and budgets
+are unchanged. Two actual false/omitted mapping controls precede original Skills/4K inputs.
+CPA organizer v1.2 clarifies fixed slots and separates user task constraints from factual claims.
+No historical verdict/root is rewritten; runtime success and D4 comparative value remain separate.
 
 ## Previous checkpoint — D3 live batch terminal; correction acceptance NOT MET
 

@@ -14,10 +14,10 @@ from typing import Any
 
 from .contracts import DecisionResult, DecisionSpec, canonical, digest, require
 
-VERSION = '1'
-POLICY = 'mindthus.relationship-frame.v1'
+VERSION = '1.1'
+POLICY = 'mindthus.relationship-frame.v1.1'
 CONTRACT = ('docs/internal/research/typed-decision/entry-assessment/'
-            'original-scenarios-design/relationship-contracts-v0.3.1.json')
+            'original-scenarios-design/relationship-contracts-v0.3.2.json')
 ID = re.compile(r'^[A-Za-z][A-Za-z0-9_-]{0,31}$')
 FRAME_FIELDS = ('actor', 'object', 'time', 'goal', 'scope')
 REF_FIELDS = {'document_id', 'revision', 'start', 'end', 'sha256'}

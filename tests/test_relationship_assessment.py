@@ -330,5 +330,25 @@ class RelationshipTests(unittest.TestCase):
                 self.assertFalse(r['qualification'])
 
 
+class RepresentationGateContractTests(unittest.TestCase):
+    def test_only_representation_gate_question_changed_in_successor(self):
+        old = json.loads((BASE / 'relationship-contracts-v0.3.1.json').read_bytes())
+        new, _ = m.load_contract(ROOT)
+        self.assertNotEqual(old['templates']['q0'], new['templates']['q0'])
+        self.assertEqual({k:v for k,v in old['templates'].items() if k != 'q0'},
+                         {k:v for k,v in new['templates'].items() if k != 'q0'})
+        self.assertEqual(old['budgets'], new['budgets'])
+        self.assertEqual(old['sources'], new['sources'])
+
+    def test_real_negative_controls_have_valid_bytes_but_no_embedded_labels(self):
+        data = json.loads((BASE / 'D3-repair-r2/cases.json').read_bytes())
+        for episode in data['episodes'][:2]:
+            compiled = m.compile_packet(episode['inputs']['1']['packet'], ROOT)
+            self.assertIn('q0', [spec.id for spec in compiled.specs])
+            self.assertNotIn('criteria', compiled.packet)
+            self.assertNotIn('expected_q0', compiled.context)
+            self.assertFalse(any(k in compiled.context for k in ('label','expected','case_family')))
+
+
 if __name__=='__main__':
     unittest.main()
