@@ -6,7 +6,29 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — MR-02 pragmatic independent audit complete; reduce the default path before implementation
+## Current checkpoint — route control v0.2.1 design fixed; one independent review PASS_WITH_NOTES
+
+Owner confirmed using-mindthus ordinary routing should be committed by typed observations plus a thin policy,
+not freely re-decided by the executing LLM. Keep explicit scoped objections and existing Skills/display
+correction; task conclusions and real permissions remain with the original host/method executor.
+Read [design/review entry](route-control-v0.2/README.md).
+
+Effective design is route-control-v0.2/profile.json plus implementation-addendum.json (v0.2.1).
+Reviewed source 9054cb3a29ca105ee7ca9d6432be19c7b4592c3e; inherited 19 question texts/eight method bindings unchanged.
+One isolated CPA DeepSeek design review returned PASS_WITH_NOTES; four nonblocking notes were dispositioned.
+The original response had a single JSON markdown fence: strict parse failed, raw outcome retained,
+offline exact fence removal recovered the report, no second inference. Author implementation clarifications
+are not a second independent review. Per-issue fallback/roles, mutually exclusive public mode/single budget,
+and unknown Score attention are explicit. No new runtime, Jev business call, native activation or task success claimed.
+
+NEXT: minimal same-entry opt-in commitment/dispatch/objection integration; reuse relationship components
+with ONE episode journal and budget, not nesting legacy public modes. Programmatic loading/revision/receipt
+boundary is required for enforced-control claims; prompt-only remains advisory. Then small advice-vs-committed
+consumption comparison with actual tasks, allowing recoverable deviations. Do not reimplement the 19-question
+full graph or require general statistical noninferiority before low-risk trial. #211 OPEN; main/old trials unchanged.
+Task tsk_09b99fc771fe4cbe; this checkpoint replaces the previous advice-only normal consumption proposal.
+
+## Previous checkpoint — MR-02 pragmatic independent audit complete; reduce the default path before implementation
 
 Owner accepts recoverable semantic deviations and explicitly prioritizes proportionate complexity.
 Audited target `9cc8f846e638aa81317c3c2982423760f7d8fcca`; task `tsk_58a9f04ea3a91fe6`.

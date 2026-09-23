@@ -1,0 +1,50 @@
+{
+  "schema": "mindthus.route-control-implementation-addendum.v0.2.1",
+  "status": "author_clarifications_after_one_independent_review_not_reaudited",
+  "extends": {
+    "path": "profile.json",
+    "sha256": "cf57fbeececce81db2cef75290d0cc6f227ec1484625c8cdd5dc31d85c3d83e0"
+  },
+  "precedence": "Load with profile.json as ONE effective route-control.v0.2.1 policy; below explicit invariants refine profile. No v0.1 or legacy free-host policy in the same episode.",
+  "reviewed_source_commit": "9054cb3a29ca105ee7ca9d6432be19c7b4592c3e",
+  "F1_unresolved_scope": {
+    "rule": "delegated_unresolved is a handoff record, not a committed method role. Keep affected scope/owner=original_host/reason/relevant observations in unresolved; no active primary/support/constraint method assignment for that unresolved scope. Successful independent scope commitments remain active. Do not count its later host work as Jev-routed execution.",
+    "no_erasure": "Pending method obligations/observations survive in unresolved, not erased or marked passed."
+  },
+  "F2_consistency": {
+    "per_issue_mode_exactly_one": [
+      "committed",
+      "direct",
+      "acquire",
+      "delegated_unresolved"
+    ],
+    "parent_partial": "At least one committed/direct and at least one pending scope; not an extra per-issue mode.",
+    "committed": "Exactly one established primary for each conclusion scope; supports/constraints bind same scope. For host-direct work with only method support, require explicit established original_host primary responsibility rather than inventing a method owner.",
+    "different_issues": "Separate primaries allowed, no global single-winner constraint.",
+    "invalid_record": "Do not publish invalid scope as committed; retain its observations in unresolved, preserve valid independent scopes."
+  },
+  "F3_mode_boundary": {
+    "public_mode": "route-control.v0.2.1 proposed, not yet registered",
+    "mutually_exclusive_public_entry_modes": [
+      "assessment-v2",
+      "relationship-frame.v1",
+      "route-control.v0.2.1"
+    ],
+    "episode_policy": "one public profile and one journal/budget per episode; reuse lower-level existing relationship check/correct components with same episode context, never nest a second public entry.run/root/profile or simply remove existing route=False protection",
+    "regression": "Test double-mode/double-budget rejection and unchanged legacy profiles."
+  },
+  "F4_attention_unknown": {
+    "when": [
+      "S02 status non-ok",
+      "S02 native distribution absent or invalid",
+      "impact assessability not established"
+    ],
+    "attention": "unknown",
+    "raw_observation": "retain separately including any numeric value; never substitute zero",
+    "effect": "No numeric ordering/depth weighting from this result; use original user priorities/method obligations. Other valid route roles remain usable.",
+    "assessability": "actual S01 positive OR source-bound valid existing_resolution, not mandatory repeated S01"
+  },
+  "new_questions": 0,
+  "new_business_calls": 0,
+  "default_activation": false
+}

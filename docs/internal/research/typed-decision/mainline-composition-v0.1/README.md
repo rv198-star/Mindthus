@@ -1,3 +1,5 @@
+> 最新控制权设计与一次独立评审见 [route-control-v0.2](../route-control-v0.2/README.md)。本目录为继承的题文和历史政策；有效消费以新profile及v0.2.1实现澄清为准，未启用运行。
+
 # using-mindthus 主线路由：问题合同与验收设计 v0.1
 
 > 后续审计：见 [实用性独立审计与作者处置](pragmatic-audit-20260923/disposition.md)。
