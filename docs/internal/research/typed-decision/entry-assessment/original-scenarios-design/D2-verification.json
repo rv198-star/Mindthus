@@ -1,0 +1,103 @@
+{
+  "schema": "mindthus.relationship-d2-verification.v1",
+  "source_commit": "c3c894d4533d155e0f8b2138bea72c128c39b125",
+  "baseline_commit": "9065d182904821e05207346aca1e94baa56fca47",
+  "implementation_digest": "1e0271d904c12eb1bd6267277c87eccacb3c0a6fee7b11d8b26ff32e4c0155da",
+  "source_sha256": {
+    "experiments/typed_decision/entry.py": "be8615d315194b62d4b6fcabc98af169afd1c886bff603a30f54cc652629b03f",
+    "experiments/typed_decision/relationship_runtime.py": "ba35c20f66420b22e1b4c81c564bf208583dad1a2c6e5857372505e24c3889f1",
+    "experiments/typed_decision/relationship_assessment.py": "95ae35483e066704f55eeb7139b970ba7d1b4f03931f9fe98a9b26bb9d9a9bfd",
+    "tests/test_relationship_runtime.py": "472304aa0960d33134eb45972f65a899d520989e02f05382e996380500fc5930",
+    "tests/test-lifecycle-registry.json": "1f6f64ce5cdd4fd7df2c877ebb90bc81326e7be7a25259c4d1287920acf30ece",
+    "docs/internal/research/typed-decision/entry-assessment/original-scenarios-design/D2-contract.md": "fe6ecde9d1349cc0dd0cab2c1411918200f557c0dd6665563f15a6e20db933a0"
+  },
+  "new_d2_tests": {
+    "run": 64,
+    "passed": 64
+  },
+  "focused": {
+    "run": 153,
+    "passed": 153,
+    "seconds": 10.911
+  },
+  "full_suite": {
+    "run": 1388,
+    "passed": 1383,
+    "skipped": 5,
+    "failed": 0,
+    "errors": 0,
+    "seconds": 146.801,
+    "exit_code": 0
+  },
+  "lifecycle": {
+    "registered": 84,
+    "executable": 84
+  },
+  "log_sha256": {
+    "full-suite.log": "6af43741f967be50c331ff461410048c5ab6c7d8771b8d854198d183cc990e6f",
+    "focused.log": "be8262720ae61df45e039848a78d327215ae10028c61a3841d8b03e6c39ad9e2",
+    "lifecycle.log": "4a104322d4258b4549b8b7e174c2de63678e10294bf077beb1bd525f6c2c615e"
+  },
+  "offline_demo": {
+    "record_count": 64,
+    "bytes": 304882,
+    "unresolved_intents": 0,
+    "byte_identical_archive": true,
+    "reentry_new_calls": 0,
+    "reentry_records_unchanged": true,
+    "original_documents_and_authority_preserved": true,
+    "judgments_skills_two_turns": 4,
+    "corrections_skills_two_turns": 2,
+    "new_evidence_after_exhaustion_new_calls": 0,
+    "judgments_display": 2,
+    "corrections_display": 1,
+    "judgments_and_revisions": "scripted fixtures, not real Jev/LLM"
+  },
+  "secret_scan": {
+    "kind": "credential_pattern_scan",
+    "result": "PASS",
+    "credential_values_read": false,
+    "scope": "changed runtime/test/contract files; no exact secret-value scan"
+  },
+  "preserved": [
+    "D1 relationship question contract and compiler",
+    "assessment v2",
+    "canonical skills and methods",
+    "DecisionProvider and Session",
+    "C01 graph4",
+    "old six/eight-case terminal trials",
+    "main"
+  ],
+  "review": {
+    "type": "author source review and executable offline fault injection",
+    "new_independent_model_audit": false
+  },
+  "limitations": [
+    "D3 actual-host/live admission not implemented",
+    "Semantic correctness of organizer and revised proposal remains unmeasured",
+    "Timeout callbacks cooperate; arbitrary in-process work cannot be forcibly terminated",
+    "Root registry covers one OS user and Git common directory, not malicious deletion or different users/machines"
+  ],
+  "claim_ceiling": {
+    "D2_engineering": "implemented and offline verified",
+    "D3_live": false,
+    "D4_task_quality": "not_evaluated",
+    "default_skill_activation": false,
+    "new_live_model_calls": 0,
+    "production_admission": false
+  },
+  "post_documentation_checks": {
+    "modules": [
+      "test_method_layering_contract",
+      "test_before_after_case_pages",
+      "test_mindthus_router_contract"
+    ],
+    "run": 70,
+    "passed": 70,
+    "failed": 0,
+    "seconds": 0.046,
+    "evidence": "successful bounded command receipt; no log file fabricated"
+  },
+  "relative_links_checked": 98,
+  "archive_integrity_rechecked": true
+}

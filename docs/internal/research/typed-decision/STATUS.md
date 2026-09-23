@@ -6,7 +6,38 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — relationship D1 implemented; offline only
+## Current checkpoint — relationship D2 same-entry correction and episode recovery complete; offline only
+
+D2 source `c3c894d4533d155e0f8b2138bea72c128c39b125`; task `tsk_d959a7cf9cf7dcf4`.
+Read [D2 contract](entry-assessment/original-scenarios-design/D2-contract.md),
+[verification](entry-assessment/original-scenarios-design/D2-verification.json) and
+[offline observation](entry-assessment/original-scenarios-design/D2-offline-observation.json).
+
+The existing entry.run and CLI now accept explicit `mode=relationship-frame.v1`. Default
+assessment-v2 remains unchanged. D1 compiles/consumes the same questions; relationship_runtime
+adds only episode locking/budgets, original-host correction/organizer receipts and optional S2.
+New candidate text is appended, with updated target refs and immutable original documents,
+authority and relationship membership. A correction cannot drop checks to obtain a clear scan.
+
+Same user/Git-common-directory/episode is pinned to one root. Counts persist across turns,
+revisions and interruptions: 4 judgment requests/2 corrections/1 optional organizer, 7 total,
+120 seconds; per turn 2 judgments/1 correction. Unknown intents never resend; completed receipts
+rebuild reports without callbacks. New evidence after exhaustion goes unchanged to the original
+host, with no new Jev intent and no claim of free fallback. The old paid router is not stacked.
+
+64 D2 tests plus 43 D1 and 46 old-entry tests pass (153 focused); full suite 1388 = 1383 success
++ 5 skips, zero failures/errors; lifecycle84/84. Public-entry scripted Skills two-turn and 4K
+joint-factor demonstrations are archived as 64 immutable JSON records. Reentry added zero calls;
+scope acceptance stayed separate from explanation repair. These are control-flow observations,
+NOT real Jev/LLM judgment quality. This task read no secrets and made no paid/model calls.
+
+NEXT: D3 actual host adapter + separately frozen combined live admission through THIS entry,
+then D4 raw-input/independent comparisons. Current provider/hooks still require is_live=false.
+Do not rerun completed six/eight-case trials, change D1 semantics, or implement a surrogate carrier.
+Real model/token windows, host deadlines and task quality still need D3/D4 evidence. Historical
+REVISE audits remain unchanged. #211 stays OPEN; default Skills, #212 and main remain unchanged.
+
+## Previous checkpoint — relationship D1 implemented; offline only
 
 Source: `2a811a69c68dc4361fae62acfdf9371245885865`; new task `tsk_578fb8c8ab5b17bc`.
 Read [D1 resolution](entry-assessment/original-scenarios-design/D1-contract-resolution.md),

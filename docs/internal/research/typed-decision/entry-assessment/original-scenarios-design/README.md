@@ -1,4 +1,16 @@
-# Skills / 4K 入口：合同完善与 Relationship D1
+# Skills / 4K 入口：Relationship D2
+
+**D2 已接通同一入口的离线纠偏与跨轮恢复；尚未启用真实模型或默认 Skill。**
+
+先读 [D2合同](D2-contract.md)、[验证](D2-verification.json) 与 [离线执行观察](D2-offline-observation.json)。
+实现通过 `entry.run(..., mode='relationship-frame.v1')`；CLI 为 `python3 -m experiments.typed_decision.entry --mode relationship-frame.v1 --fixture <显式离线夹具> --state-root <固定episode目录>`。
+原 `assessment-v2` 模式保持默认。一次修正、可选一次复查、跨轮4/2/1请求额度和未知调用恢复均由代码执行；不把回退或清晰扫描当成任务完成。
+
+64项新D2控制及全仓1388项（1383成功、5跳过）通过。Skills两轮与4K处境演示为固定脚本判断和修正，不是模型行为测量；原始记录及重入校验已归档。
+下一步是D3同入口的真实宿主适配与单独live准入，再做D4原文端到端对比。当前没有新付费调用授权、没有默认启用、没有重跑旧6/8例。
+当前D2任务：`tsk_d959a7cf9cf7dcf4`；#211仍OPEN。
+
+## 历史 D1 交付
 
 **当前：D1离线实现完成；独立快速设计审计REVISE但允许offline D1，作者局部处置后按v0.3.1开发。不是全面审计PASS或真实效果验证。**
 
@@ -10,7 +22,7 @@
 分别保存；原被审v0.3未修改。43新离线测试、全仓1324项（1319成功/5跳过）通过，生命周期83/83。
 14个语义判例是作者预期，不是Jev实测正确率。本轮没有Jev场景调用或真实宿主纠偏。
 
-**下一步D2**：同一entry.run的显式离线profile、一次宿主纠偏、跨turn/episode账本与恢复；
+**当时下一步D2（已由上文完成）**：同一entry.run的显式离线profile、一次宿主纠偏、跨turn/episode账本与恢复；
 D3/D4真实接线、准入和独立效果验证随后另行冻结。旧6/8例不重跑，默认Skill和main不变，#211仍OPEN。
 当前可恢复任务：`tsk_578fb8c8ab5b17bc`。
 
