@@ -1,0 +1,204 @@
+{
+  "schema": "mindthus.route-control-design.v0.2",
+  "status": "implementation_design_not_runtime",
+  "parent_commit": "bba72569f15280e0b96353cec9f37353f9c875cb",
+  "extends_questions": {
+    "path": "docs/internal/research/typed-decision/mainline-composition-v0.1/questions.json",
+    "sha256": "8aa2e1c46f15dbdf184301f87dcbdfeb972b3b860300f0a7009d9c04b0c62717",
+    "ids": [
+      "G01",
+      "G02",
+      "G03",
+      "G04",
+      "G05",
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "S01",
+      "S02",
+      "V01",
+      "V02",
+      "V03"
+    ]
+  },
+  "method_bindings": {
+    "path": "docs/internal/research/typed-decision/mainline-composition-v0.1/method-bindings.json",
+    "sha256": "ce43c43f92e423717b49d47e1e907f7a9be61851cc0db520624cdb5981160b2e"
+  },
+  "resolution": "This profile replaces activation/consumption below; inherited question text, criteria, types and method meaning remain verbatim. It does not merge old free-LLM policy. No new question family.",
+  "effective_policy": "route-control.v0.2",
+  "authority": {
+    "ordinary_route": "fast_model_observations_plus_policy",
+    "task_conclusion": "method_executing_LLM",
+    "permissions": "original_host_and_user",
+    "silent_executor_override": false,
+    "executor_self_approval_of_semantic_objection": false,
+    "default_global_LLM_reroute": false
+  },
+  "shared_prerequisite": {
+    "input_admitted": "Original documents directly bound OR material generated proposal passed current fidelity review; relevant scope/identity/authority known. G01 is required for a newly generated load-bearing proposal, not fabricated for raw input.",
+    "substitution": "Replace inherited G01=faithful consumption prerequisite with input_admitted. Still require G01 for generated load-bearing representations. Retain all other explicit question prerequisites unless individually overridden below.",
+    "non_ok": "Mark only the dependent scope unresolved; it is not false, 0, or a passed route. Preserve original text and successful independent work.",
+    "existing_resolution": "For omitted conditional questions, an already resolved handling-mode/scope/assessability/companion condition may satisfy the semantic prerequisite only with its source, responsible owner and current version. Record condition_source=existing_resolution, never fabricate a Jev observation. Missing resolution stays unresolved. S01 positive is replaced by assessability established under this rule or actual S01."
+  },
+  "normal_questions": [
+    "M02",
+    "M03",
+    "S02"
+  ],
+  "activation": {
+    "M02": "Required retained issue-method candidates after full canonical contract is available; skip direct task.",
+    "M03": "Same State as M02, current real handling context; proposed labels are not expected truths.",
+    "S02": "Multiple unresolved issues or materially depth-changing consequences; use known assessability or S01; no mandatory score for simple tasks.",
+    "G01": "New/changed load-bearing semantic representation; absent for direct original text view.",
+    "G02": "Genuine multi-issue coverage uncertainty; not duplicated with V01 at same join.",
+    "G03": "Semantic handling-mode uncertainty; known direct work bypasses.",
+    "G04": "Specific dispute about obligation scope, not every defect.",
+    "G05": "A mentioned method has invocation/review/incidental ambiguity.",
+    "M01": "Candidate discovery only when complete contracts absent.",
+    "M04": "M02 nonpositive or actual role/entry conflict requiring gap localization.",
+    "M05": "Known canonical companion trigger unclear; established triggers directly enforced without repeated inference.",
+    "R01": "Actual output/coverage reuse requires validity for the specified use.",
+    "R02": "Actually overlapping potential primary roles.",
+    "R03": "Same-scope competition with both applicable; may speculate in same batch, consume only if premise holds.",
+    "R04": "A proposed concrete producer-output-consumer dependency exists; no all-pairs expansion.",
+    "S01": "Assessability of S02 genuinely unknown; known consequence information reused.",
+    "V01": "New plan or genuine uncovered-issue signal.",
+    "V02": "Specific duplication/re-analysis signal in an actual plan.",
+    "V03": "Specific cross-scope/authority/evidence use risk in an actual plan."
+  },
+  "consumption": {
+    "M02": {
+      "positive": "eligible_for_role_consumption_not_permission",
+      "negative": "do_not_start_this_method; local M04 only when helpful",
+      "unresolved": "local exception or acquire; no full-route veto"
+    },
+    "M03": {
+      "primary_candidate": "Commit if sole eligible primary in this scope; otherwise canonical arbitration or R03.",
+      "support": "Commit support scope when M02 positive.",
+      "constraint": "Commit domain constraint role; no new permissions.",
+      "support_and_constraint": "One method step carries both, not two executions.",
+      "covered": "Only omit/reuse if effective artifact or explicit adequate current responsibility established; otherwise unresolved.",
+      "no_contribution": "Do not start; preserve required reads and actual explicit request disposition.",
+      "unclear": "Local unresolved exception; not a silent alternative primary."
+    },
+    "R03": {
+      "left": "Commit left primary for shared scope. Losing primary becomes not_selected_as_primary, NOT automatically support; preserve separately established required support/constraints.",
+      "right": "Symmetric right primary rule.",
+      "neither": "Local unresolved/no-match",
+      "unclear": "One scoped arbitration; no majority voting"
+    },
+    "R04": {
+      "none": "No semantic edge; resource/authority constraints remain.",
+      "needed_to_begin": "Consumer starts only after required output accepted for that use.",
+      "needed_before_commit": "Independent preparation allowed, dependent commitment waits.",
+      "conditional": "Require actual named condition evidence; unknown freezes that dependent commitment.",
+      "unclear": "Only affected relation unresolved."
+    },
+    "S02": {
+      "assessable": "Carry value and native distribution as attention guidance to method executor; no weighted route winner or uncalibrated hard depth gate.",
+      "not_assessable": "retain raw observation, not consumed; impact unknown",
+      "conflict": "Authority, dependencies, user bounds, required checks dominate."
+    }
+  },
+  "draft_numeric_policy": {
+    "purpose": "low-risk reversible opt-in development only, no production calibration claim",
+    "noul_positive_gte": 0.8,
+    "noul_negative_lte": 0.2,
+    "choice": "valid category; explicit unclear/non-ok or relevant cross-result conflict -> scoped unresolved",
+    "score": "attention only, no tail_mass gate",
+    "missing_native_probability": "unknown, no invented confidence"
+  },
+  "commitment_required": [
+    "route_id",
+    "revision",
+    "input_hash",
+    "contract_hashes",
+    "engine_identity",
+    "policy_version",
+    "per_issue",
+    "mandatory_reads",
+    "artifact_edges",
+    "reuse",
+    "unresolved",
+    "source_observations"
+  ],
+  "route_modes": [
+    "committed",
+    "partial",
+    "acquire",
+    "direct",
+    "delegated_unresolved"
+  ],
+  "objection": {
+    "fields": [
+      "route_id",
+      "revision",
+      "affected_issue_or_step",
+      "kind",
+      "original_refs",
+      "claimed_conflict",
+      "requested_change"
+    ],
+    "kinds": [
+      "source_or_scope",
+      "method_boundary",
+      "new_fact",
+      "dependency",
+      "permission"
+    ],
+    "semantic_outcomes": [
+      "uphold",
+      "amend",
+      "acquire",
+      "unresolved"
+    ],
+    "receipt": "Separate bounded context only on exception, cites original sources; code validates identity/scope/permissions, never validity of semantics by syntax alone.",
+    "max_semantic_arbitrations": 1,
+    "vague_preference_is_override": false
+  },
+  "host_control": {
+    "commitment_is_instruction_not_evidence": true,
+    "programmatic_required_reads_and_dispatch": true,
+    "active_revision_checked": true,
+    "results_need_step_artifacts_or_exception": true,
+    "load_receipt_proves_semantic_execution": false,
+    "prompt_only_claim": "advisory_not_enforced"
+  },
+  "correction": {
+    "component": "existing relationship module; no hardcoded Skills/display IDs",
+    "when": "named frame/candidate defect at before-route or before-answer",
+    "action": "one real bounded correction or same objection channel, not ignorable diagnostic",
+    "optional_related_recheck": 1,
+    "original_documents_preserved": true,
+    "only_affected_route_invalidated": true
+  },
+  "limits": {
+    "fast_batches_per_episode": 4,
+    "organizer": 1,
+    "semantic_arbitrator": 1,
+    "named_correction": 1,
+    "total_plugin_requests": 7,
+    "plugin_elapsed_seconds": 180,
+    "single_call_seconds": 45,
+    "shares_route_and_relationship_budget": true,
+    "dual_role_call": "one actual request; debit each declared role slot",
+    "method_execution": "original mission budget, count all end-to-end costs",
+    "repeat_sampling_default": false
+  },
+  "non_goals": [
+    "full_v01_default_graph",
+    "model_weight_finetuning",
+    "new_planner_platform",
+    "new_indefinite_review_loop",
+    "default_plugin_activation",
+    "silent_model_substitution"
+  ],
+  "acceptance": "acceptance.md; engineering and small paired usable-task validation; old cases are exposed development, no universal accuracy claim"
+}
