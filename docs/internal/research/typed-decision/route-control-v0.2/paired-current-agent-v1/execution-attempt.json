@@ -1,0 +1,77 @@
+{
+  "schema": "mindthus.six-scenes-attempt.v1",
+  "time_utc": "2026-09-23T13:41:43.153821+00:00",
+  "task_id": "tsk_33474a9c1917c41c",
+  "source_commit": "2f2d9d18f135169b6a589947d3083bd23d7c0cf2",
+  "freeze_commit": "a016b4c882ae5329f796dbc6217b71db108a7955",
+  "tool": "NexusDock.exec_command",
+  "command": "python3 docs/internal/research/typed-decision/route-control-v0.2/paired-current-agent-v1/run.py run",
+  "platform_result": "此工具调用被 OpenAI 的安全检查屏蔽。请仔细检查你发送的内容。",
+  "status": "BLOCKED_BEFORE_COMMAND_EXECUTION",
+  "root_exists": false,
+  "provider_intents": 0,
+  "provider_outcomes": 0,
+  "actual_Jev_calls": 0,
+  "actual_CPA_calls": 0,
+  "host_handoffs": 0,
+  "paired_outputs": 0,
+  "credentials_retained_in_evidence": false,
+  "fallback_or_bypass_attempted": false,
+  "cases": [
+    {
+      "id": "A1",
+      "scenario": "A",
+      "mode_1_advisory": "UNRUN",
+      "mode_2_committed": "UNRUN"
+    },
+    {
+      "id": "A2",
+      "scenario": "A",
+      "mode_1_advisory": "UNRUN",
+      "mode_2_committed": "UNRUN"
+    },
+    {
+      "id": "B1",
+      "scenario": "B",
+      "mode_1_advisory": "UNRUN",
+      "mode_2_committed": "UNRUN"
+    },
+    {
+      "id": "C1",
+      "scenario": "C",
+      "mode_1_advisory": "UNRUN",
+      "mode_2_committed": "UNRUN"
+    },
+    {
+      "id": "D1",
+      "scenario": "D",
+      "mode_1_advisory": "UNRUN",
+      "mode_2_committed": "UNRUN"
+    },
+    {
+      "id": "E1",
+      "scenario": "E",
+      "mode_1_advisory": "UNRUN",
+      "mode_2_committed": "UNRUN"
+    },
+    {
+      "id": "E2",
+      "scenario": "E",
+      "mode_1_advisory": "UNRUN",
+      "mode_2_committed": "UNRUN"
+    },
+    {
+      "id": "F1",
+      "scenario": "F",
+      "mode_1_advisory": "UNRUN",
+      "mode_2_committed": "UNRUN"
+    },
+    {
+      "id": "F2",
+      "scenario": "F",
+      "mode_1_advisory": "UNRUN",
+      "mode_2_committed": "UNRUN"
+    }
+  ],
+  "next": "Keep current source and frozen inputs; execute only when platform permits. Do not bypass this denial."
+}

@@ -6,7 +6,26 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — current-Agent host port implemented; CPA optional, engineering verified
+## Current checkpoint — six named scenarios frozen; real command blocked before execution
+
+Task `tsk_33474a9c1917c41c`; source `2f2d9d1`, freeze `a016b4c882ae5329f796dbc6217b71db108a7955`.
+Read [six-scene index](route-control-v0.2/paired-current-agent-v1/README.md) and
+[frozen plan](route-control-v0.2/paired-current-agent-v1/PLAN.md).
+Scenarios: A everyday, B single-method, C primary/support, D staged handoff,
+E Skills, F display context. Arms: 1 advisory / 2 committed, NOT A/B labels.
+Nine inputs, at most12 TypeSafe Jev requests, no CPA; runtime c366139 unchanged.
+
+One real invocation was blocked by platform safety BEFORE command execution.
+Batch root absent; provider intents/outcomes=0, actual Jev/CPA calls=0, handoffs=0.
+All nine inputs in both arms remain UNRUN. Do not replace them with fixtures/old outputs
+or retry via another route. Continue only under platform-permitted execution.
+Frozen input and implementation identities verified; no new semantic success claimed.
+
+Shared current-conversation context means paired development observations, not independent
+blind A/B or causal quality evidence. E/F use exposed fixed history. #211 OPEN,
+main/default unchanged. Existing offline host-port evidence below remains valid.
+
+## Previous checkpoint — current-Agent host port implemented; CPA optional, engineering verified
 
 Task `tsk_194ec4de860d5889`, base `4928335ac4a534ec2a764119aef2c6b290531e61`.
 Read [current-host usage](route-control-v0.2/implementation/current-host.md),
