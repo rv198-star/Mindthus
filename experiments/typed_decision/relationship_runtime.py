@@ -160,7 +160,12 @@ class Episode:
                     slot = self.host_slots[kind]
                     require(out.get('host_configuration') == self.live_admission[slot], 'recorded_host_drift')
             if kind == 'judgment':
-                if any(r['status'] == 'provider_error' for r in out['results'].values()):
+                # A verified response may contain an invalid individual observation.
+                # Consumers handle that scope; only transport/envelope/identity failures stop the episode.
+                if any(r['status'] == 'provider_error' and not (
+                        out.get('resolved_runtime') is not None
+                        and r.get('reason', '').startswith('answer_contract:'))
+                       for r in out['results'].values()):
                     failures.append(str(op.relative_to(self.root)))
                 if out.get('resolved_runtime') is not None:
                     shared = self.root / 'resolved-runtime.json'

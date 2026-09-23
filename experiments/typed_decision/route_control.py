@@ -156,15 +156,17 @@ def _read_methods(repo, names, bindings):
     return loaded
 
 
-def compile_route(packet, repo, bundle, qs, bindings):
+def compile_route(packet, repo, bundle, qs, bindings, *, focus_issue=None, artifacts=None):
     docs = validate_input(packet, bindings)
-    methods = set(m for i in packet['issues'] for m in i['candidates'])
+    issues = packet['issues'] if focus_issue is None else [i for i in packet['issues'] if i['id'] == focus_issue]
+    require(bool(issues), 'post_artifact_issue_absent')
+    methods = set(m for i in issues for m in i['candidates'])
     # Read potential companion contracts for judgment, not an assertion they were executed.
     if methods & {'sela', 'mpg'}: methods.update(('sela', 'mpg'))
     loaded = _read_methods(repo, methods, bindings)
     context = {'original_documents': packet['documents'], 'authority': packet['authority'],
-               'issue_view': packet['issues'], 'method_view': loaded,
-               'artifact_view': [], 'plan_view': {'status': 'no_generated_plan',
+               'issue_view': issues, 'method_view': loaded,
+               'artifact_view': rel.clone(artifacts or []), 'plan_view': {'status': 'no_generated_plan',
                                                 'dependencies_proposed': packet['dependencies']}}
     specs, index = [], {}
     def add(template, suffix, binding):
@@ -174,7 +176,7 @@ def compile_route(packet, repo, bundle, qs, bindings):
                          version=q['version'], policy_ref=MODE)
         s.validate(); specs.append(s); index[ident] = {'template': template, 'binding': binding}
     catalog = {m['method']: m for m in bindings['methods']}
-    for issue in packet['issues']:
+    for issue in issues:
         ident = issue['id']; task = check_ref(issue['request_ref'], docs)
         issue_binding = {'id': ident, 'original_task_span': task, 'source_ref': issue['request_ref']}
         mode = _resolution(issue['handling'], packet, docs)
@@ -198,16 +200,18 @@ def compile_route(packet, repo, bundle, qs, bindings):
         if issue['attention']:
             if issue['assessability'] is None: add('S01', ident, {'issue': issue_binding})
             add('S02', ident, {'issue': issue_binding})
-    for edge in packet['dependencies']:
+    for edge in (packet['dependencies'] if focus_issue is None else []):
         add('R04', edge['id'], {'producer_step': edge['producer'], 'consumer_step': edge['consumer'],
                               'artifact_contract': edge['artifact'], 'condition': edge['condition'], 'refs': edge['refs']})
     require(len(specs) <= 48 and len(canonical(context)) <= 98304, 'route_batch_capacity')
-    return SimpleNamespace(specs=tuple(specs), context=context, index=index, loaded=loaded,
-                           identity={'packet_sha256': digest(packet), 'contract_sha256': digest(bundle)})
+    identity = {'packet_sha256': digest(packet), 'contract_sha256': digest(bundle)}
+    if focus_issue is not None:
+        identity.update(focus_issue=focus_issue, accepted_artifacts_sha256=digest(artifacts or []))
+    return SimpleNamespace(specs=tuple(specs), context=context, index=index, loaded=loaded, identity=identity)
 
 
-def _evaluate(ep, directory, compiled):
-    step = directory / 'steps/route'
+def _evaluate(ep, directory, compiled, *, name='route'):
+    step = directory / 'steps' / name
     timeout = ep.profile['single_call_seconds']
     if compiled.specs and not list((step / 'calls').glob('*/outcome.json')):
         timeout = ep.admit('judgment')
@@ -388,6 +392,46 @@ def _change(route, iid, outcome, packet):
     return refresh(revised)
 
 
+
+def _after_artifacts(ep, directory, packet, route, iid, needed, outputs, bundle, qs, bindings):
+    """Re-evaluate only a waiting consumer against actually accepted predecessor outputs.
+
+    These are host artifacts accepted for a named use, not newly verified external facts.
+    The existing Episode/Session reserves and replays this additional batch.
+    """
+    artifacts = []
+    for edge in needed:
+        output = outputs[edge['producer']]
+        acceptance = output['accepted_uses'][edge['id']]
+        require(acceptance['accepted'] is True and acceptance['artifact_sha256'] == output['artifact_sha256']
+                and acceptance['dependency_id'] == edge['id'], 'post_artifact_acceptance_required')
+        artifacts.append({'producer_issue': edge['producer'], 'consumer_issue': iid,
+                          'artifact_contract': edge['artifact'], 'dependency_id': edge['id'],
+                          'text': output['text'], 'artifact_sha256': output['artifact_sha256'],
+                          'acceptance': acceptance,
+                          'provenance': 'original_host_output_accepted_for_this_use_not_independent_fact'})
+    compiled = compile_route(packet, ep.repo, bundle, qs, bindings, focus_issue=iid, artifacts=artifacts)
+    name = 'route__after__' + iid + '__' + digest(compiled.identity)[:16]
+    observations = _evaluate(ep, directory, compiled, name=name)
+    # Consumption is restricted to this issue. Original source documents and boundaries stay identical.
+    local_packet = {**packet, 'issues': [i for i in packet['issues'] if i['id'] == iid], 'dependencies': []}
+    local_route = consume(local_packet, compiled, observations, bundle, bindings)
+    changed = rel.clone(route)
+    old = next(r for r in route['per_issue'] if r['issue_id'] == iid)
+    new = local_route['per_issue'][0]
+    changed['per_issue'] = [new if r['issue_id'] == iid else r for r in changed['per_issue']]
+    changed['mandatory_reads'] = sorted(set(changed['mandatory_reads']) | set(local_route['mandatory_reads']))
+    changed['source_observations'].update(observations)
+    changed['revision'] += 1
+    changed['parent_commitment_sha256'] = digest(route)
+    changed.setdefault('post_artifact_evaluations', []).append({
+        'issue_id': iid, 'step': name, 'prior_scope': old,
+        'accepted_artifacts_sha256': digest(artifacts), 'observations': observations})
+    refresh(changed)
+    rt.save(directory / ('commitment-' + str(changed['revision']) + '.json'), changed)
+    return changed
+
+
 def _admission(admission, root, packet, provider, bundle, hooks):
     require(isinstance(admission, dict) and admission.get('schema') == 'mindthus.route-control-live.v1',
             'route_live_admission_required')
@@ -492,18 +536,25 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None, corrector
             route['engine_identity'] = ep.manifest['provider']
             rt.save(directory / 'commitment-1.json', route)
             dispatch_order = [i['id'] for i in packet['issues']]
-            accepted = {}; waiting = set(dispatch_order)
+            accepted = {}; waiting = set(dispatch_order); advanced = set()
             while waiting:
                 progressed = False
                 for iid in dispatch_order:
                     if iid not in waiting: continue
                     row = next(r for r in route['per_issue'] if r['issue_id'] == iid)
-                    if row['mode'] not in ('committed', 'direct'):
-                        pending[iid] = row['reason'] or row['mode']; waiting.remove(iid); progressed = True; continue
                     needed = [e for e in route['artifact_edges'] if e['consumer'] == iid]
                     if any(e['relation'] == 'unclear' or (e['relation'] == 'conditional' and e['condition_value'] is not True)
                            for e in needed):
                         pending[iid] = 'dependency_unresolved'; waiting.remove(iid); progressed = True; continue
+                    if needed and row['mode'] in ('committed', 'delegated_unresolved'):
+                        if any(e['producer'] not in accepted or not accepted[e['producer']].get(e['id']) for e in needed):
+                            continue
+                        if row['mode'] == 'delegated_unresolved' and iid not in advanced:
+                            route = _after_artifacts(ep, directory, packet, route, iid, needed, outputs, bundle, qs, bindings)
+                            advanced.add(iid)
+                            row = next(r for r in route['per_issue'] if r['issue_id'] == iid)
+                    if row['mode'] not in ('committed', 'direct'):
+                        pending[iid] = row['reason'] or row['mode']; waiting.remove(iid); progressed = True; continue
                     if any(e['producer'] not in accepted or not accepted[e['producer']].get(e['id']) for e in needed): continue
                     if executor is None:
                         pending[iid] = 'executor_not_supplied'; waiting.remove(iid); progressed = True; continue

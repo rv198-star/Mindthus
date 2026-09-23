@@ -266,6 +266,11 @@ class Session:
                 'missing/mismatched intent',
             )
             raw = self._read_outcome(outcome)
+            receipt_path = directory / 'provider-receipt.json'
+            if receipt_path.exists():
+                receipt = read_record(receipt_path)
+                require(receipt['call_key'] == key and receipt['context_sha256'] == identity['context_sha256']
+                        and receipt['questions_sha256'] == digest(identity['questions']), 'provider receipt binding mismatch')
             require(set(raw['results']) == {spec.id for spec in specs},
                     'persisted answer ids mismatch')
             require(raw.get('call_key') == key, 'outcome identity mismatch')
@@ -336,6 +341,8 @@ class Session:
         })
         begin = time.monotonic()
         self.calls_made += 1
+        clear_receipt = getattr(self.provider, 'clear_receipt', None)
+        if clear_receipt is not None: clear_receipt()
         try:
             batch = self.provider.evaluate(specs, view, remaining)
             require(isinstance(batch, BatchResult), 'invalid provider batch type')
@@ -352,6 +359,20 @@ class Session:
                     reason=safe_failure_reason(exc),
                 ) for spec in specs
             })
+
+        receipt_fn = getattr(self.provider, 'response_receipt', None)
+        receipt = receipt_fn() if receipt_fn is not None else None
+        if receipt is not None:
+            require(isinstance(receipt, dict), 'invalid provider receipt')
+            write_once(directory / 'provider-receipt.json', {
+                'call_key': key, 'context_sha256': identity['context_sha256'],
+                'questions_sha256': digest(identity['questions']), 'receipt': receipt})
+            # Even global validation failures may have valid billed usage. Do not invent a runtime.
+            usage = receipt.get('validated_usage')
+            if isinstance(usage, dict) and set(usage) == {'input_tokens', 'output_tokens', 'cost_usd'}:
+                if all(v is None or (number(v, 0, 1e15) and (k == 'cost_usd' or type(v) is int))
+                       for k, v in usage.items()):
+                    batch.usage = usage
 
         record = {
             'call_key': key,

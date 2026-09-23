@@ -7,6 +7,7 @@ maps the contract to wire format and reports the resolved runtime observation.
 from __future__ import annotations
 
 import json
+import math
 import os
 import re
 import socket
@@ -142,7 +143,70 @@ class JevEngine:
         return results
 
 
-class TypeSafeJevProvider:
+    def validated_results(self, specs, answers):
+        """Answer-local contract defects do not erase other typed observations."""
+        require(isinstance(answers, dict) and set(answers) == {s.id for s in specs},
+                'invalid Jev answer ids')
+        from .session import safe_failure_reason
+        results = {}
+        for spec in specs:
+            try:
+                result = self.results([spec], {spec.id: answers[spec.id]})[spec.id]
+                result.validate(spec)
+            except ContractError as exc:
+                result = DecisionResult('provider_error', reason='answer_contract:' + safe_failure_reason(exc))
+            results[spec.id] = result
+        return results
+
+
+class _JevReceipt:
+    """Capture decoded response data before validation, never credential headers."""
+    def clear_receipt(self):
+        self._receipt = None
+
+    def response_receipt(self):
+        return getattr(self, '_receipt', None)
+
+    def capture_receipt(self, body, raw):
+        secrets = [v for k, v in os.environ.items()
+                   if any(x in k.upper() for x in ('API_KEY', 'TOKEN', 'SECRET')) and len(v) >= 8]
+        changed = False
+        def clean(x):
+            nonlocal changed
+            if isinstance(x, dict):
+                out = {}
+                for k, v in x.items():
+                    if str(k).lower() in ('reasoning', 'reasoning_content', 'thinking', 'thoughts', 'authorization'):
+                        changed = True
+                        out[k] = '[omitted]'
+                    else:
+                        out[clean(str(k))] = clean(v)
+                return out
+            if isinstance(x, list): return [clean(v) for v in x]
+            if isinstance(x, str):
+                value = x
+                for secret in secrets: value = value.replace(secret, '[REDACTED]')
+                value = re.sub(r'(?:apikey_|sk-)[A-Za-z0-9_-]{16,}', '[REDACTED]', value)
+                changed |= value != x
+                return value
+            if type(x) is float and not math.isfinite(x):
+                changed = True
+                return {'invalid_nonfinite_number': str(x)}
+            return x
+        usage = raw.get('usage') if isinstance(raw, dict) else None
+        usage = usage if isinstance(usage, dict) else {}
+        measured = {}
+        for dst, src in (('input_tokens', 'input_tokens'), ('output_tokens', 'output_tokens'), ('cost_usd', 'cost')):
+            value = usage.get(src)
+            measured[dst] = value if (number(value, 0, 1e15) and (dst == 'cost_usd' or type(value) is int)) else None
+        response = clean(raw)
+        self._receipt = {'schema': 'mindthus.jev-response-receipt.v1',
+                         'wire_request_sha256': digest(body), 'response': response,
+                         'response_is_decoded_json': True, 'redacted_or_sanitized': changed,
+                         'validated_usage': measured}
+
+
+class TypeSafeJevProvider(_JevReceipt):
     """TypeSafe native serving path for the Jev Decision Engine."""
 
     is_live = True
@@ -157,7 +221,7 @@ class TypeSafeJevProvider:
             transport='systemone-v1',
             requested_model=model,
             endpoint='https://api.typesafe.ai/v1/systemone',
-            adapter_version='2-choice-rounding-v1' if choice_rounding else '2',
+            adapter_version='3-scoped-receipt-choice-v1' if choice_rounding else '3-scoped-receipt',
         )
         self.transport = transport
 
@@ -168,17 +232,17 @@ class TypeSafeJevProvider:
         require(runtime.provider.lower() == 'typesafe', 'resolved TypeSafe provider changed')
 
     def evaluate(self, specs: list[DecisionSpec], context: dict, timeout: float) -> BatchResult:
+        self.clear_receipt()
         key = os.environ.get('TYPESAFE_API_KEY')
         if not key:
             raise ProviderError('missing_credential:TYPESAFE_API_KEY')
         questions = self.engine.questions(specs)
+        body = {'model': self.serving_identity.requested_model, 'state': context, 'questions': questions}
         raw = self.transport(
             self.serving_identity.endpoint,
-            {'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'},
-            {'model': self.serving_identity.requested_model,
-             'state': context, 'questions': questions},
-            timeout,
+            {'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'}, body, timeout,
         )
+        self.capture_receipt(body, raw)
         require(isinstance(raw, dict), 'provider response must be an object')
         runtime = ResolvedRuntime(model=raw.get('model'), provider='TypeSafe')
         self.validate_runtime(runtime)
@@ -186,7 +250,7 @@ class TypeSafeJevProvider:
                 'invalid provider usage shape')
         usage = raw.get('usage') or {}
         batch = BatchResult(
-            self.engine.results(specs, raw.get('answers')),
+            self.engine.validated_results(specs, raw.get('answers')),
             runtime,
             {
                 'input_tokens': usage.get('input_tokens'),
@@ -202,7 +266,7 @@ class TypeSafeJevProvider:
 JevProvider = TypeSafeJevProvider
 
 
-class OpenRouterJevProvider:
+class OpenRouterJevProvider(_JevReceipt):
     """OpenRouter Decisions serving path for the same logical Jev Decision Engine."""
 
     is_live = True
@@ -217,7 +281,7 @@ class OpenRouterJevProvider:
             transport='decisions-alpha-v1',
             requested_model=model,
             endpoint='https://openrouter.ai/api/alpha/decisions',
-            adapter_version='2-choice-rounding-v1' if choice_rounding else '2',
+            adapter_version='3-scoped-receipt-choice-v1' if choice_rounding else '3-scoped-receipt',
         )
         self.transport = transport
 
@@ -227,17 +291,17 @@ class OpenRouterJevProvider:
                 'resolved OpenRouter model differs from configured Jev family')
 
     def evaluate(self, specs: list[DecisionSpec], context: dict, timeout: float) -> BatchResult:
+        self.clear_receipt()
         key = os.environ.get('OPENROUTER_API_KEY')
         if not key:
             raise ProviderError('missing_credential:OPENROUTER_API_KEY')
         questions = self.engine.questions(specs)
+        body = {'model': self.serving_identity.requested_model, 'state': context, 'questions': questions}
         raw = self.transport(
             self.serving_identity.endpoint,
-            {'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'},
-            {'model': self.serving_identity.requested_model,
-             'state': context, 'questions': questions},
-            timeout,
+            {'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'}, body, timeout,
         )
+        self.capture_receipt(body, raw)
         require(isinstance(raw, dict), 'provider response must be an object')
         runtime = ResolvedRuntime(
             model=raw.get('model'),
@@ -248,7 +312,7 @@ class OpenRouterJevProvider:
                 'invalid OpenRouter provider usage shape')
         usage = raw.get('usage') or {}
         batch = BatchResult(
-            self.engine.results(specs, raw.get('answers')),
+            self.engine.validated_results(specs, raw.get('answers')),
             runtime,
             {
                 'input_tokens': usage.get('input_tokens'),

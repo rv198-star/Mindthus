@@ -185,8 +185,7 @@ class ProviderTests(unittest.TestCase):
     def test_native_wrong_model_invalid_choices_and_missing_answers(self):
         valid = {'model': 'jev-1.13.0', 'answers': {'test': {'type': 'choice', 'choice': 'yes',
                   'probabilities': {'yes': .9, 'no': .1}, 'confidence': .8}}}
-        malformed = [dict(valid, model='jev-new'), dict(valid, answers={}),
-                     dict(valid, answers={'test': {'type': 'noul', 'noul': .8}})]
+        malformed = [dict(valid, model='jev-new'), dict(valid, answers={})]
         for response in malformed:
             with self.subTest(response=response), patch.dict(os.environ, {'TYPESAFE_API_KEY': 'fixture'}), \
                     self.assertRaises(ContractError):
@@ -1340,7 +1339,7 @@ class LiveCarrierTests(unittest.TestCase):
         result = campaign.run(ROOT, self.root, provider, manifest, cases)
         outcome = read_record(next((self.root / 'calls').glob('*/outcome.json')))
         self.assertEqual(outcome['results']['entry_mode']['reason'],
-                         'ContractError:distribution_not_normalized')
+                         'answer_contract:ContractError:distribution_not_normalized')
         wire = read_record(next((self.root / 'wire').glob('*.json')))
         self.assertEqual(wire['usage']['input_tokens'], 123)
         self.assertEqual(wire['answers']['entry_mode']['probabilities']['unclear'], .09)

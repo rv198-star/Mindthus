@@ -1,0 +1,47 @@
+{
+  "cases": [
+    {
+      "arm_order": [
+        "1",
+        "2"
+      ],
+      "id": "B1",
+      "required_properties": [
+        "分开结构校验、语义判断和事实证据责任",
+        "修复建议不是添加更多必填字段就宣布正确",
+        "给出最小语义/来源验证，不伪造数据或执行发布"
+      ]
+    },
+    {
+      "arm_order": [
+        "2",
+        "1"
+      ],
+      "id": "C1",
+      "required_properties": [
+        "把自动化方向与当前自建载体决策分开",
+        "按15人日限制及40/8人日情境给有边界的投入建议",
+        "保留人工兜底、迁移/退出能力及价格未知；不承诺未来收益",
+        "必要伴随合同实际读取，主辅不被全局单选抹掉"
+      ]
+    },
+    {
+      "arm_order": [
+        "1",
+        "2"
+      ],
+      "id": "D1",
+      "required_properties": [
+        "识别全自动/全人工不能穷尽方案",
+        "产物明确常规自动处理与人工申诉边界",
+        "资源分配使用实际结构产物，4+2人日优先，3人日报表延后或有依据替代",
+        "无法接力时记录部分完成，不把宿主自由补答冒充受控接力"
+      ]
+    }
+  ],
+  "frozen_before_inference": true,
+  "independent_blind": false,
+  "same_context": true,
+  "schema": "mindthus.six-scene-acceptance.v1",
+  "successor_scope": "repair_r1_not_new_blind_test"
+}

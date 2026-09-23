@@ -6,7 +6,22 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — continuation blocked; saved-output review and offline causes established
+## Current checkpoint — scoped response isolation and post-artifact activation implemented; successor verification
+
+Task `tsk_887f48004c3496e1`; parent `97529bb9f4074ad554be3b0c0eef8e19d5601cf4`.
+Read [root-cause repair](route-control-v0.2/scoped-repair-r1/README.md) and engineering.json.
+Jev serving adapters validate individual answers, preserve safe decoded response receipts/valid usage,
+and mark local failures without erasing good observations. Global response identity/transport failures
+still stop. Waiting dependent issues can re-evaluate after accepted actual predecessor artifacts,
+consumer-only in the same Episode/Session and budget; no arbitrary threshold/tolerance relaxation.
+24 new / 318 focused / full1520 (1515 success,5skip) / lifecycle88/88 PASS. No new question family.
+Old pending runtime preserved at /srv/agentdock/worktrees/mindthus-six-scenes-v1-frozen; its original
+freeze verifies. Old 179 existing files unchanged, 8 supplier outcomes/7 staged host replies retained.
+Original resume this turn was denied by platform before execution; no old calls or host outcomes added.
+NEXT: freeze B1/C1/D1 successor R1 only (max4 new Jev requests), use current Agent, no CPA.
+Do not rerun A/E/F initial judgments or rewrite old evidence. Record real platform outcomes.
+
+## Previous checkpoint — continuation blocked; saved-output review and offline causes established
 
 Task `tsk_33474a9c1917c41c`; base d22fa808; original freeze/runtime unchanged.
 Read [continuation diagnosis](route-control-v0.2/paired-current-agent-v1/continuation-diagnostics-v1/README.md).
