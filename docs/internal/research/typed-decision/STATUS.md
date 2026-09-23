@@ -6,7 +6,24 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — same-channel retry reached Jev; continuation blocked with seven staged host replies
+## Current checkpoint — continuation blocked; saved-output review and offline causes established
+
+Task `tsk_33474a9c1917c41c`; base d22fa808; original freeze/runtime unchanged.
+Read [continuation diagnosis](route-control-v0.2/paired-current-agent-v1/continuation-diagnostics-v1/README.md).
+The owner-authorized original runner was blocked again before execution. Eight original supplier
+outcomes, seven staged host responses, zero consumed host outcomes remain; no new Jev/CPA calls.
+Twelve saved texts were reviewed against original criteria (5 advisory, 7 staged); this is author
+content review, NOT completed comparisons or semantic acceptance. Six staged texts are usable,
+D1 is a structure-only partial artifact. Rechecks and missing arms remain pending.
+Four no-network diagnostic controls reproduced all-batch invalidation and lost usage from one bad
+Score, and D1 staying unresolved even after fixture predecessor acceptance. Synthetic rounding
+examples are not the missing B1/C1 raw replies. D1 has no post-artifact re-evaluation hook.
+NEXT: under permitted original execution, consume pending replies without rerunning initial calls.
+Successor repair needs scoped answer-error propagation/raw receipts and bounded post-artifact
+activation, not arbitrary tolerance relaxation or threshold lowering. Do not change live pending
+runtime/freeze. No winner, all-method qualification, native/default enabling, or new full regression.
+
+## Previous checkpoint — same-channel retry reached Jev; continuation blocked with seven staged host replies
 
 Task `tsk_33474a9c1917c41c`; original freeze `a016b4c`, runtime `c366139` unchanged.
 Read [actual retry evidence](route-control-v0.2/paired-current-agent-v1/retry-evidence-20260923/README.md).

@@ -1,5 +1,7 @@
 # 六场景对照：当前状态与恢复入口
 
+当前后续诊断与已存内容评阅：[continuation-diagnostics-v1](continuation-diagnostics-v1/README.md)。此链接更新进度，不覆盖历史快照。
+
 ## Latest retry checkpoint — 2026-09-23
 
 [Same-channel retry and preserved live records](retry-evidence-20260923/README.md): original command succeeded with eight real Jev requests (six valid typed batches, two local contract rejections). Seven current-Agent replies are staged; the next same-channel continuation was blocked before execution, so no recheck or final paired result is claimed. Prior UNRUN descriptions below are historical snapshots. Runtime and original freeze remain unchanged.
