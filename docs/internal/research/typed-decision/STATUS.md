@@ -6,7 +6,16 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — D3 live batch terminal; correction acceptance NOT MET
+## Current internal iteration — D3 input/reference repair
+
+Owner explicitly authorizes routine internal repairs and bounded successor verification without
+per-detail approval. Task `tsk_1a35f6536ac65d76`; baseline `6f42c2b`. Preserve the original failed
+D3 records and historical review verdicts. Read [R1 protocol](entry-assessment/original-scenarios-design/D3-repair-r1/protocol.md).
+R1 corrects exact input annotations and generic repeated-quote selection; D1/Q0 remain unchanged.
+Freeze before calls; no reopening terminal roots, hidden retries, forced Q0 or relaxed truth gates.
+The ultimate target is real Skills/4K correction, not merely another completed test batch.
+
+## Previous checkpoint — D3 live batch terminal; correction acceptance NOT MET
 
 D3 source `6fa33f2`; freeze `716496e25688ac936c18ed8e292cbb3ddb33689a`.
 Task `tsk_8dc1ae88072bbe94`. Read [D3 disposition](entry-assessment/original-scenarios-design/D3-live/disposition.md)

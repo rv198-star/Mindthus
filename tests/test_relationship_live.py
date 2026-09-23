@@ -225,4 +225,42 @@ class D3Tests(unittest.TestCase):
         self.assertEqual(r['status'], 'corrected_rechecked')
 
 
+class QuoteSelectionTests(unittest.TestCase):
+    def setUp(self):
+        self.doc = {'id': 'U', 'revision': '1', 'kind': 'user', 'text': '楼主先问。楼主后问。'}
+
+    def test_explicit_repeated_quote_selects_exact_second_span(self):
+        result = live.locate(self.doc, {'quote': '楼主', 'occurrence': 1})
+        self.assertEqual(result, rel.quote(self.doc, 5, 7))
+
+    def test_repeated_quote_without_selection_still_rejected(self):
+        with self.assertRaises(ContractError): live.locate(self.doc, '楼主')
+
+    def test_invalid_occurrence_cannot_fall_back(self):
+        for n in [-1, 2, True, 1.0, '1', None]:
+            with self.subTest(n=n), self.assertRaises(ContractError):
+                live.locate(self.doc, {'quote': '楼主', 'occurrence': n})
+
+    def test_overlapping_matches_counted_by_codepoint(self):
+        d = dict(self.doc, text='aaa')
+        self.assertEqual(live.locate(d, {'quote': 'aa', 'occurrence': 1}), rel.quote(d, 1, 3))
+
+    def test_full_selector_and_normalization_never_guessed(self):
+        with self.assertRaises(ContractError): live.locate(self.doc, {'quote': '__FULL__', 'occurrence': 0})
+        with self.assertRaises(ContractError): live.locate(self.doc, {'quote': '楼 主', 'occurrence': 0})
+
+    def test_organizer_and_corrector_publish_the_same_selector_rule(self):
+        with patch.dict(os.environ, {'MINDTHUS_HOST_API_KEY': 'test-not-a-secret'}):
+            raw = {'proposal': {'refs': [{'document_id': 'U', 'quote': '楼主', 'occurrence': 1}]}}
+            def transport(*args):
+                return {'model':live.MODEL, 'usage':{}, 'choices':[{'finish_reason':'stop',
+                        'message':{'content':json.dumps(raw, ensure_ascii=False)}}]}
+            org = live.CPAHost('owner', REPO, organizer=True, transport=transport)
+            request = {'original_input': {'documents':[self.doc]}}
+            result = org.organize(request, 1)
+            self.assertEqual(result['proposal']['refs'][0], rel.quote(self.doc, 5, 7))
+            self.assertIn('zero-based', org.wire_body(request)['messages'][0]['content'])
+            self.assertEqual(org.configuration['adapter'], 'cpa-relationship-host.v1.1')
+
+
 if __name__ == '__main__': unittest.main()

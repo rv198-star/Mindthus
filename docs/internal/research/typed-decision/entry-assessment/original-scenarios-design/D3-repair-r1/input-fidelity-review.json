@@ -1,0 +1,47 @@
+{
+  "basis": "author source/locator review, not model success",
+  "changes": [
+    {
+      "episode": "A",
+      "turn": "1",
+      "raw_documents_unchanged": true,
+      "authority_unchanged": true,
+      "questions": 12,
+      "projected_bytes": 27563
+    },
+    {
+      "episode": "A",
+      "turn": "2",
+      "raw_documents_unchanged": true,
+      "authority_unchanged": true,
+      "questions": 14,
+      "projected_bytes": 30571
+    },
+    {
+      "episode": "B",
+      "turn": "1",
+      "raw_documents_unchanged": true,
+      "authority_unchanged": true,
+      "questions": 10,
+      "projected_bytes": 24177
+    },
+    {
+      "episode": "B",
+      "turn": "2",
+      "raw_documents_unchanged": true,
+      "authority_unchanged": true,
+      "questions": 11,
+      "projected_bytes": 26451
+    },
+    {
+      "episode": "C",
+      "turn": "1",
+      "raw_documents_unchanged": true,
+      "authority_unchanged": true,
+      "questions": 8,
+      "projected_bytes": 21637
+    }
+  ],
+  "expected_labels_unchanged": true,
+  "historical_sampling": "exposed repair controls; not holdout"
+}
