@@ -1,0 +1,38 @@
+{
+  "schema": "mindthus.mainline-pragmatic-audit-verification.v1",
+  "audited_commit": "9cc8f846e638aa81317c3c2982423760f7d8fcca",
+  "original_input_sources_verified": 21,
+  "all_audited_sources_unchanged": true,
+  "question_templates_reviewed": 19,
+  "independent_calls": 1,
+  "model": "deepseek-v4.1-flash",
+  "reviewer_verdict": "REVISE_BEFORE_IMPLEMENTATION",
+  "author_disposition": "retain_semantics_reduce_default_activation_and_staged_acceptance",
+  "new_business_model_calls": 0,
+  "runtime_and_tests_unchanged": true,
+  "semantics_or_value_qualified": false,
+  "no_unresolved_audit_intent": true,
+  "actual_money_usd": null,
+  "credit_not_interpreted_as_currency": true,
+  "credential_exact_scan": {
+    "files": 6,
+    "hits": 0,
+    "session": "session-dfe620101525d1fce35c32e7"
+  },
+  "files_sha256": {
+    "audit-runner.py": "85081d281f9990c52f73980daf3290e13d9ca2f633acc7d7dc9559a6cfc9d110",
+    "response.json": "26492275578b39b1d06f9952ae678fff81934fd133f0b20095f1fb88525e6bee",
+    "request.json": "18dc4b53235dc8c6377e9ea580ecde8b8697fcb23ebaf3cbd6832eeda1bb7a57",
+    "source-snapshot.json": "e12774f3eced8efeb0ea086c8679bae36aa24ea8c71ae544edc3a1df409ae8ac",
+    "review.json": "77c42c23c1874dcfbe6a5a1aad2dda159544fa18292be22bbe73ccb4d9f20572",
+    "outcome.json": "937b789f6cadd792a9e8736b01b97bfb6ee3a0066e2e1e17fcaf35285b0188c8",
+    "intent.json": "4a9c297c9b3ef4efebc59b8d816d65da4b8e3c609734ebb546a4eb65e4bafa9b",
+    "disposition.md": "2d314950037cab7dc526f31509e969b003aa65e889d3f62c4ff5ae1939d7f6aa"
+  },
+  "limitations": [
+    "one isolated model context, not an independent fact source",
+    "method references use declared review ranges",
+    "author lightweight proposals not re-audited or implemented",
+    "no business or performance test"
+  ]
+}

@@ -6,7 +6,32 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — mainline composition question/evaluation design candidate v0.1
+## Current checkpoint — MR-02 pragmatic independent audit complete; reduce the default path before implementation
+
+Owner accepts recoverable semantic deviations and explicitly prioritizes proportionate complexity.
+Audited target `9cc8f846e638aa81317c3c2982423760f7d8fcca`; task `tsk_58a9f04ea3a91fe6`.
+Read [audit disposition](mainline-composition-v0.1/pragmatic-audit-20260923/disposition.md)
+and [unaltered independent review](mainline-composition-v0.1/pragmatic-audit-20260923/review.json).
+One actual isolated CPA DeepSeek review returned REVISE_BEFORE_IMPLEMENTATION, reviewed all
+19 templates and allowed an offline/advisory first slice. This is design review, not model accuracy.
+
+Author accepts reduced default checking and deferral of formal CAL/LOCKED/NI gates from low-risk
+opt-in development. Retain mixed Noul/Choice/Score and real multi-method duties; do NOT adopt the
+reviewer's wholesale Score deferral or weaken SELA/MPG companion reads. Do not require an already
+known mismatch before checking a newly generated, load-bearing representation. Method-internal
+multi-role checks belong to method execution, not a new router-agent layer.
+
+Next: small advisory implementation delta using available context, conditional checks and existing
+journals; normal material-ready mixed batch, extra batch only for real new inputs. Then a small
+predeclared paired raw-task development batch. Route alternatives, mild ordering/depth differences
+and local host correction are allowed; false evidence/authority and unknown-call repeats are not.
+No numeric tolerated error rate was approved. Do not require full statistical noninferiority before
+bounded opt-in trials, and do not use such trials to claim general equivalence. This is a proposed
+next profile, not implemented behavior; original v0.1 questions/policy/acceptance remain unchanged.
+No business Jev call, runtime change, new baseline campaign or default activation occurred here.
+#211 stays OPEN; main and historical terminal trials remain unchanged.
+
+## Previous checkpoint — mainline composition question/evaluation design candidate v0.1
 
 Owner restored overall methodology routing and multi-method cooperation as the mainline,
 with mixed Choice/Noul/Score questions and explicit acceptance/iteration design.
