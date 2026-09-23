@@ -6,7 +6,30 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — six named scenarios frozen; real command blocked before execution
+## Current checkpoint — same-channel retry reached Jev; continuation blocked with seven staged host replies
+
+Task `tsk_33474a9c1917c41c`; original freeze `a016b4c`, runtime `c366139` unchanged.
+Read [actual retry evidence](route-control-v0.2/paired-current-agent-v1/retry-evidence-20260923/README.md).
+On the Owner-requested same-channel retry, the original runner exited 0: A1 made zero inference calls,
+and the other eight inputs each completed one supplier intent/outcome. Six batches have usable typed
+results; B1/C1 were rejected by local distribution contracts (raw responses/usage not retained by that
+adapter). This is not proof of semantic inaccuracy or a generally unavailable Jev service.
+
+Current Agent submitted seven validated host-response records: execution A1/A2/D1/E2 and correction
+E1/F1/F2. Five advisory outputs were also saved under the frozen shared-context limitations. D1 has
+an actual EDSP output and a host acceptance-for-use declaration; SRA scope remains unresolved.
+The subsequent original runner command was again denied by platform safety BEFORE execution.
+No host outcome was consumed, no correction recheck occurred, and no extra supplier request was made.
+Eight supplier intents have eight outcomes; seven LOCAL pending handoffs have staged responses.
+There is no unknown supplier call. Do not use the older all-UNRUN snapshot as current status.
+
+NEXT under platform-permitted execution: consume existing host replies, reuse all eight initial calls,
+finish the allowed correction rechecks and remaining paired output/review. Preserve B1/C1 failures;
+adapter changes or D1 post-artifact re-evaluation need a successor freeze, not edited old records.
+No repeated completed requests, no alternate channel bypass, no CPA, no A/B winner or qualification.
+162 JSON records are archived byte-for-byte; original code, cases, policy, main and default Skill unchanged.
+
+## Previous checkpoint — six named scenarios frozen; real command blocked before execution
 
 Task `tsk_33474a9c1917c41c`; source `2f2d9d1`, freeze `a016b4c882ae5329f796dbc6217b71db108a7955`.
 Read [six-scene index](route-control-v0.2/paired-current-agent-v1/README.md) and

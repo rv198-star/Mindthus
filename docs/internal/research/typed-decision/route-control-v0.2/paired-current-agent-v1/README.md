@@ -1,5 +1,10 @@
 # 六场景对照：当前状态与恢复入口
 
+## Latest retry checkpoint — 2026-09-23
+
+[Same-channel retry and preserved live records](retry-evidence-20260923/README.md): original command succeeded with eight real Jev requests (six valid typed batches, two local contract rejections). Seven current-Agent replies are staged; the next same-channel continuation was blocked before execution, so no recheck or final paired result is claimed. Prior UNRUN descriptions below are historical snapshots. Runtime and original freeze remain unchanged.
+
+
 本批场景用A–F，模式用①建议式/②约束式。完整材料、顺序和边界见 [PLAN.md](PLAN.md)。
 
 **已完成清单、9份输入及标准、既有entry调用准入和调用前冻结。已尝试执行；命令被平台安全检查在执行前阻止，没有真实Jev请求或对照回答。**
