@@ -6,7 +6,24 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — relationship D2 same-entry correction and episode recovery complete; offline only
+## Current work — D3 same-entry live admission and bounded original-scenario validation
+
+Task `tsk_8dc1ae88072bbe94`, base `a69216415aaef8069f7449037ad4a64f8eaef32f`.
+Owner authorized advancing D2 to real tests. Read
+[D3 protocol](entry-assessment/original-scenarios-design/D3-live/protocol.md).
+Same entry.run/CLI now has an explicit live_admission seam, D2 episode accounting and
+unchanged D1 questions. New CPA host text/quote adapter and optional raw organizer execute
+under the same entry; actual network transport has a subprocess deadline and no retry.
+Four episodes/six turns are authored development controls, not natural failures or D4.
+The next Skills/display turn binds the actual prior output, but stressed new candidates
+remain authored. One final control starts with proposal=null for real structure generation.
+
+20 new D3 + 153 prior focused tests passed; full1408=1403 success+5 skips, zero failures; lifecycle85/85. Pre-call freeze is next.
+No model request has yet been made at this checkpoint. Never rerun a completed/unknown
+external intent; inspect this task and D3-live/freeze.json plus its root before resuming.
+D3 completion will not enable default Skills, update main or grant independent D4 accuracy.
+
+## Previous checkpoint — relationship D2 same-entry correction and episode recovery complete; offline only
 
 D2 source `c3c894d4533d155e0f8b2138bea72c128c39b125`; task `tsk_d959a7cf9cf7dcf4`.
 Read [D2 contract](entry-assessment/original-scenarios-design/D2-contract.md),

@@ -1,11 +1,12 @@
-"""D2 persistence for the existing entry's explicit offline relationship mode.
+"""D2/D3 persistence for the existing entry's explicit relationship mode.
 
 D1 owns semantics; Session owns judgment receipts. This module owns the episode
-lock, aggregate allowances and host receipts. No credentials or live admission.
+lock, aggregate allowances and host receipts. Live requires frozen D3 admission.
 """
 from __future__ import annotations
 
 from contextlib import ExitStack, contextmanager
+from dataclasses import asdict
 from pathlib import Path
 import fcntl
 import subprocess
@@ -59,8 +60,10 @@ def _locked(path: Path):
 
 
 class Episode:
-    def __init__(self, root: Path, repo: Path, provider, packet: dict, contract: dict):
+    def __init__(self, root: Path, repo: Path, provider, packet: dict, contract: dict, live_admission=None):
         self.root, self.repo, self.provider = root, repo, provider
+        self.live_admission = relation.clone(live_admission) if live_admission is not None else None
+        self.evidence_kind = "live_model" if self.live_admission is not None else "offline_fixture"
         self.turn_key = digest(packet['turn_id'])
         self.manifest = {'schema': 'mindthus.relationship-episode.v1', 'mode': MODE,
                          'episode_id': packet['episode_id'], 'profile': relation.clone(PROFILE),
@@ -68,6 +71,8 @@ class Episode:
                          'provider': provider_configuration(provider),
                          'owner_ref': packet['authority']['owner_ref'],
                          'contract_sha256': digest(contract), 'sources': contract['sources']}
+        if self.live_admission is not None:
+            self.manifest["live_admission"] = self.live_admission
         self.stack = ExitStack()
 
     def __enter__(self):
@@ -118,7 +123,7 @@ class Episode:
             if not op.exists():
                 raise RecoveryRequired('unresolved_relationship_call:' + str(ip.relative_to(self.root)))
             out = read_record(op)
-            require(out.get('evidence_kind') == 'offline_fixture', 'unexpected_evidence_kind')
+            require(out.get('evidence_kind') == self.evidence_kind, 'unexpected_evidence_kind')
             elapsed = out.get('elapsed_seconds')
             require(number(elapsed, 0, 86400), 'invalid_recorded_request_seconds')
             counts[kind] += 1
@@ -129,6 +134,13 @@ class Episode:
             usage = out['usage'] if kind == 'judgment' else out.get('usage', UNKNOWN_USAGE)
             _usage(usage)
             rows.append({'kind': kind, 'seconds': elapsed, 'usage': usage})
+            if self.live_admission is not None:
+                cap = self.live_admission['ceilings']
+                if kind == 'judgment' and usage['cost_usd'] is not None and usage['cost_usd'] > cap['reserve_per_jev_usd']:
+                    failures.append(str(op.relative_to(self.root)))
+                if kind != 'judgment':
+                    slot = 'organizer' if kind == 'organize' else 'corrector'
+                    require(out.get('host_configuration') == self.live_admission[slot], 'recorded_host_drift')
             if kind == 'judgment':
                 if any(r['status'] == 'provider_error' for r in out['results'].values()):
                     failures.append(str(op.relative_to(self.root)))
@@ -153,6 +165,11 @@ class Episode:
         if state['failures']:
             raise EpisodeStop('terminal_technical_failure')
         counts, turn = state['counts'], state['turn_counts']
+        if self.live_admission is not None:
+            cap = self.live_admission['ceilings']
+            slot = {'judgment': 'judgments', 'correction': 'corrections', 'organize': 'organize'}[kind]
+            if counts['total'] >= cap['requests'] or counts[kind] >= cap[slot]:
+                raise EpisodeStop('live_admission_budget_exhausted')
         ceilings = {'judgment': 'judgments_total', 'correction': 'corrections_total',
                     'organize': 'structural_organize'}
         if counts['total'] >= PROFILE['total_requests'] or counts[kind] >= PROFILE[ceilings[kind]]:
@@ -245,9 +262,24 @@ def _judge(ep: Episode, directory: Path, packet: dict, name: str) -> dict:
     wrapped = _Provider(ep)
     original_evaluate = wrapped.evaluate
     wrapped.evaluate = lambda specs, context, seconds: original_evaluate(specs, context, min(seconds, timeout))
-    with Session(step, wrapped, scope='relationship-' + digest([packet, name]),
-                 limits=Limits(max_calls=1, max_seconds=45, max_request_bytes=49152)) as session:
-        report = relation.assess_offline(session, packet, ep.repo)
+    scope = 'relationship-' + digest([packet, name])
+    limits = Limits(max_calls=1, max_seconds=45, max_request_bytes=49152)
+    live = None
+    if ep.live_admission is not None:
+        from .relationship_live import session_admission
+        live = session_admission(ep, compiled, scope, asdict(limits))
+        save(step / 'live-admission.json', live)
+    with Session(step, wrapped, scope=scope, limits=limits, live_admission=live) as session:
+        if live is None:
+            report = relation.assess_offline(session, packet, ep.repo)
+        else:
+            answers = session.evaluate(list(compiled.specs), compiled.context) if compiled.specs else {}
+            result = relation.consume(compiled, {'identity': compiled.identity,
+                'results': {k: asdict(v) for k, v in answers.items()}}, ep.repo)
+            graph = {'id': 'mindthus.relationship-frame', 'version': relation.VERSION,
+                     'contract_sha256': compiled.identity['contract_sha256'],
+                     'source_bindings': compiled.identity['sources']}
+            report = session.finish(graph, packet, result)
     stable = {k: report[k] for k in ('identity', 'run_id', 'result', 'call_keys', 'source_ref', 'trial_usage')}
     return save(rp, stable)
 
@@ -314,6 +346,18 @@ def _host(ep: Episode, directory: Path, kind: str, request: dict, hook, validato
     intent = {'mode': MODE, 'policy': relation.POLICY, 'request_id': request['request_id'],
               'request_sha256': digest(request), 'owner_ref': expected_owner,
               'profile_sha256': digest(PROFILE), 'output_bytes': PROFILE['host_output_bytes']}
+    if ep.live_admission is not None:
+        slot = 'organizer' if kind == 'organize' else 'corrector'
+        intent['host_configuration'] = ep.live_admission[slot]
+        if hook is not None:
+            require(hook.configuration == ep.live_admission[slot], 'host_configuration_changed')
+            body = hook.wire_body(request)
+            from .relationship_live import no_secrets
+            no_secrets(body)
+            intent['wire_request_sha256'] = digest(body)
+            save(step / 'wire-request.json', body)
+        elif ip.exists():
+            intent['wire_request_sha256'] = read_record(ip)['wire_request_sha256']
     save(step / 'request.json', request)
     if op.exists():
         require(ip.exists() and read_record(ip) == intent, 'host_request_identity_changed')
@@ -323,14 +367,16 @@ def _host(ep: Episode, directory: Path, kind: str, request: dict, hook, validato
         return outcome
     if ip.exists():
         raise RecoveryRequired('unresolved_host_' + kind)
-    require(hook is not None and getattr(hook, 'is_live', None) is False
+    require(hook is not None and getattr(hook, 'is_live', None) is (ep.live_admission is not None)
             and hook.identity == expected_owner, 'offline_host_identity_required')
     timeout = ep.admit(kind)
     save(ip, intent)
     begin = time.monotonic()
     out = {'status': 'failed', 'reply': None, 'error': None, 'usage': relation.clone(UNKNOWN_USAGE),
-           'mode': MODE, 'policy': relation.POLICY, 'evidence_kind': 'offline_fixture'}
+           'mode': MODE, 'policy': relation.POLICY, 'evidence_kind': ep.evidence_kind}
     try:
+        if ep.live_admission is not None:
+            hook.last_receipt = None
         fn = hook.organize if kind == 'organize' else hook.correct
         reply = fn(relation.clone(request), timeout)
         require(len(canonical(reply)) <= PROFILE['host_output_bytes'], 'host_output_overflow')
@@ -339,15 +385,24 @@ def _host(ep: Episode, directory: Path, kind: str, request: dict, hook, validato
         out.update(status='complete', reply=relation.clone(reply), usage=relation.clone(reply['usage']))
     except Exception as exc:
         out['error'] = type(exc).__name__  # Never store arbitrary hook/remote text.
+    if ep.live_admission is not None:
+        out['host_configuration'] = ep.live_admission[slot]
+        receipt = getattr(hook, 'last_receipt', None)
+        if receipt is not None:
+            from .relationship_live import no_secrets
+            no_secrets(receipt)
+            out['transport_receipt'] = relation.clone(receipt)
+            out['usage'] = relation.clone(receipt['usage'])
     out['elapsed_seconds'] = time.monotonic() - begin
     return save(op, out)
 
 
-def run(root: Path, provider, data: dict, repo: Path, *, corrector=None, organizer=None, recheck=True) -> dict:
-    """Called by entry.run only in explicit relationship mode; all inference is offline."""
-    require(getattr(provider, 'is_live', None) is False, 'relationship_live_not_admitted')
+def run(root: Path, provider, data: dict, repo: Path, *, corrector=None, organizer=None, recheck=True, live_admission=None) -> dict:
+    """Same entry mode; live is possible only through the explicit D3 admission."""
+    live = live_admission is not None
+    require(getattr(provider, 'is_live', None) is live, 'relationship_live_not_admitted')
     require(type(recheck) is bool, 'recheck_flag_required')
-    require(all(h is None or getattr(h, 'is_live', None) is False for h in (corrector, organizer)),
+    require(all(h is None or getattr(h, 'is_live', None) is live for h in (corrector, organizer)),
             'relationship_host_live_not_admitted')
     root, repo = Path(root).resolve(), Path(repo).resolve()
     require(not root.is_relative_to(repo), 'state_root_inside_repository')
@@ -355,6 +410,10 @@ def run(root: Path, provider, data: dict, repo: Path, *, corrector=None, organiz
     require(all(contract['budgets'][k] == v for k, v in PROFILE.items() if k != 'host_output_bytes'),
             'relationship_profile_contract_changed')
     packet = relation.clone(data)
+    if live:
+        from .relationship_live import validate_admission
+        validate_admission(live_admission, root, repo, provider, packet, contract, PROFILE,
+                           corrector, organizer, recheck)
     try:
         _raw_validate(packet, contract)
     except ContractError as exc:
@@ -363,11 +422,11 @@ def run(root: Path, provider, data: dict, repo: Path, *, corrector=None, organiz
         return {'schema': 'mindthus.relationship-entry-result.v1', 'mode': MODE,
                 'status': 'returned_to_owner', 'reason': str(exc), 'original_input': packet,
                 'action': 'return_original_owner', 'source_ref': None, 'new_calls': 0,
-                'task_complete': False, 'qualification': False, 'evidence_kind': 'offline_fixture'}
+                'task_complete': False, 'qualification': False, 'evidence_kind': 'live_model' if live else 'offline_fixture'}
     owner = packet['authority']['owner_ref']
     for hook, identity in ((corrector, owner), (organizer, owner + ':organizer')):
         require(hook is None or hook.identity == identity, 'relationship_hook_owner_changed')
-    with Episode(root, repo, provider, packet, contract) as ep:
+    with Episode(root, repo, provider, packet, contract, live_admission=live_admission) as ep:
         turn_root = root / 'turns' / ep.turn_key
         key = digest(packet)
         directory = turn_root / 'inputs' / key
@@ -393,7 +452,7 @@ def run(root: Path, provider, data: dict, repo: Path, *, corrector=None, organiz
                    'known_obligations': relation.clone(packet['authority']['known_obligations']),
                    'episode_counts': state['counts'], 'turn_counts': state['turn_counts'],
                    'recorded_request_seconds': state['seconds'], 'usage': state['usage'],
-                   'host_followup_cost': 'unknown', 'evidence_kind': 'offline_fixture',
+                   'host_followup_cost': 'unknown', 'evidence_kind': ep.evidence_kind,
                    'task_complete': False, 'qualification': False, 'native_skill_load': 'not_observed'}
             if status not in ('assessment_complete', 'corrected_rechecked'):
                 out['action'] = 'return_original_owner'

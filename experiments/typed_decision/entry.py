@@ -154,7 +154,7 @@ def _final(root: Path, manifest: dict, initial: dict, final: dict, status: str,
 
 def run(root: Path, provider, data: dict, repo: Path, *, corrector=None,
         correction_owner_ref='original-agent:v1', route=False, mode='assessment-v2',
-        organizer=None, recheck=True) -> dict:
+        organizer=None, recheck=True, live_admission=None) -> dict:
     """Run an opt-in assessment episode; route only after its scoped gate permits it.
 
 S0 inspects an actual user frame. S1 requires an existing candidate. A corrected
@@ -167,8 +167,8 @@ frame/answer stays a proposal alongside, never in place of, the original request
         require(correction_owner_ref in ('original-agent:v1', data.get('authority', {}).get('owner_ref')),
                 'relationship_owner_mismatch')
         return relationship_runtime.run(root, provider, data, repo, corrector=corrector,
-                                        organizer=organizer, recheck=recheck)
-    require(organizer is None and recheck is True, 'relationship_options_on_legacy_mode')
+                                        organizer=organizer, recheck=recheck, live_admission=live_admission)
+    require(organizer is None and recheck is True and live_admission is None, 'relationship_options_on_legacy_mode')
     require(not provider.is_live, 'entry_live_campaign_not_preregistered')
     require(corrector is None or not corrector.is_live, 'host_live_campaign_not_preregistered')
     require(assessment.text(correction_owner_ref) and type(route) is bool, 'entry options malformed')
@@ -313,9 +313,26 @@ def main(argv=None):
     parser.add_argument('--route', action='store_true', help='Continue via existing C01; no native skill execution')
     parser.add_argument('--mode', choices=['assessment-v2', 'relationship-frame.v1'], default='assessment-v2')
     parser.add_argument('--no-recheck', action='store_true', help='Relationship mode only: return revision without S2')
+    parser.add_argument('--live-input', type=Path, help='D3: exact admitted input packet JSON')
+    parser.add_argument('--live-admission', type=Path, help='D3: frozen per-episode admission JSON')
     args = parser.parse_args(argv)
     repo = Path(__file__).resolve().parents[2]
     try:
+        if args.live_input is not None or args.live_admission is not None:
+            require(args.live_input is not None and args.live_admission is not None
+                    and args.mode == 'relationship-frame.v1', 'explicit_live_input_admission_required')
+            from .relationship_live import CPAHost, deadline_post_json
+            from .providers import TypeSafeJevProvider
+            packet = json.loads(args.live_input.read_bytes())
+            admission = json.loads(args.live_admission.read_bytes())
+            owner = packet['authority']['owner_ref']
+            provider = TypeSafeJevProvider(model='jev-1.13.0', choice_rounding=True, transport=deadline_post_json)
+            result = run(args.state_root, provider, packet, repo, mode=args.mode, route=args.route,
+                         corrector=CPAHost(owner, repo),
+                         organizer=CPAHost(owner, repo, organizer=True) if admission['organizer'] else None,
+                         recheck=not args.no_recheck, live_admission=admission)
+            print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
+            return 0
         fixture = json.loads(args.fixture.read_text(encoding='utf8'))
         owner = (fixture['input']['authority']['owner_ref'] if args.mode == 'relationship-frame.v1'
                  else 'original-agent:v1')
