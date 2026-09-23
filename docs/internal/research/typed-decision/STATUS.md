@@ -6,7 +6,22 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — two root-cause fixes delivered; B/C/D successor attempt blocked before execution
+## Current checkpoint — code pushed; Owner-requested final attempt denied; stop retries
+
+Before the final attempt, HEAD `0a8999c24241df4c9334acdeabbd0db8e7562f5d` was clean and
+confirmed at origin/experiment/typed-decision-runtime (push returned Everything up-to-date).
+The Owner explicitly requested one final attempt. The original NexusDock command for frozen
+R1 B1/C1/D1 was denied by OpenAI tool safety before execution. No further retry was made.
+Read [final attempt](route-control-v0.2/scoped-repair-r1/final-attempt.json).
+
+R1 roots remain absent; new Jev/CPA calls=0. Original six-scene batch still has 8/8 supplier
+intent/outcomes, 7 staged host responses and 0 consumed host outcomes; no unknown supplier call.
+Runtime and frozen-file fingerprints match. Prior engineering verification remains valid,
+but R1 live acceptance and the paired comparison remain incomplete. main/default Skill unchanged.
+STOP: do not schedule or perform further retries in this session. Preserve both experiment
+versions and existing responses; any later work must start from this actual stopped state.
+
+## Previous checkpoint — two root-cause fixes delivered; B/C/D successor attempt blocked before execution
 
 Task `tsk_887f48004c3496e1`; implementation source `378ab6861c5daf42b3eb0ca5f9e8a58d4da8df37`, freeze `3df1835`.
 Read [repair and verification](route-control-v0.2/scoped-repair-r1/disposition.md).
