@@ -1,0 +1,1300 @@
+{
+  "episodes": [
+    {
+      "id": "G",
+      "label": "True omission of actor/time/goal/scope from proposal",
+      "criteria": {
+        "1": [
+          "Q0 detects missing explicit current-use task context",
+          "No correction consumes this incomplete framing"
+        ]
+      },
+      "inputs": {
+        "1": {
+          "packet": {
+            "activation": {
+              "enabled": true,
+              "reason": "已选定的开发控制候选检查；不宣称自动激活覆盖",
+              "source_refs": [
+                {
+                  "document_id": "U",
+                  "end": 94,
+                  "revision": "1",
+                  "sha256": "e14935d032f103c8ac8fc6db4fdc6fe547d2c9d7faded223bcb8ea36bd54dbe8",
+                  "start": 0
+                }
+              ]
+            },
+            "authority": {
+              "known_obligations": [],
+              "mode": "advisory",
+              "owner_ref": "cpa:deepseek-v4.1-flash:relationship-owner",
+              "risk": "low"
+            },
+            "documents": [
+              {
+                "id": "U",
+                "kind": "user",
+                "revision": "1",
+                "text": "我已经有27英寸4K显示器。楼主和我一样烦恼字号不合适、配置难用；momo给了缩放设置办法，Mike说物理PPI不能变，所以软件没有价值。只判断谁更切中眼前的可用性问题，不要转成购买推荐。"
+              },
+              {
+                "id": "S",
+                "kind": "source",
+                "revision": "1",
+                "text": "本开发对照给定的历史情境事实，不是最新产品测试或价格：软件没有改变显示器的原生像素数；所给操作记录显示设置缩放后，字号与配置达到了当事人可接受的程度，但未消除物理像素密度差异。购前没有报价，也没有用户愿付锐度溢价的数额。"
+              },
+              {
+                "id": "C",
+                "kind": "candidate",
+                "revision": "1",
+                "text": "Mike物理层面是对的，momo体验层面也有道理。双方各自成立，所以无法判断哪条回复更切中楼主需求。"
+              }
+            ],
+            "episode_id": "D3-repair-r3-G",
+            "proposal": {
+              "candidate": {
+                "controller_refs": [],
+                "discriminator_refs": [],
+                "ref": {
+                  "document_id": "C",
+                  "end": 50,
+                  "revision": "1",
+                  "sha256": "45782f78b76a1313305682f97b0f54152f8f09a11bc7a8b6d9fe9e7157c50f36",
+                  "start": 0
+                },
+                "thesis_refs": [
+                  {
+                    "document_id": "C",
+                    "end": 50,
+                    "revision": "1",
+                    "sha256": "fd21cc860ff2a234fc51b75608927d79c65f21b65f881b73f21e4a73b58869d0",
+                    "start": 32
+                  }
+                ]
+              },
+              "claims": [
+                {
+                  "id": "K0",
+                  "origin": "source_observation",
+                  "refs": [
+                    {
+                      "document_id": "S",
+                      "end": 42,
+                      "revision": "1",
+                      "sha256": "18b45b622e7daf8f5133ba94f2edc6e6c38f1bb7b006f188674827af2e1efdcb",
+                      "start": 27
+                    }
+                  ],
+                  "text": "软件没有改变显示器的原生像素数"
+                },
+                {
+                  "id": "K1",
+                  "origin": "source_observation",
+                  "refs": [
+                    {
+                      "document_id": "S",
+                      "end": 88,
+                      "revision": "1",
+                      "sha256": "bcb66ef55ffbd894e3f0be8dbbd68c7b8ebb726175d9a696ae202d6be107a1ed",
+                      "start": 43
+                    }
+                  ],
+                  "text": "所给操作记录显示设置缩放后，字号与配置达到了当事人可接受的程度，但未消除物理像素密度差异。"
+                }
+              ],
+              "competitions": [],
+              "edges": [],
+              "frames": [
+                {
+                  "actor": {
+                    "text": "",
+                    "origin": "unstated",
+                    "refs": []
+                  },
+                  "goal": {
+                    "text": "",
+                    "origin": "unstated",
+                    "refs": []
+                  },
+                  "id": "F0",
+                  "kind": "decision",
+                  "object": {
+                    "text": "momo和Mike的回复",
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "revision": "1",
+                        "start": 33,
+                        "end": 69,
+                        "sha256": "e6da2179451798598cde992f694b57472228a2dd562f342761c8ff6889abd892"
+                      }
+                    ]
+                  },
+                  "scope": {
+                    "text": "",
+                    "origin": "unstated",
+                    "refs": []
+                  },
+                  "time": {
+                    "text": "",
+                    "origin": "unstated",
+                    "refs": []
+                  }
+                }
+              ],
+              "scope_correction_refs": [],
+              "user_premise": null
+            },
+            "revision": "input-fidelity-r1",
+            "schema": "relationship-input.v1",
+            "stage": "S1",
+            "turn_id": "1"
+          },
+          "previous": null
+        }
+      }
+    },
+    {
+      "criteria": {
+        "1": [
+          "回到同一Skills对象，不用Agent系统作证据",
+          "保留提示注入的真实作用",
+          "依据同模板约束差异说明结果控制关系"
+        ],
+        "2": [
+          "接受范围纠正不等于接受后续结论",
+          "在Skills内比较解释并指出有材料支持的区分",
+          "不否定提示文本作用、不编造更高级机制"
+        ]
+      },
+      "id": "A",
+      "inputs": {
+        "1": {
+          "packet": {
+            "activation": {
+              "enabled": true,
+              "reason": "已选定的开发控制候选检查；不宣称自动激活覆盖",
+              "source_refs": [
+                {
+                  "document_id": "U",
+                  "end": 61,
+                  "revision": "1",
+                  "sha256": "f8ca073a52bde1da4e103ce9de6dfa30a20e469095868068562a241b7cdaf96f",
+                  "start": 0
+                }
+              ]
+            },
+            "authority": {
+              "known_obligations": [],
+              "mode": "advisory",
+              "owner_ref": "cpa:deepseek-v4.1-flash:relationship-owner",
+              "risk": "low"
+            },
+            "documents": [
+              {
+                "id": "U",
+                "kind": "user",
+                "revision": "1",
+                "text": "Skills 的工程价值不就是把合适的提示词或上下文在合适时机注入模型吗？所以 Skills 本质上还是提示词工程，对吧？"
+              },
+              {
+                "id": "S",
+                "kind": "source",
+                "revision": "1",
+                "text": "本开发对照给定的观察记录，不是现实新实验：所讨论的具体 Skills 包包含提示文本、任务约束与验收规则；提示文本进入模型上下文。固定同一个提示模板，遵循与跳过任务约束会使产物分别通过或不通过相同验收。此处没有提供整个 Agent 系统的记忆、权限或编排能力作为 Skills 的证据。"
+              },
+              {
+                "id": "X",
+                "kind": "source",
+                "revision": "1",
+                "text": "同一 Skills 对象内的竞争解释提案：提示文本是传递说明的载体；可重复完成特定任务还受该包的任务约束与验收规则控制。这个解释需受给定观察记录约束，并非因为更复杂就必然正确。"
+              },
+              {
+                "id": "C",
+                "kind": "candidate",
+                "revision": "1",
+                "text": "Skills不只是提示词，因为整个Agent系统还有长期记忆、工具权限和任务编排，所以Skills的本质是整个Agent系统。"
+              }
+            ],
+            "episode_id": "D3-repair-r3-A",
+            "proposal": {
+              "candidate": {
+                "controller_refs": [
+                  {
+                    "document_id": "C",
+                    "end": 40,
+                    "revision": "1",
+                    "sha256": "23ecd378f6304b57224e9b07678b85a63454983a45d61413c7a6ef78f33c5608",
+                    "start": 13
+                  }
+                ],
+                "discriminator_refs": [],
+                "ref": {
+                  "document_id": "C",
+                  "end": 63,
+                  "revision": "1",
+                  "sha256": "1493ded47140a1cf244da8cb47e15907a9c44b8f2c3a8238c5a59ee5e022bb00",
+                  "start": 0
+                },
+                "thesis_refs": [
+                  {
+                    "document_id": "C",
+                    "end": 63,
+                    "revision": "1",
+                    "sha256": "8326efb827667ae368501d99d18b9a95ac26e968408c47b208a0dd49332b9ae6",
+                    "start": 41
+                  }
+                ]
+              },
+              "claims": [
+                {
+                  "id": "K0",
+                  "origin": "source_observation",
+                  "refs": [
+                    {
+                      "document_id": "S",
+                      "end": 65,
+                      "revision": "1",
+                      "sha256": "4a07c5b5a8d7896ee3b7ceb2621f6d2f9d2234e86284295fdc4fe18561cf2293",
+                      "start": 53
+                    }
+                  ],
+                  "text": "提示文本进入模型上下文。"
+                },
+                {
+                  "id": "K1",
+                  "origin": "source_observation",
+                  "refs": [
+                    {
+                      "document_id": "S",
+                      "end": 101,
+                      "revision": "1",
+                      "sha256": "6e97cd9ccece1cc715f949cb9e8a8530d7dd9a800d9cbc33a7015fd374add1ad",
+                      "start": 65
+                    }
+                  ],
+                  "text": "固定同一个提示模板，遵循与跳过任务约束会使产物分别通过或不通过相同验收。"
+                }
+              ],
+              "competitions": [
+                {
+                  "frame_id": "F0",
+                  "left_refs": [
+                    {
+                      "document_id": "U",
+                      "end": 61,
+                      "revision": "1",
+                      "sha256": "59d871c258256b399bd6dd4eb997872de732398c90e6cc752ac8d0cef99942bd",
+                      "start": 37
+                    }
+                  ],
+                  "right_refs": [
+                    {
+                      "document_id": "X",
+                      "end": 60,
+                      "revision": "1",
+                      "sha256": "c3b7e8b083ff7ebd7657f787ff6066228c171c2389a36b5282fed5a49834bc38",
+                      "start": 21
+                    }
+                  ]
+                }
+              ],
+              "edges": [],
+              "frames": [
+                {
+                  "actor": {
+                    "origin": "inferred",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 61,
+                        "revision": "1",
+                        "sha256": "f8ca073a52bde1da4e103ce9de6dfa30a20e469095868068562a241b7cdaf96f",
+                        "start": 0
+                      }
+                    ],
+                    "text": "提问者"
+                  },
+                  "goal": {
+                    "origin": "inferred",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 61,
+                        "revision": "1",
+                        "sha256": "f8ca073a52bde1da4e103ce9de6dfa30a20e469095868068562a241b7cdaf96f",
+                        "start": 0
+                      }
+                    ],
+                    "text": "判断提示词或上下文注入是否足以解释所讨论Skills"
+                  },
+                  "id": "F0",
+                  "kind": "definition",
+                  "object": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 12,
+                        "revision": "1",
+                        "sha256": "41c5b01790e74bbf7980d9bec589cf22fc275e1bc737f7eac7cb08c9c142f233",
+                        "start": 0
+                      },
+                      {
+                        "document_id": "U",
+                        "end": 57,
+                        "revision": "1",
+                        "sha256": "ba149d16598c2f4359497bc53a55d9f6a18b5ebd784ec9badd86d9021535ad31",
+                        "start": 40
+                      }
+                    ],
+                    "text": "Skills 的工程价值和本质"
+                  },
+                  "scope": {
+                    "origin": "inferred",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 12,
+                        "revision": "1",
+                        "sha256": "41c5b01790e74bbf7980d9bec589cf22fc275e1bc737f7eac7cb08c9c142f233",
+                        "start": 0
+                      },
+                      {
+                        "document_id": "S",
+                        "end": 143,
+                        "revision": "1",
+                        "sha256": "ea27c46edc77af8e102df553c0a1b05b274d82d2fa84a78af811202313bd13cd",
+                        "start": 101
+                      }
+                    ],
+                    "text": "只评价所讨论的Skills，不借整个Agent系统的能力论证"
+                  },
+                  "time": {
+                    "origin": "unstated",
+                    "refs": [],
+                    "text": ""
+                  }
+                }
+              ],
+              "scope_correction_refs": [],
+              "user_premise": null
+            },
+            "revision": "input-fidelity-r1",
+            "schema": "relationship-input.v1",
+            "stage": "S1",
+            "turn_id": "1"
+          },
+          "previous": null
+        },
+        "2": {
+          "packet": {
+            "activation": {
+              "enabled": true,
+              "reason": "已选定的开发控制候选检查；不宣称自动激活覆盖",
+              "source_refs": [
+                {
+                  "document_id": "U",
+                  "end": 55,
+                  "revision": "1",
+                  "sha256": "481b2cc999f81992d2d5fda2241b9feb3e310b84fa53a877798eb15537eaadd8",
+                  "start": 0
+                }
+              ]
+            },
+            "authority": {
+              "known_obligations": [],
+              "mode": "advisory",
+              "owner_ref": "cpa:deepseek-v4.1-flash:relationship-owner",
+              "risk": "low"
+            },
+            "documents": [
+              {
+                "id": "U1",
+                "kind": "user",
+                "revision": "1",
+                "text": "Skills 的工程价值不就是把合适的提示词或上下文在合适时机注入模型吗？所以 Skills 本质上还是提示词工程，对吧？"
+              },
+              {
+                "id": "A1",
+                "kind": "assistant",
+                "revision": "1",
+                "text": "[PREVIOUS_ACTUAL_OUTPUT]"
+              },
+              {
+                "id": "U",
+                "kind": "user",
+                "revision": "1",
+                "text": "我一直说的是 SKILLS，不是整个 Agent 系统。既然范围锁回 SKILLS，那本质不还是提示词注入吗？"
+              },
+              {
+                "id": "S",
+                "kind": "source",
+                "revision": "1",
+                "text": "本开发对照给定的观察记录，不是现实新实验：所讨论的具体 Skills 包包含提示文本、任务约束与验收规则；提示文本进入模型上下文。固定同一个提示模板，遵循与跳过任务约束会使产物分别通过或不通过相同验收。此处没有提供整个 Agent 系统的记忆、权限或编排能力作为 Skills 的证据。"
+              },
+              {
+                "id": "X",
+                "kind": "source",
+                "revision": "1",
+                "text": "同一 Skills 对象内的竞争解释提案：提示文本是传递说明的载体；可重复完成特定任务还受该包的任务约束与验收规则控制。这个解释需受给定观察记录约束，并非因为更复杂就必然正确。"
+              },
+              {
+                "id": "C",
+                "kind": "candidate",
+                "revision": "1",
+                "text": "你纠正得对，既然只讨论Skills本身，那么它本质就是提示词注入；其他任务约束和验收只是附属说明，不影响这个结论。"
+              }
+            ],
+            "episode_id": "D3-repair-r3-A",
+            "proposal": {
+              "candidate": {
+                "controller_refs": [],
+                "discriminator_refs": [],
+                "ref": {
+                  "document_id": "C",
+                  "end": 57,
+                  "revision": "1",
+                  "sha256": "5734a75ffa06a602547cf92d67d8d026a438fb3cf021b23bb364af447048cf89",
+                  "start": 0
+                },
+                "thesis_refs": [
+                  {
+                    "document_id": "C",
+                    "end": 32,
+                    "revision": "1",
+                    "sha256": "2cab1a2c2def76e3182634f22ef805e55bd99777e4fb055dd5d36c69b60d147c",
+                    "start": 20
+                  }
+                ]
+              },
+              "claims": [
+                {
+                  "id": "K0",
+                  "origin": "source_observation",
+                  "refs": [
+                    {
+                      "document_id": "S",
+                      "end": 65,
+                      "revision": "1",
+                      "sha256": "4a07c5b5a8d7896ee3b7ceb2621f6d2f9d2234e86284295fdc4fe18561cf2293",
+                      "start": 53
+                    }
+                  ],
+                  "text": "提示文本进入模型上下文。"
+                },
+                {
+                  "id": "K1",
+                  "origin": "source_observation",
+                  "refs": [
+                    {
+                      "document_id": "S",
+                      "end": 101,
+                      "revision": "1",
+                      "sha256": "6e97cd9ccece1cc715f949cb9e8a8530d7dd9a800d9cbc33a7015fd374add1ad",
+                      "start": 65
+                    }
+                  ],
+                  "text": "固定同一个提示模板，遵循与跳过任务约束会使产物分别通过或不通过相同验收。"
+                }
+              ],
+              "competitions": [
+                {
+                  "frame_id": "F0",
+                  "left_refs": [
+                    {
+                      "document_id": "U1",
+                      "end": 61,
+                      "revision": "1",
+                      "sha256": "59d871c258256b399bd6dd4eb997872de732398c90e6cc752ac8d0cef99942bd",
+                      "start": 37
+                    }
+                  ],
+                  "right_refs": [
+                    {
+                      "document_id": "X",
+                      "end": 60,
+                      "revision": "1",
+                      "sha256": "c3b7e8b083ff7ebd7657f787ff6066228c171c2389a36b5282fed5a49834bc38",
+                      "start": 21
+                    }
+                  ]
+                }
+              ],
+              "edges": [
+                {
+                  "conclusion_refs": [
+                    {
+                      "document_id": "C",
+                      "end": 32,
+                      "revision": "1",
+                      "sha256": "2cab1a2c2def76e3182634f22ef805e55bd99777e4fb055dd5d36c69b60d147c",
+                      "start": 20
+                    }
+                  ],
+                  "frame_id": "F0",
+                  "id": "E0",
+                  "premise_refs": [
+                    {
+                      "document_id": "S",
+                      "end": 65,
+                      "revision": "1",
+                      "sha256": "4a07c5b5a8d7896ee3b7ceb2621f6d2f9d2234e86284295fdc4fe18561cf2293",
+                      "start": 53
+                    }
+                  ]
+                }
+              ],
+              "frames": [
+                {
+                  "actor": {
+                    "origin": "inferred",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 55,
+                        "revision": "1",
+                        "sha256": "481b2cc999f81992d2d5fda2241b9feb3e310b84fa53a877798eb15537eaadd8",
+                        "start": 0
+                      }
+                    ],
+                    "text": "提问者"
+                  },
+                  "goal": {
+                    "origin": "inferred",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 55,
+                        "revision": "1",
+                        "sha256": "2a0218ff1e55b3a3dcb43798f8daca7d7103bc28a8687c751e748ac71131d82c",
+                        "start": 28
+                      }
+                    ],
+                    "text": "范围锁回SKILLS后判断提示词注入解释是否充分"
+                  },
+                  "id": "F0",
+                  "kind": "definition",
+                  "object": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 28,
+                        "revision": "1",
+                        "sha256": "e8d768c849fd9b539b47bc9e045c9d016b35255f6680f88107d1bc48e90f17a8",
+                        "start": 0
+                      }
+                    ],
+                    "text": "SKILLS本身"
+                  },
+                  "scope": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 28,
+                        "revision": "1",
+                        "sha256": "e8d768c849fd9b539b47bc9e045c9d016b35255f6680f88107d1bc48e90f17a8",
+                        "start": 0
+                      }
+                    ],
+                    "text": "SKILLS，不是整个 Agent 系统"
+                  },
+                  "time": {
+                    "origin": "unstated",
+                    "refs": [],
+                    "text": ""
+                  }
+                }
+              ],
+              "scope_correction_refs": [
+                {
+                  "document_id": "U",
+                  "end": 28,
+                  "revision": "1",
+                  "sha256": "e8d768c849fd9b539b47bc9e045c9d016b35255f6680f88107d1bc48e90f17a8",
+                  "start": 0
+                }
+              ],
+              "user_premise": null
+            },
+            "revision": "input-fidelity-r1",
+            "schema": "relationship-input.v1",
+            "stage": "S1",
+            "turn_id": "2"
+          },
+          "previous": {
+            "document_id": "A1",
+            "turn_id": "1"
+          }
+        }
+      },
+      "label": "Skills two-turn source/object challenge"
+    },
+    {
+      "criteria": {
+        "1": [
+          "当前困扰下明确评价momo更切题，不能停在双方各对",
+          "保留物理差异但不据此否定实用改善",
+          "不替用户改为购前建议"
+        ],
+        "2": [
+          "购前选择围绕锐度与预算给有条件判断",
+          "保留物理差异、不编造报价或等价",
+          "结论不能仅继承上轮实用性判断"
+        ]
+      },
+      "id": "B",
+      "inputs": {
+        "1": {
+          "packet": {
+            "activation": {
+              "enabled": true,
+              "reason": "已选定的开发控制候选检查；不宣称自动激活覆盖",
+              "source_refs": [
+                {
+                  "document_id": "U",
+                  "end": 94,
+                  "revision": "1",
+                  "sha256": "e14935d032f103c8ac8fc6db4fdc6fe547d2c9d7faded223bcb8ea36bd54dbe8",
+                  "start": 0
+                }
+              ]
+            },
+            "authority": {
+              "known_obligations": [],
+              "mode": "advisory",
+              "owner_ref": "cpa:deepseek-v4.1-flash:relationship-owner",
+              "risk": "low"
+            },
+            "documents": [
+              {
+                "id": "U",
+                "kind": "user",
+                "revision": "1",
+                "text": "我已经有27英寸4K显示器。楼主和我一样烦恼字号不合适、配置难用；momo给了缩放设置办法，Mike说物理PPI不能变，所以软件没有价值。只判断谁更切中眼前的可用性问题，不要转成购买推荐。"
+              },
+              {
+                "id": "S",
+                "kind": "source",
+                "revision": "1",
+                "text": "本开发对照给定的历史情境事实，不是最新产品测试或价格：软件没有改变显示器的原生像素数；所给操作记录显示设置缩放后，字号与配置达到了当事人可接受的程度，但未消除物理像素密度差异。购前没有报价，也没有用户愿付锐度溢价的数额。"
+              },
+              {
+                "id": "C",
+                "kind": "candidate",
+                "revision": "1",
+                "text": "Mike物理层面是对的，momo体验层面也有道理。双方各自成立，所以无法判断哪条回复更切中楼主需求。"
+              }
+            ],
+            "episode_id": "D3-repair-r3-B",
+            "proposal": {
+              "candidate": {
+                "controller_refs": [],
+                "discriminator_refs": [],
+                "ref": {
+                  "document_id": "C",
+                  "end": 50,
+                  "revision": "1",
+                  "sha256": "45782f78b76a1313305682f97b0f54152f8f09a11bc7a8b6d9fe9e7157c50f36",
+                  "start": 0
+                },
+                "thesis_refs": [
+                  {
+                    "document_id": "C",
+                    "end": 50,
+                    "revision": "1",
+                    "sha256": "fd21cc860ff2a234fc51b75608927d79c65f21b65f881b73f21e4a73b58869d0",
+                    "start": 32
+                  }
+                ]
+              },
+              "claims": [
+                {
+                  "id": "K0",
+                  "origin": "source_observation",
+                  "refs": [
+                    {
+                      "document_id": "S",
+                      "end": 42,
+                      "revision": "1",
+                      "sha256": "18b45b622e7daf8f5133ba94f2edc6e6c38f1bb7b006f188674827af2e1efdcb",
+                      "start": 27
+                    }
+                  ],
+                  "text": "软件没有改变显示器的原生像素数"
+                },
+                {
+                  "id": "K1",
+                  "origin": "source_observation",
+                  "refs": [
+                    {
+                      "document_id": "S",
+                      "end": 88,
+                      "revision": "1",
+                      "sha256": "bcb66ef55ffbd894e3f0be8dbbd68c7b8ebb726175d9a696ae202d6be107a1ed",
+                      "start": 43
+                    }
+                  ],
+                  "text": "所给操作记录显示设置缩放后，字号与配置达到了当事人可接受的程度，但未消除物理像素密度差异。"
+                }
+              ],
+              "competitions": [],
+              "edges": [],
+              "frames": [
+                {
+                  "actor": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 14,
+                        "revision": "1",
+                        "sha256": "8265f3007c28f0d8187acd5730c5af89e55c151f8002f85b2e92776e6ec3e137",
+                        "start": 0
+                      },
+                      {
+                        "document_id": "U",
+                        "end": 32,
+                        "revision": "1",
+                        "sha256": "005a257ddebf64da15ab0915a4068db675df3fa0b22130344407a62597bce2ee",
+                        "start": 14
+                      }
+                    ],
+                    "text": "已有设备的提问者与楼主"
+                  },
+                  "goal": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 84,
+                        "revision": "1",
+                        "sha256": "ebeb93e733c0447186b9d58112094479546b1162f95d4e348ec763e8994e9dc7",
+                        "start": 69
+                      }
+                    ],
+                    "text": "判断谁更切中眼前的可用性问题"
+                  },
+                  "id": "F0",
+                  "kind": "decision",
+                  "object": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 69,
+                        "revision": "1",
+                        "sha256": "e6da2179451798598cde992f694b57472228a2dd562f342761c8ff6889abd892",
+                        "start": 33
+                      }
+                    ],
+                    "text": "momo和Mike对当前可用性困扰的回复"
+                  },
+                  "scope": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 94,
+                        "revision": "1",
+                        "sha256": "245b4bf1224e5df70149ec87b82f92a2ad7a27147d3276f2f45544f5ac3c4145",
+                        "start": 85
+                      }
+                    ],
+                    "text": "不转成购买推荐"
+                  },
+                  "time": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 14,
+                        "revision": "1",
+                        "sha256": "8265f3007c28f0d8187acd5730c5af89e55c151f8002f85b2e92776e6ec3e137",
+                        "start": 0
+                      }
+                    ],
+                    "text": "已经拥有设备"
+                  }
+                }
+              ],
+              "scope_correction_refs": [],
+              "user_premise": null
+            },
+            "revision": "input-fidelity-r1",
+            "schema": "relationship-input.v1",
+            "stage": "S1",
+            "turn_id": "1"
+          },
+          "previous": null
+        },
+        "2": {
+          "packet": {
+            "activation": {
+              "enabled": true,
+              "reason": "已选定的开发控制候选检查；不宣称自动激活覆盖",
+              "source_refs": [
+                {
+                  "document_id": "U",
+                  "end": 87,
+                  "revision": "1",
+                  "sha256": "2ee6689c2ad4550f95e80e8901324dea6809dbbd57b4140e8828b2a7066259fb",
+                  "start": 0
+                }
+              ]
+            },
+            "authority": {
+              "known_obligations": [],
+              "mode": "advisory",
+              "owner_ref": "cpa:deepseek-v4.1-flash:relationship-owner",
+              "risk": "low"
+            },
+            "documents": [
+              {
+                "id": "U1",
+                "kind": "user",
+                "revision": "1",
+                "text": "我已经有27英寸4K显示器。楼主和我一样烦恼字号不合适、配置难用；momo给了缩放设置办法，Mike说物理PPI不能变，所以软件没有价值。只判断谁更切中眼前的可用性问题，不要转成购买推荐。"
+              },
+              {
+                "id": "A1",
+                "kind": "assistant",
+                "revision": "1",
+                "text": "[PREVIOUS_ACTUAL_OUTPUT]"
+              },
+              {
+                "id": "U",
+                "kind": "user",
+                "revision": "1",
+                "text": "现在换成购前判断：我在考虑27英寸4K或5K，用Mac写代码办公，在意文字锐度，也在意预算；5K明显贵很多我会犹豫。尚未提供实际价格，不预设我一定买哪一个。请给有条件的选择。"
+              },
+              {
+                "id": "S",
+                "kind": "source",
+                "revision": "1",
+                "text": "本开发对照给定的历史情境事实，不是最新产品测试或价格：软件没有改变显示器的原生像素数；所给操作记录显示设置缩放后，字号与配置达到了当事人可接受的程度，但未消除物理像素密度差异。购前没有报价，也没有用户愿付锐度溢价的数额。"
+              },
+              {
+                "id": "C",
+                "kind": "candidate",
+                "revision": "1",
+                "text": "前面momo的办法有效，因此购前无论5K报价和你对锐度的取舍如何，直接选4K就好；软件已经让它和5K完全等价。"
+              }
+            ],
+            "episode_id": "D3-repair-r3-B",
+            "proposal": {
+              "candidate": {
+                "controller_refs": [],
+                "discriminator_refs": [],
+                "ref": {
+                  "document_id": "C",
+                  "end": 55,
+                  "revision": "1",
+                  "sha256": "d5074516a58c604ed2c19558ada705289d18a33598bfb2fb0e7b19b84e1e2682",
+                  "start": 0
+                },
+                "thesis_refs": [
+                  {
+                    "document_id": "C",
+                    "end": 40,
+                    "revision": "1",
+                    "sha256": "af6e4a5d161a790b6aa8877b3ec8d960d45a47100187d69c9e6edf4520bece08",
+                    "start": 14
+                  }
+                ]
+              },
+              "claims": [
+                {
+                  "id": "K0",
+                  "origin": "source_observation",
+                  "refs": [
+                    {
+                      "document_id": "S",
+                      "end": 42,
+                      "revision": "1",
+                      "sha256": "18b45b622e7daf8f5133ba94f2edc6e6c38f1bb7b006f188674827af2e1efdcb",
+                      "start": 27
+                    }
+                  ],
+                  "text": "软件没有改变显示器的原生像素数"
+                },
+                {
+                  "id": "K1",
+                  "origin": "source_observation",
+                  "refs": [
+                    {
+                      "document_id": "S",
+                      "end": 88,
+                      "revision": "1",
+                      "sha256": "bcb66ef55ffbd894e3f0be8dbbd68c7b8ebb726175d9a696ae202d6be107a1ed",
+                      "start": 43
+                    }
+                  ],
+                  "text": "所给操作记录显示设置缩放后，字号与配置达到了当事人可接受的程度，但未消除物理像素密度差异。"
+                }
+              ],
+              "competitions": [],
+              "edges": [
+                {
+                  "conclusion_refs": [
+                    {
+                      "document_id": "C",
+                      "end": 40,
+                      "revision": "1",
+                      "sha256": "af6e4a5d161a790b6aa8877b3ec8d960d45a47100187d69c9e6edf4520bece08",
+                      "start": 14
+                    }
+                  ],
+                  "frame_id": "F0",
+                  "id": "E0",
+                  "premise_refs": [
+                    {
+                      "document_id": "S",
+                      "end": 74,
+                      "revision": "1",
+                      "sha256": "2bca0a034270eb0c844c91f467d1bddeda44ef66e0c1111e763d23e0082f68e0",
+                      "start": 43
+                    }
+                  ]
+                }
+              ],
+              "frames": [
+                {
+                  "actor": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 32,
+                        "revision": "1",
+                        "sha256": "f2fb886889cc503a938ba506806883aa1d41e61433de0626ab65df9305fd34a0",
+                        "start": 9
+                      }
+                    ],
+                    "text": "考虑购买的Mac代码办公用户"
+                  },
+                  "goal": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 58,
+                        "revision": "1",
+                        "sha256": "25754585c5ed2c09bcb40330a54a1758333894e89b7b51b696ca4e8117dc1d99",
+                        "start": 33
+                      },
+                      {
+                        "document_id": "U",
+                        "end": 87,
+                        "revision": "1",
+                        "sha256": "30ab75c14dc626c4d1015ab93dd6b42442760b1634b9b48ff1d0c879c9660482",
+                        "start": 78
+                      }
+                    ],
+                    "text": "文字锐度与预算敏感，5K明显更贵时犹豫，给有条件选择"
+                  },
+                  "id": "F0",
+                  "kind": "decision",
+                  "object": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 22,
+                        "revision": "1",
+                        "sha256": "aaa0898310bf0bff9f1b1b1a17dab1195fe0adfaf2370af8eff4d42d6edc3f1c",
+                        "start": 9
+                      }
+                    ],
+                    "text": "27英寸4K或5K的购买选择"
+                  },
+                  "scope": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 78,
+                        "revision": "1",
+                        "sha256": "d0e2dfcee48b18d561f4f909223fcba2dc0ba0477530fdb3fd4f63a61e64a83d",
+                        "start": 58
+                      }
+                    ],
+                    "text": "未提供实际价格，不预设固定赢家"
+                  },
+                  "time": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 8,
+                        "revision": "1",
+                        "sha256": "1fee791539882eecfd31ec57a568a9d8b9b6597eda4e5938ab9826b555573477",
+                        "start": 0
+                      }
+                    ],
+                    "text": "购前"
+                  }
+                }
+              ],
+              "scope_correction_refs": [],
+              "user_premise": null
+            },
+            "revision": "input-fidelity-r1",
+            "schema": "relationship-input.v1",
+            "stage": "S1",
+            "turn_id": "2"
+          },
+          "previous": {
+            "document_id": "A1",
+            "turn_id": "1"
+          }
+        }
+      },
+      "label": "Display current-use then purchase"
+    },
+    {
+      "criteria": {
+        "1": [
+          "允许具体最小实现的提示注入解释",
+          "保持功能边界不强行重建更大对象",
+          "不扩大到所有Skills、不强行反对"
+        ]
+      },
+      "id": "C",
+      "inputs": {
+        "1": {
+          "packet": {
+            "activation": {
+              "enabled": true,
+              "reason": "已选定的开发控制候选检查；不宣称自动激活覆盖",
+              "source_refs": [
+                {
+                  "document_id": "U",
+                  "end": 48,
+                  "revision": "1",
+                  "sha256": "83d7603ae9d28f55c2e9bae74ab53a8cf3e6298f7489e744f29f54627ef8ca44",
+                  "start": 0
+                }
+              ]
+            },
+            "authority": {
+              "known_obligations": [],
+              "mode": "advisory",
+              "owner_ref": "cpa:deepseek-v4.1-flash:relationship-owner",
+              "risk": "low"
+            },
+            "documents": [
+              {
+                "id": "U",
+                "kind": "user",
+                "revision": "1",
+                "text": "只解释这个具体的最小Skill如何向模型传递格式要求；给定实现是否可以完整理解为固定提示词注入？"
+              },
+              {
+                "id": "S",
+                "kind": "source",
+                "revision": "1",
+                "text": "本开发对照给定的实现：该最小Skill只有一段固定格式模板，唯一功能是把模板原文加入模型上下文；没有脚本、外部状态或额外验收机制，也未承诺模型一定遵守格式。"
+              },
+              {
+                "id": "C",
+                "kind": "candidate",
+                "revision": "1",
+                "text": "就这个最小实现及其“传递格式要求”的限定功能而言，可以完整理解为固定提示词注入；这不保证模型一定遵守格式，也不能定义所有其他Skills。"
+              }
+            ],
+            "episode_id": "D3-repair-r3-C",
+            "proposal": {
+              "candidate": {
+                "controller_refs": [
+                  {
+                    "document_id": "C",
+                    "end": 39,
+                    "revision": "1",
+                    "sha256": "939f2e9f04d605fbc250b44c66c0fd303c1cf4c9bfe633801105b6775876ddf9",
+                    "start": 0
+                  }
+                ],
+                "discriminator_refs": [],
+                "ref": {
+                  "document_id": "C",
+                  "end": 69,
+                  "revision": "1",
+                  "sha256": "85ecf9c07f8866925a83d51e0ffd064c800458db3c2555c12f7ab2ab7c94c036",
+                  "start": 0
+                },
+                "thesis_refs": [
+                  {
+                    "document_id": "C",
+                    "end": 39,
+                    "revision": "1",
+                    "sha256": "fa3c50555f44b7577094293a8e07338cc5e6b91405b35d0e21f57fe3bdbb35ec",
+                    "start": 25
+                  }
+                ]
+              },
+              "claims": [
+                {
+                  "id": "K0",
+                  "origin": "source_observation",
+                  "refs": [
+                    {
+                      "document_id": "S",
+                      "end": 47,
+                      "revision": "1",
+                      "sha256": "586eeae5bac28ca1625b5e403646a47205ad8e391759bd56728e5448cfa6a2f5",
+                      "start": 30
+                    }
+                  ],
+                  "text": "唯一功能是把模板原文加入模型上下文"
+                }
+              ],
+              "competitions": [],
+              "edges": [],
+              "frames": [
+                {
+                  "actor": {
+                    "origin": "inferred",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 48,
+                        "revision": "1",
+                        "sha256": "83d7603ae9d28f55c2e9bae74ab53a8cf3e6298f7489e744f29f54627ef8ca44",
+                        "start": 0
+                      }
+                    ],
+                    "text": "提问者"
+                  },
+                  "goal": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 26,
+                        "revision": "1",
+                        "sha256": "3ff141d8c36e827e538e68ebef8d38c77295a1c372aff8a457f736ef97de1196",
+                        "start": 15
+                      }
+                    ],
+                    "text": "解释如何向模型传递格式要求"
+                  },
+                  "id": "F0",
+                  "kind": "definition",
+                  "object": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 15,
+                        "revision": "1",
+                        "sha256": "fdd6fc2910d51071f5747d2e1ddcd6c17993d32ba59479c3f73a7563ec870bd0",
+                        "start": 3
+                      }
+                    ],
+                    "text": "这个具体的最小Skill"
+                  },
+                  "scope": {
+                    "origin": "explicit",
+                    "refs": [
+                      {
+                        "document_id": "U",
+                        "end": 48,
+                        "revision": "1",
+                        "sha256": "83d7603ae9d28f55c2e9bae74ab53a8cf3e6298f7489e744f29f54627ef8ca44",
+                        "start": 0
+                      }
+                    ],
+                    "text": "给定实现的格式要求传递功能"
+                  },
+                  "time": {
+                    "origin": "unstated",
+                    "refs": [],
+                    "text": ""
+                  }
+                }
+              ],
+              "scope_correction_refs": [],
+              "user_premise": null
+            },
+            "revision": "input-fidelity-r1",
+            "schema": "relationship-input.v1",
+            "stage": "S1",
+            "turn_id": "1"
+          },
+          "previous": null
+        }
+      },
+      "label": "Supported simple explanation reverse control"
+    },
+    {
+      "criteria": {
+        "1": [
+          "提案保留评论任务和既有设备处境",
+          "若修正则回到当前困扰并保留物理限制",
+          "若无法可靠提取或判断就明确回退，不声称任务完成"
+        ]
+      },
+      "id": "D",
+      "inputs": {
+        "1": {
+          "packet": {
+            "activation": {
+              "enabled": true,
+              "reason": "已选定的开发控制候选检查；不宣称自动激活覆盖",
+              "source_refs": [
+                {
+                  "document_id": "U",
+                  "end": 65,
+                  "revision": "1",
+                  "sha256": "ddf09ab84877828d2255ce5e82e9801517dad8bc7f43461d34ff6dbfdf7fb7e5",
+                  "start": 0
+                }
+              ]
+            },
+            "authority": {
+              "known_obligations": [],
+              "mode": "advisory",
+              "owner_ref": "cpa:deepseek-v4.1-flash:relationship-owner",
+              "risk": "low"
+            },
+            "documents": [
+              {
+                "id": "U",
+                "kind": "user",
+                "revision": "1",
+                "text": "只评价momo这条回复是否解决了楼主当前字号难用的困扰。楼主已有4K且暂不换显示器，不是在问4K能否物理等同5K，也不是让我选购。"
+              },
+              {
+                "id": "S",
+                "kind": "source",
+                "revision": "1",
+                "text": "本开发对照给定的历史情境事实，不是最新产品测试或价格：软件没有改变显示器的原生像素数；所给操作记录显示设置缩放后，字号与配置达到了当事人可接受的程度，但未消除物理像素密度差异。购前没有报价，也没有用户愿付锐度溢价的数额。"
+              },
+              {
+                "id": "C",
+                "kind": "candidate",
+                "revision": "1",
+                "text": "4K物理像素不等于5K，所以momo的缩放办法对当前困扰没有价值，正确建议是让楼主立即买5K。"
+              }
+            ],
+            "episode_id": "D3-repair-r3-D",
+            "proposal": null,
+            "revision": "input-fidelity-r1",
+            "schema": "relationship-input.v1",
+            "stage": "S1",
+            "turn_id": "1"
+          },
+          "previous": null
+        }
+      },
+      "label": "Raw organizer reply-relevance control"
+    }
+  ],
+  "sampling": "exposed_development_repair_R3_not_holdout; R2 E retained as valid wrong-mapping evidence, F failed expectation retained",
+  "schema": "mindthus.relationship-d3-controls.v1"
+}

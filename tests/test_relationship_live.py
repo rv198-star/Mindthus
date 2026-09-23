@@ -260,7 +260,21 @@ class QuoteSelectionTests(unittest.TestCase):
             result = org.organize(request, 1)
             self.assertEqual(result['proposal']['refs'][0], rel.quote(self.doc, 5, 7))
             self.assertIn('zero-based', org.wire_body(request)['messages'][0]['content'])
-            self.assertEqual(org.configuration['adapter'], 'cpa-relationship-host.v1.2')
+            self.assertEqual(org.configuration['adapter'], 'cpa-relationship-host.v1.3')
+
+
+class RebindRequestTests(unittest.TestCase):
+    def test_no_target_relations_explicitly_requires_zero_bindings(self):
+        hook=live.CPAHost('original-host', REPO)
+        from experiments.typed_decision.relationship_runtime import correction_request
+        from tests.test_relationship_assessment import response
+        p=packet();compiled=rel.compile_packet(p,REPO)
+        r=rel.consume(compiled,response(compiled,{'definition':'account_missing'}),REPO)
+        body=hook.wire_body(correction_request(p,{'result':r}))
+        content=json.loads(body['messages'][1]['content'])
+        self.assertEqual(content['reference_rebinding']['required_rebind_ids'],[])
+        self.assertEqual(content['reference_rebinding']['required_count'],0)
+        self.assertIn('never repair check_ref IDs',content['reference_rebinding']['rule'])
 
 
 if __name__ == '__main__': unittest.main()
