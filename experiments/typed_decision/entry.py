@@ -153,12 +153,22 @@ def _final(root: Path, manifest: dict, initial: dict, final: dict, status: str,
 
 
 def run(root: Path, provider, data: dict, repo: Path, *, corrector=None,
-        correction_owner_ref='original-agent:v1', route=False) -> dict:
+        correction_owner_ref='original-agent:v1', route=False, mode='assessment-v2',
+        organizer=None, recheck=True) -> dict:
     """Run an opt-in assessment episode; route only after its scoped gate permits it.
 
 S0 inspects an actual user frame. S1 requires an existing candidate. A corrected
 frame/answer stays a proposal alongside, never in place of, the original request.
 """
+    require(mode in ('assessment-v2', 'relationship-frame.v1'), 'unknown_entry_mode')
+    if mode == 'relationship-frame.v1':
+        from . import relationship_runtime
+        require(route is False, 'relationship_mode_does_not_stack_C01_routing')
+        require(correction_owner_ref in ('original-agent:v1', data.get('authority', {}).get('owner_ref')),
+                'relationship_owner_mismatch')
+        return relationship_runtime.run(root, provider, data, repo, corrector=corrector,
+                                        organizer=organizer, recheck=recheck)
+    require(organizer is None and recheck is True, 'relationship_options_on_legacy_mode')
     require(not provider.is_live, 'entry_live_campaign_not_preregistered')
     require(corrector is None or not corrector.is_live, 'host_live_campaign_not_preregistered')
     require(assessment.text(correction_owner_ref) and type(route) is bool, 'entry options malformed')
@@ -282,7 +292,11 @@ class EntryFixtureProvider(FixtureProvider):
     def evaluate(self, specs, context, timeout):
         saved = self.answers
         target = context.get('assessment_target')
-        if target is not None:
+        if 'proposal_view' in context:
+            candidate = context['proposal_view']['candidate']
+            version = candidate['ref']['revision'] if candidate else 'S0'
+            self.answers = saved.get('by_target_version', {}).get(version, saved.get('initial', {}))
+        elif target is not None:
             self.answers = saved.get('by_target_version', {}).get(target['version'], saved.get('initial', {}))
         else:
             self.answers = saved.get('routing', {})
@@ -297,13 +311,17 @@ def main(argv=None):
     parser.add_argument('--fixture', type=Path, default=Path(__file__).parent / 'fixtures/entry-correction.json')
     parser.add_argument('--state-root', type=Path, required=True)
     parser.add_argument('--route', action='store_true', help='Continue via existing C01; no native skill execution')
+    parser.add_argument('--mode', choices=['assessment-v2', 'relationship-frame.v1'], default='assessment-v2')
+    parser.add_argument('--no-recheck', action='store_true', help='Relationship mode only: return revision without S2')
     args = parser.parse_args(argv)
     repo = Path(__file__).resolve().parents[2]
     try:
         fixture = json.loads(args.fixture.read_text(encoding='utf8'))
-        hook = ScriptedCorrection(fixture['correction']) if fixture.get('correction') else None
+        owner = (fixture['input']['authority']['owner_ref'] if args.mode == 'relationship-frame.v1'
+                 else 'original-agent:v1')
+        hook = ScriptedCorrection(fixture['correction'], identity=owner) if fixture.get('correction') else None
         result = run(args.state_root, EntryFixtureProvider(fixture['answers']), fixture['input'], repo,
-                     corrector=hook, route=args.route)
+                     corrector=hook, route=args.route, mode=args.mode, recheck=not args.no_recheck)
         print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
         return 0
     except (ValueError, KeyError, OSError, RecoveryRequired) as exc:

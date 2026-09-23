@@ -156,14 +156,16 @@
         "tests/test_typed_decision.py",
         "tests/test_typed_decision_review.py",
         "tests/test_entry_assessment.py",
-        "tests/test_relationship_assessment.py"
+        "tests/test_relationship_assessment.py",
+        "tests/test_relationship_runtime.py"
       ],
       "owner": "runtime",
       "protects": [
         "opt-in typed result integrity, canonical projection, provider adapters, bounded inference journal, C01 dependency and source-binding contracts",
         "C01 v3 and C02 v2 review-remediation: same-State planning, joint consistency, artifact fidelity handoff, historical qualification isolation",
         "C01-next scoped P1-P3 assessment, one host correction/recheck, original-goal preservation and immutable recovery",
-        "Relationship D1 source quotes, G1/G2 typed contracts, conditional consumption, no-live and version identity"
+        "Relationship D1 source quotes, G1/G2 typed contracts, conditional consumption, no-live and version identity",
+        "D2 same-entry offline relationship correction, revision provenance, cross-turn budgets and immutable episode recovery"
       ],
       "introduced_by": "issues #209 #211",
       "lifecycle_status": "active_regression",
