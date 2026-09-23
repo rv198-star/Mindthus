@@ -1,0 +1,18 @@
+{
+  "recorded_at_utc": "2026-09-23T17:51:56.592766+00:00",
+  "source_commit": "378ab6861c5daf42b3eb0ca5f9e8a58d4da8df37",
+  "freeze_commit": "3df1835",
+  "operation": "python3 docs/internal/research/typed-decision/route-control-v0.2/scoped-repair-r1/run.py run",
+  "tool": "NexusDock.exec_command",
+  "platform_message": "此工具调用被 OpenAI 的安全检查屏蔽。请仔细检查你发送的内容。",
+  "status": "BLOCKED_BEFORE_EXECUTION",
+  "root_exists": false,
+  "new_Jev_calls": 0,
+  "new_CPA_calls": 0,
+  "cases": {
+    "B1": "UNRUN",
+    "C1": "UNRUN",
+    "D1": "UNRUN"
+  },
+  "fallback_or_bypass": false
+}

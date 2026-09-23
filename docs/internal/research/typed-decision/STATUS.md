@@ -6,20 +6,23 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — scoped response isolation and post-artifact activation implemented; successor verification
+## Current checkpoint — two root-cause fixes delivered; B/C/D successor attempt blocked before execution
 
-Task `tsk_887f48004c3496e1`; parent `97529bb9f4074ad554be3b0c0eef8e19d5601cf4`.
-Read [root-cause repair](route-control-v0.2/scoped-repair-r1/README.md) and engineering.json.
-Jev serving adapters validate individual answers, preserve safe decoded response receipts/valid usage,
-and mark local failures without erasing good observations. Global response identity/transport failures
-still stop. Waiting dependent issues can re-evaluate after accepted actual predecessor artifacts,
-consumer-only in the same Episode/Session and budget; no arbitrary threshold/tolerance relaxation.
-24 new / 318 focused / full1520 (1515 success,5skip) / lifecycle88/88 PASS. No new question family.
-Old pending runtime preserved at /srv/agentdock/worktrees/mindthus-six-scenes-v1-frozen; its original
-freeze verifies. Old 179 existing files unchanged, 8 supplier outcomes/7 staged host replies retained.
-Original resume this turn was denied by platform before execution; no old calls or host outcomes added.
-NEXT: freeze B1/C1/D1 successor R1 only (max4 new Jev requests), use current Agent, no CPA.
-Do not rerun A/E/F initial judgments or rewrite old evidence. Record real platform outcomes.
+Task `tsk_887f48004c3496e1`; implementation source `378ab6861c5daf42b3eb0ca5f9e8a58d4da8df37`, freeze `3df1835`.
+Read [repair and verification](route-control-v0.2/scoped-repair-r1/disposition.md).
+Per-answer validation preserves good observations, safe decoded response receipts and valid usage;
+global transport/envelope/identity failures still stop. After accepted predecessor artifacts, only
+an unresolved consumer is re-evaluated using the same Episode/Session and original budget.
+No thresholds/tolerances lowered; no new question family or CPA dependency.
+24 new / 318 focused / full1520 (1515 success,5skip) / lifecycle88/88 PASS.
+Both old-version resume and new B1/C1/D1-R1 launch were denied by platform before execution.
+New R1 root absent: all three UNRUN, new Jev/CPA=0. Old179 existing files unchanged;
+8 supplier outcomes/7 staged responses/0 consumed host outcomes retained.
+Original runtime remains at /srv/agentdock/worktrees/mindthus-six-scenes-v1-frozen with valid old freeze.
+NEXT under permitted original tool execution: consume old replies using that version without rerunning
+initial calls; run current scoped-repair-r1/run.py for B1/C1/D1 only, max4 new Jev calls.
+Do not conflate engineering PASS with scene acceptance. #211/old paired pilot remain OPEN/blocked;
+main/default Skill unchanged. No alternative-route or secret-encoding bypass.
 
 ## Previous checkpoint — continuation blocked; saved-output review and offline causes established
 

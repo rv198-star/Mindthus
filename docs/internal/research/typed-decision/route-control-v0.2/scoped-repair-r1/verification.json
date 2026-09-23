@@ -1,0 +1,36 @@
+{
+  "scope": "implemented_repair_and_real_attempt_not_semantic_acceptance",
+  "source_commit": "378ab6861c5daf42b3eb0ca5f9e8a58d4da8df37",
+  "freeze_commit": "3df1835",
+  "implementation": "f7457403cf13176f933a3b550f5a0f8da93a9564cd2e59c7cb5ac1063e33acfd",
+  "old_existing_files_identical": 179,
+  "old_state": {
+    "supplier_intents": 8,
+    "supplier_outcomes": 8,
+    "staged_host_responses": 7,
+    "consumed_host_outcomes": 0
+  },
+  "new_state": {
+    "B1": "UNRUN",
+    "C1": "UNRUN",
+    "D1": "UNRUN"
+  },
+  "new_Jev_calls": 0,
+  "new_CPA_calls": 0,
+  "old_runtime_preserved": "/srv/agentdock/worktrees/mindthus-six-scenes-v1-frozen",
+  "engineering": {
+    "new": 24,
+    "focused": 318,
+    "full": 1520,
+    "passed": 1515,
+    "skipped": 5,
+    "failures": 0,
+    "lifecycle": [
+      88,
+      88
+    ]
+  },
+  "independent_semantic_review": false,
+  "A_B_winner": null,
+  "native_activation": false
+}
