@@ -1,0 +1,33 @@
+{
+  "baseline": "7306ba9aca90da23d84210939999e802ce8e041a",
+  "sources": {
+    "docs/methodologies/typed-decision-principles.md": "1f7094062d9594cad3d79a6b8adaf1cb3191bdcf8096f6f3f690e488f9f8f186",
+    "skills/using-mindthus/SKILL.md": "9eb89affdbd468d40f0c222d085492193a8a81b99f05a56da1bc515aefbeee19",
+    "docs/methodologies/primitives/aspect-ownership.md": "51ed019cbcc93ff5a38cf24c129fc3773edeb33ddda0b578e65b932d6a2dbae0",
+    "AGENTS.md": "5c65a1f313f4bad988d00dba604ae9c6807a74fe4c5feaa0934b9fecd1eb020f",
+    "experiments/AGENTS.md": "b7436dd94bc7a1afb70879a89ed6382d7c03e148aa179c1992dfc80ede5b8b05",
+    "experiments/typed_decision/contracts.py": "c86b9e19187672369db16e3990a1983c8e5dd2403e2d81ff46a506e57ded2291",
+    "experiments/typed_decision/providers.py": "9ef958f3adb971f8595c7f3424767ada1e16b124e15600302bf18a9fb67e90eb",
+    "experiments/typed_decision/session.py": "d35b83c6c0085d23fc774f5e9dc8003e8131d0c8c49e527c99588f590bd68f0b",
+    "experiments/typed_decision/entry.py": "375353d659dc3fa5613447fd6708e48cb40471d7e7a1cebecb176ee7db4c193f",
+    "experiments/typed_decision/c01.py": "81475d2f304819088e8b3bd884b042e61a07099c59559b9313e0bce7f053a7bd",
+    "experiments/typed_decision/relationship_assessment.py": "335cf2fbbc8826f0207cee360d8aa298e27306c105ea8fec4919e457dfacf858",
+    "docs/internal/research/typed-decision/entry-assessment/original-scenarios-design/relationship-contracts-v0.3.2.json": "407ec5838cc29e9749cafced57ef3db9e100c7b533d3ee654031a1e0a0783cf4",
+    "skills/3l5s/SKILL.md": "fe472b01eeaf724c047f6db486d0f860b82e5b47be2d4f1b5ebf3376e839cbb1",
+    "skills/edsp/SKILL.md": "4de72a21f227b77711cb8f48212e8f3cb42d5b3b0cd1b911ca3284aad40e240c",
+    "skills/sela/SKILL.md": "71b34d7ae2b6312c41ed904dba00cc9bea6615d6e73a537ac20e5cd29fb1b9ad",
+    "skills/mpg/SKILL.md": "1a8e4e5f7a382e24a266befd3b9f58b329253a0ecf49e55b0e9f5690eccf6bc0",
+    "skills/sra/SKILL.md": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514",
+    "skills/wae/SKILL.md": "f5ec807d2bfe91847671eb61d5150b43c464cda378bd2dbb8b7e91db372c7496",
+    "skills/tvg/SKILL.md": "f1ede50d063ba72dc39e9f13c0721a079f31c58c892f486675126472bf67e7de",
+    "skills/tplan/SKILL.md": "dbd00b73b2c965c5a687cb12602874226c87e07f9695354f05683a832761ed96"
+  },
+  "external_checked_on": "2026-09-23",
+  "external_sources": {
+    "typesafe_primitives": "https://docs.typesafe.ai/primitives",
+    "typesafe_noul": "https://docs.typesafe.ai/primitives/noul",
+    "typesafe_score": "https://docs.typesafe.ai/primitives/score",
+    "typesafe_fan_out": "https://docs.typesafe.ai/patterns/fan-out"
+  },
+  "external_claim_boundary": "Official interface definitions and mixed request semantics only; no imported performance or billing guarantee; full copied pages not included."
+}

@@ -1,0 +1,65 @@
+{
+  "schema": "mindthus.mainline-iteration.v0.1",
+  "scope": "research_and_development_not_runtime_loop",
+  "cycle_limits": {
+    "semantic_candidates": 3,
+    "consecutive_no_gain_live_batches": 2,
+    "no_gain_action": "internal_anti_spiral_review_reduce_replace_or_retain_champion",
+    "new_cycle_requires": "new_named_evidence_based_hypothesis_and_existing_total_authorization_not_renaming"
+  },
+  "change_record_required": [
+    "failure_id",
+    "evidence_refs",
+    "primary_layer",
+    "counterexample",
+    "intervention",
+    "expected_delta",
+    "regression_risks",
+    "affected_question_ids",
+    "source_revision",
+    "input_revision",
+    "question_revision",
+    "policy_revision",
+    "adapter_revision",
+    "budget_and_actual_cost",
+    "outcome"
+  ],
+  "layers": [
+    "transport",
+    "source_proposal",
+    "question_semantics",
+    "type_or_rubric",
+    "calibration",
+    "consumer_dependency",
+    "host_execution",
+    "acceptance_ambiguity"
+  ],
+  "reuse_rules": {
+    "same_identity": "reuse completed; no new inference",
+    "policy_only_same_meaning": "DEV/CAL offline rescore allowed; qualification still rechecked",
+    "physical_question_or_State_change": "new preregistered bounded call identity",
+    "unknown_intent": "reconcile; never resend",
+    "terminal_batch": "immutable; successor separate"
+  },
+  "partition_rules": {
+    "DEV": "question/State/policy fixes allowed with lineage",
+    "CAL": "only preregistered calibration; semantic change promotes whole affected family to DEV",
+    "LOCKED": "no tuning/labels/model switches; opened family becomes exposed regression for successor"
+  },
+  "candidate_actions": [
+    "retain",
+    "revise",
+    "merge",
+    "delete",
+    "narrow_activation",
+    "fallback_to_champion"
+  ],
+  "automatic_escalation_to_owner_only": [
+    "goal_or_acceptance_policy_change",
+    "permission_scope_change",
+    "exceed_authorized_total_cost",
+    "new_irreversible_risk",
+    "new_unapproved_provider"
+  ],
+  "defaults_preserved": true
+}

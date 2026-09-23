@@ -6,7 +6,35 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current checkpoint — D3 core real correction exercised after internal repair
+## Current checkpoint — mainline composition question/evaluation design candidate v0.1
+
+Owner restored overall methodology routing and multi-method cooperation as the mainline,
+with mixed Choice/Noul/Score questions and explicit acceptance/iteration design.
+Read [design entry](mainline-composition-v0.1/README.md),
+[all question contracts](mainline-composition-v0.1/question-catalog.md),
+[evaluation and iteration](mainline-composition-v0.1/evaluation.md), and
+[offline verification](mainline-composition-v0.1/verification.json).
+Task `tsk_c58b0d86d35f6c3e`; base `7306ba9aca90da23d84210939999e802ce8e041a`.
+
+19 proposed templates (6 Noul / 12 Choice / 1 Score), eight canonical method bindings,
+12 cross-question rules, 24 authored development acceptance controls, forward DAG source,
+and DEV/CAL/LOCKED family-separated evaluation are specified. Parameters/capacities are
+provisional shadow candidates, not measured safe thresholds or paid admission. Routine
+internal fixes proceed by diagnosis/revision/regression/new freeze; past results remain
+immutable. Locked-test feedback cannot be used to tune and still claim independence.
+
+MR-01 is design-only. No new routing runtime, default Skill activation, model call, native
+multi-method execution or independent audit occurred here. Static contract checks are NOT
+24 semantic tests passing. Existing D3 Skills/4K success remains valid bounded development
+regression, not whole-entry qualification. Original C01 graph4 remains single-owner and
+unqualified; old formal-abc stays paused and is not resumed by these documents.
+
+NEXT: MR-02 one focused independent review of the COMPLETE current question/policy/
+acceptance packet, then minimal compilation/consumption integration into the existing entry;
+MR-03 real development plus separately held calibration; MR-04 independent raw-task
+comparisons and net-value/adoption decision. Keep #211 OPEN; main and historical trials unchanged.
+
+## Previous checkpoint — D3 core real correction exercised after internal repair
 
 Task `tsk_1a35f6536ac65d76`; source `09e08351162549dd3fe93bddf2ae5ca9967b880c`, freeze
 `7660e47dfe8a614d9c56d87cd04ecd22e464d0c3`. Read [R3 disposition](entry-assessment/original-scenarios-design/D3-repair-r3/disposition.md),

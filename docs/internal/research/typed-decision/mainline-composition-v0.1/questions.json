@@ -1,0 +1,938 @@
+{
+  "schema": "mindthus.mainline-question-set.v0.1",
+  "status": "design_candidate_not_implemented",
+  "policy_ref": "mainline-composition.v0.1",
+  "baseline": "7306ba9aca90da23d84210939999e802ce8e041a",
+  "instance_rules": {
+    "append_binding_to_question": true,
+    "ids_are_not_semantics": true,
+    "method_M02_append": "method_binding_question",
+    "same_request_answers_are_not_hidden_inputs": true,
+    "full_contract_required_for_applicability": true,
+    "labels_must_not_be_in_state": true
+  },
+  "questions": [
+    {
+      "id": "G01",
+      "title": "某项判断提案是否忠实于原材料",
+      "group": "G",
+      "kind": "select",
+      "wire_type": "choice",
+      "version": "0.1",
+      "parameters": [
+        "issue"
+      ],
+      "question": "将 Binding.issue 的对象、交付物、范围、来源角色和位置提案与 original_documents 对照：该表示是否足以忠实支持这一局部判断？只评价表示保真，不评价被引用候选的论证是否正确。错误观点被如实标为候选不构成映射错误；遗漏能改变本项判断的有效约束才算重要遗漏。",
+      "criteria": {
+        "faithful": "未识别出会改变这项判断的表示错配或重要遗漏。",
+        "omission": "该项提案遗漏了原材料中会改变其判断的约束或关系。",
+        "misrepresentation": "该项映射把对象/角色/支持关系表示成了原材料不支持的内容。",
+        "both": "上述遗漏与错配同时存在。",
+        "unclear": "材料不足以确定表示是否保真。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "已有真实事项提案且该提案将用于路由；没有提案时先复用原短计划或一次有界整理。",
+      "consume_prerequisites": [],
+      "consume": {
+        "faithful": "允许消费本issue后续观察；不证明候选正确。",
+        "omission": "原文+问题引用交回宿主一次修复该issue；依赖节点暂停。",
+        "misrepresentation": "同omission；其他独立issue保留。",
+        "both": "同omission；不能关闭全任务除非原始全局材料确有问题。",
+        "unclear": "该issue保持unresolved，不删除原始任务。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "docs/methodologies/typed-decision-principles.md",
+        "skills/using-mindthus/SKILL.md"
+      ],
+      "acceptance_refs": [
+        "A01",
+        "A11",
+        "A12",
+        "A18"
+      ]
+    },
+    {
+      "id": "G02",
+      "title": "判断事项清单是否覆盖当前交付",
+      "group": "G",
+      "kind": "assess_proposition",
+      "wire_type": "noul",
+      "version": "0.1",
+      "parameters": [
+        "issue_roster"
+      ],
+      "question": "只对本次明确请求：Binding.issue_roster是否覆盖了 original_documents 中所有能改变本次交付的未决判断事项？已经由有效结果覆盖或可以直接执行的部分可被明确列作复用/直接处理；不要求列出所有相关知识。",
+      "criteria": {
+        "true": "每项结果相关的未决判断都有可追溯事项，或明确的直接/复用处理。",
+        "false": "至少一项结果相关的未决判断被清单漏掉；仅多列背景不能补上它。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "多子问题或由宿主新整理事项时；明确单一且未发生整理的直接任务不额外调用。",
+      "consume_prerequisites": [],
+      "consume": {
+        "positive": "允许形成完整性候选，但仍需各事项及最终任务验收。",
+        "negative": "清单完整性未通过；一次宿主补齐，不让已确认独立动作全部停顿。",
+        "unresolved": "保留已知事项，标未覆盖风险；不得宣称完整路由。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "docs/methodologies/typed-decision-principles.md",
+        "skills/using-mindthus/SKILL.md"
+      ],
+      "acceptance_refs": [
+        "A01",
+        "A12",
+        "A18"
+      ]
+    },
+    {
+      "id": "G03",
+      "title": "当前事项应该怎样处理",
+      "group": "G",
+      "kind": "select",
+      "wire_type": "choice",
+      "version": "0.1",
+      "parameters": [
+        "issue"
+      ],
+      "question": "仅针对 Binding.issue 与本次拟交付动作，现有事实及有效产物支持哪种下一步？区分开始方法前必需的外部事实，与方法本来要解决的未知。分析对象有缺陷不等于助手不能开始分析。",
+      "criteria": {
+        "reuse_result": "相关结论已有记录，需核对适用条件后复用，不重新分析。",
+        "direct_execute": "清楚、低风险、材料够用，当前不需要未决方法判断。",
+        "acquire_fact": "开始该决定所需的具体外部事实缺失，应先取得它。",
+        "judge": "已具备开始的材料，但存在影响目标的定义/结构/分配/方向/路径/控制/产物/状态判断。",
+        "background": "该事项不影响本次交付。",
+        "unclear": "现有材料无法选择上述处理。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "入口需要语义分诊的每个issue；已知确定性动作不为该题调用。",
+      "consume_prerequisites": [
+        "G01=faithful"
+      ],
+      "consume": {
+        "reuse_result": "进入R01；无有效产物则不能直接复用。",
+        "direct_execute": "返回原执行路径；真正显式调用另由G05保留并核查适用性。",
+        "acquire_fact": "仅阻止依赖该事实的承诺/动作，原宿主具名取证。",
+        "judge": "实例化必要方法候选组。",
+        "background": "记录无须方法介入，不作为全部任务完成。",
+        "unclear": "原宿主判断本issue。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "skills/using-mindthus/SKILL.md",
+        "docs/methodologies/typed-decision-principles.md"
+      ],
+      "acceptance_refs": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A12"
+      ]
+    },
+    {
+      "id": "G04",
+      "title": "当前义务限制哪个动作范围",
+      "group": "G",
+      "kind": "select",
+      "wire_type": "choice",
+      "version": "0.1",
+      "parameters": [
+        "issue",
+        "proposed_action",
+        "duty_evidence"
+      ],
+      "question": "给定 Binding.proposed_action 的阶段（开始分析/提交结论/执行/发布），Binding.duty_evidence 是否表明未完成义务阻止这个动作？评价当前助手的处理，不把被分析对象的问题当作开始分析的阻碍；代码已确认的权限仍独立有效。",
+      "criteria": {
+        "none": "没有材料支持这项动作被当前未完成义务阻止。",
+        "blocks_issue": "有明确义务仅阻止指定事项或其依赖动作。",
+        "blocks_parent": "有明确有效依据阻止当前共享父动作，且该动作不能分开完成。",
+        "scope_unclear": "义务可能存在，但其有效性或影响范围未确定。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "已知义务或当前处理存在具体证据/权限冲突信号；不是每个缺陷都检查。",
+      "consume_prerequisites": [
+        "G01=faithful"
+      ],
+      "consume": {
+        "none": "不新增阻断；不清除原有代码/原责任方义务。",
+        "blocks_issue": "局部阻断并携带义务/动作引用。",
+        "blocks_parent": "原责任方按有效依据确认父范围，不能仅凭模型扩大全局权限。",
+        "scope_unclear": "请求局部仲裁；保留不依赖该义务的安全工作。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "skills/using-mindthus/SKILL.md",
+        "docs/methodologies/typed-decision-principles.md"
+      ],
+      "acceptance_refs": [
+        "A02",
+        "A12",
+        "A16"
+      ]
+    },
+    {
+      "id": "G05",
+      "title": "方法名称在用户话中扮演什么角色",
+      "group": "G",
+      "kind": "select",
+      "wire_type": "choice",
+      "version": "0.1",
+      "parameters": [
+        "mention"
+      ],
+      "question": "结合原始请求上下文，Binding.mention中的方法名称是要求本轮实际使用的方法、被检查的既有答案/流程的对象，还是普通提及？仅出现方法名不转移当前判断主导权。",
+      "criteria": {
+        "invoke": "用户要求本轮使用该方法分析。",
+        "review_target": "用户要求检查某产物是否符合该方法；方法是审查范围。",
+        "incidental": "普通引用、比喻或背景，不是本轮调用指令。",
+        "unclear": "无法确定用户是否要求实际调用。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "原始输入确有明确方法名称引用时。",
+      "consume_prerequisites": [],
+      "consume": {
+        "invoke": "强制保留读取与适用性核查；不越过缺证据或权限边界。",
+        "review_target": "取得被审记录，按当前审查对象处理，不自动把该方法作为owner。",
+        "incidental": "按实际任务分诊。",
+        "unclear": "原宿主处理引用意图，不猜用户授权。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "skills/using-mindthus/SKILL.md",
+        "docs/methodologies/typed-decision-principles.md"
+      ],
+      "acceptance_refs": [
+        "A05",
+        "A06"
+      ]
+    },
+    {
+      "id": "M01",
+      "title": "粗筛某方法是否值得读完整合同",
+      "group": "M",
+      "kind": "assess_proposition",
+      "wire_type": "noul",
+      "version": "0.1",
+      "parameters": [
+        "issue",
+        "method_card"
+      ],
+      "question": "只依据 Binding.method_card 的正式来源入口/边界摘要，方法所处理的判断与 Binding.issue 是否有足够关系，值得读取完整合同确认？这只是高召回候选发现，不证明该方法适用或应被执行。",
+      "criteria": {
+        "true": "当前事项与卡片描述的适用领域有实质联系，值得读完整条款。",
+        "false": "没有此类联系；仅主题词重合不算关系。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "需要判断且完整方法合同尚未加载；已加载候选不重复粗筛。",
+      "consume_prerequisites": [
+        "G01=faithful",
+        "G03=judge or G05=invoke"
+      ],
+      "consume": {
+        "positive": "粗筛专用规则p≥0.2即保留待读候选，不使用其他Noul的0.8采纳门槛；不据此执行。",
+        "negative": "粗筛仅p<0.2不扩展，标not_evaluated；显式/伴随读取仍保留。",
+        "unresolved": "status非ok或绑定不确定时交原责任方；不得当低分裁掉；容量超额明确返回。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "skills/using-mindthus/SKILL.md",
+        "docs/methodologies/typed-decision-principles.md"
+      ],
+      "acceptance_refs": [
+        "A03",
+        "A04",
+        "A07",
+        "A08",
+        "A19"
+      ]
+    },
+    {
+      "id": "M02",
+      "title": "完整合同是否支持开始使用该方法",
+      "group": "M",
+      "kind": "assess_proposition",
+      "wire_type": "noul",
+      "version": "0.1",
+      "parameters": [
+        "issue",
+        "method"
+      ],
+      "question": "读取 method_view 中 Binding.method 的完整当前正式合同，并应用其method_binding_question：Binding.issue是否具备开始使用该方法的条件？判断开始条件，而不是它的最终分析是否已经完成。用户点名或粗筛相关均不证明成立；合同全文优先于示例。",
+      "criteria": {
+        "true": "该判断对象与入口条件符合完整合同，可以开始最小适当分析。",
+        "false": "对象在边界之外，或确有开始所必需而未满足的条件；最终产物尚未生成本身不算不适用。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "完整合同已读取并绑定来源后，对保留的issue×method实例化。",
+      "consume_prerequisites": [
+        "G01=faithful"
+      ],
+      "consume": {
+        "positive": "与M03联合确定贡献；不自动调用。",
+        "negative": "结合M04记录不适用或前置缺口；不等于模型确认事实为假。",
+        "unresolved": "结合M04定位不确定；保持原责任方。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "skills/using-mindthus/SKILL.md",
+        "docs/methodologies/typed-decision-principles.md"
+      ],
+      "acceptance_refs": [
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A17"
+      ]
+    },
+    {
+      "id": "M03",
+      "title": "方法对当前交付有什么独立作用",
+      "group": "M",
+      "kind": "select",
+      "wire_type": "choice",
+      "version": "0.1",
+      "parameters": [
+        "issue",
+        "method",
+        "handling_plan"
+      ],
+      "question": "在 Binding.issue 的明确结论范围内，相对 Binding.handling_plan 和已有有效结果，Binding.method能承担什么尚未充分负责的作用？允许适用但无需调用；不猜测不用方法名的LLM一定无法回答。",
+      "criteria": {
+        "primary_candidate": "该方法可承担此范围当前未决主判断；仍需重叠职责仲裁。",
+        "support": "有未被充分承担的辅助判断贡献，不争该范围主结论。",
+        "constraint": "为该范围提供不可遗漏的证据/风险/边界限制，不替代主判断。",
+        "support_and_constraint": "两种辅助作用均有具体用途，但不争主结论。",
+        "covered": "作用已由适当有效结果或当前充分替代路径覆盖。",
+        "no_contribution": "仅相关或装饰性，无可说明的当前执行影响。",
+        "unclear": "不能确定其实际贡献。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "完整合同及当前处理提案可用；handling_plan可显式为原宿主直接处理，不必另生成长计划。",
+      "consume_prerequisites": [
+        "G01=faithful"
+      ],
+      "consume": {
+        "primary_candidate": "M02 positive后加入主方法候选；竞争同范围时R02/R03。",
+        "support": "M02 positive后保留具名支持责任。",
+        "constraint": "M02 positive后保留限制作用，原权限不由此产生。",
+        "support_and_constraint": "分别记录辅助作用，不复制两次方法执行。",
+        "covered": "核对R01及强制读取；充分覆盖则复用/不重做。",
+        "no_contribution": "不自动调用；显式调用给任务可读解释，必要合同读取保留。",
+        "unclear": "局部仲裁，不按适用概率排序代替。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "skills/using-mindthus/SKILL.md",
+        "docs/methodologies/primitives/aspect-ownership.md",
+        "docs/methodologies/typed-decision-principles.md"
+      ],
+      "acceptance_refs": [
+        "A03",
+        "A04",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A17"
+      ]
+    },
+    {
+      "id": "M04",
+      "title": "不满足开始条件究竟缺什么",
+      "group": "M",
+      "kind": "select",
+      "wire_type": "choice",
+      "version": "0.1",
+      "parameters": [
+        "issue",
+        "method"
+      ],
+      "question": "若要开始 Binding.method 对 Binding.issue 的处理，完整合同所需的前置条件目前是什么状态？同批回答不作此题隐藏输入。不要把方法负责产出的结论反过来当作入口事实。",
+      "criteria": {
+        "ready": "具备开始条件；未知仅是方法要解决的对象。",
+        "missing_external_fact": "缺一个当前需要从外部记录/用户/环境取得的事实。",
+        "awaiting_artifact": "缺另一具名判断节点应交付的产物。",
+        "out_of_domain": "当前对象超出该方法领域或有效边界。",
+        "multiple_gaps": "两个或以上真实开始缺口并存，无法以一个原因概括。",
+        "unclear": "无法定位是否存在真实开始缺口。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "与M02可同批推测；只在M02非positive或角色/入口发生矛盾时消费。",
+      "consume_prerequisites": [
+        "G01=faithful",
+        "M02 not positive or M02/M03 conflict"
+      ],
+      "consume": {
+        "ready": "与M02冲突时交原宿主，不悄悄覆写任一原结果。",
+        "missing_external_fact": "原宿主具名定位并取证；未定位不假称已知道缺哪项。",
+        "awaiting_artifact": "R04验证具名依赖，实际产物就绪前不作对应承诺。",
+        "out_of_domain": "不启动该方法，保留原路径。",
+        "multiple_gaps": "局部交回一次梳理，不能把一个补丁当全解决。",
+        "unclear": "保留未决，不改标签。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "skills/using-mindthus/SKILL.md",
+        "docs/methodologies/typed-decision-principles.md"
+      ],
+      "acceptance_refs": [
+        "A02",
+        "A05",
+        "A08"
+      ]
+    },
+    {
+      "id": "M05",
+      "title": "正式伴随条款的条件是否成立",
+      "group": "M",
+      "kind": "assess_proposition",
+      "wire_type": "noul",
+      "version": "0.1",
+      "parameters": [
+        "issue",
+        "companion_clause"
+      ],
+      "question": "只判断 Binding.companion_clause 原文写出的触发条件是否在当前事项中成立。条款指定的读取/检查后果由流程执行，本题不决定是否可以忽略正式合同，不把伴随读取误作必需重算另一方法全部分析。",
+      "criteria": {
+        "true": "提供的任务事实符合该具名条款的触发条件。",
+        "false": "提供材料建立了该条款触发条件不成立。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "实际已加载合同包含相关条件性伴随条款时；条件不能按方法名自动认定。",
+      "consume_prerequisites": [
+        "G01=faithful"
+      ],
+      "consume": {
+        "positive": "登记条款指定读取/支持检查，由代码核对实际读取回执。",
+        "negative": "不追加此条款义务；不取消其他来源义务。",
+        "unresolved": "由原责任方确认触发条件；不视为免除。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "skills/sela/SKILL.md",
+        "skills/mpg/SKILL.md",
+        "docs/methodologies/typed-decision-principles.md"
+      ],
+      "acceptance_refs": [
+        "A07",
+        "A17"
+      ]
+    },
+    {
+      "id": "R01",
+      "title": "已有产物能否复用到当前事项",
+      "group": "R",
+      "kind": "select",
+      "wire_type": "choice",
+      "version": "0.1",
+      "parameters": [
+        "issue",
+        "artifact",
+        "required_use"
+      ],
+      "question": "比较 Binding.artifact 的来源、对象、时点、有效条件、未决项和 Binding.required_use：它现在能覆盖当前事项的哪一部分？仅有旧回答摘要或相同方法名不证明结论可复用。",
+      "criteria": {
+        "full": "材料支持该产物覆盖指定消费要求，相关有效条件未变。",
+        "partial": "只覆盖明确子部分，其他必要判断仍未解决。",
+        "stale": "已知时点/条件变化使其不能照搬到当前消费。",
+        "different_scope": "产物回答的是另一对象或另一职责范围。",
+        "conflicting": "与当前有效证据存在决定性冲突。",
+        "missing": "所需产物并未实际提供。",
+        "unclear": "有效性或覆盖范围无法建立。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "G03复用分支、M03 covered、或R04要求某已存在产物时。",
+      "consume_prerequisites": [
+        "G01=faithful",
+        "artifact identity and source bytes verified"
+      ],
+      "consume": {
+        "full": "复用指定部分，保留当前强制读取/审计义务，不重做同判断。",
+        "partial": "只复用有证据支持的子部分；其余继续judge/取证。",
+        "stale": "失效该用途及后继，不删除历史。",
+        "different_scope": "不得用于当前用途。",
+        "conflicting": "阻断依赖承诺并交原责任方核对。",
+        "missing": "等待具名产物，不伪造已完成。",
+        "unclear": "原责任方验证，不标可复用。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "docs/methodologies/typed-decision-principles.md",
+        "skills/using-mindthus/SKILL.md"
+      ],
+      "acceptance_refs": [
+        "A07",
+        "A08",
+        "A13",
+        "A15"
+      ]
+    },
+    {
+      "id": "R02",
+      "title": "两个职责是否在争同一个结论",
+      "group": "R",
+      "kind": "select",
+      "wire_type": "choice",
+      "version": "0.1",
+      "parameters": [
+        "left_step",
+        "right_step"
+      ],
+      "question": "比较 Binding.left_step 与 Binding.right_step 的对象、输出和 ownership_scope：它们是否竞争同一个可见结论范围？相同用户任务或相同主题不等于同一判断对象。",
+      "criteria": {
+        "same_scope": "两者争同一对象、条件和结论表面。",
+        "disjoint_scopes": "分别解决独立子判断，可以各有负责人。",
+        "partial_overlap": "部分共享、部分独立，需明确共享范围再仲裁。",
+        "unclear": "职责范围不足以比较。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "拟激活至少两个有非重复贡献的步骤；不默认所有方法两两比较。",
+      "consume_prerequisites": [
+        "G01=faithful"
+      ],
+      "consume": {
+        "same_scope": "以R03处理主判断归属，辅助责任仍可保留。",
+        "disjoint_scopes": "不强迫二选一；R04仍检查产物依赖。",
+        "partial_overlap": "一次宿主细化共享范围；只仲裁该部分。",
+        "unclear": "原责任方澄清相关职责。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "docs/methodologies/primitives/aspect-ownership.md",
+        "skills/using-mindthus/SKILL.md"
+      ],
+      "acceptance_refs": [
+        "A07",
+        "A09",
+        "A10"
+      ]
+    },
+    {
+      "id": "R03",
+      "title": "重叠范围由谁主导",
+      "group": "R",
+      "kind": "select",
+      "wire_type": "choice",
+      "version": "0.1",
+      "parameters": [
+        "left_method",
+        "right_method",
+        "shared_scope"
+      ],
+      "question": "只在 Binding.shared_scope 内，依据两份正式合同与当前对象，哪一方应拥有可见主结论？另一方可以保留具名支持或约束。不要依据方法普遍性、题数、概率大小或先出现顺序选择。",
+      "criteria": {
+        "left": "左方法的正式职责支配该范围主判断。",
+        "right": "右方法的正式职责支配该范围主判断。",
+        "neither": "两者均不是该范围合适的主导；需其他处理或重新定位。",
+        "unclear": "当前材料不能仲裁同范围主导。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "真实同范围竞争已建立；可带此前提同批推测，但R02不支持时不消费。",
+      "consume_prerequisites": [
+        "R02=same_scope or explicitly resolved shared_scope",
+        "M02 positive for both"
+      ],
+      "consume": {
+        "left": "左主导，右按M03保留合法辅助角色。",
+        "right": "右主导，左按M03保留合法辅助角色。",
+        "neither": "回原责任方，不把两者加权成赢家。",
+        "unclear": "一次局部仲裁；不能通过额外相似题多数投票。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "skills/using-mindthus/SKILL.md",
+        "docs/methodologies/primitives/aspect-ownership.md"
+      ],
+      "acceptance_refs": [
+        "A07",
+        "A09",
+        "A10"
+      ]
+    },
+    {
+      "id": "R04",
+      "title": "指定产物对后继节点是哪种依赖",
+      "group": "R",
+      "kind": "select",
+      "wire_type": "choice",
+      "version": "0.1",
+      "parameters": [
+        "producer_step",
+        "artifact_contract",
+        "consumer_step",
+        "condition"
+      ],
+      "question": "对 Binding.consumer_step 的指定动作，Binding.producer_step 应交付的 artifact_contract 是什么依赖？判断具体产物与动作的关系，不用一般方法顺序作证据。condition为空时不得凭空创造条件。",
+      "criteria": {
+        "none": "消费者不依赖这个产物，不连执行顺序边。",
+        "needed_to_begin": "缺此产物则不能开始这个消费动作。",
+        "needed_before_commit": "可先做独立准备，但据此形成结论/承诺前必须取得该产物。",
+        "conditional": "仅在Binding.condition所指条件成立时需要该产物。",
+        "unclear": "现有材料不能确定这种产物依赖。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "候选有向依赖边已指出实际产物与消费者；0..6条，不默认全方法对。",
+      "consume_prerequisites": [
+        "G01=faithful",
+        "producer and consumer retained or explicit existing-output reference"
+      ],
+      "consume": {
+        "none": "不添加语义执行边；权限/资源冲突另行检查。",
+        "needed_to_begin": "R01 full或经原责任方验收的产物就绪才释放消费节点。",
+        "needed_before_commit": "只允许独立准备，提交前检查R01/原验收。",
+        "conditional": "需明确条件引用及实际状态；未知或缺条件则该承诺unresolved。",
+        "unclear": "只冻结依赖分量，不阻断无关工作。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "docs/methodologies/typed-decision-principles.md",
+        "skills/using-mindthus/SKILL.md"
+      ],
+      "acceptance_refs": [
+        "A07",
+        "A08",
+        "A12",
+        "A16"
+      ]
+    },
+    {
+      "id": "S01",
+      "title": "是否有材料评估缺口影响",
+      "group": "S",
+      "kind": "assess_proposition",
+      "wire_type": "noul",
+      "version": "0.1",
+      "parameters": [
+        "issue"
+      ],
+      "question": "现有材料是否足以把 Binding.issue 未解决时对本次交付的后果，放入S02定义的影响等级？判断可评性，不判断影响大小；缺失后果材料不是低影响。 本题所指等级：0不影响交付；1只影响局部完善而必要判断仍成立；2至少一个必要子判断/交接不成立；3核心或不可分割总交付不成立。",
+      "criteria": {
+        "true": "交付目标与该缺口后果足以按给定等级比较。",
+        "false": "后果或交付目标缺失/相冲突，不能可靠定位影响程度。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "存在未解决且可改变处理深度/就绪集合审视顺序的事项；简单直接路径不评分。",
+      "consume_prerequisites": [
+        "G01=faithful",
+        "G03=judge or acquire_fact"
+      ],
+      "consume": {
+        "positive": "允许消费S02等级分布。",
+        "negative": "S02记unconsumed，影响unknown而非0。",
+        "unresolved": "同negative，保留原序和已知义务。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "docs/methodologies/typed-decision-principles.md",
+        "skills/using-mindthus/SKILL.md"
+      ],
+      "acceptance_refs": [
+        "A14",
+        "A16"
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "未解决事项对当前交付的影响程度",
+      "group": "S",
+      "kind": "rate",
+      "wire_type": "score",
+      "version": "0.1",
+      "parameters": [
+        "issue"
+      ],
+      "question": "沿且仅沿“Binding.issue未解决对当前要求交付物的影响”这一维度评估程度。不衡量用户语气、紧急程度、方法适用概率、成本或权限。该结果只在S01建立可评性后消费；没有后果材料时不能由流程把数值当低影响。",
+      "criteria": [
+        "0：不影响本次要求的交付，属于背景或可省补充。",
+        "1：降低局部完善程度，但主判断和所有必要下一步仍有成立依据。",
+        "2：至少一项必要子判断或交接产物不能成立；其他独立部分仍可完成。",
+        "3：缺口影响核心选择或不可分割的总交付，未解决则核心建议没有成立依据。"
+      ],
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "与S01共享State，可以并发计算；只在排序/深度建议确有用途时实例化。",
+      "consume_prerequisites": [
+        "G01=faithful",
+        "S01 positive"
+      ],
+      "consume": {
+        "assessable": "只在同一已就绪集合内，level≥2概率达研究阈值才建议先审；保留期望值和分布，不四舍五入成真实等级。",
+        "not_assessable": "保留返回值与未消费原因，影响unknown。",
+        "conflict_with_authority_or_dependency": "权限、依赖、硬验收、用户约束优先，Score不授权也不抵消。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "docs/methodologies/typed-decision-principles.md",
+        "skills/using-mindthus/SKILL.md"
+      ],
+      "acceptance_refs": [
+        "A14",
+        "A16"
+      ]
+    },
+    {
+      "id": "V01",
+      "title": "具体计划是否覆盖这项必要判断",
+      "group": "V",
+      "kind": "assess_proposition",
+      "wire_type": "noul",
+      "version": "0.1",
+      "parameters": [
+        "issue",
+        "route_plan"
+      ],
+      "question": "Binding.route_plan 是否给 Binding.issue 中尚需解决的必要判断安排了具名责任/产物，或引用了足以覆盖的有效结果？写出方法名本身不算覆盖；一条充分替代路径可以成立，不要求等于作者偏好的方法。",
+      "criteria": {
+        "true": "该事项的必要内容有可核验责任与交付/复用安排。",
+        "false": "重要内容无人承担或仅有形式标签，不能保证被处理。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "已经存在拟执行路由计划且有尚未决事项，不为调用该题先生成整份答案。",
+      "consume_prerequisites": [
+        "G01=faithful"
+      ],
+      "consume": {
+        "positive": "该项覆盖候选成立，仍不代表执行或质量通过。",
+        "negative": "一次补齐/修改相关责任；其他有效部分复用。",
+        "unresolved": "不宣称完整覆盖，由原责任方审该项。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "skills/using-mindthus/SKILL.md",
+        "docs/methodologies/typed-decision-principles.md"
+      ],
+      "acceptance_refs": [
+        "A08",
+        "A09",
+        "A10",
+        "A18"
+      ]
+    },
+    {
+      "id": "V02",
+      "title": "这个拟执行步骤是否确有增量用途",
+      "group": "V",
+      "kind": "select",
+      "wire_type": "choice",
+      "version": "0.1",
+      "parameters": [
+        "step",
+        "route_plan"
+      ],
+      "question": "相对 Binding.route_plan 的其他步骤及有效产物，Binding.step 是否承担独立用途或仍需遵守的正式合同义务？只移除真正重复；支持/约束不因没有独立主结论就算多余。",
+      "criteria": {
+        "distinct_contribution": "有未被其他步骤充分覆盖的实际贡献。",
+        "required_contract_read": "分析可能已覆盖，但该明确正式读取/核查义务尚须完成。",
+        "redundant": "作用已充分覆盖，也不存在未满足的强制合同义务。",
+        "unclear": "不能确定删掉是否损失必要贡献。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "候选计划中出现多个步骤或拟重做已有分析时。",
+      "consume_prerequisites": [
+        "G01=faithful"
+      ],
+      "consume": {
+        "distinct_contribution": "保留，按明确角色执行最小部分。",
+        "required_contract_read": "完成读取/必要核查，不据此重复整轮方法推理。",
+        "redundant": "提议删除；删除后仍需保持V01覆盖与原授权。",
+        "unclear": "原宿主决定，不能为省调用盲删。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "skills/using-mindthus/SKILL.md",
+        "docs/methodologies/typed-decision-principles.md"
+      ],
+      "acceptance_refs": [
+        "A03",
+        "A07",
+        "A09",
+        "A10",
+        "A17"
+      ]
+    },
+    {
+      "id": "V03",
+      "title": "路由方案是否转移了不该转移的判断权",
+      "group": "V",
+      "kind": "select",
+      "wire_type": "choice",
+      "version": "0.1",
+      "parameters": [
+        "step",
+        "route_plan"
+      ],
+      "question": "在 Binding.step 的拟输入、产物和消费方式中，是否把方法结论用于它不负责的范围，改变用户有效目标，或把模型判断升级成外部事实/授权？这里只查职责越界，不把普通答案不够好一概记为越权。",
+      "criteria": {
+        "within_scope": "未发现上述职责越界。",
+        "method_overreach": "把方法在一个切面的判断用于其不负责的结论。",
+        "goal_replaced": "路由改变了用户有效对象、范围或目标。",
+        "evidence_or_authority_upgrade": "把推测/模型信号当成独立事实、验收或权限。",
+        "unclear": "无法确定该消费是否在边界内。"
+      },
+      "required_context": [
+        "original_documents",
+        "authority",
+        "issue_view",
+        "method_view",
+        "artifact_view",
+        "plan_view"
+      ],
+      "activation": "已有拟执行/整合方案，跨方法交接或发现具体越权风险时。",
+      "consume_prerequisites": [
+        "G01=faithful"
+      ],
+      "consume": {
+        "within_scope": "允许保留该消费提案，不代表产物事实已核验。",
+        "method_overreach": "修复相关职责/依赖，不靠增加方法掩盖。",
+        "goal_replaced": "恢复用户有效对象与目标。",
+        "evidence_or_authority_upgrade": "阻止对应承诺，回原来源/权威核验。",
+        "unclear": "局部转交；原硬约束持续有效。"
+      },
+      "non_ok": "保留原status和uncertainty；只对依赖该结果的范围交还原责任方，不当false/0/已通过。",
+      "source_refs": [
+        "docs/methodologies/typed-decision-principles.md",
+        "skills/using-mindthus/SKILL.md",
+        "docs/methodologies/primitives/aspect-ownership.md"
+      ],
+      "acceptance_refs": [
+        "A07",
+        "A09",
+        "A11",
+        "A15",
+        "A16"
+      ]
+    }
+  ]
+}

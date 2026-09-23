@@ -1,0 +1,219 @@
+{
+  "schema": "mindthus.mainline-method-bindings.v0.1",
+  "methods": [
+    {
+      "method": "3l5s",
+      "source_path": "skills/3l5s/SKILL.md",
+      "source_sha256": "fe472b01eeaf724c047f6db486d0f860b82e5b47be2d4f1b5ebf3376e839cbb1",
+      "card_line_range": [
+        1,
+        4
+      ],
+      "card_excerpt": "---\nname: \"3l5s\"\ndescription: Use when a problem is unclear, noisy, repeatedly reworked, or too large to execute directly; also use when a task list looks structured but may not be executable, verifiable, or tied to a falsifiable problem.\n---",
+      "method_binding_question": "针对这个事项，是否存在尚未形成可复述/可定位/可证伪的问题，或已明确但不能直接执行/验证的工作，需要Discovery/Definition或单层BTGSB？普通已确定的编辑不因是任务就进入3L5S。",
+      "positive_example": "嘈杂故障现象需收敛成可证伪问题。",
+      "negative_example": "目标和步骤均确定的文字替换直接处理。",
+      "binding_status": "author_paraphrase_to_be_audited; full canonical contract controls",
+      "contract_review_ranges": [
+        [
+          1,
+          115
+        ]
+      ],
+      "canonical_routing_row": {
+        "source": "skills/using-mindthus/SKILL.md",
+        "text": "| `3l5s` | Problem-definition failure or work too large to execute. |"
+      }
+    },
+    {
+      "method": "edsp",
+      "source_path": "skills/edsp/SKILL.md",
+      "source_sha256": "4de72a21f227b77711cb8f48212e8f3cb42d5b3b0cd1b911ca3284aad40e240c",
+      "card_line_range": [
+        1,
+        4
+      ],
+      "card_excerpt": "---\nname: edsp\ndescription: \"Use when an ambiguous qualitative judgment needs Extreme Deduction and optional Scenario Projection: push variables to extremes, build a structural coordinate system, diagnose malformed propositions, then project concrete scenarios when needed.\"\n---",
+      "method_binding_question": "当前定性选择是否存在不稳定维度/合成二选一或结构歧义，需要先做Extreme Deduction建立结构？仅缺外部事实不以EDSP补洞；已稳定候选的共享资源分配交SRA。",
+      "positive_example": "两个选择都局部成立且维度未稳。",
+      "negative_example": "比较轴明确、只缺实际报价时先取数。",
+      "binding_status": "author_paraphrase_to_be_audited; full canonical contract controls",
+      "contract_review_ranges": [
+        [
+          1,
+          85
+        ]
+      ],
+      "canonical_routing_row": {
+        "source": "skills/using-mindthus/SKILL.md",
+        "text": "| `edsp` | False binary or structural ambiguity; A/B 都像对. |"
+      }
+    },
+    {
+      "method": "sela",
+      "source_path": "skills/sela/SKILL.md",
+      "source_sha256": "71b34d7ae2b6312c41ed904dba00cc9bea6615d6e73a537ac20e5cd29fb1b9ad",
+      "card_line_range": [
+        1,
+        4
+      ],
+      "card_excerpt": "---\nname: sela\ndescription: Use for long-term system-efficiency versus local-advantage direction pressure, especially old paradigm vs scalable system or external system efficiency vs local/internal advantage; when concrete carrier/exposure/path action is also present, use as a support lens with MPG rather than sole owner.\n---",
+      "method_binding_question": "当前是否存在长期系统费效优势与真实局部优势之间的方向判断？裸A/B价格比较不自动进入SELA；若具体承载/投入路径决定当前动作，SELA是方向支持而不是吸收MPG。",
+      "positive_example": "可扩展系统与真实但难规模化的局部优势冲突。",
+      "negative_example": "同类两工具一次报价比较不是长期系统压力。",
+      "binding_status": "author_paraphrase_to_be_audited; full canonical contract controls",
+      "contract_review_ranges": [
+        [
+          1,
+          110
+        ]
+      ],
+      "canonical_routing_row": {
+        "source": "skills/using-mindthus/SKILL.md",
+        "text": "| `sela` | Long-term system efficiency versus local advantage; carrier/path action defers to MPG. |"
+      }
+    },
+    {
+      "method": "mpg",
+      "source_path": "skills/mpg/SKILL.md",
+      "source_sha256": "1a8e4e5f7a382e24a266befd3b9f58b329253a0ecf49e55b0e9f5690eccf6bc0",
+      "card_line_range": [
+        1,
+        4
+      ],
+      "card_excerpt": "---\nname: mpg\ndescription: Use when a plausible mainline or strategic direction meets a concrete carrier/proxy, concentrated scarce-resource exposure, or continue/commit/hold/exit/switch decision under path volatility, costs, delays, fragility, or counter-forces; not for method-reference evidence review.\n---",
+      "method_binding_question": "是否有已提出的主线/目标、会改变承载的非线性路径，以及行动者当前需配置载体/暴露/时机/去留？主线可受质疑，不要求已经证明正确；仅审查以前MPG答案时方法是审查对象。",
+      "positive_example": "长期方向可行但当前承载脆弱且需决定继续或切换。",
+      "negative_example": "只问长期方向，没有载体/路径行动。",
+      "binding_status": "author_paraphrase_to_be_audited; full canonical contract controls",
+      "contract_review_ranges": [
+        [
+          1,
+          107
+        ]
+      ],
+      "canonical_routing_row": {
+        "source": "skills/using-mindthus/SKILL.md",
+        "text": "| `mpg` | Mainline plus carrier, exposure, path volatility, and commitment; no carrier/exposure/path, no MPG. |"
+      }
+    },
+    {
+      "method": "sra",
+      "source_path": "skills/sra/SKILL.md",
+      "source_sha256": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514",
+      "card_line_range": [
+        1,
+        4
+      ],
+      "card_excerpt": "---\nname: sra\ndescription: \"Use directly when multiple already-judgeable actions or bundles compete for one named scarce resource; choose the current floor and next meaningful tranche. Default Lite; use Full for explicit bundles, multiple resource constraints, fixed thresholds, or major commitments. Do not use with missing comparison facts/resource, or for one selected mainline's carrier, exposure, timing, or exit.\"\n---",
+      "method_binding_question": "是否有多个已足以比较的行动或组合争夺同一具名稀缺资源，需要决定保底和下一份值得投入的资源？缺候选事实/资源不能编造；唯一必需下一步或直接尝试更便宜可直接处理。",
+      "positive_example": "已比较清楚的修复争夺两天人力。",
+      "negative_example": "只有唯一必修动作，或只有项目名没有资源与事实。",
+      "binding_status": "author_paraphrase_to_be_audited; full canonical contract controls",
+      "contract_review_ranges": [
+        [
+          1,
+          120
+        ]
+      ],
+      "canonical_routing_row": {
+        "source": "skills/using-mindthus/SKILL.md",
+        "text": "| `sra` | Multiple valid candidates share a common scarce resource and are judgeable; choose next tranche, ceiling, defer/stop, reserve, or rerank. |"
+      }
+    },
+    {
+      "method": "wae",
+      "source_path": "skills/wae/SKILL.md",
+      "source_sha256": "f5ec807d2bfe91847671eb61d5150b43c464cda378bd2dbb8b7e91db372c7496",
+      "card_line_range": [
+        1,
+        4
+      ],
+      "card_excerpt": "---\nname: wae\ndescription: Use when a workflow, script, schema, agent loop, evidence gate, or review step may be controlling the wrong part of the work; especially when clean structure may be freezing uncertain truth or hiding thin judgment.\n---",
+      "method_binding_question": "事项是否属于LLM/Agent/Skill/脚本/工作流/证据门等系统，且存在谁应控制路径、语义或证据的错配？有缺陷的被审系统正可分析；普通组织边界或格式化不自动WAE。",
+      "positive_example": "schema全绿被错误当作语义已验收的自动化系统。",
+      "negative_example": "一般办公室流程排序且无agentic控制错配。",
+      "binding_status": "author_paraphrase_to_be_audited; full canonical contract controls",
+      "contract_review_ranges": [
+        [
+          1,
+          125
+        ]
+      ],
+      "canonical_routing_row": {
+        "source": "skills/using-mindthus/SKILL.md",
+        "text": "| `wae` | Agentic-system Workflow / Agentic / Evidence mismatch; no controller mismatch, no WAE. |"
+      }
+    },
+    {
+      "method": "tvg",
+      "source_path": "skills/tvg/SKILL.md",
+      "source_sha256": "f1ede50d063ba72dc39e9f13c0721a079f31c58c892f486675126472bf67e7de",
+      "card_line_range": [
+        1,
+        4
+      ],
+      "card_excerpt": "---\nname: tvg\ndescription: Use as a value-directed strengthening loop for bounded AI artifacts that need clearer judgment, evidence, trade-offs, handoff, reuse, or action value.\n---",
+      "method_binding_question": "是否已有边界明确的AI产物和可说明的价值增益目标，需把产物往该good标准改进？它不是所有审计/长文的默认归宿，TVG audit只属于进行中的TVG loop。",
+      "positive_example": "有界方案已写成但缺交接决策依据。",
+      "negative_example": "独立发布审计或从零无目标写稿不自动TVG。",
+      "binding_status": "author_paraphrase_to_be_audited; full canonical contract controls",
+      "contract_review_ranges": [
+        [
+          1,
+          90
+        ]
+      ],
+      "canonical_routing_row": {
+        "source": "skills/using-mindthus/SKILL.md",
+        "text": "| `tvg` | Bounded artifact is thin with a named value-gain target; TVG audit needs an active loop; external audits stay object-routed. |"
+      }
+    },
+    {
+      "method": "tplan",
+      "source_path": "skills/tplan/SKILL.md",
+      "source_sha256": "dbd00b73b2c965c5a687cb12602874226c87e07f9695354f05683a832761ed96",
+      "card_line_range": [
+        1,
+        4
+      ],
+      "card_excerpt": "---\nname: tplan\ndescription: \"Use when an AI agent needs an OKR-Runtime: a Mission needs script-driven task state, acceptance evidence, decision hooks, human-in-loop authority, or Mission-relative addition, subtraction, selection, closure, and recovery.\"\n---",
+      "method_binding_question": "当前是否确需持续Mission状态、acceptance证据、决策hook或人类授权/恢复，而不只是任务复杂？TPlan拥有状态和合法变更，语义问题仍由原责任方及相应方法处理。",
+      "positive_example": "跨会话多节点任务需要持久状态与恢复权限。",
+      "negative_example": "一次复杂分析无需Mission状态机。",
+      "binding_status": "author_paraphrase_to_be_audited; full canonical contract controls",
+      "contract_review_ranges": [
+        [
+          1,
+          145
+        ]
+      ],
+      "canonical_routing_row": {
+        "source": "skills/using-mindthus/SKILL.md",
+        "text": "| `tplan` | Durable Mission state, recovery, or human authority; ordinary complexity is insufficient. |"
+      }
+    }
+  ],
+  "companion_clauses": [
+    {
+      "id": "sela_to_mpg",
+      "source_path": "skills/sela/SKILL.md",
+      "line_range": [
+        86,
+        97
+      ],
+      "trigger": "SELA直接加载且当前事项存在载体、暴露、路径波动或继续/退出承诺。",
+      "consequence": "实际读取MPG并完成所需伴随检查；SELA校准方向，MPG主导路径动作。"
+    },
+    {
+      "id": "mpg_to_sela",
+      "source_path": "skills/mpg/SKILL.md",
+      "line_range": [
+        18,
+        35
+      ],
+      "trigger": "MPG直接加载且主线基于系统效率/趋势。",
+      "consequence": "路径策略前实际读取SELA并完成方向支持检查。"
+    }
+  ]
+}

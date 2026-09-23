@@ -1,0 +1,219 @@
+{
+  "schema": "mindthus.mainline-policy-candidate.v0.1",
+  "implementation_status": "not_implemented",
+  "numeric_status": "provisional_shadow_only_requires_calibration",
+  "noul_bands": {
+    "negative_lte": 0.2,
+    "positive_gte": 0.8
+  },
+  "screen_M01": {
+    "retain_gte": 0.2,
+    "never_drop": [
+      "explicit_invoke",
+      "canonical_companion"
+    ],
+    "below_band_status": "not_evaluated_not_inapplicable"
+  },
+  "score_policy": {
+    "levels": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "consumed_only_if": "S01 positive and same ready set",
+    "tail_levels": [
+      2,
+      3
+    ],
+    "tail_mass_gte": 0.8,
+    "action": "inspect_first_within_ready_set",
+    "missing_distribution": "unknown_no_imputation",
+    "does_not_override": [
+      "authority",
+      "source_integrity",
+      "hard_obligation",
+      "artifact_dependency",
+      "user_deadline"
+    ]
+  },
+  "choice_policy": {
+    "unresolved_values": [
+      "unclear",
+      "scope_unclear"
+    ],
+    "confidence_threshold": null,
+    "automatic_adoption": false,
+    "categorical_comparator": "separate_predeclared_policy_not_fabricated_probabilities"
+  },
+  "limits": {
+    "issues": 3,
+    "methods_per_issue": 3,
+    "distinct_full_methods": 4,
+    "directed_artifact_edges": 6,
+    "questions_per_batch": 48,
+    "projected_request_bytes": 98304,
+    "fast_requests_per_episode": 4,
+    "organizers": 1,
+    "arbitrations": 1,
+    "named_revisions": 1,
+    "plugin_requests_total": 7,
+    "plugin_seconds": 180,
+    "single_call_seconds": 45,
+    "paid_calls_authorized_this_design": 0,
+    "runtime_dynamic_design_uses_existing_arbitration_or_revision_slot": true
+  },
+  "rules": [
+    {
+      "id": "CP01",
+      "name": "机械边界优先",
+      "reads": [
+        "authority",
+        "records"
+      ],
+      "when": "已知缺权/无效来源/未知intent/耗尽预算",
+      "effect": "阻止对应动作并保留原文；只凭真实共享边界扩大父范围。"
+    },
+    {
+      "id": "CP02",
+      "name": "不把错误候选当错误映射",
+      "reads": [
+        "G01",
+        "G02"
+      ],
+      "when": "表示不忠实或清单不完整",
+      "effect": "一次有界原宿主整理；保留独立就绪部分，不创建无限Q0循环。"
+    },
+    {
+      "id": "CP03",
+      "name": "显式调用与提及分离",
+      "reads": [
+        "G03",
+        "G05"
+      ],
+      "when": "invoke vs review_target/incidental",
+      "effect": "invoke保留读合同和检查义务；out_of_domain仍不启动；review_target不自动当前owner。"
+    },
+    {
+      "id": "CP04",
+      "name": "相关不等于适用",
+      "reads": [
+        "M01",
+        "M02",
+        "M04"
+      ],
+      "when": "full合同未加载或M02非positive",
+      "effect": "M01不能直接开始方法；M04非positive结果保留；ready与M02negative局部仲裁。"
+    },
+    {
+      "id": "CP05",
+      "name": "适用与贡献独立",
+      "reads": [
+        "M02",
+        "M03"
+      ],
+      "when": "positive+covered; negative+primary_candidate",
+      "effect": "前者复用核验；后者局部冲突不多数投票。"
+    },
+    {
+      "id": "CP06",
+      "name": "正式伴随独立于排名",
+      "reads": [
+        "M05",
+        "R01"
+      ],
+      "when": "条款触发且已有方向产物",
+      "effect": "读取履约；有效产物复用，不重新跑全部方向分析。"
+    },
+    {
+      "id": "CP07",
+      "name": "只仲裁重叠结论",
+      "reads": [
+        "R02",
+        "R03",
+        "M03"
+      ],
+      "when": "disjoint vs same_scope",
+      "effect": "不同J各有主方法；相同J按完整合同明确主辅。"
+    },
+    {
+      "id": "CP08",
+      "name": "依赖有具体产物",
+      "reads": [
+        "R04",
+        "R01"
+      ],
+      "when": "needed_to_begin / before_commit / conditional",
+      "effect": "以实际产物/条件释放消费者；同方法别名不推导依赖，环仅锁相关分量。"
+    },
+    {
+      "id": "CP09",
+      "name": "Score不抵消硬约束",
+      "reads": [
+        "S01",
+        "S02",
+        "G04"
+      ],
+      "when": "影响可评且依赖/权限允许",
+      "effect": "仅安排同一就绪集合中的审视顺序；不可评分不置零。"
+    },
+    {
+      "id": "CP10",
+      "name": "路线覆盖与删减相互约束",
+      "reads": [
+        "V01",
+        "V02"
+      ],
+      "when": "redundant但覆盖不受损且无强制read",
+      "effect": "提议删除后仍验证必要事项；不按方法数定义充分性。"
+    },
+    {
+      "id": "CP11",
+      "name": "具名修订有界",
+      "reads": [
+        "V03",
+        "V01",
+        "V02"
+      ],
+      "when": "已定位越权/漏项",
+      "effect": "最多一次修订与关联复查；未解决交原宿主。"
+    },
+    {
+      "id": "CP12",
+      "name": "同快照复用与变更失效",
+      "reads": [
+        "records",
+        "R01"
+      ],
+      "when": "输入/问题/合同/模型/政策hash匹配",
+      "effect": "完成结果零推理复用；变化失效关联节点及后继，未知intent不重发。"
+    }
+  ],
+  "numeric_tuning_grid": {
+    "noul_bands": [
+      [
+        0.1,
+        0.9
+      ],
+      [
+        0.2,
+        0.8
+      ],
+      [
+        0.3,
+        0.7
+      ]
+    ],
+    "screen_thresholds": [
+      0.1,
+      0.2,
+      0.3
+    ],
+    "score_tail_thresholds": [
+      0.7,
+      0.8,
+      0.9
+    ]
+  },
+  "scope": "These are design decision rules and parameter candidates, not an executable production policy or optimized thresholds."
+}

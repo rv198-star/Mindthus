@@ -1,0 +1,54 @@
+flowchart TB
+  input["真实请求/原文/权限"]
+  identity["身份与有效权限"]
+  existing["复用已有短计划；必要时一次整理"]
+  view["事项与快照核对<br/>G01 G02 G03 G04 G05 S01 S02"]
+  screen["需要时发现候选<br/>M01"]
+  load["读取候选全文与正式伴随条款"]
+  evaluate["同State类型化职责/依赖评估<br/>M02 M03 M04 M05 R01 R02 R03 R04"]
+  plan["组合具名责任与产物依赖"]
+  audit["检查实际候选计划<br/>V01 V02 V03"]
+  revision["最多一次相关修订/仲裁"]
+  recheck["仅复查变更相关问题<br/>V01 V02 V03"]
+  execute["原宿主按依赖执行就绪方法"]
+  artifacts["产物及来源就绪核查<br/>R01"]
+  handoff["释放依赖消费者/整合"]
+  answercheck["按需复用已有Skills/4K关系子图"]
+  answer["结果与必要边界"]
+  direct["直接/复用有效结果"]
+  partial["具名取证/部分交接/原责任方"]
+  companion_load["实际触发且尚未读取的伴随全文"]
+  companion_evaluate["新合同快照下仅评新增关系<br/>M02 M03 M04 R02 R03 R04"]
+  input -->|always| identity
+  identity -->|valid| existing
+  identity -->|invalid_or_unknown_intent| partial
+  identity -->|known_clear_deterministic_task| direct
+  existing -->|existing_or_bounded_proposal| view
+  view -->|direct_or_verified_reuse| direct
+  view -->|missing_or_unresolved_issue| partial
+  view -->|judgment_candidates_needed| screen
+  view -->|full_contracts_already_available| evaluate
+  screen -->|retained_within_capacity| load
+  screen -->|overflow_or_no_match| partial
+  load -->|contracts_bound| evaluate
+  evaluate -->|consistent_and_all_required_contracts_available| plan
+  evaluate -->|unresolved_component| partial
+  plan -->|actual_proposal_available| audit
+  audit -->|no_blocking_finding| execute
+  audit -->|named_fix_and_budget| revision
+  revision -->|new_proposal_version| recheck
+  recheck -->|fixed| execute
+  recheck -->|still_unresolved| partial
+  execute -->|outputs_observed| artifacts
+  artifacts -->|required_use_satisfied| handoff
+  artifacts -->|missing_stale_conflicting| partial
+  handoff -->|candidate_now_exists_and_triggered| answercheck
+  handoff -->|no_additional_check_needed| answer
+  answercheck -->|bounded_check_complete| answer
+  answercheck -->|still_unresolved| partial
+  direct -->|bounded_original_task| answer
+  partial -->|only_supported_partial_delivery_or_named_gap| answer
+  evaluate -->|M05_triggered_and_required_contract_absent| companion_load
+  companion_load -->|new_contract_loaded_within_shared_budget| companion_evaluate
+  companion_evaluate -->|relations_established| plan
+  companion_evaluate -->|budget_or_unresolved| partial

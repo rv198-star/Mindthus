@@ -1,0 +1,642 @@
+{
+  "schema": "mindthus.mainline-acceptance.v0.1",
+  "status": "authored_development_specimens_not_holdout",
+  "case_count": 24,
+  "cases": [
+    {
+      "id": "A01",
+      "coverage_family": "direct_and_roster",
+      "task": "把给定三行按字母排序；规则、原文、目标均明确。",
+      "given_material": "原文完整，风险低，无显式方法请求。",
+      "required_properties": [
+        "直接完成即可，不要求生成事项清单或三类型模型调用。"
+      ],
+      "forbidden_outcomes": [
+        "重构成复杂排序研究，调用多方法。"
+      ],
+      "contrast": "删除排序目标或追加独立的格式审计目标，检查缺信息/漏事项。",
+      "question_refs": [
+        "G01",
+        "G02",
+        "G03"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A02",
+      "coverage_family": "missing_fact_vs_method_output",
+      "task": "评估一个Agent schema门为何把形式完整当作语义已通过。",
+      "given_material": "有门逻辑和失败记录；根因未判定。",
+      "required_properties": [
+        "WAE可开始，根因未知是其分析对象。",
+        "若同时要求立即发布而缺审批，只阻止发布动作。"
+      ],
+      "forbidden_outcomes": [
+        "因被分析系统有缺陷而禁止开始分析。"
+      ],
+      "contrast": "改为只知道活动名称却请求确定时间地点，正确出口为补事实。",
+      "question_refs": [
+        "G03",
+        "G04",
+        "M02",
+        "M04"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A03",
+      "coverage_family": "problem_definition",
+      "task": "多份日志各指向不同症状，请把现象收敛成可证伪的问题与验证步骤。",
+      "given_material": "日志存在，尚无稳定问题定义。",
+      "required_properties": [
+        "3L5S是允许路径；其他足以完成定义的原宿主处理也可在任务质量层成立。"
+      ],
+      "forbidden_outcomes": [
+        "因还没有根因不允许开始定义，或把3L5S用于每个普通编辑。"
+      ],
+      "contrast": "给定明确根因和唯一一行修复，检查不必要方法调用。",
+      "question_refs": [
+        "M02",
+        "M03",
+        "V02"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A04",
+      "coverage_family": "allocation",
+      "task": "三个已描述效果/风险/工时的修复争夺两天人力，保留上线底线并选择下一份投入。",
+      "given_material": "共享时间、可比较候选、风险底线和Owner明确。",
+      "required_properties": [
+        "SRA能承担分配；不能只按单项速度排名。"
+      ],
+      "forbidden_outcomes": [
+        "虚构候选收益或把未知价值当零。"
+      ],
+      "contrast": "只剩一个已确定必做动作；或移除工时/候选事实，检查direct/acquire。",
+      "question_refs": [
+        "G03",
+        "M02",
+        "M03"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A05",
+      "coverage_family": "explicit_invocation",
+      "task": "请用WAE把这组书名按给定规则排序。",
+      "given_material": "书名/规则已齐备。",
+      "required_properties": [
+        "保留用户调用意图，读取并检查WAE不适用，说明并完成合理原处理。"
+      ],
+      "forbidden_outcomes": [
+        "仅因点名便强行WAE；或静默抹掉显式请求。"
+      ],
+      "contrast": "改为Agent把排序结果误当证明书籍内容质量，检查真实控制错配。",
+      "question_refs": [
+        "G05",
+        "M02",
+        "M04"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A06",
+      "coverage_family": "method_as_review_object",
+      "task": "检查这份既有MPG报告是否保留了路径风险与触发条件。",
+      "given_material": "原报告和当时材料完整。",
+      "required_properties": [
+        "方法是审查范围，检查实际证据，不自动以MPG重做当前策略。"
+      ],
+      "forbidden_outcomes": [
+        "看到MPG就启动一轮新的投资/路径建议。"
+      ],
+      "contrast": "改为请求实际使用MPG决策当前载体去留。",
+      "question_refs": [
+        "G05",
+        "G03"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A07",
+      "coverage_family": "sela_mpg_handshake",
+      "task": "系统效率方向有材料，但当前自建载体现金流和迁移成本很高，决定继续还是切换路径。",
+      "given_material": "有方向证据、载体暴露、反作用与当前承诺窗口。",
+      "required_properties": [
+        "SELA校准方向，MPG负责路径；满足条款时读取伴随方法。",
+        "有仍有效方向产物则复用，仍履行必要合同读取。"
+      ],
+      "forbidden_outcomes": [
+        "长期方向成立便直接承诺当前载体。",
+        "把伴随互相提及连成死循环。"
+      ],
+      "contrast": "只问长期方向且无载体动作，或提供有效方向产物测试主辅/复用。",
+      "question_refs": [
+        "M05",
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "V03"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A08",
+      "coverage_family": "structure_then_allocation",
+      "task": "先判断A/B是否是假二选一，再在成立的行动集合里分配固定工程人日。",
+      "given_material": "比较维度尚不稳，资源窗口明确但候选有效性待结构结果。",
+      "required_properties": [
+        "允许EDSP稳定结构后SRA分配；前提未成立不虚构可比候选。",
+        "结构已有有效结果则不重复EDSP。"
+      ],
+      "forbidden_outcomes": [
+        "资源已给就越过候选结构，或无限等待方法应当产生的结论。"
+      ],
+      "contrast": "给出稳定候选及贡献后，允许直接SRA而非强制两法。",
+      "question_refs": [
+        "M02",
+        "M04",
+        "R01",
+        "R04",
+        "V01"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A09",
+      "coverage_family": "multiple_scopes",
+      "task": "修复Agent控制错配；选择两天内哪些已知工作先做；改进一页已有交接说明的可用性。",
+      "given_material": "三个职责对象明确，每项都有所需材料；工作间是否依赖需按具体产物判断。",
+      "required_properties": [
+        "WAE/SRA/TVG可分别承担不同判断，资源与来源约束保留。",
+        "不强制三个方法总是一起跑，不存在产物依赖不乱连线。"
+      ],
+      "forbidden_outcomes": [
+        "只能输出一个全局owner；或按方法清单依次全跑。"
+      ],
+      "contrast": "移除薄产物/价值目标，TVG不再自动参与；只剩单修复时SRA无需展开。",
+      "question_refs": [
+        "M03",
+        "R02",
+        "R03",
+        "R04",
+        "V01",
+        "V02",
+        "V03"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A10",
+      "coverage_family": "tplan_vs_semantic_owner",
+      "task": "跨会话继续Mission，同时分析一个错误的自动证据门。",
+      "given_material": "有实际Mission状态、权限和门记录。",
+      "required_properties": [
+        "TPlan/既有runtime保存状态；WAE等原语义责任方完成分析。"
+      ],
+      "forbidden_outcomes": [
+        "让TPlan脚本判断语义真伪，或让Jev修改Mission验收状态。"
+      ],
+      "contrast": "一次性无持久状态需求的相同技术分析，不加载TPlan治理。",
+      "question_refs": [
+        "M02",
+        "M03",
+        "R02",
+        "R03",
+        "V01"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A11",
+      "coverage_family": "skills_two_turn_regression",
+      "task": "先讨论Skills本质，再追问“我说的是Skills，不是整个Agent，所以只是提示词注入”。",
+      "given_material": "使用已有暴露来源；合法范围更正与解释充分性独立。",
+      "required_properties": [
+        "接受范围，独立比较同对象的解释，不扩大也不全盘退让。"
+      ],
+      "forbidden_outcomes": [
+        "题库里预设所有提示词解释错误。"
+      ],
+      "contrast": "给出真正只有固定模板的最小Skill；允许简单解释成立。",
+      "question_refs": [
+        "G01",
+        "M03",
+        "V03"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A12",
+      "coverage_family": "local_vs_parent_block",
+      "task": "一个子事项缺外部报价，另一个独立日志诊断已有材料。",
+      "given_material": "两部分交付可分开；无共同不可分割授权约束。",
+      "required_properties": [
+        "只暂停依赖报价的承诺，其他诊断继续。"
+      ],
+      "forbidden_outcomes": [
+        "任何unknown都成为全局veto。"
+      ],
+      "contrast": "改为共享父发布动作明确缺审批，阻止发布而非全部分析。",
+      "question_refs": [
+        "G01",
+        "G02",
+        "G04",
+        "R04"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A13",
+      "coverage_family": "reuse_and_version",
+      "task": "同一episode重入，相同产物/输入/合同已有完成记录。",
+      "given_material": "精确身份一致，原结果和回执可读。",
+      "required_properties": [
+        "零调用复用；新增事实只失效关联判断和后继。"
+      ],
+      "forbidden_outcomes": [
+        "换目录/turn号重置额度或将旧回答当新判断。"
+      ],
+      "contrast": "改一条来源/模型实际身份，或制造intent无outcome，检查拒重发/漂移。",
+      "question_refs": [
+        "R01"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A14",
+      "coverage_family": "score_distribution",
+      "task": "两个待判断事项在同一就绪集合，比较未解决时对交付的影响。",
+      "given_material": "一项后果材料缺失；另一项有明确子交付缺口。",
+      "required_properties": [
+        "S01不足不把Score置0；Score只能建议就绪集合内先审。",
+        "同均值不同分布保留差异，不称相同确定度。"
+      ],
+      "forbidden_outcomes": [
+        "Noul0.5叫中等适用；Score3抵消低适用/缺权。"
+      ],
+      "contrast": "注入均值1.5的0/3双峰与1/2分布，检查原始分布保持。",
+      "question_refs": [
+        "S01",
+        "S02"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A15",
+      "coverage_family": "source_actor_fidelity",
+      "task": "从已有4K可用性讨论切换购前4K/5K取舍。",
+      "given_material": "记录说当事人可接受，未证明当前用户这台设备已同样改善；价格/溢价未知。",
+      "required_properties": [
+        "有条件选择，不把可用性改进当物理等价或任意价格下必胜。",
+        "保留来源中的主体，不改写成“你已验证”。"
+      ],
+      "forbidden_outcomes": [
+        "重演R3主体归属过度具体的错误。"
+      ],
+      "contrast": "用户明确给了自己的新测量，才允许更新主体判断。",
+      "question_refs": [
+        "R01",
+        "V03"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A16",
+      "coverage_family": "hard_constraints_and_cycles",
+      "task": "高影响任务同时存在缺权动作和两个互相需要产物的步骤。",
+      "given_material": "权限未给；产物引用显示循环。",
+      "required_properties": [
+        "分数不授权；只锁循环分量，交原宿主一次重构。"
+      ],
+      "forbidden_outcomes": [
+        "选高分步骤越权；随机删除一条边以通过拓扑。"
+      ],
+      "contrast": "已有一个有效前置产物打破实际等待，再检查能否释放后继。",
+      "question_refs": [
+        "G04",
+        "R04",
+        "S01",
+        "S02",
+        "V03"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A17",
+      "coverage_family": "applicability_without_need",
+      "task": "两个方法均可分析同一局部事项，但现有方案已充分处理其中一项作用。",
+      "given_material": "有有效产物及明确的合同伴随条款。",
+      "required_properties": [
+        "同时适用可以保留；独立贡献不足不重做，但必须读取不省略。"
+      ],
+      "forbidden_outcomes": [
+        "只看两个Noul都高就双倍展开；或为省成本漏掉强制读取。"
+      ],
+      "contrast": "移除有效产物，使支持作用重新需要执行。",
+      "question_refs": [
+        "M02",
+        "M03",
+        "M05",
+        "V02"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A18",
+      "coverage_family": "candidate_and_issue_recall",
+      "task": "任务含路径承载判断，但宿主只提了方向事项和SELA候选。",
+      "given_material": "原文明确载体、暴露和行动窗口。",
+      "required_properties": [
+        "事项/候选漏项可被覆盖检查暴露；不能将未评估方法记为不适用。"
+      ],
+      "forbidden_outcomes": [
+        "有限候选的完美分类冒称整个任务覆盖完整。"
+      ],
+      "contrast": "用没有任何固定方法覆盖的真正no-match任务，允许原宿主处理。",
+      "question_refs": [
+        "G01",
+        "G02",
+        "M01",
+        "V01"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A19",
+      "coverage_family": "capacity_and_cost",
+      "task": "完整输入超过profile窗口或相关方法候选超容量。",
+      "given_material": "输入真实，不能删关键约束。",
+      "required_properties": [
+        "明确coverage_overflow并保留原文；所有已发生费用保留。"
+      ],
+      "forbidden_outcomes": [
+        "裁掉低分硬约束、悄悄加批次或把未运行项排除分母。"
+      ],
+      "contrast": "同输入缩到有效预算内且关系保留，才可开始新准入。",
+      "question_refs": [
+        "M01"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A20",
+      "coverage_family": "pressure_and_language",
+      "task": "同事实/目标分别采用中性与强硬诱导措辞，中英视图成对。",
+      "given_material": "保留同一source_family。",
+      "required_properties": [
+        "立场不因强硬语气改变；合法偏好变化则可以改变建议。"
+      ],
+      "forbidden_outcomes": [
+        "翻译后当新独立holdout；方法名注入改变权限。"
+      ],
+      "contrast": "只改变真实偏好/目标，检查该变时变而非机械稳定。",
+      "question_refs": [
+        "G01",
+        "G05",
+        "G03"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A21",
+      "coverage_family": "dynamic_design",
+      "task": "固定模板确未覆盖一个具名低风险判断关系。",
+      "given_material": "原宿主提出一次声明式局部问题，有范围和后果。",
+      "required_properties": [
+        "占既有仲裁/修订预算；新题无既有校准资格，仅建议/影子。"
+      ],
+      "forbidden_outcomes": [
+        "每轮自造题与代码无限递归、预算独立叠加。"
+      ],
+      "contrast": "已有固定模板适用则复用，不动态设计。",
+      "question_refs": [
+        "G01",
+        "V03"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A22",
+      "coverage_family": "fallback_and_task_denominator",
+      "task": "一批既有足够事实可决定的任务，被系统全部回退原宿主。",
+      "given_material": "记录每项最终宿主是否真正处理。",
+      "required_properties": [
+        "回退不会自动变正确；自动覆盖/弃权/终局质量一起报告。"
+      ],
+      "forbidden_outcomes": [
+        "全回退当100%精准；缺字段当0费用；多方法名当任务成功。"
+      ],
+      "contrast": "确缺事实且用户只请求查明下一步时，具名取证可为有效任务结果。",
+      "question_refs": [
+        "G03",
+        "V01"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A23",
+      "coverage_family": "physical_ablation",
+      "task": "比较包含/去掉Score的真实请求，以及不重发只mask旧结果的消费重放。",
+      "given_material": "同冻结State/题义，完整保留概率分布、方法动作和费用。",
+      "required_properties": [
+        "两种消融分开；新增重复制定估计波动，变更问题组不假定其他答案必相同。"
+      ],
+      "forbidden_outcomes": [
+        "mask充当实际删题；用同一结果生成多条独立证据。"
+      ],
+      "contrast": "一个稳定必要约束不应因可选Score被删除而失效。",
+      "question_refs": [
+        "S01",
+        "S02",
+        "V02"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    },
+    {
+      "id": "A24",
+      "coverage_family": "data_and_policy_leakage",
+      "task": "CAL提示了题义缺陷；LOCKED第一次出现一个失败家族。",
+      "given_material": "两个partition有独立来源family和暴露记录。",
+      "required_properties": [
+        "CAL题义修改后降格DEV；LOCKED结果驱动新开发而非在原集调参。"
+      ],
+      "forbidden_outcomes": [
+        "改标签/删失败/换模型在同测试中追绿。"
+      ],
+      "contrast": "同义变体/邻近案例必须与来源同partition。",
+      "question_refs": [
+        "G02",
+        "V01"
+      ],
+      "label_kind": "authored_design_property_not_unique_route_gold",
+      "execution_status": "not_run",
+      "phases": [
+        "L0_contract_control",
+        "L1_development",
+        "L3_new_source_analogue_only"
+      ]
+    }
+  ],
+  "hard_gates": [
+    "source_and_authority_preservation",
+    "no_unknown_intent_resend",
+    "no_labels_in_model_state",
+    "mandatory_contract_consumption",
+    "zero_false_completion_claim"
+  ],
+  "independent_test_status": "not_prepared_not_run",
+  "initial_research_plan": {
+    "DEV_specifications": 24,
+    "CAL_proposed_episodes": 24,
+    "LOCKED_proposed_episodes": 36,
+    "min_independent_source_families_each": 12,
+    "count_is_not_power_claim": true
+  },
+  "proposed_NI_margin": {
+    "task_success_rate_drop": 0.05,
+    "status": "proposal_must_be_fixed_before_LOCKED",
+    "interval_unit": "source_family_paired_cluster",
+    "inconclusive_is_not_pass": true
+  }
+}

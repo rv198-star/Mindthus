@@ -1,0 +1,348 @@
+{
+  "schema": "mindthus.mainline-logical-dag.v0.1",
+  "kind": "design_not_runtime_execution",
+  "nodes": [
+    {
+      "id": "input",
+      "label": "真实请求/原文/权限",
+      "owner": "host",
+      "question_refs": []
+    },
+    {
+      "id": "identity",
+      "label": "身份与有效权限",
+      "owner": "code",
+      "question_refs": []
+    },
+    {
+      "id": "existing",
+      "label": "复用已有短计划；必要时一次整理",
+      "owner": "host",
+      "question_refs": []
+    },
+    {
+      "id": "view",
+      "label": "事项与快照核对",
+      "owner": "mixed",
+      "question_refs": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "S01",
+        "S02"
+      ]
+    },
+    {
+      "id": "screen",
+      "label": "需要时发现候选",
+      "owner": "mixed",
+      "question_refs": [
+        "M01"
+      ]
+    },
+    {
+      "id": "load",
+      "label": "读取候选全文与正式伴随条款",
+      "owner": "code",
+      "question_refs": []
+    },
+    {
+      "id": "evaluate",
+      "label": "同State类型化职责/依赖评估",
+      "owner": "mixed",
+      "question_refs": [
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "R01",
+        "R02",
+        "R03",
+        "R04"
+      ]
+    },
+    {
+      "id": "plan",
+      "label": "组合具名责任与产物依赖",
+      "owner": "host_and_code",
+      "question_refs": []
+    },
+    {
+      "id": "audit",
+      "label": "检查实际候选计划",
+      "owner": "mixed",
+      "question_refs": [
+        "V01",
+        "V02",
+        "V03"
+      ]
+    },
+    {
+      "id": "revision",
+      "label": "最多一次相关修订/仲裁",
+      "owner": "host",
+      "question_refs": []
+    },
+    {
+      "id": "recheck",
+      "label": "仅复查变更相关问题",
+      "owner": "mixed",
+      "question_refs": [
+        "V01",
+        "V02",
+        "V03"
+      ]
+    },
+    {
+      "id": "execute",
+      "label": "原宿主按依赖执行就绪方法",
+      "owner": "host",
+      "question_refs": []
+    },
+    {
+      "id": "artifacts",
+      "label": "产物及来源就绪核查",
+      "owner": "host_and_code",
+      "question_refs": [
+        "R01"
+      ]
+    },
+    {
+      "id": "handoff",
+      "label": "释放依赖消费者/整合",
+      "owner": "host",
+      "question_refs": []
+    },
+    {
+      "id": "answercheck",
+      "label": "按需复用已有Skills/4K关系子图",
+      "owner": "existing_bounded_module",
+      "question_refs": []
+    },
+    {
+      "id": "answer",
+      "label": "结果与必要边界",
+      "owner": "host",
+      "question_refs": []
+    },
+    {
+      "id": "direct",
+      "label": "直接/复用有效结果",
+      "owner": "host",
+      "question_refs": []
+    },
+    {
+      "id": "partial",
+      "label": "具名取证/部分交接/原责任方",
+      "owner": "host",
+      "question_refs": []
+    },
+    {
+      "id": "companion_load",
+      "label": "实际触发且尚未读取的伴随全文",
+      "owner": "code",
+      "question_refs": []
+    },
+    {
+      "id": "companion_evaluate",
+      "label": "新合同快照下仅评新增关系",
+      "owner": "mixed",
+      "question_refs": [
+        "M02",
+        "M03",
+        "M04",
+        "R02",
+        "R03",
+        "R04"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "input",
+      "to": "identity",
+      "condition": "always"
+    },
+    {
+      "from": "identity",
+      "to": "existing",
+      "condition": "valid"
+    },
+    {
+      "from": "identity",
+      "to": "partial",
+      "condition": "invalid_or_unknown_intent"
+    },
+    {
+      "from": "identity",
+      "to": "direct",
+      "condition": "known_clear_deterministic_task"
+    },
+    {
+      "from": "existing",
+      "to": "view",
+      "condition": "existing_or_bounded_proposal"
+    },
+    {
+      "from": "view",
+      "to": "direct",
+      "condition": "direct_or_verified_reuse"
+    },
+    {
+      "from": "view",
+      "to": "partial",
+      "condition": "missing_or_unresolved_issue"
+    },
+    {
+      "from": "view",
+      "to": "screen",
+      "condition": "judgment_candidates_needed"
+    },
+    {
+      "from": "view",
+      "to": "evaluate",
+      "condition": "full_contracts_already_available"
+    },
+    {
+      "from": "screen",
+      "to": "load",
+      "condition": "retained_within_capacity"
+    },
+    {
+      "from": "screen",
+      "to": "partial",
+      "condition": "overflow_or_no_match"
+    },
+    {
+      "from": "load",
+      "to": "evaluate",
+      "condition": "contracts_bound"
+    },
+    {
+      "from": "evaluate",
+      "to": "plan",
+      "condition": "consistent_and_all_required_contracts_available"
+    },
+    {
+      "from": "evaluate",
+      "to": "partial",
+      "condition": "unresolved_component"
+    },
+    {
+      "from": "plan",
+      "to": "audit",
+      "condition": "actual_proposal_available"
+    },
+    {
+      "from": "audit",
+      "to": "execute",
+      "condition": "no_blocking_finding"
+    },
+    {
+      "from": "audit",
+      "to": "revision",
+      "condition": "named_fix_and_budget"
+    },
+    {
+      "from": "revision",
+      "to": "recheck",
+      "condition": "new_proposal_version"
+    },
+    {
+      "from": "recheck",
+      "to": "execute",
+      "condition": "fixed"
+    },
+    {
+      "from": "recheck",
+      "to": "partial",
+      "condition": "still_unresolved"
+    },
+    {
+      "from": "execute",
+      "to": "artifacts",
+      "condition": "outputs_observed"
+    },
+    {
+      "from": "artifacts",
+      "to": "handoff",
+      "condition": "required_use_satisfied"
+    },
+    {
+      "from": "artifacts",
+      "to": "partial",
+      "condition": "missing_stale_conflicting"
+    },
+    {
+      "from": "handoff",
+      "to": "answercheck",
+      "condition": "candidate_now_exists_and_triggered"
+    },
+    {
+      "from": "handoff",
+      "to": "answer",
+      "condition": "no_additional_check_needed"
+    },
+    {
+      "from": "answercheck",
+      "to": "answer",
+      "condition": "bounded_check_complete"
+    },
+    {
+      "from": "answercheck",
+      "to": "partial",
+      "condition": "still_unresolved"
+    },
+    {
+      "from": "direct",
+      "to": "answer",
+      "condition": "bounded_original_task"
+    },
+    {
+      "from": "partial",
+      "to": "answer",
+      "condition": "only_supported_partial_delivery_or_named_gap"
+    },
+    {
+      "from": "evaluate",
+      "to": "companion_load",
+      "condition": "M05_triggered_and_required_contract_absent"
+    },
+    {
+      "from": "companion_load",
+      "to": "companion_evaluate",
+      "condition": "new_contract_loaded_within_shared_budget"
+    },
+    {
+      "from": "companion_evaluate",
+      "to": "plan",
+      "condition": "relations_established"
+    },
+    {
+      "from": "companion_evaluate",
+      "to": "partial",
+      "condition": "budget_or_unresolved"
+    }
+  ],
+  "packing_rule": "Input/contract/new-artifact availability determines API batches; Noul/Choice/Score are not serial stages. Same-State V checks may pack when plan already exists.",
+  "runtime_unroll": "Finite method steps reference versioned artifacts; multi-turn changes create new nodes and spend same episode budget. No backward edges to an already executed version.",
+  "budget_ref": "policy.json",
+  "subgraph_ref": "../entry-assessment/original-scenarios-design/D3-repair-r3/disposition.md",
+  "execution_expansion": {
+    "per_step": [
+      "begin",
+      "produce",
+      "accepted_output",
+      "commit"
+    ],
+    "needed_to_begin": "producer.accepted_output -> consumer.begin",
+    "needed_before_commit": "producer.accepted_output -> consumer.commit; independent preparation may begin earlier",
+    "conditional": "guarded forward edge, requires named condition evidence",
+    "versioned_node_ids": true,
+    "reuse_node": "verified existing output supplies accepted_output without rerunning producer",
+    "cycle_action": "stop affected component and at most one host arbitration, not random edge deletion",
+    "parallelism": "absence of semantic dependency is not permission to execute concurrently; resource/authority locks still apply"
+  }
+}
