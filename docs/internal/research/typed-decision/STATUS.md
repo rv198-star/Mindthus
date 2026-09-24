@@ -12,8 +12,10 @@ On 2026-09-24, the local experimental branch fast-forwarded from `3c24522a6` to
 remote `c4630e844`; pre-existing untracked files and main were preserved. Read the
 [local takeover](route-control-v0.2/scoped-repair-r1/local-codex-takeover.md) and
 [raw outcome index](route-control-v0.2/scoped-repair-r1/local-codex-observation.json).
-The requested handoff file was not present in accessible local locations and has been
-requested from the Owner; its recovery instructions are not presumed.
+The requested handoff was supplied later as a ZIP. All five contained documents match
+its manifest hashes. It is a historical report and proposed migration guide, not a live
+ledger backup or a new authority over the Owner's current instructions. See the takeover
+record for the package digest and the old archive audit.
 
 The original R1 freeze verifies unchanged. A separate local Codex freeze binds the same
 three R1 inputs, implementation, official TypeSafe `jev-1.13.0`, provider, and 4-call/
@@ -31,6 +33,12 @@ regression remains a separate prior PASS; these live results do not qualify #211
 spend the remaining R1 slot as a retry or use old ChatGPT text as a new Codex arm.
 All 43 local runtime JSON files are byte-identically archived under
 `scoped-repair-r1/local-codex-evidence-20260924/`, with an index and zero credential hits.
+After the handoff arrived, 52 focused tests passed under the local Python and canonical
+temporary-directory environment; lifecycle registration passed 88/88. The archived old
+162 JSON contain all eight initial intents/outcomes and seven staged host responses.
+The difference from the old 179-all-files count matches the expected 17 lock files, but
+the OCI directory listing was not included, so old-runtime completeness and legal local
+resume remain unproven. No old response was consumed or old Jev request repeated.
 
 ## Current checkpoint — code pushed; Owner-requested final attempt denied; stop retries
 
