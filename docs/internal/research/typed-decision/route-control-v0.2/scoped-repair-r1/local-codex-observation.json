@@ -1,0 +1,115 @@
+{
+  "archived_evidence_index": "docs/internal/research/typed-decision/route-control-v0.2/scoped-repair-r1/local-codex-evidence-20260924/evidence-index.json",
+  "archived_evidence_index_sha256": "fa6572e50ff8b9579c25c3e0957a50c66ab4ce968269f7332abb20cd16b22143",
+  "cases": {
+    "B1": {
+      "advisory_output_state": "unrun",
+      "committed_output_state": "unrun",
+      "failed_questions": {
+        "S02.I1": "answer_contract:ContractError:weighted_rating/distribution_mismatch"
+      },
+      "host_consumed_outcomes": 0,
+      "host_handoffs": 0,
+      "inference_seconds": 1.973166499985382,
+      "ok_question_ids": [
+        "M02.I1.wae",
+        "M03.I1.wae",
+        "S01.I1"
+      ],
+      "outcome_file_sha256": "b43e000484bf943ef332d0695a439a9d542e0b76f198be080da5d61f60288fd5",
+      "outcome_path": "/Users/william/Documents/Codex/2026-09-24/mindthus-six-scenes-r1-local/episodes/B1/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/cc3c91e4103c4584789bf82331306463d3687ef13d1b80ba7c93e82f62c335c9/steps/route/calls/b42d38179232a90d003b6c87b4081fe31d1b58478fc5630d02e049b57baf5999/outcome.json",
+      "pending": {
+        "I1": "no_established_primary"
+      },
+      "provider_intents": 1,
+      "provider_outcomes": 1,
+      "reported_usage": {
+        "cost_usd": null,
+        "input_tokens": 4837,
+        "output_tokens": 143
+      },
+      "state": "partial"
+    },
+    "C1": {
+      "advisory_output_state": "unrun",
+      "committed_output_state": "unrun",
+      "failed_questions": {
+        "M02.I1.mpg": "ProviderError:transport_failure",
+        "M02.I1.sela": "ProviderError:transport_failure",
+        "M03.I1.mpg": "ProviderError:transport_failure",
+        "M03.I1.sela": "ProviderError:transport_failure",
+        "M05.I1.mpg": "ProviderError:transport_failure",
+        "M05.I1.sela": "ProviderError:transport_failure",
+        "R02.I1.sela.mpg": "ProviderError:transport_failure",
+        "R03.I1.sela.mpg": "ProviderError:transport_failure",
+        "S01.I1": "ProviderError:transport_failure",
+        "S02.I1": "ProviderError:transport_failure"
+      },
+      "host_consumed_outcomes": 0,
+      "host_handoffs": 0,
+      "inference_seconds": 5.030522665998433,
+      "ok_question_ids": [],
+      "outcome_file_sha256": "975410638dac4e4ecd2785fc23e3649064e34b2fd054107605820706a39013d5",
+      "outcome_path": "/Users/william/Documents/Codex/2026-09-24/mindthus-six-scenes-r1-local/episodes/C1/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/ca9d27d41e033bba45fe4fb14b4f8cf67dfda8b5808e381a7de54634079f2045/steps/route/calls/4dbe0caa6da741e9cbd1717adf60864d6fe107843d67ef6cd658f357b1715fce/outcome.json",
+      "pending": {
+        "I1": "method_observation_unresolved:sela;method_observation_unresolved:mpg;no_established_primary"
+      },
+      "provider_intents": 1,
+      "provider_outcomes": 1,
+      "reported_usage": {
+        "cost_usd": null,
+        "input_tokens": null,
+        "output_tokens": null
+      },
+      "state": "technical_failure"
+    },
+    "D1": {
+      "advisory_output_state": "unrun",
+      "committed_output_state": "unrun",
+      "failed_questions": {
+        "M02.I1.edsp": "ProviderError:transport_failure",
+        "M02.I2.sra": "ProviderError:transport_failure",
+        "M03.I1.edsp": "ProviderError:transport_failure",
+        "M03.I2.sra": "ProviderError:transport_failure",
+        "R04.P1": "ProviderError:transport_failure",
+        "S01.I1": "ProviderError:transport_failure",
+        "S01.I2": "ProviderError:transport_failure",
+        "S02.I1": "ProviderError:transport_failure",
+        "S02.I2": "ProviderError:transport_failure"
+      },
+      "host_consumed_outcomes": 0,
+      "host_handoffs": 0,
+      "inference_seconds": 5.037890542007517,
+      "ok_question_ids": [],
+      "outcome_file_sha256": "764c528c296fa8457d7c87c605c60a5ad03effd2964fc1adeaa671cbb274e64c",
+      "outcome_path": "/Users/william/Documents/Codex/2026-09-24/mindthus-six-scenes-r1-local/episodes/D1/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/19cd962619d26e5c6e0733a200a68e3d16a2cd2746a18f55fbe501334c9995ff/steps/route/calls/3cce8d625dc67040c8b14c8c17f7a1faf49db6e40e3147298aab56b07be8529c/outcome.json",
+      "pending": {
+        "I1": "method_observation_unresolved:edsp;no_established_primary",
+        "I2": "dependency_unresolved"
+      },
+      "provider_intents": 1,
+      "provider_outcomes": 1,
+      "reported_usage": {
+        "cost_usd": null,
+        "input_tokens": null,
+        "output_tokens": null
+      },
+      "state": "technical_failure"
+    }
+  },
+  "host": "current_local_codex",
+  "issue": "#211",
+  "local_freeze_record_sha256": "c9c62aec0173529db717e01c063c34da26e4f11ffcd41e1ec51c3b83d689e7ec",
+  "local_runner_file_sha256": "fc88ad39533c42ae510086964c04090658c34661626b0277c4d7ea36136d133c",
+  "maximum_jev_requests": 4,
+  "model": "jev-1.13.0",
+  "new_cpa_requests": 0,
+  "new_jev_requests": 3,
+  "new_openrouter_requests": 0,
+  "old_archive_index_file_sha256": "4f37d34b520066abd922a6b11e245f5b928f451115f9d8b8574c33b154fd6ec3",
+  "parent_freeze_file_sha256": "5b4d990dc77524ad25df115123e9648d762c2b5a3911037219f0b7fea9b15e9f",
+  "remaining_budget_not_spendable_without_accepted_dependency": 1,
+  "runtime_root": "/Users/william/Documents/Codex/2026-09-24/mindthus-six-scenes-r1-local",
+  "schema": "mindthus.local-codex-r1-observation.v1",
+  "source_commit": "c4630e8447253ebc59691e83ba2557c84e97298d"
+}

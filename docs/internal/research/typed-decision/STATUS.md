@@ -6,6 +6,32 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current local Codex takeover — R1 live partial; old-host recovery pending
+
+On 2026-09-24, the local experimental branch fast-forwarded from `3c24522a6` to
+remote `c4630e844`; pre-existing untracked files and main were preserved. Read the
+[local takeover](route-control-v0.2/scoped-repair-r1/local-codex-takeover.md) and
+[raw outcome index](route-control-v0.2/scoped-repair-r1/local-codex-observation.json).
+The requested handoff file was not present in accessible local locations and has been
+requested from the Owner; its recovery instructions are not presumed.
+
+The original R1 freeze verifies unchanged. A separate local Codex freeze binds the same
+three R1 inputs, implementation, official TypeSafe `jev-1.13.0`, provider, and 4-call/
+USD0.08 reserve ceiling to a new local root. Old OCI paths, freezes and archived records
+were not rewritten. The 162 archived old files match their index; the original runtime
+root/worktree is absent locally, so seven staged old host replies remain unconsumed.
+
+Three new TypeSafe requests each have an intent/outcome, with no retry or unknown intent.
+B1 retained three valid observations, isolated one Score contract error and preserved
+4837/143 reported tokens; policy still had no established primary. C1 and D1 recorded
+transport failure with unknown usage, and no host handoff. D1's predecessor was not ready,
+so its conditional second request was not made. New CPA/OpenRouter calls=0. No R1 host
+consumption, E1/F1/F2 recheck, or judgeable same-host ①/② pair has completed. Engineering
+regression remains a separate prior PASS; these live results do not qualify #211. Do not
+spend the remaining R1 slot as a retry or use old ChatGPT text as a new Codex arm.
+All 43 local runtime JSON files are byte-identically archived under
+`scoped-repair-r1/local-codex-evidence-20260924/`, with an index and zero credential hits.
+
 ## Current checkpoint — code pushed; Owner-requested final attempt denied; stop retries
 
 Before the final attempt, HEAD `0a8999c24241df4c9334acdeabbd0db8e7562f5d` was clean and
