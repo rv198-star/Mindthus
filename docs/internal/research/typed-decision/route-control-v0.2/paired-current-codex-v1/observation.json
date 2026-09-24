@@ -1,0 +1,30 @@
+{
+  "advisory_author_review": "usable_content_process_exit_unknown",
+  "advisory_call": {
+    "elapsed_seconds": 43.01292237499729,
+    "events_sha256": "1a07a9145de58ed903386992562b29e89e530e21177d0c85ce0570956e2f28ea",
+    "exit_code": null,
+    "last_sha256": "75ee17e7e5e532edaff11165b18d5cf341a97f26fa2db3fc0d9269a880c48446",
+    "model_requested": "gpt-6-sol",
+    "model_service_attestation": "not_observed",
+    "status": "timeout_unknown_billing",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "usage": {
+      "cost_usd": null,
+      "input_tokens": 17553,
+      "output_tokens": 476
+    }
+  },
+  "advisory_last_message_present": true,
+  "advisory_native_turn_completed": true,
+  "committed_execution_count": 1,
+  "committed_host_consumed": true,
+  "formal_qualification": false,
+  "freeze_digest": "74ba0adf6ef9a56d363f0973346c77e27fe746f7dc9b35c3dd779849c4698b78",
+  "mode_1": "advisory",
+  "mode_2": "committed",
+  "new_jev_calls": 0,
+  "same_jev_observation_reused": true,
+  "scenario": "B3",
+  "schema": "mindthus.paired-current-codex-development-observation.v1"
+}

@@ -1,0 +1,5 @@
+{"type":"thread.started","thread_id":"01a0d383-b958-7fc0-97fb-0ffb2840fbf5"}
+{"type":"turn.started"}
+{"type":"error","message":"Reconnecting... 2/5 (stream disconnected before completion: tls handshake eof)"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"answers\":{\"M02.I1.wae\":{\"status\":\"ok\",\"value\":0.99},\"M03.I1.wae\":{\"status\":\"ok\",\"value\":\"primary_candidate\"}}}"}}
+{"type":"turn.completed","usage":{"input_tokens":18342,"cached_input_tokens":0,"cache_write_input_tokens":0,"output_tokens":102,"reasoning_output_tokens":51}}

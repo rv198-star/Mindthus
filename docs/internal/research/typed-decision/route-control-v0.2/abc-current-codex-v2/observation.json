@@ -1,0 +1,392 @@
+{
+  "CPA_calls": 0,
+  "OpenRouter_calls": 0,
+  "actual_cost_usd": null,
+  "automatic_retries": 0,
+  "cases": {
+    "B3": {
+      "A_native_skill_reads": [
+        "wae"
+      ],
+      "A_using_mindthus_entry_read_observed": false,
+      "arms": {
+        "B": {
+          "counts": {
+            "arbitration": 0,
+            "correction": 0,
+            "execution": 0,
+            "judgment": 1,
+            "organize": 0,
+            "total": 1
+          },
+          "has_host_output": false,
+          "pending": {
+            "I1": "method_observation_unresolved:wae;no_established_primary"
+          },
+          "qualification": false,
+          "route": [
+            {
+              "attention": {
+                "status": "unknown"
+              },
+              "constraints": [],
+              "issue_id": "I1",
+              "mode": "delegated_unresolved",
+              "primary": null,
+              "reason": "method_observation_unresolved:wae;no_established_primary",
+              "supports": []
+            }
+          ],
+          "task_complete": false,
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 18342,
+            "output_tokens": 102
+          }
+        },
+        "C": {
+          "counts": {
+            "arbitration": 0,
+            "correction": 0,
+            "execution": 1,
+            "judgment": 1,
+            "organize": 0,
+            "total": 2
+          },
+          "has_host_output": true,
+          "jev_answers": {
+            "M02.I1.wae": {
+              "noul": 0.89,
+              "type": "noul"
+            },
+            "M03.I1.wae": {
+              "choice": "primary_candidate",
+              "confidence": 0.23,
+              "probabilities": {
+                "constraint": 0.15,
+                "covered": 0.03,
+                "no_contribution": 0.08,
+                "primary_candidate": 0.33,
+                "support": 0.13,
+                "support_and_constraint": 0.25,
+                "unclear": 0.03
+              },
+              "type": "choice"
+            }
+          },
+          "jev_response_model": "jev-1.13.0",
+          "pending": {},
+          "qualification": false,
+          "route": [
+            {
+              "attention": {
+                "status": "unknown"
+              },
+              "constraints": [],
+              "issue_id": "I1",
+              "mode": "committed",
+              "primary": "wae",
+              "reason": null,
+              "supports": []
+            }
+          ],
+          "task_complete": false,
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 21864,
+            "output_tokens": 911
+          }
+        }
+      },
+      "author_text_review": {
+        "all_visible_final_texts_usable": true,
+        "independent_review": false,
+        "severe_errors_seen": false
+      },
+      "codex_calls": {
+        "B3-A-baseline": {
+          "elapsed_seconds": 64.83608199999435,
+          "events_sha256": "d6b34bc3a7e745ea03e9c174523e842b22c1ef41d5fe48aa9b5e334ef75cc4b8",
+          "exit_code": 0,
+          "last_sha256": "513fedad18026ae4af0db5f03d6297780a518c90830e3b4eec2694e572c1a807",
+          "model_requested": "gpt-6-sol",
+          "model_service_attestation": "not_observed",
+          "status": "complete",
+          "stderr_sha256": "20396b89daf507652740dd6ed993e434e1b09f22221df74aff63b8a3473013cf",
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 33241,
+            "output_tokens": 1033
+          }
+        },
+        "B3-B-delegated-host": {
+          "elapsed_seconds": 38.10138320797705,
+          "events_sha256": "3d4485a2a51dda9891997ad527165646b3bcba29a1f42cdb579e5d6a3d214c91",
+          "exit_code": 0,
+          "last_sha256": "6fc0b891b25156227d871a828af05aca7cdbb646ae4ce13b5e3cc5cd7027d0a1",
+          "model_requested": "gpt-6-sol",
+          "model_service_attestation": "not_observed",
+          "status": "complete",
+          "stderr_sha256": "fae509517054eac9ecdfbc8a59916427551ded23e4f10552a10e0c0e27467080",
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 14784,
+            "output_tokens": 575
+          }
+        },
+        "B3-B-judge": {
+          "elapsed_seconds": 44.01388770798803,
+          "events_sha256": "189bc0c7908dc66c7e949e5c688add526d81478aa74d08e2d1c5ae5d282a437f",
+          "exit_code": null,
+          "last_sha256": null,
+          "model_requested": "gpt-6-sol",
+          "model_service_attestation": "not_observed",
+          "status": "timeout_unknown_billing",
+          "stderr_sha256": "9caf2eacf0313aa3842089975b45a5bc5faa7c5081142d83d24d34789141c8a8",
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 18342,
+            "output_tokens": 102
+          }
+        },
+        "B3-C-host": {
+          "elapsed_seconds": 39.64844145800453,
+          "events_sha256": "1fc46927f79b5ede1b45617f249912d07c6544a9f35f8cdc26fa7e542378120d",
+          "exit_code": 0,
+          "last_sha256": "8ccf424124b353cb90899d0063842a168c38919e3f30dc6dbd552d0dbbb7832a",
+          "model_requested": "gpt-6-sol",
+          "model_service_attestation": "not_observed",
+          "status": "complete",
+          "stderr_sha256": "3c95cb5c92e7cea9c504d95d216b2a0a79027fa21602695fd1b7ae26e9a89d6b",
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 17670,
+            "output_tokens": 807
+          }
+        }
+      }
+    },
+    "C2": {
+      "A_native_skill_reads": [
+        "sela",
+        "mpg"
+      ],
+      "A_using_mindthus_entry_read_observed": false,
+      "arms": {
+        "B": {
+          "counts": {
+            "arbitration": 0,
+            "correction": 0,
+            "execution": 1,
+            "judgment": 1,
+            "organize": 0,
+            "total": 2
+          },
+          "has_host_output": true,
+          "pending": {},
+          "qualification": false,
+          "route": [
+            {
+              "attention": {
+                "status": "unknown"
+              },
+              "constraints": [],
+              "issue_id": "I1",
+              "mode": "committed",
+              "primary": "mpg",
+              "reason": null,
+              "supports": [
+                "sela"
+              ]
+            }
+          ],
+          "task_complete": false,
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 41181,
+            "output_tokens": 1358
+          }
+        },
+        "C": {
+          "counts": {
+            "arbitration": 0,
+            "correction": 0,
+            "execution": 0,
+            "judgment": 1,
+            "organize": 0,
+            "total": 1
+          },
+          "has_host_output": false,
+          "jev_answers": {
+            "M02.I1.mpg": {
+              "noul": 0.88,
+              "type": "noul"
+            },
+            "M02.I1.sela": {
+              "noul": 0.66,
+              "type": "noul"
+            },
+            "M03.I1.mpg": {
+              "choice": "primary_candidate",
+              "confidence": 0.44,
+              "probabilities": {
+                "constraint": 0.02,
+                "covered": 0.08,
+                "no_contribution": 0.19,
+                "primary_candidate": 0.51,
+                "support": 0.09,
+                "support_and_constraint": 0.09,
+                "unclear": 0.02
+              },
+              "type": "choice"
+            },
+            "M03.I1.sela": {
+              "choice": "support",
+              "confidence": 0.35,
+              "probabilities": {
+                "constraint": 0.03,
+                "covered": 0.08,
+                "no_contribution": 0.12,
+                "primary_candidate": 0.06,
+                "support": 0.45,
+                "support_and_constraint": 0.25,
+                "unclear": 0.01
+              },
+              "type": "choice"
+            },
+            "M05.I1.mpg": {
+              "noul": 0.88,
+              "type": "noul"
+            },
+            "M05.I1.sela": {
+              "noul": 0.91,
+              "type": "noul"
+            },
+            "R02.I1.sela.mpg": {
+              "choice": "disjoint_scopes",
+              "confidence": 0.4,
+              "probabilities": {
+                "disjoint_scopes": 0.55,
+                "partial_overlap": 0.4,
+                "same_scope": 0.04,
+                "unclear": 0.01
+              },
+              "type": "choice"
+            },
+            "R03.I1.sela.mpg": {
+              "choice": "right",
+              "confidence": 0.99,
+              "probabilities": {
+                "left": 0.0,
+                "neither": 0.0,
+                "right": 1.0,
+                "unclear": 0.0
+              },
+              "type": "choice"
+            }
+          },
+          "jev_response_model": "jev-1.13.0",
+          "pending": {
+            "I1": "applicability_role_unresolved:sela;unresolved_required_candidate"
+          },
+          "qualification": false,
+          "route": [
+            {
+              "attention": {
+                "status": "unknown"
+              },
+              "constraints": [],
+              "issue_id": "I1",
+              "mode": "delegated_unresolved",
+              "primary": null,
+              "reason": "applicability_role_unresolved:sela;unresolved_required_candidate",
+              "supports": []
+            }
+          ],
+          "task_complete": false,
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 8492,
+            "output_tokens": 357
+          }
+        }
+      },
+      "author_text_review": {
+        "all_visible_final_texts_usable": true,
+        "independent_review": false,
+        "severe_errors_seen": false
+      },
+      "codex_calls": {
+        "C2-A-baseline": {
+          "elapsed_seconds": 82.73303166602273,
+          "events_sha256": "e4ba6b2f4e4884f10f6e4230eb32c5a52523e6ea686190ca14daed7fce96a807",
+          "exit_code": 0,
+          "last_sha256": "e0e288fbc61576f12cf8ce33caf4b6b002e660652c9d355c21857c488dae9951",
+          "model_requested": "gpt-6-sol",
+          "model_service_attestation": "not_observed",
+          "status": "complete",
+          "stderr_sha256": "fbfb0ce3ba8311b742709a76c1a31be6144c9090ffcd7806aedff9f593c1eaa7",
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 34747,
+            "output_tokens": 973
+          }
+        },
+        "C2-B-host": {
+          "elapsed_seconds": 37.3581392079941,
+          "events_sha256": "a57fc1d1e183e33f558450d9668d32b535b48fbe860d7c1af200d7f36293646e",
+          "exit_code": 0,
+          "last_sha256": "55939568ee431b71039e647fdb003cd33e07acb58bad6935ede88854f1a26519",
+          "model_requested": "gpt-6-sol",
+          "model_service_attestation": "not_observed",
+          "status": "complete",
+          "stderr_sha256": "a2177103f1168b3b072215230641ee33627283d33052d260de766dacfe49a154",
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 18971,
+            "output_tokens": 687
+          }
+        },
+        "C2-B-judge": {
+          "elapsed_seconds": 42.09827579202829,
+          "events_sha256": "50f78d0aacf4fe0dee9a320c77ef14f0baf92bcda11256980e398d69a2bf0465",
+          "exit_code": 0,
+          "last_sha256": "2ab36eeaa7e64d021de2d57a8ce76212db20a34f69d1e0ebdb35b75a719cbdb6",
+          "model_requested": "gpt-6-sol",
+          "model_service_attestation": "not_observed",
+          "status": "complete",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 22210,
+            "output_tokens": 671
+          }
+        },
+        "C2-C-delegated-host": {
+          "elapsed_seconds": 38.641952459001914,
+          "events_sha256": "0bda76f8a6e165b1e341fe1e73c6e8aec2b0f8d998d8ab1ff1289c83daa96ab9",
+          "exit_code": 0,
+          "last_sha256": "2c20568dfdb1e386f70afd1a278b13d2f49a8437ed5a5bdad42b4c797efeb7f5",
+          "model_requested": "gpt-6-sol",
+          "model_service_attestation": "not_observed",
+          "status": "complete",
+          "stderr_sha256": "76653006934a64947c8eb45d2d71241e4e689d97ca2acc50daf81bc009f1c4f6",
+          "usage": {
+            "cost_usd": null,
+            "input_tokens": 14797,
+            "output_tokens": 518
+          }
+        }
+      }
+    }
+  },
+  "formal_qualification": false,
+  "freezes": {
+    "B3": "2457e509d175cec5153e8f0502c61bd2c4ef11de9aa2042ba17132ba079e98e6",
+    "C2": "f39e427565c822b96098c3cb4e0379026744a89c7948848444759fc59526d33c"
+  },
+  "new_codex_cli_calls": 8,
+  "new_typesafe_calls": 2,
+  "schema": "mindthus.abc-hard-development-observation.v1",
+  "source_commit": "e5dc48920f2862057d2902088f49f21af59f4731"
+}

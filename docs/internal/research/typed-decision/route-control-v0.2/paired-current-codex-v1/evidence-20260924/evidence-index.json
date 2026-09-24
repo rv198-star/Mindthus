@@ -1,0 +1,34 @@
+{
+  "schema": "mindthus.paired-current-codex-evidence-index.v1",
+  "source_root": "/Users/william/Documents/Codex/2026-09-24/mindthus-paired-current-codex-v1",
+  "files": [
+    {
+      "path": "codex-calls/B3-advisory/events.jsonl",
+      "sha256": "1a07a9145de58ed903386992562b29e89e530e21177d0c85ce0570956e2f28ea",
+      "bytes": 1380
+    },
+    {
+      "path": "codex-calls/B3-advisory/intent.json",
+      "sha256": "73ad5cb372ae0a2968d1c514cf72be3261b79c3b23920458f1bde59b56cd7562",
+      "bytes": 582
+    },
+    {
+      "path": "codex-calls/B3-advisory/last-message.txt",
+      "sha256": "75ee17e7e5e532edaff11165b18d5cf341a97f26fa2db3fc0d9269a880c48446",
+      "bytes": 1020
+    },
+    {
+      "path": "codex-calls/B3-advisory/outcome.json",
+      "sha256": "d061b51ac2c575697fdd15641b002b4cfa8527ce5ed54515f69fcc360324e0fd",
+      "bytes": 604
+    },
+    {
+      "path": "freeze.json",
+      "sha256": "df20cba1b89a0aab2cca30ca3dc0c914588caeff03aaf9ac4f1b309b9c903ffd",
+      "bytes": 2053
+    }
+  ],
+  "total_files": 5,
+  "total_bytes": 5639,
+  "credential_exact_value_hits": 0
+}

@@ -6,6 +6,30 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current #211 development continuation — hard judgments and one current-Codex pair
+
+Owner authorized completing the small comparison before a plain-language report. The
+new B3/C2 hard-judgment inputs and local carrier were committed before inference at
+`e5dc48920` and separately frozen. Read the [three-arm result](route-control-v0.2/abc-current-codex-v2/RESULT.md),
+[machine observation](route-control-v0.2/abc-current-codex-v2/observation.json), and
+[109-file evidence index](route-control-v0.2/abc-current-codex-v2/evidence-20260924/evidence-index.json).
+There were eight new Codex CLI requests, two real official TypeSafe `jev-1.13.0`
+requests, zero CPA/OpenRouter and zero retries. B3 Jev committed WAE and its current
+Codex host receipt was consumed by the original Episode; C2 ordinary Codex committed
+MPG primary/SELA support and its host receipt was consumed. B3 ordinary Codex judgment
+timed out; C2 Jev left SELA applicability/role unresolved under fixed policy. Independent
+fallback texts do not count as committed host work. No net quality gain over the direct
+Codex text was observed by author review; costs remain unknown, no independent holdout.
+
+A separate [B3 ①/② current-Codex development pair](route-control-v0.2/paired-current-codex-v1/RESULT.md)
+reused the same Jev observations without a new Jev call. The ① advice text and native
+`turn.completed` were saved, but the outer CLI process hit its 43-second timeout and has
+unknown exit/billing status. ② has a valid committed host receipt. Both texts met the
+predeclared content properties in author review; this is not a clean formal pair or a
+quality win. Previous ChatGPT-authored ① texts and seven old pending receipts were not
+rewritten or treated as current-Codex evidence. #211 remains OPEN; formal A/B/C and
+same-host ①/② qualification remain unproven. `main` and default skill unchanged.
+
 ## Current #211 A/B/C development start — one exposed B2 input, no formal qualification
 
 Owner asked to start the A/B/C comparison after confirming local Jev access. A new

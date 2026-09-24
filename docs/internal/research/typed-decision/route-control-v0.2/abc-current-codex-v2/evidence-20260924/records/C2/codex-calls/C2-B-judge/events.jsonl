@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"01a0d388-d435-7710-97e2-4ccfd177cbd3"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"answers\":{\"M02.I1.mpg\":{\"status\":\"ok\",\"value\":0.96},\"M02.I1.sela\":{\"status\":\"ok\",\"value\":0.82},\"M03.I1.mpg\":{\"status\":\"ok\",\"value\":\"primary_candidate\"},\"M03.I1.sela\":{\"status\":\"ok\",\"value\":\"support\"},\"M05.I1.mpg\":{\"status\":\"ok\",\"value\":0.05},\"M05.I1.sela\":{\"status\":\"ok\",\"value\":0.05},\"R02.I1.sela.mpg\":{\"status\":\"ok\",\"value\":\"disjoint_scopes\"},\"R03.I1.sela.mpg\":{\"status\":\"ok\",\"value\":\"right\"}}}"}}
+{"type":"turn.completed","usage":{"input_tokens":22210,"cached_input_tokens":0,"cache_write_input_tokens":0,"output_tokens":671,"reasoning_output_tokens":516}}

@@ -1,0 +1,40 @@
+{
+  "cases": {
+    "B3": {
+      "checks": {
+        "admission_B": true,
+        "admission_C": true,
+        "base_runner": true,
+        "files": true,
+        "identity_B": true,
+        "identity_C": true,
+        "implementation": true,
+        "runner": true,
+        "skills": true,
+        "source_bindings": true,
+        "source_commit_is_ancestor": true
+      },
+      "freeze_digest": "2457e509d175cec5153e8f0502c61bd2c4ef11de9aa2042ba17132ba079e98e6",
+      "source_commit": "e5dc48920f2862057d2902088f49f21af59f4731"
+    },
+    "C2": {
+      "checks": {
+        "admission_B": true,
+        "admission_C": true,
+        "base_runner": true,
+        "files": true,
+        "identity_B": true,
+        "identity_C": true,
+        "implementation": true,
+        "runner": true,
+        "skills": true,
+        "source_bindings": true,
+        "source_commit_is_ancestor": true
+      },
+      "freeze_digest": "f39e427565c822b96098c3cb4e0379026744a89c7948848444759fc59526d33c",
+      "source_commit": "e5dc48920f2862057d2902088f49f21af59f4731"
+    }
+  },
+  "note": "Frozen runner verify command recomputes live HEAD, so read-only audit checks frozen source commit ancestry and all substantive fields without rewriting freeze.",
+  "schema": "mindthus.abc-hard-postrun-verification.v1"
+}
