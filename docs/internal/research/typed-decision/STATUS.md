@@ -6,6 +6,14 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+For the latest user request to finish all planned tests, read the
+[completion audit](route-control-v0.2/completion-audit-20260924.md). It distinguishes
+attempted requests, accepted host outcomes, original OCI-dependent E/F recovery,
+conditional R1 capacity, and the still-unadmitted formal #211 holdout. The 162 old
+and 43 R1 archived records were rechecked byte-for-byte; no new model request was made
+by that audit. The old OCI runtime root and Episode registry are needed to resume its
+seven pending host replies without rewriting identity or resending initial Jev calls.
+
 ## Current #211 development continuation — hard judgments and one current-Codex pair
 
 Owner authorized completing the small comparison before a plain-language report. The
