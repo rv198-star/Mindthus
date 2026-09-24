@@ -20,6 +20,12 @@ MPG primary/SELA support and its host receipt was consumed. B3 ordinary Codex ju
 timed out; C2 Jev left SELA applicability/role unresolved under fixed policy. Independent
 fallback texts do not count as committed host work. No net quality gain over the direct
 Codex text was observed by author review; costs remain unknown, no independent holdout.
+Correction to the plain-language report: extra calls did **not** imply higher observed
+elapsed time in every completed path. B3 A took 64.84 seconds, whereas C's Jev call plus
+consumed Codex host took 1.91 + 39.65 = 41.55 seconds of recorded model calls. C2 A
+took 82.73 seconds, whereas B's judge plus consumed host took 42.10 + 37.36 = 79.46
+seconds. These sums exclude unmeasured orchestration and human intervals and are not
+formal end-to-end speed measurements; B3-B and C2-C lacked a completed controlled path.
 
 A separate [B3 ①/② current-Codex development pair](route-control-v0.2/paired-current-codex-v1/RESULT.md)
 reused the same Jev observations without a new Jev call. The ① advice text and native
