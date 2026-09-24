@@ -6,6 +6,27 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current #211 A/B/C development start — one exposed B2 input, no formal qualification
+
+Owner asked to start the A/B/C comparison after confirming local Jev access. A new
+current-Codex `route-control.v0.2.1` development input B2 and exact A/B/C carrier were
+committed at `4747fb1e6`, then frozen before inference (digest `726b2270e8e5227413027900d5dfcfca08f7b779c26adf66003709c6943b6e11`).
+Read [result](route-control-v0.2/abc-current-codex-v1/RESULT.md),
+[observation](route-control-v0.2/abc-current-codex-v1/observation.json) and
+[raw evidence index](route-control-v0.2/abc-current-codex-v1/evidence-20260924/evidence-index.json).
+
+A produced a useful direct Codex memo, with native skill directory mounted but no
+observed activation. B used one real Codex CLI four-question judgment; C used one real
+TypeSafe `jev-1.13.0` four-question judgment. Both routes stayed unresolved and produced
+zero committed current-Agent handoffs; each then received one separately marked Codex
+fallback output. C isolated an S02 Score contract error while retaining three valid
+results and 4804/139 reported TypeSafe tokens. Total new calls: four Codex CLI, one
+TypeSafe, zero CPA/OpenRouter, zero retries. Three final texts were usable under author
+review, without an observed B/C quality gain; all monetary costs remain unknown.
+This exposed single case is not a formal A/B/C score, independent holdout, same-host
+①/② result, or #211 qualification. Old eight requests and seven staged replies remain
+untouched. Do not rerun B2 to chase a committed route.
+
 ## Current local Codex takeover — R1 live partial; old-host recovery pending
 
 On 2026-09-24, the local experimental branch fast-forwarded from `3c24522a6` to

@@ -1,0 +1,201 @@
+{
+  "actual_calls": {
+    "CPA": 0,
+    "OpenRouter": 0,
+    "codex_cli": 4,
+    "technical_retries": 0,
+    "typesafe_jev": 1
+  },
+  "archive_index": "evidence-20260924/evidence-index.json",
+  "arms": {
+    "A": {
+      "author_acceptance": "usable",
+      "codex_usage": {
+        "call_seconds": 34.96458333299961,
+        "calls": 1,
+        "cost_usd": null,
+        "input_tokens": 15454,
+        "output_tokens": 383,
+        "records": [
+          "codex-calls/B2-A-baseline/outcome.json"
+        ]
+      },
+      "mode": "current_non_jev_codex",
+      "native_skill_directory_available": true,
+      "requested_model": "gpt-6-sol",
+      "service_model_attestation": "not_observed",
+      "severe_errors": [],
+      "skill_load_or_activation_observed": false,
+      "task_output": "codex-calls/B2-A-baseline/last-message.txt"
+    },
+    "B": {
+      "author_acceptance": "usable",
+      "codex_usage": {
+        "call_seconds": 56.77097933299956,
+        "calls": 2,
+        "cost_usd": null,
+        "input_tokens": 33658,
+        "output_tokens": 395,
+        "records": [
+          "codex-calls/B2-B-judge/outcome.json",
+          "codex-calls/B2-B-delegated-host/outcome.json"
+        ]
+      },
+      "judgment": {
+        "episode_host_execution_count": 0,
+        "pending_host_requests": 0,
+        "provider_outcome_path": "episodes/B/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/957e894ff25761a7f7d677e900d8de159d5d36a4621e8164a967abdcff7eeba9/steps/route/calls/6ba9a4a08c2e735f883e03147a6c13c0c84a1a6a187371d90e96665aacc5ffd0/outcome.json",
+        "provider_runtime": {
+          "model": "gpt-6-sol",
+          "provider": "codex-cli-configured-model"
+        },
+        "provider_seconds": 33.7137689999945,
+        "provider_usage": {
+          "cost_usd": null,
+          "input_tokens": 18853,
+          "output_tokens": 220
+        },
+        "results": {
+          "M02.I1.tvg": {
+            "reason": "ordinary_llm_subjective_value_not_calibrated",
+            "status": "ok",
+            "uncertainty": null,
+            "value": 0.04
+          },
+          "M03.I1.tvg": {
+            "reason": "ordinary_llm_subjective_value_not_calibrated",
+            "status": "ok",
+            "uncertainty": null,
+            "value": "no_contribution"
+          },
+          "S01.I1": {
+            "reason": "ordinary_llm_subjective_value_not_calibrated",
+            "status": "ok",
+            "uncertainty": null,
+            "value": 0.98
+          },
+          "S02.I1": {
+            "reason": "ordinary_llm_subjective_value_not_calibrated",
+            "status": "ok",
+            "uncertainty": null,
+            "value": 3
+          }
+        },
+        "route": [
+          {
+            "attention": {
+              "status": "unknown"
+            },
+            "constraints": [],
+            "issue_id": "I1",
+            "mode": "delegated_unresolved",
+            "primary": null,
+            "reason": "no_established_primary",
+            "supports": []
+          }
+        ]
+      },
+      "mode": "same_compiled_graph_ordinary_codex_judge",
+      "requested_model": "gpt-6-sol",
+      "service_model_attestation": "not_observed",
+      "severe_errors": [],
+      "task_output": "codex-calls/B2-B-delegated-host/last-message.txt",
+      "task_output_kind": "delegated_host_work_not_committed_handoff"
+    },
+    "C": {
+      "author_acceptance": "usable",
+      "codex_usage": {
+        "call_seconds": 30.542904000001727,
+        "calls": 1,
+        "cost_usd": null,
+        "input_tokens": 14805,
+        "output_tokens": 209,
+        "records": [
+          "codex-calls/B2-C-delegated-host/outcome.json"
+        ]
+      },
+      "judgment": {
+        "episode_host_execution_count": 0,
+        "pending_host_requests": 0,
+        "provider_outcome_path": "episodes/C/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/08010501d23f2f7f325edcd4dc60f73d23c4e6b8573092361ad8cde437ec9975/steps/route/calls/9b711c6c7167722d4b9a9d3f049cf384eac296fc52438011a34c0e8daf585494/outcome.json",
+        "provider_runtime": {
+          "model": "jev-1.13.0",
+          "provider": "TypeSafe"
+        },
+        "provider_seconds": 1.8571827909909189,
+        "provider_usage": {
+          "cost_usd": null,
+          "input_tokens": 4804,
+          "output_tokens": 139
+        },
+        "results": {
+          "M02.I1.tvg": {
+            "reason": "",
+            "status": "ok",
+            "uncertainty": null,
+            "value": 0.24
+          },
+          "M03.I1.tvg": {
+            "reason": "",
+            "status": "ok",
+            "uncertainty": {
+              "confidence": 0.28,
+              "probabilities": {
+                "constraint": 0.08,
+                "covered": 0.1,
+                "no_contribution": 0.18,
+                "primary_candidate": 0.04,
+                "support": 0.38,
+                "support_and_constraint": 0.2,
+                "unclear": 0.02
+              },
+              "source": "provider_distribution"
+            },
+            "value": "support"
+          },
+          "S01.I1": {
+            "reason": "",
+            "status": "ok",
+            "uncertainty": null,
+            "value": 0.5
+          },
+          "S02.I1": {
+            "reason": "answer_contract:ContractError:weighted_rating/distribution_mismatch",
+            "status": "provider_error",
+            "uncertainty": null,
+            "value": null
+          }
+        },
+        "route": [
+          {
+            "attention": {
+              "status": "unknown"
+            },
+            "constraints": [],
+            "issue_id": "I1",
+            "mode": "delegated_unresolved",
+            "primary": null,
+            "reason": "applicability_role_unresolved:tvg;no_established_primary",
+            "supports": []
+          }
+        ]
+      },
+      "mode": "same_compiled_graph_typesafe_jev",
+      "requested_model": "jev-1.13.0",
+      "severe_errors": [],
+      "task_output": "codex-calls/B2-C-delegated-host/last-message.txt",
+      "task_output_kind": "delegated_host_work_not_committed_handoff"
+    }
+  },
+  "case_class": "authored_exposed_development_not_holdout",
+  "case_id": "B2",
+  "cost_usd": "unknown for all arms",
+  "current_agent_route_handoffs_consumed": 0,
+  "freeze_digest": "726b2270e8e5227413027900d5dfcfca08f7b779c26adf66003709c6943b6e11",
+  "freeze_source_commit": "4747fb1e60901d898a267dae5e246fc67f104302",
+  "issue": "#211",
+  "paired_advisory_committed": "not measured in this batch",
+  "result_ceiling": "one exposed development case; A native skill activation not observed; B/C both delegated; no formal ABC noninferiority, cost, causal or adoption claim",
+  "schema": "mindthus.abc-current-codex-development-observation.v1",
+  "task_text_comparison": "all three satisfy preregistered required properties and avoid preregistered severe errors in author review; no observed quality gain"
+}
