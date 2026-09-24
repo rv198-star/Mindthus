@@ -38,7 +38,10 @@ temporary-directory environment; lifecycle registration passed 88/88. The archiv
 162 JSON contain all eight initial intents/outcomes and seven staged host responses.
 The difference from the old 179-all-files count matches the expected 17 lock files, but
 the OCI directory listing was not included, so old-runtime completeness and legal local
-resume remain unproven. No old response was consumed or old Jev request repeated.
+resume remain unproven. The separate Episode registry that binds episode ID to absolute
+root is outside the archive, and the old live admission binds path and implementation;
+no controlled migration entry is implemented. No old response was consumed or old Jev
+request repeated.
 
 ## Current checkpoint — code pushed; Owner-requested final attempt denied; stop retries
 
