@@ -6,6 +6,25 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## 2026-09-25 design reassessment and independent reviews
+
+The [design reassessment](route-control-v0.2/design-reassessment-v1/README.md) recovers
+the owner's original case-analysis / multi-view observation discussion, maps all ten
+principles to the implementation, and records two independent Codex reviews of the
+existing evidence and revised proposal. The proposed source-direct, scoped observation
+consumer remains **unimplemented**; the new D/N comparison remains **unrun**. It retains
+① advisory / ② constrained consumption, adds a questions-only control, and separates
+natural S1 candidate review from S0 routing. #211 remains **NOT QUALIFIED**.
+
+One concrete integration defect found by the independent audit was fixed: an unresolved
+or unverified relationship correction now keeps its own issue pending, including after
+an unrelated prerequisite artifact has been accepted. Independent issues still execute.
+Four new regressions failed before the fix and passed afterward; 196 relevant route,
+relationship and current-host tests plus 24 scoped-repair tests passed. The architecture
+reviewer independently reran the four regressions. No new Jev, CPA or OpenRouter business
+request was made; no historical receipt, freeze or score was rewritten. This is an
+engineering repair and reviewed design, not new evidence of semantic improvement.
+
 For the latest user request to finish all planned tests, read the
 [completion audit](route-control-v0.2/completion-audit-20260924.md). It distinguishes
 attempted requests, accepted host outcomes, original OCI-dependent E/F recovery,

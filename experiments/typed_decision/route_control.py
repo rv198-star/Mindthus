@@ -487,6 +487,7 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None, corrector
         summary = directory / 'summary.json'
         if summary.exists(): return {**read_record(summary), 'source_ref': str(summary)}
         route = None; outputs = {}; pending = {}; relation_result = None; relation_issue = None
+        relationship_pending = None
         def finish(reason=None, terminal=True):
             state = ep.tally()
             out = {'schema': 'mindthus.route-control-result.v1', 'mode': MODE, 'route': route,
@@ -528,10 +529,15 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None, corrector
             route = consume(packet, compiled, observations, bundle, bindings)
             if relation_result:
                 latest = relation_result.get('recheck') or relation_result['initial']
-                if latest['result']['action'] == 'return_original_owner':
+                action = latest['result']['action']
+                if action != 'continue_original':
+                    relationship_pending = ('relationship_correction_unverified'
+                        if relation_result['revised'] is not None and relation_result['recheck'] is None
+                        else 'relationship_correction_unresolved' if action == 'request_correction'
+                        else 'relationship_scope_unresolved')
                     affected = next(x for x in route['per_issue'] if x['issue_id'] == relation_issue)
                     affected.update(mode='delegated_unresolved', primary=None, supports=[], constraints=[],
-                                    reason='relationship_scope_unresolved')
+                                    reason=relationship_pending)
                     refresh(route)
             route['engine_identity'] = ep.manifest['provider']
             rt.save(directory / 'commitment-1.json', route)
@@ -542,6 +548,11 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None, corrector
                 for iid in dispatch_order:
                     if iid not in waiting: continue
                     row = next(r for r in route['per_issue'] if r['issue_id'] == iid)
+                    # Accepted predecessor artifacts resolve their dependency only;
+                    # they cannot discharge a separate candidate-correction finding.
+                    if iid == relation_issue and relationship_pending:
+                        pending[iid] = relationship_pending
+                        waiting.remove(iid); progressed = True; continue
                     needed = [e for e in route['artifact_edges'] if e['consumer'] == iid]
                     if any(e['relation'] == 'unclear' or (e['relation'] == 'conditional' and e['condition_value'] is not True)
                            for e in needed):

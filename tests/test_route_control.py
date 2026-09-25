@@ -33,8 +33,9 @@ def packet(candidates=('wae',), *, count=1, handling='judge', attention=True):
 
 
 class Provider(FixtureProvider):
-    def __init__(self, overrides=None):
+    def __init__(self, overrides=None, *, corrected_overrides=None):
         self.overrides = {k: asdict(v) if isinstance(v, DecisionResult) else deepcopy(v) for k, v in (overrides or {}).items()}
+        self.corrected_overrides = corrected_overrides or {}
         super().__init__(self.overrides)
         self.batch_count = 0; self.seen = []
 
@@ -46,7 +47,7 @@ class Provider(FixtureProvider):
             if 'proposal_view' in context:
                 value = self.overrides.get(s.id, self.overrides.get(t, DEFAULT[t]))
                 if context['proposal_view']['candidate']['ref']['document_id'].startswith('R'):
-                    value = DEFAULT[t]
+                    value = self.corrected_overrides.get(s.id, self.corrected_overrides.get(t, DEFAULT[t]))
             else:
                 value = self.overrides.get(s.id, self.overrides.get(t, {
                     'M02': .95, 'M03': 'primary_candidate', 'G03': 'judge', 'R02': 'same_scope',
@@ -294,6 +295,62 @@ class RouteTests(unittest.TestCase):
         d['issues'][0]['request_ref']=rel.quote(rp['documents'][0]);d['issues'][0]['handling']=None;d['issues'][0]['assessability']=None
         self.data=d;self.provider=Provider({'q0':'unsupported_mapping'})
         r=self.run_route();self.assertFalse(r['outputs']);self.assertIn('relationship_scope_unresolved',r['pending']['I1'])
+
+    def relation_issues(self, count=2, affected='I1'):
+        rp = relation_packet(candidate='只谈该 Skills，因此一定只是提示词。')
+        data = packet(count=count)
+        data.update(episode_id=rp['episode_id'], turn_id=rp['turn_id'], revision=rp['revision'],
+                    documents=rp['documents'], authority=rp['authority'], relationship=rp,
+                    relationship_issue=affected)
+        for issue in data['issues']:
+            issue.update(request_ref=rel.quote(rp['documents'][0]), handling=None, assessability=None)
+        return data
+
+    def test_recheck_still_requests_correction_keeps_scope_pending(self):
+        self.data = self.relation_issues()
+        self.provider = Provider({'definition': 'carrier_only_unjustified'},
+                                 corrected_overrides={'definition': 'account_missing'})
+        corrector = Hook()
+        result = self.run_route(corrector=corrector)
+        self.assertEqual(result['relationship']['recheck']['result']['action'], 'request_correction')
+        self.assertEqual(set(result['outputs']), {'I2'})
+        self.assertEqual(result['pending']['I1'], 'relationship_correction_unresolved')
+        self.assertEqual(corrector.calls, 1)
+        self.assertEqual(result['counts']['judgment'], 3)
+        saved = self.records()
+        self.assertEqual(self.run_route(corrector=corrector), result)
+        self.assertEqual(self.records(), saved)
+        self.assertEqual(corrector.calls, 1)
+
+    def test_unverified_correction_is_not_consumed_as_cleared(self):
+        self.data = self.relation_issues()
+        self.provider = Provider({'definition': 'carrier_only_unjustified'})
+        result = self.run_route(corrector=Hook(), recheck=False)
+        self.assertIsNone(result['relationship']['recheck'])
+        self.assertEqual(set(result['outputs']), {'I2'})
+        self.assertEqual(result['pending']['I1'], 'relationship_correction_unverified')
+        self.assertEqual(result['counts']['judgment'], 2)
+
+    def test_accepted_predecessor_does_not_clear_unresolved_correction(self):
+        self.data = self.relation_issues(affected='I2')
+        self.data['dependencies'] = [self.edge()]
+        self.provider = Provider({'definition': 'carrier_only_unjustified'},
+                                 corrected_overrides={'definition': 'account_missing'})
+        result = self.run_route(corrector=Hook(), artifact_acceptor=Acceptor())
+        self.assertEqual(set(result['outputs']), {'I1'})
+        self.assertTrue(result['outputs']['I1']['accepted_uses']['E1']['accepted'])
+        self.assertEqual(result['pending']['I2'], 'relationship_correction_unresolved')
+        self.assertEqual(result['counts']['judgment'], 3)
+        self.assertNotIn('post_artifact_evaluations', result['route'])
+
+    def test_accepted_predecessor_does_not_clear_relationship_return(self):
+        self.data = self.relation_issues(affected='I2')
+        self.data['dependencies'] = [self.edge()]
+        self.provider = Provider({'q0': 'unsupported_mapping'})
+        result = self.run_route(artifact_acceptor=Acceptor())
+        self.assertEqual(set(result['outputs']), {'I1'})
+        self.assertEqual(result['pending']['I2'], 'relationship_scope_unresolved')
+        self.assertEqual(result['counts']['judgment'], 2)
     def test_public_cli_fixture_runs_new_mode_and_replays(self):
         import subprocess
         path=REPO/'experiments/typed_decision/fixtures/route-control.json'
