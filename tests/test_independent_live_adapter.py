@@ -32,4 +32,18 @@ class IndependentAdapterTests(unittest.TestCase):
         schema=r.schema(q)
         self.assertEqual(schema['properties']['issues']['items']['properties']['candidates']['items']['enum'],['edsp','wae'])
 
+class TransportRecoveryTests(unittest.TestCase):
+    def test_invalid_ids_map_without_changing_judgments(self):
+        import tempfile
+        spec=importlib.util.spec_from_file_location('transport_test',P.with_name('transport_recovery.py'))
+        adapter=importlib.util.module_from_spec(spec);spec.loader.exec_module(adapter)
+        raw={'issues':[{'id':'中文事项','candidates':['edsp'],'goal':'Original goal','scope':'Original scope'}]}
+        with tempfile.TemporaryDirectory() as tmp:
+            adapter.ROOT=Path(tmp);adapter.r.ACTIVE_LABEL='full-F-jev_advisory'
+            with patch.object(adapter,'original_normalize',side_effect=lambda raw,q,u:raw):
+                out=adapter.normalize(raw,{'schema':'mindthus.route-v03-organize-request.v1','request_id':'id'}, {})
+            self.assertEqual(out['issues'][0],{**raw['issues'][0],'id':'I1'})
+            self.assertEqual(raw['issues'][0]['id'],'中文事项')
+            self.assertTrue((Path(tmp)/'adapters/full-F-jev_advisory-identifier-map.json').exists())
+
 if __name__=='__main__':unittest.main()

@@ -6,6 +6,26 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## 2026-09-26 independent full-path comparison — main comparison finally executed
+
+The [independent full-path report](route-control-v0.2/design-reassessment-v1/independent-v1/RESULT.md)
+is the current main comparison: E Skills and F display each ran no-Jev, Jev advisory ① and
+Jev committed ② from the same original task, in six independent host sessions. No common
+candidate, author-chosen route or cross-branch Jev response was shared. Full-path host delivery:
+no-Jev 2/2; advisory 1/2; committed 0/2. E committed stopped on method applicability;
+F committed stopped on local coverage; F advisory produced local drafts but its source objection
+was rejected by the advisory reply contract, with no final acceptance. Five physical official
+Jev calls were made. Failures remain in the denominator and original ledgers are preserved.
+
+Do not use the prior common-candidate diagnosis as this main comparison. The current package
+has not shown judgment improvement and loses delivery coverage on these two historical snapshots;
+this is a result about the present combined runtime, not a standalone Jev model accuracy estimate.
+E's first two anonymous reviews omitted real host method materials and falsely called those
+citations invented; preserve them as invalid and use the material-complete supplemental reviews.
+The report separates this evaluator defect from product outcomes. New N families and wider A–F
+remain unrun; #211 is NOT QUALIFIED. Engineering: 317 affected tests plus one new ID-mapping
+counterexample (four adapter tests) passed. No CPA/OpenRouter calls; main remains unchanged.
+
 ## 2026-09-26 v0.3 live D — real calls complete, qualification not passed
 
 The [live D report](route-control-v0.2/design-reassessment-v1/live-v03-d1/RESULT.md)
