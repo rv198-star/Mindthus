@@ -89,15 +89,23 @@ class CurrentAgentObserver:
         return BatchResult(results, ResolvedRuntime(self.model, 'current-agent-declared'), reply['usage'])
 
 
-def prepare_condition(packet, condition, repo):
+def prepare_condition(packet, condition, repo, *, material_policy="entry_selected"):
+    require(material_policy in ("entry_selected", "all_methods_diagnostic"), "comparison_material_policy")
     require(condition in CONDITIONS, 'comparison_condition')
     bundle, questions, bindings, contract = runtime._bundle(Path(repo))
     sd.validate_packet(packet, bindings)
     originals = {k: rel.clone(packet[k]) for k in ('documents','conversation','authority','intervention')}
-    materials = rc._read_methods(Path(repo), {m['method'] for m in bindings['methods']}, bindings)
+    catalog = {m['method']: {'path': m['path'] if 'path' in m else 'skills/' + m['method'] + '/SKILL.md',
+                            'summary': m['method_binding_question']} for m in bindings['methods']}
+    materials = rc._read_methods(Path(repo), set(catalog), bindings) if material_policy == 'all_methods_diagnostic' else {}
+    entry_material = runtime.entry_material(repo)
     body = {'schema': 'mindthus.comparison-condition.v1', 'condition': condition,
             'original_input': originals, 'loaded_methods': materials,
-            'source_identity': digest(originals), 'method_identity': digest(materials),
+            'entry_skill': entry_material, 'method_catalog': catalog,
+            'material_policy': material_policy,
+            'baseline_claim': 'entry-selected protocol; native plugin auto-activation not asserted' if material_policy == 'entry_selected'
+                              else 'full-preload diagnostic, not a natural entry baseline',
+            'source_identity': digest(originals), 'method_identity': digest([entry_material, catalog, materials]),
             'contract_identity': digest(contract), 'source_bindings': bundle['sources'],
             'host_work_limits': {'execution': packet['task_budget']['max_calls'],
                                  'correction': 1, 'arbitration': 1}}
@@ -119,7 +127,26 @@ def validate_native_reply(reply, request):
     fields = {'schema','request_id','text','version','performed_methods','decision_status','dispute','usage'}
     if request.get('artifact_actions'):
         fields.add('artifact_action')
+    reading = reply.get('artifact_action') == 'read_methods'
+    if reading:
+        fields.add('requested_methods')
     rel.shape(reply, fields, 'comparison_native_reply')
+    if reading:
+        names = reply['requested_methods']
+        available = request['condition_packet']['method_catalog']
+        loaded = request['condition_packet']['loaded_methods']
+        require('read_methods' in request.get('artifact_actions', [])
+                and isinstance(names, list) and 0 < len(names) <= len(available)
+                and all(isinstance(n, str) for n in names) and len(names) == len(set(names))
+                and set(names) <= set(available) and not (set(names) & set(loaded)),
+                'comparison_method_request')
+        require(reply['schema'] == 'mindthus.route-v03-native-reply.v1'
+                and reply['request_id'] == request['request_id'] and reply['text'] == ''
+                and reply['version'] == digest('') and reply['performed_methods'] == []
+                and reply['decision_status'] == 'unresolved' and reply['dispute'] is None,
+                'comparison_read_is_not_answer')
+        rt._usage(reply['usage'])
+        return
     if request.get('artifact_actions'):
         require(reply['artifact_action'] in request['artifact_actions'], 'comparison_artifact_action')
         if reply['artifact_action'] == 'retain':
@@ -151,7 +178,8 @@ class _NoObserver:
         raise AssertionError('native conditions do not invoke a decision provider')
 
 
-def run_native(root, packet, repo, *, condition, executor, corrector, arbitrator=None, candidate_snapshot=None):
+def run_native(root, packet, repo, *, condition, executor, corrector, arbitrator=None, candidate_snapshot=None,
+               material_policy='entry_selected'):
     """Natural first answer, one review, and receipt through the SAME host/Episode.
 
     Questions-only differs by an unfilled checklist; neither sees host-inferred
@@ -163,8 +191,8 @@ def run_native(root, packet, repo, *, condition, executor, corrector, arbitrator
     owner = packet['authority']['owner_ref']
     require(isinstance(executor, CurrentAgentHost) and executor.identity == owner and
             isinstance(corrector, CurrentAgentHost) and corrector.identity == owner, 'comparison_native_host')
-    prepared = prepare_condition(packet, condition, repo)
-    bundle = runtime._bundle(repo)[0]
+    prepared = prepare_condition(packet, condition, repo, material_policy=material_policy)
+    bundle, _, bindings, _ = runtime._bundle(repo)
     profile = {**runtime.PROFILE, 'judgments_total': 0,
                'executions_total': packet['task_budget']['max_calls'],
                'execution_seconds': packet['task_budget']['max_seconds']}
@@ -180,10 +208,14 @@ def run_native(root, packet, repo, *, condition, executor, corrector, arbitrator
         summary = directory/'summary.json'
         if summary.exists(): return read_record(summary)
         initial, revised, acceptance, arbitration = None, None, None, None
+        method_reads = []
+        active_materials = rel.clone(prepared)
         def result(reason=None):
             tally = ep.tally()
             return {'condition': condition, 'initial': initial, 'reviewed': revised, 'acceptance': acceptance,
                     'arbitration': arbitration, 'counts': tally['counts'], 'usage': tally['usage'], 'reason': reason,
+                    'material_policy': material_policy, 'method_reads': rel.clone(method_reads),
+                    'actual_method_materials': rel.clone(active_materials['loaded_methods']),
                     'host_evidence_kind': 'current_agent_submission', 'judgment_evidence_kind': 'not_used',
                     'semantic_correctness': 'not_scored', 'qualification': False,
                     'consumption_complete': bool(acceptance and acceptance['accepted']['task']['accepted'])}
@@ -197,21 +229,52 @@ def run_native(root, packet, repo, *, condition, executor, corrector, arbitrator
                            'provenance':candidate_snapshot['provenance']}
                 steps = steps[1:]
             for step, host, role in steps:
-                body = {'schema':'mindthus.route-v03-native-request.v1', 'mode':sd.MODE,
-                        'policy':condition, 'condition_packet':prepared,
-                        'candidate': initial['text'] if initial else None,
-                        'artifact_actions': ['retain','replace'] if initial else ['replace'],
-                        'instruction': 'Produce your natural route decision and task answer.' if initial is None else
-                                       'Review your answer once against the original task. Retain the exact candidate or replace it with a full answer. '
-                                       'A retention statement is not an answer. '
-                                       'Preserve unresolved facts and authority. This is the only revision opportunity.'}
-                body['request_id'] = digest(body)
-                out = rt._host(ep,directory,step,body,host,lambda r:validate_native_reply(r,body),
-                               operation=role, expected_owner=owner)
-                if out['status'] != 'complete':
-                    value=result('native_host_failed');rt.save(summary,value);return value
-                if initial is None: initial=out['reply']
-                else: revised=out['reply']
+                read_round = 0
+                max_reads = min(2, max(0, packet['task_budget']['max_calls'] - 2))
+                while True:
+                    may_read = (material_policy == 'entry_selected'
+                                and len(method_reads) < max_reads)
+                    body = {'schema':'mindthus.route-v03-native-request.v1', 'mode':sd.MODE,
+                            'policy':condition, 'condition_packet':rel.clone(active_materials),
+                            'candidate': initial['text'] if initial else None,
+                            'artifact_actions': (['retain','replace'] if initial else ['replace']) +
+                                                (['read_methods'] if may_read else []),
+                            'instruction': ('Use the supplied using-mindthus entry normally. '
+                                'Answer directly when sufficient. To inspect a method first, return '
+                                'artifact_action=read_methods, requested_methods with its catalog name(s), '
+                                'empty text, no performed_methods, and unresolved status. This is a '
+                                'material request, not an answer. Only actually loaded methods may be '
+                                'claimed as performed. Do not request all methods as a default ritual.'
+                                if initial is None else
+                                'Review your answer once against the original task. Retain the exact '
+                                'candidate or replace it with a full answer. Preserve unresolved facts '
+                                'and authority. A retention statement is not an answer. If a newly relevant '
+                                'method is needed and read_methods is allowed, request its catalog name first '
+                                'with empty text and unresolved status, without changing the candidate.')}
+                    body['request_id'] = digest(body)
+                    # A material request during review uses its single review slot;
+                    # the ensuing bounded delivery/read uses a remaining execution slot.
+                    review_after_read = step == 'correction' and read_round > 0
+                    actual_step = ('execution__review_read_' + str(read_round) if review_after_read else
+                                   step + ('__read_' + str(read_round) if read_round else ''))
+                    out = rt._host(ep,directory,actual_step,body,executor if review_after_read else host,
+                                   lambda r:validate_native_reply(r,body),
+                                   operation='execute' if review_after_read else role, expected_owner=owner)
+                    if out['status'] != 'complete':
+                        value=result('native_host_failed');rt.save(summary,value);return value
+                    if out['reply'].get('artifact_action') != 'read_methods':
+                        if initial is None: initial=out['reply']
+                        else: revised=out['reply']
+                        break
+                    names = out['reply']['requested_methods']
+                    loaded = rc._read_methods(repo, names, bindings)
+                    receipt = {'request_id': body['request_id'], 'requested_methods': names,
+                               'loads': loaded, 'host_context_ref': out.get('host_context_ref')}
+                    rt.save(directory / ('method-read-' + str(len(method_reads)) + '.json'), receipt)
+                    method_reads.append(receipt)
+                    active_materials['loaded_methods'].update(loaded)
+                    active_materials['method_identity'] = digest(active_materials['loaded_methods'])
+                    read_round += 1
             route={'route_id':digest(prepared),'revision':1,'contract_hashes':bundle['sources']}
             outputs={'task': {'text':revised['text'],'artifact_sha256':revised['version']}}
             resolved = revised['decision_status']=='decided'
@@ -245,12 +308,13 @@ def run_native(root, packet, repo, *, condition, executor, corrector, arbitrator
 
 
 def run_condition(root, provider, packet, repo, *, condition, executor, corrector,
-                  arbitrator=None, organizer=None, live_admission=None, artifact_acceptor=None, candidate_snapshot=None):
+                  arbitrator=None, organizer=None, live_admission=None, artifact_acceptor=None, candidate_snapshot=None,
+                  material_policy='entry_selected'):
     require(condition in CONDITIONS, 'comparison_condition')
     if condition in ('pure_codex','questions_only'):
         require(provider is None and live_admission is None, 'native_has_no_observer')
         return run_native(root,packet,repo,condition=condition,executor=executor,corrector=corrector,
-                          arbitrator=arbitrator,candidate_snapshot=candidate_snapshot)
+                          arbitrator=arbitrator,candidate_snapshot=candidate_snapshot,material_policy=material_policy)
     expected='advisory' if condition=='jev_advisory' else 'committed'
     require(packet['consumption_policy']==expected, 'comparison_policy_frozen')
     if condition=='codex_observation_committed':

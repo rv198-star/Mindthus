@@ -1,0 +1,67 @@
+{
+  "search_scope": "Exact original image name searched in conversation/library images; no match returned. No claim of universal absence.",
+  "windows": [
+    {
+      "scenario": "E",
+      "archive_sha256": "5ba7e2b68a987d33380d627345e523c4176a6667e172d032821f8f28acd65125",
+      "member": "sources/E.json",
+      "packet_sha256": "600f16359c8d673876b746f756801770603499379bcc3bdd9c9868016cbc0018",
+      "phase": "initial",
+      "cutoff_order": 0,
+      "source_sha256": "cb06085808ea1854a2aa7aa5842f903e51bc6bada03ca666384b6670ccf6a37d",
+      "visible_source_sha256": "b7123a6c6fcb0182dff888dc2245f01783f4adbb7f0f290dab85d0ce4d2d2cb8",
+      "missing_original": [],
+      "original_failure_reproduction_eligible": false,
+      "source_window_complete": true,
+      "claim": "prefix_only_not_yet_a_reproduction"
+    },
+    {
+      "scenario": "E",
+      "archive_sha256": "5ba7e2b68a987d33380d627345e523c4176a6667e172d032821f8f28acd65125",
+      "member": "sources/E.json",
+      "packet_sha256": "cb06085808ea1854a2aa7aa5842f903e51bc6bada03ca666384b6670ccf6a37d",
+      "phase": "after_user_correction",
+      "cutoff_order": 1,
+      "source_sha256": "cb06085808ea1854a2aa7aa5842f903e51bc6bada03ca666384b6670ccf6a37d",
+      "visible_source_sha256": "be8dc7f4f767d1c01952c5deb790e68d7ff4f6dad42c7838ca5be172661556ef",
+      "missing_original": [
+        "intervening_historical_assistant"
+      ],
+      "original_failure_reproduction_eligible": false,
+      "source_window_complete": false,
+      "claim": "partial_snapshot"
+    },
+    {
+      "scenario": "F",
+      "archive_sha256": "5ba7e2b68a987d33380d627345e523c4176a6667e172d032821f8f28acd65125",
+      "member": "sources/F.json",
+      "packet_sha256": "9e2094e39ee804d52bd14b695e6e29fdd245d8c40a03890c545a2efbcd71b3b6",
+      "phase": "initial",
+      "cutoff_order": 0,
+      "source_sha256": "5f62f28f944c68dc902aa880b5478a076837ad8d4a96986a49c3f6679a203650",
+      "visible_source_sha256": "35acd30736e9c189c87ad4cd0de444c63abd0446a0e54a8efcc7a360e1bd44e4",
+      "missing_original": [
+        "original_image"
+      ],
+      "original_failure_reproduction_eligible": false,
+      "source_window_complete": false,
+      "claim": "partial_snapshot"
+    },
+    {
+      "scenario": "F",
+      "archive_sha256": "5ba7e2b68a987d33380d627345e523c4176a6667e172d032821f8f28acd65125",
+      "member": "sources/F.json",
+      "packet_sha256": "5f62f28f944c68dc902aa880b5478a076837ad8d4a96986a49c3f6679a203650",
+      "phase": "after_user_correction",
+      "cutoff_order": 12,
+      "source_sha256": "5f62f28f944c68dc902aa880b5478a076837ad8d4a96986a49c3f6679a203650",
+      "visible_source_sha256": "d124e6a7844674fee3f55a6ea847443c762ebad1ce19a4eaa9f4e5888d7f5efe",
+      "missing_original": [
+        "original_image"
+      ],
+      "original_failure_reproduction_eligible": false,
+      "source_window_complete": false,
+      "claim": "partial_snapshot"
+    }
+  ]
+}

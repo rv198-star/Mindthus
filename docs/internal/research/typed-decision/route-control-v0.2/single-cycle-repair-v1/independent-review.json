@@ -1,0 +1,66 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "P1",
+      "file": "experiments/typed_decision/route_control_v03.py",
+      "problem": "An organizer constrained by max_issues has no required field for omitted deliverables or capacity failure. Validation checks only the number of returned issues, so the later completion result can describe only the issues the organizer retained.",
+      "concrete_counterexample": "With no predeclared issues, a two-call budget, and three separate user deliverables, the organizer may return one valid issue. If coverage marks that issue covered, the other two need not appear in pending or unassigned_scope.",
+      "smallest_fix": "Require a source-bound omitted-scope or over-capacity disposition in the organizer reply, validate it, and prevent an internally complete result while deliverables remain unrepresented."
+    },
+    {
+      "severity": "P1",
+      "file": "experiments/typed_decision/source_direct_v03.py",
+      "problem": "Removing the global-coverage block treats every unassigned scope as independent without establishing whether it is a shared prerequisite. The dispatcher subsequently gates on local coverage, not the meaning of the omitted scope.",
+      "concrete_counterexample": "A missing user instruction requires approval before either answer is released. If it appears only as unassigned_scope while two local rows are covered, both rows can execute and be accepted.",
+      "smallest_fix": "Classify uncovered source-bound scope as independent work or a shared gate; hold affected execution when that classification is absent or indicates an unmet shared obligation."
+    },
+    {
+      "severity": "P1",
+      "file": "experiments/typed_decision/route_control_v03.py",
+      "problem": "_limited_response checks candidate probability and role but does not restrict the row's unresolved reason or check mandatory_reads. It can therefore grant the limited exit for a reason other than isolated method uncertainty.",
+      "concrete_counterexample": "A covered WAE candidate at probability 0.77 qualifies even if the route also records a required companion in mandatory_reads; the limited request loads no methods and its answer can proceed to acceptance.",
+      "smallest_fix": "Require an explicit method-selection-only unresolved reason and verify that no issue-applicable mandatory read, companion, or shared obligation remains."
+    },
+    {
+      "severity": "P1",
+      "file": "experiments/typed_decision/route_control_v03.py",
+      "problem": "The limited-reply validator forbids performed_methods entries but does not prevent the answer text from claiming a method was executed. A subsequent correction also changes the text without reapplying the limited-answer boundary.",
+      "concrete_counterexample": "A reply can set performed_methods to [], supply a valid method_boundary objection and bounded_answer status, yet say 'I executed WAE' in text. The checked fields do not establish that claim.",
+      "smallest_fix": "Carry the limited boundary through correction and require source-based review of the final text's method-execution claims before acceptance; do not treat an empty performed_methods list as semantic proof."
+    },
+    {
+      "severity": "P1",
+      "file": "experiments/typed_decision/evaluation_integrity.py",
+      "problem": "append_branch_turn verifies a complete host response and matching request history, but not that its text was the final accepted artifact. The supplied test demonstrates that self-consistent synthetic receipt files satisfy this check.",
+      "concrete_counterexample": "An initial host response that was later replaced or rejected can be supplied as receipt_ref and inserted as the assistant turn of a purported realized branch.",
+      "smallest_fix": "Bind the branch artifact to the Episode's final acceptance result, including the accepted text hash and its execution receipt, rather than to any complete response."
+    },
+    {
+      "severity": "P2",
+      "file": "experiments/typed_decision/evaluation_integrity.py",
+      "problem": "reviewer_packet checks a method material's hash against its supplied content, but not against a recorded method load. This establishes self-consistency, not actual availability to the candidate.",
+      "concrete_counterexample": "A caller can supply invented method content with its correctly computed SHA-256 and label it actual_method_materials; the reviewer receives it as candidate context.",
+      "smallest_fix": "Construct reviewer materials from bound load receipts and verify their identities against the candidate's recorded request context."
+    },
+    {
+      "severity": "P2",
+      "file": "experiments/typed_decision/evaluation_integrity.py",
+      "problem": "Original-failure reproduction eligibility depends only on the caller's missing_original list, not on phase or independently verified source completeness.",
+      "concrete_counterexample": "An after_user_correction prefix with missing_original=() is marked original_failure_reproduction_eligible=true, although the stated protocol says corrected snapshots cannot prove an autonomous first answer.",
+      "smallest_fix": "Set eligibility false for non-initial phases and leave it false unless original-source completeness is affirmatively established."
+    },
+    {
+      "severity": "P2",
+      "file": "experiments/typed_decision/comparison_v03.py",
+      "problem": "Native method requests are available only before the first answer. A correction has retain/replace actions even when method-reading budget remains, so a reviewer cannot inspect a newly relevant method on demand.",
+      "concrete_counterexample": "The initial host answers directly without loading a method; during review it recognizes that the answer requires WAE. It cannot request WAE for the correction and cannot truthfully report performing it.",
+      "smallest_fix": "Allow bounded read_methods requests during correction when the remaining execution and acceptance slots permit them, with the same request and load receipts."
+    }
+  ],
+  "limitations": [
+    "No tools were used, as requested. This review covers the supplied patch, evaluation file, tests, and current runtime excerpt; it cannot verify behavior delegated to unprovided policy validators, Episode internals, or the full CurrentAgentHost runner.",
+    "The supplied tests use fixture hosts and synthetic receipts. They do not establish live entry behavior, comparable model settings across branches, or source-based semantic scores for scenarios A–F.",
+    "The historical E assistant answer and F original image are described as unavailable. The supplied material cannot establish an original first-turn reproduction for either missing source."
+  ]
+}

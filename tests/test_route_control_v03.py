@@ -99,7 +99,8 @@ class V03Tests(unittest.TestCase):
         elif schema.endswith('organize-request.v1'):
             prepared = packet()
             reply = dict(schema='mindthus.route-v03-organize-reply.v1', request_id=q['request_id'],
-                         issues=prepared['issues'], host_inferences=prepared['host_inferences'], usage=deepcopy(rt.UNKNOWN_USAGE))
+                         issues=prepared['issues'], host_inferences=prepared['host_inferences'],
+                         coverage_disposition={'status': 'complete', 'unassigned': []}, usage=deepcopy(rt.UNKNOWN_USAGE))
         else:
             reply = dict(schema='mindthus.route-v03-correction-reply.v1', request_id=q['request_id'],
                          dispositions=[], revisions={}, usage=deepcopy(rt.UNKNOWN_USAGE))
@@ -211,7 +212,10 @@ class V03Tests(unittest.TestCase):
 
     def test_global_omission_remains_unassigned(self):
         self.provider = Provider({'COVERAGE.global': 'missing'}); result = self.drive()
-        self.assertEqual(result['route']['coverage']['unassigned_scope'], 'missing'); self.assertFalse(result['outputs'])
+        self.assertEqual(result['route']['coverage']['unassigned_scope'], 'missing')
+        self.assertIn('I1', result['delivery']['accepted_outputs'])
+        self.assertEqual(result['delivery']['state'], 'partial')
+        self.assertFalse(result['consumption_complete'])
 
     def test_accepted_predecessor_cannot_clear_missing_coverage(self):
         self.edge(); self.provider = Provider({'COVERAGE.I2': 'missing'})
@@ -338,7 +342,8 @@ class V03Tests(unittest.TestCase):
     def test_acceptance_budget_exhaustion_is_not_complete(self):
         self.data['task_budget']['max_calls']=1
         result=self.drive();self.assertFalse(result['consumption_complete'])
-        self.assertEqual(result['pending']['I1'],'acceptance_budget_exhausted')
+        self.assertEqual(result['reason'],'insufficient_execution_capacity_before_inference')
+        self.assertEqual(self.provider.batch_count,0)
 
     def test_mixed_revision_and_objection_bind_current_candidate(self):
         self.provider = Provider({'S1.I1.scope_preservation':'scope_drift',

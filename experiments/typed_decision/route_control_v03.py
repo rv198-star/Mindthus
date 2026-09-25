@@ -6,6 +6,7 @@ bounded route compiler, method loader, dependency acceptance and episode journal
 from __future__ import annotations
 
 from pathlib import Path
+import hashlib
 import subprocess
 
 from . import relationship_assessment as rel, relationship_runtime as rt
@@ -23,11 +24,21 @@ STEP_KINDS = {**rc.STEP_KINDS, 'candidate': 'judgment'}
 HOST_SLOTS = rc.HOST_SLOTS
 
 
+
+def entry_material(repo):
+    path = Path(repo) / 'skills/using-mindthus/SKILL.md'
+    content = path.read_bytes()
+    return {'path': 'skills/using-mindthus/SKILL.md',
+            'sha256': hashlib.sha256(content).hexdigest(), 'content': content.decode('utf8')}
+
+
 def _bundle(repo):
     bundle, qs, bindings = rc.load_policy(repo)
     contract, source_sha256 = sd.load_contract(repo)
     bundle = rel.clone(bundle)
     bundle['sources'][sd.CONTRACT_PATH] = source_sha256
+    entry = entry_material(repo)
+    bundle['sources'][entry['path']] = entry['sha256']
     bundle['v03_contract_sha256'] = digest(contract)
     return bundle, qs, bindings, contract
 
@@ -90,22 +101,49 @@ def _host_identity(hook, expected, live):
 
 
 def _organize_request(packet, bindings):
+    capacity = min(3, max(0, packet['task_budget']['max_calls'] - 1))
     body = {'schema': 'mindthus.route-v03-organize-request.v1', 'mode': MODE, 'policy': MODE,
             'original_input': packet,
             'method_summaries': {m['method']: m['method_binding_question']
                                  for m in bindings['methods']},
-            'instruction': 'Extract at most three source-bound issues and no more than three '
-                           'method candidates per issue. Host guesses are inference, not facts. '
+            'entry_skill': entry_material(Path(__file__).resolve().parents[2]),
+            'max_issues': capacity,
+            'coverage_reply': {'status': 'complete|partial', 'unassigned': [
+                {'source_ref': 'exact original quote ref', 'kind': 'independent|shared_gate|unclear',
+                 'affected_issues': 'retained issue IDs; empty for unassigned independent work or all affected scopes',
+                 'reason': 'why the user-requested scope is not represented'}]},
+            'instruction': f'Extract at most {capacity} source-bound user deliverables and no more than three '
+                           'method candidates per issue. One execution slot is reserved for final acceptance. '
+                           'Keep auxiliary unknowns as limitations of their answer, not new user obligations. '
+                           'Preserve genuine separate requests and dependencies; report a capacity limit rather '
+                           'than conceal an omitted deliverable. Return coverage_disposition with exact '
+                           'source references for every omitted request or shared prerequisite. '
+                           'Host guesses are inference, not facts. '
                            'Do not invent a full frame/claim graph or decide the final answer.'}
     return {**body, 'request_id': digest(body)}
 
 
 def validate_organized(reply, request, bindings):
-    rel.shape(reply, {'schema', 'request_id', 'issues', 'host_inferences', 'usage'},
+    rel.shape(reply, {'schema', 'request_id', 'issues', 'host_inferences', 'coverage_disposition', 'usage'},
               'v03_organizer_reply')
     require(reply['schema'] == 'mindthus.route-v03-organize-reply.v1'
             and reply['request_id'] == request['request_id'], 'v03_organizer_binding')
     rt._usage(reply['usage'])
+    require(len(reply['issues']) <= request['max_issues'], 'v03_organized_capacity_exceeded')
+    coverage = reply['coverage_disposition']
+    rel.shape(coverage, {'status', 'unassigned'}, 'v03_organized_coverage')
+    require(coverage['status'] in ('complete', 'partial') and isinstance(coverage['unassigned'], list)
+            and (coverage['status'] == 'partial') == bool(coverage['unassigned']), 'v03_organized_coverage_status')
+    ids = {i['id'] for i in reply['issues']}
+    docs = {d['id']: d for d in request['original_input']['documents']}
+    for omitted in coverage['unassigned']:
+        rel.shape(omitted, {'source_ref', 'kind', 'affected_issues', 'reason'}, 'v03_unassigned_scope')
+        rc.check_ref(omitted['source_ref'], docs, source_only=True)
+        require(omitted['kind'] in ('independent', 'shared_gate', 'unclear')
+                and isinstance(omitted['affected_issues'], list)
+                and all(isinstance(i, str) for i in omitted['affected_issues'])
+                and set(omitted['affected_issues']) <= ids and rel.text(omitted['reason']),
+                'v03_unassigned_scope_value')
     amended = {**request['original_input'], 'issues': reply['issues'],
                'host_inferences': reply['host_inferences']}
     sd.validate_packet(amended, bindings, organized=True)
@@ -144,22 +182,29 @@ def _execution_reply(reply, request, packet, bindings):
             require(type(item['accepted']) is bool and item['artifact_sha256'] == digest(reply['text'])
                     and rel.text(item['reason']) and reply['objection'] is None, 'v03_dependency_receipt_binding')
     reply = {k: v for k, v in reply.items() if k != 'dependency_acceptance'}
-    if packet['consumption_policy'] == 'committed':
+    limited = request.get('limited_response') is not None
+    if packet['consumption_policy'] == 'committed' and not limited:
         rc.validate_execution(reply, request, sd.route_input(packet))
         return
+    status_field = 'scope_status' if limited else 'advisory_status'
     fields = {'route_id', 'revision', 'issue_id', 'performed_methods', 'text', 'objection', 'usage'}
-    if 'advisory_status' in reply:
-        fields.add('advisory_status')
+    if limited:
+        require(reply.get('scope_status') in ('bounded_answer', 'unresolved') and
+                reply.get('performed_methods') == [] and reply.get('objection') is not None,
+                'v03_limited_reply_requires_explicit_boundary')
+        require(reply['objection'].get('kind') == 'method_boundary', 'v03_limited_method_boundary_only')
+    if status_field in reply:
+        fields.add(status_field)
     rel.shape(reply, fields, 'v03_advisory_execution')
     require(reply['route_id'] == request['route_id'] and
             reply['revision'] == request['revision'] and
             reply['issue_id'] == request['issue']['issue_id'], 'v03_advisory_execution_binding')
     rt._usage(reply['usage'])
-    allowed = {m['method'] for m in bindings['methods']}
+    allowed = set(request['loaded_methods'])
     require(isinstance(reply['performed_methods'], list) and
             len(reply['performed_methods']) == len(set(reply['performed_methods'])) and
             set(reply['performed_methods']) <= allowed, 'v03_advisory_method_claim')
-    status = reply.get('advisory_status', 'unresolved' if reply['objection'] is not None else 'answer')
+    status = reply.get(status_field, 'unresolved' if reply['objection'] is not None else 'answer')
     require(status in ('answer', 'bounded_answer', 'unresolved'), 'v03_advisory_status')
     require(isinstance(reply['text'], str), 'v03_advisory_text')
     if reply['objection'] is not None:
@@ -188,7 +233,7 @@ def _execution_reply(reply, request, packet, bindings):
 def _post_artifacts(ep, directory, packet, route, iid, needed, outputs, bundle, qs, bindings, contract):
     old = next(r for r in route['per_issue'] if r['issue_id'] == iid)
     # An accepted artifact cannot supply a missing retained candidate or an unassigned task.
-    if 'unassigned_scope' in route['coverage'] or route['coverage']['issues'][iid].get('value') != 'covered':
+    if route['coverage']['issues'][iid].get('value') != 'covered':
         return route
     artifacts = []
     for edge in needed:
@@ -243,6 +288,62 @@ def _invalidate_dependents(route, outputs, changed, pending):
             outputs[iid]['accepted_uses'] = {}
 
 
+
+def _limited_response(packet, route, row):
+    """A bounded answer is distinct from committing an uncertain method.
+
+    This narrow exit changes no threshold and grants no method, fact, permission,
+    companion or dependency override. It cannot release a required unknown helper.
+    """
+    iid = row['issue_id']
+    auth = packet['authority']
+    if (row['mode'] != 'delegated_unresolved' or auth['risk'] != 'low'
+            or auth['mode'] not in ('read_only', 'advisory') or auth['known_obligations']
+            or route['artifact_edges'] or route['mandatory_reads'] or 'unassigned_scope' in route['coverage']
+            or route['coverage']['issues'][iid].get('value') != 'covered'):
+        return None
+    issue = next(i for i in packet['issues'] if i['id'] == iid)
+    docs = {d['id']: d for d in packet['documents']}
+    handling = rc._resolution(issue['handling'], sd.route_input(packet), docs)
+    handling = handling or rc._value(route['source_observations'], 'G03.' + iid)
+    if handling != 'judge' or len(issue['candidates']) != 1:
+        return None
+    method = issue['candidates'][0]
+    # A companion obligation cannot be waived by this path.
+    if method in ('sela', 'mpg'):
+        return None
+    expected_reason = 'applicability_role_unresolved:' + method + ';no_established_primary'
+    if row.get('reason') != expected_reason:
+        return None
+    observations = route['source_observations']
+    probability = rc._value(observations, 'M02.' + iid + '.' + method)
+    role = rc._value(observations, 'M03.' + iid + '.' + method)
+    if probability is None or not .2 < probability < .8 or role != 'primary_candidate':
+        return None
+    return {'kind': 'method_uncommitted_bounded_response.v1',
+            'route_reason': row['reason'], 'method': method,
+            'instruction': 'Answer only what the supplied sources support without claiming to have '
+                           'executed or selected a named method. Return scope_status=bounded_answer '
+                           'and a source-bound method_boundary objection describing the uncommitted '
+                           'scope and limits, or scope_status=unresolved. Do not acquire facts, '
+                           'grant permissions, or treat this as a completed method route.'}
+
+
+def delivery_summary(route, outputs, acceptance, pending):
+    """Report actual accepted artifacts, not a new semantic task-success oracle."""
+    accepted = (acceptance or {}).get('accepted', {})
+    delivered = {iid: {'text': out['text'], 'artifact_sha256': out['artifact_sha256'],
+                      'route_status': 'limited_response' if 'route_exception' in out else 'as_dispatched'}
+                 for iid, out in outputs.items() if iid not in pending
+                 and accepted.get(iid, {}).get('accepted') is True
+                 and accepted[iid].get('artifact_sha256') == out['artifact_sha256']}
+    unassigned = (route or {}).get('coverage', {}).get('unassigned_scope')
+    return {'accepted_outputs': delivered, 'pending': dict(pending), 'unassigned_scope': unassigned,
+            'state': 'partial' if delivered and (pending or unassigned) else
+                     'delivered' if delivered else 'none',
+            'user_task_satisfaction': 'requires_source_based_semantic_review'}
+
+
 def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
               executor, arbitrator, artifact_acceptor, contract):
     """Dispatch current-host work; use the old targeted dependent-successor repair."""
@@ -256,6 +357,15 @@ def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
             if iid not in waiting:
                 continue
             row = next(r for r in route['per_issue'] if r['issue_id'] == iid)
+            omitted = route.get('organizer_coverage', {}).get('unassigned', [])
+            if any(x['kind'] in ('shared_gate', 'unclear') and
+                   (not x['affected_issues'] or iid in x['affected_issues']) for x in omitted):
+                pending[iid] = 'unassigned_shared_prerequisite'
+                waiting.remove(iid); progressed = True; continue
+            if (packet['authority']['known_obligations'] and
+                    'unassigned_scope' in route['coverage']):
+                pending[iid] = 'unresolved_shared_obligation'
+                waiting.remove(iid); progressed = True; continue
             needed = [e for e in route['artifact_edges'] if e['consumer'] == iid]
             # Known source-bound prerequisites apply to both consumption modes.
             if any(e['relation'] == 'unclear' or
@@ -279,7 +389,8 @@ def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
             if known_handling == 'acquire_fact':
                 pending[iid] = 'owner_established_fact_required'
                 waiting.remove(iid); progressed = True; continue
-            if mode == 'committed' and row['mode'] not in ('committed', 'direct'):
+            limited = _limited_response(packet, route, row) if mode == 'committed' else None
+            if mode == 'committed' and row['mode'] not in ('committed', 'direct') and limited is None:
                 pending[iid] = row['reason'] or row['mode']
                 waiting.remove(iid); progressed = True; continue
             if any(e['producer'] not in accepted or not accepted[e['producer']].get(e['id'])
@@ -291,13 +402,14 @@ def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
             for attempt in range(2 if mode == 'committed' else 1):
                 row = next(r for r in route['per_issue'] if r['issue_id'] == iid)
                 methods = sorted({row['primary'], *row['supports'], *row['constraints']} - {None})
-                names = {m['method'] for m in bindings['methods']}
-                loaded = rc._read_methods(ep.repo, names, bindings)
+                names = set(original_issue['candidates']) | set(methods) | set(route['mandatory_reads'])
+                loaded = rc._read_methods(ep.repo, names, bindings) if not limited else {}
                 request = {'schema': 'mindthus.route-v03-execution-request.v1',
                            'mode': MODE, 'policy': mode, 'route_id': route['route_id'],
                            'revision': route['revision'], 'issue': row,
                            'execute_methods': methods if mode == 'committed' else [],
                            'suggested_methods': methods, 'loaded_methods': loaded,
+                           'entry_skill': entry_material(ep.repo),
                            'route_observations': route['source_observations'], 'coverage': route['coverage'],
                            'dependency_uses': {e['id']: e for e in route['artifact_edges'] if e['producer'] == iid},
                            'original_input': packet, 'prior_outputs': outputs,
@@ -310,6 +422,9 @@ def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
                                            'bounded_answer when the text answers the task within the stated limits; '
                                            'unresolved when a necessary fact or permission prevents an answer; '
                                            'answer when there is no objection. Keep limitations visible in the answer.')}
+                if limited is not None:
+                    request['limited_response'] = limited
+                    request['instruction'] = limited['instruction']
                 request['request_id'] = digest(request)
                 step = 'execution__' + iid + '__' + str(route['revision'])
                 rt.save(directory / 'dispatch' / (step + '.json'),
@@ -321,18 +436,23 @@ def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
                 if out['status'] != 'complete':
                     pending[iid] = 'execution_failed_or_noncompliant'; break
                 reply = out['reply']
-                advisory_status = reply.get('advisory_status', 'unresolved' if reply['objection'] is not None else 'answer')
-                if mode == 'advisory' and advisory_status == 'unresolved':
-                    pending[iid] = 'advisory_host_unresolved'
+                local_response = mode == 'advisory' or limited is not None
+                status_key = 'scope_status' if limited is not None else 'advisory_status'
+                advisory_status = reply.get(status_key, 'unresolved' if reply['objection'] is not None else 'answer')
+                if local_response and advisory_status == 'unresolved':
+                    pending[iid] = 'limited_host_unresolved' if limited is not None else 'advisory_host_unresolved'
                     if not rel.text(reply['text']):
                         break
-                if reply['objection'] is None or mode == 'advisory':
+                if reply['objection'] is None or local_response:
                     outputs[iid] = {'route_id': route['route_id'], 'revision': route['revision'],
                                     'text': reply['text'], 'methods': reply['performed_methods'],
                                     'artifact_sha256': digest(reply['text']), 'accepted_uses': {},
                                     'input_artifacts': {e['id']: outputs[e['producer']]['artifact_sha256'] for e in needed},
                                     'valid_for_current_dependencies': True}
-                    if mode == 'advisory' and reply['objection'] is not None:
+                    if limited is not None:
+                        outputs[iid]['route_exception'] = {**limited, 'disposition': advisory_status,
+                                                          'objection': rel.clone(reply['objection'])}
+                    if local_response and reply['objection'] is not None:
                         outputs[iid]['advisory_objection'] = {
                             'objection': rel.clone(reply['objection']), 'disposition': advisory_status,
                             'host_context_ref': out.get('host_context_ref')}
@@ -438,6 +558,7 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
         route, outputs, pending, s0, s1 = None, {}, {}, None, None
         correction, arbitration, rechecked, acceptance = None, None, None, None
         finding_states, issue_states = {}, {}
+        organizer_coverage = None
         def finish(reason=None, *, terminal=True):
             state = ep.tally()
             for issue in packet['issues']:
@@ -456,7 +577,12 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
                       'acceptance': acceptance, 'reason': reason,
                       'finding_states': finding_states, 'issue_states': issue_states,
                       'consumption_complete': bool(acceptance) and not pending and
+                          not (route or {}).get('coverage', {}).get('unassigned_scope') and
                           all(x['accepted'] for x in acceptance['accepted'].values()),
+                      'delivery': delivery_summary(route, outputs, acceptance, pending),
+                      'routing_complete': bool(route and route.get('per_issue')) and
+                          all(r['mode'] in ('direct', 'committed') for r in route['per_issue']) and
+                          not route.get('coverage', {}).get('unassigned_scope'),
                       'counts': state['counts'], 'usage': state['usage'],
                       'plugin_request_seconds': state['seconds'],
                       'method_request_seconds': state.get('execution_seconds', 0),
@@ -472,6 +598,9 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
                 return finish('outside_low_risk_opt_in')
             if ep.tally()['failures']:
                 return finish('terminal_prior_failure')
+            required_slots = len(packet['issues']) + 1 if packet['issues'] else 2
+            if packet['task_budget']['max_calls'] < required_slots:
+                return finish('insufficient_execution_capacity_before_inference')
             if not packet['issues']:
                 if organizer is None:
                     return finish('awaiting_organizer', terminal=False)
@@ -482,6 +611,7 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
                 if out['status'] != 'complete':
                     return finish('organizer_failed')
                 packet = validate_organized(out['reply'], request, bindings)
+                organizer_coverage = rel.clone(out['reply']['coverage_disposition'])
                 rt.save(directory / 'organized-input.json', packet)
             if candidate_snapshot is not None:
                 route = rel.clone(candidate_snapshot['route'])
@@ -493,6 +623,10 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
                 s0 = {'observations': observations, 'compiled_identity': compiled.identity}
                 route = sd.consume_s0(packet, compiled, observations, bundle, bindings)
                 route['engine_identity'] = ep.manifest['provider']
+                if organizer_coverage is not None:
+                    route['organizer_coverage'] = organizer_coverage
+                    if organizer_coverage['unassigned']:
+                        route['coverage']['unassigned_scope'] = 'source_bound_organizer_omission'
                 rt.save(directory / 'commitment-1.json', route)
                 route, outputs, pending = _dispatch(ep, directory, packet, route, bundle, qs, bindings,
                                                     compiled, executor, arbitrator, artifact_acceptor, contract)
@@ -582,6 +716,8 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
             evidence = {'initial': s1, 'recheck': rechecked, 'arbitration': arbitration,
                         'finding_states': finding_states, 'pending': pending,
                         'dependency_versions': {i: o.get('input_artifacts', {}) for i, o in outputs.items()},
+                        'unassigned_scope': route.get('coverage', {}).get('unassigned_scope'),
+                        'route_exceptions': {i: o['route_exception'] for i, o in outputs.items() if 'route_exception' in o},
                         'advisory_objections': {i: o['advisory_objection'] for i, o in outputs.items()
                                                 if 'advisory_objection' in o}}
             if executor is not None and outputs:

@@ -177,11 +177,9 @@ def consume_s0(packet: dict, compiled, answers: dict, bundle: dict, bindings: di
             row.update(mode='delegated_unresolved', primary=None, supports=[], constraints=[],
                        reason='candidate_coverage_' + str(value.get('value') or value.get('status') or 'absent'))
     route['coverage'] = coverage
-    if packet['consumption_policy'] == 'committed' and 'unassigned_scope' in coverage:
-        for row in route['per_issue']:
-            if row['mode'] in ('direct', 'committed'):
-                row.update(mode='delegated_unresolved', primary=None, supports=[], constraints=[],
-                           reason='unassigned_scope_' + coverage['unassigned_scope'])
+    # Global coverage describes an unassigned request, not a shared prerequisite.
+    # Keep it visible at final acceptance; independent rows retain their roles.
+    # Explicit authority/fact/dependency gates remain in the dispatcher.
     return rc.refresh(route)
 
 
@@ -190,11 +188,15 @@ def compile_s1(packet: dict, route: dict, outputs: dict, repo: Path, contract: d
     _, rules = rel.load_contract(repo)
     targets = {iid: {'issue_id': iid, 'text': output['text'],
                      'candidate_version': output['artifact_sha256'],
-                     'route_revision': output['revision']}
+                     'route_revision': output['revision'],
+                     'execution_boundary': output.get('route_exception')}
                for iid, output in outputs.items()}
+    _, _, bindings = rc.load_policy(repo)
+    actually_used = {m for output in outputs.values() for m in output.get('methods', [])}
     context = {'original_documents': packet['documents'], 'conversation': packet['conversation'],
                'host_inferences': packet['host_inferences'], 'assessment_targets': targets,
-               'canonical_rules': rules, 'route': route}
+               'canonical_rules': rules, 'route': route,
+               'host_method_materials': rc._read_methods(repo, actually_used, bindings)}
     require(len(canonical(context)) <= 98304, 'v03_s1_context_capacity')
     specs, index = [], {}
     for iid in sorted(targets):
@@ -260,7 +262,10 @@ def correction_request(packet: dict, route: dict, outputs: dict, report: dict) -
             'method_source_hashes': {path: sha for path, sha in route['contract_hashes'].items()
                                      if path.startswith('skills/')},
             'original_input': packet,
-            'instruction': 'For each finding: revise the bound candidate once, give a source-bound '
+            'execution_boundaries': {iid: output['route_exception'] for iid, output in outputs.items()
+                                     if 'route_exception' in output},
+            'instruction': 'Preserve each candidate execution boundary. A bounded no-method answer '
+                           'cannot become a claim of method execution after revision. For each finding: revise the bound candidate once, give a source-bound '
                            'objection, or leave the affected action unresolved. A typed observation '
                            'is not evidence or permission. Do not provide hidden chain of thought.'}
     return {**body, 'request_id': digest(body)}
@@ -402,7 +407,9 @@ def acceptance_request(packet: dict, route: dict, outputs: dict, dispositions: d
             'original_input': packet,
             'instruction': 'Confirm actual acceptance of each unchanged candidate for the named '
                            'task. Do not rewrite content in this receipt. Leave any necessary '
-                           'unresolved finding or dependency unaccepted.'}
+                           'unresolved finding or dependency unaccepted. For route_exceptions, inspect the actual '
+                           'final text and its source support: it must not claim a method was executed or selected. '
+                           'An empty performed_methods field alone is not semantic proof. Preserve all scope limits.'}
     return {**body, 'request_id': digest(body)}
 
 

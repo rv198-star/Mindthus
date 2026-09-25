@@ -153,15 +153,22 @@
     {
       "test_id": "typed-decision-c01-experiment",
       "paths": [
+        "tests/test_advisory_source_objection.py",
+        "tests/test_comparison_v03.py",
+        "tests/test_current_host.py",
         "tests/test_entry_assessment.py",
+        "tests/test_entry_single_cycle.py",
+        "tests/test_independent_live_adapter.py",
+        "tests/test_live_d_adapter.py",
+        "tests/test_observation_assessment.py",
         "tests/test_relationship_assessment.py",
         "tests/test_relationship_live.py",
         "tests/test_relationship_runtime.py",
         "tests/test_route_control.py",
+        "tests/test_route_control_v03.py",
+        "tests/test_scoped_route_repair.py",
         "tests/test_typed_decision.py",
-        "tests/test_typed_decision_review.py",
-        "tests/test_current_host.py",
-        "tests/test_scoped_route_repair.py"
+        "tests/test_typed_decision_review.py"
       ],
       "owner": "runtime",
       "protects": [

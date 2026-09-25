@@ -6,6 +6,35 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## 2026-09-26 Owner resumed ONE repair cycle — implementation candidate, not qualification
+
+Owner approved item-by-item fixes after the baseline-comparability audit. Scope: one bounded A cycle;
+no default adoption, no TPlan pivot, no threshold tuning. See
+[single-cycle repair](route-control-v0.2/single-cycle-repair-v1/PLAN.md) and
+[review disposition](route-control-v0.2/single-cycle-repair-v1/REVIEW-DISPOSITION.md).
+
+Default no-Jev preparation now uses the actual using-mindthus entry and a method catalog;
+method bodies are requested and read through the same CurrentAgentHost/Episode, including a
+bounded review-time read. Full preload is explicitly diagnostic. Both branch types see the
+same entry source. Global independent omission remains unassigned without revoking ready work;
+source-bound shared gates stay blocking. Method-only uncertainty has a narrow sourced limited-
+answer exit, not a committed method. Delivery, routing and full consumption are distinct.
+Organizer capacity reserves acceptance and requires an explicit source-bound omission disposition.
+
+Source-window and reviewer validators prevent late corrections being treated as initial input,
+bind realized branch turns to actual final acceptance and bind reviewer method context to
+recorded requests. Missing E historical assistant / F original image remain missing. Ordinary
+prefix preparation never certifies original-failure reproduction. A portable prepare/step/explicit
+Codex transport uses the existing runtime; no CPA client or new semantic routing implementation.
+
+Independent Codex code audit returned REVISE with eight findings; author fixes and counterexamples
+are recorded separately, not relabeled as independent PASS. Full 1644 tests passed before final
+entry-material parity change; final related 364 passed, final full rerun/live verification pending.
+Old 2411 source/evidence/skill files were unchanged before this recovery update. No old trial rerun.
+Old version remains /srv/agentdock/worktrees/mindthus-211-before-1749196.
+#211 remains NOT QUALIFIED. Next: finish final checks, freeze only valid new source windows,
+then actual current-host validation; a good fixture, receipt or content hash is not a quality gain.
+
 ## 2026-09-26 owner-requested HOLD — using-mindthus + Jev / #211
 
 The owner has paused this optimization topic while considering the next scenario.

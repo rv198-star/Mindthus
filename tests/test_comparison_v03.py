@@ -55,7 +55,7 @@ class ComparisonTests(unittest.TestCase):
                 d={'reason':'Source-bound disagreement needs independent resolution.',
                    'original_refs':[rel.quote(self.data['documents'][0])]} if dispute and q['candidate'] is not None else None
                 reply={'schema':'mindthus.route-v03-native-reply.v1','request_id':q['request_id'],
-                       'text':text,'version':digest(text),'performed_methods':['wae'],'artifact_action':'replace',
+                       'text':text,'version':digest(text),'performed_methods':[], 'artifact_action':'replace',
                        'decision_status':'disputed' if d else 'decided','dispute':d,'usage':dict(rt.UNKNOWN_USAGE)}
             elif schema.endswith('execution-request.v1'):
                 reply=Executor().execute(q,45)

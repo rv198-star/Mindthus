@@ -71,6 +71,7 @@ def _reply_shape(role: str, request: dict) -> dict:
     if schema == 'mindthus.route-v03-organize-request.v1':
         return {'schema': 'mindthus.route-v03-organize-reply.v1',
                 'request_id': request['request_id'], 'issues': [],
+                'coverage_disposition': {'status': 'complete', 'unassigned': []},
                 'host_inferences': {'provenance': 'host_inference',
                                     'owner_ref': request['original_input']['authority']['owner_ref'],
                                     'issue_views': {}}, 'usage': unknown}
@@ -91,7 +92,8 @@ def _reply_shape(role: str, request: dict) -> dict:
         return {'route_id': request['route_id'], 'revision': request['revision'],
                 'issue_id': request['issue']['issue_id'], 'performed_methods': [],
                 'text': '', 'objection': None, 'dependency_acceptance': {}, 'usage': unknown,
-                **({'advisory_status': 'unresolved'} if request.get('policy') == 'advisory' else {})}
+                **({'advisory_status': 'unresolved'} if request.get('policy') == 'advisory' else {}),
+                **({'scope_status': 'unresolved'} if request.get('limited_response') is not None else {})}
     if role == 'execution':
         return {'route_id': request['route_id'], 'revision': request['revision'],
                 'issue_id': request['issue']['issue_id'], 'performed_methods': [],

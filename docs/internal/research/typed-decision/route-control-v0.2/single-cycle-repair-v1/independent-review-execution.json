@@ -1,0 +1,19 @@
+{
+  "requested_model": "gpt-6-sol",
+  "requested_reasoning": "xhigh",
+  "contexts": [
+    "01a0daad-78f4-7ab3-8e0b-f3bbb8721748"
+  ],
+  "usage": {
+    "input_tokens": 35280,
+    "cached_input_tokens": 3712,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 8076,
+    "reasoning_output_tokens": 6732
+  },
+  "observed_tool_events": [],
+  "final_response_sha256": "f8d1ddaf0348c9d74dee203f35079300ab515865f62223a6385c32d153f39e88",
+  "model_service_attestation": "not_observed",
+  "raw_reasoning_stream": "not_exported",
+  "review_result": "REVISE; author fixes follow; not independently re-approved"
+}
