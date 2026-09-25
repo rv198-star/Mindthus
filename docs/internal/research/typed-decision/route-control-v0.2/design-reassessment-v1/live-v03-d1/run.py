@@ -37,7 +37,7 @@ def arr(items):return {'type':'array','items':items}
 def enum(values):return {'type':'string','enum':list(values)}
 TEXT_SCHEMA=obj({'text':STR})
 
-def freeze(root):
+def freeze(root,parent_root=None):
     source=json.loads((root/'sources/display-thread.json').read_text())
     skills=json.loads((REPO/'tests/bidirectional_steelman_cases.jsonl').read_text().splitlines()[0])
     sources={
@@ -71,6 +71,13 @@ def freeze(root):
         sources={case:digest(read_record(root/'sources'/f'{case}.json')) for case in sources},
         stages={'natural_codex':2,'comparison_jev':6,'full_jev':6,'technical_jev':2},
         qualification='historical_exposed_partial_source_development_only')
+    if parent_root is not None:
+        parent=read_record(parent_root/'freeze.json')
+        binding['technical_predecessor']=dict(root=str(parent_root),freeze_sha256=sha(parent_root/'freeze.json'),
+            implementation=parent['implementation'],reason='Correct CLI JSON Schema serialization; no semantic contract change',
+            consumed_jev={s:len(list((parent_root/'jev-calls'/s).glob('*/intent.json'))) for s in ('comparison','full')},
+            preserved_results=[p.stem for p in (parent_root/'results').glob('*.json')],
+            natural_attempts='Each source is one declared technical supplement after invalid JSON Schema; prior failures retained')
     save(root/'freeze.json',binding)
     return binding
 
@@ -99,7 +106,9 @@ def call(root,label,body,schema,*,session_group=None,timeout=240):
         require(out['status']=='complete','D_prior_codex_failure')
         return json.loads((directory/'answer.json').read_text()),out
     if ip.exists():raise RecoveryRequired('D_codex_intent_unresolved')
-    save(ip,intent);save(directory/'schema.json',schema)
+    save(ip,intent)
+    # CLI consumes raw JSON Schema, not the checksummed ledger envelope.
+    (directory/'schema.json').write_text(json.dumps(schema,ensure_ascii=False,indent=2)+'\n')
     (directory/'prompt.txt').write_text(prompt)
     command=[f['codex_binary'],'exec']
     if prior:command+=['resume']
@@ -125,7 +134,7 @@ def call(root,label,body,schema,*,session_group=None,timeout=240):
             for k in ('input_tokens','output_tokens'):
                 if type(item['usage'].get(k)) is int:usage[k]=item['usage'][k]
         row=item.get('item',{})
-        if row.get('type') not in (None,'agent_message','reasoning'):tool_use.append(row.get('type'))
+        if row.get('type') not in (None,'agent_message','reasoning','error'):tool_use.append(row.get('type'))
     if tool_use:status='invalid_tool_use'
     out=dict(status=status,elapsed_seconds=elapsed,usage=usage,context_ref=context,tool_use=tool_use,
              requested_model=MODEL,model_service_attestation='not_observed',events_sha256=sha(directory/'events.jsonl'),
@@ -163,8 +172,9 @@ def jev(root,stage):
         # Only byte-equivalent State/questions are reused, preserving physical call identity.
         if op.exists():return read_record(op)['response']
         if (directory/'intent.json').exists():raise RecoveryRequired('D_jev_intent_unresolved')
-        cap=verify(root)['stages'][stage+'_jev']
-        require(len(list((root/'jev-calls'/stage).glob('*/intent.json')))<cap,'D_jev_stage_budget')
+        frozen=verify(root);cap=frozen['stages'][stage+'_jev']
+        used=frozen.get('technical_predecessor',{}).get('consumed_jev',{}).get(stage,0)
+        require(used+len(list((root/'jev-calls'/stage).glob('*/intent.json')))<cap,'D_jev_stage_budget')
         save(directory/'intent.json',dict(wire_request_sha256=ident,model='jev-1.13.0',timeout=timeout))
         start=time.monotonic()
         try:raw=deadline_post_json(url,headers,body,min(timeout,60))
@@ -260,6 +270,8 @@ def observation(root,label,original_context):
 
 def run(root,case,condition,*,full=False,manual=False):
     label=('full-' if full else 'common-')+case+'-'+condition;ep=root/'episodes'/label
+    require(label not in verify(root).get('technical_predecessor',{}).get('preserved_results',[]),
+            'D_predecessor_result_preserved_do_not_rerun')
     policy='advisory' if condition=='jev_advisory' else 'committed'
     data=packet(root,case,label,policy,common=not full);hs=hooks(data['authority']['owner_ref'])
     snapshot=None
@@ -301,12 +313,13 @@ def main():
     p.add_argument('--root',type=Path,required=True);p.add_argument('--case',choices=['E','F'])
     p.add_argument('--condition',choices=cmp.CONDITIONS,default='jev_committed');p.add_argument('--full',action='store_true')
     p.add_argument('--manual',action='store_true');p.add_argument('--credential-file',type=Path)
+    p.add_argument('--parent-root',type=Path)
     a=p.parse_args();root=a.root.resolve()
     if a.credential_file:
         require(a.credential_file.stat().st_mode&0o077==0,'credential_not_private')
         for line in a.credential_file.read_text().splitlines():
             if line.startswith('TYPESAFE_API_KEY='):os.environ['TYPESAFE_API_KEY']=line.split('=',1)[1].strip().strip('"\'')
-    if a.command=='freeze':result=freeze(root)
+    if a.command=='freeze':result=freeze(root,a.parent_root.resolve() if a.parent_root else None)
     elif a.command=='natural':result=natural(root,a.case)
     elif a.command=='run':result=run(root,a.case,a.condition,full=a.full,manual=a.manual)
     else:
