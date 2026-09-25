@@ -16,6 +16,16 @@ first handoff; their later read-only bundle establishes provenance, not local ru
 
 ## 2026-09-25 local completion and #211 small holdout
 
+User clarified the comparison priority: judge whether routing changes the actual
+decision; provisionally record spending as zero, and compare latency only for the
+routing module. The [judgment comparison](route-control-v0.2/formal-abc-v1/JUDGMENT-COMPARISON.md)
+uses existing frozen records: final action choices converged in HB/HC/HD, but Jev
+failed to commit HB/HC while the ordinary-model route committed both; HD's accepted
+predecessor and targeted Jev recheck still left the resource decision unresolved.
+Initial judgment-provider calls totaled 88.15 seconds for B versus 4.97 seconds for C;
+HD's legal Jev recheck made C's four calls 6.83 seconds. These are module request
+times, not whole-task speed. Temporary zero is not a verified billing amount.
+
 With OCI continuation unavailable, the current Codex completed the new local A–F
 [development batch](route-control-v0.2/paired-local-codex-v3/RESULT.md): nine cases,
 nine total real official TypeSafe Jev calls (eight newly in the batch and B1 once in its
