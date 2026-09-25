@@ -1,8 +1,10 @@
-"""Technical recovery for host-consumption rechecks after a missing local Jev key.
+"""Technical recovery for an unresolved host-consumption recheck.
 
-The parent A recheck failed before transport with no runtime, receipt or usage.  This
-successor preserves that outcome, binds the already frozen host candidates, and admits
-one fresh official TypeSafe recheck per A-F scenario.  It never retries an old intent.
+The operator observed a missing local Jev key when the parent A recheck produced a
+generic provider error.  Its ledger has no runtime, receipt or usage, which is consistent
+with that diagnosis but does not independently prove that no upstream request occurred.
+This successor preserves the outcome, binds the frozen host candidates, and admits one
+fresh official TypeSafe recheck per A-F scenario.  It never retries an old intent.
 """
 from __future__ import annotations
 
@@ -26,9 +28,10 @@ from experiments.typed_decision.session import Limits, Session, implementation_d
 ROOT = parent.ROOT / 'recheck-recovery-v1'
 SCENARIOS = parent.SCENARIOS
 LIMITS = Limits(max_calls=1, max_seconds=60, max_request_bytes=98304)
-AUTH = ('User authorized environment retry comparison for incomplete verification. Parent A '
-        'recheck failed locally because TYPESAFE_API_KEY was absent and made no upstream call; '
-        'preserve it and use official TypeSafe jev-1.13.0 only.')
+AUTH = ('User authorized environment retry comparison for incomplete verification. The operator '
+        'observed TYPESAFE_API_KEY absent at the parent A failure; the ledger records only a '
+        'generic provider error and does not independently establish upstream delivery. Preserve '
+        'the old intent and use official TypeSafe jev-1.13.0 only for new successor intents.')
 
 
 def sha(path: Path) -> str:
@@ -51,7 +54,7 @@ def manifest() -> dict:
     require(failure['resolved_runtime'] is None
             and all(row['status'] == 'provider_error' for row in failure['results'].values())
             and failure['usage'] == {'input_tokens': None, 'output_tokens': None, 'cost_usd': None},
-            'parent_failure_not_technical_pretransport')
+            'parent_failure_not_unresolved_without_usage')
     p = base.jev_provider()
     rows = {}
     for scenario in SCENARIOS:
@@ -66,7 +69,9 @@ def manifest() -> dict:
         'parent_host_freeze_sha256': sha(parent.ROOT / 'host-freeze.json'),
         'parent_recheck_freeze_sha256': sha(parent.ROOT / 'recheck-freeze.json'),
         'parent_failed_A_outcome_sha256': sha(failed),
-        'parent_failure_class': 'missing_local_TYPESAFE_API_KEY_pretransport',
+        'parent_failure_class': 'generic_provider_error_without_runtime_receipt_or_usage',
+        'operator_observation': 'TYPESAFE_API_KEY_missing_in_invoking_shell',
+        'parent_upstream_delivery': 'not_independently_verifiable_from_ledger',
         'provider': provider_configuration(p), 'limits': asdict(LIMITS),
         'authorization_ref': AUTH, 'max_jev_calls': 6, 'technical_retries_per_new_intent': 0,
         'rows': rows,
@@ -126,7 +131,9 @@ def summary() -> None:
                      'usage': report['trial_usage'] if report else None})
     value = {'schema': 'mindthus.source-direct-v3-host-recheck-recovery-summary.v1',
              'complete': all(row['complete'] for row in rows), 'rows': rows,
-             'parent_failure_preserved': True, 'qualification': False}
+             'parent_failure_preserved': True,
+             'parent_upstream_delivery': 'not_independently_verifiable_from_ledger',
+             'qualification': False}
     base.save(ROOT / 'summary.json', value)
     print(json.dumps({'complete': value['complete'],
                       'completed': sum(row['complete'] for row in rows)}, ensure_ascii=False))

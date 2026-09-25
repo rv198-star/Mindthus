@@ -84,6 +84,15 @@ class ObservationAssessmentTests(unittest.TestCase):
         request = obs.correction_request(report, self.data, REPO)
         self.assertEqual(request['instruction_checks'], ['evidence_decision_fit'])
         self.assertEqual(request['consumption_policy_ref'], obs.CONSUMPTION_POLICY)
+        self.assertEqual(request['findings'], [{
+            'check_id': 'evidence_decision_fit',
+            'value': 'unsupported_candidate_claim',
+            'meaning': obs.CHECKS['evidence_decision_fit']['criteria'][
+                'unsupported_candidate_claim'],
+            'target_ref': self.data['target']['source_ref'],
+            'target_version': self.data['target']['version'],
+            'state_sha256': digest(self.data),
+        }])
         self.assertNotIn(obs.CHECKS['premise_treatment']['remedy'],
                          request['instructions'])
 

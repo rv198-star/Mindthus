@@ -15,7 +15,7 @@ from .session import RecoveryRequired, safe_failure_reason
 
 VERSION = '3'
 POLICY = 'mindthus.source-direct-observation.v3'
-CONSUMPTION_POLICY = 'mindthus.source-direct-observation-consumption.v3.1'
+CONSUMPTION_POLICY = 'mindthus.source-direct-observation-consumption.v3.2'
 
 CHECKS = {
     **assessment.CHECKS,
@@ -245,11 +245,24 @@ def correction_request(report: dict, data: dict, repo: Path) -> dict:
     instruction_keys = (['evidence_decision_fit']
                         if 'evidence_decision_fit' in actionable
                         else [key for key in order if key in actionable])
+    rows = {row['check_id']: row for row in report['result']['matrix']}
+    findings = []
+    for key in instruction_keys:
+        row = rows[key]
+        require(row['status'] == 'ok' and row['value'] in CHECKS[key].get(
+                'hits', (CHECKS[key].get('hit'),)), 'source_direct_v3_invalid_finding')
+        findings.append({
+            'check_id': key, 'value': row['value'],
+            'meaning': CHECKS[key]['criteria'][row['value']],
+            'target_ref': row['target_ref'], 'target_version': row['target_version'],
+            'state_sha256': row['state_sha256'],
+        })
     body = {
         'original_task': assessment.clone(data['task']),
         'decision_context': assessment.clone(data['decision_context']),
         'current_target': assessment.clone(report['result']['target']),
         'instruction_checks': instruction_keys,
+        'findings': findings,
         'instructions': [CHECKS[key]['remedy'] for key in instruction_keys],
         'blocking_unresolved': assessment.clone(report['result']['blocking_unresolved']),
         'advisory_unresolved': assessment.clone(report['result']['advisory_unresolved']),
@@ -257,7 +270,9 @@ def correction_request(report: dict, data: dict, repo: Path) -> dict:
         'boundary': ('Revise only the current target once. Preserve original facts, user goals, '
                      'permissions and supported local truths. Do not treat an unresolved advisory '
                      'observation as false or passed. A blocking unresolved relation must remain '
-                     'explicit for recheck; do not invent evidence to clear it.'),
+                     'explicit for recheck; do not invent evidence to clear it. A finding is a '
+                     'candidate-bound observation, not new evidence; the host may object only by '
+                     'citing the supplied task or evidence.'),
         'parent_assessment_ref': report['source_ref'],
         'consumption_policy_ref': CONSUMPTION_POLICY,
     }
