@@ -6,6 +6,23 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## 2026-09-26 independent 5.6 Sol repeat — baseline first answers also acceptable
+
+The [5.6 Sol report](route-control-v0.2/design-reassessment-v1/independent-sol56-v1/RESULT.md)
+repeats six isolated full paths on the same E/F source snapshots, changing the host request to
+gpt-5.6-sol/xhigh while keeping gpt-6-sol/xhigh anonymous reviewers and all routing thresholds.
+Delivery counts are no-Jev 2/2, advisory 1/2, committed 1/2. Both no-Jev first answers were
+retained verbatim and both reviewers found them acceptable; E's three answers were acceptable
+without established Jev gain. F advisory still hit the source-objection contract rejection,
+and F committed remained pending. E committed crossed the unchanged 0.8 method threshold at
+0.81 versus prior 0.77, on different independently organized inputs; this is not standalone
+model accuracy evidence. Six Jev calls and 19 CLI calls (15 host, four review) completed.
+
+Current success cannot be attributed solely to moving from 5.6 Sol to 6 Sol. Historical
+correction hints, full method context and fresh-session state remain different from the old
+failure trajectory. No original-pre-failure replay, N source family or broader A–F expansion
+was run. #211 remains NOT QUALIFIED; old failures and evidence remain intact.
+
 ## 2026-09-26 independent full-path comparison — main comparison finally executed
 
 The [independent full-path report](route-control-v0.2/design-reassessment-v1/independent-v1/RESULT.md)
