@@ -147,8 +147,10 @@ def _execution_reply(reply, request, packet, bindings):
     if packet['consumption_policy'] == 'committed':
         rc.validate_execution(reply, request, sd.route_input(packet))
         return
-    rel.shape(reply, {'route_id', 'revision', 'issue_id', 'performed_methods',
-                      'text', 'objection', 'usage'}, 'v03_advisory_execution')
+    fields = {'route_id', 'revision', 'issue_id', 'performed_methods', 'text', 'objection', 'usage'}
+    if 'advisory_status' in reply:
+        fields.add('advisory_status')
+    rel.shape(reply, fields, 'v03_advisory_execution')
     require(reply['route_id'] == request['route_id'] and
             reply['revision'] == request['revision'] and
             reply['issue_id'] == request['issue']['issue_id'], 'v03_advisory_execution_binding')
@@ -157,8 +159,30 @@ def _execution_reply(reply, request, packet, bindings):
     require(isinstance(reply['performed_methods'], list) and
             len(reply['performed_methods']) == len(set(reply['performed_methods'])) and
             set(reply['performed_methods']) <= allowed, 'v03_advisory_method_claim')
-    require(rel.text(reply['text']) and reply['objection'] is None,
-            'v03_advisory_result_required')
+    status = reply.get('advisory_status', 'unresolved' if reply['objection'] is not None else 'answer')
+    require(status in ('answer', 'bounded_answer', 'unresolved'), 'v03_advisory_status')
+    require(isinstance(reply['text'], str), 'v03_advisory_text')
+    if reply['objection'] is not None:
+        objection = reply['objection']
+        require(isinstance(objection, dict) and isinstance(objection.get('original_refs'), list),
+                'v03_advisory_objection_refs')
+        docs = {d['id']: d for d in packet['documents']}
+        # Historical assistant text can explain the disputed framing, but cannot
+        # serve as the sole factual/authority basis of the objection.
+        for ref in objection['original_refs']:
+            rc.check_ref(ref, docs)
+        primary_refs = [ref for ref in objection['original_refs']
+                        if docs[ref['document_id']]['kind'] in ('user', 'source')]
+        rc.validate_objection({**objection, 'original_refs': primary_refs}, request,
+                              reply['issue_id'], sd.route_input(packet))
+        require(status != 'answer', 'v03_objection_disposition_required')
+        if status == 'bounded_answer':
+            require(reply['objection']['kind'] in ('source_or_scope', 'method_boundary'),
+                    'v03_hard_objection_cannot_be_bounded_answer')
+    else:
+        require(status != 'bounded_answer', 'v03_bounded_answer_requires_objection')
+    if status != 'unresolved':
+        require(rel.text(reply['text']), 'v03_advisory_result_required')
 
 
 def _post_artifacts(ep, directory, packet, route, iid, needed, outputs, bundle, qs, bindings, contract):
@@ -281,7 +305,11 @@ def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
                            'instruction': ('Execute the committed method scope; give a source-bound '
                                            'objection if it is materially wrong.' if mode == 'committed' else
                                            'Use the route as advice. Choose a sufficient canonical or direct '
-                                           'path and disclose performed methods. Preserve authority and known dependencies.')}
+                                           'path and disclose performed methods. Preserve authority and known dependencies. '
+                                           'For a source/scope or method-boundary objection, explicitly report advisory_status: '
+                                           'bounded_answer when the text answers the task within the stated limits; '
+                                           'unresolved when a necessary fact or permission prevents an answer; '
+                                           'answer when there is no objection. Keep limitations visible in the answer.')}
                 request['request_id'] = digest(request)
                 step = 'execution__' + iid + '__' + str(route['revision'])
                 rt.save(directory / 'dispatch' / (step + '.json'),
@@ -293,13 +321,24 @@ def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
                 if out['status'] != 'complete':
                     pending[iid] = 'execution_failed_or_noncompliant'; break
                 reply = out['reply']
-                if reply['objection'] is None:
+                advisory_status = reply.get('advisory_status', 'unresolved' if reply['objection'] is not None else 'answer')
+                if mode == 'advisory' and advisory_status == 'unresolved':
+                    pending[iid] = 'advisory_host_unresolved'
+                    if not rel.text(reply['text']):
+                        break
+                if reply['objection'] is None or mode == 'advisory':
                     outputs[iid] = {'route_id': route['route_id'], 'revision': route['revision'],
                                     'text': reply['text'], 'methods': reply['performed_methods'],
                                     'artifact_sha256': digest(reply['text']), 'accepted_uses': {},
                                     'input_artifacts': {e['id']: outputs[e['producer']]['artifact_sha256'] for e in needed},
                                     'valid_for_current_dependencies': True}
+                    if mode == 'advisory' and reply['objection'] is not None:
+                        outputs[iid]['advisory_objection'] = {
+                            'objection': rel.clone(reply['objection']), 'disposition': advisory_status,
+                            'host_context_ref': out.get('host_context_ref')}
                     accepted[iid] = {}
+                    if iid in pending:
+                        break
                     for edge in route['artifact_edges']:
                         if edge['producer'] == iid and (artifact_acceptor or edge['id'] in reply.get('dependency_acceptance', {})):
                             ap = directory / 'accepted' / (edge['id'] + '.json')
@@ -542,7 +581,9 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
                     disposition[iid] = 'unresolved'
             evidence = {'initial': s1, 'recheck': rechecked, 'arbitration': arbitration,
                         'finding_states': finding_states, 'pending': pending,
-                        'dependency_versions': {i: o.get('input_artifacts', {}) for i, o in outputs.items()}}
+                        'dependency_versions': {i: o.get('input_artifacts', {}) for i, o in outputs.items()},
+                        'advisory_objections': {i: o['advisory_objection'] for i, o in outputs.items()
+                                                if 'advisory_objection' in o}}
             if executor is not None and outputs:
                 ar = sd.acceptance_request(packet, route, outputs, disposition, evidence)
                 try:

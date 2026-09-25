@@ -90,7 +90,8 @@ def _reply_shape(role: str, request: dict) -> dict:
     if schema == 'mindthus.route-v03-execution-request.v1':
         return {'route_id': request['route_id'], 'revision': request['revision'],
                 'issue_id': request['issue']['issue_id'], 'performed_methods': [],
-                'text': '', 'objection': None, 'dependency_acceptance': {}, 'usage': unknown}
+                'text': '', 'objection': None, 'dependency_acceptance': {}, 'usage': unknown,
+                **({'advisory_status': 'unresolved'} if request.get('policy') == 'advisory' else {})}
     if role == 'execution':
         return {'route_id': request['route_id'], 'revision': request['revision'],
                 'issue_id': request['issue']['issue_id'], 'performed_methods': [],
