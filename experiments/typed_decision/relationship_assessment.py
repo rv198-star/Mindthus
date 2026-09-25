@@ -14,10 +14,10 @@ from typing import Any
 
 from .contracts import DecisionResult, DecisionSpec, canonical, digest, require
 
-VERSION = '1.1'
-POLICY = 'mindthus.relationship-frame.v1.1'
+VERSION = '1.2'
+POLICY = 'mindthus.relationship-frame.v1.2'
 CONTRACT = ('docs/internal/research/typed-decision/entry-assessment/'
-            'original-scenarios-design/relationship-contracts-v0.3.2.json')
+            'original-scenarios-design/relationship-contracts-v0.3.3.json')
 ID = re.compile(r'^[A-Za-z][A-Za-z0-9_-]{0,31}$')
 FRAME_FIELDS = ('actor', 'object', 'time', 'goal', 'scope')
 REF_FIELDS = {'document_id', 'revision', 'start', 'end', 'sha256'}
@@ -371,7 +371,8 @@ def consume(compiled: Compiled, response: dict, repo: Path) -> dict:
         if row['family'] == 'delivery':
             if row['value'] == 'list_only' and val('readiness.' + fid) == 'decide_now':
                 remedy = 'deliver_verdict'
-            if row['value'] == 'verdict_with_basis' and val('readiness.' + fid) == 'conditional_decision':
+            if (row['value'] == 'verdict_with_basis' and val('readiness.' + fid) == 'conditional_decision'
+                    and selected['kind'] == 'decision'):
                 remedy = 'state_conditions'
         if remedy:
             repairs.append({'kind':remedy,'check_ref':row['id'],'instruction':REMEDIES[remedy],

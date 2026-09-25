@@ -130,6 +130,20 @@ class RelationshipTests(unittest.TestCase):
         r=self.evaluate(packet('decision'),{'readiness':'conditional_decision'})
         self.assertEqual([x['kind'] for x in r['plan']['repair_relations']],['state_conditions'])
 
+    def test_reply_explanation_does_not_force_user_tradeoff_choice(self):
+        r=self.evaluate(packet('explanation'),{'readiness':'conditional_decision',
+                                                'delivery':'verdict_with_basis'})
+        self.assertEqual(r['action'],'continue_original')
+
+    def test_local_transfer_question_targets_current_candidate(self):
+        c=m.compile_packet(packet(),ROOT)
+        question=next(s.question for s in c.specs if s.id=='q0')
+        self.assertIn('proposal_view',question)
+        contract,_=m.load_contract(ROOT)
+        local=contract['templates']['local_transfer']['question']
+        self.assertIn('CURRENT CANDIDATE',local)
+        self.assertIn('Do not reflag a user inference',local)
+
     def test_true_verdict_conflict_returns_original_owner(self):
         self.assertEqual(self.evaluate(values={'delivery':'conflicting_verdicts'})['action'],'return_original_owner')
 
@@ -333,10 +347,18 @@ class RelationshipTests(unittest.TestCase):
 class RepresentationGateContractTests(unittest.TestCase):
     def test_only_representation_gate_question_changed_in_successor(self):
         old = json.loads((BASE / 'relationship-contracts-v0.3.1.json').read_bytes())
-        new, _ = m.load_contract(ROOT)
+        new = json.loads((BASE / 'relationship-contracts-v0.3.2.json').read_bytes())
         self.assertNotEqual(old['templates']['q0'], new['templates']['q0'])
         self.assertEqual({k:v for k,v in old['templates'].items() if k != 'q0'},
                          {k:v for k,v in new['templates'].items() if k != 'q0'})
+        self.assertEqual(old['budgets'], new['budgets'])
+        self.assertEqual(old['sources'], new['sources'])
+
+    def test_candidate_bound_successor_keeps_prior_contract(self):
+        old = json.loads((BASE / 'relationship-contracts-v0.3.2.json').read_bytes())
+        new, _ = m.load_contract(ROOT)
+        changed = {k for k in old['templates'] if old['templates'][k] != new['templates'][k]}
+        self.assertEqual(changed, {'local_transfer', 'definition'})
         self.assertEqual(old['budgets'], new['budgets'])
         self.assertEqual(old['sources'], new['sources'])
 
