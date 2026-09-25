@@ -6,6 +6,23 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## 2026-09-26 concrete repair design — not implemented yet
+
+The [repair design](route-control-v0.2/design-reassessment-v1/REPAIR-DESIGN.md) is the
+current implementation and test sequence for #211. It specifies a new opt-in v0.3 thin
+input, integration into the existing entry/Episode/CurrentAgentHost, complete finding
+disposition, scoped uncertainty, final owner acceptance, and portable new-run configuration.
+It preserves old modes, ledgers and the two established root fixes.
+
+First recover real historical and current-native Skills/display trajectories; then freeze
+contracts, implement and test offline, and exercise two real integrations. Separate common
+candidate S1 diagnostics from complete-path comparisons. Freeze twelve new source families,
+run four E/F families first, and conditionally extend to the remaining eight covering A–F.
+Five controls distinguish review, questions, observer backend and ①/② consumption. The new
+plan supersedes unrun parts of the previous proposal/test-plan; budgets are not additive.
+This entry records design work only: no new runtime implementation or experimental model
+requests. #211 remains NOT QUALIFIED.
+
 ## 2026-09-26 whole-scheme audit supersedes earlier benefit interpretations
 
 The [full audit](route-control-v0.2/design-reassessment-v1/FULL-AUDIT-20260926.md) found a
