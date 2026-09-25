@@ -15,6 +15,7 @@ from .session import RecoveryRequired, safe_failure_reason
 
 VERSION = '3'
 POLICY = 'mindthus.source-direct-observation.v3'
+CONSUMPTION_POLICY = 'mindthus.source-direct-observation-consumption.v3.1'
 
 CHECKS = {
     **assessment.CHECKS,
@@ -63,6 +64,16 @@ UNKNOWN_POLICY = {
     'premise_treatment': 'advisory',
     'scope_preservation': 'blocks_action',
     'evidence_decision_fit': 'blocks_action',
+}
+
+# Narrow premise attribution is useful supporting evidence, but a model can confuse a
+# candidate-only invention with something asserted by the user.  Retain that signal for
+# owner review without letting it independently generate an automatic correction.
+HIT_POLICY = {
+    'explanatory_scope': 'requires_disposition',
+    'premise_treatment': 'advisory',
+    'scope_preservation': 'requires_disposition',
+    'evidence_decision_fit': 'requires_disposition',
 }
 
 
@@ -133,7 +144,8 @@ def assess(session, data: dict, repo: Path, *, stage: str = 'S1') -> dict:
             answers = {s.id: DecisionResult('provider_error', reason=safe_failure_reason(exc))
                        for s in specs}
 
-    rows, hits, blocking_unknown, advisory_unknown = [], [], [], []
+    rows, hits, actionable_hits, advisory_hits = [], [], [], []
+    blocking_unknown, advisory_unknown = [], []
     for key, check in CHECKS.items():
         answer = answers.get(key)
         hit_values = (tuple(check['hits']) if 'hits' in check
@@ -141,12 +153,14 @@ def assess(session, data: dict, repo: Path, *, stage: str = 'S1') -> dict:
         policy = UNKNOWN_POLICY[key]
         if answer and answer.status == 'ok' and answer.value in hit_values:
             hits.append(key)
+            (actionable_hits if HIT_POLICY[key] == 'requires_disposition'
+             else advisory_hits).append(key)
         if answer and _is_unknown(answer):
             (blocking_unknown if policy == 'blocks_action' else advisory_unknown).append(key)
         rows.append({
             'check_id': key,
             'question_version': VERSION,
-            'effect': {'hit': 'requires_disposition', 'unknown': policy},
+            'effect': {'hit': HIT_POLICY[key], 'unknown': policy},
             'target_ref': target['source_ref'], 'target_version': target['version'],
             'target_kind': target['kind'], 'object_scope': assessment.clone(data['decision_context']),
             'state_sha256': digest(data), 'phase': stage,
@@ -168,7 +182,7 @@ def assess(session, data: dict, repo: Path, *, stage: str = 'S1') -> dict:
         action = 'return_original_owner'
     elif data['task'].get('risk') != 'low':
         action = 'return_original_owner'
-    elif hits:
+    elif actionable_hits:
         # A known, bounded defect remains actionable even if a sibling observation
         # failed.  Blocking unknowns remain explicit and must be cleared on recheck.
         action = 'request_correction'
@@ -176,6 +190,8 @@ def assess(session, data: dict, repo: Path, *, stage: str = 'S1') -> dict:
         action = ('acquire_information' if all(answers[key].status in ('ok', 'missing_context')
                                                 for key in blocking_unknown)
                   else 'return_original_owner')
+    elif advisory_hits:
+        action = 'return_original_owner'
     elif activation['required'] or data['task'].get('known_obligations'):
         action = 'return_original_owner'
     else:
@@ -183,22 +199,27 @@ def assess(session, data: dict, repo: Path, *, stage: str = 'S1') -> dict:
 
     result = {
         'action': action, 'matrix': rows, 'hits': hits,
+        'actionable_hits': actionable_hits, 'advisory_hits': advisory_hits,
         'blocking_unresolved': blocking_unknown, 'advisory_unresolved': advisory_unknown,
         'reason': problem or reason or ('risk_outside_automatic_correction'
                     if data['task'].get('risk') != 'low'
-                    else 'scoped_correction_required' if hits
+                    else 'scoped_correction_required' if actionable_hits
                     else 'blocking_observation_unresolved' if blocking_unknown
+                    else 'advisory_observation_retained' if advisory_hits
                     else 'required_audit_retained' if activation['required']
                     else 'known_obligation_retained' if data['task'].get('known_obligations')
                     else 'source_direct_observations_consumed'),
         'required_audit_retained': activation['required'],
         'obligations': assessment.clone(data['task'].get('known_obligations', [])),
         'qualification': False, 'target': target, 'policy_ref': POLICY,
+        'consumption_policy_ref': CONSUMPTION_POLICY,
     }
     graph = {'id': 'mindthus.source-direct-observation', 'version': VERSION,
              'source_bindings': refs, 'selected_checks': selected,
              'unknown_policy': {key: UNKNOWN_POLICY[key] for key in selected},
-             'policy_ref': POLICY, 'stage': stage}
+             'hit_policy': {key: HIT_POLICY[key] for key in selected},
+             'policy_ref': POLICY, 'consumption_policy_ref': CONSUMPTION_POLICY,
+             'stage': stage}
     return session.finish(graph, data, result)
 
 
@@ -207,7 +228,8 @@ def correction_request(report: dict, data: dict, repo: Path) -> dict:
     require(report['result']['action'] == 'request_correction',
             'source_direct_v3_no_correction')
     require(report['identity']['graph']['version'] == VERSION
-            and report['result']['policy_ref'] == POLICY,
+            and report['result']['policy_ref'] == POLICY
+            and report['result'].get('consumption_policy_ref') == CONSUMPTION_POLICY,
             'source_direct_v3_contract_changed')
     require(report['identity']['input_sha256'] == digest(data),
             'source_direct_v3_input_changed')
@@ -216,12 +238,19 @@ def correction_request(report: dict, data: dict, repo: Path) -> dict:
             'source_direct_v3_sources_changed')
     order = ('scope_preservation', 'premise_treatment', 'explanatory_scope',
              'evidence_decision_fit')
+    actionable = report['result']['actionable_hits']
+    # The source-direct adequacy finding already names the task-changing defect and
+    # supplies the broadest bounded remedy.  When present, it dominates overlapping
+    # auxiliary labels so a noisy attribution cannot pollute the host instruction.
+    instruction_keys = (['evidence_decision_fit']
+                        if 'evidence_decision_fit' in actionable
+                        else [key for key in order if key in actionable])
     body = {
         'original_task': assessment.clone(data['task']),
         'decision_context': assessment.clone(data['decision_context']),
         'current_target': assessment.clone(report['result']['target']),
-        'instructions': [CHECKS[key]['remedy'] for key in order
-                         if key in report['result']['hits']],
+        'instruction_checks': instruction_keys,
+        'instructions': [CHECKS[key]['remedy'] for key in instruction_keys],
         'blocking_unresolved': assessment.clone(report['result']['blocking_unresolved']),
         'advisory_unresolved': assessment.clone(report['result']['advisory_unresolved']),
         'canonical_rules': rules,
@@ -230,5 +259,6 @@ def correction_request(report: dict, data: dict, repo: Path) -> dict:
                      'observation as false or passed. A blocking unresolved relation must remain '
                      'explicit for recheck; do not invent evidence to clear it.'),
         'parent_assessment_ref': report['source_ref'],
+        'consumption_policy_ref': CONSUMPTION_POLICY,
     }
     return {'request_id': digest(body), **body}

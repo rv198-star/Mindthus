@@ -6,6 +6,26 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## 2026-09-25 source-direct minimum slice and clean A–F validation
+
+The [source-direct result](route-control-v0.2/design-reassessment-v1/RESULT.md) implements
+an opt-in S1 observation contract over the original task, evidence and current candidate.
+The first live campaign was invalidated for model-visible outcome labels and retained as
+diagnostic evidence. A label-neutral replacement then completed 12 official TypeSafe
+`jev-1.13.0` observations across A–F and two same-question current-Codex observations
+on A. Strict evaluation is 11/12: all six bad candidates were blocked, five fully
+accepted candidates passed, and K1's partial answer was incorrectly released because it
+omitted the preregistered explicit budget unknown. Codex matched Jev's two A actions, so
+no Jev quality advantage is established.
+
+Independent review also found five narrow premise-attribution false labels. Consumption
+policy v3.1 keeps that label advisory and lets the direct evidence/decision finding own
+the bounded correction instruction. Offline replay of all 14 saved observations preserved
+every route action and removed the noisy remedy; 279 related tests pass. No actual host
+rewrite/recheck, new ①/② pair, complete five-condition comparison, or N source family was
+run. Provider costs remain unavailable and are provisionally recorded as zero per owner.
+Main and old ledgers remain unchanged; #211 remains **NOT QUALIFIED**.
+
 ## 2026-09-25 design reassessment and independent reviews
 
 The [design reassessment](route-control-v0.2/design-reassessment-v1/README.md) recovers

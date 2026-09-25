@@ -66,6 +66,34 @@ class ObservationAssessmentTests(unittest.TestCase):
         report, _ = self.assess({**FIT, 'evidence_decision_fit': 'unsupported_candidate_claim'})
         self.assertEqual(report['result']['action'], 'request_correction')
 
+    def test_noisy_premise_attribution_cannot_drive_automatic_correction(self):
+        report, _ = self.assess({**FIT, 'premise_treatment': 'unsupported_as_fact'})
+        self.assertEqual(report['result']['action'], 'return_original_owner')
+        self.assertEqual(report['result']['actionable_hits'], [])
+        self.assertEqual(report['result']['advisory_hits'], ['premise_treatment'])
+        row = next(x for x in report['result']['matrix']
+                   if x['check_id'] == 'premise_treatment')
+        self.assertEqual(row['effect']['hit'], 'advisory')
+
+    def test_direct_evidence_finding_dominates_noisy_auxiliary_remedy(self):
+        report, _ = self.assess({**FIT,
+                                 'premise_treatment': 'unsupported_as_fact',
+                                 'evidence_decision_fit': 'unsupported_candidate_claim'})
+        self.assertEqual(report['result']['action'], 'request_correction')
+        self.assertEqual(report['result']['advisory_hits'], ['premise_treatment'])
+        request = obs.correction_request(report, self.data, REPO)
+        self.assertEqual(request['instruction_checks'], ['evidence_decision_fit'])
+        self.assertEqual(request['consumption_policy_ref'], obs.CONSUMPTION_POLICY)
+        self.assertNotIn(obs.CHECKS['premise_treatment']['remedy'],
+                         request['instructions'])
+
+    def test_legacy_report_without_consumption_policy_is_rejected_cleanly(self):
+        report, _ = self.assess({**FIT,
+                                 'evidence_decision_fit': 'unsupported_candidate_claim'})
+        del report['result']['consumption_policy_ref']
+        with self.assertRaisesRegex(ContractError, 'source_direct_v3_contract_changed'):
+            obs.correction_request(report, self.data, REPO)
+
     def test_high_risk_hit_returns_to_owner_before_any_correction(self):
         self.data['task']['risk'] = 'high'
         report, _ = self.assess({**FIT, 'evidence_decision_fit': 'unsupported_candidate_claim'})
