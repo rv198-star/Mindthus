@@ -28,6 +28,15 @@ failed the proposal mapping gate. No Skills/4K uplift versus pure Codex is estab
 #211 remains **NOT QUALIFIED**. Actual fees are unknown; provisionally zero per owner.
 Old OCI and earlier formal ledgers were not changed.
 
+Owner-authorized [timeout recovery](route-control-v0.2/hard-route-v1/TIMEOUT-RECOVERY.md)
+then completed the two B-arm technical failures without altering original episodes:
+S1's original CLI turn had completed and its answer was recovered from original bytes;
+K1 received one identical-prompt request with a 100-second technical window.
+S1's correction/recheck still requested another correction, and K1 judged the
+proposal mapping incomplete. Post-recovery B host continuation remains 1/6 versus
+C 2/6, with zero new Jev calls. This removes the timeout ambiguity but does not
+establish overall route non-inferiority or a hard-scenario improvement over direct Codex.
+
 ## 2026-09-25 local completion and #211 small holdout
 
 Owner's newer #211 qualification target is [overall route non-inferiority versus
