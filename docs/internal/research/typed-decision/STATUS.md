@@ -28,6 +28,16 @@ failed the proposal mapping gate. No Skills/4K uplift versus pure Codex is estab
 #211 remains **NOT QUALIFIED**. Actual fees are unknown; provisionally zero per owner.
 Old OCI and earlier formal ledgers were not changed.
 
+The [candidate-bound relationship v1.2 repair](route-control-v0.2/hard-route-v1/RELATIONSHIP-V12.md)
+addresses the S1/S3 recheck binding error and K3 explanation/decision mismatch in a
+new contract version; v1.1 sources and all old receipts remain historical. On the
+three exposed bad candidates, real official Jev still requested correction 3/3;
+on their already corrected texts, it continued 3/3. This used six new Jev requests,
+no retries or other provider. Focused regression passed 139 tests and the final
+full suite passed 1524 tests (2 skipped) with the bundled Python on `PATH`.
+This is an exposed development repair, not 100% semantic reliability or #211
+qualification. K1/K2 and an independent holdout remain outside this probe.
+
 Owner-authorized [timeout recovery](route-control-v0.2/hard-route-v1/TIMEOUT-RECOVERY.md)
 then completed the two B-arm technical failures without altering original episodes:
 S1's original CLI turn had completed and its answer was recovered from original bytes;
