@@ -6,6 +6,17 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## 2026-09-26 owner-requested HOLD — using-mindthus + Jev / #211
+
+The owner has paused this optimization topic while considering the next scenario.
+Implementation and evidence checkpoint: `4052138cc`. Preserve existing code, raw records,
+results and unresolved items. Further optimization, model calls, comparisons and scenario
+expansion are on hold until an explicit resumption or a newly scoped request.
+
+Qualification remains **NOT QUALIFIED**: no judgment-accuracy gain has been established.
+HOLD does not mean passed or abandoned. Historical next steps below are context, not
+authorization to continue while this hold is active. The next scenario is not yet selected.
+
 ## 2026-09-26 advisory source-objection contract repaired — main answer accepted
 
 The [4K contract repair](route-control-v0.2/design-reassessment-v1/advisory-source-repair/RESULT.md)
