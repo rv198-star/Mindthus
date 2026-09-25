@@ -36,4 +36,4 @@ AI 源题生成器已知 B/C/D 家族描述；这只是独立上下文，非人�
 
 冻结版运行器把 `*-latest.json` 写为普通 JSON，宿主续行却按带校验包读取；首轮三个宿主动作在读指针前报错，**没有新增模型请求**。补丁只保留原指针字节并包装最新结果指针，未改 Episode 账本、冻结、题目或预算，见 [修复说明](AMENDMENT.md)。HD/B 首次 I1 消费时宿主未接受 P1，该 false 回执保持原样，不回写为 true。HD/C 则在消费前审看真实 I1 文本、记录对应哈希的宿主接受，随后沿同 Episode 复查 I2。该接受证明可用作后继候选输入，不证明候选事实真实。
 
-[原始记录索引](evidence-20260925/index-arms.json) 含 215 个臂记录；[匿名评阅索引](evidence-20260925/index-review.json) 含 8 个记录，均逐文件哈希核对，排除 Codex home、工作目录和密钥。当前相关工程回归 `tests.test_current_host`、`tests.test_route_control`、`tests.test_relationship_runtime` 为 **144/144 通过**。本结果不改变先前已停止的 C01/C02 协议，也不覆盖 #211 所需更宽的真实任务、货币成本和收益门槛。
+[原始记录索引](evidence-20260925/records/index-arms.json) 含 215 个臂记录；[匿名评阅索引](evidence-20260925/records/index-review.json) 含 8 个记录，均逐文件哈希核对，排除 Codex home、工作目录和密钥。当前相关工程回归 `tests.test_current_host`、`tests.test_route_control`、`tests.test_relationship_runtime` 为 **144/144 通过**。本结果不改变先前已停止的 C01/C02 协议，也不覆盖 #211 所需更宽的真实任务、货币成本和收益门槛。
