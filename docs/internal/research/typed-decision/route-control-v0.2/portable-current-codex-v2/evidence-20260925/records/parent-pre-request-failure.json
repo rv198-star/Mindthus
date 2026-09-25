@@ -1,0 +1,11 @@
+{
+  "schema": "mindthus.portable-pre-request-failure.v1",
+  "source_commit": "b4d2ed017",
+  "parent_root": "/Users/william/Documents/Codex/2026-09-25/mindthus-portable-current-codex-v1",
+  "stage": "Episode.__enter__ before provider.evaluate",
+  "exception": "nonempty_unbound_episode_root",
+  "cause": "freeze.json was written inside the new Episode root",
+  "Jev_calls": 0,
+  "host_calls": 0,
+  "evidence_kind": "operator_observed_command_error"
+}

@@ -38,6 +38,15 @@ no Jev or tested A/B/C arm ran. These are AI-synthetic candidate inputs conditio
 our family descriptions, not admitted independent holdout. Formal sampling, labels,
 native A host and cost/quality thresholds still require a separate preregistration.
 
+OCI is not a prerequisite for new Episodes. A
+[portable local successor](route-control-v0.2/portable-current-codex-v2/RESULT.md)
+used a new external state root, preserved the pre-request v1 root error, and passed
+144/144 focused engineering tests. One real `jev-1.13.0` B1 candidate request
+returned a valid but unresolved route (WAE applicability 0.70, constraint role):
+Jev judgment 1, committed host execution 0. Reentry did not repeat the request.
+The old OCI seven receipts remain staged and unconsumed; this new result does not
+convert them or qualify formal #211 A/B/C.
+
 ## Current #211 development continuation — hard judgments and one current-Codex pair
 
 Owner authorized completing the small comparison before a plain-language report. The
