@@ -1,0 +1,147 @@
+{
+  "schema": "mindthus.current-host-response.v1",
+  "request_id": "7d2daa384b534cc5193d03f58775fcf7d9bfdf5954a77aef28df638c54a26985",
+  "request_sha256": "bba02c7daeea7fd34783179988de554019061bfe011452bbf145aaaf43eeafde",
+  "owner_ref": "current-codex:paired-local-v3",
+  "host_context_ref": "current-codex-local-thread-20260925",
+  "elapsed_seconds": null,
+  "reply": {
+    "text": "就目前的一行交接条目而言，固定指令已说明提取哪些字段、缺项怎样标记和输出顺序；七周抽查也能按格式整理，店员仍控制顾客联系和订单修改。现有材料没有增加多轮判断或额外角色的必要。若以后要处理含糊订单或让工具改动订单，再另立权限与验证。",
+    "version": "revision-1",
+    "receipt_ref": "current-codex-local-20260925:E2",
+    "usage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    "proposal": {
+      "candidate": {
+        "ref": {
+          "document_id": "Rfff00235379e017f4c880e30",
+          "revision": "revision-1",
+          "start": 0,
+          "end": 115,
+          "sha256": "573ac11bfc24d2b870e7637bd566b5af7c75848a27e4c5e8a18ff750f2fa3d82"
+        },
+        "thesis_refs": [
+          {
+            "document_id": "Rfff00235379e017f4c880e30",
+            "revision": "revision-1",
+            "start": 0,
+            "end": 115,
+            "sha256": "573ac11bfc24d2b870e7637bd566b5af7c75848a27e4c5e8a18ff750f2fa3d82"
+          }
+        ],
+        "controller_refs": [
+          {
+            "document_id": "Rfff00235379e017f4c880e30",
+            "revision": "revision-1",
+            "start": 0,
+            "end": 115,
+            "sha256": "573ac11bfc24d2b870e7637bd566b5af7c75848a27e4c5e8a18ff750f2fa3d82"
+          }
+        ],
+        "discriminator_refs": [
+          {
+            "document_id": "Rfff00235379e017f4c880e30",
+            "revision": "revision-1",
+            "start": 0,
+            "end": 115,
+            "sha256": "573ac11bfc24d2b870e7637bd566b5af7c75848a27e4c5e8a18ff750f2fa3d82"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "id": "K0",
+          "origin": "source_observation",
+          "refs": [
+            {
+              "document_id": "S",
+              "end": 119,
+              "revision": "1",
+              "sha256": "cd53a46a145c17acf6b6153a042ceabc2d37adf50f0895b6324997b17aedc7c9",
+              "start": 0
+            }
+          ],
+          "text": "七周抽查均可整理且工具不联系顾客或改订单"
+        }
+      ],
+      "competitions": [],
+      "edges": [],
+      "frames": [
+        {
+          "actor": {
+            "origin": "explicit",
+            "refs": [
+              {
+                "document_id": "U",
+                "end": 67,
+                "revision": "1",
+                "sha256": "8d0a19d92834bdcc5dd77e1f3f3b93c5e4cef6ad04714bdc5b80372ffadf404e",
+                "start": 0
+              }
+            ],
+            "text": "手作店店员"
+          },
+          "goal": {
+            "origin": "explicit",
+            "refs": [
+              {
+                "document_id": "U",
+                "end": 67,
+                "revision": "1",
+                "sha256": "8d0a19d92834bdcc5dd77e1f3f3b93c5e4cef6ad04714bdc5b80372ffadf404e",
+                "start": 0
+              }
+            ],
+            "text": "判断是否需要更多轮和角色"
+          },
+          "id": "F0",
+          "kind": "definition",
+          "object": {
+            "origin": "explicit",
+            "refs": [
+              {
+                "document_id": "U",
+                "end": 67,
+                "revision": "1",
+                "sha256": "8d0a19d92834bdcc5dd77e1f3f3b93c5e4cef6ad04714bdc5b80372ffadf404e",
+                "start": 0
+              }
+            ],
+            "text": "固定订单备注整理指令"
+          },
+          "scope": {
+            "origin": "explicit",
+            "refs": [
+              {
+                "document_id": "U",
+                "end": 67,
+                "revision": "1",
+                "sha256": "8d0a19d92834bdcc5dd77e1f3f3b93c5e4cef6ad04714bdc5b80372ffadf404e",
+                "start": 0
+              }
+            ],
+            "text": "只处理一行交接条目"
+          },
+          "time": {
+            "origin": "explicit",
+            "refs": [
+              {
+                "document_id": "U",
+                "end": 67,
+                "revision": "1",
+                "sha256": "8d0a19d92834bdcc5dd77e1f3f3b93c5e4cef6ad04714bdc5b80372ffadf404e",
+                "start": 0
+              }
+            ],
+            "text": "当前用途"
+          }
+        }
+      ],
+      "scope_correction_refs": [],
+      "user_premise": null
+    }
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "schema": "mindthus.current-host-response.v1",
+  "request_id": "f29e3a8b12e47aadcc8affc0e894ebea6fc7bae6a58ff979efcde34db3d38157",
+  "request_sha256": "454611b271388874aafaccb6f6b70c739f17307388e341eeabf2fc9777eab3dc",
+  "owner_ref": "current-codex:paired-local-v3",
+  "host_context_ref": "current-codex-local-thread-20260925",
+  "elapsed_seconds": null,
+  "reply": {
+    "text": "本季不能更换箱型。本周先给现有42只箱贴临时唯一标识，交接单逐箱记标识、门店、交出与收回人及时间，并安排一次盘点核对重复登记。无法确认归属的箱子单列差异交店主复核。还需查清实际箱数、每只去向和重复记录；在核实前不把差异当成已证实的遗失或损失。",
+    "version": "revision-1",
+    "receipt_ref": "current-codex-local-20260925:F1",
+    "usage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost_usd": null
+    },
+    "proposal": {
+      "candidate": {
+        "ref": {
+          "document_id": "Rd7cdbb6410b2b90ab70399f1",
+          "revision": "revision-1",
+          "start": 0,
+          "end": 121,
+          "sha256": "6b5a5ec308982d93feb2e8205a305088ca5d9b2560d457804d43f399556433c2"
+        },
+        "thesis_refs": [
+          {
+            "document_id": "Rd7cdbb6410b2b90ab70399f1",
+            "revision": "revision-1",
+            "start": 0,
+            "end": 121,
+            "sha256": "6b5a5ec308982d93feb2e8205a305088ca5d9b2560d457804d43f399556433c2"
+          }
+        ],
+        "controller_refs": [
+          {
+            "document_id": "Rd7cdbb6410b2b90ab70399f1",
+            "revision": "revision-1",
+            "start": 0,
+            "end": 121,
+            "sha256": "6b5a5ec308982d93feb2e8205a305088ca5d9b2560d457804d43f399556433c2"
+          }
+        ],
+        "discriminator_refs": [
+          {
+            "document_id": "Rd7cdbb6410b2b90ab70399f1",
+            "revision": "revision-1",
+            "start": 0,
+            "end": 121,
+            "sha256": "6b5a5ec308982d93feb2e8205a305088ca5d9b2560d457804d43f399556433c2"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "id": "K0",
+          "origin": "source_observation",
+          "refs": [
+            {
+              "document_id": "S",
+              "end": 118,
+              "revision": "1",
+              "sha256": "f3d8876c19d77e738da65d7b17e2a01d0094294bcfc84990143ab396bffe5ed3",
+              "start": 0
+            }
+          ],
+          "text": "可调整登记、贴临时标识并盘点"
+        }
+      ],
+      "competitions": [],
+      "edges": [],
+      "frames": [
+        {
+          "actor": {
+            "origin": "explicit",
+            "refs": [
+              {
+                "document_id": "U",
+                "end": 66,
+                "revision": "1",
+                "sha256": "ff86b62602ade76d6f40e9e5158fc207525484ad4ecf22b2811d23a84277d192",
+                "start": 0
+              }
+            ],
+            "text": "鲜切店店主"
+          },
+          "goal": {
+            "origin": "explicit",
+            "refs": [
+              {
+                "document_id": "U",
+                "end": 66,
+                "revision": "1",
+                "sha256": "ff86b62602ade76d6f40e9e5158fc207525484ad4ecf22b2811d23a84277d192",
+                "start": 0
+              }
+            ],
+            "text": "在不换箱型下消除记录混乱"
+          },
+          "id": "F0",
+          "kind": "decision",
+          "object": {
+            "origin": "explicit",
+            "refs": [
+              {
+                "document_id": "U",
+                "end": 66,
+                "revision": "1",
+                "sha256": "ff86b62602ade76d6f40e9e5158fc207525484ad4ecf22b2811d23a84277d192",
+                "start": 0
+              }
+            ],
+            "text": "已启用周转箱的交接补救"
+          },
+          "scope": {
+            "origin": "explicit",
+            "refs": [
+              {
+                "document_id": "U",
+                "end": 66,
+                "revision": "1",
+                "sha256": "ff86b62602ade76d6f40e9e5158fc207525484ad4ecf22b2811d23a84277d192",
+                "start": 0
+              }
+            ],
+            "text": "本季不能更换箱型"
+          },
+          "time": {
+            "origin": "explicit",
+            "refs": [
+              {
+                "document_id": "U",
+                "end": 66,
+                "revision": "1",
+                "sha256": "ff86b62602ade76d6f40e9e5158fc207525484ad4ecf22b2811d23a84277d192",
+                "start": 0
+              }
+            ],
+            "text": "本周"
+          }
+        }
+      ],
+      "scope_correction_refs": [],
+      "user_premise": null
+    }
+  }
+}
