@@ -6,6 +6,25 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## 2026-09-26 whole-scheme audit supersedes earlier benefit interpretations
+
+The [full audit](route-control-v0.2/design-reassessment-v1/FULL-AUDIT-20260926.md) found a
+target/measurement mismatch: the latest six cases test fresh-context correction of supplied
+bad answers with author-selected framing, not the original multi-turn Skills/display failures.
+The source-direct S1 component has not been integrated into entry/Episode/CurrentAgentHost.
+Its consumer discards other actionable findings whenever evidence_decision_fit hits, and the
+experimental host runner validates only a nonempty objection rather than the existing bound
+objection/arbitration contract. Six real host calls and six Jev rechecks remain established.
+
+Withdraw the earlier interpretation of 2/6 versus 6/6 as a reliability gain: contracts and
+consumption endpoints differ. Keep the historical 5/6 checklist scores, but do not classify
+K1's missing explicit budget-unknown sentence as a substantive decision error without showing
+that it changes the current decision. No new product effect score is assigned. The complete
+control comparison and target-behavior validation remain unrun; #211 is not yet qualified.
+The audit made no live experimental model requests or runtime changes. Next work should
+address task representativeness, existing-runtime integration, and valid paired measurements.
+The following dated entries preserve their historical context; this audit limits their claims.
+
 ## 2026-09-25 v3.2 concrete Jev finding host consumption
 
 The [source-direct result](route-control-v0.2/design-reassessment-v1/RESULT.md) now includes
