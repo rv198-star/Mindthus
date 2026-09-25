@@ -31,6 +31,13 @@ new Codex CLI calls: 1; focused engineering tests: 143/143. The old 43-second ti
 remains historical. This is an exposed development pair, not formal #211 qualification.
 Original E/F rechecks and formal independent A/B/C remain unrun.
 
+With OCI continuation unavailable, one isolated Codex context generated nine
+[A–F candidate tasks](route-control-v0.2/holdout-candidate-source-v1/RESULT.md)
+under a precommitted one-call source protocol. The request completed with valid JSON;
+no Jev or tested A/B/C arm ran. These are AI-synthetic candidate inputs conditioned on
+our family descriptions, not admitted independent holdout. Formal sampling, labels,
+native A host and cost/quality thresholds still require a separate preregistration.
+
 ## Current #211 development continuation — hard judgments and one current-Codex pair
 
 Owner authorized completing the small comparison before a plain-language report. The

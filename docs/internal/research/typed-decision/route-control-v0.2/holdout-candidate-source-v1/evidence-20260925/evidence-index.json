@@ -1,0 +1,34 @@
+{
+  "count": 5,
+  "credential_pattern_hits": 0,
+  "freeze_payload_sha256": "d4c239ee6e018ac3919227087a9a9a14b11c468b7ff864af5b527f1b26907852",
+  "records": [
+    {
+      "bytes": 920,
+      "path": "freeze.json",
+      "sha256": "5f8dc1c127b9732fb259d4a1cb64fc3323d734897bc1957d29cab598343683ed"
+    },
+    {
+      "bytes": 599,
+      "path": "codex-calls/task-candidates/intent.json",
+      "sha256": "c84915b556709caaeea9fe3f51f2d1176bc5c2073752b6ef306626a6800ad828"
+    },
+    {
+      "bytes": 586,
+      "path": "codex-calls/task-candidates/outcome.json",
+      "sha256": "ef9571ac688b0b7bb2af640116a0223cf24d75339ff33a6102d26f00ee6d1672"
+    },
+    {
+      "bytes": 5824,
+      "path": "codex-calls/task-candidates/events.jsonl",
+      "sha256": "e79f8ef36cb5c3924cd7f219d8c5237366f45dd1aa95e137b811ccf2d170dc1b"
+    },
+    {
+      "bytes": 5365,
+      "path": "codex-calls/task-candidates/last-message.txt",
+      "sha256": "9fc560a466eecf236e6b7a7eb142685caa7d32ab5c3057945738a75ff848b501"
+    }
+  ],
+  "schema": "mindthus.holdout-candidate-source-evidence.v1",
+  "source_root": "/Users/william/Documents/Codex/2026-09-25/mindthus-holdout-candidate-source-v1"
+}
