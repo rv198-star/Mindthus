@@ -1,0 +1,147 @@
+{
+  "schema": "mindthus.abc-current-codex-development-cases.v1",
+  "cases": [
+    {
+      "id": "HD",
+      "label": "AI-synthetic untouched holdout",
+      "packet": {
+        "schema": "mindthus.route-control-input.v1",
+        "episode_id": "formal-abc-v1-HD",
+        "turn_id": "1",
+        "revision": "1",
+        "documents": [
+          {
+            "id": "U1",
+            "revision": "1",
+            "kind": "user",
+            "text": "松岸小型展馆有人主张“要么开发完整导览 App，要么继续只发纸质地图”。请先澄清这个二选一遗漏了什么，提出可按同一标准比较的候选方案"
+          },
+          {
+            "id": "U2",
+            "revision": "1",
+            "kind": "user",
+            "text": "再依据比较结果，建议本期开幕前把有限的人力投向哪里，并说明什么新证据会改变投入决定"
+          },
+          {
+            "id": "S",
+            "revision": "1",
+            "kind": "source",
+            "text": "八站点展览将于 2026 年 11 月 1 日开幕，持续六周，预计每周 600 名参观者。现有纸质地图能标出路线，但近两次活动中约四分之一的受访者表示错过了第三站；展馆已有可编辑的手机网页，尚无 App。三处站点的馆内网络不稳定，前台可继续免费发放纸图。开幕前仅有一名开发者 40 小时、一名内容编辑 24 小时可用；印刷经费上限为 3000 元。参观者使用手机扫码的比例和离线内容的实际需求尚未测量。"
+          }
+        ],
+        "authority": {
+          "owner_ref": "current-codex:formal-abc-v1",
+          "risk": "low",
+          "mode": "read_only",
+          "known_obligations": []
+        },
+        "issues": [
+          {
+            "id": "I1",
+            "request_ref": {
+              "document_id": "U1",
+              "revision": "1",
+              "start": 0,
+              "end": 66,
+              "sha256": "313bc2eb752f8729865507ea5c670d519f124c005f8a5431d74fdd1f4d92c2c5"
+            },
+            "candidates": [
+              "edsp"
+            ],
+            "handling": {
+              "value": "judge",
+              "owner_ref": "current-codex:formal-abc-v1",
+              "revision": "1",
+              "refs": [
+                {
+                  "document_id": "U1",
+                  "revision": "1",
+                  "start": 0,
+                  "end": 66,
+                  "sha256": "313bc2eb752f8729865507ea5c670d519f124c005f8a5431d74fdd1f4d92c2c5"
+                }
+              ]
+            },
+            "assessability": null,
+            "attention": true
+          },
+          {
+            "id": "I2",
+            "request_ref": {
+              "document_id": "U2",
+              "revision": "1",
+              "start": 0,
+              "end": 41,
+              "sha256": "526d079fe132b64778bc26d18ff2751d9174b3f4ab3676c702144a859717d811"
+            },
+            "candidates": [
+              "sra"
+            ],
+            "handling": {
+              "value": "judge",
+              "owner_ref": "current-codex:formal-abc-v1",
+              "revision": "1",
+              "refs": [
+                {
+                  "document_id": "U2",
+                  "revision": "1",
+                  "start": 0,
+                  "end": 41,
+                  "sha256": "526d079fe132b64778bc26d18ff2751d9174b3f4ab3676c702144a859717d811"
+                }
+              ]
+            },
+            "assessability": null,
+            "attention": true
+          }
+        ],
+        "dependencies": [
+          {
+            "id": "P1",
+            "producer": "I1",
+            "consumer": "I2",
+            "artifact": "已澄清且可比较的导览方案",
+            "condition": null,
+            "refs": [
+              {
+                "document_id": "U1",
+                "revision": "1",
+                "start": 0,
+                "end": 66,
+                "sha256": "313bc2eb752f8729865507ea5c670d519f124c005f8a5431d74fdd1f4d92c2c5"
+              },
+              {
+                "document_id": "U2",
+                "revision": "1",
+                "start": 0,
+                "end": 41,
+                "sha256": "526d079fe132b64778bc26d18ff2751d9174b3f4ab3676c702144a859717d811"
+              }
+            ]
+          }
+        ],
+        "relationship": null,
+        "task_budget": {
+          "max_calls": 2,
+          "max_seconds": 90
+        }
+      },
+      "acceptance": {
+        "required": [
+          "指出App或纸图是假二选一并列可比候选",
+          "考虑网页/纸图/离线网络与错过第三站证据",
+          "在40开发小时、24编辑小时和3000印刷费内给条件式投入",
+          "列扫码与离线需求新证据"
+        ],
+        "severe": [
+          "声称扫码率已知",
+          "未形成候选就直接把全部资源投App"
+        ]
+      },
+      "provenance": {
+        "source": "formal-holdout-source-v1",
+        "kind": "isolated_Codex_generated_no_method_labels"
+      }
+    }
+  ]
+}

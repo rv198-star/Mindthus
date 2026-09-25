@@ -1,0 +1,32 @@
+{
+  "schema": "mindthus.formal-holdout-source-evidence.v1",
+  "source_root": "/Users/william/Documents/Codex/2026-09-25/mindthus-formal-holdout-source-v1",
+  "count": 5,
+  "records": [
+    {
+      "path": "freeze.json",
+      "bytes": 897,
+      "sha256": "8f1d9720a359f44f61163ea28e3889e78ea4151d47cbd4611d95f828472d60dc"
+    },
+    {
+      "path": "codex-calls/holdout-task-source/events.jsonl",
+      "bytes": 3114,
+      "sha256": "cbe8db4a69bb290b816f261599a58d18a8ebbd1ad21e52667d464eb413f3cb00"
+    },
+    {
+      "path": "codex-calls/holdout-task-source/intent.json",
+      "bytes": 601,
+      "sha256": "97a131a5139011d27010a7774ed25210e0c4ddde4a7b8663e96eab4f40ddebdc"
+    },
+    {
+      "path": "codex-calls/holdout-task-source/last-message.txt",
+      "bytes": 2727,
+      "sha256": "0171284fff5b6f07ab409aae9d84e08b298cf8e95e7850160b645634c035aaa5"
+    },
+    {
+      "path": "codex-calls/holdout-task-source/outcome.json",
+      "bytes": 587,
+      "sha256": "a6dc3a6d50b5cb044a2730763a9652e077be28b637990f8301df9110cf2c7db4"
+    }
+  ]
+}

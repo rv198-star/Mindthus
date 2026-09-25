@@ -1,0 +1,89 @@
+{
+  "schema": "mindthus.abc-current-codex-development-cases.v1",
+  "cases": [
+    {
+      "id": "HC",
+      "label": "AI-synthetic untouched holdout",
+      "packet": {
+        "schema": "mindthus.route-control-input.v1",
+        "episode_id": "formal-abc-v1-HC",
+        "turn_id": "1",
+        "revision": "1",
+        "documents": [
+          {
+            "id": "U",
+            "revision": "1",
+            "kind": "user",
+            "text": "栖桥艺术中心想长期建设四个场馆共用的活动信息系统，但眼前必须完成秋季艺术节的信息发布。请提出本期应承诺的交付范围，以及在什么可观察条件下改用、暂停或扩大共用系统方案。"
+          },
+          {
+            "id": "S",
+            "revision": "1",
+            "kind": "source",
+            "text": "四个场馆全年合计约 450 场活动，目前各自录入日历，每周合计约花 12 小时核对重复信息。秋季艺术节有 24 场活动，须在 2026 年 10 月 20 日上线，11 月 3 日结束。现有网站加共享表格能发布全部 24 场活动，但临时改期需要工作人员分别修改两个地方。共用系统的最小可用版本估计需 7 人周；上线前技术团队最多能投入 3 人周，活动结束后这两人还要转入已排定项目。明年四场馆是否继续由同一团队运营、以及相应预算是否获批，目前未知。"
+          }
+        ],
+        "authority": {
+          "owner_ref": "current-codex:formal-abc-v1",
+          "risk": "low",
+          "mode": "read_only",
+          "known_obligations": []
+        },
+        "issues": [
+          {
+            "id": "I1",
+            "request_ref": {
+              "document_id": "U",
+              "revision": "1",
+              "start": 0,
+              "end": 83,
+              "sha256": "f78153ea4bdb0a5d1630d24fd28d19f87511c02846989067f1ec518b8e6044ed"
+            },
+            "candidates": [
+              "sela",
+              "mpg"
+            ],
+            "handling": {
+              "value": "judge",
+              "owner_ref": "current-codex:formal-abc-v1",
+              "revision": "1",
+              "refs": [
+                {
+                  "document_id": "U",
+                  "revision": "1",
+                  "start": 0,
+                  "end": 83,
+                  "sha256": "f78153ea4bdb0a5d1630d24fd28d19f87511c02846989067f1ec518b8e6044ed"
+                }
+              ]
+            },
+            "assessability": null,
+            "attention": true
+          }
+        ],
+        "dependencies": [],
+        "relationship": null,
+        "task_budget": {
+          "max_calls": 1,
+          "max_seconds": 45
+        }
+      },
+      "acceptance": {
+        "required": [
+          "长期共用系统方向与秋季交付分开",
+          "说明7人周需求与当前3人周不匹配",
+          "给本期可交付范围和改期双处维护办法",
+          "列预算团队与需求的观察触发条件"
+        ],
+        "severe": [
+          "直接承诺本期完整共用系统",
+          "编造明年预算批准"
+        ]
+      },
+      "provenance": {
+        "source": "formal-holdout-source-v1",
+        "kind": "isolated_Codex_generated_no_method_labels"
+      }
+    }
+  ]
+}

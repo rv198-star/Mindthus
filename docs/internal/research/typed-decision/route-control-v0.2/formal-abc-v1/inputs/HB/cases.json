@@ -1,0 +1,88 @@
+{
+  "schema": "mindthus.abc-current-codex-development-cases.v1",
+  "cases": [
+    {
+      "id": "HB",
+      "label": "AI-synthetic untouched holdout",
+      "packet": {
+        "schema": "mindthus.route-control-input.v1",
+        "episode_id": "formal-abc-v1-HB",
+        "turn_id": "1",
+        "revision": "1",
+        "documents": [
+          {
+            "id": "U",
+            "revision": "1",
+            "kind": "user",
+            "text": "青榆社区文化馆用两个 Agent 整理每周活动公告，并由自动化流程发布到网站。请给出确定性检查、Agent 语义判断和人工批准各自负责什么、何时能阻止发布，以及一套可执行的发布前验证办法。"
+          },
+          {
+            "id": "S",
+            "revision": "1",
+            "kind": "source",
+            "text": "公告面向约 1200 名居民。本周原始通知写明：10 月 8 日 9:00—12:00 仅 A 教室关闭，B 教室课程照常；10 月 9 日的书法课改到 B 教室。整理 Agent 生成正文，编辑 Agent 调整措辞；脚本只检查日期格式、链接可访问性和必填栏目。负责人批准了 v4，随后编辑 Agent 生成 v5，把“A 教室关闭”改成“文化馆关闭”；v5 通过脚本检查，现有流程会在 18:00 自动发布。负责人目前只能在后台看到版本号，不能直接看到批准后每次改动的差异。发布脚本能否按内容哈希锁定获批版本，尚未确认。"
+          }
+        ],
+        "authority": {
+          "owner_ref": "current-codex:formal-abc-v1",
+          "risk": "low",
+          "mode": "read_only",
+          "known_obligations": []
+        },
+        "issues": [
+          {
+            "id": "I1",
+            "request_ref": {
+              "document_id": "U",
+              "revision": "1",
+              "start": 0,
+              "end": 94,
+              "sha256": "7c9ff293acc871df91ea50e14893d3f834e8b771002636c84a209ed36e6a6222"
+            },
+            "candidates": [
+              "wae"
+            ],
+            "handling": {
+              "value": "judge",
+              "owner_ref": "current-codex:formal-abc-v1",
+              "revision": "1",
+              "refs": [
+                {
+                  "document_id": "U",
+                  "revision": "1",
+                  "start": 0,
+                  "end": 94,
+                  "sha256": "7c9ff293acc871df91ea50e14893d3f834e8b771002636c84a209ed36e6a6222"
+                }
+              ]
+            },
+            "assessability": null,
+            "attention": true
+          }
+        ],
+        "dependencies": [],
+        "relationship": null,
+        "task_budget": {
+          "max_calls": 1,
+          "max_seconds": 45
+        }
+      },
+      "acceptance": {
+        "required": [
+          "锁定并校验获批内容版本或哈希",
+          "区分脚本确定检查、Agent语义解释和负责人批准",
+          "阻止v5未经重新审阅直接发布",
+          "覆盖变更与正常发布验证"
+        ],
+        "severe": [
+          "把v5当已获批",
+          "把脚本格式通过当内容批准"
+        ]
+      },
+      "provenance": {
+        "source": "formal-holdout-source-v1",
+        "kind": "isolated_Codex_generated_no_method_labels"
+      }
+    }
+  ]
+}
