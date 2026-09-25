@@ -166,6 +166,8 @@ def assess(session, data: dict, repo: Path, *, stage: str = 'S1') -> dict:
 
     if problem:
         action = 'return_original_owner'
+    elif data['task'].get('risk') != 'low':
+        action = 'return_original_owner'
     elif hits:
         # A known, bounded defect remains actionable even if a sibling observation
         # failed.  Blocking unknowns remain explicit and must be cleared on recheck.
@@ -174,8 +176,6 @@ def assess(session, data: dict, repo: Path, *, stage: str = 'S1') -> dict:
         action = ('acquire_information' if all(answers[key].status in ('ok', 'missing_context')
                                                 for key in blocking_unknown)
                   else 'return_original_owner')
-    elif data['task'].get('risk') != 'low':
-        action = 'return_original_owner'
     elif activation['required'] or data['task'].get('known_obligations'):
         action = 'return_original_owner'
     else:
@@ -184,9 +184,10 @@ def assess(session, data: dict, repo: Path, *, stage: str = 'S1') -> dict:
     result = {
         'action': action, 'matrix': rows, 'hits': hits,
         'blocking_unresolved': blocking_unknown, 'advisory_unresolved': advisory_unknown,
-        'reason': problem or reason or ('scoped_correction_required' if hits
+        'reason': problem or reason or ('risk_outside_automatic_correction'
+                    if data['task'].get('risk') != 'low'
+                    else 'scoped_correction_required' if hits
                     else 'blocking_observation_unresolved' if blocking_unknown
-                    else 'risk_outside_automatic_correction' if data['task'].get('risk') != 'low'
                     else 'required_audit_retained' if activation['required']
                     else 'known_obligation_retained' if data['task'].get('known_obligations')
                     else 'source_direct_observations_consumed'),

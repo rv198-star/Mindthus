@@ -166,7 +166,7 @@ def schema_for(specs) -> dict:
 
 
 def codex_call(label: str, prompt: str, timeout: float, schema: dict, *,
-               root: Path = ROOT) -> tuple[str | None, dict]:
+               root: Path = ROOT, codex_home: Path = CODEX_HOME) -> tuple[str | None, dict]:
     directory = root / 'codex-calls' / label
     workspace = root / 'workspaces' / label
     directory.mkdir(parents=True, exist_ok=True)
@@ -178,7 +178,7 @@ def codex_call(label: str, prompt: str, timeout: float, schema: dict, *,
         'label': label, 'model': MODEL_CODEX,
         'prompt_sha256': hashlib.sha256(prompt.encode()).hexdigest(),
         'schema_sha256': hashlib.sha256(schema_text.encode()).hexdigest(),
-        'timeout_seconds': timeout, 'codex_home': str(CODEX_HOME),
+        'timeout_seconds': timeout, 'codex_home': str(codex_home),
         'workspace': str(workspace), 'sandbox': 'read-only', 'ephemeral': True,
         'no_user_config': True,
     }
@@ -191,14 +191,14 @@ def codex_call(label: str, prompt: str, timeout: float, schema: dict, *,
         return (last.read_text(encoding='utf8') if last.exists() else None), outcome
     if intent_path.exists():
         raise RecoveryRequired('unresolved prior Codex observation:' + label)
-    require(CODEX.is_file() and (CODEX_HOME / 'auth.json').is_file(), 'codex_profile_unavailable')
+    require(CODEX.is_file() and (codex_home / 'auth.json').is_file(), 'codex_profile_unavailable')
     save(intent_path, intent)
     command = [str(CODEX), 'exec', '--ignore-user-config', '--ephemeral',
                '--skip-git-repo-check', '--sandbox', 'read-only', '-m', MODEL_CODEX,
                '-C', str(workspace), '--json', '-o', str(directory / 'last-message.txt'),
                '--output-schema', str(schema_path), '-']
     env = os.environ.copy()
-    env['CODEX_HOME'] = str(CODEX_HOME)
+    env['CODEX_HOME'] = str(codex_home)
     for key in ('TYPESAFE_API_KEY', 'MINDTHUS_HOST_API_KEY', 'OPENROUTER_API_KEY'):
         env.pop(key, None)
     start = time.monotonic()

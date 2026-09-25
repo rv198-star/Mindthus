@@ -66,6 +66,14 @@ class ObservationAssessmentTests(unittest.TestCase):
         report, _ = self.assess({**FIT, 'evidence_decision_fit': 'unsupported_candidate_claim'})
         self.assertEqual(report['result']['action'], 'request_correction')
 
+    def test_high_risk_hit_returns_to_owner_before_any_correction(self):
+        self.data['task']['risk'] = 'high'
+        report, _ = self.assess({**FIT, 'evidence_decision_fit': 'unsupported_candidate_claim'})
+        self.assertEqual(report['result']['action'], 'return_original_owner')
+        self.assertEqual(report['result']['reason'], 'risk_outside_automatic_correction')
+        with self.assertRaises(ContractError):
+            obs.correction_request(report, self.data, REPO)
+
     def test_not_applicable_is_distinct_from_pass(self):
         report, _ = self.assess({**FIT, 'evidence_decision_fit': 'not_applicable'})
         row = next(x for x in report['result']['matrix']
