@@ -6,7 +6,25 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## 2026-09-26 Owner resumed ONE repair cycle — implementation candidate, not qualification
+## Current recovery — final code verified; existing E⓪ complete; E② not yet run
+
+Code base `ea05409a1afef88afa049460147b4cffbff9e3f1`; task `tsk_94fd2ef722b6bb96`.
+Read [actual recovery](route-control-v0.2/single-cycle-repair-v1/recovery-ea05409/RECOVERY.md).
+The preceding checkpoint lagged behind local artifacts: release-full.log already held 1645 PASS
+(1640 success/5 skipped), and the frozen E-first root already held a complete pure_codex baseline.
+This recovery verified the exact freeze, three prior host call outcomes, initial/retained answer
+and final acceptance. Only m0 was visible; entry/catalog supplied; method bodies initially empty.
+No new baseline was generated. The incidental duplicate full rerun is disclosed: 1645/0 failures.
+Lifecycle 95/95; all 2410 protected files except the expected STATUS update remain unchanged.
+
+The next actual step is E② in `/srv/agentdock/tmp/mindthus-single-cycle-E-first-ea05409`.
+The credential-read tool was denied before retrieval; no Jev execution command followed.
+New Jev/Codex/CPA calls are zero, old E⓪ CLI calls=3, E①/E②/F UNRUN, unknown intents=0.
+Do not retrieve the credential through an alternate path to bypass the denial. Do not rerun E⓪.
+Review remains original independent REVISE plus author fixes; no quality winner or qualification.
+Evidence snapshot and exact verification are linked above. Current main/default skills unchanged.
+
+## Previous checkpoint — Owner resumed ONE repair cycle — implementation candidate, not qualification
 
 Owner approved item-by-item fixes after the baseline-comparability audit. Scope: one bounded A cycle;
 no default adoption, no TPlan pivot, no threshold tuning. See

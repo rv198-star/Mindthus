@@ -1,0 +1,77 @@
+{
+  "schema": "mindthus.interruption-recovery.v1",
+  "implementation_source": "ea05409a1afef88afa049460147b4cffbff9e3f1",
+  "implementation": "2afb6dba468f35c0e15f20f1259967983bd17526fb008fc3df2382feb1c116b0",
+  "node_checked_at_utc": "2026-09-25T23:03:26.982645+00:00",
+  "task_id": "tsk_94fd2ef722b6bb96",
+  "stage": "verification_complete; existing baseline retained; committed E pending",
+  "full_tests": {
+    "run": 1645,
+    "passed": 1640,
+    "skipped": 5,
+    "failed": 0,
+    "log": "full-final.log",
+    "seconds": 173.918,
+    "repeat_disclosed": true,
+    "prior_final_run": "release-full.log:1645 tests/177.381s; discovered after current run started because STATUS lagged"
+  },
+  "lifecycle": [
+    95,
+    95
+  ],
+  "protected_files": {
+    "checked": 2411,
+    "unchanged": 2410,
+    "expected_changed": [
+      "docs/internal/research/typed-decision/STATUS.md"
+    ]
+  },
+  "baseline": {
+    "case": "E",
+    "condition": "pure_codex",
+    "source_phase": "initial",
+    "cutoff_order": 0,
+    "only_user_document": "m0",
+    "preloaded_method_bodies": 0,
+    "entry_and_catalog_supplied": true,
+    "calls": 3,
+    "host_request_seconds": 39.27113543078303,
+    "first_answer_retained": true,
+    "consumption_complete": true,
+    "answer_sha256": "9cfb0bf1af5250c40e54eb56dfaf04fc44513f2a79e89db43e3d7b53912c87d6",
+    "origin": "completed before current recovery; not regenerated",
+    "new_quality_verdict": null
+  },
+  "trial": {
+    "freeze_sha256": "6e0e6d994b3e3203b55e4a4b98b252f90c28c6fe5533ccf2bac11e69f3e27b3b",
+    "requested_model": "gpt-6-sol",
+    "requested_reasoning": "xhigh",
+    "source_window": {
+      "claim": "prefix_only_not_yet_a_reproduction",
+      "cutoff_order": 0,
+      "missing_original": [],
+      "original_failure_reproduction_eligible": false,
+      "phase": "initial",
+      "source_sha256": "cb06085808ea1854a2aa7aa5842f903e51bc6bada03ca666384b6670ccf6a37d",
+      "source_window_complete": true,
+      "visible_source_sha256": "b7123a6c6fcb0182dff888dc2245f01783f4adbb7f0f290dab85d0ce4d2d2cb8"
+    },
+    "jev_physical_calls": 0,
+    "unknown_intents": [],
+    "jev_committed": "UNRUN",
+    "jev_advisory": "UNRUN",
+    "F": "UNRUN"
+  },
+  "current_recovery": {
+    "new_jev_calls": 0,
+    "new_codex_calls": 0,
+    "new_CPA_calls": 0,
+    "runtime_code_changed": false,
+    "blocked_operation": "NexusDock.private_note_manage/read: saved TypeSafe credential",
+    "blocking_response": "此工具调用被 OpenAI 的安全检查屏蔽。请仔细检查你发送的内容。",
+    "did_not_attempt": "No alternate credential retrieval, provider, model or transport; no Jev execution command after denial"
+  },
+  "review": "original independent REVISE with eight author dispositions; not relabeled PASS",
+  "qualification": "NOT QUALIFIED",
+  "paired_winner": null
+}
