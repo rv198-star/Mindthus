@@ -1,0 +1,148 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "answers": {
+      "additionalProperties": false,
+      "properties": {
+        "M02.I1.wae": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "ok",
+                "abstain",
+                "missing_context"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "status",
+            "value"
+          ],
+          "type": "object"
+        },
+        "M03.I1.wae": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "ok",
+                "abstain",
+                "missing_context"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "constraint",
+                    "covered",
+                    "no_contribution",
+                    "primary_candidate",
+                    "support",
+                    "support_and_constraint",
+                    "unclear"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "status",
+            "value"
+          ],
+          "type": "object"
+        },
+        "S01.I1": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "ok",
+                "abstain",
+                "missing_context"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "status",
+            "value"
+          ],
+          "type": "object"
+        },
+        "S02.I1": {
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "ok",
+                "abstain",
+                "missing_context"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "maximum": 3,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "status",
+            "value"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "M02.I1.wae",
+        "M03.I1.wae",
+        "S01.I1",
+        "S02.I1"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "answers"
+  ],
+  "type": "object"
+}

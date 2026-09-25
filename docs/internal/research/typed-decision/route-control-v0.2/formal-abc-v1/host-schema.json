@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["performed_methods", "text"],
+  "properties": {
+    "performed_methods": {"type": "array", "items": {"type": "string"}},
+    "text": {"type": "string"}
+  }
+}
