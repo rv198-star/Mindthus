@@ -1,0 +1,217 @@
+{
+  "evidence_kind": "offline_fixture",
+  "source_kind": "synthetic",
+  "scenario": "C",
+  "case": "strategy_carrier",
+  "input": {
+    "schema": "mindthus.route-control-input.v2",
+    "episode_id": "synthetic-v03-strategy_carrier",
+    "turn_id": "1",
+    "revision": "1",
+    "documents": [
+      {
+        "id": "msg0",
+        "kind": "user",
+        "revision": "1",
+        "text": "行业自动化正在普及，但团队现金只够六个月。评估转型方向，并说明怎样保留现金撑过迁移，不执行交易。"
+      }
+    ],
+    "authority": {
+      "owner_ref": "original-host",
+      "risk": "low",
+      "mode": "read_only",
+      "known_obligations": []
+    },
+    "issues": [
+      {
+        "id": "I1",
+        "request_ref": {
+          "document_id": "msg0",
+          "revision": "1",
+          "start": 0,
+          "end": 48,
+          "sha256": "6db7e80de5d9e9c89025052730513c465e177f75a74a0a828d3334177cd2f859"
+        },
+        "candidates": [
+          "sela",
+          "mpg"
+        ],
+        "handling": {
+          "value": "judge",
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "msg0",
+              "revision": "1",
+              "start": 0,
+              "end": 48,
+              "sha256": "6db7e80de5d9e9c89025052730513c465e177f75a74a0a828d3334177cd2f859"
+            }
+          ]
+        },
+        "assessability": {
+          "value": true,
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "msg0",
+              "revision": "1",
+              "start": 0,
+              "end": 48,
+              "sha256": "6db7e80de5d9e9c89025052730513c465e177f75a74a0a828d3334177cd2f859"
+            }
+          ]
+        },
+        "attention": false
+      }
+    ],
+    "dependencies": [],
+    "relationship": null,
+    "task_budget": {
+      "max_calls": 2,
+      "max_seconds": 90
+    },
+    "consumption_policy": "committed",
+    "conversation": [
+      {
+        "document_id": "msg0",
+        "role": "user",
+        "order": 0,
+        "author_ref": "synthetic-user",
+        "source_ref": "synthetic:route-v03/strategy_carrier/0"
+      }
+    ],
+    "host_inferences": {
+      "provenance": "host_inference",
+      "owner_ref": "original-host",
+      "issue_views": {
+        "I1": {
+          "actor": null,
+          "goal": null,
+          "scope": null,
+          "source_refs": []
+        }
+      }
+    },
+    "intervention": {
+      "turn_id": "1",
+      "history_sha256": "08994efba8585d07f986fbde3d4b2017ab916487dc342e4e4473c247d1a2c7e6"
+    }
+  },
+  "answers": {
+    "M02.I1.sela": {
+      "status": "ok",
+      "value": 0.95,
+      "uncertainty": null,
+      "reason": ""
+    },
+    "M03.I1.sela": {
+      "status": "ok",
+      "value": "primary_candidate",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "M02.I1.mpg": {
+      "status": "ok",
+      "value": 0.95,
+      "uncertainty": null,
+      "reason": ""
+    },
+    "M03.I1.mpg": {
+      "status": "ok",
+      "value": "support",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "R02.I1.sela.mpg": {
+      "status": "ok",
+      "value": "same_scope",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "R03.I1.sela.mpg": {
+      "status": "ok",
+      "value": "right",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "M05.I1.sela": {
+      "status": "ok",
+      "value": 0.95,
+      "uncertainty": null,
+      "reason": ""
+    },
+    "M05.I1.mpg": {
+      "status": "ok",
+      "value": 0.95,
+      "uncertainty": null,
+      "reason": ""
+    },
+    "COVERAGE.global": {
+      "status": "ok",
+      "value": "covered",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "COVERAGE.I1": {
+      "status": "ok",
+      "value": "covered",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "ROLE_SCOPE.I1.sela": {
+      "status": "ok",
+      "value": "required",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "COMPANION_SCOPE.I1.sela": {
+      "status": "ok",
+      "value": "required",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "ROLE_SCOPE.I1.mpg": {
+      "status": "ok",
+      "value": "required",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "COMPANION_SCOPE.I1.mpg": {
+      "status": "ok",
+      "value": "required",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.scope_preservation": {
+      "status": "ok",
+      "value": "aligned",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.explanatory_scope": {
+      "status": "ok",
+      "value": "supported_scope",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.premise_treatment": {
+      "status": "ok",
+      "value": "properly_treated",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.evidence_decision_fit": {
+      "status": "ok",
+      "value": "grounded_action",
+      "uncertainty": null,
+      "reason": ""
+    }
+  },
+  "reviewer_only": {
+    "purpose": "工程接线与状态控制，观察值为注入，不能用于模型准确率",
+    "expected_finding_count": 0
+  }
+}

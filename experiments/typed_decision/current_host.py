@@ -57,12 +57,18 @@ def pending_request(intent: dict, step: Path) -> bool:
 def _reply_shape(role: str, request: dict) -> dict:
     unknown = {'input_tokens': None, 'output_tokens': None, 'cost_usd': None}
     schema = request.get('schema')
+    if schema == 'mindthus.route-v03-native-request.v1':
+        return {'schema': 'mindthus.route-v03-native-reply.v1', 'request_id': request['request_id'],
+                'text': '', 'version': '', 'performed_methods': [], 'decision_status': 'unresolved', 'dispute': None, 'usage': unknown}
     if schema == 'mindthus.route-v03-organize-request.v1':
         return {'schema': 'mindthus.route-v03-organize-reply.v1',
                 'request_id': request['request_id'], 'issues': [],
                 'host_inferences': {'provenance': 'host_inference',
                                     'owner_ref': request['original_input']['authority']['owner_ref'],
                                     'issue_views': {}}, 'usage': unknown}
+    if schema == 'mindthus.route-v03-advice-request.v1':
+        return {'schema': 'mindthus.route-v03-advice-reply.v1', 'request_id': request['request_id'],
+                'revisions': {}, 'usage': unknown}
     if schema == 'mindthus.route-v03-correction-request.v1':
         return {'schema': 'mindthus.route-v03-correction-reply.v1',
                 'request_id': request['request_id'], 'dispositions': [],
@@ -73,6 +79,10 @@ def _reply_shape(role: str, request: dict) -> dict:
     if schema == 'mindthus.route-v03-accept-request.v1':
         return {'schema': 'mindthus.route-v03-accept-reply.v1',
                 'request_id': request['request_id'], 'accepted': {}, 'usage': unknown}
+    if schema == 'mindthus.route-v03-execution-request.v1':
+        return {'route_id': request['route_id'], 'revision': request['revision'],
+                'issue_id': request['issue']['issue_id'], 'performed_methods': [],
+                'text': '', 'objection': None, 'dependency_acceptance': {}, 'usage': unknown}
     if role == 'execution':
         return {'route_id': request['route_id'], 'revision': request['revision'],
                 'issue_id': request['issue']['issue_id'], 'performed_methods': [],
@@ -90,9 +100,14 @@ def _validate_reply(role: str, reply: dict, request: dict, repo: Path) -> None:
     schema = request.get('schema')
     if isinstance(schema, str) and schema.startswith('mindthus.route-v03-'):
         from . import route_control_v03 as v03, source_direct_v03 as sd
-        if schema == 'mindthus.route-v03-organize-request.v1':
+        if schema == 'mindthus.route-v03-native-request.v1':
+            from .comparison_v03 import validate_native_reply
+            validate_native_reply(reply, request)
+        elif schema == 'mindthus.route-v03-organize-request.v1':
             _, _, bindings, _ = v03._bundle(repo)
             v03.validate_organized(reply, request, bindings)
+        elif schema == 'mindthus.route-v03-advice-request.v1':
+            sd.validate_advice(reply, request)
         elif schema == 'mindthus.route-v03-correction-request.v1':
             sd.validate_correction(reply, request)
         elif schema == 'mindthus.route-v03-arbitration-request.v1':
@@ -222,6 +237,15 @@ def submit_response(root: Path, repo: Path, submission: dict) -> str:
         require(pending_request(read_record(hp.with_name('intent.json')), hp.parent),
                 'current_host_intent_required')
         validate_submission(submission, handoff, repo)
+        if manifest['mode'] == 'route-control.v0.3' and handoff['role'] != 'arbitration':
+            declared = manifest.get('live_admission', {}).get('observer_original_context_ref')
+            if declared is not None:
+                require(submission['host_context_ref'] == declared, 'v03_observer_original_context_changed')
+            for prior_path in root.glob('turns/*/inputs/*/steps/*/host-response.json'):
+                prior_handoff = read_record(prior_path.with_name('handoff.json'))
+                if prior_handoff['role'] != 'arbitration':
+                    require(read_record(prior_path)['submission']['host_context_ref'] == submission['host_context_ref'],
+                            'v03_original_host_context_changed')
         rp = hp.with_name('host-response.json')
         if rp.exists():
             require(read_record(rp)['submission'] == submission, 'current_host_response_immutable')

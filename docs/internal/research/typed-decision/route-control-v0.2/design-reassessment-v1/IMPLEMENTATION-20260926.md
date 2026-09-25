@@ -1,7 +1,8 @@
 # #211 v0.3 实现接管说明
 
-状态：**已编写代码与运行配置入口；未做测试、独立审计或新模型实验。**
-用户本轮要求暂缓这三项活动；不能据此声称修正设计的工程门、E/F 小批或 A–F 比较已经通过。
+最新状态：**首版经审计后已修复九项问题，并通过 310 项离线回归。真实模型实验未运行。**
+详见 [审计修复结果](REPAIR-RESULT-20260926.md)。下方描述保留首版接管背景；涉及
+当时“暂缓测试”或未接齐的部分，以修复结果为准。不能声称 E/F 小批或 A–F 真实比较已经通过。
 主设计和执行顺序见 [REPAIR-DESIGN.md](REPAIR-DESIGN.md)。
 
 ## 本次写入的能力
@@ -14,9 +15,9 @@
 
 | 字段 | 要求 |
 | --- | --- |
-| `conversation` | 按轮次有序的 `{document_id,role,order}`，指向同包原始 user/assistant 文档；保留原作者，不把旧助手文本写成当前回答 |
+| `conversation` | 按轮次有序的 `{document_id,role,order,author_ref,source_ref}`，指向同包原始 user/assistant 文档；保留原作者，不把旧助手文本写成当前回答 |
 | `host_inferences` | `{provenance:'host_inference',owner_ref,issue_views}`；每个事项的 actor/goal/scope 可为 null，有推断时须有原文引用 |
-| `intervention` | `{turn_id,history_sha256}`；hash 为 `digest(conversation)`，一个 Episode 只在预登记的本轮介入 |
+| `intervention` | `{turn_id,history_sha256}`；hash 由 `source_direct_v03.history_identity(packet)` 计算，覆盖对话元数据及其文档正文，一个 Episode 只在预登记的本轮介入 |
 | `consumption_policy` | `advisory` 为①建议式；`committed` 为②约束式，身份在调用前固定 |
 
 其余 `issues/dependencies/authority/task_budget` 沿用旧路由的容量、原文引用和权限校验。

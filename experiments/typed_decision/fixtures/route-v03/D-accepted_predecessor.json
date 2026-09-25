@@ -1,0 +1,281 @@
+{
+  "evidence_kind": "offline_fixture",
+  "source_kind": "synthetic",
+  "scenario": "D",
+  "case": "accepted_predecessor",
+  "input": {
+    "schema": "mindthus.route-control-input.v2",
+    "episode_id": "synthetic-v03-accepted_predecessor",
+    "turn_id": "1",
+    "revision": "1",
+    "documents": [
+      {
+        "id": "msg0",
+        "kind": "user",
+        "revision": "1",
+        "text": "先划清该审核门的控制职责，再基于这个已确认结果给出改造建议；第二步需要我的接受。"
+      }
+    ],
+    "authority": {
+      "owner_ref": "original-host",
+      "risk": "low",
+      "mode": "read_only",
+      "known_obligations": []
+    },
+    "issues": [
+      {
+        "id": "I1",
+        "request_ref": {
+          "document_id": "msg0",
+          "revision": "1",
+          "start": 0,
+          "end": 40,
+          "sha256": "0b843dff72347b07e04370bf702e2a7f20a764929a224a330326d8ec1e3c8ae3"
+        },
+        "candidates": [
+          "wae"
+        ],
+        "handling": {
+          "value": "judge",
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "msg0",
+              "revision": "1",
+              "start": 0,
+              "end": 40,
+              "sha256": "0b843dff72347b07e04370bf702e2a7f20a764929a224a330326d8ec1e3c8ae3"
+            }
+          ]
+        },
+        "assessability": {
+          "value": true,
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "msg0",
+              "revision": "1",
+              "start": 0,
+              "end": 40,
+              "sha256": "0b843dff72347b07e04370bf702e2a7f20a764929a224a330326d8ec1e3c8ae3"
+            }
+          ]
+        },
+        "attention": false
+      },
+      {
+        "id": "I2",
+        "request_ref": {
+          "document_id": "msg0",
+          "revision": "1",
+          "start": 0,
+          "end": 40,
+          "sha256": "0b843dff72347b07e04370bf702e2a7f20a764929a224a330326d8ec1e3c8ae3"
+        },
+        "candidates": [
+          "wae"
+        ],
+        "handling": {
+          "value": "judge",
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "msg0",
+              "revision": "1",
+              "start": 0,
+              "end": 40,
+              "sha256": "0b843dff72347b07e04370bf702e2a7f20a764929a224a330326d8ec1e3c8ae3"
+            }
+          ]
+        },
+        "assessability": {
+          "value": true,
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "msg0",
+              "revision": "1",
+              "start": 0,
+              "end": 40,
+              "sha256": "0b843dff72347b07e04370bf702e2a7f20a764929a224a330326d8ec1e3c8ae3"
+            }
+          ]
+        },
+        "attention": false
+      }
+    ],
+    "dependencies": [
+      {
+        "id": "D1",
+        "producer": "I1",
+        "consumer": "I2",
+        "artifact": "已接受的控制职责分析",
+        "condition": null,
+        "refs": [
+          {
+            "document_id": "msg0",
+            "revision": "1",
+            "start": 0,
+            "end": 40,
+            "sha256": "0b843dff72347b07e04370bf702e2a7f20a764929a224a330326d8ec1e3c8ae3"
+          }
+        ]
+      }
+    ],
+    "relationship": null,
+    "task_budget": {
+      "max_calls": 3,
+      "max_seconds": 135
+    },
+    "consumption_policy": "committed",
+    "conversation": [
+      {
+        "document_id": "msg0",
+        "role": "user",
+        "order": 0,
+        "author_ref": "synthetic-user",
+        "source_ref": "synthetic:route-v03/accepted_predecessor/0"
+      }
+    ],
+    "host_inferences": {
+      "provenance": "host_inference",
+      "owner_ref": "original-host",
+      "issue_views": {
+        "I1": {
+          "actor": null,
+          "goal": null,
+          "scope": null,
+          "source_refs": []
+        },
+        "I2": {
+          "actor": null,
+          "goal": null,
+          "scope": null,
+          "source_refs": []
+        }
+      }
+    },
+    "intervention": {
+      "turn_id": "1",
+      "history_sha256": "c2b997b4568778bc7f07afcc84f7c0eb267879edbcc6ba33085cdfb9e1e3460b"
+    }
+  },
+  "answers": {
+    "M02.I1.wae": {
+      "status": "ok",
+      "value": 0.95,
+      "uncertainty": null,
+      "reason": ""
+    },
+    "M03.I1.wae": {
+      "status": "ok",
+      "value": "primary_candidate",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "M02.I2.wae": {
+      "status": "ok",
+      "value": 0.95,
+      "uncertainty": null,
+      "reason": ""
+    },
+    "M03.I2.wae": {
+      "status": "ok",
+      "value": "primary_candidate",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "R04.D1": {
+      "status": "ok",
+      "value": "needed_to_begin",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "COVERAGE.global": {
+      "status": "ok",
+      "value": "covered",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "COVERAGE.I1": {
+      "status": "ok",
+      "value": "covered",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "ROLE_SCOPE.I1.wae": {
+      "status": "ok",
+      "value": "required",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "COVERAGE.I2": {
+      "status": "ok",
+      "value": "covered",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "ROLE_SCOPE.I2.wae": {
+      "status": "ok",
+      "value": "required",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.scope_preservation": {
+      "status": "ok",
+      "value": "aligned",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.explanatory_scope": {
+      "status": "ok",
+      "value": "supported_scope",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.premise_treatment": {
+      "status": "ok",
+      "value": "properly_treated",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.evidence_decision_fit": {
+      "status": "ok",
+      "value": "grounded_action",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I2.scope_preservation": {
+      "status": "ok",
+      "value": "aligned",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I2.explanatory_scope": {
+      "status": "ok",
+      "value": "supported_scope",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I2.premise_treatment": {
+      "status": "ok",
+      "value": "properly_treated",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I2.evidence_decision_fit": {
+      "status": "ok",
+      "value": "grounded_action",
+      "uncertainty": null,
+      "reason": ""
+    }
+  },
+  "reviewer_only": {
+    "purpose": "工程接线与状态控制，观察值为注入，不能用于模型准确率",
+    "expected_finding_count": 0
+  }
+}

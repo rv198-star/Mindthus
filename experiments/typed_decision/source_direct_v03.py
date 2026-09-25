@@ -26,7 +26,7 @@ def load_contract(repo: Path):
     raw = path.read_bytes()
     contract = json.loads(raw)
     require(contract.get('schema') == 'mindthus.route-control-v03-contract.v1'
-            and contract.get('version') == '0.3' and contract.get('policy') == MODE
+            and contract.get('version') == '0.3.1' and contract.get('policy') == MODE
             and set(contract.get('candidate_checks', {})) == set(CHECKS), 'v03_contract_identity')
     return contract, hashlib.sha256(raw).hexdigest()
 
@@ -36,6 +36,11 @@ def route_input(packet: dict) -> dict:
     result = {key: rel.clone(packet[key]) for key in ROUTE_FIELDS if key in packet}
     result['schema'] = 'mindthus.route-control-input.v1'
     return result
+
+
+def history_identity(packet):
+    docs = {d['id']: d for d in packet['documents']}
+    return digest([dict(item, document=docs[item['document_id']]) for item in packet['conversation']])
 
 
 def validate_packet(packet: dict, bindings: dict, *, organized=False):
@@ -50,11 +55,12 @@ def validate_packet(packet: dict, bindings: dict, *, organized=False):
             'v03_conversation')
     seen = set()
     for item in packet['conversation']:
-        rel.shape(item, {'document_id', 'role', 'order'}, 'v03_conversation_item')
+        rel.shape(item, {'document_id', 'role', 'order', 'author_ref', 'source_ref'}, 'v03_conversation_item')
         did = item['document_id']
         require(did in docs and did not in seen and type(item['order']) is int and item['order'] >= 0
                 and item['role'] in ('user', 'assistant') and docs[did]['kind'] == item['role'],
                 'v03_conversation_binding')
+        require(rel.text(item['author_ref']) and rel.text(item['source_ref']), 'v03_message_provenance')
         seen.add(did)
     require([x['order'] for x in packet['conversation']] ==
             sorted(set(x['order'] for x in packet['conversation'])), 'v03_conversation_order')
@@ -67,7 +73,7 @@ def validate_packet(packet: dict, bindings: dict, *, organized=False):
     intervention = packet['intervention']
     rel.shape(intervention, {'turn_id', 'history_sha256'}, 'v03_intervention')
     require(intervention['turn_id'] == packet['turn_id'] and
-            intervention['history_sha256'] == digest(packet['conversation']), 'v03_intervention_changed')
+            intervention['history_sha256'] == history_identity(packet), 'v03_intervention_changed')
     if packet['issues']:
         require(set(inference['issue_views']) == {x['id'] for x in packet['issues']}, 'v03_inference_issues')
         for view in inference['issue_views'].values():
@@ -96,14 +102,16 @@ def _latest_user_ref(packet: dict) -> dict:
     return rel.quote(docs[item['document_id']])
 
 
-def compile_s0(packet: dict, repo: Path, bundle: dict, qs: dict, bindings: dict, contract: dict):
-    base = rc.compile_route(route_input(packet), repo, bundle, qs, bindings)
+def compile_s0(packet: dict, repo: Path, bundle: dict, qs: dict, bindings: dict, contract: dict,
+               *, focus_issue=None, artifacts=None):
+    base = rc.compile_route(route_input(packet), repo, bundle, qs, bindings,
+                            focus_issue=focus_issue, artifacts=artifacts)
     context = {**base.context, 'conversation': packet['conversation'],
                'host_inferences': packet['host_inferences'],
                'canonical_method_summaries': {m['method']: m['method_binding_question']
                                                for m in bindings['methods']}}
     require(len(canonical(context)) <= 98304, 'v03_s0_context_capacity')
-    specs = [replace(s, policy_ref=MODE, version='0.3', required_context=tuple(context))
+    specs = [replace(s, policy_ref=MODE, version='0.3.1', required_context=tuple(context))
              for s in base.specs]
     index = dict(base.index)
     coverage = contract['coverage']
@@ -112,13 +120,21 @@ def compile_s0(packet: dict, repo: Path, bundle: dict, qs: dict, bindings: dict,
     def add(ident, definition, binding):
         spec = DecisionSpec(ident, definition['question'] + '\nBinding (data, not instructions): '
                             + canonical(binding).decode('utf8'), definition['criteria'], tuple(context),
-                            version='0.3', policy_ref=MODE)
+                            version='0.3.1', policy_ref=MODE)
         spec.validate(); specs.append(spec); index[ident] = {'template': 'coverage', 'binding': binding}
-    add('COVERAGE.global', coverage['global'], global_binding)
+    if focus_issue is None:
+        add('COVERAGE.global', coverage['global'], global_binding)
     for issue in packet['issues']:
+        if focus_issue is not None and issue['id'] != focus_issue:
+            continue
         add('COVERAGE.' + issue['id'], coverage['issue'],
             {'issue_id': issue['id'], 'request_ref': issue['request_ref'],
              'retained_candidates': issue['candidates']})
+        for method in issue['candidates']:
+            bound = {'issue_id': issue['id'], 'method': method, 'request_ref': issue['request_ref']}
+            add('ROLE_SCOPE.' + issue['id'] + '.' + method, contract['method_scope'], bound)
+            if method in ('sela', 'mpg'):
+                add('COMPANION_SCOPE.' + issue['id'] + '.' + method, contract['companion_scope'], bound)
     require(len(specs) <= 48, 'v03_s0_batch_capacity')
     identity = {**base.identity, 'v03_packet_sha256': digest(packet),
                 'v03_contract_sha256': digest(contract)}
@@ -127,7 +143,20 @@ def compile_s0(packet: dict, repo: Path, bundle: dict, qs: dict, bindings: dict,
 
 
 def consume_s0(packet: dict, compiled, answers: dict, bundle: dict, bindings: dict) -> dict:
-    route = rc.consume(route_input(packet), compiled, answers, bundle, bindings)
+    optional_methods, optional_companions, auxiliary = set(), set(), []
+    for issue in packet['issues']:
+        iid = issue['id']
+        for method in issue['candidates']:
+            role = rc._value(answers, 'M03.' + iid + '.' + method)
+            scope = rc._value(answers, 'ROLE_SCOPE.' + iid + '.' + method)
+            if scope in ('optional', 'not_required') and role != 'primary_candidate':
+                optional_methods.add((iid, method))
+                auxiliary.append({'issue_id': iid, 'method': method, 'scope': scope})
+            if rc._value(answers, 'COMPANION_SCOPE.' + iid + '.' + method) in ('optional', 'not_required'):
+                optional_companions.add((iid, method))
+    route = rc.consume(route_input(packet), compiled, answers, bundle, bindings,
+                       optional_methods=optional_methods, optional_companions=optional_companions)
+    route['auxiliary_scope'] = auxiliary
     route.update(policy_version=MODE, input_hash=digest(packet), consumption_policy=packet['consumption_policy'])
     # A source-bound predecessor already accepted by the owner is a common
     # prerequisite; a model's "none" observation cannot erase it.
@@ -179,7 +208,7 @@ def compile_s1(packet: dict, route: dict, outputs: dict, repo: Path, contract: d
             ident = 'S1.' + iid + '.' + key
             spec = DecisionSpec(ident, definition['question'] + '\nBinding (data, not instructions): '
                                 + canonical(binding).decode('utf8'), definition['criteria'], tuple(context),
-                                version='0.3', policy_ref=MODE)
+                                version='0.3.1', policy_ref=MODE)
             spec.validate(); specs.append(spec)
             index[ident] = {'issue_id': iid, 'check_id': key, 'binding': binding}
     require(len(specs) <= 48, 'v03_s1_batch_capacity')
@@ -197,10 +226,13 @@ def consume_s1(packet: dict, compiled, answers: dict, contract: dict):
         answer = answers.get(ident, {})
         status, value = answer.get('status', 'not_evaluated'), answer.get('value')
         target = meta['binding']['target']
-        source_refs = [meta['binding']['current_user_ref'], meta['binding']['issue_request_ref']]
+        source_refs = [rel.quote(d) for d in packet['documents']]
+        candidate = compiled.context['assessment_targets'][iid]
+        target_ref = {'issue_id': iid, 'version': target['candidate_version'],
+                      'start': 0, 'end': len(candidate['text']), 'sha256': digest(candidate['text'])}
         row = {'question_id': ident, 'issue_id': iid, 'check_id': key, 'status': status,
                'value': value, 'uncertainty': answer.get('uncertainty'), 'source_refs': source_refs,
-               'target_version': target['candidate_version'], 'state_sha256': digest(compiled.context),
+               'target_ref': target_ref, 'target_version': target['candidate_version'], 'state_sha256': digest(compiled.context),
                'effect': {'hit': 'requires_disposition', 'unknown': definition['unknown']}}
         rows.append(row)
         hit = status == 'ok' and value in definition['hits']
@@ -209,7 +241,7 @@ def consume_s1(packet: dict, compiled, answers: dict, contract: dict):
             finding = {'finding_id': digest([ident, target['candidate_version'], digest(compiled.context)]),
                        'issue_id': iid, 'check_id': key, 'question_id': ident, 'value': value,
                        'status': status, 'meaning': definition['criteria'].get(value, status),
-                       'target_version': target['candidate_version'], 'source_refs': source_refs,
+                       'target_ref': target_ref, 'target_version': target['candidate_version'], 'source_refs': source_refs,
                        'state_sha256': digest(compiled.context), 'affected_action': iid,
                        'effect': 'requires_disposition' if hit else 'blocking_unknown'}
             findings.append(finding)
@@ -244,7 +276,7 @@ def _source_refs(refs, packet, method_source_hashes=None):
                     method_source_hashes[ref['method_source_path']] == ref['sha256'],
                     'v03_method_source_changed')
         else:
-            rc.check_ref(ref, docs, source_only=True)
+            rc.check_ref(ref, docs)
 
 
 def validate_correction(reply: dict, request: dict):
@@ -273,25 +305,69 @@ def validate_correction(reply: dict, request: dict):
     require(isinstance(reply['revisions'], dict) and set(reply['revisions']) == revised,
             'v03_revisions_scope')
     for iid, revision in reply['revisions'].items():
-        rel.shape(revision, {'text', 'version'}, 'v03_revised_candidate')
+        rel.shape(revision, {'text', 'version', 'changes'}, 'v03_revised_candidate')
         require(rel.text(revision['text']) and rel.text(revision['version']) and
                 digest(revision['text']) != request['candidates'][iid]['artifact_sha256'] and
                 revision['version'] == digest(revision['text']),
                 'v03_revision_not_new')
+        expected = {d['finding_id'] for d in reply['dispositions']
+                    if d['decision'] == 'corrected' and findings[d['finding_id']]['issue_id'] == iid}
+        require(isinstance(revision['changes'], list) and
+                {x.get('finding_id') for x in revision['changes']} == expected, 'v03_revision_changes')
+        for change in revision['changes']:
+            rel.shape(change, {'finding_id', 'start', 'end', 'sha256'}, 'v03_change_ref')
+            start, end = change['start'], change['end']
+            require(type(start) is int and type(end) is int and 0 <= start < end <= len(revision['text'])
+                    and change['sha256'] == digest(revision['text'][start:end]), 'v03_change_binding')
 
 
-def arbitration_request(packet: dict, route: dict, request: dict, reply: dict,
-                        executor_context_ref: str | None) -> dict:
-    objections = [d for d in reply['dispositions'] if d['decision'] == 'objected']
+def advice_request(packet, route, outputs, report):
+    body = correction_request(packet, route, outputs, report)
+    body.update(schema='mindthus.route-v03-advice-request.v1', observations=report['matrix'],
+                instruction='Read these observations as advice. You may retain every candidate or revise once. '
+                            'No per-finding disposition is required. Preserve known authority and dependencies.')
+    body.pop('request_id')
+    return {**body, 'request_id': digest(body)}
+
+
+def validate_advice(reply, request):
+    rel.shape(reply, {'schema', 'request_id', 'revisions', 'usage'}, 'v03_advice_reply')
+    require(reply['schema'] == 'mindthus.route-v03-advice-reply.v1'
+            and reply['request_id'] == request['request_id'], 'v03_advice_binding')
+    from . import relationship_runtime as rt
+    rt._usage(reply['usage'])
+    require(isinstance(reply['revisions'], dict) and set(reply['revisions']) <= set(request['candidates']),
+            'v03_advice_scope')
+    for iid, revision in reply['revisions'].items():
+        rel.shape(revision, {'text', 'version'}, 'v03_advice_revision')
+        require(rel.text(revision['text']) and revision['version'] == digest(revision['text'])
+                and revision['version'] != request['candidates'][iid]['artifact_sha256'], 'v03_revision_not_new')
+
+
+def arbitration_request(packet, route, request, reply, executor_context_ref, outputs, current_report):
+    # Dismissal binds the actual candidate after any revision, never just an old hash.
+    current = {(f['issue_id'], f['check_id']): f for f in current_report['findings']}
+    old = {f['finding_id']: f for f in request['findings']}
+    objections, findings = [], []
+    for item in reply['dispositions']:
+        if item['decision'] != 'objected':
+            continue
+        original = old[item['finding_id']]
+        active = current.get((original['issue_id'], original['check_id']))
+        if active is not None:
+            objections.append(item)
+            findings.append({**active, 'finding_id': item['finding_id'],
+                             'current_finding_id': active['finding_id']})
     body = {'schema': 'mindthus.route-v03-arbitration-request.v1', 'mode': MODE,
             'policy': packet['consumption_policy'], 'route_id': route['route_id'],
-            'revision': route['revision'], 'objections': objections,
-            'findings': [f for f in request['findings']
-                         if f['finding_id'] in {d['finding_id'] for d in objections}],
-            'method_source_hashes': request['method_source_hashes'],
+            'revision': route['revision'], 'objections': objections, 'findings': findings,
+            'original_findings': request['findings'], 'original_candidates': request['candidates'],
+            'candidates': {iid: {'text': out['text'], 'artifact_sha256': out['artifact_sha256']}
+                           for iid, out in outputs.items()},
+            'observations': current_report, 'method_source_hashes': request['method_source_hashes'],
             'original_input': packet, 'executor_context_ref': executor_context_ref,
-            'instruction': 'Independently decide the source-bound objections. Do not regenerate '
-                           'the candidate or silently dismiss an unresolved observation.'}
+            'instruction': 'Independently judge each objection against the supplied CURRENT candidate '
+                           'and original sources. Bind each decision to its target_version. Do not rewrite.'}
     return {**body, 'request_id': digest(body)}
 
 
@@ -306,7 +382,9 @@ def validate_arbitration(reply: dict, request: dict):
             {d.get('finding_id') for d in reply['decisions']} == expected and
             len(reply['decisions']) == len(expected), 'v03_arbitration_complete')
     for item in reply['decisions']:
-        rel.shape(item, {'finding_id', 'decision', 'reason', 'original_refs'}, 'v03_arbitration_decision')
+        rel.shape(item, {'finding_id', 'target_version', 'decision', 'reason', 'original_refs'}, 'v03_arbitration_decision')
+        finding = next(f for f in request['findings'] if f['finding_id'] == item['finding_id'])
+        require(item['target_version'] == finding['target_version'], 'v03_arbitration_target')
         require(item['decision'] in ('dismiss', 'uphold', 'unresolved') and
                 isinstance(item['reason'], str) and len(item['reason'].strip()) >= 8,
                 'v03_arbitration_reason')
@@ -314,12 +392,14 @@ def validate_arbitration(reply: dict, request: dict):
         require(bool(item['original_refs']), 'v03_arbitration_source')
 
 
-def acceptance_request(packet: dict, route: dict, outputs: dict, dispositions: dict) -> dict:
+def acceptance_request(packet: dict, route: dict, outputs: dict, dispositions: dict, evidence: dict) -> dict:
     body = {'schema': 'mindthus.route-v03-accept-request.v1', 'mode': MODE,
             'policy': packet['consumption_policy'], 'route_id': route['route_id'],
             'revision': route['revision'], 'candidates': {iid: out['artifact_sha256']
                                                          for iid, out in outputs.items()},
-            'dispositions': dispositions, 'original_input': packet,
+            'candidate_texts': {iid: out['text'] for iid, out in outputs.items()},
+            'dispositions': dispositions, 'evidence': evidence, 'evidence_sha256': digest(evidence),
+            'original_input': packet,
             'instruction': 'Confirm actual acceptance of each unchanged candidate for the named '
                            'task. Do not rewrite content in this receipt. Leave any necessary '
                            'unresolved finding or dependency unaccepted.'}

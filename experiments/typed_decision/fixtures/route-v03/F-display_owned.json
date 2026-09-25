@@ -1,0 +1,188 @@
+{
+  "evidence_kind": "offline_fixture",
+  "source_kind": "synthetic",
+  "scenario": "F",
+  "case": "display_owned",
+  "input": {
+    "schema": "mindthus.route-control-input.v2",
+    "episode_id": "synthetic-v03-display_owned",
+    "turn_id": "1",
+    "revision": "1",
+    "documents": [
+      {
+        "id": "msg0",
+        "kind": "user",
+        "revision": "1",
+        "text": "我已经有27寸4K显示器，macOS下怎样先用得顺手？"
+      },
+      {
+        "id": "msg1",
+        "kind": "assistant",
+        "revision": "1",
+        "text": "4K的物理像素密度不如5K，你应该换显示器。"
+      },
+      {
+        "id": "msg2",
+        "kind": "user",
+        "revision": "1",
+        "text": "我问的是现有设备的软件设置，暂时不换设备。不能达到5K不代表完全不能改善吧？"
+      }
+    ],
+    "authority": {
+      "owner_ref": "original-host",
+      "risk": "low",
+      "mode": "read_only",
+      "known_obligations": []
+    },
+    "issues": [
+      {
+        "id": "I1",
+        "request_ref": {
+          "document_id": "msg2",
+          "revision": "1",
+          "start": 0,
+          "end": 38,
+          "sha256": "911d2ba1c6d427152d7c6da66b95cb2cd776889dcab12dab5108dd042ec9fe55"
+        },
+        "candidates": [
+          "edsp"
+        ],
+        "handling": {
+          "value": "judge",
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "msg2",
+              "revision": "1",
+              "start": 0,
+              "end": 38,
+              "sha256": "911d2ba1c6d427152d7c6da66b95cb2cd776889dcab12dab5108dd042ec9fe55"
+            }
+          ]
+        },
+        "assessability": {
+          "value": true,
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "msg2",
+              "revision": "1",
+              "start": 0,
+              "end": 38,
+              "sha256": "911d2ba1c6d427152d7c6da66b95cb2cd776889dcab12dab5108dd042ec9fe55"
+            }
+          ]
+        },
+        "attention": false
+      }
+    ],
+    "dependencies": [],
+    "relationship": null,
+    "task_budget": {
+      "max_calls": 2,
+      "max_seconds": 90
+    },
+    "consumption_policy": "committed",
+    "conversation": [
+      {
+        "document_id": "msg0",
+        "role": "user",
+        "order": 0,
+        "author_ref": "synthetic-user",
+        "source_ref": "synthetic:route-v03/display_owned/0"
+      },
+      {
+        "document_id": "msg1",
+        "role": "assistant",
+        "order": 1,
+        "author_ref": "synthetic-assistant",
+        "source_ref": "synthetic:route-v03/display_owned/1"
+      },
+      {
+        "document_id": "msg2",
+        "role": "user",
+        "order": 2,
+        "author_ref": "synthetic-user",
+        "source_ref": "synthetic:route-v03/display_owned/2"
+      }
+    ],
+    "host_inferences": {
+      "provenance": "host_inference",
+      "owner_ref": "original-host",
+      "issue_views": {
+        "I1": {
+          "actor": null,
+          "goal": null,
+          "scope": null,
+          "source_refs": []
+        }
+      }
+    },
+    "intervention": {
+      "turn_id": "1",
+      "history_sha256": "2ca3bdf8525a74e2c86c7246959f576cde48015cfd8248ef66774ffaa1ef0860"
+    }
+  },
+  "answers": {
+    "M02.I1.edsp": {
+      "status": "ok",
+      "value": 0.95,
+      "uncertainty": null,
+      "reason": ""
+    },
+    "M03.I1.edsp": {
+      "status": "ok",
+      "value": "primary_candidate",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "COVERAGE.global": {
+      "status": "ok",
+      "value": "covered",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "COVERAGE.I1": {
+      "status": "ok",
+      "value": "covered",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "ROLE_SCOPE.I1.edsp": {
+      "status": "ok",
+      "value": "required",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.scope_preservation": {
+      "status": "ok",
+      "value": "scope_drift",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.explanatory_scope": {
+      "status": "ok",
+      "value": "supported_scope",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.premise_treatment": {
+      "status": "ok",
+      "value": "properly_treated",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.evidence_decision_fit": {
+      "status": "ok",
+      "value": "material_omission",
+      "uncertainty": null,
+      "reason": ""
+    }
+  },
+  "reviewer_only": {
+    "purpose": "工程接线与状态控制，观察值为注入，不能用于模型准确率",
+    "expected_finding_count": 2
+  }
+}

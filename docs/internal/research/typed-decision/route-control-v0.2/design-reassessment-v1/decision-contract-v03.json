@@ -1,6 +1,6 @@
 {
   "schema": "mindthus.route-control-v03-contract.v1",
-  "version": "0.3",
+  "version": "0.3.1",
   "policy": "route-control.v0.3",
   "coverage": {
     "global": {
@@ -40,7 +40,10 @@
         "insufficient_context": "The original request is genuinely too incomplete to assess alignment.",
         "not_applicable": "The candidate makes no task-facing judgment."
       },
-      "hits": ["scope_drift", "decision_drift"],
+      "hits": [
+        "scope_drift",
+        "decision_drift"
+      ],
       "unknown": "blocks_action",
       "action_consequence": "A hit requires restoration of the current task scope or a source-bound objection; a decision-changing unknown keeps the affected action unresolved.",
       "review_examples_not_model_input": {
@@ -56,7 +59,9 @@
         "insufficient_context": "A genuinely missing material fact prevents assessing the explanatory scope.",
         "not_applicable": "The candidate offers no relevant explanatory claim."
       },
-      "hits": ["overextended_local_truth"],
+      "hits": [
+        "overextended_local_truth"
+      ],
       "unknown": "advisory",
       "action_consequence": "A hit requires narrowing or supporting the whole-object claim; an unknown alone does not veto a separate supported action.",
       "review_examples_not_model_input": {
@@ -73,7 +78,10 @@
         "insufficient_context": "A genuinely missing source prevents deciding attribution.",
         "not_applicable": "The candidate makes no material factual use of a disputed premise."
       },
-      "hits": ["unsupported_user_claim_as_fact", "unsupported_candidate_claim"],
+      "hits": [
+        "unsupported_user_claim_as_fact",
+        "unsupported_candidate_claim"
+      ],
       "unknown": "advisory",
       "action_consequence": "A hit requires restoring the claim's actual status or giving support before the action relies on it; a legitimate user preference stays a constraint.",
       "review_examples_not_model_input": {
@@ -90,13 +98,44 @@
         "insufficient_context": "A genuinely missing material fact prevents assessing the action.",
         "not_applicable": "The candidate contains no task-facing decision."
       },
-      "hits": ["material_omission", "unjustified_decision"],
+      "hits": [
+        "material_omission",
+        "unjustified_decision"
+      ],
       "unknown": "blocks_action",
       "action_consequence": "A hit requires revising the affected choice or defending it with original evidence; a missing decision-changing condition keeps only that choice unresolved.",
       "review_examples_not_model_input": {
         "grounded_action": "For an existing 4K screen, the candidate suggests a reversible scaling adjustment while stating that software cannot add pixels.",
         "material_omission": "For a buyer prioritizing crisp 1440-size text, the candidate recommends 4K as fully equivalent to 5K solely because a scaling tool exists."
       }
+    }
+  },
+  "method_scope": {
+    "question": "Does the bound method supply a necessary condition of the current action, only optional support, or no required contribution? Judge from original task and canonical methods, not another answer. Primary ownership or unresolved ownership competition is required, never optional.",
+    "criteria": {
+      "required": "Current action depends on this contribution or ownership judgment.",
+      "optional": "Only additional support; a sufficient independent primary action remains valid without it.",
+      "not_required": "This contribution has no necessary role in the current action.",
+      "unclear": "Cannot establish whether the action depends on this contribution."
+    },
+    "action_consequence": "Only explicit optional/not_required permits auxiliary uncertainty without withdrawing a known primary. Conflicting primary evidence remains unresolved.",
+    "review_examples_not_model_input": {
+      "optional": "A settled primary action remains valid even if an additional explanatory lens contributes nothing.",
+      "required": "Without the companion conclusion, the current decision has no established necessary premise."
+    }
+  },
+  "companion_scope": {
+    "question": "Does using the companion method resolve a necessary dependency of the current route, or only offer optional support? Read the canonical companion clause and task; relevance alone is not necessity.",
+    "criteria": {
+      "required": "Current action depends on this contribution or ownership judgment.",
+      "optional": "Only additional support; a sufficient independent primary action remains valid without it.",
+      "not_required": "This contribution has no necessary role in the current action.",
+      "unclear": "Cannot establish whether the action depends on this contribution."
+    },
+    "action_consequence": "Only explicit optional/not_required permits auxiliary uncertainty without withdrawing a known primary. Conflicting primary evidence remains unresolved.",
+    "review_examples_not_model_input": {
+      "optional": "A settled primary action remains valid even if an additional explanatory lens contributes nothing.",
+      "required": "Without the companion conclusion, the current decision has no established necessary premise."
     }
   }
 }

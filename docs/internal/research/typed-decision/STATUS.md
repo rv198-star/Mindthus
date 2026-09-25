@@ -6,7 +6,20 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## 2026-09-26 v0.3 implementation written — validation paused
+## 2026-09-26 v0.3 audit fixes — offline engineering verified
+
+The [repair result](route-control-v0.2/design-reassessment-v1/REPAIR-RESULT-20260926.md)
+records fixes for all nine findings in the baseline-5985 implementation audit, contract 0.3.1,
+source/context binding, bounded advisory and committed consumption, current-version arbitration
+replay, dependent-output invalidation, and five-condition experimental APIs. 310 related offline
+tests pass, including 50 new tests and eight synthetic A–F fixture subcases. The two earlier root
+fixes remain covered. New tests use injected observations and host receipts, not real model evidence.
+
+No new live Jev/Codex comparison or independent audit was run in this repair turn. Twelve new
+source families, real host consumption, anonymous scoring and quality comparison remain unrun.
+No OCI ledger, historical result, or main was changed. #211 remains NOT QUALIFIED.
+
+## 2026-09-26 v0.3 implementation written — earlier validation pause
 
 The [implementation handoff](route-control-v0.2/design-reassessment-v1/IMPLEMENTATION-20260926.md)
 records the new opt-in entry, source-direct contracts, existing Episode and CurrentAgentHost

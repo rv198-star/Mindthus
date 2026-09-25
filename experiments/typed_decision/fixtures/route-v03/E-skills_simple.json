@@ -1,0 +1,142 @@
+{
+  "evidence_kind": "offline_fixture",
+  "source_kind": "synthetic",
+  "scenario": "E",
+  "case": "skills_simple",
+  "input": {
+    "schema": "mindthus.route-control-input.v2",
+    "episode_id": "synthetic-v03-skills_simple",
+    "turn_id": "1",
+    "revision": "1",
+    "documents": [
+      {
+        "id": "msg0",
+        "kind": "user",
+        "revision": "1",
+        "text": "这个 Skills 文件只有一句要求“回答时使用中文”，没有脚本、引用或其他文件；就这个文件解释它的作用即可。"
+      }
+    ],
+    "authority": {
+      "owner_ref": "original-host",
+      "risk": "low",
+      "mode": "read_only",
+      "known_obligations": []
+    },
+    "issues": [
+      {
+        "id": "I1",
+        "request_ref": {
+          "document_id": "msg0",
+          "revision": "1",
+          "start": 0,
+          "end": 55,
+          "sha256": "42b7f6df868aeac722746be945e5812b5645ffc3d9fa74b25678f6ccec9354b0"
+        },
+        "candidates": [],
+        "handling": {
+          "value": "direct_execute",
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "msg0",
+              "revision": "1",
+              "start": 0,
+              "end": 55,
+              "sha256": "42b7f6df868aeac722746be945e5812b5645ffc3d9fa74b25678f6ccec9354b0"
+            }
+          ]
+        },
+        "assessability": {
+          "value": true,
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "msg0",
+              "revision": "1",
+              "start": 0,
+              "end": 55,
+              "sha256": "42b7f6df868aeac722746be945e5812b5645ffc3d9fa74b25678f6ccec9354b0"
+            }
+          ]
+        },
+        "attention": false
+      }
+    ],
+    "dependencies": [],
+    "relationship": null,
+    "task_budget": {
+      "max_calls": 2,
+      "max_seconds": 90
+    },
+    "consumption_policy": "committed",
+    "conversation": [
+      {
+        "document_id": "msg0",
+        "role": "user",
+        "order": 0,
+        "author_ref": "synthetic-user",
+        "source_ref": "synthetic:route-v03/skills_simple/0"
+      }
+    ],
+    "host_inferences": {
+      "provenance": "host_inference",
+      "owner_ref": "original-host",
+      "issue_views": {
+        "I1": {
+          "actor": null,
+          "goal": null,
+          "scope": null,
+          "source_refs": []
+        }
+      }
+    },
+    "intervention": {
+      "turn_id": "1",
+      "history_sha256": "549d428dcd1090dda0e75b5a9ed19a05536611bfe0fee71eb09094f85f236acf"
+    }
+  },
+  "answers": {
+    "COVERAGE.global": {
+      "status": "ok",
+      "value": "covered",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "COVERAGE.I1": {
+      "status": "ok",
+      "value": "covered",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.scope_preservation": {
+      "status": "ok",
+      "value": "aligned",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.explanatory_scope": {
+      "status": "ok",
+      "value": "supported_scope",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.premise_treatment": {
+      "status": "ok",
+      "value": "properly_treated",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.evidence_decision_fit": {
+      "status": "ok",
+      "value": "grounded_action",
+      "uncertainty": null,
+      "reason": ""
+    }
+  },
+  "reviewer_only": {
+    "purpose": "工程接线与状态控制，观察值为注入，不能用于模型准确率",
+    "expected_finding_count": 0
+  }
+}

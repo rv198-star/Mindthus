@@ -1,0 +1,162 @@
+{
+  "evidence_kind": "offline_fixture",
+  "source_kind": "synthetic",
+  "scenario": "B",
+  "case": "control",
+  "input": {
+    "schema": "mindthus.route-control-input.v2",
+    "episode_id": "synthetic-v03-control",
+    "turn_id": "1",
+    "revision": "1",
+    "documents": [
+      {
+        "id": "msg0",
+        "kind": "user",
+        "revision": "1",
+        "text": "工作流只检验字段齐全，语义相反的两个结论都被放行。判断这段工作该由谁控制，先分析不发布。"
+      }
+    ],
+    "authority": {
+      "owner_ref": "original-host",
+      "risk": "low",
+      "mode": "read_only",
+      "known_obligations": []
+    },
+    "issues": [
+      {
+        "id": "I1",
+        "request_ref": {
+          "document_id": "msg0",
+          "revision": "1",
+          "start": 0,
+          "end": 44,
+          "sha256": "50f0bf592a6ed32f0d2ff805bde4430052823605bf5ea58f60c8eb98b70824cc"
+        },
+        "candidates": [
+          "wae"
+        ],
+        "handling": {
+          "value": "judge",
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "msg0",
+              "revision": "1",
+              "start": 0,
+              "end": 44,
+              "sha256": "50f0bf592a6ed32f0d2ff805bde4430052823605bf5ea58f60c8eb98b70824cc"
+            }
+          ]
+        },
+        "assessability": {
+          "value": true,
+          "owner_ref": "original-host",
+          "revision": "1",
+          "refs": [
+            {
+              "document_id": "msg0",
+              "revision": "1",
+              "start": 0,
+              "end": 44,
+              "sha256": "50f0bf592a6ed32f0d2ff805bde4430052823605bf5ea58f60c8eb98b70824cc"
+            }
+          ]
+        },
+        "attention": false
+      }
+    ],
+    "dependencies": [],
+    "relationship": null,
+    "task_budget": {
+      "max_calls": 2,
+      "max_seconds": 90
+    },
+    "consumption_policy": "committed",
+    "conversation": [
+      {
+        "document_id": "msg0",
+        "role": "user",
+        "order": 0,
+        "author_ref": "synthetic-user",
+        "source_ref": "synthetic:route-v03/control/0"
+      }
+    ],
+    "host_inferences": {
+      "provenance": "host_inference",
+      "owner_ref": "original-host",
+      "issue_views": {
+        "I1": {
+          "actor": null,
+          "goal": null,
+          "scope": null,
+          "source_refs": []
+        }
+      }
+    },
+    "intervention": {
+      "turn_id": "1",
+      "history_sha256": "ca0b4616830292c13ba3dbd1e8f7d79b98b20bfdcfb5ccc8956532bfa58344fd"
+    }
+  },
+  "answers": {
+    "M02.I1.wae": {
+      "status": "ok",
+      "value": 0.95,
+      "uncertainty": null,
+      "reason": ""
+    },
+    "M03.I1.wae": {
+      "status": "ok",
+      "value": "primary_candidate",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "COVERAGE.global": {
+      "status": "ok",
+      "value": "covered",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "COVERAGE.I1": {
+      "status": "ok",
+      "value": "covered",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "ROLE_SCOPE.I1.wae": {
+      "status": "ok",
+      "value": "required",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.scope_preservation": {
+      "status": "ok",
+      "value": "aligned",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.explanatory_scope": {
+      "status": "ok",
+      "value": "supported_scope",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.premise_treatment": {
+      "status": "ok",
+      "value": "properly_treated",
+      "uncertainty": null,
+      "reason": ""
+    },
+    "S1.I1.evidence_decision_fit": {
+      "status": "ok",
+      "value": "grounded_action",
+      "uncertainty": null,
+      "reason": ""
+    }
+  },
+  "reviewer_only": {
+    "purpose": "工程接线与状态控制，观察值为注入，不能用于模型准确率",
+    "expected_finding_count": 0
+  }
+}

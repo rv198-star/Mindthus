@@ -18,7 +18,7 @@ MODE = sd.MODE
 PROFILE = {**rc.PROFILE, 'judgments_total': 4, 'judgments_per_turn': 4,
            'corrections_total': 1, 'corrections_per_turn': 1, 'structural_organize': 1,
            'arbitrations_total': 1, 'total_requests': 7}
-STEP_KINDS = rc.STEP_KINDS
+STEP_KINDS = {**rc.STEP_KINDS, 'candidate': 'judgment'}
 HOST_SLOTS = rc.HOST_SLOTS
 
 
@@ -31,20 +31,18 @@ def _bundle(repo):
     return bundle, qs, bindings, contract
 
 
-def prepare_admission(root, provider, packet, repo, hooks, *, authorization_ref):
+def prepare_admission(root, provider, packet, repo, hooks, *, authorization_ref, experiment_condition=None, candidate_snapshot=None):
     """Build an identity-bound future live freeze; this makes no provider call."""
     root, repo = Path(root).resolve(), Path(repo).resolve()
     require(repo == Path(__file__).resolve().parents[2] and not root.is_relative_to(repo),
             'v03_checkout_or_state_root')
     require(rel.text(authorization_ref), 'v03_live_authorization_required')
-    serving = provider_configuration(provider)['serving']
-    require(getattr(provider, 'is_live', None) is True and
-            serving['provider'] == 'typesafe' and
-            serving['transport'] == 'systemone-v1' and
-            serving['requested_model'] == 'jev-1.13.0',
-            'v03_official_jev_required')
+    _validate_provider(provider, experiment_condition)
     bundle, _, bindings, _ = _bundle(repo)
     sd.validate_packet(packet, bindings)
+    if candidate_snapshot is not None:
+        from .comparison_v03 import validate_snapshot
+        validate_snapshot(candidate_snapshot, packet, repo)
     owner = packet['authority']['owner_ref']
     require(set(hooks) == {'executor', 'arbitrator', 'corrector', 'organizer'},
             'v03_host_slots')
@@ -55,16 +53,32 @@ def prepare_admission(root, provider, packet, repo, hooks, *, authorization_ref)
                 'v03_current_host_only')
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo,
                                      text=True, stderr=subprocess.PIPE).strip()
+    judgments = 2 if candidate_snapshot is not None else 4 if packet['dependencies'] else 3
+    organize = 1 if not packet['issues'] else 0
     return {'schema': 'mindthus.route-control-live.v1', 'authorization_ref': authorization_ref,
+            'experiment_condition': experiment_condition, 'candidate_snapshot_sha256': digest(candidate_snapshot),
+            'observer_original_context_ref': (provider.host_context_ref
+                if experiment_condition == 'codex_observation_committed' else None),
             'source_commit': commit, 'implementation': implementation_digest(),
             'source_bindings': bundle['sources'], 'mode': MODE,
             'root': str(root), 'packet_hashes': [digest(packet)],
             'provider': provider_configuration(provider),
             **{name: (hook.configuration if hook else None) for name, hook in hooks.items()},
-            'ceilings': {'requests': 7, 'judgments': 4, 'corrections': 1,
-                         'organize': 1 if not packet['issues'] else 0,
+            'ceilings': {'requests': judgments + organize + 2, 'judgments': judgments, 'corrections': 1,
+                         'organize': organize,
                          'arbitrations': 1, 'executions': packet['task_budget']['max_calls'],
                          'reserve_per_jev_usd': .02}}
+
+
+def _validate_provider(provider, experiment_condition=None):
+    from .comparison_v03 import CurrentAgentObserver
+    serving = provider_configuration(provider)['serving']
+    if experiment_condition == 'codex_observation_committed':
+        require(isinstance(provider, CurrentAgentObserver), 'v03_explicit_control_backend')
+    else:
+        require(experiment_condition is None and getattr(provider, 'is_live', None) is True
+                and serving['provider'] == 'typesafe' and serving['transport'] == 'systemone-v1'
+                and serving['requested_model'] == 'jev-1.13.0', 'v03_official_jev_required')
 
 
 def _host_identity(hook, expected, live):
@@ -117,6 +131,15 @@ def _admit(admission, root, packet, provider, bundle, hooks):
 
 
 def _execution_reply(reply, request, packet, bindings):
+    if 'dependency_acceptance' in reply:
+        accepted = reply['dependency_acceptance']
+        require(isinstance(accepted, dict) and set(accepted) <= set(request['dependency_uses']),
+                'v03_dependency_acceptance_scope')
+        for item in accepted.values():
+            rel.shape(item, {'accepted', 'artifact_sha256', 'reason'}, 'v03_dependency_receipt')
+            require(type(item['accepted']) is bool and item['artifact_sha256'] == digest(reply['text'])
+                    and rel.text(item['reason']) and reply['objection'] is None, 'v03_dependency_receipt_binding')
+    reply = {k: v for k, v in reply.items() if k != 'dependency_acceptance'}
     if packet['consumption_policy'] == 'committed':
         rc.validate_execution(reply, request, sd.route_input(packet))
         return
@@ -134,8 +157,66 @@ def _execution_reply(reply, request, packet, bindings):
             'v03_advisory_result_required')
 
 
+def _post_artifacts(ep, directory, packet, route, iid, needed, outputs, bundle, qs, bindings, contract):
+    old = next(r for r in route['per_issue'] if r['issue_id'] == iid)
+    # An accepted artifact cannot supply a missing retained candidate or an unassigned task.
+    if 'unassigned_scope' in route['coverage'] or route['coverage']['issues'][iid].get('value') != 'covered':
+        return route
+    artifacts = []
+    for edge in needed:
+        out = outputs[edge['producer']]
+        receipt = out['accepted_uses'][edge['id']]
+        require(receipt['accepted'] and receipt['artifact_sha256'] == out['artifact_sha256'],
+                'post_artifact_acceptance_required')
+        artifacts.append({'producer_issue': edge['producer'], 'consumer_issue': iid,
+                          'artifact_contract': edge['artifact'], 'dependency_id': edge['id'],
+                          'text': out['text'], 'artifact_sha256': out['artifact_sha256'],
+                          'acceptance': receipt,
+                          'provenance': 'original_host_output_accepted_for_this_use_not_independent_fact'})
+    compiled = sd.compile_s0(packet, ep.repo, bundle, qs, bindings, contract,
+                             focus_issue=iid, artifacts=artifacts)
+    name = 'route__after__' + iid + '__' + digest(compiled.identity)[:16]
+    answers = rc._evaluate(ep, directory, compiled, name=name, mode=MODE)
+    local = {**packet, 'issues': [i for i in packet['issues'] if i['id'] == iid], 'dependencies': []}
+    local_answers = {**answers, 'COVERAGE.global': route['coverage']['global']}
+    updated = sd.consume_s0(local, compiled, local_answers, bundle, bindings)
+    changed = rel.clone(route)
+    changed['per_issue'] = [updated['per_issue'][0] if r['issue_id'] == iid else r for r in route['per_issue']]
+    changed['coverage']['issues'][iid] = updated['coverage']['issues'][iid]
+    changed['mandatory_reads'] = sorted(set(route['mandatory_reads']) | set(updated['mandatory_reads']))
+    changed['source_observations'].update(answers)
+    changed['revision'] += 1
+    changed['parent_commitment_sha256'] = digest(route)
+    changed.setdefault('post_artifact_evaluations', []).append({'issue_id': iid, 'step': name,
+        'prior_scope': old, 'accepted_artifacts_sha256': digest(artifacts), 'observations': answers})
+    rc.refresh(changed)
+    rt.save(directory / ('commitment-' + str(changed['revision']) + '.json'), changed)
+    return changed
+
+
+def _invalidate_dependents(route, outputs, changed, pending):
+    affected = set(changed)
+    dependents = set()
+    while True:
+        more = {e['consumer'] for e in route['artifact_edges'] if e['producer'] in affected}
+        dependents |= more
+        if more <= affected:
+            break
+        affected |= more
+    # A simultaneous text revision is not a receipt for consuming the NEW
+    # predecessor version. Both changed and unchanged descendants need that proof.
+    for iid in dependents:
+        pending[iid] = 'accepted_predecessor_version_changed'
+        if iid in outputs:
+            outputs[iid]['valid_for_current_dependencies'] = False
+    for iid in affected:
+        if iid in outputs and outputs[iid].get('accepted_uses'):
+            outputs[iid]['invalidated_accepted_uses'] = outputs[iid]['accepted_uses']
+            outputs[iid]['accepted_uses'] = {}
+
+
 def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
-              executor, arbitrator, artifact_acceptor):
+              executor, arbitrator, artifact_acceptor, contract):
     """Dispatch current-host work; use the old targeted dependent-successor repair."""
     outputs, pending, accepted = {}, {}, {}
     order = [issue['id'] for issue in packet['issues']]
@@ -159,8 +240,8 @@ def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
                        for e in needed):
                     continue
                 if row['mode'] == 'delegated_unresolved' and iid not in advanced:
-                    route = rc._after_artifacts(ep, directory, sd.route_input(packet), route, iid,
-                                                needed, outputs, bundle, qs, bindings)
+                    route = _post_artifacts(ep, directory, packet, route, iid,
+                                            needed, outputs, bundle, qs, bindings, contract)
                     advanced.add(iid)
                     row = next(r for r in route['per_issue'] if r['issue_id'] == iid)
             mode = packet['consumption_policy']
@@ -182,14 +263,15 @@ def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
             for attempt in range(2 if mode == 'committed' else 1):
                 row = next(r for r in route['per_issue'] if r['issue_id'] == iid)
                 methods = sorted({row['primary'], *row['supports'], *row['constraints']} - {None})
-                names = ({m['method'] for m in bindings['methods']} if mode == 'advisory'
-                         else set(methods) | set(route['mandatory_reads']))
+                names = {m['method'] for m in bindings['methods']}
                 loaded = rc._read_methods(ep.repo, names, bindings)
                 request = {'schema': 'mindthus.route-v03-execution-request.v1',
                            'mode': MODE, 'policy': mode, 'route_id': route['route_id'],
                            'revision': route['revision'], 'issue': row,
                            'execute_methods': methods if mode == 'committed' else [],
                            'suggested_methods': methods, 'loaded_methods': loaded,
+                           'route_observations': route['source_observations'], 'coverage': route['coverage'],
+                           'dependency_uses': {e['id']: e for e in route['artifact_edges'] if e['producer'] == iid},
                            'original_input': packet, 'prior_outputs': outputs,
                            'authority': packet['authority'],
                            'instruction': ('Execute the committed method scope; give a source-bound '
@@ -210,13 +292,18 @@ def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
                 if reply['objection'] is None:
                     outputs[iid] = {'route_id': route['route_id'], 'revision': route['revision'],
                                     'text': reply['text'], 'methods': reply['performed_methods'],
-                                    'artifact_sha256': digest(reply['text']), 'accepted_uses': {}}
+                                    'artifact_sha256': digest(reply['text']), 'accepted_uses': {},
+                                    'input_artifacts': {e['id']: outputs[e['producer']]['artifact_sha256'] for e in needed},
+                                    'valid_for_current_dependencies': True}
                     accepted[iid] = {}
                     for edge in route['artifact_edges']:
-                        if edge['producer'] == iid and artifact_acceptor:
+                        if edge['producer'] == iid and (artifact_acceptor or edge['id'] in reply.get('dependency_acceptance', {})):
                             ap = directory / 'accepted' / (edge['id'] + '.json')
                             receipt = (read_record(ap) if ap.exists() else
-                                       artifact_acceptor.accept(edge, outputs[iid], packet))
+                                       artifact_acceptor.accept(edge, outputs[iid], packet) if artifact_acceptor else
+                                       {**reply['dependency_acceptance'][edge['id']], 'owner_ref': owner,
+                                        'dependency_id': edge['id'], 'host_context_ref': out.get('host_context_ref'),
+                                        'source': 'bound_current_host_execution_receipt'})
                             require(isinstance(receipt, dict) and receipt.get('owner_ref') == owner and
                                     receipt.get('artifact_sha256') == outputs[iid]['artifact_sha256'] and
                                     receipt.get('dependency_id') == edge['id'] and
@@ -255,9 +342,12 @@ def _dispatch(ep, directory, packet, route, bundle, qs, bindings, compiled,
 
 def run(root, provider, data, repo, *, executor=None, arbitrator=None,
         corrector=None, organizer=None, recheck=True, live_admission=None,
-        artifact_acceptor=None):
+        artifact_acceptor=None, candidate_snapshot=None):
     repo, root, packet = Path(repo).resolve(), Path(root).resolve(), rel.clone(data)
     submitted_packet = rel.clone(packet)
+    if candidate_snapshot is not None:
+        from .comparison_v03 import validate_snapshot
+        validate_snapshot(candidate_snapshot, packet, repo)
     require(not root.is_relative_to(repo), 'state_root_inside_repository')
     bundle, qs, bindings, contract = _bundle(repo)
     sd.validate_packet(packet, bindings)
@@ -265,9 +355,7 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
     live = live_admission is not None
     require(getattr(provider, 'is_live', None) is live, 'v03_live_not_admitted')
     if live:
-        serving = provider_configuration(provider)['serving']
-        require(serving['provider'] == 'typesafe' and serving['transport'] == 'systemone-v1'
-                and serving['requested_model'] == 'jev-1.13.0', 'v03_official_jev_required')
+        _validate_provider(provider, live_admission.get('experiment_condition'))
     owner = packet['authority']['owner_ref']
     hooks = {'executor': executor, 'arbitrator': arbitrator,
              'corrector': corrector, 'organizer': organizer}
@@ -281,11 +369,17 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
         require(artifact_acceptor.identity == owner, 'v03_artifact_owner')
     if live:
         _admit(live_admission, root, packet, provider, bundle, hooks)
+        require(live_admission.get('candidate_snapshot_sha256') == digest(candidate_snapshot), 'v03_snapshot_not_admitted')
+        if live_admission.get('experiment_condition') == 'codex_observation_committed':
+            require(live_admission.get('observer_original_context_ref') == provider.host_context_ref,
+                    'v03_observer_original_context_changed')
     profile = {**PROFILE, 'executions_total': packet['task_budget']['max_calls'],
                'execution_seconds': packet['task_budget']['max_seconds']}
     with rt.Episode(root, repo, provider, packet, bundle, live_admission,
                     mode=MODE, profile=profile, kinds=STEP_KINDS,
                     host_slots=HOST_SLOTS) as ep:
+        rt.save(root / 'intervention.json', {'intervention': packet['intervention'],
+                'consumption_policy': packet['consumption_policy']})
         directory = root / 'turns' / ep.turn_key / 'inputs' / digest(packet)
         require(all(p['directory'] == str(directory) for p in ep.tally()['pending_host']),
                 'v03_pending_host_must_resume')
@@ -293,15 +387,22 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
                    'hooks': {name: (hook.configuration if hook else None)
                              for name, hook in hooks.items()},
                    'artifact_acceptor': getattr(artifact_acceptor, 'configuration', None),
-                   'recheck': recheck}
+                   'recheck': recheck, 'candidate_snapshot': candidate_snapshot}
         rt.save(directory / 'manifest.json', binding)
         summary = directory / 'summary.json'
         if summary.exists():
             return {**read_record(summary), 'source_ref': str(summary)}
         route, outputs, pending, s0, s1 = None, {}, {}, None, None
         correction, arbitration, rechecked, acceptance = None, None, None, None
+        finding_states, issue_states = {}, {}
         def finish(reason=None, *, terminal=True):
             state = ep.tally()
+            for issue in packet['issues']:
+                iid = issue['id']
+                if iid not in issue_states:
+                    issue_states[iid] = {'state': 'technical_failure' if state['failures'] else
+                        'unresolved' if iid in pending or iid in outputs else 'unrun',
+                        'reason': pending.get(iid, reason)}
             result = {'schema': 'mindthus.route-control-result.v03', 'mode': MODE,
                       'consumption_policy': packet['consumption_policy'],
                       'original_input': submitted_packet,
@@ -310,6 +411,9 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
                       'pending': pending, 's0': s0, 's1': s1, 'correction': correction,
                       'arbitration': arbitration, 'recheck': rechecked,
                       'acceptance': acceptance, 'reason': reason,
+                      'finding_states': finding_states, 'issue_states': issue_states,
+                      'consumption_complete': bool(acceptance) and not pending and
+                          all(x['accepted'] for x in acceptance['accepted'].values()),
                       'counts': state['counts'], 'usage': state['usage'],
                       'plugin_request_seconds': state['seconds'],
                       'method_request_seconds': state.get('execution_seconds', 0),
@@ -336,15 +440,19 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
                     return finish('organizer_failed')
                 packet = validate_organized(out['reply'], request, bindings)
                 rt.save(directory / 'organized-input.json', packet)
-            compiled = sd.compile_s0(packet, repo, bundle, qs, bindings, contract)
-            rt.save(directory / 'judgment-contract-loads.json', compiled.loaded)
-            observations = rc._evaluate(ep, directory, compiled, name='route', mode=MODE)
-            s0 = {'observations': observations, 'compiled_identity': compiled.identity}
-            route = sd.consume_s0(packet, compiled, observations, bundle, bindings)
-            route['engine_identity'] = ep.manifest['provider']
-            rt.save(directory / 'commitment-1.json', route)
-            route, outputs, pending = _dispatch(ep, directory, packet, route, bundle, qs, bindings,
-                                                compiled, executor, arbitrator, artifact_acceptor)
+            if candidate_snapshot is not None:
+                route = rel.clone(candidate_snapshot['route'])
+                outputs = rel.clone(candidate_snapshot['outputs'])
+            else:
+                compiled = sd.compile_s0(packet, repo, bundle, qs, bindings, contract)
+                rt.save(directory / 'judgment-contract-loads.json', compiled.loaded)
+                observations = rc._evaluate(ep, directory, compiled, name='route', mode=MODE)
+                s0 = {'observations': observations, 'compiled_identity': compiled.identity}
+                route = sd.consume_s0(packet, compiled, observations, bundle, bindings)
+                route['engine_identity'] = ep.manifest['provider']
+                rt.save(directory / 'commitment-1.json', route)
+                route, outputs, pending = _dispatch(ep, directory, packet, route, bundle, qs, bindings,
+                                                    compiled, executor, arbitrator, artifact_acceptor, contract)
             if outputs:
                 candidate_batch = sd.compile_s1(packet, route, outputs, repo, contract)
                 initial = rc._evaluate(ep, directory, candidate_batch, name='candidate', mode=MODE)
@@ -353,14 +461,19 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
             else:
                 return finish('no_current_candidate')
             disposition = {iid: 'resolved' for iid in outputs}
-            if packet['consumption_policy'] == 'committed' and s1['findings']:
+            current_report = s1
+            request = None
+            if s1['findings']:
+                finding_states.update({f['finding_id']: {'state': 'pending', 'issue_id': f['issue_id'],
+                    'target_version': f['target_version']} for f in s1['findings']})
                 if corrector is None:
-                    pending.update({f['issue_id']: 'correction_not_supplied' for f in s1['findings']})
+                    pending.update({f['issue_id']: 'observation_delivery_not_supplied' for f in s1['findings']})
                     return finish('awaiting_corrector', terminal=False)
-                request = sd.correction_request(packet, route, outputs, s1)
+                advisory = packet['consumption_policy'] == 'advisory'
+                request = (sd.advice_request if advisory else sd.correction_request)(packet, route, outputs, s1)
+                validator = sd.validate_advice if advisory else sd.validate_correction
                 out = rt._host(ep, directory, 'correction', request, corrector,
-                               lambda reply: sd.validate_correction(reply, request),
-                               operation='correct', expected_owner=owner)
+                               lambda reply: validator(reply, request), operation='correct', expected_owner=owner)
                 if out['status'] != 'complete':
                     return finish('correction_failed')
                 correction = out['reply']
@@ -369,61 +482,65 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
                                     'artifact_sha256': digest(changed['text']),
                                     'candidate_version': changed['version'],
                                     'parent_artifact_sha256': outputs[iid]['artifact_sha256']}
-                    disposition[iid] = 'unresolved'
-                revised_issues = set(correction['revisions'])
-                if revised_issues and recheck:
-                    relevant = {iid: outputs[iid] for iid in revised_issues}
-                    followup = sd.compile_s1(packet, route, relevant, repo, contract)
+                revised = set(correction['revisions'])
+                _invalidate_dependents(route, outputs, revised, pending)
+                if revised:
+                    followup = sd.compile_s1(packet, route, {i: outputs[i] for i in revised}, repo, contract)
                     result = rc._evaluate(ep, directory, followup, name='candidate__recheck', mode=MODE)
                     rechecked = sd.consume_s1(packet, followup, result, contract)
                     rt.save(directory / 'candidate-recheck.json', rechecked)
-                    still = {f['issue_id'] for f in rechecked['findings']}
-                    for iid in revised_issues - still:
-                        disposition[iid] = 'resolved'
-                for item in correction['dispositions']:
-                    if item['decision'] == 'unresolved':
-                        disposition[next(f['issue_id'] for f in s1['findings']
-                                         if f['finding_id'] == item['finding_id'])] = 'unresolved'
-                objections = [x for x in correction['dispositions'] if x['decision'] == 'objected']
-                if objections:
-                    if arbitrator is None or ep.tally()['counts']['arbitration'] >= 1:
-                        pending.update({f['issue_id']: 'arbitration_not_supplied' for f in s1['findings']
-                                        if f['finding_id'] in {o['finding_id'] for o in objections}})
-                    else:
-                        ar = sd.arbitration_request(packet, route, request, correction,
-                                                     out.get('host_context_ref'))
-                        judged = rt._host(ep, directory, 'arbitration', ar, arbitrator,
-                                          lambda reply: sd.validate_arbitration(reply, ar),
-                                          operation='arbitrate', expected_owner=owner + ':route-arbitrator')
-                        if judged['status'] == 'complete':
+                    current_report = {**rechecked,
+                        'findings': [f for f in s1['findings'] if f['issue_id'] not in revised] + rechecked['findings'],
+                        'matrix': [f for f in s1['matrix'] if f['issue_id'] not in revised] + rechecked['matrix']}
+                if not advisory:
+                    # Freeze the pre-arbitration endpoint before any extra judgment.
+                    rt.save(directory / 'before-arbitration.json',
+                            {'outputs': outputs, 'observations': current_report, 'pending': pending})
+                    ar = sd.arbitration_request(packet, route, request, correction,
+                                                out.get('host_context_ref'), outputs, current_report)
+                    if ar['objections'] and arbitrator is not None:
+                        step = directory / 'steps' / 'arbitration'
+                        existing = read_record(step / 'request.json') if (step / 'request.json').exists() else None
+                        # A completed identical request is replayable even when its slot has been used.
+                        if existing == ar or (existing is None and ep.tally()['counts']['arbitration'] == 0):
+                            judged = rt._host(ep, directory, 'arbitration', ar, arbitrator,
+                                lambda reply: sd.validate_arbitration(reply, ar),
+                                operation='arbitrate', expected_owner=owner + ':route-arbitrator')
+                            if judged['status'] != 'complete':
+                                return finish('arbitration_failed')
                             arbitration = judged['reply']
-                            for item in arbitration['decisions']:
-                                iid = next(f['issue_id'] for f in s1['findings']
-                                           if f['finding_id'] == item['finding_id'])
-                                if item['decision'] != 'dismiss':
-                                    disposition[iid] = 'unresolved'
-                        else:
-                            return finish('arbitration_failed')
-                for finding in s1['findings']:
-                    iid = finding['issue_id']
-                    own = next(x for x in correction['dispositions']
-                               if x['finding_id'] == finding['finding_id'])
-                    if own['decision'] == 'corrected' and disposition[iid] != 'resolved':
-                        pending[iid] = 'candidate_correction_unverified_or_unresolved'
-                    elif own['decision'] == 'objected':
-                        if arbitration is None or next(x for x in arbitration['decisions']
-                            if x['finding_id'] == finding['finding_id'])['decision'] != 'dismiss':
-                            pending[iid] = 'objection_unresolved'
-                    elif own['decision'] == 'unresolved':
-                        pending[iid] = 'finding_unresolved'
-            if packet['consumption_policy'] == 'advisory':
-                # Real observed findings remain visible, but they impose no new S1 obligation.
-                disposition = {iid: 'resolved' for iid in outputs}
+                    decisions = {d['finding_id']: d for d in (arbitration or {}).get('decisions', [])}
+                    active = {(f['issue_id'], f['check_id']): f for f in current_report['findings']}
+                    old = {f['finding_id']: f for f in s1['findings']}
+                    dismissed = set()
+                    for item in correction['dispositions']:
+                        f = old[item['finding_id']]; key = (f['issue_id'], f['check_id'])
+                        state = 'unresolved'
+                        if item['decision'] != 'unresolved' and key not in active:
+                            state = 'resolved_by_revision'
+                        elif item['decision'] == 'objected':
+                            decision = decisions.get(item['finding_id'], {})
+                            if decision.get('decision') == 'dismiss':
+                                state = 'resolved_by_objection'; dismissed.add(key)
+                        finding_states[item['finding_id']] = {'state': state,
+                            'issue_id': f['issue_id'], 'target_version': outputs[f['issue_id']]['artifact_sha256']}
+                        if state == 'unresolved':
+                            pending[f['issue_id']] = 'finding_unresolved'
+                    for key, f in active.items():
+                        if key not in dismissed:
+                            pending[f['issue_id']] = 'candidate_correction_unverified_or_unresolved'
+                else:
+                    for f in s1['findings']:
+                        finding_states[f['finding_id']] = {'state': 'advice_consumed',
+                            'issue_id': f['issue_id'], 'target_version': outputs[f['issue_id']]['artifact_sha256']}
             for iid in pending:
                 if iid in disposition:
                     disposition[iid] = 'unresolved'
+            evidence = {'initial': s1, 'recheck': rechecked, 'arbitration': arbitration,
+                        'finding_states': finding_states, 'pending': pending,
+                        'dependency_versions': {i: o.get('input_artifacts', {}) for i, o in outputs.items()}}
             if executor is not None and outputs:
-                ar = sd.acceptance_request(packet, route, outputs, disposition)
+                ar = sd.acceptance_request(packet, route, outputs, disposition, evidence)
                 try:
                     out = rt._host(ep, directory, 'execution__accept', ar, executor,
                                    lambda reply: sd.validate_acceptance(reply, ar),
@@ -432,10 +549,25 @@ def run(root, provider, data, repo, *, executor=None, arbitrator=None,
                     pending.update({iid: 'acceptance_budget_exhausted' for iid in outputs})
                     return finish(str(exc))
                 if out['status'] != 'complete':
+                    pending.update({iid: 'acceptance_failed' for iid in outputs})
                     return finish('acceptance_failed')
                 acceptance = out['reply']
+                for iid, receipt in acceptance['accepted'].items():
+                    if not receipt['accepted']:
+                        pending.setdefault(iid, 'owner_declined_acceptance')
             elif outputs:
                 pending.update({iid: 'acceptance_owner_not_supplied' for iid in outputs})
+            for issue in packet['issues']:
+                iid = issue['id']
+                if iid in pending:
+                    issue_states[iid] = {'state': 'unresolved', 'reason': pending[iid]}
+                elif iid not in outputs:
+                    issue_states[iid] = {'state': 'unrun'}
+                else:
+                    own = [f['state'] for f in finding_states.values() if f['issue_id'] == iid]
+                    state = ('resolved_by_objection' if 'resolved_by_objection' in own else
+                             'resolved_by_revision' if 'resolved_by_revision' in own else 'accepted')
+                    issue_states[iid] = {'state': state, 'artifact_sha256': outputs[iid]['artifact_sha256']}
             return finish()
         except AwaitingCurrentAgent as exc:
             result = finish('awaiting_current_agent', terminal=False)

@@ -238,7 +238,7 @@ def _value(observations, ident):
     return row.get('value') if row.get('status') == 'ok' else None
 
 
-def consume(packet, compiled, observations, bundle, bindings):
+def consume(packet, compiled, observations, bundle, bindings, *, optional_methods=(), optional_companions=()):
     docs = {d['id']: d for d in packet['documents']}
     rows, unresolved, reads = [], [], set()
     for issue in packet['issues']:
@@ -252,14 +252,17 @@ def consume(packet, compiled, observations, bundle, bindings):
             for m in issue['candidates']:
                 p = _value(observations, 'M02.' + iid + '.' + m)
                 role = _value(observations, 'M03.' + iid + '.' + m)
-                if p is None or role is None or role == 'unclear': reasons.append('method_observation_unresolved:' + m)
+                if p is None or role is None or role == 'unclear':
+                    if (iid, m) not in optional_methods:
+                        reasons.append('method_observation_unresolved:' + m)
                 elif p >= .8:
                     if role in ('primary_candidate', 'support', 'constraint', 'support_and_constraint'): roles[m] = role
                     elif role == 'covered':
                         if m in issue.get('coverage', {}): covered.append(m)
                         else: reasons.append('coverage_needs_existing_output:' + m)
                 elif p > .2 or role in ('primary_candidate', 'support', 'constraint', 'support_and_constraint'):
-                    reasons.append('applicability_role_unresolved:' + m)
+                    if (iid, m) not in optional_methods:
+                        reasons.append('applicability_role_unresolved:' + m)
             primaries = [m for m, role in roles.items() if role == 'primary_candidate']
             if len(primaries) > 1:
                 winners = []
@@ -288,7 +291,7 @@ def consume(packet, compiled, observations, bundle, bindings):
                     v = _value(observations, 'M05.' + iid + '.' + m)
                     if v is not None and v >= .8:
                         reads.add('mpg' if m == 'sela' else 'sela')
-                    elif v is None or v > .2:
+                    elif (v is None or v > .2) and (iid, m) not in optional_companions:
                         reasons.append('companion_condition_unresolved:' + m)
                         row.update(mode='delegated_unresolved', primary=None, supports=[], constraints=[])
         else: reasons.append('handling_unresolved')

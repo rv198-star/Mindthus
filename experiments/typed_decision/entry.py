@@ -154,7 +154,8 @@ def _final(root: Path, manifest: dict, initial: dict, final: dict, status: str,
 
 def run(root: Path, provider, data: dict, repo: Path, *, corrector=None,
         correction_owner_ref='original-agent:v1', route=False, mode='assessment-v2',
-        organizer=None, recheck=True, live_admission=None, executor=None, arbitrator=None, artifact_acceptor=None) -> dict:
+        organizer=None, recheck=True, live_admission=None, executor=None, arbitrator=None, artifact_acceptor=None,
+        candidate_snapshot=None) -> dict:
     """Run an opt-in assessment episode; route only after its scoped gate permits it.
 
 S0 inspects an actual user frame. S1 requires an existing candidate. A corrected
@@ -171,7 +172,8 @@ frame/answer stays a proposal alongside, never in place of, the original request
                                      arbitrator=arbitrator, corrector=corrector,
                                      organizer=organizer, recheck=recheck,
                                      live_admission=live_admission,
-                                     artifact_acceptor=artifact_acceptor)
+                                     artifact_acceptor=artifact_acceptor, candidate_snapshot=candidate_snapshot)
+    require(candidate_snapshot is None, 'common_candidate_requires_v03')
     if mode == 'route-control.v0.2.1':
         from . import route_control
         require(route is False and organizer is None, 'route_control_public_modes_exclusive')
