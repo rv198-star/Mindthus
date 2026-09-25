@@ -9,6 +9,11 @@
         "covered": "No materially separate part of the current user request is visibly omitted from the retained issues.",
         "missing": "A materially separate user-requested action or decision has no retained issue.",
         "unclear": "The supplied original request does not permit a reliable issue-coverage judgment."
+      },
+      "action_consequence": "A missing or unclear separate action remains unassigned for the original host; covered permits only the retained issues to continue.",
+      "review_examples_not_model_input": {
+        "covered": "The user asks only to choose a display for purchase and the retained issue covers that purchase decision.",
+        "missing": "The user asks for both a route decision and an actual follow-up artifact, but the retained issues cover only the route."
       }
     },
     "issue": {
@@ -17,6 +22,11 @@
         "covered": "The retained candidates and handling paths cover the current actionable alternatives for this issue; this does not prove exhaustive correctness.",
         "missing": "A necessary method candidate or direct/fact-acquisition path is absent and could change the action.",
         "unclear": "The supplied material does not settle whether a necessary alternative is absent."
+      },
+      "action_consequence": "In committed mode, missing or unclear keeps this issue unresolved; in advisory mode it remains an observation for the host.",
+      "review_examples_not_model_input": {
+        "covered": "A deterministic formatting request has a direct path and no necessary named method.",
+        "missing": "The issue needs a source fact before advice, but the host retained only a judgment-method candidate."
       }
     }
   },
@@ -31,7 +41,12 @@
         "not_applicable": "The candidate makes no task-facing judgment."
       },
       "hits": ["scope_drift", "decision_drift"],
-      "unknown": "blocks_action"
+      "unknown": "blocks_action",
+      "action_consequence": "A hit requires restoration of the current task scope or a source-bound objection; a decision-changing unknown keeps the affected action unresolved.",
+      "review_examples_not_model_input": {
+        "aligned": "After the user narrows to Skills itself, the candidate judges Skills without relying on capabilities of the whole Agent system.",
+        "scope_drift": "After that narrowing, the candidate still answers what the entire Agent system can do."
+      }
     },
     "explanatory_scope": {
       "question": "Compare the candidate's claimed explanation with the supplied source. Does a locally valid mechanism get promoted into a definition of the whole object without sufficient support? A simple mechanism may genuinely be sufficient in the stated scope. Select exactly one relation.",
@@ -42,7 +57,12 @@
         "not_applicable": "The candidate offers no relevant explanatory claim."
       },
       "hits": ["overextended_local_truth"],
-      "unknown": "advisory"
+      "unknown": "advisory",
+      "action_consequence": "A hit requires narrowing or supporting the whole-object claim; an unknown alone does not veto a separate supported action.",
+      "review_examples_not_model_input": {
+        "supported_scope": "For the specified simple skill, a fixed instruction fully explains the observed behavior, and the candidate limits its claim to that skill.",
+        "overextended_local_truth": "Prompt text reaches the model, so the candidate concludes every Skills capability is only prompt injection despite task and acceptance constraints in the same object."
+      }
     },
     "premise_treatment": {
       "question": "Distinguish the latest user's assertion or preference, a prior assistant inference, and a fact introduced only by the CURRENT candidate. Has the candidate treated an unsupported assertion as established fact in a way that changes the requested decision? A user's valid preference or scope is not a false factual premise. Select exactly one relation.",
@@ -54,7 +74,12 @@
         "not_applicable": "The candidate makes no material factual use of a disputed premise."
       },
       "hits": ["unsupported_user_claim_as_fact", "unsupported_candidate_claim"],
-      "unknown": "advisory"
+      "unknown": "advisory",
+      "action_consequence": "A hit requires restoring the claim's actual status or giving support before the action relies on it; a legitimate user preference stays a constraint.",
+      "review_examples_not_model_input": {
+        "properly_treated": "The user values text sharpness and has a limited budget; the candidate uses these as preferences without claiming a measured price or acuity threshold.",
+        "unsupported_candidate_claim": "The candidate invents a measured performance penalty and uses it to rule out the user's display option."
+      }
     },
     "evidence_decision_fit": {
       "question": "Compare the CURRENT candidate's action or decision with the latest user goal and the supplied evidence and unknowns. Does it preserve distinctions that would change this action? Missing facts that do not affect the present choice do not require an explicit disclaimer. Select exactly one relation.",
@@ -66,7 +91,12 @@
         "not_applicable": "The candidate contains no task-facing decision."
       },
       "hits": ["material_omission", "unjustified_decision"],
-      "unknown": "blocks_action"
+      "unknown": "blocks_action",
+      "action_consequence": "A hit requires revising the affected choice or defending it with original evidence; a missing decision-changing condition keeps only that choice unresolved.",
+      "review_examples_not_model_input": {
+        "grounded_action": "For an existing 4K screen, the candidate suggests a reversible scaling adjustment while stating that software cannot add pixels.",
+        "material_omission": "For a buyer prioritizing crisp 1440-size text, the candidate recommends 4K as fully equivalent to 5K solely because a scaling tool exists."
+      }
     }
   }
 }
