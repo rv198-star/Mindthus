@@ -6,7 +6,27 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## 2026-09-25 source-direct minimum slice and clean A–F validation
+## 2026-09-25 v3.2 concrete Jev finding host consumption
+
+The [source-direct result](route-control-v0.2/design-reassessment-v1/RESULT.md) now includes
+the completed v3.2 end-to-end host probe at frozen commit `72d86a001`. Unlike the earlier
+observer-only batch and the v3.1 generic-remedy probe, v3.2 delivered each candidate-bound
+Jev `evidence_decision_fit` value and meaning to the current Codex host. All six host calls
+returned new candidates, and six new official TypeSafe `jev-1.13.0` rechecks bound to those
+candidates returned `continue_original`.
+
+Independent read-only review verified the prompt, intent, output and recheck hashes and
+found no expected-result labels or acceptance checklist leakage. Strict final content is
+still 5/6: D/K1 does not explicitly state that the current budget is unknown. The old pure
+Codex correction baseline is also 5/6. The old relationship path released 2/6 after
+correction while v3.2 completed and released 6/6, which establishes a working consumption
+chain but not an accuracy gain because D is a false release. Six Codex host calls took
+95.025 seconds and six Jev rechecks took 9.868 seconds; these are route-module timings.
+Costs remain unavailable and provisionally zero per owner. No CPA or OpenRouter call was
+made. #211 remains **NOT QUALIFIED**; the complete five-condition comparison, same-host
+①/② pair, natural first answers and independent N sources remain unrun.
+
+## 2026-09-25 source-direct observer-only minimum slice and clean A–F validation
 
 The [source-direct result](route-control-v0.2/design-reassessment-v1/RESULT.md) implements
 an opt-in S1 observation contract over the original task, evidence and current candidate.
@@ -22,8 +42,9 @@ Independent review also found five narrow premise-attribution false labels. Cons
 policy v3.1 keeps that label advisory and lets the direct evidence/decision finding own
 the bounded correction instruction. Offline replay of all 14 saved observations preserved
 every route action and removed the noisy remedy; 279 related tests pass. No actual host
-rewrite/recheck, new ①/② pair, complete five-condition comparison, or N source family was
-run. Provider costs remain unavailable and are provisionally recorded as zero per owner.
+rewrite/recheck was part of this observer-only batch; the later v3.2 section above records
+that separate run. No new ①/② pair, complete five-condition comparison, or N source family
+was run. Provider costs remain unavailable and are provisionally recorded as zero per owner.
 Main and old ledgers remain unchanged; #211 remains **NOT QUALIFIED**.
 
 ## 2026-09-25 design reassessment and independent reviews
@@ -32,7 +53,8 @@ The [design reassessment](route-control-v0.2/design-reassessment-v1/README.md) r
 the owner's original case-analysis / multi-view observation discussion, maps all ten
 principles to the implementation, and records two independent Codex reviews of the
 existing evidence and revised proposal. The proposed source-direct, scoped observation
-consumer remains **unimplemented**; the new D/N comparison remains **unrun**. It retains
+consumer was later implemented and exercised through v3.2; the full five-condition D/N
+comparison remains **unrun**. It retains
 ① advisory / ② constrained consumption, adds a questions-only control, and separates
 natural S1 candidate review from S0 routing. #211 remains **NOT QUALIFIED**.
 
