@@ -1,0 +1,51 @@
+{
+  "exclusions": [
+    "codex-home*",
+    "workspaces",
+    "symlinks"
+  ],
+  "records": [
+    {
+      "bytes": 2714,
+      "path": "codex-calls/formal-abc-blind-quality/events.jsonl",
+      "sha256": "e705a83d6ede5a1c7018d46f9c1a55a4d86ad5e4edf426e65c539d36549ce66c"
+    },
+    {
+      "bytes": 665,
+      "path": "codex-calls/formal-abc-blind-quality/intent.json",
+      "sha256": "002a4619514ff4f6885fe3ed88620ea93c4fa3ce306ab9bda6bcfe04d84dac53"
+    },
+    {
+      "bytes": 2251,
+      "path": "codex-calls/formal-abc-blind-quality/last-message.txt",
+      "sha256": "4c1cd02d029e70dee9a856884317e84e03f5f7f9bc1fd435f9b4b34b23985131"
+    },
+    {
+      "bytes": 587,
+      "path": "codex-calls/formal-abc-blind-quality/outcome.json",
+      "sha256": "478b0c44a9722a6b89b24a31fb225af9b5c2f572fa9be8452796075d81d516b9"
+    },
+    {
+      "bytes": 3032,
+      "path": "freeze.json",
+      "sha256": "41f014d873d8b999488e057d652b7d6a613376528f338ddffd240be34c213fa2"
+    },
+    {
+      "bytes": 21393,
+      "path": "review-input.json",
+      "sha256": "c9f458d17c5dd0944d2eac84d731291fe82f7fa2bb41e30e5850df467ea4b1c2"
+    },
+    {
+      "bytes": 21835,
+      "path": "review-prompt.txt",
+      "sha256": "a27e59a539f18c0d4bda6e86bb6bb3c3fa395efa2f3d53e9bca7372325a49f98"
+    },
+    {
+      "bytes": 2577,
+      "path": "review-schema.json",
+      "sha256": "46ec53da206baa5fbac5bc182db977a4b6590e28a7cbf3007c412b937e0113c6"
+    }
+  ],
+  "schema": "mindthus.raw-evidence-archive.v1",
+  "source_root": "/Users/william/Documents/Codex/2026-09-25/mindthus-formal-abc-review-v1"
+}

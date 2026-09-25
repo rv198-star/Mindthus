@@ -14,6 +14,27 @@ and 43 R1 archived records were rechecked byte-for-byte; no new model request wa
 by that audit. The original OCI runtime root and Episode registry were absent from the
 first handoff; their later read-only bundle establishes provenance, not local run authority.
 
+## 2026-09-25 local completion and #211 small holdout
+
+With OCI continuation unavailable, the current Codex completed the new local A–F
+[development batch](route-control-v0.2/paired-local-codex-v3/RESULT.md): nine cases,
+nine total real official TypeSafe Jev calls (eight newly in the batch and B1 once in its
+preceding local Episode), three ② execution outcomes consumed, two named correction
+receipts, and the other cases explicitly unresolved. A four-pair anonymous ①/② text
+review found four ties among usable answers; it is exposed development evidence.
+
+The separately frozen [#211 three-family A/B/C small holdout](route-control-v0.2/formal-abc-v1/RESULT.md)
+ran all three arms on HB/HC/HD: 14 tested Codex CLI requests, four real `jev-1.13.0`
+requests, one independent AI review request, zero CPA/OpenRouter and zero automatic
+retries. The AI reviewer found 9/9 final texts usable and no severe errors. B committed
+and consumed HB/HC, with HD/I1 only; C needed independent fallback text in all three
+cases, despite accepted HD/I1 and a real post-artifact Jev recheck. A/HB native skill
+body read was not observed, though skill-owned resources were accessed. Monetary cost
+was unavailable, so the predeclared 20% cost gate is unknown and #211 is **not
+qualified**. A local latest-pointer format error was repaired with original bytes
+preserved; original OCI ledgers and main were untouched. Raw records and hashes are
+linked from the result. Focused engineering regression: 144/144 passed.
+
 ## 2026-09-25 test successor
 
 The OCI root/registry read-only bundle has now been obtained and independently checked:

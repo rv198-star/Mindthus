@@ -1,0 +1,36 @@
+{
+  "exclusions": [
+    "codex-home*",
+    "workspaces",
+    "symlinks"
+  ],
+  "records": [
+    {
+      "bytes": 1430,
+      "path": "codex-calls/blind-quality-review/events.jsonl",
+      "sha256": "9bdb011605a1c32448c63edab08d4da653672170b1a75a7d0dd8b471d661976c"
+    },
+    {
+      "bytes": 661,
+      "path": "codex-calls/blind-quality-review/intent.json",
+      "sha256": "699714fa4443cf603f6d8f3eacb82ad0de90ee423324e4f4e6a6bfca031798e0"
+    },
+    {
+      "bytes": 1005,
+      "path": "codex-calls/blind-quality-review/last-message.txt",
+      "sha256": "cb88c12ab5e5e2295e5c949ee4665e991b2962b34e345a85259938b240af390e"
+    },
+    {
+      "bytes": 587,
+      "path": "codex-calls/blind-quality-review/outcome.json",
+      "sha256": "bfb197c0de47bd51f133440ef8ea37201cdb04483313358cdfe4b12ef6204e80"
+    },
+    {
+      "bytes": 1002,
+      "path": "freeze.json",
+      "sha256": "732d61925d575584d7e15cc625065859aa0488ac219cf8ef8412caab29ffff9d"
+    }
+  ],
+  "schema": "mindthus.raw-evidence-archive.v1",
+  "source_root": "/Users/william/Documents/Codex/2026-09-25/mindthus-paired-blind-review-v1"
+}

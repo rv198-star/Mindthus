@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"01a0d6b8-1b37-7a33-bf81-85f82b0963aa"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"answers\":{\"M02.I1.edsp\":{\"status\":\"ok\",\"value\":0.95},\"M02.I2.sra\":{\"status\":\"ok\",\"value\":0.3},\"M03.I1.edsp\":{\"status\":\"ok\",\"value\":\"primary_candidate\"},\"M03.I2.sra\":{\"status\":\"ok\",\"value\":\"primary_candidate\"},\"R04.P1\":{\"status\":\"ok\",\"value\":\"needed_before_commit\"},\"S01.I1\":{\"status\":\"ok\",\"value\":1},\"S01.I2\":{\"status\":\"ok\",\"value\":1},\"S02.I1\":{\"status\":\"ok\",\"value\":3},\"S02.I2\":{\"status\":\"ok\",\"value\":3}}}"}}
+{"type":"turn.completed","usage":{"input_tokens":22392,"cached_input_tokens":0,"cache_write_input_tokens":0,"output_tokens":630,"reasoning_output_tokens":478}}
