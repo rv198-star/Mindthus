@@ -6,6 +6,24 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## 2026-09-26 advisory source-objection contract repaired — main answer accepted
+
+The [4K contract repair](route-control-v0.2/design-reassessment-v1/advisory-source-repair/RESULT.md)
+allows a validated advisory source objection without deleting it. Explicit host dispositions
+separate bounded_answer from unresolved; legacy objections default to unresolved. Historical
+assistant references remain context, with a required user/source basis. Permission/dependency/new-fact
+objections cannot be promoted to bounded answers; committed mode stays strict. Final owner
+acceptance receives the original objections and remains bound to actual candidate hashes.
+
+325 related tests passed, including the exact archived 5.6 Sol F reply previously rejected.
+One fresh real F advisory run used gpt-5.6-sol/xhigh and two official Jev calls: I1's bounded
+main answer was actually accepted; I2 original-source verification and I3 empirical-effect
+verification remained unresolved and unaccepted. No reply-contract rejection occurred.
+consumption_complete remains false: local delivery is verified, full verification is not.
+The new repair trial explicitly permits four execution slots (three issue outputs plus acceptance),
+not the old two-slot comparison budget; old ledgers and results are unchanged. No new quality
+advantage claim or independent blind review. #211 remains NOT QUALIFIED.
+
 ## 2026-09-26 independent 5.6 Sol repeat — baseline first answers also acceptable
 
 The [5.6 Sol report](route-control-v0.2/design-reassessment-v1/independent-sol56-v1/RESULT.md)
