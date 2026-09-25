@@ -11,8 +11,25 @@ For the latest user request to finish all planned tests, read the
 attempted requests, accepted host outcomes, original OCI-dependent E/F recovery,
 conditional R1 capacity, and the still-unadmitted formal #211 holdout. The 162 old
 and 43 R1 archived records were rechecked byte-for-byte; no new model request was made
-by that audit. The old OCI runtime root and Episode registry are needed to resume its
-seven pending host replies without rewriting identity or resending initial Jev calls.
+by that audit. The original OCI runtime root and Episode registry were absent from the
+first handoff; their later read-only bundle establishes provenance, not local run authority.
+
+## 2026-09-25 test successor
+
+The OCI root/registry read-only bundle has now been obtained and independently checked:
+179 runtime files, all 162 historical JSONs byte-identical, nine matching Episode
+bindings, and frozen source at `97529bb9`. All seven staged host replies passed the
+original version's `validate_submission` in an isolated checkout, but none has been
+consumed by the original OCI Episode. See the updated [completion audit](route-control-v0.2/completion-audit-20260924.md).
+
+The [B3 ①/② successor result](route-control-v0.2/paired-current-codex-v2/RESULT.md)
+records one clean new current-Codex advisory call under a precommitted 120-second
+test version. It reused the same real `jev-1.13.0` initial observation and compared
+with the existing consumed committed host result. Both texts met the predeclared
+B3 properties, with no observed quality winner. New Jev/CPA/OpenRouter calls: 0;
+new Codex CLI calls: 1; focused engineering tests: 143/143. The old 43-second timeout
+remains historical. This is an exposed development pair, not formal #211 qualification.
+Original E/F rechecks and formal independent A/B/C remain unrun.
 
 ## Current #211 development continuation — hard judgments and one current-Codex pair
 

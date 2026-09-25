@@ -1,0 +1,34 @@
+{
+  "count": 5,
+  "credential_pattern_hits": 0,
+  "freeze_payload_sha256": "9b477d00b8fd9ad116211cf7ea5c00c4d46df178e0de42a2c1a73b70601cde61",
+  "records": [
+    {
+      "bytes": 1461,
+      "path": "freeze.json",
+      "sha256": "e4809efa3cab60e10b3203b0a8ef7f2c7d12e8bf596012de17c145b9ff71faf7"
+    },
+    {
+      "bytes": 603,
+      "path": "codex-calls/B3-advisory-successor/intent.json",
+      "sha256": "e2116e4d73a8e5506cbc8f2559d545e1b2c539c45b47094800cb90dc62975cf7"
+    },
+    {
+      "bytes": 587,
+      "path": "codex-calls/B3-advisory-successor/outcome.json",
+      "sha256": "4dc48c137ef717037c65a6213f853fd6b584d09a25f02344cc93ec9bb9a8e554"
+    },
+    {
+      "bytes": 1582,
+      "path": "codex-calls/B3-advisory-successor/events.jsonl",
+      "sha256": "b9e8c490a1a94fe896d6f0bbc2cfbcc8f6b650dbf8113a0b8b33bc38a6511d9c"
+    },
+    {
+      "bytes": 1222,
+      "path": "codex-calls/B3-advisory-successor/last-message.txt",
+      "sha256": "e6b63f2d12b25aed727f4895e8e5d07f9240841dc260a4414c35bff9a9531534"
+    }
+  ],
+  "schema": "mindthus.paired-current-codex-successor-evidence.v1",
+  "source_root": "/Users/william/Documents/Codex/2026-09-25/mindthus-paired-current-codex-v2"
+}
