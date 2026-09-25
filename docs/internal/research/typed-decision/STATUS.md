@@ -14,6 +14,20 @@ and 43 R1 archived records were rechecked byte-for-byte; no new model request wa
 by that audit. The original OCI runtime root and Episode registry were absent from the
 first handoff; their later read-only bundle establishes provenance, not local run authority.
 
+## 2026-09-25 new Skills / 4K development comparison
+
+The [new six-case result](route-control-v0.2/hard-route-v1/RESULT.md) records six frozen
+AI-synthetic source families, all B/C Episode runs, 11 real official TypeSafe Jev
+judgments, five current-Codex corrections and five rechecks. Same-graph B/C host
+continuation was 1/6 versus 2/6, but B had two deadline failures; this is not a
+non-inferiority demonstration. A separately frozen direct current-Codex candidate
+baseline correctly rejected all six bad candidates and fulfilled all strict checklist
+items in 5/6; Jev-assisted Codex produced five substantive revisions, but only 2/6
+were consumed by the host. Three useful revisions were rejected on recheck, and K2
+failed the proposal mapping gate. No Skills/4K uplift versus pure Codex is established.
+#211 remains **NOT QUALIFIED**. Actual fees are unknown; provisionally zero per owner.
+Old OCI and earlier formal ledgers were not changed.
+
 ## 2026-09-25 local completion and #211 small holdout
 
 Owner's newer #211 qualification target is [overall route non-inferiority versus
