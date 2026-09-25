@@ -1,0 +1,3687 @@
+{
+  "schema": "mindthus.v03-d-result.v1",
+  "roots": [
+    "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d1",
+    "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d2"
+  ],
+  "results": {
+    "full-E-jev_committed": {
+      "record": "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d1/results/full-E-jev_committed.json",
+      "runtime_consumption_complete": false,
+      "pending": {
+        "I1": "applicability_role_unresolved:edsp;no_established_primary"
+      },
+      "text": "",
+      "artifact_validity": "no_answer"
+    },
+    "common-E-codex_observation_committed": {
+      "record": "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d2/results/common-E-codex_observation_committed.json",
+      "runtime_consumption_complete": true,
+      "pending": {},
+      "text": "你讨论的范围是 Skills。若这里的 Skills 确实通过按需向模型提供指令或上下文起作用，那么可以把这一机制归入提示词工程。但现有材料只有你的两条提问，没有 Skills 的定义或实现依据，因此无法断定 Skills 的全部机制，或断言其本质都等于“提示词注入”。你所说的“注入”具体指什么，也需要明确。两条消息之间的助手答复缺失，无法判断此前答复说了什么。",
+      "artifact_validity": "candidate_bound"
+    },
+    "common-E-jev_advisory": {
+      "record": "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d2/results/common-E-jev_advisory.json",
+      "runtime_consumption_complete": true,
+      "pending": {},
+      "text": "范围锁在 Skills，你说得基本对：它的核心机制通常是在合适时机把指令和上下文加载给模型，因此可以视为模块化、按需调用的提示词工程。区别在于，有些 Skill 还配有脚本、模板或校验规则；这些工程配套不能全算作提示词本身。这里的“注入”如果只是指正常加载上下文，成立；如果指安全领域的恶意提示词注入，则不是一回事。",
+      "artifact_validity": "candidate_bound"
+    },
+    "common-E-jev_committed": {
+      "record": "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d2/results/common-E-jev_committed.json",
+      "runtime_consumption_complete": true,
+      "pending": {},
+      "text": "范围锁在 Skills，你说得基本对：它的核心机制通常是在合适时机把指令和上下文加载给模型，因此可以视为模块化、按需调用的提示词工程。区别在于，有些 Skill 还配有脚本、模板或校验规则；这些工程配套不能全算作提示词本身。这里的“注入”如果只是指正常加载上下文，成立；如果指安全领域的恶意提示词注入，则不是一回事。",
+      "artifact_validity": "candidate_bound"
+    },
+    "common-E-pure_codex": {
+      "record": "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d2/results/common-E-pure_codex.json",
+      "runtime_consumption_complete": true,
+      "pending": {},
+      "text": "范围锁在 Skills，你说得基本对：它的核心机制通常是在合适时机把指令和上下文加载给模型，因此可以视为模块化、按需调用的提示词工程。区别在于，有些 Skill 还配有脚本、模板或校验规则；这些工程配套不能全算作提示词本身。这里的“注入”如果只是指正常加载上下文，成立；如果指安全领域的恶意提示词注入，则不是一回事。",
+      "artifact_validity": "candidate_bound"
+    },
+    "common-E-questions_only": {
+      "record": "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d2/results/common-E-questions_only.json",
+      "runtime_consumption_complete": true,
+      "pending": {},
+      "text": "范围锁在 Skills，你说得基本对：它的核心机制通常是在合适时机把指令和上下文加载给模型，因此可以视为模块化、按需调用的提示词工程。区别在于，有些 Skill 还配有脚本、模板或校验规则；这些工程配套不能全算作提示词本身。这里的“注入”如果只是指正常加载上下文，成立；如果指安全领域的恶意提示词注入，则不是一回事。",
+      "artifact_validity": "candidate_bound"
+    },
+    "common-F-codex_observation_committed": {
+      "record": "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d2/results/common-F-codex_observation_committed.json",
+      "runtime_consumption_complete": true,
+      "pending": {},
+      "text": "你说得对，我前面把楼主的问题改写成了“买 4K 还是 5K”，因此低估了你回答的价值。按现有转述，楼主还在问：如果用 27 寸 4K，界面能否调到合适大小、用起来是否顺手。推荐 BetterDisplay 正是在回答这个问题；Mike 用“PPI 改不了”否定它的价值，也没有回应这层需求。\n\n但“把担心的问题都解决了”仍说得太满。BetterDisplay 可以提供更多缩放选择，缓解默认 1080 显得太大的问题；它不能消除 4K 与 5K 的物理清晰度差距，也不能据此保证没有缩放性能代价。配置是否省事，还取决于具体设置。\n\n所以我会修正先前的判词：就楼主如何把 4K 用得合适这一问，你的回答更切题；就能否达到 5K 的效果，你的建议有边界。原图目前不可见，我只能依据对话中的转述判断，不能断言你原话是否已交代这些边界。",
+      "artifact_validity": "candidate_bound"
+    },
+    "common-F-jev_advisory": {
+      "record": "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d2/results/common-F-jev_advisory.json",
+      "runtime_consumption_complete": true,
+      "pending": {},
+      "text": "你说得对，我前面把楼主的问题改写成了“买 4K 还是 5K”，因此低估了你回答的价值。按现有转述，楼主还在问：如果用 27 寸 4K，界面能否调到合适大小、用起来是否顺手。推荐 BetterDisplay 正是在回答这个问题；Mike 用“PPI 改不了”否定它的价值，也没有回应这层需求。\n\n但“把担心的问题都解决了”仍说得太满。BetterDisplay 可以提供更多缩放选择，缓解默认 1080 显得太大的问题；它不能消除 4K 与 5K 的物理清晰度差距，也不能据此保证没有缩放性能代价。配置是否省事，还取决于具体设置。\n\n所以我会修正先前的判词：就楼主如何把 4K 用得合适这一问，你的回答更切题；就能否达到 5K 的效果，你的建议有边界。原图目前不可见，我只能依据对话中的转述判断，不能断言你原话是否已交代这些边界。",
+      "artifact_validity": "candidate_bound"
+    },
+    "common-F-jev_committed": {
+      "record": "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d2/results/common-F-jev_committed.json",
+      "runtime_consumption_complete": true,
+      "pending": {},
+      "text": "你说得对，我前面把楼主的问题改写成了“买 4K 还是 5K”，因此低估了你回答的价值。按现有转述，楼主还在问：如果用 27 寸 4K，界面能否调到合适大小、用起来是否顺手。推荐 BetterDisplay 正是在回答这个问题；Mike 用“PPI 改不了”否定它的价值，也没有回应这层需求。\n\n但“把担心的问题都解决了”仍说得太满。BetterDisplay 可以提供更多缩放选择，缓解默认 1080 显得太大的问题；它不能消除 4K 与 5K 的物理清晰度差距，也不能据此保证没有缩放性能代价。配置是否省事，还取决于具体设置。\n\n所以我会修正先前的判词：就楼主如何把 4K 用得合适这一问，你的回答更切题；就能否达到 5K 的效果，你的建议有边界。原图目前不可见，我只能依据对话中的转述判断，不能断言你原话是否已交代这些边界。",
+      "artifact_validity": "candidate_bound"
+    },
+    "common-F-pure_codex": {
+      "record": "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d2/results/common-F-pure_codex.json",
+      "runtime_consumption_complete": true,
+      "pending": {},
+      "text": "你说得对，我前面把楼主的问题改写成了“买 4K 还是 5K”，因此低估了你回答的价值。按现有转述，楼主还在问：如果用 27 寸 4K，界面能否调到合适大小、用起来是否顺手。推荐 BetterDisplay 正是在回答这个问题；Mike 用“PPI 改不了”否定它的价值，也没有回应这层需求。\n\n但“把担心的问题都解决了”仍说得太满。BetterDisplay 可以提供更多缩放选择，缓解默认 1080 显得太大的问题；它不能消除 4K 与 5K 的物理清晰度差距，也不能据此保证没有缩放性能代价。配置是否省事，还取决于具体设置。\n\n所以我会修正先前的判词：就楼主如何把 4K 用得合适这一问，你的回答更切题；就能否达到 5K 的效果，你的建议有边界。原图目前不可见，我只能依据对话中的转述判断，不能断言你原话是否已交代这些边界。",
+      "artifact_validity": "candidate_bound"
+    },
+    "common-F-questions_only": {
+      "record": "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d2/results/common-F-questions_only.json",
+      "runtime_consumption_complete": true,
+      "pending": {},
+      "text": "接受候选稿，不改写正文。它回应了用户对实际可用性的强调，也保留了清晰度、性能和配置方面的未知；原图缺失的限制已说明。",
+      "artifact_validity": "invalid_retention_statement_as_answer"
+    },
+    "full-F-jev_committed": {
+      "record": "/Users/william/Documents/Codex/2026-09-26/mindthus-v03-live-d2/results/full-F-jev_committed.json",
+      "runtime_consumption_complete": false,
+      "pending": {
+        "I1": "candidate_coverage_missing"
+      },
+      "text": "",
+      "artifact_validity": "no_answer"
+    }
+  },
+  "codex_calls": [
+    {
+      "root": "mindthus-v03-live-d1",
+      "name": "natural-E",
+      "answer_sha256": null,
+      "context_ref": "01a0d9fa-cafd-7293-a9bf-28bbe0dadfd0",
+      "elapsed_seconds": 95.12963483400017,
+      "events_sha256": "195f47973e9141321fb2e55757bc2e18b72fb795f9cc11acf6f098d77adb6d0b",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "invalid_tool_use",
+      "tool_use": [
+        "error"
+      ],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": null,
+        "output_tokens": null
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d1",
+      "name": "natural-F",
+      "answer_sha256": null,
+      "context_ref": "01a0d9fb-0fb4-7a81-9c90-ee6487acecb7",
+      "elapsed_seconds": 81.55978033300198,
+      "events_sha256": "025a48d5adf31c1e9ffcddfd601ba01b52a074513f9ff944277b1deb0ee033a0",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "invalid_tool_use",
+      "tool_use": [
+        "error"
+      ],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": null,
+        "output_tokens": null
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "blind-E-1",
+      "answer_sha256": "bd6ee2f25da1d0b5b12382eea2afe96ccbb254f3cd71e9e03fc38a4ac88f351d",
+      "context_ref": "01a0da0e-94ad-7a92-a4fb-eb6907282622",
+      "elapsed_seconds": 150.38997645900236,
+      "events_sha256": "a446ec4a649305d53cb3c3a2cd2e4c5c71209b1292b62e483f29e1b210b213b9",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 15559,
+        "output_tokens": 1736
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "blind-E-2",
+      "answer_sha256": "d3f029c57165dbcb7f6279608b81f96ab8c7c3cf7d06291dc6ca243a0d5ed188",
+      "context_ref": "01a0da0e-c141-71c3-88be-49d5291bc399",
+      "elapsed_seconds": 176.09577004200037,
+      "events_sha256": "f50db278fd04d25a154e69bfe7e12a2afbda9178cbecb676cc016816acb4d86c",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 15559,
+        "output_tokens": 2875
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "blind-E-3",
+      "answer_sha256": "e3a4b1efad0c396a5f19ad557e63d3a5846f6b0f474c8b686838807ecb4e98b2",
+      "context_ref": "01a0da12-39a2-7a50-9e9f-7ba60a8ce6e3",
+      "elapsed_seconds": 161.313246083002,
+      "events_sha256": "1a11630c323dd00f4c3fbf2411799f9f2694c7ec73c0e161d6f43bf2b731f27a",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 15559,
+        "output_tokens": 2322
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "blind-F-1",
+      "answer_sha256": "3141fb62560eab36882d42880ded92bb64abce40a1d0285f966d79cd23af7787",
+      "context_ref": "01a0da07-891d-7ac0-92b9-f6aae8434876",
+      "elapsed_seconds": 72.89459533300032,
+      "events_sha256": "e63ec7c6e216d201e30a31acd120896fbf1950eeb03731ad102ee6a7edfa3771",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 21204,
+        "output_tokens": 1955
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "blind-F-2",
+      "answer_sha256": "304b5a69a9604911f6ee2ed35c9300f9b9b912bb5e091639dbf7255b1f0d0ff6",
+      "context_ref": "01a0da07-d30d-7a73-832b-de049934d1ae",
+      "elapsed_seconds": 68.88872224999795,
+      "events_sha256": "a27091198b2eb9c2a8127143afa5a2f93b42794765094887dc9a5b0791b86f9f",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 21204,
+        "output_tokens": 1358
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "blind-F-3",
+      "answer_sha256": "2ff91754261fef23bdf06e006c6511732c095ae5940c7bab416ea8921a78138d",
+      "context_ref": "01a0da0a-722f-7ae3-bd74-01e81c2c0261",
+      "elapsed_seconds": 145.75078933300028,
+      "events_sha256": "1bc445f35382c86b521c8ec4d3a1f54bbf5051bac6e502827b1d470488c86dbb",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 21204,
+        "output_tokens": 1321
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-E-codex_observation_committed-context",
+      "answer_sha256": "413f0a1a0db4ccfa52108adbd3647d0a740d8ee0fccf5ba19c8b26eb962b2969",
+      "context_ref": "01a0da06-df84-74e1-b534-ceef53fc4a22",
+      "elapsed_seconds": 44.68344141600028,
+      "events_sha256": "5baf39be24833b3b9388a969d086dd50dba9453dec99a397f14d0cda1a5eb8dc",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 14060,
+        "output_tokens": 300
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-E-codex_observation_committed-correction",
+      "answer_sha256": "517b4a84387501c7717d0ebc0d55e648dffe3bafe038fa661f51e6aacb360c92",
+      "context_ref": "01a0da06-df84-74e1-b534-ceef53fc4a22",
+      "elapsed_seconds": 136.44213387499985,
+      "events_sha256": "ddffe81cd06e4fdd3aa519d8899ffbbf1c8f73e706a1e83e80b9dc7f21b8b2fe",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 31497,
+        "output_tokens": 1199
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-E-codex_observation_committed-execution__accept",
+      "answer_sha256": "34e85b530d3d69994b2c2f7231fb958700613637ec24fdcecefe9ac6c91b4b1e",
+      "context_ref": "01a0da06-df84-74e1-b534-ceef53fc4a22",
+      "elapsed_seconds": 124.30615533300079,
+      "events_sha256": "3e0eb9d3bc22caac15440651ae73726fa813a662244b46c26ffb60a2ee39fbdd",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 55995,
+        "output_tokens": 1422
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-E-codex_observation_committed-observer-079f5bde01926690",
+      "answer_sha256": "074bd09eaaf09c1baf60674438d4b5528ae5058470a526c1c699e96043269f26",
+      "context_ref": "01a0da07-8e2b-7e83-9973-847e85cd380e",
+      "elapsed_seconds": 56.01041483299923,
+      "events_sha256": "67b70514c31e06eb3ed82c9e3ad89f00e4aa6c3fef38b2451a56d4623f8ce603",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 19727,
+        "output_tokens": 1193
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-E-codex_observation_committed-observer-b8e3684fc3cc5904",
+      "answer_sha256": "6e35106f75e082f314481ea1e5edcd9a30f0318cfac146f215660bcfd670b44d",
+      "context_ref": "01a0da0a-7de7-7782-88e1-71a8cc1eb6dc",
+      "elapsed_seconds": 131.46835008400012,
+      "events_sha256": "4bdbca2e208954274623300a0304521982cbaaf2bbd40ae82c11260de26b6034",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 19692,
+        "output_tokens": 346
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-E-jev_advisory-execution__accept",
+      "answer_sha256": "3ddf9a53bb95489d50a228f31114e2392ef808872353aa197ab4ac119d618789",
+      "context_ref": "01a0da02-458d-79b1-8d48-4c5149b3b461",
+      "elapsed_seconds": 56.42816933300128,
+      "events_sha256": "d05e5dfd0104dd78d9d7f92fcacd81497467ebe55b468048481f9b33ad8e8b4f",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 17131,
+        "output_tokens": 460
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-E-jev_committed-execution__accept",
+      "answer_sha256": "f2dfda42e4e365240d447d441d3e8348089ebe2dd0e27b56c98bb3b5bf3ac6c8",
+      "context_ref": "01a0da00-9b33-7e01-ab42-26a5eb640693",
+      "elapsed_seconds": 45.57246979199772,
+      "events_sha256": "2f46f20c1889595e08facc61afe7f4babd90a75d71ed4c100f8f83808c483957",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 17122,
+        "output_tokens": 501
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-E-pure_codex-correction",
+      "answer_sha256": "55f5efa531474c1741db53f3250e66a2ef25dd1d186826f97a2a1a18a1282cf0",
+      "context_ref": "01a0da03-cbe0-7d22-8c05-aa436425c848",
+      "elapsed_seconds": 133.39514433300064,
+      "events_sha256": "ede918722d4279b194308747d8974ba5a9d7292ff09195ca05ad5aad52f40c7f",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 30641,
+        "output_tokens": 743
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-E-pure_codex-execution__accept",
+      "answer_sha256": "bf713b5b1b1dfbb0d234c21669e2db3473e92320affb5da342ff999ba80059a1",
+      "context_ref": "01a0da03-cbe0-7d22-8c05-aa436425c848",
+      "elapsed_seconds": 64.47148341600041,
+      "events_sha256": "cc5d64fb13ba9439a0cbdbe21f0a0f167c858fa453cada95e3417272dfdc7adf",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 63516,
+        "output_tokens": 1206
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-E-questions_only-correction",
+      "answer_sha256": "55f5efa531474c1741db53f3250e66a2ef25dd1d186826f97a2a1a18a1282cf0",
+      "context_ref": "01a0da03-cbe0-7b33-b8b0-02c4e32c7442",
+      "elapsed_seconds": 157.57613179200052,
+      "events_sha256": "e96818019e8acd02e61245e96ba519158a6e4d810c9e9a23b6e3d34d8d50ce02",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 33121,
+        "output_tokens": 1925
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-E-questions_only-execution__accept",
+      "answer_sha256": "5113bd0d1eaab31dc5fca9466e4c04810aebe1ca87947d0f9104b367370d7f3f",
+      "context_ref": "01a0da03-cbe0-7b33-b8b0-02c4e32c7442",
+      "elapsed_seconds": 52.630754916001024,
+      "events_sha256": "89153bf003765a7d0877d4c2bc729f6e2e8853dd8892763baf1c99094d86b7bb",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 69659,
+        "output_tokens": 2139
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-F-codex_observation_committed-context",
+      "answer_sha256": "8efa9178564e1c8a03114fef7d0a8b3089bae4a8efe680c78d869e90758ef401",
+      "context_ref": "01a0da03-0aec-7773-b5a2-69db02d6d68a",
+      "elapsed_seconds": 70.27245441700143,
+      "events_sha256": "5cc26b7cb04943070680caedeaf23d7d6811f8d7c040362eec8708329989adb8",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 14060,
+        "output_tokens": 433
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-F-codex_observation_committed-execution__accept",
+      "answer_sha256": "017639845d8cae4a74cc2953b98545f9ee361faf72d8958dff139e80b175c0c9",
+      "context_ref": "01a0da03-0aec-7773-b5a2-69db02d6d68a",
+      "elapsed_seconds": 62.26100766699892,
+      "events_sha256": "ca37ecd8df599e8df3fd7513f174e6a7b40b8b24080577efd86cd3f743067e8a",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 39073,
+        "output_tokens": 1044
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-F-codex_observation_committed-observer-70176cd4a2a4f7c8",
+      "answer_sha256": "6e35106f75e082f314481ea1e5edcd9a30f0318cfac146f215660bcfd670b44d",
+      "context_ref": "01a0da04-1da4-7d60-a0b4-ab55585b0398",
+      "elapsed_seconds": 140.1976203339982,
+      "events_sha256": "31ca9fc1dfd3ddbe27b81bf3a1f101722b78d1e01ac0182e7038b431d182dd4c",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 24828,
+        "output_tokens": 900
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-F-jev_advisory-execution__accept",
+      "answer_sha256": "590c92647ca848def0f53ca78dc4a94fd6a15dda599f3fcb70d666327a1abe9d",
+      "context_ref": "01a0da02-458d-7870-acc9-badb15a7dea6",
+      "elapsed_seconds": 51.93667125000138,
+      "events_sha256": "5dd7efe86e823bbc977df4635094e4e1aad42231315ca47c0ebc362dc7ecd3a2",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 24694,
+        "output_tokens": 411
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-F-jev_committed-execution__accept",
+      "answer_sha256": "240e76fc07da4ad25fa3341f275f79d1d80604ef32a38dfd1dee5d5129ce42cb",
+      "context_ref": "01a0d9ff-fcf7-7cf3-88a1-f0e59108f80a",
+      "elapsed_seconds": 46.30928900000072,
+      "events_sha256": "ec17782e7e7f64280d4816cd3f056fd2cac175a2d0aa99fcc9773372e92685bd",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 24698,
+        "output_tokens": 443
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-F-pure_codex-correction",
+      "answer_sha256": "d7694519a6d5eb0ee105afa46f2d37d1c4e362eb01705d9d51df6f460591b778",
+      "context_ref": "01a0d9ff-f4fc-72b0-989a-191eebbcdbc5",
+      "elapsed_seconds": 67.27331362499899,
+      "events_sha256": "eb231eeeee301d8e7fc6669bc355c1d7891dae2bbc04a09e9af4cbcb2711db41",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 35704,
+        "output_tokens": 841
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-F-pure_codex-execution__accept",
+      "answer_sha256": "65864137a4d12013a97b117599ad192e7a992dffc45344a18acbe5a3952d72ed",
+      "context_ref": "01a0d9ff-f4fc-72b0-989a-191eebbcdbc5",
+      "elapsed_seconds": 127.75008737499957,
+      "events_sha256": "8848aa8d431b684bcb6cbde49ab92bf2fc2a1954cdde42a2d1c4bdbafcff3409",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 159897,
+        "output_tokens": 1326
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-F-pure_codex-format-r1",
+      "answer_sha256": "3b76e358e6a973393492f9e04689e4bc898413f9871b7674eb489d48b12605a1",
+      "context_ref": "01a0d9ff-f4fc-72b0-989a-191eebbcdbc5",
+      "elapsed_seconds": 68.08995320900067,
+      "events_sha256": "4b818a159133a6a7e840e6a359acaae0ff6b3128990ed498a0bdf7c5f128d5a8",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 94204,
+        "output_tokens": 1149
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-F-questions_only-correction",
+      "answer_sha256": "0959495402f131efb4603c6a44635acd786dd9e13bc7899558b1801adc582579",
+      "context_ref": "01a0d9ff-f4fc-7a13-923f-2b44ccddf8ba",
+      "elapsed_seconds": 60.59721287499997,
+      "events_sha256": "52c04f30e41aba90ba3a017259843ed63b38e10c38997c0c3ceaab62538f797b",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 38190,
+        "output_tokens": 980
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "common-F-questions_only-execution__accept",
+      "answer_sha256": "83ca029435ec1f8f45e73918c0e16ba05dd90eda6f7b2551a56e7294eeb9e449",
+      "context_ref": "01a0d9ff-f4fc-7a13-923f-2b44ccddf8ba",
+      "elapsed_seconds": 44.72141808299784,
+      "events_sha256": "091b80628362df7e0ddf1489894d2038c714d2dd0c157d9f48066bd077fc1994",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 83836,
+        "output_tokens": 1367
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "natural-E",
+      "answer_sha256": "eb5f5f9c37d1f13dd8053c04a5f3eeb8254cc7bdcaa28c221139e34229c64482",
+      "context_ref": "01a0d9fe-a3a8-7331-9566-220714e92263",
+      "elapsed_seconds": 57.157085083999846,
+      "events_sha256": "7484a4d324ece5a322e028f0a9be5947569c6cfe81a1350c146ea6cefffbc591",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 30289,
+        "output_tokens": 560
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "name": "natural-F",
+      "answer_sha256": "7f4ab2380cafc1b6a1fec8f7755f357fec88b7b378000ab35214cb91e7a61115",
+      "context_ref": "01a0d9fe-a481-7590-941b-6d1046f00ce9",
+      "elapsed_seconds": 56.36352129199804,
+      "events_sha256": "d991cdde69d2555f61f8f81d4ea3c94604d92308c4bae311c15bc415b49e80a6",
+      "model_service_attestation": "not_observed",
+      "requested_model": "gpt-6-sol",
+      "status": "complete",
+      "tool_use": [],
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 34612,
+        "output_tokens": 750
+      }
+    }
+  ],
+  "jev_calls": [
+    {
+      "root": "mindthus-v03-live-d1",
+      "stage": "full",
+      "wire_request_sha256": "06cbd0bafe439490af2a05e35871eeb15c1474134291178b89e15c89e44d8e55",
+      "elapsed_seconds": 4.995045167001081,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 5223,
+        "output_tokens": 295
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "stage": "comparison",
+      "wire_request_sha256": "4aa2823c502f73d713f1ba109d38ad71220c898740ae50a4e8472b551ecf6174",
+      "elapsed_seconds": 1.5068185000018275,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 6449,
+        "output_tokens": 296
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "stage": "comparison",
+      "wire_request_sha256": "a0f5ad6cbc864cb8653b3472faee4a8fb4eb0028b93fc08f37e7a72864a0ce9a",
+      "elapsed_seconds": 2.147247166001762,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 13230,
+        "output_tokens": 296
+      }
+    },
+    {
+      "root": "mindthus-v03-live-d2",
+      "stage": "full",
+      "wire_request_sha256": "d7d1328877622c8fbcefde3243084c0cbf6ed894a3e8a2069bf00bf3038f2265",
+      "elapsed_seconds": 1.973485750000691,
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 11872,
+        "output_tokens": 295
+      }
+    }
+  ],
+  "reviews": {
+    "E-review-1": {
+      "pure_codex": {
+        "material_error_span": "",
+        "reason": "限定在 Skills，回答了提示词与上下文加载的作用，也区分了配套工程和恶意注入。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "questions_only": {
+        "material_error_span": "",
+        "reason": "与 X1 内容相同，判断成立。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "jev_committed": {
+        "material_error_span": "",
+        "reason": "与 X1 内容相同，判断成立。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "codex_observation_committed": {
+        "material_error_span": "",
+        "reason": "对用户提出的机制给出合理条件判断，并保留对 Skills 全部机制的未知；没有补写缺失的旧答。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "jev_advisory": {
+        "material_error_span": "",
+        "reason": "与 X1 内容相同，判断成立。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "full_path": {
+        "material_error_span": "applicability_role_unresolved:edsp;no_established_primary",
+        "reason": "两条用户消息已足以就 Skills 范围作条件化回答；旧答缺失不妨碍判断。空答属于不必要搁置。",
+        "unnecessary_block": true,
+        "verdict": "material_error"
+      },
+      "natural": {
+        "material_error_span": "",
+        "reason": "与 X1 内容相同，判断成立；候选状态不影响内容盲评。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      }
+    },
+    "E-review-2": {
+      "pure_codex": {
+        "material_error_span": "",
+        "reason": "保持 Skills 范围，区分按需提供提示或上下文的机制与整体工程价值，也说明了“注入”的不同含义。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "questions_only": {
+        "material_error_span": "",
+        "reason": "与 X1 同文；判断和限定均切题。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "jev_committed": {
+        "material_error_span": "",
+        "reason": "与 X1 同文；判断和限定均切题。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "codex_observation_committed": {
+        "material_error_span": "",
+        "reason": "条件化地认可提示词工程这一归类，并避免从该机制推断 Skills 的全部价值；这是可接受的回答。此前答复缺失不妨碍回答当前问题，要求进一步明确“注入”也非必要。",
+        "unnecessary_block": true,
+        "verdict": "acceptable"
+      },
+      "jev_advisory": {
+        "material_error_span": "",
+        "reason": "与 X1 同文；判断和限定均切题。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "full_path": {
+        "material_error_span": "text: \"\"",
+        "reason": "当前问题已有足够信息作范围内的条件化回答；缺少历史助手答复不构成必须留空的条件。",
+        "unnecessary_block": true,
+        "verdict": "material_error"
+      },
+      "natural": {
+        "material_error_span": "",
+        "reason": "与 X1 同文；候选状态不影响内容判断。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      }
+    },
+    "E-review-3": {
+      "pure_codex": {
+        "material_error_span": "",
+        "reason": "锁定 Skills 范围，认可按需提供指令和上下文可归入提示词工程，并合理限定“注入”的含义。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "questions_only": {
+        "material_error_span": "",
+        "reason": "与 X1 相同，核心判断和限定均合理。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "jev_committed": {
+        "material_error_span": "",
+        "reason": "与 X1 相同，核心判断和限定均合理。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "codex_observation_committed": {
+        "material_error_span": "",
+        "reason": "以条件化方式回答核心问题，并保留对 Skills 全部机制的未知；没有推测缺失的历史答复。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "jev_advisory": {
+        "material_error_span": "",
+        "reason": "与 X1 相同，核心判断和限定均合理。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "full_path": {
+        "material_error_span": "applicability_role_unresolved:edsp;no_established_primary",
+        "reason": "现有两条提问已足以作条件化判断；历史答复缺失不妨碍回答当前问题，留空缺少必要依据。",
+        "unnecessary_block": true,
+        "verdict": "material_error"
+      },
+      "natural": {
+        "material_error_span": "",
+        "reason": "与 X1 相同，核心判断和限定均合理。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      }
+    },
+    "F-review-1": {
+      "jev_committed": {
+        "material_error_span": "",
+        "reason": "回应了楼主的实际可用性顾虑，承认缩放调节的价值，同时保留清晰度、性能和配置边界，并说明原图不可见。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "natural": {
+        "material_error_span": "",
+        "reason": "依据转述作条件化判断，既没有把4K与5K的差距等同于补救无效，也没有声称所有顾虑已解决。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "codex_observation_committed": {
+        "material_error_span": "",
+        "reason": "切中用户对回答价值的质疑，且对物理差距、性能代价和原图缺失均有必要限定。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "questions_only": {
+        "material_error_span": "",
+        "reason": "虽是接受回执，其对候选稿的判断与可见内容相符；候选稿已回应可用性问题并保留必要未知，无须仅为改写而改写。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "full_path": {
+        "material_error_span": "",
+        "reason": "正文为空，只有“候选覆盖缺失”的待处理标记；无法评判其具体判断，也不能仅凭未答复认定内容错误。",
+        "unnecessary_block": false,
+        "verdict": "unresolved"
+      },
+      "pure_codex": {
+        "material_error_span": "",
+        "reason": "合理修正了此前对问题重心的判断，并以原图不可见为限，未越过现有证据。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "jev_advisory": {
+        "material_error_span": "",
+        "reason": "承认BetterDisplay对调节界面大小的价值，同时没有夸大其对锐度、性能和配置问题的作用。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      }
+    },
+    "F-review-2": {
+      "jev_committed": {
+        "material_error_span": "",
+        "reason": "回应了4K实际可用性，并保留清晰度、性能及原图缺失的边界。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "natural": {
+        "material_error_span": "",
+        "reason": "与X1正文相同；候选状态不影响内容判断。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "codex_observation_committed": {
+        "material_error_span": "",
+        "reason": "与X1正文相同，判断有据且作了必要限定。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "questions_only": {
+        "material_error_span": "",
+        "reason": "接受候选稿的理由与候选内容相符；回执本身不替代内容核验。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "full_path": {
+        "material_error_span": "candidate_coverage_missing",
+        "reason": "现有转述足以支持有条件的回答；缺少原图只限制对原话的核验，不能据此空置答复。",
+        "unnecessary_block": true,
+        "verdict": "material_error"
+      },
+      "pure_codex": {
+        "material_error_span": "",
+        "reason": "与X1正文相同，未将软件调优夸大为消除物理差距。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "jev_advisory": {
+        "material_error_span": "",
+        "reason": "与X1正文相同，回应了用户当前关切并说明证据限制。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      }
+    },
+    "F-review-3": {
+      "jev_committed": {
+        "material_error_span": "",
+        "reason": "依据现有转述回应了楼主的可用性顾虑，同时保留清晰度、性能和配置的边界，并说明原图不可见。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "natural": {
+        "material_error_span": "",
+        "reason": "与X1正文相同；候选状态不影响内容判断。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "codex_observation_committed": {
+        "material_error_span": "",
+        "reason": "与X1正文相同，没有实质判断错误。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "questions_only": {
+        "material_error_span": "",
+        "reason": "作为接受候选稿的回执，其理由与已提供的候选稿相符；回执本身不单独证明候选稿正确。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "full_path": {
+        "material_error_span": "candidate_coverage_missing",
+        "reason": "材料中已有完整候选稿，且原图缺失仍允许依据转述作条件化判断；据此搁置评估缺乏必要条件。",
+        "unnecessary_block": true,
+        "verdict": "material_error"
+      },
+      "pure_codex": {
+        "material_error_span": "",
+        "reason": "与X1正文相同，判断有条件且未声称核验原图。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      },
+      "jev_advisory": {
+        "material_error_span": "",
+        "reason": "与X1正文相同，没有实质差异。",
+        "unnecessary_block": false,
+        "verdict": "acceptable"
+      }
+    }
+  },
+  "source_files": [
+    {
+      "path": "mindthus-v03-live-d1/admissions/full-E-jev_committed.json",
+      "sha256": "b0131fba13d34af97ccdca53ae7f823e57f54374de1f7612dcf7d115e1dfb6ee",
+      "bytes": 3562
+    },
+    {
+      "path": "mindthus-v03-live-d1/codex-calls/natural-E/intent.json",
+      "sha256": "2b6eec126814afc4d3352b9660037e8921998ac895582f707e73fba554399ecb",
+      "bytes": 579
+    },
+    {
+      "path": "mindthus-v03-live-d1/codex-calls/natural-E/outcome.json",
+      "sha256": "91821b19dfff53edecbd64ee3536cb2e6fff12e4a2075bca3d62eb0783fa7fb3",
+      "bytes": 511
+    },
+    {
+      "path": "mindthus-v03-live-d1/codex-calls/natural-E/prompt.txt",
+      "sha256": "77be0978b3e1c376fd0a7990503584ccb59a0b8f5ea0a87629077bb429689084",
+      "bytes": 69989
+    },
+    {
+      "path": "mindthus-v03-live-d1/codex-calls/natural-E/schema.json",
+      "sha256": "e9ca24668260b339b40d9a9adf7aed7019a36b3cabb96d41032b41d0960eb64c",
+      "bytes": 234
+    },
+    {
+      "path": "mindthus-v03-live-d1/codex-calls/natural-F/intent.json",
+      "sha256": "7dc3b023d73b39cee12293e3841bf67feb3f2ee0ebab239c090799f195e0a0dd",
+      "bytes": 579
+    },
+    {
+      "path": "mindthus-v03-live-d1/codex-calls/natural-F/outcome.json",
+      "sha256": "b23b4890c399973e7011bdf0a2c66baea50f8a535488002f40f64450bf58c641",
+      "bytes": 511
+    },
+    {
+      "path": "mindthus-v03-live-d1/codex-calls/natural-F/prompt.txt",
+      "sha256": "66ceb60a84dfae6dda1bbe1c232de4bb2f14e2ef2745a4f3bd0da813fa3cb1e1",
+      "bytes": 85902
+    },
+    {
+      "path": "mindthus-v03-live-d1/codex-calls/natural-F/schema.json",
+      "sha256": "e9ca24668260b339b40d9a9adf7aed7019a36b3cabb96d41032b41d0960eb64c",
+      "bytes": 234
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/.entry-lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/intervention.json",
+      "sha256": "2a3a5688b8d70b91bfd29cf146dbe7d4d07fb816fc411e88c04556cfca6c35ed",
+      "bytes": 277
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/manifest.json",
+      "sha256": "04cac95243b2d18314b33646c8f6270b0dfe2cb673280d8deff8e56611caee7b",
+      "bytes": 6088
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/resolved-runtime.json",
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/commitment-1.json",
+      "sha256": "9c3b5892584caedf20be77836914ebd6ca3b153a05b5055057b93bc613363a97",
+      "bytes": 4489
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/judgment-contract-loads.json",
+      "sha256": "b446b9382f4cdecacac07cade66633b3a0e4d60db8eeba06df8f266a186759fc",
+      "bytes": 5076
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/manifest.json",
+      "sha256": "3854b70baab245e47e12541925b5916d18c63431cd2642a369b786c8be0bd7a0",
+      "bytes": 2459
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/organized-input.json",
+      "sha256": "be1022298b7802f9189a86d39d150f1a27eaaaf4cd431bd8b13dc435df9c8f94",
+      "bytes": 2245
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/organize/handoff.json",
+      "sha256": "ea7dcac2e407f5725314acee7b47a372a78d3fd97dc45d19a0cbd5301dd4dda4",
+      "bytes": 5147
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/organize/host-response.json",
+      "sha256": "2d7f5e6a7989ddf028e851ea18afa530556f29e634f1d83766f6fb44b1aa32e0",
+      "bytes": 1540
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/organize/intent.json",
+      "sha256": "d01433620f5a58bf98d1af1f090145f025e8e9fbad45f2a17b4969173f35fcfe",
+      "bytes": 751
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/organize/outcome.json",
+      "sha256": "8d424725d736f30c2cde39b60326813eb8b77abfab9badfc31ac44c6cb50df08",
+      "bytes": 1852
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/organize/request.json",
+      "sha256": "3cc77ee00a87a4f83a2951537be49058a34ecaa552f8fca75ce25b8000a5b35d",
+      "bytes": 3804
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/route/.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/route/calls/dcc5fdc938192a8eb9e38497733ce45a52bb155398facaa0eff185aba3b1b5ff/intent.json",
+      "sha256": "a31ed1d158f5345109f2c199f74681a17df1648936036a560305f3b76fa93752",
+      "bytes": 9491
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/route/calls/dcc5fdc938192a8eb9e38497733ce45a52bb155398facaa0eff185aba3b1b5ff/outcome.json",
+      "sha256": "67ee883c3840e9fd8da76a7d4ab6ffe059417dfad1c7726e354db33e61d36113",
+      "bytes": 1660
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/route/calls/dcc5fdc938192a8eb9e38497733ce45a52bb155398facaa0eff185aba3b1b5ff/provider-receipt.json",
+      "sha256": "1fcb09a78a769f20d2fcf14477b2d180960006c8894ae1e61adb5330abfd2446",
+      "bytes": 1648
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/route/live-admission.json",
+      "sha256": "392469aaf0caf21ea977b417c99c3146b5860da70a970cf68f779afb1a657724",
+      "bytes": 1033
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/route/policy.json",
+      "sha256": "c73c5699dce77c41c7d3e53c2e446e174845d1dbf07cf4a8777b5ce7985ac3cc",
+      "bytes": 1678
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/route/resolved-runtime.json",
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/steps/route/runs/85f4dce99321178e94806d16bd9cb8f34a4b12143087999a4f9f5c00a3634707.json",
+      "sha256": "ba6ab7799262100e880621210a4f00e5a286e89b5bac7277d150637a0335af1c",
+      "bytes": 2234
+    },
+    {
+      "path": "mindthus-v03-live-d1/episodes/full-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/17a964336e7b69b99547f6fbf2b6432e5261be48f27ac6ac86bfcbf985919e23/summary.json",
+      "sha256": "48555a9115d5f4b2eed6a5aec7641ca4545efb66afb489c56f80fd3ea7c2982c",
+      "bytes": 8578
+    },
+    {
+      "path": "mindthus-v03-live-d1/freeze.json",
+      "sha256": "4f1ad4b2eb3b4e7f65c7165a563e4472a1a69b88af861fea3e8b0e1bf0c6adf3",
+      "bytes": 1153
+    },
+    {
+      "path": "mindthus-v03-live-d1/jev-calls/full/06cbd0bafe439490af2a05e35871eeb15c1474134291178b89e15c89e44d8e55/intent.json",
+      "sha256": "3c924c9bcecd6f6e6de08af216cc719be77d904cde22ce47416a0222ed025e85",
+      "bytes": 268
+    },
+    {
+      "path": "mindthus-v03-live-d1/jev-calls/full/06cbd0bafe439490af2a05e35871eeb15c1474134291178b89e15c89e44d8e55/response.json",
+      "sha256": "f7a6bdd47f2fd3aa4a346a9b71bbf418fbb64534c2806da057f6d6d25579095b",
+      "bytes": 1424
+    },
+    {
+      "path": "mindthus-v03-live-d1/results/full-E-jev_committed.json",
+      "sha256": "6846d2d001ab5e2bc4d7cc022d3efab3369c76205616526d2b2cf51ff456ff89",
+      "bytes": 8842
+    },
+    {
+      "path": "mindthus-v03-live-d1/sessions/natural-E.json",
+      "sha256": "48e76a865faebeaf26edb41cabb5c2ed6601f8c1488e77381faa2f4154556896",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d1/sessions/natural-F.json",
+      "sha256": "f089c8ce1f881cf5f0030c4f0339f426c3115be74de3c6d82befbef77ea9a738",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d1/sources/E.json",
+      "sha256": "37ceb8d851e21e9a930349b32e76160262d9255cc7408a423ce23db75427c13f",
+      "bytes": 1515
+    },
+    {
+      "path": "mindthus-v03-live-d1/sources/F.json",
+      "sha256": "9a3ff9c6bdddfb2ef424a0c047b817b08d6cfc1660bffd9885573a1587182bd4",
+      "bytes": 17428
+    },
+    {
+      "path": "mindthus-v03-live-d1/sources/display-thread.json",
+      "sha256": "39530be61140c399243a9657159668404f6a40f5dfd04e3056c4883331f0cdc0",
+      "bytes": 23773
+    },
+    {
+      "path": "mindthus-v03-live-d2/adapters/native-schema-r1.json",
+      "sha256": "35ca1d5789aee6e7f01ae408b7a53619e6df827ecfd77b14bc3966f1c6c64172",
+      "bytes": 392
+    },
+    {
+      "path": "mindthus-v03-live-d2/admissions/common-E-codex_observation_committed.json",
+      "sha256": "b772a54c7ca50f8cb25d3776de9f7653e432dc44dbc2d7fd40fe4e75520c32f8",
+      "bytes": 3698
+    },
+    {
+      "path": "mindthus-v03-live-d2/admissions/common-E-jev_advisory.json",
+      "sha256": "d8f44fa50c0e47a3723fc5ae116fd5ba584bda87613e6a742b52017cfcaabc86",
+      "bytes": 3563
+    },
+    {
+      "path": "mindthus-v03-live-d2/admissions/common-E-jev_committed.json",
+      "sha256": "e99bdf040451a784559c654fa64141c32023c1c3c0acb771490bbc8c1f201886",
+      "bytes": 3564
+    },
+    {
+      "path": "mindthus-v03-live-d2/admissions/common-F-codex_observation_committed.json",
+      "sha256": "dcb36149c26fde0417b4b33a62538d92a85a2e3afc2c6057a4f3787fab1fd84c",
+      "bytes": 3698
+    },
+    {
+      "path": "mindthus-v03-live-d2/admissions/common-F-jev_advisory.json",
+      "sha256": "cbdb529e579abc4a14d73882cf701cb3eefaf9e2dc2b5a2b63f485829a088720",
+      "bytes": 3563
+    },
+    {
+      "path": "mindthus-v03-live-d2/admissions/common-F-jev_committed.json",
+      "sha256": "83336d250cb83475dd8ad8578422e374c1c44c25eba015b5b046c8e0a6f9882a",
+      "bytes": 3564
+    },
+    {
+      "path": "mindthus-v03-live-d2/admissions/full-F-jev_committed.json",
+      "sha256": "8775452ae3615a5a71b2b69dab1ad7fca647491a5a66ccf14b4675d93d6c2e2a",
+      "bytes": 3562
+    },
+    {
+      "path": "mindthus-v03-live-d2/candidates/E.json",
+      "sha256": "9d32e4ad3f8f0e39bdd3aa0a492849b16727d1b0b82c9d223771b3e37ce8c215",
+      "bytes": 812
+    },
+    {
+      "path": "mindthus-v03-live-d2/candidates/F.json",
+      "sha256": "b4596c5eb1c5674f5271200490d5cd92e4398f0e94a81229d11a39bc1a452188",
+      "bytes": 1306
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-1/answer.json",
+      "sha256": "bd6ee2f25da1d0b5b12382eea2afe96ccbb254f3cd71e9e03fc38a4ac88f351d",
+      "bytes": 1575
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-1/intent.json",
+      "sha256": "0b96d59d573d16baa54cc5186f9db4831c57b062be8c071f4701ced2f26a175d",
+      "bytes": 579
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-1/outcome.json",
+      "sha256": "3e2e5b42e6ae934e9335b202042fbf075b467825e88d318e941600b7e99ff184",
+      "bytes": 560
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-1/prompt.txt",
+      "sha256": "627ad7f2032ad4bdcea0709d25291f899eade18d5045fd8a6d1e499e5669590d",
+      "bytes": 4883
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-1/schema.json",
+      "sha256": "ce62fa0dc91b2aa00a4fd62eb5604524f81b22d7982ae0058ff9b2c4dcbc23f5",
+      "bytes": 5405
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-2/answer.json",
+      "sha256": "d3f029c57165dbcb7f6279608b81f96ab8c7c3cf7d06291dc6ca243a0d5ed188",
+      "bytes": 1334
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-2/intent.json",
+      "sha256": "0b96d59d573d16baa54cc5186f9db4831c57b062be8c071f4701ced2f26a175d",
+      "bytes": 579
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-2/outcome.json",
+      "sha256": "32a433b1e00e1604ec5790bfc34b41b14d6a97d1b299646ac953d832eb3f25fe",
+      "bytes": 560
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-2/prompt.txt",
+      "sha256": "627ad7f2032ad4bdcea0709d25291f899eade18d5045fd8a6d1e499e5669590d",
+      "bytes": 4883
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-2/schema.json",
+      "sha256": "ce62fa0dc91b2aa00a4fd62eb5604524f81b22d7982ae0058ff9b2c4dcbc23f5",
+      "bytes": 5405
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-3/answer.json",
+      "sha256": "e3a4b1efad0c396a5f19ad557e63d3a5846f6b0f474c8b686838807ecb4e98b2",
+      "bytes": 1286
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-3/intent.json",
+      "sha256": "0b96d59d573d16baa54cc5186f9db4831c57b062be8c071f4701ced2f26a175d",
+      "bytes": 579
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-3/outcome.json",
+      "sha256": "af723ba02aa1e98281410e2a3e9f28449b58c73fa50ae591322ab640895a8b51",
+      "bytes": 558
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-3/prompt.txt",
+      "sha256": "627ad7f2032ad4bdcea0709d25291f899eade18d5045fd8a6d1e499e5669590d",
+      "bytes": 4883
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-3/schema.json",
+      "sha256": "ce62fa0dc91b2aa00a4fd62eb5604524f81b22d7982ae0058ff9b2c4dcbc23f5",
+      "bytes": 5405
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-1/answer.json",
+      "sha256": "3141fb62560eab36882d42880ded92bb64abce40a1d0285f966d79cd23af7787",
+      "bytes": 1559
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-1/intent.json",
+      "sha256": "251f05d720b9bc0c857653014d80ea7ec1ef80083f18dfda11761dd380583f12",
+      "bytes": 579
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-1/outcome.json",
+      "sha256": "7d7e6760fdb036d02ef3cd0e5016546c215830741f00046917910b1565d6b686",
+      "bytes": 559
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-1/prompt.txt",
+      "sha256": "8f28d6f7dcb1acafdb1f26a9fbcd035d29001975c8516048f95d1697e2c4171e",
+      "bytes": 22914
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-1/schema.json",
+      "sha256": "ce62fa0dc91b2aa00a4fd62eb5604524f81b22d7982ae0058ff9b2c4dcbc23f5",
+      "bytes": 5405
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-2/answer.json",
+      "sha256": "304b5a69a9604911f6ee2ed35c9300f9b9b912bb5e091639dbf7255b1f0d0ff6",
+      "bytes": 1224
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-2/intent.json",
+      "sha256": "251f05d720b9bc0c857653014d80ea7ec1ef80083f18dfda11761dd380583f12",
+      "bytes": 579
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-2/outcome.json",
+      "sha256": "54deaf4399047935b4b3d9d72f9679dc35d9fb0b983567b7b5557bc828a7db66",
+      "bytes": 559
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-2/prompt.txt",
+      "sha256": "8f28d6f7dcb1acafdb1f26a9fbcd035d29001975c8516048f95d1697e2c4171e",
+      "bytes": 22914
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-2/schema.json",
+      "sha256": "ce62fa0dc91b2aa00a4fd62eb5604524f81b22d7982ae0058ff9b2c4dcbc23f5",
+      "bytes": 5405
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-3/answer.json",
+      "sha256": "2ff91754261fef23bdf06e006c6511732c095ae5940c7bab416ea8921a78138d",
+      "bytes": 1279
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-3/intent.json",
+      "sha256": "251f05d720b9bc0c857653014d80ea7ec1ef80083f18dfda11761dd380583f12",
+      "bytes": 579
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-3/outcome.json",
+      "sha256": "4afbf9454dd66bff2dd4d79a6ad484cca7436464f5961757a5d62a4d3702bbe0",
+      "bytes": 560
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-3/prompt.txt",
+      "sha256": "8f28d6f7dcb1acafdb1f26a9fbcd035d29001975c8516048f95d1697e2c4171e",
+      "bytes": 22914
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-3/schema.json",
+      "sha256": "ce62fa0dc91b2aa00a4fd62eb5604524f81b22d7982ae0058ff9b2c4dcbc23f5",
+      "bytes": 5405
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-context/answer.json",
+      "sha256": "413f0a1a0db4ccfa52108adbd3647d0a740d8ee0fccf5ba19c8b26eb962b2969",
+      "bytes": 292
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-context/intent.json",
+      "sha256": "4be8a7cb333760e5ad997fba472b1705389b53f3020235e9e2865d64f2deccf8",
+      "bytes": 613
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-context/outcome.json",
+      "sha256": "a2abe3ef818bb7bdb511c5e59f861b25de4cab23d4db90b704da25a1b5766f72",
+      "bytes": 558
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-context/prompt.txt",
+      "sha256": "dc86a5fdbd42ef6bfb04124b5383f6a01cf1c768c0ecc428d0344d31003ef970",
+      "bytes": 360
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-context/schema.json",
+      "sha256": "aad5c54214c99fcec651ddffeb8d0ce408b1bf45fc65155c884e3777e173f2dc",
+      "bytes": 154
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-correction/answer.json",
+      "sha256": "517b4a84387501c7717d0ebc0d55e648dffe3bafe038fa661f51e6aacb360c92",
+      "bytes": 1227
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-correction/intent.json",
+      "sha256": "8cc4b0059099023eb14c7cc46f55dc442c45053c1eb9b4e46bf042b0add5297f",
+      "bytes": 647
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-correction/outcome.json",
+      "sha256": "3ae37d0348c8d5659aad608cb45cbe067bd0c8ca5b05c216df509c616361a43b",
+      "bytes": 560
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-correction/prompt.txt",
+      "sha256": "cd635a418036d8b76e06e64e3a6749394104aac9970ef4f2f740955523f09239",
+      "bytes": 7953
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-correction/schema.json",
+      "sha256": "3ec39f0292129d28c1659d3e4b890ef18b6aa8515d2d69a26139a5f047f163ab",
+      "bytes": 1593
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-execution__accept/answer.json",
+      "sha256": "34e85b530d3d69994b2c2f7231fb958700613637ec24fdcecefe9ac6c91b4b1e",
+      "bytes": 238
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-execution__accept/intent.json",
+      "sha256": "b47f19a176877c1d6ce448b0be707ed144ff7a72400c1d6eeef007b806190ebb",
+      "bytes": 647
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-execution__accept/outcome.json",
+      "sha256": "e9291fe7e8414b108148c77de44471a9b83f1fca06f74527cc1edb25765975b8",
+      "bytes": 560
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-execution__accept/prompt.txt",
+      "sha256": "62cfb1f64187f55637b79ac8a9e61779bc021c2e1660548c57c3781a2f7b5134",
+      "bytes": 16447
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-execution__accept/schema.json",
+      "sha256": "3dbdfb76a9fb6d7883928d71c2fd3624ca1ea42a48dc017221c5a88267947307",
+      "bytes": 634
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-079f5bde01926690/answer.json",
+      "sha256": "074bd09eaaf09c1baf60674438d4b5528ae5058470a526c1c699e96043269f26",
+      "bytes": 311
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-079f5bde01926690/intent.json",
+      "sha256": "d56f4cb577ad3b446dde4aeb8929815acd47419fcd6e6a5e2f97666f34df85d7",
+      "bytes": 594
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-079f5bde01926690/outcome.json",
+      "sha256": "3c7681a7029a31d7340067e224e2d2d60ceebf1181c7459db5598ce4cbeb4e94",
+      "bytes": 559
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-079f5bde01926690/prompt.txt",
+      "sha256": "786192412d8c7b4d0c38246a4604ab1ca56c916fcfe43fbbf5ec511c60a9fcff",
+      "bytes": 21116
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-079f5bde01926690/schema.json",
+      "sha256": "dae5ccf764204f93c0de98bf83822682d6b6a6a8bf1071e6cc19f153f86df3ea",
+      "bytes": 3973
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-b8e3684fc3cc5904/answer.json",
+      "sha256": "6e35106f75e082f314481ea1e5edcd9a30f0318cfac146f215660bcfd670b44d",
+      "bytes": 283
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-b8e3684fc3cc5904/intent.json",
+      "sha256": "22f8d333eb7a1ce1fc5839739a21c97deca2f8c9b90bd74c96d111ca0a072088",
+      "bytes": 593
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-b8e3684fc3cc5904/outcome.json",
+      "sha256": "fd5b6339783b0ab453cb4c8ba0358c756fc11f3e99c63a4bc77f37c262703ba6",
+      "bytes": 559
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-b8e3684fc3cc5904/prompt.txt",
+      "sha256": "095eaca6d3bb54c9b41570b291f8d4685b90729666e768fb0eb2998a1fc7fc3b",
+      "bytes": 21154
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-b8e3684fc3cc5904/schema.json",
+      "sha256": "dae5ccf764204f93c0de98bf83822682d6b6a6a8bf1071e6cc19f153f86df3ea",
+      "bytes": 3973
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_advisory-execution__accept/answer.json",
+      "sha256": "3ddf9a53bb95489d50a228f31114e2392ef808872353aa197ab4ac119d618789",
+      "bytes": 323
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_advisory-execution__accept/intent.json",
+      "sha256": "368770e2d9fd226682c9cccbf29e141e54b419d528c124547ef9823ad6cc857c",
+      "bytes": 598
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_advisory-execution__accept/outcome.json",
+      "sha256": "a113e0df1bcbf694c0e68461a59de205d4b26148745f0763503a4a99d19dd9f6",
+      "bytes": 558
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_advisory-execution__accept/prompt.txt",
+      "sha256": "5b5d202d4fa6bd60d74812e43c0a5975851ad9817e57341081a165784965dfcc",
+      "bytes": 8854
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_advisory-execution__accept/schema.json",
+      "sha256": "3dbdfb76a9fb6d7883928d71c2fd3624ca1ea42a48dc017221c5a88267947307",
+      "bytes": 634
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_committed-execution__accept/answer.json",
+      "sha256": "f2dfda42e4e365240d447d441d3e8348089ebe2dd0e27b56c98bb3b5bf3ac6c8",
+      "bytes": 262
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_committed-execution__accept/intent.json",
+      "sha256": "421ad4e1469ce48b24acc95a370dcbc322ebf13e592cb97fd2df1c2769085ca0",
+      "bytes": 599
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_committed-execution__accept/outcome.json",
+      "sha256": "1e14c95b26920e9655065fbe8977a82786ad22cf8feda9b6c6ed3ce01076264c",
+      "bytes": 558
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_committed-execution__accept/prompt.txt",
+      "sha256": "b7bcfebe237513f87757978470f6fa7be1f5670a35bf7323c21453eff15007b3",
+      "bytes": 8856
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_committed-execution__accept/schema.json",
+      "sha256": "3dbdfb76a9fb6d7883928d71c2fd3624ca1ea42a48dc017221c5a88267947307",
+      "bytes": 634
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-correction/answer.json",
+      "sha256": "55f5efa531474c1741db53f3250e66a2ef25dd1d186826f97a2a1a18a1282cf0",
+      "bytes": 553
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-correction/intent.json",
+      "sha256": "becb2e4b55869d3ad752f5d261b76698900df2e3f396afa9c5248f33dc4c48de",
+      "bytes": 596
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-correction/outcome.json",
+      "sha256": "e66179511b967e1e492ef739ab3802f7b879db989d06bc43365a152bd734eec9",
+      "bytes": 559
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-correction/prompt.txt",
+      "sha256": "7424a811aeb91bc55f1ea240810476540196fa7eb42ffc54c3fbbeb7b6e73668",
+      "bytes": 71298
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-correction/schema.json",
+      "sha256": "f857aefaca17a41d218fbe901cee6023447cbfb8dc5cd68edd9e0b6c22373701",
+      "bytes": 812
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-execution__accept/answer.json",
+      "sha256": "bf713b5b1b1dfbb0d234c21669e2db3473e92320affb5da342ff999ba80059a1",
+      "bytes": 215
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-execution__accept/intent.json",
+      "sha256": "8ef655ba24ccfec387e84db1cb73adece84ab44907a4724890c062a6a35822db",
+      "bytes": 630
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-execution__accept/outcome.json",
+      "sha256": "03a6853c2bdf0b4d3e05d018459c78b17cd25273e9e4802d8ef8d9006524c519",
+      "bytes": 559
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-execution__accept/prompt.txt",
+      "sha256": "bf04e62cb780854ba4dd6100bbdab1d17216e42458724f8ca66552183f459584",
+      "bytes": 5347
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-execution__accept/schema.json",
+      "sha256": "fed054582e320b6974e0e438a73b560acb22eea8e1d0a97463585d29a75d4064",
+      "bytes": 636
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-correction/answer.json",
+      "sha256": "55f5efa531474c1741db53f3250e66a2ef25dd1d186826f97a2a1a18a1282cf0",
+      "bytes": 553
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-correction/intent.json",
+      "sha256": "dc9f656a1d36f601e873ca6b6b5859a3750e1c6d76efd94d99714c5399828129",
+      "bytes": 600
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-correction/outcome.json",
+      "sha256": "88e740db911b33c30e64322f868b52907011a911d88403f55842c9c75086e5ac",
+      "bytes": 560
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-correction/prompt.txt",
+      "sha256": "0b3e00507fc2b824d11b7068f95d3dfe6b6dc418ec041823200c611aa63e2ba4",
+      "bytes": 83290
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-correction/schema.json",
+      "sha256": "f857aefaca17a41d218fbe901cee6023447cbfb8dc5cd68edd9e0b6c22373701",
+      "bytes": 812
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-execution__accept/answer.json",
+      "sha256": "5113bd0d1eaab31dc5fca9466e4c04810aebe1ca87947d0f9104b367370d7f3f",
+      "bytes": 254
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-execution__accept/intent.json",
+      "sha256": "68e73dc8f1feb49dab14965468930458dd6c4abb9d1470f8be36e1bd7fb7c883",
+      "bytes": 634
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-execution__accept/outcome.json",
+      "sha256": "869d86c5d07de932567bdaebfdb506dbbfa51b583a55445337614ce66931e7f5",
+      "bytes": 560
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-execution__accept/prompt.txt",
+      "sha256": "f66fc516cbb9bd35fd065c37165eeacbb02050dbb388b9735b7c6204c626b407",
+      "bytes": 5348
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-execution__accept/schema.json",
+      "sha256": "fed054582e320b6974e0e438a73b560acb22eea8e1d0a97463585d29a75d4064",
+      "bytes": 636
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-context/answer.json",
+      "sha256": "8efa9178564e1c8a03114fef7d0a8b3089bae4a8efe680c78d869e90758ef401",
+      "bytes": 239
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-context/intent.json",
+      "sha256": "1a2bdb97f6f87cb8d5ce54e34aaf585622301e1dcc771959f39b843a6b4e0a2a",
+      "bytes": 613
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-context/outcome.json",
+      "sha256": "0ba6c570fac45e2bd3f6e05035a1ea089ce26cf40cb319a3f0fd2d203193f104",
+      "bytes": 558
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-context/prompt.txt",
+      "sha256": "dc86a5fdbd42ef6bfb04124b5383f6a01cf1c768c0ecc428d0344d31003ef970",
+      "bytes": 360
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-context/schema.json",
+      "sha256": "aad5c54214c99fcec651ddffeb8d0ce408b1bf45fc65155c884e3777e173f2dc",
+      "bytes": 154
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-execution__accept/answer.json",
+      "sha256": "017639845d8cae4a74cc2953b98545f9ee361faf72d8958dff139e80b175c0c9",
+      "bytes": 304
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-execution__accept/intent.json",
+      "sha256": "f2b31e7b3bca1e46d134b5277ab08848b8c9bb86b8e6f3d90969a9dab94269b5",
+      "bytes": 647
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-execution__accept/outcome.json",
+      "sha256": "ff369a85b34753c851297c54611005ebcfd54a2467607529b89102d98e56858b",
+      "bytes": 559
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-execution__accept/prompt.txt",
+      "sha256": "dad8d3a6805332a246e8f6c9e6d379abfb066ddef03fa22766043350cd9db859",
+      "bytes": 30342
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-execution__accept/schema.json",
+      "sha256": "3dbdfb76a9fb6d7883928d71c2fd3624ca1ea42a48dc017221c5a88267947307",
+      "bytes": 634
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-observer-70176cd4a2a4f7c8/answer.json",
+      "sha256": "6e35106f75e082f314481ea1e5edcd9a30f0318cfac146f215660bcfd670b44d",
+      "bytes": 283
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-observer-70176cd4a2a4f7c8/intent.json",
+      "sha256": "1d28642e19b88243af93ff81d5de7480cb2d403be425014b5f6dea9efddb0857",
+      "bytes": 594
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-observer-70176cd4a2a4f7c8/outcome.json",
+      "sha256": "83be02153770ad2b7b014c597e20781d7f2f82011b35b470211588ff82a6e289",
+      "bytes": 558
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-observer-70176cd4a2a4f7c8/prompt.txt",
+      "sha256": "b9b624ab5a59b017e7718ae49f9ea3762e61641a8a80f2883ddd3b559ea19582",
+      "bytes": 37531
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-observer-70176cd4a2a4f7c8/schema.json",
+      "sha256": "dae5ccf764204f93c0de98bf83822682d6b6a6a8bf1071e6cc19f153f86df3ea",
+      "bytes": 3973
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_advisory-execution__accept/answer.json",
+      "sha256": "590c92647ca848def0f53ca78dc4a94fd6a15dda599f3fcb70d666327a1abe9d",
+      "bytes": 340
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_advisory-execution__accept/intent.json",
+      "sha256": "6cec39f81138008572d306d43b0f7ec2dd5b3e57a2eb7c99abab083e40b5d565",
+      "bytes": 598
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_advisory-execution__accept/outcome.json",
+      "sha256": "75352f565b3510f5ab21fb71f295fed3399a6b76ca404a19f5b4bab42dac00c7",
+      "bytes": 558
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_advisory-execution__accept/prompt.txt",
+      "sha256": "261232db24db9a9143b3aab4134ecb5ae8e50af1f4d36f0b9a813b31c77aa4c9",
+      "bytes": 31085
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_advisory-execution__accept/schema.json",
+      "sha256": "3dbdfb76a9fb6d7883928d71c2fd3624ca1ea42a48dc017221c5a88267947307",
+      "bytes": 634
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_committed-execution__accept/answer.json",
+      "sha256": "240e76fc07da4ad25fa3341f275f79d1d80604ef32a38dfd1dee5d5129ce42cb",
+      "bytes": 269
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_committed-execution__accept/intent.json",
+      "sha256": "f805ab7ef532d1feeb6e1f31045bcfbd9b6a757773f1960dcab95f197cd75e49",
+      "bytes": 599
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_committed-execution__accept/outcome.json",
+      "sha256": "cf646160b31c8211b972b3d0df34bd796d850ffc56cdc908bf2e268234eb5333",
+      "bytes": 558
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_committed-execution__accept/prompt.txt",
+      "sha256": "8d6abf360ed5af2d09615a0c355e28ae0db0a8afdae53a5cc00123b73f076206",
+      "bytes": 31087
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_committed-execution__accept/schema.json",
+      "sha256": "3dbdfb76a9fb6d7883928d71c2fd3624ca1ea42a48dc017221c5a88267947307",
+      "bytes": 634
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-correction/answer.json",
+      "sha256": "d7694519a6d5eb0ee105afa46f2d37d1c4e362eb01705d9d51df6f460591b778",
+      "bytes": 1115
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-correction/intent.json",
+      "sha256": "6c5857b19f5865dea494644f2d49ce1cd91df403fd9a018648863d1b38adff9f",
+      "bytes": 596
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-correction/outcome.json",
+      "sha256": "e2e9cbf7bf255bcdc81944302a1e5b201e0ee49c0d60f45a0237259927c820d2",
+      "bytes": 558
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-correction/prompt.txt",
+      "sha256": "d940407951fc50d803fbb365fe06420052d160210a6e3587556ca9127efc3d75",
+      "bytes": 87705
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-correction/schema.json",
+      "sha256": "aa800d879b6e21771ee33a5ef4874472d1041b79a5fda5b289e73a44ea16ab49",
+      "bytes": 643
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-execution__accept/answer.json",
+      "sha256": "65864137a4d12013a97b117599ad192e7a992dffc45344a18acbe5a3952d72ed",
+      "bytes": 180
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-execution__accept/intent.json",
+      "sha256": "d45e07a308c131fb557ea3c6d1d560815b2372e230dcdff1313c93b8fadba4a2",
+      "bytes": 630
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-execution__accept/outcome.json",
+      "sha256": "aaa1437024eb1df33b329bdb69b17259c9c7ba16160a074b42b6bfbf6af3f760",
+      "bytes": 561
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-execution__accept/prompt.txt",
+      "sha256": "2fed05a4ccc472e35fa39ca2f197b035390268e2ef994e85d2cba49ac37ff55c",
+      "bytes": 22745
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-execution__accept/schema.json",
+      "sha256": "fed054582e320b6974e0e438a73b560acb22eea8e1d0a97463585d29a75d4064",
+      "bytes": 636
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-format-r1/answer.json",
+      "sha256": "3b76e358e6a973393492f9e04689e4bc898413f9871b7674eb489d48b12605a1",
+      "bytes": 1068
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-format-r1/intent.json",
+      "sha256": "98ecb88fee7fa0dc335c8300838b9e786ad370679a15d3f14f2f06a04c31fd65",
+      "bytes": 643
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-format-r1/outcome.json",
+      "sha256": "71bf7b15de0453ab3b3b5b0226ccbbce98b4c93c0e99420bdd4860b506420062",
+      "bytes": 559
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-format-r1/prompt.txt",
+      "sha256": "64e6b961c161ff499117637b3841cbebe3a6f73ea10b233db674eebb898b3472",
+      "bytes": 88453
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-format-r1/schema.json",
+      "sha256": "f857aefaca17a41d218fbe901cee6023447cbfb8dc5cd68edd9e0b6c22373701",
+      "bytes": 812
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-correction/answer.json",
+      "sha256": "0959495402f131efb4603c6a44635acd786dd9e13bc7899558b1801adc582579",
+      "bytes": 302
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-correction/intent.json",
+      "sha256": "08109bd2034c5c000ed150ea90d7d40cba525ecce78ff8c4dbbcc312adaaba2c",
+      "bytes": 600
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-correction/outcome.json",
+      "sha256": "b9fe3498fd4d21f50638c63e765790ae1ec23882a023cdba65aed17b029212c3",
+      "bytes": 558
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-correction/prompt.txt",
+      "sha256": "9e6f08be1a267857567c1f9675d8577c11e6f934909493bbe4c06934ce7d1688",
+      "bytes": 99697
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-correction/schema.json",
+      "sha256": "aa800d879b6e21771ee33a5ef4874472d1041b79a5fda5b289e73a44ea16ab49",
+      "bytes": 643
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-execution__accept/answer.json",
+      "sha256": "83ca029435ec1f8f45e73918c0e16ba05dd90eda6f7b2551a56e7294eeb9e449",
+      "bytes": 256
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-execution__accept/intent.json",
+      "sha256": "de0e42f4ef2fcf00d8b917d55332f186a9f5a9f8eea6544e346a770b927797c7",
+      "bytes": 634
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-execution__accept/outcome.json",
+      "sha256": "bba5abd6a79bbd51459e2de868bf712c95026ff45f9da55d19a8ec4e319bc18b",
+      "bytes": 559
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-execution__accept/prompt.txt",
+      "sha256": "2e650fab6012b235a0bcf4984be9d9b8a3437686a179269694b2a8e75050f11a",
+      "bytes": 21211
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-execution__accept/schema.json",
+      "sha256": "fed054582e320b6974e0e438a73b560acb22eea8e1d0a97463585d29a75d4064",
+      "bytes": 636
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-E/answer.json",
+      "sha256": "eb5f5f9c37d1f13dd8053c04a5f3eeb8254cc7bdcaa28c221139e34229c64482",
+      "bytes": 457
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-E/intent.json",
+      "sha256": "2b6eec126814afc4d3352b9660037e8921998ac895582f707e73fba554399ecb",
+      "bytes": 579
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-E/outcome.json",
+      "sha256": "d35d1d06d5227580bc4933fd59b796504690d9d697b602fe68901d89c584728f",
+      "bytes": 559
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-E/prompt.txt",
+      "sha256": "77be0978b3e1c376fd0a7990503584ccb59a0b8f5ea0a87629077bb429689084",
+      "bytes": 69989
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-E/schema.json",
+      "sha256": "aad5c54214c99fcec651ddffeb8d0ce408b1bf45fc65155c884e3777e173f2dc",
+      "bytes": 154
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-F/answer.json",
+      "sha256": "7f4ab2380cafc1b6a1fec8f7755f357fec88b7b378000ab35214cb91e7a61115",
+      "bytes": 951
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-F/intent.json",
+      "sha256": "7dc3b023d73b39cee12293e3841bf67feb3f2ee0ebab239c090799f195e0a0dd",
+      "bytes": 579
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-F/outcome.json",
+      "sha256": "4096fd51bc05c83ce4fb999607fb410c3cb441264795a689ce65df8db2c5f0b2",
+      "bytes": 558
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-F/prompt.txt",
+      "sha256": "66ceb60a84dfae6dda1bbe1c232de4bb2f14e2ef2745a4f3bd0da813fa3cb1e1",
+      "bytes": 85902
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-F/schema.json",
+      "sha256": "aad5c54214c99fcec651ddffeb8d0ce408b1bf45fc65155c884e3777e173f2dc",
+      "bytes": 154
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/.entry-lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/intervention.json",
+      "sha256": "2a3a5688b8d70b91bfd29cf146dbe7d4d07fb816fc411e88c04556cfca6c35ed",
+      "bytes": 277
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/manifest.json",
+      "sha256": "aea081d288f969db7b343930fe46753f83e26f1d72bd14dad783748a8b16127b",
+      "bytes": 6285
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/resolved-runtime.json",
+      "sha256": "719688ead6b0b78699ee15996a57a26193ed610696ecfa6632de8800a4b78c78",
+      "bytes": 185
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/before-arbitration.json",
+      "sha256": "a8c0275554f9538435e46ca7895609e040238afa521534c1b214e343f46095b0",
+      "bytes": 5195
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/candidate-observation.json",
+      "sha256": "9063e9f3b11ba815bd8b904a15abf8d0b28f2918634bf3e5bfe4b898a3137adb",
+      "bytes": 7828
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/candidate-recheck.json",
+      "sha256": "bb772936d4ecac1b5a1ea54481add1cab46d5ee1a6c4405815c595701ac95305",
+      "bytes": 4322
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/manifest.json",
+      "sha256": "a030fa01f3d77fd62ea9af81ab34da0490aef518868bc9944b54f4370d445d0f",
+      "bytes": 5285
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate/.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate/calls/b1dfff99fa3b7b2fb28c7b8e7aef23bc1663884cc50fdf05f511c1c68547aaf1/intent.json",
+      "sha256": "c78acd180ec0d4e9e05f356fb3ea2cd487c5ee8c72cfddac3fbfcbfbef8c45f9",
+      "bytes": 7431
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate/calls/b1dfff99fa3b7b2fb28c7b8e7aef23bc1663884cc50fdf05f511c1c68547aaf1/outcome.json",
+      "sha256": "d4a152663c70296999668062171123de8ebc460d5ae79a817e3ac9e9c9421c89",
+      "bytes": 983
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate/calls/b1dfff99fa3b7b2fb28c7b8e7aef23bc1663884cc50fdf05f511c1c68547aaf1/provider-receipt.json",
+      "sha256": "dd71cb688427b6efc4ecfb6d8405bebc2639a052a02d1d65d0637ee9cf5e53d7",
+      "bytes": 1931
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate/live-admission.json",
+      "sha256": "eaf21469b0c36c13a46f5d195ebabb7946b4b76474e049af3b5fdb54948b9d79",
+      "bytes": 1094
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate/policy.json",
+      "sha256": "bb74ce091128da29d7659585de403e250e5f2d2b3d890190bf856b16da3ef883",
+      "bytes": 1800
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate/resolved-runtime.json",
+      "sha256": "719688ead6b0b78699ee15996a57a26193ed610696ecfa6632de8800a4b78c78",
+      "bytes": 185
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate/runs/52de6c00b03edd095fead528e778fdb55b7ffebca04ae1dcaff60e75df252a01.json",
+      "sha256": "344bafeea7b9bac6f2ab028a7d0500b31f6f3fc510d9a9fd5da3a5ce80de64c2",
+      "bytes": 1603
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate__recheck/.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate__recheck/calls/8623e545b5ac6b3b52e59cbe5902e7d5647429053370d3c65123c2e9c0b48c8f/intent.json",
+      "sha256": "d395c2895462a3cf73f1dd089d90dbd40e1faae840b336f7049604818425f4dc",
+      "bytes": 7431
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate__recheck/calls/8623e545b5ac6b3b52e59cbe5902e7d5647429053370d3c65123c2e9c0b48c8f/outcome.json",
+      "sha256": "f5d020d2a89c1c88c88d3e9416e3b8e9ee9b268a3e88501680779a791011e2d7",
+      "bytes": 955
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate__recheck/calls/8623e545b5ac6b3b52e59cbe5902e7d5647429053370d3c65123c2e9c0b48c8f/provider-receipt.json",
+      "sha256": "1a1c8669b311913ce00291e3a2233286ea7cfde72884d0bdef6b2125a409b7ea",
+      "bytes": 1901
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate__recheck/live-admission.json",
+      "sha256": "ed850fe662b8e648a04eccd8a4dab36c1e128cbce385fd3569738a94a53fd4a4",
+      "bytes": 1094
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate__recheck/policy.json",
+      "sha256": "7f5e788f09c5efcce74270575cd7bbe3aba2e05838a42514ca195d514dd85a23",
+      "bytes": 1800
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate__recheck/resolved-runtime.json",
+      "sha256": "719688ead6b0b78699ee15996a57a26193ed610696ecfa6632de8800a4b78c78",
+      "bytes": 185
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/candidate__recheck/runs/63843b01826e6a3115eb32134ca2ee08b1d6732e9b89ed9a05a48068d2d9a252.json",
+      "sha256": "4c3677f7cd244a7a22f3a3a2958e50523fdf7f76947f0af35dee61630c2ada76",
+      "bytes": 1575
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/correction/handoff.json",
+      "sha256": "e72f4e791d9d3bb3976679f5815a84a06a8b631f91807e74f4dc981e13272f0c",
+      "bytes": 8406
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/correction/host-response.json",
+      "sha256": "91327b9cf756b4fa9455045ea1385d727491af8c4dd88b9cd21f7269792f68ec",
+      "bytes": 3462
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/correction/intent.json",
+      "sha256": "58f22a306a9397fda91d0c3aed162e562534ee928dcf8d5de4064b91c496b82a",
+      "bytes": 724
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/correction/outcome.json",
+      "sha256": "d7f55f1635c553cdbf4cf9ef79f5f387f3a9bfd98c04480f127fd4e803720c42",
+      "bytes": 3765
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/correction/request.json",
+      "sha256": "7f709e90d5b21d841a947e629cfd554cfc5becf901e2eb8d03a312d3599f5b29",
+      "bytes": 7143
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/execution__accept/handoff.json",
+      "sha256": "be55d7b499abf5844b0e4413c3d1ef41ce1746154f49573c3015950b9d42c697",
+      "bytes": 16876
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/execution__accept/host-response.json",
+      "sha256": "a501ffde87b849ba21fe1983542cb78b7eb71c80a0fca5e3380d0466b1f52d77",
+      "bytes": 1040
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/execution__accept/intent.json",
+      "sha256": "efc2ea9f2ad15c8ef4f52e6552042cc65f5606543e6060030f73bf6fde7636fc",
+      "bytes": 723
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/execution__accept/outcome.json",
+      "sha256": "c9afe778546ca0efbb5f7cce4119e52060c885f3270d0979ed3ca5944eb4aaf4",
+      "bytes": 1342
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/steps/execution__accept/request.json",
+      "sha256": "1142360a7716c47e29d5f7be9d5e7d40a40042059af531d49f1459e704463f03",
+      "bytes": 15637
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/3d98334fa2e06260c7492ec8511f9e8ab84039218a60c2df2ee14bd6fe992ee3/summary.json",
+      "sha256": "acb00bc61d69bbc36e8188477a4a908487976096f86847a602b50215755f2f88",
+      "bytes": 21293
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/.entry-lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/intervention.json",
+      "sha256": "89d47fb87ee9b608ad46f38c09de1f8d1aa1da3bdd5438746dfcee60a52e47aa",
+      "bytes": 276
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/manifest.json",
+      "sha256": "a1375dfdad79a823e8f1df35414307e1b74aeec08b67623b06aefee6132d34c3",
+      "bytes": 6089
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/resolved-runtime.json",
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/candidate-observation.json",
+      "sha256": "8e1ecba95cbb4d393f555a88fb561fb7c89c98f8adbdaa0c2f00a231b2c82ae8",
+      "bytes": 5064
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/manifest.json",
+      "sha256": "b1432db874fc194b7eae79f6b9d46fad3e7dab84f23d01bb9451c91daa9ab942",
+      "bytes": 5284
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/candidate/.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/candidate/calls/2364d8b08bd1affd0b23e3dcc1936f600b77dd2441257f61b245a846c53e2be9/intent.json",
+      "sha256": "5f11fb1d7c924f5f34b6a5d4c38c501d590a37305d2907ab152c889f5f06a859",
+      "bytes": 7370
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/candidate/calls/2364d8b08bd1affd0b23e3dcc1936f600b77dd2441257f61b245a846c53e2be9/outcome.json",
+      "sha256": "8a29492be859c592e3a4e137fca8787c5d27b656dc73dbde9a8934392f5bb1d1",
+      "bytes": 1584
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/candidate/calls/2364d8b08bd1affd0b23e3dcc1936f600b77dd2441257f61b245a846c53e2be9/provider-receipt.json",
+      "sha256": "abec300d6b72464e3672638246b4a34b0e5c2c00c7032e1814307776e70dd100",
+      "bytes": 1660
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/candidate/live-admission.json",
+      "sha256": "b81f41a50f81c74ce0f38e4f764bc65ac3b30b6c78cb266e3d6c95afa7efcd45",
+      "bytes": 1033
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/candidate/policy.json",
+      "sha256": "3511a549badd3a674a8946f1fbdc1a442d00205d965dda0fdfffca8e78626348",
+      "bytes": 1678
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/candidate/resolved-runtime.json",
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/candidate/runs/fd42de11fc0c0dbb6dfa38e3685f349e0b17231e787006e762076ea58d4861f3.json",
+      "sha256": "9088d132d9929c2820a39e875da70bdb5042c2260a79c2701627940e6a48f319",
+      "bytes": 2156
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/execution__accept/handoff.json",
+      "sha256": "7cf09cb9e3093de7288e5569fda4ba6bf17cb9ac4a64c1c9aa3ff3a2ded316e3",
+      "bytes": 9283
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/execution__accept/host-response.json",
+      "sha256": "ab39b336c56af9fc75ffd61bb6b7f80f1234d5872f443a200b4a51ae81be483a",
+      "bytes": 1123
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/execution__accept/intent.json",
+      "sha256": "e32328d47016a4330854eeff557fa4723958679576c76db553bf7246ea60f244",
+      "bytes": 722
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/execution__accept/outcome.json",
+      "sha256": "e3e0ba120c09d55a8f321ecdba947a34c163f02af3e58a109bbd3ba3e6c0974e",
+      "bytes": 1422
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/steps/execution__accept/request.json",
+      "sha256": "3bde20362de9ab0eef5df945b3e4998c645afd9d50b5a672a9e0d591d575c143",
+      "bytes": 8044
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/d9a9eaa9f3892f919812a67fdfe8d28be562c6b2c36af865ad498472ca532e9c/summary.json",
+      "sha256": "045ffebe531d5c04618f85e1fc2e5470c138db86084f27fb3c6603567a6e4ed4",
+      "bytes": 10668
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/.entry-lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/intervention.json",
+      "sha256": "2a3a5688b8d70b91bfd29cf146dbe7d4d07fb816fc411e88c04556cfca6c35ed",
+      "bytes": 277
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/manifest.json",
+      "sha256": "4bffaf703c94b3b09f8b6c4d863e52f90fcb5287c8819d62cf3282f231b8cfed",
+      "bytes": 6090
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/resolved-runtime.json",
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/candidate-observation.json",
+      "sha256": "8e1ecba95cbb4d393f555a88fb561fb7c89c98f8adbdaa0c2f00a231b2c82ae8",
+      "bytes": 5064
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/manifest.json",
+      "sha256": "5507c8ea65f460ea18154c4a6f5cc6d89a10812bf43cbb97913948377e0cd797",
+      "bytes": 5285
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/candidate/.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/candidate/calls/b43622baec937bf2f76a14ca75fb4b2408281719198351f375d3866d0c08d504/intent.json",
+      "sha256": "089366e5c5e7e041cb19eff169308e77f3251799a4301c80efefa50e62d6ca9e",
+      "bytes": 7370
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/candidate/calls/b43622baec937bf2f76a14ca75fb4b2408281719198351f375d3866d0c08d504/outcome.json",
+      "sha256": "bf71435f6b458b078cc0f2b48c21f2f4834e481af47a2f6ab70ac4807a229a5b",
+      "bytes": 1583
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/candidate/calls/b43622baec937bf2f76a14ca75fb4b2408281719198351f375d3866d0c08d504/provider-receipt.json",
+      "sha256": "413a23fd26cccf3434f047bfd8385575a2e414c63339e5506b9354acb3278148",
+      "bytes": 1660
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/candidate/live-admission.json",
+      "sha256": "f15d879c07facc69a27c66ba6835987e9a32783527e79807fede55b3377aab05",
+      "bytes": 1033
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/candidate/policy.json",
+      "sha256": "46c08b49203d41e69f5afd99be9faf9518f4f77b87929e719bf46865a7db1a0c",
+      "bytes": 1678
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/candidate/resolved-runtime.json",
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/candidate/runs/f99322ab48e0b713e2b6559e3fe7b3ff30d6fa303c2f4b526e3e40c57b1e16d2.json",
+      "sha256": "749f567010f49f0da286b503f8b6ff889b5e25e72e1c3a515cf9edf078ed35bb",
+      "bytes": 2156
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/execution__accept/handoff.json",
+      "sha256": "bbfec5f692148e0ca535347fb83fbc34744c92ac82757adfd15bc5c3303b23b1",
+      "bytes": 9285
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/execution__accept/host-response.json",
+      "sha256": "5fa60a1a739610b40678ab5d90b7a2932cac126e783ccf788a917578b587cd55",
+      "bytes": 1062
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/execution__accept/intent.json",
+      "sha256": "4b7f29a1f8d1027a708c24988732ef6fa83141e1a7867d9231100c0c30f6b918",
+      "bytes": 723
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/execution__accept/outcome.json",
+      "sha256": "1344be598d028164d84a4234c03b05326a8e59660cebe756eb0e2911bb437838",
+      "bytes": 1362
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/steps/execution__accept/request.json",
+      "sha256": "5d64d3eda4636b02fb2e48191f4d7028776c82650e99776d85cfb60601dbb7e9",
+      "bytes": 8046
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/91d2e45b640c8d791647afdea68ebad052a2b988e43e883e93cbf4fb0f00ebe8/summary.json",
+      "sha256": "92fbad1e445bb56d19aa34cdbb23446b4c363324ee5edd99333dcefca3aa6380",
+      "bytes": 10608
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/.entry-lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/condition.json",
+      "sha256": "9fafce0cf49530a81e7e1185ad65c55ab678fb8b44b28899d0af9d6614e56d33",
+      "bytes": 72226
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/intervention.json",
+      "sha256": "c03ab948555e2c5fea780f101b7ee77a0a4463bcd7d01ee3de362963c1751931",
+      "bytes": 227
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/manifest.json",
+      "sha256": "11d46db8d6e8303666e90d56c429662c577665e50c414368812b469c887ae399",
+      "bytes": 2586
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/before-arbitration.json",
+      "sha256": "8628804825912261d8739c765ea46cad42b276604e4350401bf5265686dd0534",
+      "bytes": 1619
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/manifest.json",
+      "sha256": "e124462508907ef59bd33e315b7cb5af02eeca2ecffb863729ef287d7ffc6a3d",
+      "bytes": 69756
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/steps/correction/handoff.json",
+      "sha256": "8d6b7a9500b00da0b55f0d2d109dff520f2c90f35f05f5b23247cb9c99194dc7",
+      "bytes": 71806
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/steps/correction/host-response.json",
+      "sha256": "ec1b082d30a63d78f9474b6480f3f9fa03697778fd98122adeecb6417b1dfce2",
+      "bytes": 1327
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/steps/correction/intent.json",
+      "sha256": "5c9e81aa31139e6ba5512938e82a5595cf445417757705ad92bf5742725833a2",
+      "bytes": 725
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/steps/correction/outcome.json",
+      "sha256": "be062a0b25fc328beada46b139a575c2644e638659254be9a6d7dccfea5d7920",
+      "bytes": 1638
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/steps/correction/request.json",
+      "sha256": "e60305df4ce5f652a53cbb07861f03c4ef7ef6a34c386904ff8cddce87b5a610",
+      "bytes": 70488
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/steps/execution__accept/handoff.json",
+      "sha256": "cd3d832c5ac980a3f16ce9eab3cd3fc1d41255a0ebda7496f31fd5971b17d3c9",
+      "bytes": 5776
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/steps/execution__accept/host-response.json",
+      "sha256": "d507bc09ee9e8ac3b6162e149e0db02970f10f0a239389a99abbc8a418214811",
+      "bytes": 1016
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/steps/execution__accept/intent.json",
+      "sha256": "6e2a58253132e78abf4ff57d449da3450029ab0eaaa858af8d5c347620be8661",
+      "bytes": 723
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/steps/execution__accept/outcome.json",
+      "sha256": "879acb2645fc9a5c704f7330132191956dfbf4cc366e414c110b60b1fade5898",
+      "bytes": 1325
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/steps/execution__accept/request.json",
+      "sha256": "47fa7060108598c48d2bbb6724dfbd49ba6ab28d6f0a6842f55ba6b3a6be6be1",
+      "bytes": 4537
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b19f1bb8c6e654895c0ccb95994ccf6888b114dd978778fc094d06e4072ddd82/summary.json",
+      "sha256": "0a562f63c3ed99db46ffb782d6532d07e7f7a78653469149e2a842525d8ab9c1",
+      "bytes": 2506
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/.entry-lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/condition.json",
+      "sha256": "2c7d2ee9ec64d15759dbae1121b89eda58784d59b0433a1e24e557ee28927118",
+      "bytes": 84214
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/intervention.json",
+      "sha256": "c03ab948555e2c5fea780f101b7ee77a0a4463bcd7d01ee3de362963c1751931",
+      "bytes": 227
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/manifest.json",
+      "sha256": "00851a32ab0f88ed66a74b750357f15e812cf83cab2c0b301a71269b6f9d79ce",
+      "bytes": 2586
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/before-arbitration.json",
+      "sha256": "57f2a9db5104c7443737e1cc06e51b84f6f8887e46540d8b263cef7debf86e28",
+      "bytes": 1620
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/manifest.json",
+      "sha256": "dc1b0553383ad2f646620db500ef0fc4aa88ae1d87b7627e0e2a9d8207e359a7",
+      "bytes": 81744
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/steps/correction/handoff.json",
+      "sha256": "81fd66e383dee6191446daa9abb30b9a53766d391f90f5c2bef82fe224649a82",
+      "bytes": 83798
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/steps/correction/host-response.json",
+      "sha256": "3de0407ca379cc218c2140d8db0265739f28281de6565507c66a887e356b33c4",
+      "bytes": 1328
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/steps/correction/intent.json",
+      "sha256": "1289da327b086c2a4c46715162a0343e651971b2af0b9ca62c1eab0038637b3b",
+      "bytes": 729
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/steps/correction/outcome.json",
+      "sha256": "706e84325c496ef0283673b6a36aa6f41c6c6da06908543e8165325b1d73e367",
+      "bytes": 1644
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/steps/correction/request.json",
+      "sha256": "44c75309a163d15f1a5329d29ef56ca3f436e0e96e23ec12ed772093cf04614a",
+      "bytes": 82480
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/steps/execution__accept/handoff.json",
+      "sha256": "da6d59425fbeb6e61c0156ab2ddd535ba32573bb84434ec54b45132efc39531b",
+      "bytes": 5777
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/steps/execution__accept/host-response.json",
+      "sha256": "4472b5b06f397ae79f3c15bfc3ade88e6dc7229bfd530935fa5611eb1cc593ed",
+      "bytes": 1056
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/steps/execution__accept/intent.json",
+      "sha256": "1b2a2dd5b7d6dd728b9c66e99a0523672650943ed55588a5869e8c08430f6298",
+      "bytes": 723
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/steps/execution__accept/outcome.json",
+      "sha256": "56d791eddc8e84ac54657e2804f0b4c277ad3836cad51ced795512a2df121687",
+      "bytes": 1366
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/steps/execution__accept/request.json",
+      "sha256": "80c3ae2d1d54d586aebb9c23164c72b6186c541aab14286a9806d1eb7d8ef63a",
+      "bytes": 4538
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-E-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/96028f41da1c4efb7701856edee0cb69efcd5d14e2156b644c3134c88b7ba4cf/summary.json",
+      "sha256": "e83b873379400519e68ace1b6161c620a76a0d8ef90a0cf05c20a51976d6ba45",
+      "bytes": 2551
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/.entry-lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/intervention.json",
+      "sha256": "eacbd3f225297c35d0615c9b2f17e4240de7fddb95083e7724633f34394c5108",
+      "bytes": 277
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/manifest.json",
+      "sha256": "196ce00153aff75555d6cf12c250fc3272731fc669e7390fffce03cc24e2fa4d",
+      "bytes": 6285
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/resolved-runtime.json",
+      "sha256": "719688ead6b0b78699ee15996a57a26193ed610696ecfa6632de8800a4b78c78",
+      "bytes": 185
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/candidate-observation.json",
+      "sha256": "8df5e9bc2eefca2050021c1a7b8e97e0b2b72637ea80074a40267e975b32bca9",
+      "bytes": 10142
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/manifest.json",
+      "sha256": "118f28900d318bcca93dae20ec085aed6364594e5b5dded881fdcb137d969ffb",
+      "bytes": 21693
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/candidate/.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/candidate/calls/097c9aa99f4526eb20a8f0e76e8fbd7a664f5d45f64faf865fa80663b8ed72c6/intent.json",
+      "sha256": "67fc864979156eaddc0e1ec8afb9c36cb2ccb552e521869e2b6fb3408fc1cdb7",
+      "bytes": 7439
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/candidate/calls/097c9aa99f4526eb20a8f0e76e8fbd7a664f5d45f64faf865fa80663b8ed72c6/outcome.json",
+      "sha256": "2ce6e89ead020074c157fe8c8b31f4cd66ca8beac57851acedbe31fa32dec8f7",
+      "bytes": 955
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/candidate/calls/097c9aa99f4526eb20a8f0e76e8fbd7a664f5d45f64faf865fa80663b8ed72c6/provider-receipt.json",
+      "sha256": "78ec69a6a0eabea97eebd192bab3d3bc7564c9e6d23647f89c7b749cc46489b3",
+      "bytes": 1901
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/candidate/live-admission.json",
+      "sha256": "e5215c3ab10700d00be45524415880d02403f3785f6668b16e58ec1e079d8d5b",
+      "bytes": 1094
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/candidate/policy.json",
+      "sha256": "7d2e054f554741433a8e420b13dd8165e4f02a8156413c7a8865e30f3e80f35d",
+      "bytes": 1800
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/candidate/resolved-runtime.json",
+      "sha256": "719688ead6b0b78699ee15996a57a26193ed610696ecfa6632de8800a4b78c78",
+      "bytes": 185
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/candidate/runs/5d355489a9d1405c8c4e8efe352c29dba544c604969b298a1a5c0e42828a1bcf.json",
+      "sha256": "8998c324999f03a76bb36355f3629afe0f937a2e8aa76c7345135f1758bbff79",
+      "bytes": 1575
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/execution__accept/handoff.json",
+      "sha256": "9b572a2f010fb186ac5a4165a1fa8fce596b078f5c396bd43abff96ba184adcf",
+      "bytes": 30771
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/execution__accept/host-response.json",
+      "sha256": "725d2791c699b5c7bd9ee085f02f195f62345a4d0ed7206936bb27339c9b2a09",
+      "bytes": 1105
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/execution__accept/intent.json",
+      "sha256": "d130fdc5f59f119b0a34b75b8779fb42725cd9f343a94cb2bd215745395f1987",
+      "bytes": 723
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/execution__accept/outcome.json",
+      "sha256": "6e7041245c8884d18859d8ca18af7be68f909ee003475602e6eab5594ccdeb0b",
+      "bytes": 1406
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/steps/execution__accept/request.json",
+      "sha256": "8ac5a14ddf21f1c4b01830d8e2f14a74406d1ceaddc24c82da5e2cbde9800939",
+      "bytes": 29532
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-codex_observation_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/8bb685c1965fc377e9660b1c01469ae012ffaabdd21c5be92fdf28f997999bf3/summary.json",
+      "sha256": "b9050705f23492e37db4cdc032bfa053de4d709674eab4f1f3c2f1a4988d9b4a",
+      "bytes": 32138
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/.entry-lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/intervention.json",
+      "sha256": "149eeca7ebe33ba80893d94ac19e79610bd3ea2135408f594cfc3a1b45509708",
+      "bytes": 276
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/manifest.json",
+      "sha256": "87984fab8e6ccf1ffcadb8b1925d64a516edbc30219519a8e3be465d81f763ba",
+      "bytes": 6089
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/resolved-runtime.json",
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/candidate-observation.json",
+      "sha256": "1bf3e93693dfbd330fe42b237eec526a73218dda91e95bcc99278ca71d71b479",
+      "bytes": 10887
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/manifest.json",
+      "sha256": "9bff0db1f94320aeec702ea4f058ce8b176d9cfdf89fa96099b4a1b9bc14c096",
+      "bytes": 21692
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/candidate/.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/candidate/calls/c765dc552d8c85dc00c3484b79e942084b29068e9a10f03b6e621a29305dcb63/intent.json",
+      "sha256": "567ea9a17f3b8de78d663380a6446c4b69c8cba11820f2a7523f93a5746685c1",
+      "bytes": 7378
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/candidate/calls/c765dc552d8c85dc00c3484b79e942084b29068e9a10f03b6e621a29305dcb63/outcome.json",
+      "sha256": "c885ce0ee589b0624e3ac0665666325c89c7508cf095ed6f013259e7033ee965",
+      "bytes": 1590
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/candidate/calls/c765dc552d8c85dc00c3484b79e942084b29068e9a10f03b6e621a29305dcb63/provider-receipt.json",
+      "sha256": "d0db074c96f21a3796f70fa39e77407565b5f49b81030ccffba49ae8add33215",
+      "bytes": 1665
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/candidate/live-admission.json",
+      "sha256": "4a07047f4c29d2f931ff485abcb70256a6c6e1f6afa2ccb723708e637334fdb4",
+      "bytes": 1033
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/candidate/policy.json",
+      "sha256": "d996276bc18eb624e2b6b364d06798df4174163e1f207ee47fb18d6271cbe7bb",
+      "bytes": 1678
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/candidate/resolved-runtime.json",
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/candidate/runs/dbd7bb0a3c00587f0b14b7e117635f0f738f80c24eef0ef5e9fcc3ad53c5f906.json",
+      "sha256": "9fc6e3a0a5e4e3620506bae6a703716590f6f09948d3b84cdbe9f44703e0d2f1",
+      "bytes": 2159
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/execution__accept/handoff.json",
+      "sha256": "ba8a1a78510ed1997a44d1ada8e3c75410e6b03a4cc20d496c4acd088b4f70ef",
+      "bytes": 31514
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/execution__accept/host-response.json",
+      "sha256": "6d1b07e6b1d324706089e61d1035d0c03038c7cd3c1b21e9bd3b8c9aba8e4ac1",
+      "bytes": 1140
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/execution__accept/intent.json",
+      "sha256": "8c8dd1e22fb38c005d90440d3c1f4ce6ad9588010ee4d473f12a16bad6209666",
+      "bytes": 722
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/execution__accept/outcome.json",
+      "sha256": "1abc9f8c9fb63a160b9e4682260e05f6d3d0116139adc45302c08c628ec38f90",
+      "bytes": 1439
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/steps/execution__accept/request.json",
+      "sha256": "b929e72f16bfb210303653ad506cc64e8848b1c6d34620629539d8c5195eed44",
+      "bytes": 30275
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_advisory/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/a0eb2494c61590165aa47ea50e3169213a2a1bce8569d9bbe120b31df842fa86/summary.json",
+      "sha256": "9a8dd43752e261d1bb3a21774e94635274b2feb5f1d05ae7dc53e9a378b04780",
+      "bytes": 32918
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/.entry-lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/intervention.json",
+      "sha256": "eacbd3f225297c35d0615c9b2f17e4240de7fddb95083e7724633f34394c5108",
+      "bytes": 277
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/manifest.json",
+      "sha256": "fb7eb47ee4c198ba6ae1da722911ff2e28ee77ec0d10772d790f95412d8a6673",
+      "bytes": 6090
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/resolved-runtime.json",
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/candidate-observation.json",
+      "sha256": "1bf3e93693dfbd330fe42b237eec526a73218dda91e95bcc99278ca71d71b479",
+      "bytes": 10887
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/manifest.json",
+      "sha256": "88896627c713e70a9e187d292562819027abdd358eea808db5277019bd4e6e58",
+      "bytes": 21693
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/candidate/.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/candidate/calls/5552b0d553ac3f8c39cf8ae563c4813164c842dd80d8dcee7398c5d1e043da6d/intent.json",
+      "sha256": "ab0c2b2ee90b7559f6ddb33fa5ec614354639ff00a5f4f560071570f4eef0f12",
+      "bytes": 7378
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/candidate/calls/5552b0d553ac3f8c39cf8ae563c4813164c842dd80d8dcee7398c5d1e043da6d/outcome.json",
+      "sha256": "3a14c46160da296b42f616e9a073b9f34ef18c59cbe437dc52d2123121717024",
+      "bytes": 1587
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/candidate/calls/5552b0d553ac3f8c39cf8ae563c4813164c842dd80d8dcee7398c5d1e043da6d/provider-receipt.json",
+      "sha256": "6e3a7a7c82cd23737628390f98edb63cb1616d523b4b6d94ed308451adb4564a",
+      "bytes": 1665
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/candidate/live-admission.json",
+      "sha256": "f2bfb64a06369b38db06c3956d546e48c8fa048a0964ddba3d6b646864483b4c",
+      "bytes": 1033
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/candidate/policy.json",
+      "sha256": "4ae5c120593802cd86d5675797d24c051cba37256dd198b694253e3272790bcd",
+      "bytes": 1678
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/candidate/resolved-runtime.json",
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/candidate/runs/41b6e28a2237f33c1b19dbed95a935361bb7c35722ba0098c0192d329d033198.json",
+      "sha256": "95905c07270cfa6547f2d7f9cae39bb4401a4ee3cb5284cd0e0419acc1578b02",
+      "bytes": 2159
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/execution__accept/handoff.json",
+      "sha256": "9f6a5926b1b45f4c350032a17a1f882ca8cb00e29de6be98dbd28c2529f211fe",
+      "bytes": 31516
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/execution__accept/host-response.json",
+      "sha256": "3d873187c7eaacc372273d3feb2e71077af0065af6b097a46657ccdccf2b8ec8",
+      "bytes": 1069
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/execution__accept/intent.json",
+      "sha256": "3b6cc0479b0b861a9377877ec33816c5c3603322d33877544a2dcb9f9d8440c0",
+      "bytes": 723
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/execution__accept/outcome.json",
+      "sha256": "0a9878bc6bcc84fa0155e2cb2ba5f0533d787308fb64ff40ef208b0a2cd11adf",
+      "bytes": 1369
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/steps/execution__accept/request.json",
+      "sha256": "6cc76142c7a3d27478acf7c951e15504d72392874fae86dd4b66c33784b8f3c2",
+      "bytes": 30277
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/49c26b9677cf99ec88ce936d6c1cb05eac3a26e13a7c738aa3620fb96a76f28a/summary.json",
+      "sha256": "6886bd2f44de1ad16d2fa31d0978622f6cefbec587a99923493fbeb3417b8f08",
+      "bytes": 32846
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/.entry-lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/condition.json",
+      "sha256": "d81b9766dbb164cd0dc1e844109f6c52a0e41c25bf973596088430b830aa9b8f",
+      "bytes": 88633
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/intervention.json",
+      "sha256": "66bac7f5b5333b6a34d4b2f662afa904d7bb5e53073eb6c28df609e6661187f5",
+      "bytes": 227
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/manifest.json",
+      "sha256": "fe3de5e1c939daa467da6a1061498a5e72ae4b2f7fb6b215f7bca5a28dae7fe1",
+      "bytes": 2586
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/before-arbitration.json",
+      "sha256": "f67aec00538e02e155366f6241ee605e838d7a081f2dfcdd63d15e4049b0876e",
+      "bytes": 2609
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/manifest.json",
+      "sha256": "369dffc244443d3f49dcbcdaf75cb90aaa00a14d7940920925ede4fe73a1ce75",
+      "bytes": 85669
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/steps/correction/handoff.json",
+      "sha256": "ad445163932f271ed9afbfc1a74280218765ae8cc43071409c82a9617473a42b",
+      "bytes": 88213
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/steps/correction/host-response.json",
+      "sha256": "e1365e10ebceda513e3b56635af83c89c8af5235001ed987e508ca388a76cdcc",
+      "bytes": 1823
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/steps/correction/intent.json",
+      "sha256": "94c96aa6e205a1c65161a21645207424bb212a92453d53f2915c40cd9fac6a08",
+      "bytes": 725
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/steps/correction/outcome.json",
+      "sha256": "b551c205ad89fc77a2b26a29dd3ceabed666c8df027f3f73f739670991c29bdb",
+      "bytes": 2136
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/steps/correction/request.json",
+      "sha256": "d394c1575f58f1deb61f0a2783618de90c959e82d22a04af620f5e3bdc9ebe9d",
+      "bytes": 86895
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/steps/execution__accept/handoff.json",
+      "sha256": "f156fcec8a3c5d72240f4904b2a993add40b3f387c4a041191c7df9c5f59b953",
+      "bytes": 23174
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/steps/execution__accept/host-response.json",
+      "sha256": "ddf39052071e47fb81d47e4f6c8d160bd0828a6eb168dda418db652d80f5f89f",
+      "bytes": 983
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/steps/execution__accept/intent.json",
+      "sha256": "6452137997529d3b322a8cad3cecd60526943119f583cc58c331c2cb6faf92ae",
+      "bytes": 723
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/steps/execution__accept/outcome.json",
+      "sha256": "98881d8eab9e1b4ea1e868aca46d91e97d644875fe9e60dc6295777df0914ebf",
+      "bytes": 1294
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/steps/execution__accept/request.json",
+      "sha256": "bb7e421d54c02f098314efd51563e1eb447c5da6d91a725f46e6e26f627e8afb",
+      "bytes": 21935
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-pure_codex/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/b463b9902c716aa324e44bd5ab3c29a3584752eff136620bae3538842d91af36/summary.json",
+      "sha256": "047acbc9679eeaabe5f00cd9f72b9f2aacfd90ed8d21ddb110ab66e288a3cc7e",
+      "bytes": 3463
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/.entry-lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/condition.json",
+      "sha256": "a62eef065bee38d56061ffadd6df2bfd2e2192ffdc3a8c4e435837f5f84ba4f2",
+      "bytes": 100621
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/intervention.json",
+      "sha256": "66bac7f5b5333b6a34d4b2f662afa904d7bb5e53073eb6c28df609e6661187f5",
+      "bytes": 227
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/manifest.json",
+      "sha256": "e330961fc214b5227814d4510c3abde42b43be7a7dc4fbcb2df115000602065f",
+      "bytes": 2586
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/before-arbitration.json",
+      "sha256": "e5d8c67e108998da834031258cf6467f94bbc0ada87c94dfa89c8267fd4b0e06",
+      "bytes": 1841
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/manifest.json",
+      "sha256": "606ea2b33c690c8067bae23365de91c21d38b42b8448de03974612e5ee6860a2",
+      "bytes": 97657
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/steps/correction/handoff.json",
+      "sha256": "5f27e5913ad62dd43b651d8dd13d5172aa651431eac0fafc21990cebb5e5aad8",
+      "bytes": 100205
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/steps/correction/host-response.json",
+      "sha256": "0d05e8fe0e9cc16bc0b5f0a492ba81806348c53a5deeb2311b90e22ec27d4a45",
+      "bytes": 1054
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/steps/correction/intent.json",
+      "sha256": "841d650b60b0547fd5f084816b5b45929b3528f47c5271e1ec244b742863ea47",
+      "bytes": 729
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/steps/correction/outcome.json",
+      "sha256": "8bc5984af826ae3c1cb40afeeb4dca66c4202b7b831e6112071d12ee7df1135f",
+      "bytes": 1368
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/steps/correction/request.json",
+      "sha256": "e473dd15f07758fd888861ba17bf2157bc60f32c1e03234d54765fd942a8fde8",
+      "bytes": 98887
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/steps/execution__accept/handoff.json",
+      "sha256": "906c7fc5e21f53f5478ac78993bb7b6657fbb829a741425d10ed8335afc194bf",
+      "bytes": 21640
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/steps/execution__accept/host-response.json",
+      "sha256": "ca85f704db7e8c11b646ae7e4bdb38a06a1055f76a7d39a17fc7a36a8d7128ef",
+      "bytes": 1057
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/steps/execution__accept/intent.json",
+      "sha256": "eaa8aec9046557d4463f9ca6b066643e350b816630b0594b55486bae6b5941e0",
+      "bytes": 723
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/steps/execution__accept/outcome.json",
+      "sha256": "6ed95dc6bc61a516a98e4a04720bb1ce25a3950264e03388fa2967c179e68111",
+      "bytes": 1366
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/steps/execution__accept/request.json",
+      "sha256": "2d0710da30d737799734a69dc62e0759175e8a443cc2697837853509fc1be61d",
+      "bytes": 20401
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/common-F-questions_only/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/1cc4fd3c7d6acfd346e56a483f7f00046749317a5dba11d7e3280e264750c505/summary.json",
+      "sha256": "132e2940ed05c4103cb5577458d235c99ac967ca113c770a23ee3e3cb6102e0d",
+      "bytes": 2774
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/.entry-lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/intervention.json",
+      "sha256": "eacbd3f225297c35d0615c9b2f17e4240de7fddb95083e7724633f34394c5108",
+      "bytes": 277
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/manifest.json",
+      "sha256": "192c8da3197d81c1b762809b6eabb811a7bb9ad643aa7ce51065fa7ee9a76e03",
+      "bytes": 6088
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/resolved-runtime.json",
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/commitment-1.json",
+      "sha256": "c0584d8277e7aea82afd4256b5d42d087402fe24ff2129ec7a620e4a2b0c4222",
+      "bytes": 4599
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/judgment-contract-loads.json",
+      "sha256": "b446b9382f4cdecacac07cade66633b3a0e4d60db8eeba06df8f266a186759fc",
+      "bytes": 5076
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/manifest.json",
+      "sha256": "f3d275c9786ec7e4c1520f503cc856f80d8af9e46fb5def4239ce3daf44619d7",
+      "bytes": 18372
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/organized-input.json",
+      "sha256": "8b692c08f9e1666cfab4d5c411ac23c15b82d8b9f53df5f059694314186a0286",
+      "bytes": 18098
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/organize/handoff.json",
+      "sha256": "98d0726fc9c19b952cbd85a0da52932fc929e56ac7debe40a75fe13799a0288e",
+      "bytes": 21060
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/organize/host-response.json",
+      "sha256": "151245a56942b19548d229bdcf3590eed2225aee7e7ed37c05452e5fd405b657",
+      "bytes": 1480
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/organize/intent.json",
+      "sha256": "f452582baace71abb937c5926a4a60d718289db71909f1d28202140467efb135",
+      "bytes": 751
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/organize/outcome.json",
+      "sha256": "2a76d82ecae45b12efcc60a62d44a3af3e1738ca868abda727a2e4c4e86db199",
+      "bytes": 1792
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/organize/request.json",
+      "sha256": "2fde15ff8015c47ed905a836d6c643395f042ffb53e90bc0ddc3fdf75b77bbe8",
+      "bytes": 19717
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/route/.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/route/calls/b74df2edc04de1754f7a5e6558a5c101b798fc711ebe63cf1503dc73502954a9/intent.json",
+      "sha256": "b220cf95c8b4eacb3b08541dc4f763d6800e08a5dc9729fd6aafb5a506359afa",
+      "bytes": 9926
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/route/calls/b74df2edc04de1754f7a5e6558a5c101b798fc711ebe63cf1503dc73502954a9/outcome.json",
+      "sha256": "cc391c45f13a6b00fd32d29f73391d4632a9acb5848e4ea54e2ec352a1db35e3",
+      "bytes": 1779
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/route/calls/b74df2edc04de1754f7a5e6558a5c101b798fc711ebe63cf1503dc73502954a9/provider-receipt.json",
+      "sha256": "c70777ef2782c85f1e9a9403e6c453d4762de3bdc94045260cf9eb43ae8154ba",
+      "bytes": 1647
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/route/live-admission.json",
+      "sha256": "31a950d9cf6ec6f1482cb5006c1c8704046ba1089a70d3c2214f32c198de61f4",
+      "bytes": 1033
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/route/policy.json",
+      "sha256": "ac91b9c9f28a29ba1c791db6418465f85036ae4f37466c6ee3a19da02fd46bec",
+      "bytes": 1678
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/route/resolved-runtime.json",
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/steps/route/runs/be8d35dc230fba1f68465bec11ad4785257aaff91b8098624703da5ba353fc9c.json",
+      "sha256": "112e5763bfa1463975b091bdf3e0045d57a7002747d131f48f861727a473fec0",
+      "bytes": 2351
+    },
+    {
+      "path": "mindthus-v03-live-d2/episodes/full-F-jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/7a310a2ed4d1b99107ee3116908b7e592779dea65e645e1859a9bed63e22f564/summary.json",
+      "sha256": "fee2b4073642bae91bcd2d3eb260c03849a5345e3200ffb2c5b9c42fbd77d7f7",
+      "bytes": 24650
+    },
+    {
+      "path": "mindthus-v03-live-d2/freeze.json",
+      "sha256": "9f2a19dc27ce9c3d4834214c7b5c493d425ed40ef7225a39b1062c1ed584a96b",
+      "bytes": 1703
+    },
+    {
+      "path": "mindthus-v03-live-d2/jev-calls/comparison/4aa2823c502f73d713f1ba109d38ad71220c898740ae50a4e8472b551ecf6174/intent.json",
+      "sha256": "73860560698b2345205b6a024c3b83e2081b27912c86dc1fabf6d9efbdb5774c",
+      "bytes": 267
+    },
+    {
+      "path": "mindthus-v03-live-d2/jev-calls/comparison/4aa2823c502f73d713f1ba109d38ad71220c898740ae50a4e8472b551ecf6174/response.json",
+      "sha256": "fa4373dc3c2d5bbe31eda26306e43fca82deba88940b32356319a9936d53eddd",
+      "bytes": 1437
+    },
+    {
+      "path": "mindthus-v03-live-d2/jev-calls/comparison/a0f5ad6cbc864cb8653b3472faee4a8fb4eb0028b93fc08f37e7a72864a0ce9a/intent.json",
+      "sha256": "b51e4b98dc58ea9bcbfb6d3b2003b8d1c35558975f6b61a1b3858248980dc444",
+      "bytes": 268
+    },
+    {
+      "path": "mindthus-v03-live-d2/jev-calls/comparison/a0f5ad6cbc864cb8653b3472faee4a8fb4eb0028b93fc08f37e7a72864a0ce9a/response.json",
+      "sha256": "7527cd724ee96249d64106ed279f76396141c51014b54e52d41f5784510f7ea6",
+      "bytes": 1441
+    },
+    {
+      "path": "mindthus-v03-live-d2/jev-calls/full/d7d1328877622c8fbcefde3243084c0cbf6ed894a3e8a2069bf00bf3038f2265/intent.json",
+      "sha256": "a248fc5c6615329157491e54c4a3605520e2e6f3a0e90c9349c71b31358807ff",
+      "bytes": 267
+    },
+    {
+      "path": "mindthus-v03-live-d2/jev-calls/full/d7d1328877622c8fbcefde3243084c0cbf6ed894a3e8a2069bf00bf3038f2265/response.json",
+      "sha256": "3dca017860947089418e98612b26781d8bafe7c71c545bb9977cda59840e6a28",
+      "bytes": 1423
+    },
+    {
+      "path": "mindthus-v03-live-d2/results/common-E-codex_observation_committed.json",
+      "sha256": "974e333cb9db84f3f92eeb9c79717f79b5a54c3090319b27bb00f21f51244c12",
+      "bytes": 21573
+    },
+    {
+      "path": "mindthus-v03-live-d2/results/common-E-jev_advisory.json",
+      "sha256": "b049562a50a60d01f429f9d1d6dc46f6ba5e460416d118e84eff6d9f80a4887a",
+      "bytes": 10933
+    },
+    {
+      "path": "mindthus-v03-live-d2/results/common-E-jev_committed.json",
+      "sha256": "4d16e73e9e89cda4d19876561e0d61dd59c30cb9549abdde702df4fa071197ef",
+      "bytes": 10874
+    },
+    {
+      "path": "mindthus-v03-live-d2/results/common-E-pure_codex.json",
+      "sha256": "0a562f63c3ed99db46ffb782d6532d07e7f7a78653469149e2a842525d8ab9c1",
+      "bytes": 2506
+    },
+    {
+      "path": "mindthus-v03-live-d2/results/common-E-questions_only.json",
+      "sha256": "e83b873379400519e68ace1b6161c620a76a0d8ef90a0cf05c20a51976d6ba45",
+      "bytes": 2551
+    },
+    {
+      "path": "mindthus-v03-live-d2/results/common-F-codex_observation_committed.json",
+      "sha256": "5da58ed98ec03c504866f390db803d8513137b9457ce3d888bbd4713921a2298",
+      "bytes": 32418
+    },
+    {
+      "path": "mindthus-v03-live-d2/results/common-F-jev_advisory.json",
+      "sha256": "1fe62e8b91956dd4ed8362f7177fe8f8940d0fbc639315d260955bfb8383859f",
+      "bytes": 33183
+    },
+    {
+      "path": "mindthus-v03-live-d2/results/common-F-jev_committed.json",
+      "sha256": "b88f40c2d61a650a7f62d0b36a74ec9bec5b8aebcc852fec40ed8ae56974b5db",
+      "bytes": 33112
+    },
+    {
+      "path": "mindthus-v03-live-d2/results/common-F-pure_codex.json",
+      "sha256": "047acbc9679eeaabe5f00cd9f72b9f2aacfd90ed8d21ddb110ab66e288a3cc7e",
+      "bytes": 3463
+    },
+    {
+      "path": "mindthus-v03-live-d2/results/common-F-questions_only.json",
+      "sha256": "132e2940ed05c4103cb5577458d235c99ac967ca113c770a23ee3e3cb6102e0d",
+      "bytes": 2774
+    },
+    {
+      "path": "mindthus-v03-live-d2/results/full-F-jev_committed.json",
+      "sha256": "31525cb467653487143f6e7860f413d2b1b2bd4d5443aa99ccc4f632943b5e46",
+      "bytes": 24914
+    },
+    {
+      "path": "mindthus-v03-live-d2/reviews/E-key-private.json",
+      "sha256": "ef3e23c2474c95668e33941d876a45731e2ae091eb45b3d2bae717dc52007da7",
+      "bytes": 277
+    },
+    {
+      "path": "mindthus-v03-live-d2/reviews/E-pack.json",
+      "sha256": "ed0846c7f9467ade0eac0ea7ee412febf0996604fee578b2b50c677a8e059c59",
+      "bytes": 4711
+    },
+    {
+      "path": "mindthus-v03-live-d2/reviews/E-review-1.json",
+      "sha256": "9c1cd2a54ced6d984a436712f1fc962b85eb8a3486112e529e19f8ec07a08d6e",
+      "bytes": 1848
+    },
+    {
+      "path": "mindthus-v03-live-d2/reviews/E-review-2.json",
+      "sha256": "395db4347b72bb2571fceb551bd0b69b817670b1c92be43620bacff984638083",
+      "bytes": 1916
+    },
+    {
+      "path": "mindthus-v03-live-d2/reviews/E-review-3.json",
+      "sha256": "ab3e4d13d25fce391817aeec1133339810444dae8ee4f493776d0965785b678c",
+      "bytes": 1866
+    },
+    {
+      "path": "mindthus-v03-live-d2/reviews/F-key-private.json",
+      "sha256": "64766ca64f463019410bcfc1e326aea2f425b8e34c556ce30edb9b42cf6d8aaf",
+      "bytes": 277
+    },
+    {
+      "path": "mindthus-v03-live-d2/reviews/F-pack.json",
+      "sha256": "3a6f93785c5b9c81a1954e7da713ce9e008da1369634c1e977789b02019489a3",
+      "bytes": 22742
+    },
+    {
+      "path": "mindthus-v03-live-d2/reviews/F-review-1.json",
+      "sha256": "393fa5d29b478debac9128396a53141e4ab122cfd3d81080dc0c147a48f3a5d7",
+      "bytes": 2140
+    },
+    {
+      "path": "mindthus-v03-live-d2/reviews/F-review-2.json",
+      "sha256": "5b74d8de53942a4f29ed9ca8bb933d37dca71099ecbb9a69f48b80744519fbb6",
+      "bytes": 1805
+    },
+    {
+      "path": "mindthus-v03-live-d2/reviews/F-review-3.json",
+      "sha256": "b830225c6f64e0bd5ae96264d0f5a720b0453f62bf3bb9ad89e21df303a6812d",
+      "bytes": 1861
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/blind-E-1.json",
+      "sha256": "0e2924411c0e665568d2a9fdd6e0614b251c36b3adf48ff477a9902c4073f179",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/blind-E-2.json",
+      "sha256": "dde70e2c630bc10652adf516d2ac1d7226dc61246ac6cebe168d0b2309253e0e",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/blind-E-3.json",
+      "sha256": "b185a1a2c90e4beeba2605190e599672e7432235efc28826cc37cba6d5076862",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/blind-F-1.json",
+      "sha256": "879d0f35ec892258bd315d147d3593b55c8a924aaed6e6b5c157cc043828a195",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/blind-F-2.json",
+      "sha256": "eefd931172a824ce3067b9747442c1b37005a43979e9eaa4442830332d4ea9ed",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/blind-F-3.json",
+      "sha256": "f7baf5958588c73889273556d2cee885f3f5d4ef0967096151322ab810c0778f",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-E-codex_observation_committed-observer-079f5bde01926690.json",
+      "sha256": "fda5d38ed012ac3a930761cafb31c9b99d5342e985630592e28b746c709794f1",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-E-codex_observation_committed-observer-b8e3684fc3cc5904.json",
+      "sha256": "532be675c48ded2bfb6947e89f8f138d57ca80b559d00988f36599f74adf5718",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-E-codex_observation_committed.json",
+      "sha256": "e221e6b67991418c811687d6a5847f58ca43dd9e774948a24a5e15bba16d00e2",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-E-jev_advisory.json",
+      "sha256": "30e8510309a7e6c2f71e6910755c13f73bb3f8028610353a7294f2eed7c4ba6b",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-E-jev_committed.json",
+      "sha256": "28cf4c34a326ec35087155d8636a6f5e05308f497b4d1e3bef48bcdc8e48d121",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-E-pure_codex.json",
+      "sha256": "05ec56a880ca9ef8ac25ad477a5c3b1b86b0461fa80860d4e134b738082744c7",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-E-questions_only.json",
+      "sha256": "a133d4d3dd2b3d413689c80e45772fdc76a6a96c78863a498585b991dffac900",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-F-codex_observation_committed-observer-70176cd4a2a4f7c8.json",
+      "sha256": "3c95b82ba2d3de4431ba010592def86fede22394c7b481d76e933ef37ded09f0",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-F-codex_observation_committed.json",
+      "sha256": "4a84f411c5138eb9399fbdf482ebfdccd4ab0f4b1f030190a5bad3d5d50b2d46",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-F-jev_advisory.json",
+      "sha256": "98fd6b983b103e6107de542ba739d8a3051371dda1c17de1914497b79bfa25f6",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-F-jev_committed.json",
+      "sha256": "d3b0b47a33fba0d81583fea1df4a243d83beec76845ef01536c7755e46f6b0a0",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-F-pure_codex.json",
+      "sha256": "f30dc467ef9f09025265320fe133b48163e6c343b6c543b1111b34d1c14a4eb3",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/common-F-questions_only.json",
+      "sha256": "8def32d88bd0f70b921161948dada4db15b91202b15b21fe8512115ab3230533",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/natural-E.json",
+      "sha256": "2d6e286803361621e97efc4a1cf13e52c9b42bb5bf2c36cec65ef48c445b6d56",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sessions/natural-F.json",
+      "sha256": "78b449a8c1e88fe1b9e459a5384e21618fd99a10c993c07023bc1c6ec90c83bd",
+      "bytes": 182
+    },
+    {
+      "path": "mindthus-v03-live-d2/sources/E.json",
+      "sha256": "37ceb8d851e21e9a930349b32e76160262d9255cc7408a423ce23db75427c13f",
+      "bytes": 1515
+    },
+    {
+      "path": "mindthus-v03-live-d2/sources/F.json",
+      "sha256": "9a3ff9c6bdddfb2ef424a0c047b817b08d6cfc1660bffd9885573a1587182bd4",
+      "bytes": 17428
+    },
+    {
+      "path": "mindthus-v03-live-d2/sources/display-thread.json",
+      "sha256": "39530be61140c399243a9657159668404f6a40f5dfd04e3056c4883331f0cdc0",
+      "bytes": 23773
+    }
+  ],
+  "excluded_files": [
+    {
+      "path": "mindthus-v03-live-d1/codex-calls/natural-E/events.jsonl",
+      "sha256": "195f47973e9141321fb2e55757bc2e18b72fb795f9cc11acf6f098d77adb6d0b",
+      "bytes": 1220,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d1/codex-calls/natural-E/stderr.txt",
+      "sha256": "bfbd81738e19f55a684e6b84a3bfb1a501c9888b9cac38aa47420637e69f1ac9",
+      "bytes": 1874,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d1/codex-calls/natural-F/events.jsonl",
+      "sha256": "025a48d5adf31c1e9ffcddfd601ba01b52a074513f9ff944277b1deb0ee033a0",
+      "bytes": 1259,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d1/codex-calls/natural-F/stderr.txt",
+      "sha256": "480608563f36fd1fca85035ce9672606731c81d0c52063659802f5327283c2bd",
+      "bytes": 2230,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-1/events.jsonl",
+      "sha256": "a446ec4a649305d53cb3c3a2cd2e4c5c71209b1292b62e483f29e1b210b213b9",
+      "bytes": 2498,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-1/stderr.txt",
+      "sha256": "b3085207007ec4cc5b07caa9c4ea95604dcb92f5196488158def86e07372da77",
+      "bytes": 1232,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-2/events.jsonl",
+      "sha256": "f50db278fd04d25a154e69bfe7e12a2afbda9178cbecb676cc016816acb4d86c",
+      "bytes": 2216,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-2/stderr.txt",
+      "sha256": "265c5654cf0cf57f4eef2f22acc3c20e95981d1acc25f41693f95b377c92ff36",
+      "bytes": 1232,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-3/events.jsonl",
+      "sha256": "1a11630c323dd00f4c3fbf2411799f9f2694c7ec73c0e161d6f43bf2b731f27a",
+      "bytes": 2168,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-E-3/stderr.txt",
+      "sha256": "06520a71301cd15edbf46872578f0681ffe61dac2dfd921d86b1e4528fc7c81a",
+      "bytes": 1232,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-1/events.jsonl",
+      "sha256": "e63ec7c6e216d201e30a31acd120896fbf1950eeb03731ad102ee6a7edfa3771",
+      "bytes": 3497,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-1/stderr.txt",
+      "sha256": "04dd652801178eb94f51af16945a679e045093a996857518e80fcfaf8ccec29b",
+      "bytes": 5055,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-2/events.jsonl",
+      "sha256": "a27091198b2eb9c2a8127143afa5a2f93b42794765094887dc9a5b0791b86f9f",
+      "bytes": 2950,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-2/stderr.txt",
+      "sha256": "48b98d8fcc680a1db7d340b5171e5e7d15e183b86c8dc151b60c3bfd16e0350f",
+      "bytes": 4703,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-3/events.jsonl",
+      "sha256": "1bc445f35382c86b521c8ec4d3a1f54bbf5051bac6e502827b1d470488c86dbb",
+      "bytes": 2156,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/blind-F-3/stderr.txt",
+      "sha256": "447d075617e3731885d2ddecd8a545bb432a0e7c94cb2a9bd9dbe369629c5288",
+      "bytes": 1232,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-context/events.jsonl",
+      "sha256": "5baf39be24833b3b9388a969d086dd50dba9453dec99a397f14d0cda1a5eb8dc",
+      "bytes": 2118,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-context/stderr.txt",
+      "sha256": "48e033cad1928bbce3050bd119592b887ac5904a0270aaac2ea7e2546ce22457",
+      "bytes": 5056,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-correction/events.jsonl",
+      "sha256": "ddffe81cd06e4fdd3aa519d8899ffbbf1c8f73e706a1e83e80b9dc7f21b8b2fe",
+      "bytes": 2058,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-correction/stderr.txt",
+      "sha256": "a3ab0758cdc82746fcfb2e6cad03b6417f8a94e3f4d91cb8434303f6b1d9e13a",
+      "bytes": 1232,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-execution__accept/events.jsonl",
+      "sha256": "3e0eb9d3bc22caac15440651ae73726fa813a662244b46c26ffb60a2ee39fbdd",
+      "bytes": 1013,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-execution__accept/stderr.txt",
+      "sha256": "165731fd3912049bbdef7cdcdbe4805481c5c6884c51796eea61bee3e653a13b",
+      "bytes": 1232,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-079f5bde01926690/events.jsonl",
+      "sha256": "67b70514c31e06eb3ed82c9e3ad89f00e4aa6c3fef38b2451a56d4623f8ce603",
+      "bytes": 2177,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-079f5bde01926690/stderr.txt",
+      "sha256": "3402d840cf9f8967cb115b5ea7c32d5cf0e6346f434c6f9dfe105e366658fb1b",
+      "bytes": 5056,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-b8e3684fc3cc5904/events.jsonl",
+      "sha256": "4bdbca2e208954274623300a0304521982cbaaf2bbd40ae82c11260de26b6034",
+      "bytes": 1087,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-codex_observation_committed-observer-b8e3684fc3cc5904/stderr.txt",
+      "sha256": "745040b3238ef322f08b48204395354feecbb59c54d0ba8e801546f91568e77e",
+      "bytes": 1232,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_advisory-execution__accept/events.jsonl",
+      "sha256": "d05e5dfd0104dd78d9d7f92fcacd81497467ebe55b468048481f9b33ad8e8b4f",
+      "bytes": 1292,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_advisory-execution__accept/stderr.txt",
+      "sha256": "816978a63bdc96d598bd3d2bd510c87692a80fd32962e59a365f455039e83041",
+      "bytes": 2911,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_committed-execution__accept/events.jsonl",
+      "sha256": "2f46f20c1889595e08facc61afe7f4babd90a75d71ed4c100f8f83808c483957",
+      "bytes": 1679,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-jev_committed-execution__accept/stderr.txt",
+      "sha256": "67a2cec6a628dc5d79a46d6ebebcfd1d690c76613590e4e5f65d97458c5d043f",
+      "bytes": 4099,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-correction/events.jsonl",
+      "sha256": "ede918722d4279b194308747d8974ba5a9d7292ff09195ca05ad5aad52f40c7f",
+      "bytes": 1335,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-correction/stderr.txt",
+      "sha256": "770faaa9d119b2dfdbbc25ed674a18aa195acf2287bd911801db9eef3d1e276e",
+      "bytes": 1232,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-execution__accept/events.jsonl",
+      "sha256": "cc5d64fb13ba9439a0cbdbe21f0a0f167c858fa453cada95e3417272dfdc7adf",
+      "bytes": 2050,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-pure_codex-execution__accept/stderr.txt",
+      "sha256": "241131eeb459c9abf6988f07ad80056dc738d5e3d0bfcbd139483d34da3f11c2",
+      "bytes": 3813,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-correction/events.jsonl",
+      "sha256": "e96818019e8acd02e61245e96ba519158a6e4d810c9e9a23b6e3d34d8d50ce02",
+      "bytes": 1337,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-correction/stderr.txt",
+      "sha256": "c540885a7e9ed28b4182b4a40453b471e2f1115a87f6d671c81c11def2da425c",
+      "bytes": 1231,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-execution__accept/events.jsonl",
+      "sha256": "89153bf003765a7d0877d4c2bc729f6e2e8853dd8892763baf1c99094d86b7bb",
+      "bytes": 1917,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-E-questions_only-execution__accept/stderr.txt",
+      "sha256": "db02f67fc97fc4a57dcadc446083d1bebaa4af614b4bc698d8387883f9d86608",
+      "bytes": 4040,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-context/events.jsonl",
+      "sha256": "5cc26b7cb04943070680caedeaf23d7d6811f8d7c040362eec8708329989adb8",
+      "bytes": 1122,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-context/stderr.txt",
+      "sha256": "005be96d819827bb168e622e81a74b1907603a35e2931aa4e7c58378d4f70845",
+      "bytes": 2496,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-execution__accept/events.jsonl",
+      "sha256": "ca37ecd8df599e8df3fd7513f174e6a7b40b8b24080577efd86cd3f743067e8a",
+      "bytes": 2139,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-execution__accept/stderr.txt",
+      "sha256": "fdae5e605208b50dbee8990ae1c92b520b776e57e1137de2f9dc469da54fe6b5",
+      "bytes": 4370,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-observer-70176cd4a2a4f7c8/events.jsonl",
+      "sha256": "31ca9fc1dfd3ddbe27b81bf3a1f101722b78d1e01ac0182e7038b431d182dd4c",
+      "bytes": 1087,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-codex_observation_committed-observer-70176cd4a2a4f7c8/stderr.txt",
+      "sha256": "377b7eb70c9be586c3db934cfea299e7169932c8d71c99973a89cff19b71af1f",
+      "bytes": 1232,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_advisory-execution__accept/events.jsonl",
+      "sha256": "5dd7efe86e823bbc977df4635094e4e1aad42231315ca47c0ebc362dc7ecd3a2",
+      "bytes": 1309,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_advisory-execution__accept/stderr.txt",
+      "sha256": "61b2d116b80d3538228bc03df46c9a8ed6bcc68a9291e74fdadf63d5ef55e0fe",
+      "bytes": 2911,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_committed-execution__accept/events.jsonl",
+      "sha256": "ec17782e7e7f64280d4816cd3f056fd2cac175a2d0aa99fcc9773372e92685bd",
+      "bytes": 1686,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-jev_committed-execution__accept/stderr.txt",
+      "sha256": "defab25f515e305856629c27851c89a4496404f84efac74be0c0694fd3c25272",
+      "bytes": 4218,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-correction/events.jsonl",
+      "sha256": "eb231eeeee301d8e7fc6669bc355c1d7891dae2bbc04a09e9af4cbcb2711db41",
+      "bytes": 2438,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-correction/stderr.txt",
+      "sha256": "58a9ea3ef52504eab2d5c97e95979a832c2bcb2ea1446dd9717d3512011b28e7",
+      "bytes": 3882,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-execution__accept/events.jsonl",
+      "sha256": "8848aa8d431b684bcb6cbde49ab92bf2fc2a1954cdde42a2d1c4bdbafcff3409",
+      "bytes": 956,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-execution__accept/stderr.txt",
+      "sha256": "21586dc0fa40d5a2d0b171cafc78d98526e3c345c30865a11ecc6282d8074023",
+      "bytes": 1232,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-format-r1/events.jsonl",
+      "sha256": "4b818a159133a6a7e840e6a359acaae0ff6b3128990ed498a0bdf7c5f128d5a8",
+      "bytes": 1976,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-pure_codex-format-r1/stderr.txt",
+      "sha256": "529970d204249e49139687ffddb4ea710c80bef5caa2590ec1ecfd05e0f36223",
+      "bytes": 2495,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-correction/events.jsonl",
+      "sha256": "52c04f30e41aba90ba3a017259843ed63b38e10c38997c0c3ceaab62538f797b",
+      "bytes": 1619,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-correction/stderr.txt",
+      "sha256": "0106fea95f70ab88b299ef9a4cf0508dbbc6f982f277b95c288fcbf7fe6dba95",
+      "bytes": 3883,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-execution__accept/events.jsonl",
+      "sha256": "091b80628362df7e0ddf1489894d2038c714d2dd0c157d9f48066bd077fc1994",
+      "bytes": 1675,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/common-F-questions_only-execution__accept/stderr.txt",
+      "sha256": "5a98894aa193fc777b4296d66356da20c6e67e0491505cdc01b6e62b2209b508",
+      "bytes": 4098,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-E/events.jsonl",
+      "sha256": "7484a4d324ece5a322e028f0a9be5947569c6cfe81a1350c146ea6cefffbc591",
+      "bytes": 1882,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-E/stderr.txt",
+      "sha256": "786bcff7fa4986e210488d10e2fc6d6ff91caa855d0bc1dbe69a0d7cbe7b6b13",
+      "bytes": 4143,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-F/events.jsonl",
+      "sha256": "d991cdde69d2555f61f8f81d4ea3c94604d92308c4bae311c15bc415b49e80a6",
+      "bytes": 2264,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    },
+    {
+      "path": "mindthus-v03-live-d2/codex-calls/natural-F/stderr.txt",
+      "sha256": "3bd3076d60e01b621ed4fcddebd52580d97ac7cdfd9f237ae130cf8e24a8d996",
+      "bytes": 4971,
+      "reason": "raw process stream retained locally; omit internal reasoning and diagnostics"
+    }
+  ],
+  "accounting": {
+    "jev_physical_requests": 4,
+    "codex_cli_invocations": 31,
+    "provider_cost_usd": null,
+    "provisional_cost_usd": 0,
+    "cli_internal_retries": "not separately counted as invocations; preserved in local streams",
+    "parent_manual_organizer_submissions": 2,
+    "manual_organizer_usage": "unknown; conservative ledger reservation retained"
+  }
+}

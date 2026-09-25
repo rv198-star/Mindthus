@@ -6,6 +6,25 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## 2026-09-26 v0.3 live D — real calls complete, qualification not passed
+
+The [live D report](route-control-v0.2/design-reassessment-v1/live-v03-d1/RESULT.md)
+records two historical natural candidates, ten five-condition common-candidate attempts, and
+two full committed route attempts. Four physical official TypeSafe jev-1.13.0 requests were made;
+identical advisory/committed initial observations were shared. Nine common branches bind actual
+answers to acceptance; F questions-only wrongly binds a retention statement as the answer and
+is excluded from valid artifact counts despite runtime completion. Both full routes stopped
+before execution (E method applicability unresolved; F local coverage missing), so complete
+entry-to-owner acceptance remains unpassed. These are semantic pending states, not timeouts.
+
+Jev found no actionable S1 issue in either natural candidate. Codex observation found three in E,
+revised, rechecked and accepted; anonymous review has not established a substantive content gain.
+Observer inputs omit host-loaded full skill bodies, limiting attribution. Partial historical
+sources, model review disagreements and artifact-level review failures are preserved. New N
+families and wider A–F remain unrun. #211 remains NOT QUALIFIED; do not expand before repairing
+and verifying the concrete full-route and artifact-retention gaps. Engineering regression: 313
+related tests passed. No CPA/OpenRouter calls; actual costs unknown, provisionally zero.
+
 ## 2026-09-26 v0.3 audit fixes — offline engineering verified
 
 The [repair result](route-control-v0.2/design-reassessment-v1/REPAIR-RESULT-20260926.md)
