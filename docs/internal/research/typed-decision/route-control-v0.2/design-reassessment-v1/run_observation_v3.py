@@ -165,12 +165,13 @@ def schema_for(specs) -> dict:
     }
 
 
-def codex_call(label: str, prompt: str, timeout: float, schema: dict) -> tuple[str | None, dict]:
-    directory = ROOT / 'codex-calls' / label
-    workspace = ROOT / 'workspaces' / label
+def codex_call(label: str, prompt: str, timeout: float, schema: dict, *,
+               root: Path = ROOT) -> tuple[str | None, dict]:
+    directory = root / 'codex-calls' / label
+    workspace = root / 'workspaces' / label
     directory.mkdir(parents=True, exist_ok=True)
     workspace.mkdir(parents=True, exist_ok=True)
-    schema_path = ROOT / 'schemas' / (label + '.json')
+    schema_path = root / 'schemas' / (label + '.json')
     schema_text = json.dumps(schema, ensure_ascii=False, sort_keys=True, indent=2) + '\n'
     save_text(schema_path, schema_text)
     intent = {
@@ -369,7 +370,7 @@ def run_one(backend: str, case_id: str, candidate: str) -> None:
         existing = read_record(result_path)
         print(json.dumps({'backend': backend, 'case': case_id, 'candidate': candidate,
                           'action': existing['result']['action'], 'reused_result': True},
-                         ensure_ascii=False, flush=True))
+                         ensure_ascii=False), flush=True)
         return
     data = observation_input(case_id, candidate)
     p = provider(backend, case_id, candidate)
@@ -385,7 +386,7 @@ def run_one(backend: str, case_id: str, candidate: str) -> None:
                       'advisory': report['result']['advisory_unresolved'],
                       'new_calls': report['invocation']['new_calls'],
                       'seconds': report['trial_inference_seconds']},
-                     ensure_ascii=False, flush=True))
+                     ensure_ascii=False), flush=True)
 
 
 def summarize(label: str) -> None:
@@ -437,7 +438,7 @@ def summarize(label: str) -> None:
     save(ROOT / 'reports' / (label + '.json'), summary)
     print(json.dumps({'label': label, 'gate_pass': gate_pass,
                       'complete': summary['complete'], 'totals': totals,
-                      'unrun': len(summary['unrun'])}, ensure_ascii=False, flush=True))
+                      'unrun': len(summary['unrun'])}, ensure_ascii=False), flush=True)
 
 
 def main() -> None:
