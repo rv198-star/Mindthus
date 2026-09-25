@@ -6,7 +6,17 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## 2026-09-26 concrete repair design — not implemented yet
+## 2026-09-26 v0.3 implementation written — validation paused
+
+The [implementation handoff](route-control-v0.2/design-reassessment-v1/IMPLEMENTATION-20260926.md)
+records the new opt-in entry, source-direct contracts, existing Episode and CurrentAgentHost
+handoff, complete finding disposition and bounded acceptance receipt. The owner requested
+that testing and auditing be deferred. No engineering regression, current Codex/Jev
+end-to-end request, new source comparison or independent review has been run for this code.
+Historical A–F and Skills/display source locations are identified; the twelve new source
+families are not frozen. #211 remains NOT QUALIFIED.
+
+## 2026-09-26 concrete repair design — implementation sequence
 
 The [repair design](route-control-v0.2/design-reassessment-v1/REPAIR-DESIGN.md) is the
 current implementation and test sequence for #211. It specifies a new opt-in v0.3 thin

@@ -132,7 +132,8 @@ class Episode:
             if not op.exists():
                 from .current_host import pending_request
                 if pending_request(intent, ip.parent):
-                    require(self.mode == 'route-control.v0.2.1', 'current_host_on_legacy_episode')
+                    require(self.mode in ('route-control.v0.2.1', 'route-control.v0.3'),
+                            'current_host_on_legacy_episode')
                     reserved[kind] += 1; reserved['total'] += 1
                     if parts[1] == self.turn_key:
                         turn_reserved[kind] += 1; turn_reserved['total'] += 1

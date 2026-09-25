@@ -210,7 +210,7 @@ def compile_route(packet, repo, bundle, qs, bindings, *, focus_issue=None, artif
     return SimpleNamespace(specs=tuple(specs), context=context, index=index, loaded=loaded, identity=identity)
 
 
-def _evaluate(ep, directory, compiled, *, name='route'):
+def _evaluate(ep, directory, compiled, *, name='route', mode=MODE):
     step = directory / 'steps' / name
     timeout = ep.profile['single_call_seconds']
     if compiled.specs and not list((step / 'calls').glob('*/outcome.json')):
@@ -228,7 +228,7 @@ def _evaluate(ep, directory, compiled, *, name='route'):
     if not compiled.specs: return {}
     with Session(step, wrapped, scope=scope, limits=limits, live_admission=live) as session:
         result = session.evaluate(list(compiled.specs), compiled.context)
-        session.finish({'id': 'mindthus.route-control', 'version': MODE}, compiled.context,
+        session.finish({'id': 'mindthus.route-control', 'version': mode}, compiled.context,
                        {k: asdict(v) for k, v in result.items()})
     return {k: asdict(v) for k, v in result.items()}
 

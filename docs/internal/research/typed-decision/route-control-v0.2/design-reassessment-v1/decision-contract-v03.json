@@ -1,0 +1,72 @@
+{
+  "schema": "mindthus.route-control-v03-contract.v1",
+  "version": "0.3",
+  "policy": "route-control.v0.3",
+  "coverage": {
+    "global": {
+      "question": "Read the latest user request, the full relevant conversation, every retained issue, and the canonical method summaries in the State. Does the retained issue set omit a task-changing part of the user's current request? Judge the request itself, not whether the host's guessed frame is elegant. A prior assistant statement is an inference, not an instruction from the user. Select exactly one relation. Covered does not assert that the whole task is solved.",
+      "criteria": {
+        "covered": "No materially separate part of the current user request is visibly omitted from the retained issues.",
+        "missing": "A materially separate user-requested action or decision has no retained issue.",
+        "unclear": "The supplied original request does not permit a reliable issue-coverage judgment."
+      }
+    },
+    "issue": {
+      "question": "For the bound issue, compare its original user span, retained method candidates, and the complete canonical method summaries in State. Is a necessary method candidate or direct/fact-acquisition path omitted in a way that changes this issue's next action? A method being relevant does not mean it must be used. Select exactly one relation.",
+      "criteria": {
+        "covered": "The retained candidates and handling paths cover the current actionable alternatives for this issue; this does not prove exhaustive correctness.",
+        "missing": "A necessary method candidate or direct/fact-acquisition path is absent and could change the action.",
+        "unclear": "The supplied material does not settle whether a necessary alternative is absent."
+      }
+    }
+  },
+  "candidate_checks": {
+    "scope_preservation": {
+      "question": "Compare the CURRENT candidate with the latest user request and relevant prior turns. Does it answer the user's current actor, timing, scope and goal, including any valid narrowing? Do not treat the host's frame guess as ground truth. Select exactly one relation.",
+      "criteria": {
+        "aligned": "The candidate keeps the current decision object and legitimate scope.",
+        "scope_drift": "The candidate answers a broader, earlier or different object despite a material scope correction.",
+        "decision_drift": "The candidate keeps the topic but substitutes another actor, time or target decision.",
+        "insufficient_context": "The original request is genuinely too incomplete to assess alignment.",
+        "not_applicable": "The candidate makes no task-facing judgment."
+      },
+      "hits": ["scope_drift", "decision_drift"],
+      "unknown": "blocks_action"
+    },
+    "explanatory_scope": {
+      "question": "Compare the candidate's claimed explanation with the supplied source. Does a locally valid mechanism get promoted into a definition of the whole object without sufficient support? A simple mechanism may genuinely be sufficient in the stated scope. Select exactly one relation.",
+      "criteria": {
+        "supported_scope": "The explanation stays within what its evidence supports, including a sufficient simple mechanism.",
+        "overextended_local_truth": "A supported local mechanism is used to establish a wider claim that the source does not establish.",
+        "insufficient_context": "A genuinely missing material fact prevents assessing the explanatory scope.",
+        "not_applicable": "The candidate offers no relevant explanatory claim."
+      },
+      "hits": ["overextended_local_truth"],
+      "unknown": "advisory"
+    },
+    "premise_treatment": {
+      "question": "Distinguish the latest user's assertion or preference, a prior assistant inference, and a fact introduced only by the CURRENT candidate. Has the candidate treated an unsupported assertion as established fact in a way that changes the requested decision? A user's valid preference or scope is not a false factual premise. Select exactly one relation.",
+      "criteria": {
+        "properly_treated": "Claims, preferences and candidate-only inferences keep their actual source and evidential status.",
+        "unsupported_user_claim_as_fact": "A material user assertion is treated as verified fact without support.",
+        "unsupported_candidate_claim": "The candidate introduces a material unsupported fact or capability of its own.",
+        "insufficient_context": "A genuinely missing source prevents deciding attribution.",
+        "not_applicable": "The candidate makes no material factual use of a disputed premise."
+      },
+      "hits": ["unsupported_user_claim_as_fact", "unsupported_candidate_claim"],
+      "unknown": "advisory"
+    },
+    "evidence_decision_fit": {
+      "question": "Compare the CURRENT candidate's action or decision with the latest user goal and the supplied evidence and unknowns. Does it preserve distinctions that would change this action? Missing facts that do not affect the present choice do not require an explicit disclaimer. Select exactly one relation.",
+      "criteria": {
+        "grounded_action": "The action follows the supplied material and conditions itself on any genuinely decision-changing unknown.",
+        "material_omission": "The candidate ignores supplied material that could change this action.",
+        "unjustified_decision": "The action relies on an unsupported fact or an omitted necessary condition.",
+        "insufficient_context": "A genuinely missing material fact prevents assessing the action.",
+        "not_applicable": "The candidate contains no task-facing decision."
+      },
+      "hits": ["material_omission", "unjustified_decision"],
+      "unknown": "blocks_action"
+    }
+  }
+}

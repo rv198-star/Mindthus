@@ -14,7 +14,7 @@ from .contracts import canonical, digest, number, require
 from .session import RecoveryRequired, read_record, write_once, implementation_digest
 
 TRANSPORT = 'current-agent-handoff.v1'
-ROLES = ('execution', 'correction', 'arbitration')
+ROLES = ('execution', 'correction', 'arbitration', 'organize')
 
 
 class AwaitingCurrentAgent(RecoveryRequired):
@@ -30,7 +30,8 @@ class CurrentAgentHost:
     def __init__(self, owner_ref: str, *, role: str = 'execution'):
         require(rel.text(owner_ref) and role in ROLES, 'current_host_configuration')
         self.role = role
-        self.identity = owner_ref + ':route-arbitrator' if role == 'arbitration' else owner_ref
+        self.identity = (owner_ref + ':route-arbitrator' if role == 'arbitration' else
+                         owner_ref + ':organizer' if role == 'organize' else owner_ref)
         self.configuration = {'adapter': TRANSPORT, 'transport': TRANSPORT,
                               'owner': self.identity, 'kind': role,
                               'model': None, 'external_llm_required': False}
@@ -55,6 +56,23 @@ def pending_request(intent: dict, step: Path) -> bool:
 
 def _reply_shape(role: str, request: dict) -> dict:
     unknown = {'input_tokens': None, 'output_tokens': None, 'cost_usd': None}
+    schema = request.get('schema')
+    if schema == 'mindthus.route-v03-organize-request.v1':
+        return {'schema': 'mindthus.route-v03-organize-reply.v1',
+                'request_id': request['request_id'], 'issues': [],
+                'host_inferences': {'provenance': 'host_inference',
+                                    'owner_ref': request['original_input']['authority']['owner_ref'],
+                                    'issue_views': {}}, 'usage': unknown}
+    if schema == 'mindthus.route-v03-correction-request.v1':
+        return {'schema': 'mindthus.route-v03-correction-reply.v1',
+                'request_id': request['request_id'], 'dispositions': [],
+                'revisions': {}, 'usage': unknown}
+    if schema == 'mindthus.route-v03-arbitration-request.v1':
+        return {'schema': 'mindthus.route-v03-arbitration-reply.v1',
+                'request_id': request['request_id'], 'decisions': [], 'usage': unknown}
+    if schema == 'mindthus.route-v03-accept-request.v1':
+        return {'schema': 'mindthus.route-v03-accept-reply.v1',
+                'request_id': request['request_id'], 'accepted': {}, 'usage': unknown}
     if role == 'execution':
         return {'route_id': request['route_id'], 'revision': request['revision'],
                 'issue_id': request['issue']['issue_id'], 'performed_methods': [],
@@ -69,6 +87,24 @@ def _reply_shape(role: str, request: dict) -> dict:
 def _validate_reply(role: str, reply: dict, request: dict, repo: Path) -> None:
     # Exact same validators as direct callbacks. Never silently fill method claims.
     from . import route_control as rc, relationship_runtime as rt
+    schema = request.get('schema')
+    if isinstance(schema, str) and schema.startswith('mindthus.route-v03-'):
+        from . import route_control_v03 as v03, source_direct_v03 as sd
+        if schema == 'mindthus.route-v03-organize-request.v1':
+            _, _, bindings, _ = v03._bundle(repo)
+            v03.validate_organized(reply, request, bindings)
+        elif schema == 'mindthus.route-v03-correction-request.v1':
+            sd.validate_correction(reply, request)
+        elif schema == 'mindthus.route-v03-arbitration-request.v1':
+            sd.validate_arbitration(reply, request)
+        elif schema == 'mindthus.route-v03-accept-request.v1':
+            sd.validate_acceptance(reply, request)
+        elif schema == 'mindthus.route-v03-execution-request.v1':
+            _, _, bindings, _ = v03._bundle(repo)
+            v03._execution_reply(reply, request, request['original_input'], bindings)
+        else:
+            require(False, 'unknown_v03_host_request_schema')
+        return
     if role == 'execution':
         rc.validate_execution(reply, request, request['original_input'])
     elif role == 'arbitration':
@@ -126,10 +162,12 @@ def host_call(ep, directory, kind, request, hook, validator, expected_owner):
                'owner_ref': expected_owner, 'allowance_seconds': intent['allowance_seconds'],
                'output_bytes': intent['output_bytes'], 'request': request,
                'reply_shape': _reply_shape(hook.role, request),
-               'instruction': 'Use the current Agent, not an additional model API. Follow the committed '
-                              'scope and loaded contracts. A completion must describe the actual work; '
-                              'otherwise return a source-bound objection. Preserve original facts, '
-                              'permissions and pending obligations. Do not submit hidden chain-of-thought.',
+               'instruction': ('Use the current Agent and the bound request. In advisory mode '
+                               'you may choose another sufficiently supported route; in committed '
+                               'mode follow the route or give a source-bound objection. Preserve '
+                               'original facts, authority and pending obligations. An accept_only '
+                               'receipt must not rewrite the artifact. For a revised candidate, set '
+                               'version to digest(text). Do not submit hidden chain-of-thought.'),
                'arbitration': 'Requires a genuinely separate host context; identifiers record '
                               'the host declaration, not a proof of isolation.',
                'unknown_cost': 'Keep unknown token/cost/elapsed telemetry null. If elapsed is unknown, '
@@ -171,7 +209,8 @@ def submit_response(root: Path, repo: Path, submission: dict) -> str:
             'current_host_submission_size')
     with rt._locked(root / '.entry-lock'):
         manifest = read_record(root / 'manifest.json')
-        require(manifest['mode'] == 'route-control.v0.2.1', 'current_host_mode')
+        require(manifest['mode'] in ('route-control.v0.2.1', 'route-control.v0.3'),
+                'current_host_mode')
         require(manifest['implementation'] == implementation_digest(), 'current_host_implementation_changed')
         matches = []
         for hp in root.glob('turns/*/inputs/*/steps/*/handoff.json'):

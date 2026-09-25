@@ -160,7 +160,18 @@ def run(root: Path, provider, data: dict, repo: Path, *, corrector=None,
 S0 inspects an actual user frame. S1 requires an existing candidate. A corrected
 frame/answer stays a proposal alongside, never in place of, the original request.
 """
-    require(mode in ('assessment-v2', 'relationship-frame.v1', 'route-control.v0.2.1'), 'unknown_entry_mode')
+    require(mode in ('assessment-v2', 'relationship-frame.v1', 'route-control.v0.2.1',
+                     'route-control.v0.3'), 'unknown_entry_mode')
+    if mode == 'route-control.v0.3':
+        from . import route_control_v03
+        require(route is False, 'route_control_public_modes_exclusive')
+        require(correction_owner_ref in ('original-agent:v1', data.get('authority', {}).get('owner_ref')),
+                'route_control_owner_mismatch')
+        return route_control_v03.run(root, provider, data, repo, executor=executor,
+                                     arbitrator=arbitrator, corrector=corrector,
+                                     organizer=organizer, recheck=recheck,
+                                     live_admission=live_admission,
+                                     artifact_acceptor=artifact_acceptor)
     if mode == 'route-control.v0.2.1':
         from . import route_control
         require(route is False and organizer is None, 'route_control_public_modes_exclusive')
@@ -321,30 +332,58 @@ def main(argv=None):
     parser.add_argument('--fixture', type=Path, default=Path(__file__).parent / 'fixtures/entry-correction.json')
     parser.add_argument('--state-root', type=Path, required=True)
     parser.add_argument('--route', action='store_true', help='Continue via existing C01; no native skill execution')
-    parser.add_argument('--mode', choices=['assessment-v2', 'relationship-frame.v1', 'route-control.v0.2.1'], default='assessment-v2')
+    parser.add_argument('--mode', choices=['assessment-v2', 'relationship-frame.v1',
+                                           'route-control.v0.2.1', 'route-control.v0.3'],
+                        default='assessment-v2')
     parser.add_argument('--no-recheck', action='store_true', help='Relationship mode only: return revision without S2')
     parser.add_argument('--live-input', type=Path, help='D3: exact admitted input packet JSON')
     parser.add_argument('--live-admission', type=Path, help='D3: frozen per-episode admission JSON')
     parser.add_argument('--host', choices=['current-agent', 'cpa', 'fixture'],
                         help='Route control defaults to the current Agent; CPA requires explicit selection.')
     parser.add_argument('--host-response', type=Path, help='Matching current-Agent response; validate and resume the same input.')
+    parser.add_argument('--repo', type=Path, help='Repository checkout for a new opt-in run; defaults to this package checkout.')
+    parser.add_argument('--prepare-admission', type=Path,
+                        help='Write a v0.3 current-Agent admission without running a model request.')
+    parser.add_argument('--authorization-ref',
+                        help='Explicit authorization identity for a future live admission.')
     args = parser.parse_args(argv)
-    repo = Path(__file__).resolve().parents[2]
+    repo = (args.repo or Path(__file__).resolve().parents[2]).resolve()
     try:
-        route_mode = args.mode == 'route-control.v0.2.1'
+        route_mode = args.mode in ('route-control.v0.2.1', 'route-control.v0.3')
+        v03_mode = args.mode == 'route-control.v0.3'
         host_mode = args.host or ('current-agent' if route_mode else 'fixture')
+        require(not v03_mode or host_mode == 'current-agent', 'v03_requires_current_agent_host')
         if args.host_response is not None:
             require(route_mode and host_mode == 'current-agent', 'host_response_requires_current_agent')
             from .current_host import submit_response
             submit_response(args.state_root, repo, json.loads(args.host_response.read_bytes()))
+        from .current_host import CurrentAgentHost
         def current_hooks(owner):
-            from .current_host import CurrentAgentHost
             return {'executor': CurrentAgentHost(owner),
                     'arbitrator': CurrentAgentHost(owner, role='arbitration'),
                     'corrector': CurrentAgentHost(owner, role='correction')}
+        if args.prepare_admission is not None:
+            require(v03_mode and args.live_input is not None and args.live_admission is None
+                    and args.host_response is None and args.authorization_ref,
+                    'v03_prepare_admission_options')
+            from .providers import TypeSafeJevProvider
+            from .route_control_v03 import prepare_admission
+            packet = json.loads(args.live_input.read_bytes())
+            owner = packet['authority']['owner_ref']
+            hooks = {**current_hooks(owner),
+                     'organizer': CurrentAgentHost(owner, role='organize') if not packet['issues'] else None}
+            prepared = prepare_admission(args.state_root, TypeSafeJevProvider(
+                model='jev-1.13.0', choice_rounding=True), packet, repo, hooks,
+                authorization_ref=args.authorization_ref)
+            args.prepare_admission.write_text(json.dumps(prepared, ensure_ascii=False,
+                                                          indent=2, allow_nan=False) + '\n')
+            print(json.dumps({'status': 'prepared', 'admission': str(args.prepare_admission)},
+                             ensure_ascii=False))
+            return 0
         if args.live_input is not None or args.live_admission is not None:
             require(args.live_input is not None and args.live_admission is not None
-                    and args.mode in ('relationship-frame.v1', 'route-control.v0.2.1'), 'explicit_live_input_admission_required')
+                    and args.mode in ('relationship-frame.v1', 'route-control.v0.2.1',
+                                      'route-control.v0.3'), 'explicit_live_input_admission_required')
             from .relationship_live import CPAHost, deadline_post_json
             from .providers import TypeSafeJevProvider
             packet = json.loads(args.live_input.read_bytes())
@@ -355,6 +394,9 @@ def main(argv=None):
                 require(host_mode != 'fixture', 'live_fixture_host_forbidden')
                 if host_mode == 'current-agent':
                     hooks = current_hooks(owner)
+                    if v03_mode:
+                        hooks['organizer'] = (CurrentAgentHost(owner, role='organize')
+                                              if not packet['issues'] else None)
                 else:
                     from .route_control_host import CPARouteHost
                     hooks = {'executor': CPARouteHost(owner, repo) if admission['executor'] else None,
@@ -378,6 +420,9 @@ def main(argv=None):
             owner = fixture['input']['authority']['owner_ref']
             if host_mode == 'current-agent':
                 hooks = current_hooks(owner)
+                if v03_mode:
+                    hooks['organizer'] = (CurrentAgentHost(owner, role='organize')
+                                          if not fixture['input']['issues'] else None)
             else:
                 from .route_control_host import FixtureRouteHost
                 hooks = {'executor': FixtureRouteHost(owner, fixture['outputs'])}
