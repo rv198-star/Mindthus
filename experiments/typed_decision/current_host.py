@@ -66,7 +66,8 @@ def _reply_shape(role: str, request: dict) -> dict:
     schema = request.get('schema')
     if schema == 'mindthus.route-v03-native-request.v1':
         return {'schema': 'mindthus.route-v03-native-reply.v1', 'request_id': request['request_id'],
-                'text': '', 'version': '', 'performed_methods': [], 'decision_status': 'unresolved', 'dispute': None, 'usage': unknown}
+                'text': '', 'version': '', 'performed_methods': [], 'decision_status': 'unresolved', 'dispute': None, 'usage': unknown,
+                **({'artifact_action': 'replace'} if request.get('artifact_actions') else {})}
     if schema == 'mindthus.route-v03-organize-request.v1':
         return {'schema': 'mindthus.route-v03-organize-reply.v1',
                 'request_id': request['request_id'], 'issues': [],

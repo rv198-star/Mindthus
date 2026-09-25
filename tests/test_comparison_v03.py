@@ -55,7 +55,7 @@ class ComparisonTests(unittest.TestCase):
                 d={'reason':'Source-bound disagreement needs independent resolution.',
                    'original_refs':[rel.quote(self.data['documents'][0])]} if dispute and q['candidate'] is not None else None
                 reply={'schema':'mindthus.route-v03-native-reply.v1','request_id':q['request_id'],
-                       'text':text,'version':digest(text),'performed_methods':['wae'],
+                       'text':text,'version':digest(text),'performed_methods':['wae'],'artifact_action':'replace',
                        'decision_status':'disputed' if d else 'decided','dispute':d,'usage':dict(rt.UNKNOWN_USAGE)}
             elif schema.endswith('execution-request.v1'):
                 reply=Executor().execute(q,45)
@@ -82,6 +82,18 @@ class ComparisonTests(unittest.TestCase):
         self.assertEqual(result['counts']['execution'],2)
         original=self.requests[0]['condition_packet']['original_input']
         self.assertNotIn('host_inferences',original);self.assertNotIn('issues',original)
+
+    def test_retention_binds_actual_candidate_not_acknowledgment(self):
+        request={'request_id':'request', 'artifact_actions':['retain','replace'], 'candidate':'Original answer.',
+                 'condition_packet':{'loaded_methods':{}}}
+        reply={'schema':'mindthus.route-v03-native-reply.v1','request_id':'request','artifact_action':'retain',
+               'text':'Original answer.','version':digest('Original answer.'),'performed_methods':[],
+               'decision_status':'decided','dispute':None,'usage':dict(rt.UNKNOWN_USAGE)}
+        cmp.validate_native_reply(reply,request)
+        reply.update(text='Keep the original.',version=digest('Keep the original.'))
+        with self.assertRaisesRegex(ContractError,'retained_version'):cmp.validate_native_reply(reply,request)
+        request['candidate']=None;request['artifact_actions']=['replace']
+        with self.assertRaisesRegex(ContractError,'artifact_action'):cmp.validate_native_reply(reply,request)
 
     def test_questions_only_receives_unfilled_questions(self):
         result=self.drive('questions_only');self.assertTrue(result['consumption_complete'])

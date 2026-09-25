@@ -116,8 +116,15 @@ def prepare_condition(packet, condition, repo):
 
 
 def validate_native_reply(reply, request):
-    rel.shape(reply, {'schema','request_id','text','version','performed_methods','decision_status','dispute','usage'},
-              'comparison_native_reply')
+    fields = {'schema','request_id','text','version','performed_methods','decision_status','dispute','usage'}
+    if request.get('artifact_actions'):
+        fields.add('artifact_action')
+    rel.shape(reply, fields, 'comparison_native_reply')
+    if request.get('artifact_actions'):
+        require(reply['artifact_action'] in request['artifact_actions'], 'comparison_artifact_action')
+        if reply['artifact_action'] == 'retain':
+            require(request['candidate'] is not None and reply['text'] == request['candidate']
+                    and reply['version'] == digest(request['candidate']), 'comparison_retained_version')
     require(reply['schema'] == 'mindthus.route-v03-native-reply.v1' and
             reply['request_id'] == request['request_id'] and rel.text(reply['text']) and
             reply['version'] == digest(reply['text']), 'comparison_native_binding')
@@ -193,8 +200,10 @@ def run_native(root, packet, repo, *, condition, executor, corrector, arbitrator
                 body = {'schema':'mindthus.route-v03-native-request.v1', 'mode':sd.MODE,
                         'policy':condition, 'condition_packet':prepared,
                         'candidate': initial['text'] if initial else None,
+                        'artifact_actions': ['retain','replace'] if initial else ['replace'],
                         'instruction': 'Produce your natural route decision and task answer.' if initial is None else
-                                       'Review your answer once against the original task. Keep it or revise. '
+                                       'Review your answer once against the original task. Retain the exact candidate or replace it with a full answer. '
+                                       'A retention statement is not an answer. '
                                        'Preserve unresolved facts and authority. This is the only revision opportunity.'}
                 body['request_id'] = digest(body)
                 out = rt._host(ep,directory,step,body,host,lambda r:validate_native_reply(r,body),
