@@ -16,6 +16,13 @@ first handoff; their later read-only bundle establishes provenance, not local ru
 
 ## 2026-09-25 local completion and #211 small holdout
 
+Owner's newer #211 qualification target is [overall route non-inferiority versus
+ordinary LLM plus material uplift in Skills/4K-type hard scenarios](route-control-v0.2/acceptance-owner-20260925.md).
+The old freezes and scores stay historical. The current three-case holdout does not
+show non-inferiority because Jev left HB/HC unresolved while ordinary LLM committed;
+the old Skills/4K D3 work is exposed development evidence without a paired pure-LLM
+holdout. Temporary expense accounting is zero, with actual billing unverified.
+
 User clarified the comparison priority: judge whether routing changes the actual
 decision; provisionally record spending as zero, and compare latency only for the
 routing module. The [judgment comparison](route-control-v0.2/formal-abc-v1/JUDGMENT-COMPARISON.md)
