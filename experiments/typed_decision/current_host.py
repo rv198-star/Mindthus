@@ -50,7 +50,14 @@ def pending_request(intent: dict, step: Path) -> bool:
     request = read_record(step / 'request.json')
     require(digest(request) == intent['request_sha256']
             and request['request_id'] == intent['request_id'], 'current_host_request_changed')
-    require(number(intent.get('allowance_seconds'), 0.000001, 45), 'current_host_allowance')
+    maximum = 45
+    if intent.get('mode') == 'route-control.v0.3':
+        manifest = read_record(step.parents[5] / 'manifest.json')
+        profile = manifest['profile']
+        require(manifest['mode'] == intent['mode'] and digest(profile) == intent['profile_sha256']
+                and number(profile['single_call_seconds'], 1, 240), 'current_host_timing_profile')
+        maximum = profile['single_call_seconds']
+    require(number(intent.get('allowance_seconds'), 0.000001, maximum), 'current_host_allowance')
     return True
 
 

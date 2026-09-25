@@ -17,7 +17,8 @@ from .session import implementation_digest, read_record
 MODE = sd.MODE
 PROFILE = {**rc.PROFILE, 'judgments_total': 4, 'judgments_per_turn': 4,
            'corrections_total': 1, 'corrections_per_turn': 1, 'structural_organize': 1,
-           'arbitrations_total': 1, 'total_requests': 7}
+           'arbitrations_total': 1, 'total_requests': 7,
+           'single_call_seconds': 240, 'request_seconds': 960}
 STEP_KINDS = {**rc.STEP_KINDS, 'candidate': 'judgment'}
 HOST_SLOTS = rc.HOST_SLOTS
 
@@ -60,6 +61,7 @@ def prepare_admission(root, provider, packet, repo, hooks, *, authorization_ref,
             'observer_original_context_ref': (provider.host_context_ref
                 if experiment_condition == 'codex_observation_committed' else None),
             'source_commit': commit, 'implementation': implementation_digest(),
+            'timing_profile': {k: PROFILE[k] for k in ('single_call_seconds','request_seconds')},
             'source_bindings': bundle['sources'], 'mode': MODE,
             'root': str(root), 'packet_hashes': [digest(packet)],
             'provider': provider_configuration(provider),
@@ -117,6 +119,8 @@ def _admit(admission, root, packet, provider, bundle, hooks):
             admission.get('implementation') == implementation_digest() and
             admission.get('source_bindings') == bundle['sources'] and
             admission.get('provider') == provider_configuration(provider), 'v03_live_identity')
+    require(admission.get('timing_profile') ==
+            {k: PROFILE[k] for k in ('single_call_seconds','request_seconds')}, 'v03_live_timing_changed')
     require(digest(packet) in admission.get('packet_hashes', []) and
             rel.text(admission.get('authorization_ref')), 'v03_input_not_admitted')
     caps = admission['ceilings']

@@ -217,7 +217,8 @@ def _evaluate(ep, directory, compiled, *, name='route', mode=MODE):
         timeout = ep.admit('judgment')
     wrapped = rt._Provider(ep); call = wrapped.evaluate
     wrapped.evaluate = lambda specs, state, seconds: call(specs, state, min(timeout, seconds))
-    limits = Limits(max_calls=1, max_seconds=45, max_request_bytes=98304)
+    limits = Limits(max_calls=1, max_seconds=ep.profile['single_call_seconds']
+                    if mode == 'route-control.v0.3' else 45, max_request_bytes=98304)
     scope = 'route-' + digest(compiled.identity)
     live = None
     if ep.live_admission is not None and compiled.specs:

@@ -277,6 +277,17 @@ class V03Tests(unittest.TestCase):
         self.assertEqual(first, second); self.assertEqual(self.provider.batch_count, 1)
         self.assertEqual(second['reserved_counts']['execution'], 1)
 
+    def test_new_profile_accepts_measured_host_latency_over_45_seconds(self):
+        self.data['task_budget']['max_seconds']=360
+        result=self.run_entry();h=read_record(Path(result['host_request']));q=h['request']
+        self.assertEqual(h['allowance_seconds'],240)
+        reply=Executor().execute(q,180)
+        submit_response(self.root,REPO,dict(schema='mindthus.current-host-response.v1',request_id=h['request_id'],
+            request_sha256=h['request_sha256'],owner_ref=h['owner_ref'],host_context_ref='original-host-context',
+            elapsed_seconds=90.,reply=reply))
+        result=self.drive();self.assertTrue(result['consumption_complete'])
+        self.assertEqual(result['method_request_seconds'],91.)
+
     def test_missing_issue_organizes_once_in_same_episode(self):
         self.data['issues'] = []; self.data['host_inferences']['issue_views'] = {}
         self.hooks['organizer'] = CurrentAgentHost('original-host', role='organize')
