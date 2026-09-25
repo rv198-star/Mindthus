@@ -112,6 +112,22 @@ class CurrentHostTests(unittest.TestCase):
         self.run_entry(); self.root=self.base/'other'
         with self.assertRaisesRegex(ContractError,'episode_root_changed'): self.run_entry()
 
+    def test_new_episode_can_complete_in_another_state_root(self):
+        first = self.handoff(self.run_entry()); self.submit(first)
+        completed = self.run_entry()
+        first_root = self.root
+        self.root = self.base / 'another-host-root'
+        self.data = deepcopy(self.data)
+        self.data['episode_id'] += '-new'
+        self.provider = Provider()
+        second = self.handoff(self.run_entry()); self.submit(second)
+        next_completed = self.run_entry()
+        self.assertEqual(completed['counts']['execution'], 1)
+        self.assertEqual(next_completed['counts']['execution'], 1)
+        self.assertNotEqual(first['request_id'], second['request_id'])
+        self.assertTrue((first_root / 'manifest.json').exists())
+        self.assertTrue((self.root / 'manifest.json').exists())
+
     def test_pending_host_configuration_is_bound(self):
         self.run_entry(); self.hooks['executor'].configuration['adapter']='changed'
         with self.assertRaises(ContractError):self.run_entry()
