@@ -6,7 +6,23 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current OpenRouter checkpoint — code/freeze delivered; inference launch denied
+## Current official return — real Jev restored; E② host output invalid
+
+Owner explicitly switched back to official TypeSafe. Read
+[actual official result](route-control-v0.2/single-cycle-repair-v1/official-return-v1/RESULT.md).
+Existing code uses --serving typesafe with a new official E/F freeze, preserving old roots.
+E② made one real jev-1.13.0/TypeSafe request: 6 valid typed results,4907 input/295 output tokens,
+0.282356787s; cost unknown. No execution-before-start safety denial on this attempt.
+Two current Codex CLI calls completed (organize, execution). Execution returned text='v2'
+and source_ids=['repo'] where only m0 exists; normalization raised KeyError before submit_response.
+No usable task answer or final acceptance; do not fabricate a source mapping or replace the answer.
+E⓪ reused untouched,57 prior files unchanged. F has zero intents after tool network failures.
+New Jev=1,host CLI=2,CPA/OpenRouter/review=0; same-cycle Jev used1/8. No unknown physical
+requests, but the local execution handoff remains unconsumed. Next is bounded diagnosis of
+host placeholder output/reference contract, not repeated API/auth probes or automatic model retry.
+#211 NOT QUALIFIED; main/defaultSkill and runtime code unchanged.
+
+## Previous OpenRouter checkpoint — code/freeze delivered; inference launch denied
 
 Owner-authorized OpenRouter continuation is implemented (f20c71f) and frozen (c79596e).
 Read [result](route-control-v0.2/single-cycle-repair-v1/openrouter-channel-v1/RESULT.md).

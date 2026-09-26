@@ -1,0 +1,124 @@
+{
+  "checked_at_utc": "2026-09-26T11:44:36.553352+00:00",
+  "source_commit": "590049ab5bffc57d65250730bc5ba3f4df127123",
+  "freeze_commit": "f9cdef27f2f340cbd999b993aeff9bd02e17cb1d",
+  "mode": "official TypeSafe return, same bounded cycle",
+  "new_jev_calls": 1,
+  "resolved_runtime": {
+    "model": "jev-1.13.0",
+    "provider": "TypeSafe"
+  },
+  "jev_elapsed_seconds": 0.28235678747296333,
+  "jev_usage": {
+    "cost_usd": null,
+    "input_tokens": 4907,
+    "output_tokens": 295
+  },
+  "jev_all_answer_statuses_ok": true,
+  "jev_answer_count": 6,
+  "new_host_cli_calls": 2,
+  "host_calls": [
+    {
+      "status": "complete",
+      "elapsed_seconds": 143.9240387910977,
+      "context_ref": "01a0dd82-e239-7961-95a1-64dfcf04889b",
+      "requested_model": "gpt-6-sol",
+      "service_model_attestation": "not_observed",
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 37836,
+        "output_tokens": 1885
+      },
+      "step": "execution__i1__1"
+    },
+    {
+      "status": "complete",
+      "elapsed_seconds": 25.974891060963273,
+      "context_ref": "01a0dd82-e239-7961-95a1-64dfcf04889b",
+      "requested_model": "gpt-6-sol",
+      "service_model_attestation": "not_observed",
+      "usage": {
+        "cost_usd": null,
+        "input_tokens": 14470,
+        "output_tokens": 1056
+      },
+      "step": "organize"
+    }
+  ],
+  "host_failure": {
+    "stage": "execution response normalization before submit_response",
+    "exception": "KeyError: 'repo'",
+    "returned_text": "v2",
+    "returned_source_ids": [
+      "repo"
+    ],
+    "available_document_ids": [
+      "m0"
+    ],
+    "generated_answer_usable": false,
+    "final_host_acceptance": false,
+    "raw_reply_preserved": true
+  },
+  "E0_reused_not_rerun": true,
+  "E2": "HOST_OUTPUT_INVALID_AFTER_REAL_JEV_RESPONSE",
+  "F0": "UNRUN; original-tool launch attempts returned mcp_network_error and no intents exist",
+  "F2": "UNRUN",
+  "new_CPA_calls": 0,
+  "new_OpenRouter_calls": 0,
+  "new_review_calls": 0,
+  "cycle_Jev_spent": 1,
+  "cycle_Jev_limit": 8,
+  "old_protected_files_unchanged": true,
+  "old_protected_file_count": 57,
+  "archive_sha256": "8c699723cec71cdd01d3341b4b3e9d4b98c5f0c3c01b2639bbd221dbcff9bc8c",
+  "archived_files": {
+    "admissions/jev_advisory.json": "7539f121355e74a58bf821d31c56e547c9d8810ee3c0fa5f720997e4db0c76eb",
+    "admissions/jev_committed.json": "939170ca708b9628ded8427defa93327ac70eca067d7d00e1152b68a74e9da50",
+    "episodes/jev_committed/.entry-lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "episodes/jev_committed/intervention.json": "2dd90cd22c2cb14da1740e11d01018b0b51ce04d9803d533d1765d72cdd1f193",
+    "episodes/jev_committed/manifest.json": "79aa903f3cfc7a377ceb34816d3904a20b9d5abc913987d41c7b02d1b4366453",
+    "episodes/jev_committed/resolved-runtime.json": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/commitment-1.json": "748e6bf42b5ca9f0ffda104e06a95c5a1b08856171adbe7bcfdf85aaa9e00919",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/dispatch/execution__i1__1.json": "a305620c8c6e41fbc2c3bb4f693128696eb3ffe035620754b6025226b277a1c4",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/judgment-contract-loads.json": "b446b9382f4cdecacac07cade66633b3a0e4d60db8eeba06df8f266a186759fc",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/manifest.json": "3ee110f3160bdb3dc677af5ee6d2c0e60d0f7d443427c5c4756cc3aabc7c7e12",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/organized-input.json": "95eaae595231e395c7a53d91634135695ebd9546c3e0394e0cbdb8701d9a84e4",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/execution__i1__1/handoff.json": "b39996b1de68bc9cd9e58b9fa931ddd15d7d3e4b23cf3def50dfa49454f82853",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/execution__i1__1/intent.json": "de6808e078e0690b127f907a290020c0e7d45d0b018e0681854a8ab1b9fd940b",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/execution__i1__1/request.json": "7f1fdb89d92cc96261f347d45f2a36f2448403031f1dccd419baa57693a1bc1a",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/organize/handoff.json": "5f9096d9becb941c3fd8721b872bd34a040e82d168febc5d9119c7b3a532a4d0",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/organize/host-response.json": "fd3c50ae867021b948f323597260a721b9b31d17c1447739acabc2c4cfe12ac7",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/organize/intent.json": "430aa5c7809f03861d8aaa381908962b94b861dc1da664ad88fb008a64efb4e5",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/organize/outcome.json": "ed9d56bc0b2e5eca1896e967d2e5f3ca26dfcebb33f984f48477f1a298e7580e",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/organize/request.json": "0f44246234404466550360f2a09232bcef0fa416698c93272d5d1fb81c4f1bbd",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/route/.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/route/calls/9cd8deff9bd3ebdc7b967f55f26e1b3cb0f171bc6fe72835f30c71660e4ab4d6/intent.json": "527d8c420e311dcdbb7d32be034f1c7106fbd9e4f522188f10569362601bf6f8",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/route/calls/9cd8deff9bd3ebdc7b967f55f26e1b3cb0f171bc6fe72835f30c71660e4ab4d6/outcome.json": "f7660c26f726413180c97952edd0f9588c53aa86e4d88c21d66daf5304a431da",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/route/calls/9cd8deff9bd3ebdc7b967f55f26e1b3cb0f171bc6fe72835f30c71660e4ab4d6/provider-receipt.json": "5e2779ce5bcec2dc8ee430cb632d1c8ff48c4e49ff6c36cf7157d56976ad1693",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/route/live-admission.json": "fc74aefc4be85e20b70656045a375eb737b5483bb96fe006f48ba5906f884061",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/route/policy.json": "476a73e7e0657997e0e0f20494a932f93739426e35046d39c81bc46e91e0fa60",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/route/resolved-runtime.json": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+    "episodes/jev_committed/turns/391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf/inputs/e8219b2cf4482c9ff7b0e12e3347b5e237a365e070e3731e952293455713da6d/steps/route/runs/b19ed67fe1d8d5a89fc771778a76b33944d5b2dc99c64868683762b72eaa0afd.json": "35f9ef7f92b3065eedd327edb5e3083f54d7950991621f3ae0c19cdd712dc8d7",
+    "freeze.json": "56edb5f8f2e7e76c0a61d6c5f157c88ad63e2292123b7ea5250987723b4fe6f8",
+    "host-calls/jev_committed/execution__i1__1/intent.json": "af24473178b5a6b836e81c913ce54bc73f41a1bbb4e1aede95c141be3d4c69e4",
+    "host-calls/jev_committed/execution__i1__1/outcome.json": "b0372f86e5e969eb6b0a6f40132cc094da3b858a4d7ab4f50a524940d2df80af",
+    "host-calls/jev_committed/execution__i1__1/prompt.txt": "5da6ec6adb79b2b7f07ba37ca90d79f7df5b38130b5e5cd2545f7250b677e047",
+    "host-calls/jev_committed/execution__i1__1/reply.json": "f910218164025ee526fdd5aae158741709157bdf918d67802ccbd298bfb800db",
+    "host-calls/jev_committed/execution__i1__1/schema.json": "f7e1fe6980e74c97cf86170a78383ee5a7d9a38fcec1e839f62326596fcc3cd7",
+    "host-calls/jev_committed/organize/intent.json": "e06d19a44dd8e221a9a77ecadd93743a3b914d2781728dc27619c4607bf93ed1",
+    "host-calls/jev_committed/organize/outcome.json": "a2b117680cdade0facf866ddc57e0715d8be050075714c29a18e2e0942dc238f",
+    "host-calls/jev_committed/organize/prompt.txt": "d6251c6058ac477c542dfbc734698ba071e9d0c15b18a271f29f7126f79793a5",
+    "host-calls/jev_committed/organize/reply.json": "c49e3f3e21c6d9255d3acaaa017a0ac42f2a49eb6726da3f49e1252d437289dd",
+    "host-calls/jev_committed/organize/schema.json": "4495e77607898808d91ed2ae26d7bf56224c1e57afd6f62b28802504c2ca2d32",
+    "inputs/jev_advisory.json": "e578b0c358bfdd51c7fca09182f36805192ed4d1cee8a772c59d64fd4f710c70",
+    "inputs/jev_committed.json": "c152b737e4456bee5f996a668fbb274627b4cf7c2b4b6fcd6359a45ef73c0994",
+    "inputs/pure_codex.json": "f1a9456f8a1b5d91d1cdc1ee926d447850258c7f2bd3748d07c0ca412ee58010",
+    "sessions/jev_committed.json": "e9eaf492cee7308cfd127e152e02a2a0d23d01c9ee4798649b9f94aad36e23e8"
+  },
+  "credential_scan": "PASS; credential content not stored",
+  "runtime_code_changed": false,
+  "qualification": "NOT QUALIFIED",
+  "physical_unknown_provider_requests": 0,
+  "physical_unknown_host_cli_requests": 0,
+  "pending_local_host_handoff": true
+}
