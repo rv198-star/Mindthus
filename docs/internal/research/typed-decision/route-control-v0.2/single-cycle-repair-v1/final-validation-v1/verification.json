@@ -1,0 +1,41 @@
+{
+  "implementation_commit": "8a56a304e95e87ecd82a4c97a77aea7155f46bcc",
+  "preregistration_commit": "6907064ece2ac506ffb70a30205d28474680fd64",
+  "full_tests": {
+    "run": 1698,
+    "passed": 1698,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 183.012,
+    "pillow": "11.3.0 isolated test venv"
+  },
+  "focused_tests": 92,
+  "lifecycle": [
+    96,
+    96
+  ],
+  "independent_code_audits": {
+    "original_verdict": "REVISE",
+    "first_recheck": "REVISE; original 3 closed, additional missing-directory issue",
+    "final_verdict": "PASS",
+    "calls": 3,
+    "isolated_contexts": 3,
+    "seconds": 412.0690386723727,
+    "service_model_attestation": "not_observed"
+  },
+  "new_business_jev_calls": 0,
+  "new_business_codex_calls": 0,
+  "content_reviews": 0,
+  "live_state": "UNRUN: tool launch denied",
+  "protected_tracked_files": {
+    "total": 3086,
+    "unchanged": 3083,
+    "expected_changed": [
+      "docs/internal/research/typed-decision/STATUS.md",
+      "docs/internal/research/typed-decision/route-control-v0.2/single-cycle-repair-v1/run.py",
+      "tests/test_host_driver_integrity.py"
+    ]
+  },
+  "qualification": "NOT QUALIFIED",
+  "paired_winner": null
+}
