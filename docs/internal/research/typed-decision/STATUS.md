@@ -6,7 +6,20 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current conclusion — matched E/F experiment and content reviews completed; end A cycle
+## Current direct-Jev requirement — full input prepared; single-State capacity rejected
+
+Owner approved a distinct ③ direct-Jev architecture and explicitly requires original user request
+plus complete SKILLS and methodology descriptions, with no pre-route LLM shortlist or summary.
+Branch experiment/jev-direct-full-context; parent83dfa80; old②conclusion remains unchanged below.
+Read [full input and actual capacity](jev-direct-v1/RESULT.md) and [scope](jev-direct-v1/PLAN.md).
+Default corpus35 full files (10SKILL+25methodology),299105bytes, plus actual first user source.
+One official capacity probe310101bytes returned HTTP400/max_tokens_exceeded, no answers.
+Official32k State+longest-question ceiling is distinct from old local256KiB. No truncation.
+95-file full-resource profile exported only. New source builder19 tests plus4 lifecycle pass97/97.
+No③route/host/quality comparison yet. Lossless multi-State reading is proposed, not silently enabled.
+Old live roots, defaults,main and prior failure scores remain unchanged; no background job.
+
+## Previous conclusion — matched E/F experiment and content reviews completed; end A cycle
 
 Execution at existing audited/frozen implementation8a56a30, starting HEAD a2afbb7.
 Read [actual live conclusion](route-control-v0.2/single-cycle-repair-v1/final-validation-v1/live-results-v1/RESULT.md).

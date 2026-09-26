@@ -1,0 +1,181 @@
+{
+  "revision": "83dfa80a0998d75527ee8be90409869615e72140",
+  "manifest_sha256": "c60c4a2ec6fb846f153c5f119e14ecb431578e142b64d64466ae7d7f55ef5695",
+  "files": {
+    "docs/methodologies/3l5s.md": {
+      "role": "methodology",
+      "bytes": 5933,
+      "sha256": "7092b00104ca50baa4d56fdc11f4038ee4008822d7f119dcb362311df2ee80f7"
+    },
+    "docs/methodologies/anti-spiral-self-audit.md": {
+      "role": "methodology",
+      "bytes": 6743,
+      "sha256": "91618a2788ec9d8dcacd078c782be1792c89008793b6074c6085da80cfe5044d"
+    },
+    "docs/methodologies/edsp.md": {
+      "role": "methodology",
+      "bytes": 6091,
+      "sha256": "4439125a8de2ca4286a350e59052a5047d6af374058f3f306e107371c25f07b8"
+    },
+    "docs/methodologies/mpg.md": {
+      "role": "methodology",
+      "bytes": 13656,
+      "sha256": "b1d4e291d49f3ec93e2b146bcf4f1f1f8e859a3f0a5b1ecd156613e23d502d55"
+    },
+    "docs/methodologies/primitive-activation.md": {
+      "role": "methodology",
+      "bytes": 7720,
+      "sha256": "ed2ccde7334f74adb115cbb5c37d0b7e77a4b8ee82f5687a9315e59ec6fad611"
+    },
+    "docs/methodologies/primitives/aspect-ownership.md": {
+      "role": "methodology",
+      "bytes": 2425,
+      "sha256": "51ed019cbcc93ff5a38cf24c129fc3773edeb33ddda0b578e65b932d6a2dbae0"
+    },
+    "docs/methodologies/primitives/decision-context-calibration.md": {
+      "role": "methodology",
+      "bytes": 2784,
+      "sha256": "506df8ecb01eeec891a7bb4368f9e9f5b703d7afca5c18a0e48e5a963fdd53b3"
+    },
+    "docs/methodologies/primitives/entry-triage.md": {
+      "role": "methodology",
+      "bytes": 7058,
+      "sha256": "9d24ea21bdb39f06f09588cc3a0bd116491d0b742629aaae984d9120e5773b55"
+    },
+    "docs/methodologies/primitives/expression-pressure-and-gates.md": {
+      "role": "methodology",
+      "bytes": 10332,
+      "sha256": "6a66cd215ee5e9f7f0f2776e9ad1ed44b7a3104774da00a48ee739a8230a19b2"
+    },
+    "docs/methodologies/primitives/frame-fitness-check.md": {
+      "role": "methodology",
+      "bytes": 5115,
+      "sha256": "441a1339773de2c26a99fe8ede7302ac0bdf185a5bc6f624ea6bfb4cea20781f"
+    },
+    "docs/methodologies/primitives/mpg-scalar-commitment-unpack.md": {
+      "role": "methodology",
+      "bytes": 3262,
+      "sha256": "da634279663278b89f48a962850919f765d9aee0c33b8e4027ce66dc1adef216"
+    },
+    "docs/methodologies/primitives/root-cause-replacement.md": {
+      "role": "methodology",
+      "bytes": 5138,
+      "sha256": "a3c617524a840fd5c3f7e6fee1d301f1cc21cbe49a37f335ef2bedf57b144b64"
+    },
+    "docs/methodologies/primitives/whole-elephant-protocol.md": {
+      "role": "methodology",
+      "bytes": 18614,
+      "sha256": "2995f919c2cfc70a22fb4e7f4b660b510f959fa159b156a0e63a55233ce1e2f9"
+    },
+    "docs/methodologies/public-runtime-boundary.md": {
+      "role": "methodology",
+      "bytes": 2384,
+      "sha256": "1523dce9d682e16cd8f14fdc4b8f6da06217c269bbcf528d730249efc0fcc59e"
+    },
+    "docs/methodologies/sela.md": {
+      "role": "methodology",
+      "bytes": 9460,
+      "sha256": "e875bc1f20d6b61d51442a0acb82994b97c1538c967537c0c54b8ea6d2e7ff85"
+    },
+    "docs/methodologies/shared-primitives.md": {
+      "role": "methodology",
+      "bytes": 10574,
+      "sha256": "5149da1cf36206dcf29158459965f37ff133ce3d98c0a708e7520404048f3ea4"
+    },
+    "docs/methodologies/sra.md": {
+      "role": "methodology",
+      "bytes": 14544,
+      "sha256": "4ac80a3afa9e4e57b9868c262f6fa4ad7a08288b31ce5ec57d4c442a5f16e7a1"
+    },
+    "docs/methodologies/tplan.md": {
+      "role": "methodology",
+      "bytes": 25278,
+      "sha256": "55f42e113c9d5d4193687dd46b75c7e84407ea034b39de424214505e653a95ed"
+    },
+    "docs/methodologies/tvg-profile-cases/cinematic-colossal-realism.md": {
+      "role": "methodology",
+      "bytes": 616,
+      "sha256": "3ebe103dbb63197a3365181c2aa6cdcb3c4ff77ebb86effdeee1a3b724bfad5a"
+    },
+    "docs/methodologies/tvg-profile-cases/cinematic-visual-direction.md": {
+      "role": "methodology",
+      "bytes": 5695,
+      "sha256": "3380dcebea2d93a1673abb08adaf8f204206b540201f14a317e3fc323ac82b60"
+    },
+    "docs/methodologies/tvg-profile-cases/film-style-profiles.md": {
+      "role": "methodology",
+      "bytes": 4326,
+      "sha256": "6d789d93693750f5fbc7db63c25acb2938fcad4ef39a37371e4e9704a6f473ba"
+    },
+    "docs/methodologies/tvg-profile-cases/plain-sharp-skill-intro.md": {
+      "role": "methodology",
+      "bytes": 4506,
+      "sha256": "366af413f4e3a364f29eb03a7ced7f5aad0fd1b1f600190b47ed9b737dc7c47d"
+    },
+    "docs/methodologies/tvg.md": {
+      "role": "methodology",
+      "bytes": 22029,
+      "sha256": "c7676f327eb5cf69389827cd4be59f93523e943652e3abfa2a22713a68aa5c11"
+    },
+    "docs/methodologies/typed-decision-principles.md": {
+      "role": "methodology",
+      "bytes": 16150,
+      "sha256": "1f7094062d9594cad3d79a6b8adaf1cb3191bdcf8096f6f3f690e488f9f8f186"
+    },
+    "docs/methodologies/wae.md": {
+      "role": "methodology",
+      "bytes": 11454,
+      "sha256": "99629f77d0159dfa5bef0ff8e31afdb6e11ae9faac2c730c01ef3892eb1e3604"
+    },
+    "skills/3l5s/SKILL.md": {
+      "role": "skill_entry",
+      "bytes": 7962,
+      "sha256": "fe472b01eeaf724c047f6db486d0f860b82e5b47be2d4f1b5ebf3376e839cbb1"
+    },
+    "skills/case-prep/SKILL.md": {
+      "role": "skill_entry",
+      "bytes": 5759,
+      "sha256": "e49f51f388290296349f7956536f0ee718edb2efc9ca11cddcd74e37e393f249"
+    },
+    "skills/edsp/SKILL.md": {
+      "role": "skill_entry",
+      "bytes": 4722,
+      "sha256": "4de72a21f227b77711cb8f48212e8f3cb42d5b3b0cd1b911ca3284aad40e240c"
+    },
+    "skills/mpg/SKILL.md": {
+      "role": "skill_entry",
+      "bytes": 8315,
+      "sha256": "1a8e4e5f7a382e24a266befd3b9f58b329253a0ecf49e55b0e9f5690eccf6bc0"
+    },
+    "skills/sela/SKILL.md": {
+      "role": "skill_entry",
+      "bytes": 6095,
+      "sha256": "71b34d7ae2b6312c41ed904dba00cc9bea6615d6e73a537ac20e5cd29fb1b9ad"
+    },
+    "skills/sra/SKILL.md": {
+      "role": "skill_entry",
+      "bytes": 10075,
+      "sha256": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514"
+    },
+    "skills/tplan/SKILL.md": {
+      "role": "skill_entry",
+      "bytes": 7932,
+      "sha256": "dbd00b73b2c965c5a687cb12602874226c87e07f9695354f05683a832761ed96"
+    },
+    "skills/tvg/SKILL.md": {
+      "role": "skill_entry",
+      "bytes": 8904,
+      "sha256": "f1ede50d063ba72dc39e9f13c0721a079f31c58c892f486675126472bf67e7de"
+    },
+    "skills/using-mindthus/SKILL.md": {
+      "role": "skill_entry",
+      "bytes": 7269,
+      "sha256": "9eb89affdbd468d40f0c222d085492193a8a81b99f05a56da1bc515aefbeee19"
+    },
+    "skills/wae/SKILL.md": {
+      "role": "skill_entry",
+      "bytes": 10185,
+      "sha256": "f5ec807d2bfe91847671eb61d5150b43c464cda378bd2dbb8b7e91db372c7496"
+    }
+  }
+}

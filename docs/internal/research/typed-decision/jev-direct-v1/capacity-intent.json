@@ -1,0 +1,14 @@
+{
+  "schema": "mindthus.full-context-capacity-probe.v1",
+  "endpoint": "https://api.typesafe.ai/v1/systemone",
+  "requested_model": "jev-1.13.0",
+  "request_sha256": "c320b6d48a8cb95eb278768784012dcd273a7c8429e5e4f5347ca5507f448258",
+  "request_bytes": 310101,
+  "manifest_sha256": "c60c4a2ec6fb846f153c5f119e14ecb431578e142b64d64466ae7d7f55ef5695",
+  "source_files": 35,
+  "maximum_requests": 1,
+  "automatic_retries": 0,
+  "pre_route_llm_calls": 0,
+  "classification": "capacity_only_not_a_route_trial",
+  "started_at_utc": "2026-09-26T22:27:16.367592+00:00"
+}
