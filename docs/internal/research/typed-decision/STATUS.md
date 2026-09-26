@@ -6,7 +6,18 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current compact direct-Jev implementation — offline/audit complete, matched pilot next
+## Current compact direct-Jev checkpoint — implementation delivered; live launch denied
+
+Code a1425b5; preregistered paired freeze1100b4b. Read [actual delivery/status](jev-direct-v2/RESULT.md).
+One original business batch launch was rejected before execution by tool safety. Subsequent read-only
+check confirms coordinator absent, all12 paths zero host/Jev intents/outcomes, zero content reviews.
+Do not substitute old② results or old baseline. Six paired scenarios are UNRUN, not passed/failed.
+Root /srv/agentdock/tmp/mindthus-jev-direct-v2-live retains its original freeze and manifest.
+39 new offline tests; full1756/1756, no skips; independent findings closed with scoped final PASS.
+No extra model retry or alternate transport after denial. Task tsk_59cddc8c377ddcf5 awaits permitted
+business execution, then original anonymous content review; do not repeat the finished engineering work.
+
+## Previous compact direct-Jev implementation — offline/audit complete, matched pilot next
 
 Owner approved compact full-catalog routing descriptions plus at most one Jev-directed original-source read.
 Branch experiment/jev-direct-full-context; original full-State capacity failure and old②negative outcome preserved.
