@@ -1,0 +1,24 @@
+{
+  "source_commit": "8a56a304e95e87ecd82a4c97a77aea7155f46bcc",
+  "root": "/srv/agentdock/tmp/mindthus-final-validation-f9d130f",
+  "scenarios": {
+    "E": "initial first user message",
+    "F": "after user correction; original image missing"
+  },
+  "conditions": [
+    "pure_codex",
+    "jev_committed"
+  ],
+  "prior_cycle_jev_calls": 1,
+  "cycle_total_jev_max": 8,
+  "maximum_new_jev": 6,
+  "maximum_per_case_jev": 3,
+  "code_audit": "independent findings closed; final PASS",
+  "prior_baseline_preserved": true,
+  "new_baseline_reason": "host schema/prompt changed; matched successor only",
+  "automatic_semantic_retries": 0,
+  "freezes_sha256": {
+    "E": "5c1e5f027e9f0306acff204e6be50c9aec0c5210830097db3a078f20ffec0e16",
+    "F": "a1e1223fdb240993b20c618bd6d50c3e66cdb06682514b554bbc3a21bb105a8c"
+  }
+}
