@@ -1,0 +1,205 @@
+{
+  "artifacts": {
+    "X1": {
+      "overall_usable": "no",
+      "dimensions": {
+        "situated_goal": {
+          "verdict": "not_assessable",
+          "reason": "交付为空，无法判断它是否以楼主的实际可用性目标为准。虽然原图缺失，现有对话仍足以支持有保留的回应；空答未回应用户。",
+          "decision_consequence": "用户得不到关于自己的建议是否对题的判断。",
+          "source_refs": [
+            {
+              "document_id": "m12",
+              "revision": "1",
+              "start": 0,
+              "end": 94,
+              "sha256": "1ca3116dc387432396fc9a0493b4f57b4752f0fe7f56e7eafb1581e2b16dd43b"
+            },
+            {
+              "document_id": "source-limit",
+              "revision": "1",
+              "start": 0,
+              "end": 38,
+              "sha256": "48f90bc740964da1c971b34a0c3b0a0e57e79e7c210fcc71e9c1f709e2e48038"
+            }
+          ],
+          "answer_spans": []
+        },
+        "unwarranted_time_scope": {
+          "verdict": "not_assessable",
+          "reason": "交付为空，没有可评价的买前或买后适用范围表述。",
+          "decision_consequence": "无法判断它是否会把实用价值错误地限于买后。",
+          "source_refs": [
+            {
+              "document_id": "m9",
+              "revision": "1",
+              "start": 0,
+              "end": 697,
+              "sha256": "b548f39d7ac41902bb603773494cc03d04449dec2ad6e4b86e95b070437f8f2d"
+            },
+            {
+              "document_id": "m12",
+              "revision": "1",
+              "start": 0,
+              "end": 94,
+              "sha256": "1ca3116dc387432396fc9a0493b4f57b4752f0fe7f56e7eafb1581e2b16dd43b"
+            }
+          ],
+          "answer_spans": []
+        },
+        "constraint_and_verdict": {
+          "verdict": "not_assessable",
+          "reason": "交付为空，既没有裁决，也没有对物理限制和未经验证的效果作出表述；不能把沉默算作正确处理约束。",
+          "decision_consequence": "用户无法据此区分可改善的体验与尚未证实的效果。",
+          "source_refs": [
+            {
+              "document_id": "m12",
+              "revision": "1",
+              "start": 0,
+              "end": 94,
+              "sha256": "1ca3116dc387432396fc9a0493b4f57b4752f0fe7f56e7eafb1581e2b16dd43b"
+            },
+            {
+              "document_id": "source-limit",
+              "revision": "1",
+              "start": 0,
+              "end": 38,
+              "sha256": "48f90bc740964da1c971b34a0c3b0a0e57e79e7c210fcc71e9c1f709e2e48038"
+            }
+          ],
+          "answer_spans": []
+        }
+      }
+    },
+    "X2": {
+      "overall_usable": "yes",
+      "dimensions": {
+        "situated_goal": {
+          "verdict": "pass",
+          "reason": "明确纠正了此前把物理画质等同于全部问题的判断，以楼主能否取得可接受的使用结果评价双方回答。",
+          "decision_consequence": "裁决回到楼主关心的可用性，而非要求4K在物理画质上等同5K。",
+          "source_refs": [
+            {
+              "document_id": "m2",
+              "revision": "1",
+              "start": 0,
+              "end": 155,
+              "sha256": "daf37766e101303e73f9ee198ed27cd2c8ee86f6dd371d34662a5df23af1a574"
+            },
+            {
+              "document_id": "m9",
+              "revision": "1",
+              "start": 0,
+              "end": 697,
+              "sha256": "b548f39d7ac41902bb603773494cc03d04449dec2ad6e4b86e95b070437f8f2d"
+            },
+            {
+              "document_id": "m12",
+              "revision": "1",
+              "start": 0,
+              "end": 94,
+              "sha256": "1ca3116dc387432396fc9a0493b4f57b4752f0fe7f56e7eafb1581e2b16dd43b"
+            }
+          ],
+          "answer_spans": [
+            {
+              "start": 15,
+              "end": 41,
+              "sha256": "2217fd8facbdacfdca762555674c49d95accdf25797159e7eaaef597ddaf296b"
+            },
+            {
+              "start": 61,
+              "end": 100,
+              "sha256": "15cc93e1a13bac3591bf66adbb9c1f68e583b6e6ebccb90d7e0c6e671da2d34e"
+            },
+            {
+              "start": 101,
+              "end": 144,
+              "sha256": "dc3b0812dc621a075b11cc03d8c950ef031e62fe74003ae1ef6725f1307387c5"
+            }
+          ]
+        },
+        "unwarranted_time_scope": {
+          "verdict": "pass",
+          "reason": "没有把建议的价值限定为已购买4K之后；其条件判断针对的是楼主想实现的使用目标。",
+          "decision_consequence": "买前考虑4K是否够用的读者也能使用这一判断。",
+          "source_refs": [
+            {
+              "document_id": "m9",
+              "revision": "1",
+              "start": 0,
+              "end": 697,
+              "sha256": "b548f39d7ac41902bb603773494cc03d04449dec2ad6e4b86e95b070437f8f2d"
+            },
+            {
+              "document_id": "m12",
+              "revision": "1",
+              "start": 0,
+              "end": 94,
+              "sha256": "1ca3116dc387432396fc9a0493b4f57b4752f0fe7f56e7eafb1581e2b16dd43b"
+            }
+          ],
+          "answer_spans": [
+            {
+              "start": 251,
+              "end": 275,
+              "sha256": "64828c8e65471d558e3df6fecc9ede49ea0463ca7c773f87a2b61f0c2f233726"
+            }
+          ]
+        },
+        "constraint_and_verdict": {
+          "verdict": "pass",
+          "reason": "肯定建议对题，同时保留像素差距，并明确缺乏对清晰度、配置便利性及性能代价的实测，未把用户自述当作全部效果已获验证。",
+          "decision_consequence": "读者可以认可建议的实用方向，而不误以为画质、配置和性能顾虑已被逐项证实消除。",
+          "source_refs": [
+            {
+              "document_id": "m1",
+              "revision": "1",
+              "start": 0,
+              "end": 1877,
+              "sha256": "fe353480dfad142ca557504ffe1a8e512f22d1c5a7b318ac8827285b5948428e"
+            },
+            {
+              "document_id": "m4",
+              "revision": "1",
+              "start": 0,
+              "end": 51,
+              "sha256": "4f96adc4048637da2ac3b14e4055bfbde8aee0b76c17f4e0121a726960e0bde0"
+            },
+            {
+              "document_id": "m12",
+              "revision": "1",
+              "start": 0,
+              "end": 94,
+              "sha256": "1ca3116dc387432396fc9a0493b4f57b4752f0fe7f56e7eafb1581e2b16dd43b"
+            },
+            {
+              "document_id": "source-limit",
+              "revision": "1",
+              "start": 0,
+              "end": 38,
+              "sha256": "48f90bc740964da1c971b34a0c3b0a0e57e79e7c210fcc71e9c1f709e2e48038"
+            }
+          ],
+          "answer_spans": [
+            {
+              "start": 174,
+              "end": 189,
+              "sha256": "da4d20480ac50a7b924bb1fde02ac0e83a43bd92133a921684e04a86f1209fd1"
+            },
+            {
+              "start": 189,
+              "end": 243,
+              "sha256": "2b57dc05dfaaef825fc82ffb4ab0628985cffe5ffd2e7089b8627c7eced80758"
+            },
+            {
+              "start": 314,
+              "end": 347,
+              "sha256": "a6d51c3bfcbb1e118fbefdcf3c8e7617a8bc2b5d701ca80597a75fe9eddba50d"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

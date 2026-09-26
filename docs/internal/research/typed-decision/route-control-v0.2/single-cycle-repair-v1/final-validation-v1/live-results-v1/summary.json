@@ -1,0 +1,330 @@
+{
+  "schema": "mindthus.final-live-comparison.v1",
+  "checked_at_node_utc": "2026-09-26T21:41:01.982948+00:00",
+  "code_head": "a2afbb70ecb3205514f7cd0331ff3d050e24abc6",
+  "source_implementation": "8a56a304e95e87ecd82a4c97a77aea7155f46bcc",
+  "scope": "two preregistered development windows E initial and F post-correction; not historical full replay or full A-F qualification",
+  "business_host_requested_model": "gpt-6-sol",
+  "business_host_requested_effort": "xhigh",
+  "model_service_attestation": "not_observed",
+  "observer_resolved_model": "jev-1.13.0",
+  "observer_resolved_provider": "TypeSafe",
+  "rows": [
+    {
+      "scenario": "E",
+      "condition": "pure_codex",
+      "source_phase": "initial",
+      "source_cutoff": 0,
+      "source_limit": [],
+      "text": "不完全对。把合适的提示词或上下文在合适时机交给模型，是 Skills 的一部分价值；但不能因此把整个工程对象定义为提示词工程。就当前提供的入口协议而言，它还规定了何时不使用方法、缺少事实时先补证、由哪类判断负责，以及证据不足时不能声称验证通过。如果只优化注入内容，就会漏掉路由、证据和停止条件。这一判断仅针对所给材料；不能据此断言所有 Skills 都按同一机制运行，也不能推断插件会原生自动激活。",
+      "text_sha256": "5515f7f5d47489f459eb5da67091c359a40f1861c83a8a7d3ee5f7fed6609f5b",
+      "consumption_complete": true,
+      "routing_complete": null,
+      "reason": null,
+      "pending": {},
+      "host_calls": 3,
+      "jev_calls": 0,
+      "recorded_host_request_seconds": 35.781459383666515,
+      "recorded_jev_request_seconds": 0,
+      "recorded_request_seconds": 35.781459383666515,
+      "reported_input_tokens_sum": 121501,
+      "reported_output_tokens_sum": 2591,
+      "cost_usd": null,
+      "cost_complete": false,
+      "blind_overall_usable": [
+        "yes",
+        "yes"
+      ],
+      "blind_dimensions": [
+        {
+          "scope_preservation": "pass",
+          "mechanism_and_object": "pass",
+          "decisive_relation": "pass"
+        },
+        {
+          "scope_preservation": "pass",
+          "mechanism_and_object": "pass",
+          "decisive_relation": "pass"
+        }
+      ],
+      "actual_loaded_methods": [],
+      "baseline_first_answer_retained": true,
+      "host_contexts": [
+        "01a0dfa4-04e9-7293-b495-f8ebd1809fde"
+      ],
+      "jev_runtime": []
+    },
+    {
+      "scenario": "E",
+      "condition": "jev_committed",
+      "source_phase": "initial",
+      "source_cutoff": 0,
+      "source_limit": [],
+      "text": "不完全对。你说中了 Skills 的一个实现层面：在合适时机向模型提供相关指令和上下文。但“信息怎样进入模型”不等于“这项工程能力由什么构成”。如果一个 Skill 只是按条件插入一段文字，把它称为提示词工程很贴切；如果它还规定何时适用、何时停用、如何执行和检查结果，只优化提示词措辞就会漏掉触发、边界与可靠性。更准确地说，提示词工程可以是 Skills 的组成部分，不能据此断定它就是全部。当前材料没有给出你所指 Skills 的具体实现，无法断言每个 Skill 都具备后面这些机制。",
+      "text_sha256": "4020e1c301f8795b2861cb046e90cf532413f77f2a1b081bdbe9b0e010ff42e1",
+      "consumption_complete": true,
+      "routing_complete": true,
+      "reason": null,
+      "pending": {},
+      "host_calls": 3,
+      "jev_calls": 2,
+      "recorded_host_request_seconds": 41.03200747910887,
+      "recorded_jev_request_seconds": 0.5810245089232922,
+      "recorded_request_seconds": 41.61303198803216,
+      "reported_input_tokens_sum": 133476,
+      "reported_output_tokens_sum": 4135,
+      "cost_usd": null,
+      "cost_complete": false,
+      "blind_overall_usable": [
+        "yes",
+        "yes"
+      ],
+      "blind_dimensions": [
+        {
+          "scope_preservation": "pass",
+          "mechanism_and_object": "pass",
+          "decisive_relation": "pass"
+        },
+        {
+          "scope_preservation": "pass",
+          "mechanism_and_object": "pass",
+          "decisive_relation": "pass"
+        }
+      ],
+      "actual_loaded_methods": [
+        "edsp"
+      ],
+      "baseline_first_answer_retained": null,
+      "host_contexts": [
+        "01a0dfa4-f198-7842-a0ed-aea9e0b46265"
+      ],
+      "jev_runtime": [
+        {
+          "model": "jev-1.13.0",
+          "provider": "TypeSafe"
+        },
+        {
+          "model": "jev-1.13.0",
+          "provider": "TypeSafe"
+        }
+      ]
+    },
+    {
+      "scenario": "F",
+      "condition": "pure_codex",
+      "source_phase": "after_user_correction",
+      "source_cutoff": 12,
+      "source_limit": [
+        "original_image"
+      ],
+      "text": "你指出了我此前判断的关键偏差：我把“4K能否达到5K的物理画质”当成楼主问题的全部，因此说Mike更接近全局。按现有转述，楼主更关心的是27寸4K能否在清晰度、界面大小、配置和性能之间取得可接受的结果。就这个问题，你推荐BetterDisplay，比Mike以PPI为由否定软件价值更对题；默认1080界面太大，也确实是缩放选项可以针对的问题。\n\n但“把担心都解决了”说得过满。软件不能抹平4K与5K的像素差距；具体设置是否更清晰、省事，性能代价多大，现有材料没有实测，不能替楼主保证。我的修正判断是：如果楼主要的是“把4K调到够用”，你的回答更有用；如果要的是“和5K一样清晰且无需折腾、没有性能代价”，你的建议不能承诺这些。原图未提供，我只能依据历史转述判断，不能确认楼主和评论的逐字原意。",
+      "text_sha256": "5cb3b020262e9630180206a830d6918958d9b088c0e670e4077282b3e66e549a",
+      "consumption_complete": true,
+      "routing_complete": null,
+      "reason": null,
+      "pending": {},
+      "host_calls": 3,
+      "jev_calls": 0,
+      "recorded_host_request_seconds": 53.18458316195756,
+      "recorded_jev_request_seconds": 0,
+      "recorded_request_seconds": 53.18458316195756,
+      "reported_input_tokens_sum": 174895,
+      "reported_output_tokens_sum": 4605,
+      "cost_usd": null,
+      "cost_complete": false,
+      "blind_overall_usable": [
+        "yes",
+        "yes"
+      ],
+      "blind_dimensions": [
+        {
+          "situated_goal": "pass",
+          "unwarranted_time_scope": "pass",
+          "constraint_and_verdict": "pass"
+        },
+        {
+          "situated_goal": "pass",
+          "unwarranted_time_scope": "pass",
+          "constraint_and_verdict": "pass"
+        }
+      ],
+      "actual_loaded_methods": [],
+      "baseline_first_answer_retained": true,
+      "host_contexts": [
+        "01a0dfa5-2d36-7f92-b6b4-e5bbcf9e6944"
+      ],
+      "jev_runtime": []
+    },
+    {
+      "scenario": "F",
+      "condition": "jev_committed",
+      "source_phase": "after_user_correction",
+      "source_cutoff": 12,
+      "source_limit": [
+        "original_image"
+      ],
+      "text": "",
+      "text_sha256": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "consumption_complete": false,
+      "routing_complete": false,
+      "reason": "no_current_candidate",
+      "pending": {
+        "i1": "candidate_coverage_missing"
+      },
+      "host_calls": 1,
+      "jev_calls": 1,
+      "recorded_host_request_seconds": 16.592612477950752,
+      "recorded_jev_request_seconds": 0.3109463946893811,
+      "recorded_request_seconds": 16.903558872640133,
+      "reported_input_tokens_sum": 31632,
+      "reported_output_tokens_sum": 993,
+      "cost_usd": null,
+      "cost_complete": false,
+      "blind_overall_usable": [
+        "no",
+        "no"
+      ],
+      "blind_dimensions": [
+        {
+          "situated_goal": "not_assessable",
+          "unwarranted_time_scope": "not_assessable",
+          "constraint_and_verdict": "not_assessable"
+        },
+        {
+          "situated_goal": "not_assessable",
+          "unwarranted_time_scope": "not_assessable",
+          "constraint_and_verdict": "not_assessable"
+        }
+      ],
+      "actual_loaded_methods": [],
+      "baseline_first_answer_retained": null,
+      "host_contexts": [
+        "01a0dfa7-3a82-7ba1-80b8-06e37c5552c5"
+      ],
+      "jev_runtime": [
+        {
+          "model": "jev-1.13.0",
+          "provider": "TypeSafe"
+        }
+      ]
+    }
+  ],
+  "new_jev_business_calls": 3,
+  "same_cycle_prior_jev_calls": 1,
+  "same_cycle_used": 4,
+  "same_cycle_cap": 8,
+  "new_host_business_calls": 10,
+  "new_content_review_calls": 4,
+  "reviews": [
+    {
+      "case": "E",
+      "review": 1,
+      "receipt": {
+        "status": "complete",
+        "exit_code": 0,
+        "elapsed_seconds": 69.3392780078575,
+        "contexts": [
+          "01a0dfa6-506e-7180-8f28-d4b5ddb1c609"
+        ],
+        "usage": [
+          {
+            "input_tokens": 17560,
+            "cached_input_tokens": 6784,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 3523,
+            "reasoning_output_tokens": 2611
+          }
+        ],
+        "tool_events": 0,
+        "model_service_attestation": "not_observed"
+      }
+    },
+    {
+      "case": "E",
+      "review": 2,
+      "receipt": {
+        "status": "complete",
+        "exit_code": 0,
+        "elapsed_seconds": 37.88183861039579,
+        "contexts": [
+          "01a0dfa7-5e6e-7401-b24c-964f061a417d"
+        ],
+        "usage": [
+          {
+            "input_tokens": 17560,
+            "cached_input_tokens": 3712,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 1909,
+            "reasoning_output_tokens": 1006
+          }
+        ],
+        "tool_events": 0,
+        "model_service_attestation": "not_observed"
+      }
+    },
+    {
+      "case": "F",
+      "review": 1,
+      "receipt": {
+        "status": "complete",
+        "exit_code": 0,
+        "elapsed_seconds": 36.07990619447082,
+        "contexts": [
+          "01a0dfa8-0de1-7b33-9652-1eee50c0b5f8"
+        ],
+        "usage": [
+          {
+            "input_tokens": 21962,
+            "cached_input_tokens": 3712,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 1749,
+            "reasoning_output_tokens": 832
+          }
+        ],
+        "tool_events": 0,
+        "model_service_attestation": "not_observed"
+      }
+    },
+    {
+      "case": "F",
+      "review": 2,
+      "receipt": {
+        "status": "complete",
+        "exit_code": 0,
+        "elapsed_seconds": 41.17735751811415,
+        "contexts": [
+          "01a0dfa8-33c9-75e3-9db3-c4c863a77326"
+        ],
+        "usage": [
+          {
+            "input_tokens": 21962,
+            "cached_input_tokens": 6784,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 1995,
+            "reasoning_output_tokens": 984
+          }
+        ],
+        "tool_events": 0,
+        "model_service_attestation": "not_observed"
+      }
+    }
+  ],
+  "unknown_business_calls": [],
+  "business_semantic_retries": 0,
+  "network_retry_before_F_committed": "one connection error; session list and zero intents verified before same-command retry",
+  "engineering_tests_repeated": false,
+  "decision": {
+    "adopt_using_mindthus_jev_default": false,
+    "end_A_cycle": true,
+    "next_research_direction": "TPlan narrowly scoped decision point, not implemented here",
+    "reason": "No added qualified quality outcome in E while recorded request time and token counts increase; F committed delivery blocked while baseline usable. No demonstrated net benefit under frozen criteria.",
+    "limits": [
+      "two development sources only",
+      "F original image missing; after-correction regression only",
+      "E first turn only; no multi-turn retention claim",
+      "host model identity is request/config not server attestation",
+      "actual billed costs unknown; no statistical superiority claim",
+      "negative application result does not refute Jev engine or observation paradigm"
+    ]
+  }
+}

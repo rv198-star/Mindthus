@@ -1,0 +1,66 @@
+{
+  "artifacts": {
+    "X1": {
+      "overall_usable": "no",
+      "dimensions": {
+        "situated_goal": {
+          "verdict": "not_assessable",
+          "reason": "交付为空，无法判断它是否以楼主的实际可用性目标为准。原图缺失妨碍核对原话，但现有对话足以对用户在 m12 提出的判断作有条件回应；空答没有提供这种回应。",
+          "source_ids": ["m12", "m1", "source-limit"],
+          "answer_quotes": [],
+          "decision_consequence": "用户无法据此判断自己的建议是否对准楼主的顾虑。"
+        },
+        "unwarranted_time_scope": {
+          "verdict": "not_assessable",
+          "reason": "交付为空，没有可评价的购买前或购买后适用范围表述。",
+          "source_ids": ["m9", "m12"],
+          "answer_quotes": [],
+          "decision_consequence": "无法判断它是否延续了此前将建议局限于买后调优的错误定框。"
+        },
+        "constraint_and_verdict": {
+          "verdict": "not_assessable",
+          "reason": "交付为空，既没有无依据地承诺效果，也没有给出保留物理和性能边界的判断。原图及实测缺失不支持核实“都解决了”，但不妨碍作有边界的判断。",
+          "source_ids": ["m1", "m12", "source-limit"],
+          "answer_quotes": [],
+          "decision_consequence": "用户得不到可采纳的结论，也得不到效果尚未核实的提示。"
+        }
+      }
+    },
+    "X2": {
+      "overall_usable": "yes",
+      "dimensions": {
+        "situated_goal": {
+          "verdict": "pass",
+          "reason": "将判断对象从是否达到 5K 的物理画质，纠正为楼主能否在清晰度、大小、配置和性能之间取得可接受的使用结果，并据此重评用户的建议。",
+          "source_ids": ["m12", "m1", "m9"],
+          "answer_quotes": [
+            "按现有转述，楼主更关心的是27寸4K能否在清晰度、界面大小、配置和性能之间取得可接受的结果。",
+            "就这个问题，你推荐BetterDisplay，比Mike以PPI为由否定软件价值更对题"
+          ],
+          "decision_consequence": "评价以楼主的使用目标为中心，而不把与 5K 完全等效当成解决问题的前提。"
+        },
+        "unwarranted_time_scope": {
+          "verdict": "pass",
+          "reason": "没有把 BetterDisplay 的可用性价值限定为买后补救；“把4K调到够用”的条件也适用于购买前评估方案。它没有重复历史回答中买前听 Mike、买后听 momo 的硬切分。",
+          "source_ids": ["m9", "m12"],
+          "answer_quotes": [
+            "就这个问题，你推荐BetterDisplay，比Mike以PPI为由否定软件价值更对题",
+            "如果楼主要的是“把4K调到够用”，你的回答更有用"
+          ],
+          "decision_consequence": "不会仅因楼主尚未购买显示器，就排除用户建议的决策价值。"
+        },
+        "constraint_and_verdict": {
+          "verdict": "pass",
+          "reason": "肯定建议与楼主顾虑的相关性，同时不把软件可调节等同于保证消除画质差距、配置成本或性能代价；明确指出缺少原图和实测所限制的结论范围。",
+          "source_ids": ["m1", "m12", "source-limit"],
+          "answer_quotes": [
+            "但“把担心都解决了”说得过满。",
+            "软件不能抹平4K与5K的像素差距；具体设置是否更清晰、省事，性能代价多大，现有材料没有实测，不能替楼主保证。",
+            "原图未提供，我只能依据历史转述判断，不能确认楼主和评论的逐字原意。"
+          ],
+          "decision_consequence": "用户可以认可建议更对题，同时不会误以为所有具体效果已获验证。"
+        }
+      }
+    }
+  }
+}

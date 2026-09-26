@@ -1,0 +1,56 @@
+{
+  "artifacts": {
+    "X1": {
+      "overall_usable": "yes",
+      "dimensions": {
+        "scope_preservation": {
+          "verdict": "pass",
+          "reason": "围绕 Skill 本身作条件判断，没有把整个 Agent 系统的能力算作 Skill 的能力。",
+          "source_ids": ["m0"],
+          "answer_quotes": ["当前材料没有给出你所指 Skills 的具体实现，无法断言每个 Skill 都具备后面这些机制。"],
+          "decision_consequence": "结论限于所述两类实现，不冒充对所有 Skills 的事实判断。"
+        },
+        "mechanism_and_object": {
+          "verdict": "pass",
+          "reason": "承认适时注入指令和上下文是实现机制，也明确接受仅插入文字的 Skill 可以归为提示词工程；对额外职责采用条件表述。",
+          "source_ids": ["m0"],
+          "answer_quotes": ["如果一个 Skill 只是按条件插入一段文字，把它称为提示词工程很贴切"],
+          "decision_consequence": "不会仅凭 Skill 这个名称推定存在额外工程机制。"
+        },
+        "decisive_relation": {
+          "verdict": "pass",
+          "reason": "给出了改变结论的条件：若 Skill 还承担适用边界、执行与结果检查，仅优化注入文字不足以覆盖这些职责。该结论是有界的，而非泛泛地说“不完全对”。",
+          "source_ids": ["m0"],
+          "answer_quotes": ["如果它还规定何时适用、何时停用、如何执行和检查结果，只优化提示词措辞就会漏掉触发、边界与可靠性。"],
+          "decision_consequence": "判断取决于具体 Skill 是否实际承担这些职责；不能从回答反推其已被实现。"
+        }
+      }
+    },
+    "X2": {
+      "overall_usable": "yes",
+      "dimensions": {
+        "scope_preservation": {
+          "verdict": "pass",
+          "reason": "以实际收到的入口协议为例，并明确限制结论的适用范围，没有将其推广为所有 Skills 或插件的通性。",
+          "source_ids": ["m0"],
+          "answer_quotes": ["这一判断仅针对所给材料；不能据此断言所有 Skills 都按同一机制运行，也不能推断插件会原生自动激活。"],
+          "decision_consequence": "对具体协议的判断不会被误用为对通用运行机制的断言。"
+        },
+        "mechanism_and_object": {
+          "verdict": "pass",
+          "reason": "区分了向模型交付内容这一机制与所给协议规定的使用、补证、路由和验证边界；没有否认注入本身的价值。",
+          "source_ids": ["m0"],
+          "answer_quotes": ["把合适的提示词或上下文在合适时机交给模型，是 Skills 的一部分价值", "就当前提供的入口协议而言，它还规定了何时不使用方法、缺少事实时先补证、由哪类判断负责，以及证据不足时不能声称验证通过。"],
+          "decision_consequence": "评价对象从注入内容扩展到该协议实际规定的判断职责，但不推定这些职责已自动执行。"
+        },
+        "decisive_relation": {
+          "verdict": "pass",
+          "reason": "明确指出为何“只优化注入内容”不足以覆盖所给协议：它会遗漏路由、证据和停止条件；这是针对当前材料的结论，而非无依据的普遍断言。",
+          "source_ids": ["m0"],
+          "answer_quotes": ["如果只优化注入内容，就会漏掉路由、证据和停止条件。"],
+          "decision_consequence": "实际评估该 Skill 时须检查这些条件，而不能仅检查注入文字是否合适。"
+        }
+      }
+    }
+  }
+}

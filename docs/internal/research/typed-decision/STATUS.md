@@ -6,7 +6,28 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current final validation — code audits/tests complete; new business launch denied
+## Current conclusion — matched E/F experiment and content reviews completed; end A cycle
+
+Execution at existing audited/frozen implementation8a56a30, starting HEAD a2afbb7.
+Read [actual live conclusion](route-control-v0.2/single-cycle-repair-v1/final-validation-v1/live-results-v1/RESULT.md).
+Four business paths and four isolated anonymous content reviews now finished. E native and committed
+both accepted and met all three target dimensions in both reviews. F native accepted/passed;
+F committed stopped at local candidate_coverage_missing, no user-facing output. Both reviewers
+found the empty output unusable while specific absent-content dimensions remain not_assessable.
+New calls: Jev3, business host10, content reviewer4; same-cycle Jev4/8. No semantic retries,
+threshold or rubric changes. Driver terminal record checks pass; no unknown business requests.
+E recorded request time35.781s native vs41.613s committed; large-model calls3 vs3 plus2 Jev calls.
+Actual dollar cost unknown. F committed early termination is not a successful efficiency gain.
+
+Adoption decision: NOT QUALIFIED; do not enable Jev as default using-mindthus routing. End this
+bounded A repair/evaluation cycle; no more E/F tuning or expanding gates to seek a winner.
+Preserve stable using-mindthus and experiment assets. TPlan bounded decision-point research is
+recommended as next direction, not implemented or automatically started. This negative application
+result does not disprove Jev/multidimensional observation generally. E first-turn only, F late
+missing-image regression only; neither proves full original-failure replay or all-method qualification.
+Old answers/failed trials/main/default Skills preserved. Engineering tests and code audits reused.
+
+## Previous final validation — code audits/tests complete; new business launch denied
 
 Implementation8a56a30; frozen successor6907064. Read [actual result](route-control-v0.2/single-cycle-repair-v1/final-validation-v1/RESULT.md).
 Independent code review cycle completed:267.72s REVISE,132.79s scoped recheck,11.56s final PASS;

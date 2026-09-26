@@ -1,0 +1,145 @@
+{
+  "artifacts": {
+    "X1": {
+      "overall_usable": "yes",
+      "dimensions": {
+        "scope_preservation": {
+          "verdict": "pass",
+          "reason": "围绕 Skill 本身作条件判断，没有把整个 Agent 系统的能力算作 Skill 的能力。",
+          "decision_consequence": "结论限于所述两类实现，不冒充对所有 Skills 的事实判断。",
+          "source_refs": [
+            {
+              "document_id": "m0",
+              "revision": "1",
+              "start": 0,
+              "end": 61,
+              "sha256": "f8ca073a52bde1da4e103ce9de6dfa30a20e469095868068562a241b7cdaf96f"
+            }
+          ],
+          "answer_spans": [
+            {
+              "start": 196,
+              "end": 244,
+              "sha256": "547df61ac89a65043b194389b7e7172e4233cb9c3f5a4501d74868a91125b1fc"
+            }
+          ]
+        },
+        "mechanism_and_object": {
+          "verdict": "pass",
+          "reason": "承认适时注入指令和上下文是实现机制，也明确接受仅插入文字的 Skill 可以归为提示词工程；对额外职责采用条件表述。",
+          "decision_consequence": "不会仅凭 Skill 这个名称推定存在额外工程机制。",
+          "source_refs": [
+            {
+              "document_id": "m0",
+              "revision": "1",
+              "start": 0,
+              "end": 61,
+              "sha256": "f8ca073a52bde1da4e103ce9de6dfa30a20e469095868068562a241b7cdaf96f"
+            }
+          ],
+          "answer_spans": [
+            {
+              "start": 72,
+              "end": 107,
+              "sha256": "33e4e8ff06451d3b84f26f50eb2d083baa2065097b7a172b5e58be2b0100b21f"
+            }
+          ]
+        },
+        "decisive_relation": {
+          "verdict": "pass",
+          "reason": "给出了改变结论的条件：若 Skill 还承担适用边界、执行与结果检查，仅优化注入文字不足以覆盖这些职责。该结论是有界的，而非泛泛地说“不完全对”。",
+          "decision_consequence": "判断取决于具体 Skill 是否实际承担这些职责；不能从回答反推其已被实现。",
+          "source_refs": [
+            {
+              "document_id": "m0",
+              "revision": "1",
+              "start": 0,
+              "end": 61,
+              "sha256": "f8ca073a52bde1da4e103ce9de6dfa30a20e469095868068562a241b7cdaf96f"
+            }
+          ],
+          "answer_spans": [
+            {
+              "start": 108,
+              "end": 156,
+              "sha256": "73bed5fe0f500c3acde071bfc7edfaedeabe6a0cf515a72190aa9a0bfafc682c"
+            }
+          ]
+        }
+      }
+    },
+    "X2": {
+      "overall_usable": "yes",
+      "dimensions": {
+        "scope_preservation": {
+          "verdict": "pass",
+          "reason": "以实际收到的入口协议为例，并明确限制结论的适用范围，没有将其推广为所有 Skills 或插件的通性。",
+          "decision_consequence": "对具体协议的判断不会被误用为对通用运行机制的断言。",
+          "source_refs": [
+            {
+              "document_id": "m0",
+              "revision": "1",
+              "start": 0,
+              "end": 61,
+              "sha256": "f8ca073a52bde1da4e103ce9de6dfa30a20e469095868068562a241b7cdaf96f"
+            }
+          ],
+          "answer_spans": [
+            {
+              "start": 147,
+              "end": 199,
+              "sha256": "dde72584a2431371f187bff79451c638963e6f0297bce08e09c4e1f6fc48748d"
+            }
+          ]
+        },
+        "mechanism_and_object": {
+          "verdict": "pass",
+          "reason": "区分了向模型交付内容这一机制与所给协议规定的使用、补证、路由和验证边界；没有否认注入本身的价值。",
+          "decision_consequence": "评价对象从注入内容扩展到该协议实际规定的判断职责，但不推定这些职责已自动执行。",
+          "source_refs": [
+            {
+              "document_id": "m0",
+              "revision": "1",
+              "start": 0,
+              "end": 61,
+              "sha256": "f8ca073a52bde1da4e103ce9de6dfa30a20e469095868068562a241b7cdaf96f"
+            }
+          ],
+          "answer_spans": [
+            {
+              "start": 5,
+              "end": 41,
+              "sha256": "4ddfa0392e06840b098d70ed26f76220f9ddda69d5d96933dbcbde2c7e89609d"
+            },
+            {
+              "start": 63,
+              "end": 122,
+              "sha256": "dd425a0f26637dfaad6bd9bf76eac84b306afcd70c32e4859058415866331cfd"
+            }
+          ]
+        },
+        "decisive_relation": {
+          "verdict": "pass",
+          "reason": "明确指出为何“只优化注入内容”不足以覆盖所给协议：它会遗漏路由、证据和停止条件；这是针对当前材料的结论，而非无依据的普遍断言。",
+          "decision_consequence": "实际评估该 Skill 时须检查这些条件，而不能仅检查注入文字是否合适。",
+          "source_refs": [
+            {
+              "document_id": "m0",
+              "revision": "1",
+              "start": 0,
+              "end": 61,
+              "sha256": "f8ca073a52bde1da4e103ce9de6dfa30a20e469095868068562a241b7cdaf96f"
+            }
+          ],
+          "answer_spans": [
+            {
+              "start": 122,
+              "end": 147,
+              "sha256": "8f5a32cf49e06f0ddb6f69bb127b9f85aca1e5148b08e9a73d34664fa8032eb5"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
