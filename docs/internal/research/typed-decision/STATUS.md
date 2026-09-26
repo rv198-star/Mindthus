@@ -6,7 +6,19 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current host wire repair — code and offline recovery fixed; no new business inference
+## Current final validation — independent code findings closed; all offline tests executed
+
+Owner allowed longer time limits. See [final validation plan](route-control-v0.2/single-cycle-repair-v1/final-validation-v1/PLAN.md)
+and [code audit dispositions](route-control-v0.2/single-cycle-repair-v1/final-validation-v1/AUDIT-DISPOSITION.md).
+Independent reviews: 267.72s REVISE (3 findings), 132.79s recheck (one directory-deletion gap),
+11.56s final PASS after fixes. Manual step/drive share a lock; terminal reuses a complete
+call manifest plus supporting bindings; process return and reply validity are separate.
+Final full suite1698 passed, zero skips (isolated Pillow test environment), related92 passed.
+New business model calls not yet started. New matched E⓪/E② and F⓪/F② require this technical
+successor because host prompt/schema changed. Old baselines/failures remain unchanged.
+Same-cycle Jev consumed1/8; at most6 new requests planned. #211 NOT QUALIFIED pending results.
+
+## Previous host wire repair — code and offline recovery fixed; no new business inference
 
 Baseline e813b27. Read [repair report](route-control-v0.2/single-cycle-repair-v1/host-wire-repair-v1/RESULT.md).
 Active driver now isolates schema nodes before mutation, constrains/validates actual source IDs,

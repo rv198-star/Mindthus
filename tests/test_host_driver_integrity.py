@@ -326,4 +326,78 @@ class HostDriverIntegrityTests(unittest.TestCase):
         x=json.loads(p.read_text());x['payload']['reply']['text']='修改';x['sha256']=digest(x['payload']);p.write_text(json.dumps(x))
         result=self.run_driver();self.assertEqual(result['status'],'host_reply_rejected');self.assertEqual(len(self.calls),1)
 
+
+    def test_manual_step_uses_same_lock_as_driver(self):
+        self.prepare()
+        with self.driver.wire.rt._locked(self.runroot/'.host-driver.lock'):
+            with patch.object(self.driver,'submit_response') as submit:
+                with self.assertRaises(RecoveryRequired):self.driver.step(self.runroot,'pure_codex')
+            submit.assert_not_called()
+
+    def test_manual_reply_cannot_race_active_cli(self):
+        self.prepare();seen=[];original=self.mock_cli
+        def run(*args):
+            with self.assertRaises(RecoveryRequired):self.driver.step(self.runroot,'pure_codex')
+            seen.append(True);return original(*args)
+        with patch.object(self.driver,'_run_cli',side_effect=run):
+            result=self.driver.drive(self.runroot,'pure_codex')
+        self.assertTrue(result['consumption_complete']);self.assertEqual(len(seen),3)
+
+    def test_completed_terminal_checks_mutated_reply(self):
+        self.prepare();self.assertTrue(self.run_driver()['consumption_complete'])
+        p=next(self.runroot.glob('host-calls/*/*/reply.json'))
+        x=json.loads(p.read_text());x['tampered']=True;p.write_text(json.dumps(x))
+        for call in (lambda:self.run_driver(),lambda:self.driver.step(self.runroot,'pure_codex')):
+            with self.assertRaisesRegex(ContractError,'reply_changed'):call()
+        self.assertEqual(len(self.calls),3)
+
+    def test_completed_terminal_checks_mutated_prompt(self):
+        self.prepare();self.run_driver()
+        p=next(self.runroot.glob('host-calls/*/*/prompt.txt'));p.write_text('changed')
+        with self.assertRaisesRegex(ContractError,'binding_changed'):self.run_driver()
+        self.assertEqual(len(self.calls),3)
+
+    def test_completed_terminal_checks_staged_response(self):
+        self.prepare();self.run_driver()
+        p=next((self.runroot/'episodes').glob('*/turns/*/inputs/*/steps/*/host-response.json'))
+        x=json.loads(p.read_text());x['payload']['submission']['reply']['text']='changed'
+        x['sha256']=digest(x['payload']);p.write_text(json.dumps(x))
+        with self.assertRaisesRegex(ContractError,'staged_reply_changed'):self.run_driver()
+        self.assertEqual(len(self.calls),3)
+
+    def test_returned_invalid_json_has_process_and_usage_receipt(self):
+        self.prepare();original=self.mock_cli
+        def run(cmd,*args):
+            value=original(cmd,*args);Path(cmd[cmd.index('-o')+1]).write_text('{invalid');return value
+        with patch.object(self.driver,'_run_cli',side_effect=run):r=self.driver.drive(self.runroot,'pure_codex')
+        failure=read_record(Path(r['failure_record']))
+        self.assertTrue(failure['process_returned']);self.assertTrue(failure['transport_completed'])
+        self.assertFalse(failure['reply_validated']);self.assertEqual(failure['usage']['input_tokens'],12)
+        self.assertEqual(self.run_driver(),r);self.assertEqual(len(self.calls),1)
+
+    def test_failed_terminal_detects_changed_invalid_json(self):
+        self.prepare();original=self.mock_cli
+        def run(cmd,*args):
+            value=original(cmd,*args);Path(cmd[cmd.index('-o')+1]).write_text('{invalid');return value
+        with patch.object(self.driver,'_run_cli',side_effect=run):self.driver.drive(self.runroot,'pure_codex')
+        next(self.runroot.glob('host-calls/*/*/reply.json')).write_text('{different')
+        with self.assertRaisesRegex(ContractError,'failed_reply_changed'):self.run_driver()
+        self.assertEqual(len(self.calls),1)
+
+
+    def test_completed_terminal_detects_missing_entire_call_directory(self):
+        import shutil
+        self.prepare();self.run_driver()
+        victim=next(self.runroot.glob('host-calls/*/*/outcome.json')).parent
+        shutil.rmtree(victim)
+        with self.assertRaisesRegex(ContractError,'call_set_changed'):self.run_driver()
+        with self.assertRaisesRegex(ContractError,'call_set_changed'):self.driver.step(self.runroot,'pure_codex')
+        self.assertEqual(len(self.calls),3)
+
+    def test_completed_terminal_detects_missing_all_call_records(self):
+        import shutil
+        self.prepare();self.run_driver();shutil.rmtree(self.runroot/'host-calls')
+        with self.assertRaisesRegex(ContractError,'call_set_changed'):self.run_driver()
+        self.assertEqual(len(self.calls),3)
+
 if __name__=='__main__':unittest.main()

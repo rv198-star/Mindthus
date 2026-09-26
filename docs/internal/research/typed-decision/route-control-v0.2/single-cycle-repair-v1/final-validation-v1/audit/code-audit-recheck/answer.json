@@ -1,0 +1,1 @@
+{"verdict":"REVISE","findings":[{"severity":"高","location":"run.py 的 _verified_terminal() 与 _restore_context()","problem":"终态校验只遍历仍存在的 host-calls 目录。完成含多个调用的分支后，删除其中一个完整调用目录，剩余调用仍可通过校验，重入便继续返回成功；被删调用的请求、回复和 outcome 完全未被核验。","required_fix":"将终态与完整的驱动调用清单绑定；重入时发现清单中的调用记录缺失应拒绝复用终态，且不得重发 CLI 请求。"}],"summary":"共享锁和已返回进程的失败记录修复未见直接阻塞项；但终态仍可在宿主调用记录缺失时被复用，不能判定 PASS。"}

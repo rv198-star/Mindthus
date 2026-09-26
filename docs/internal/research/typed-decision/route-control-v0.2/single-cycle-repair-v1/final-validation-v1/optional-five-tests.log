@@ -1,0 +1,10 @@
+test_generated_plugin_runs_documented_atlas_label_and_selection_stages (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_generic_atlas_labeler_adds_round_ids_and_visible_lineage (tests.test_tvg_contract.TvgContractTests) ... ok
+test_generic_atlas_selection_board_crops_only_supplied_ids (tests.test_tvg_contract.TvgContractTests) ... ok
+test_generic_atlas_selection_rejects_labels_from_wrong_same_size_image (tests.test_tvg_contract.TvgContractTests) ... ok
+test_generic_atlas_selection_rejects_reordered_or_out_of_bounds_regions (tests.test_tvg_contract.TvgContractTests) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.185s
+
+OK

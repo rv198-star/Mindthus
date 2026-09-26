@@ -8,6 +8,7 @@ from pathlib import Path
 import argparse
 import importlib.util
 import json
+import hashlib
 import os
 import re
 import signal
@@ -119,17 +120,25 @@ def provider(root,condition):
 
 
 def step(root,condition,response_path=None):
+    verify(root)
+    require(condition in CONDITIONS,'condition')
+    # Manual replies and automatic CLI execution serialize on the same boundary.
+    with wire.rt._locked(root/'.host-driver.lock'):
+        return _step(root,condition,response_path)
+
+
+def _step(root,condition,response_path=None):
     frozen=verify(root);require(condition in frozen['conditions'],'condition')
     terminal=root/'results'/f'{condition}.json'
     if terminal.exists():
-        return read_record(terminal)
+        return _verified_terminal(root,condition,frozen)
     ep=root/'episodes'/condition;p=read_record(root/'inputs'/f'{condition}.json')
     if response_path:
         value=json.loads(response_path.read_text());submit_response(ep,REPO,value.get('payload',value))
     native=condition=='pure_codex'
     result=cmp.run_condition(ep,None if native else provider(root,condition),p,REPO,condition=condition,
         **hooks(p['authority']['owner_ref']),live_admission=None if native else read_record(root/'admissions'/f'{condition}.json'))
-    if result.get('status')!='awaiting_current_agent':save(root/'results'/f'{condition}.json',result)
+    if result.get('status')!='awaiting_current_agent':result=_publish_terminal(root,condition,result)
     return result
 
 
@@ -270,13 +279,18 @@ def _binding(q, schema, prompt, frozen):
             'model_requested':frozen['model'],'reasoning_effort':frozen['reasoning_effort']}
 
 
-def _load_completed(directory,q,frozen,limit):
+def _stored_binding(directory,q,frozen):
     intent=read_record(directory/'intent.json')
     require(read_record(directory/'request.json')==q,'host_cache_request_changed')
     schema=json.loads((directory/'schema.json').read_text())
     prompt=(directory/'prompt.txt').read_text()
     expected=_binding(q,schema,prompt,frozen)
     require(schema==schema_for(q) and all(intent.get(k)==v for k,v in expected.items()),'host_cache_binding_changed')
+    return intent,expected
+
+
+def _load_completed(directory,q,frozen,limit):
+    intent,expected=_stored_binding(directory,q,frozen)
     result=read_record(directory/'outcome.json')
     require(result.get('status')=='complete' and result.get('request_binding')==expected,'host_cache_outcome_changed')
     raw=_decode_reply(directory/'reply.json',limit)
@@ -300,6 +314,69 @@ def _restore_context(root,condition,frozen):
     elif session_file.exists(): raise ContractError('host_session_without_completed_call')
 
 
+
+def _call_manifest(root,condition):
+    return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest()
+            for p in sorted((root/'host-calls'/condition).rglob('*')) if p.is_file()}
+
+
+def _publish_terminal(root,condition,result):
+    # Bind the COMPLETE call-file set, not just whichever records survive recovery.
+    value={**result,'host_call_manifest':_call_manifest(root,condition)}
+    save(root/'results'/f'{condition}.json',value)
+    return value
+
+
+def _verified_terminal(root,condition,frozen):
+    """A terminal marker is not permission to skip verification of its supporting records."""
+    result=read_record(root/'results'/f'{condition}.json')
+    recorded=result.get('host_call_manifest')
+    observed_files=_call_manifest(root,condition)
+    require(isinstance(recorded,dict) and set(recorded)==set(observed_files),'host_terminal_call_set_changed')
+    _restore_context(root,condition,frozen)
+    episode=root/'episodes'/condition
+    for ip in sorted((root/'host-calls'/condition).glob('*/intent.json')):
+        directory=ip.parent;q=read_record(directory/'request.json')
+        intent,_=_stored_binding(directory,q,frozen)
+        op=directory/'outcome.json';fp=directory/'failure.json'
+        require(op.exists() or fp.exists(),'host_terminal_has_unknown_call')
+        if fp.exists():
+            fail=read_record(fp)
+            require(fail['request_id']==q['request_id'] and fail['request_sha256']==digest(q),
+                    'host_terminal_failure_binding')
+            if 'reply_bytes_sha256' in fail:
+                reply_path=directory/'reply.json'
+                observed=hashlib.sha256(reply_path.read_bytes()).hexdigest() if reply_path.exists() else None
+                require(observed==fail['reply_bytes_sha256'],'host_terminal_failed_reply_changed')
+        if not op.exists():continue
+        raw,out=_load_completed(directory,q,frozen,intent['output_bytes'])
+        sp=directory/'submission.json'
+        if sp.exists():
+            submission=read_record(sp)
+            require(submission['reply']==normalize(raw,q,out['usage'])
+                    and submission['request_id']==q['request_id']
+                    and submission['request_sha256']==digest(q)
+                    and submission['host_context_ref']==out['context_ref']
+                    and submission['elapsed_seconds']==out['elapsed_seconds'], 'host_terminal_submission_changed')
+            handoffs=[h for h in episode.glob('turns/*/inputs/*/steps/*/handoff.json')
+                      if read_record(h)['request_id']==q['request_id']]
+            require(len(handoffs)==1,'host_terminal_handoff_missing')
+            handoff=read_record(handoffs[0]);validate_submission(submission,handoff,REPO)
+            staged=handoffs[0].with_name('host-response.json')
+            if staged.exists():
+                require(read_record(staged)['submission']==submission,'host_terminal_staged_reply_changed')
+            elif result.get('consumption_complete'):
+                raise ContractError('host_terminal_response_not_staged')
+            cp=directory/'consumption.json'
+            if cp.exists():
+                require(read_record(cp)=={'status':'response_staged','submission_sha256':digest(submission),
+                    'request_id':q['request_id'],'semantic_acceptance':False}, 'host_terminal_consumption_changed')
+        elif result.get('consumption_complete'):
+            raise ContractError('host_terminal_submission_missing')
+    require(recorded==observed_files,'host_terminal_record_digest_changed')
+    return result
+
+
 def _run_cli(cmd,prompt,env,timeout):
     # Stop local descendants on timeout; do not claim this cancels server-side work.
     proc=subprocess.Popen(cmd,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,
@@ -318,7 +395,9 @@ def _failure(root,condition,directory,q,stage,exc,*,elapsed=None,usage=None,comp
     code=str(exc) if isinstance(exc,ContractError) and re.fullmatch(r'[A-Za-z0-9_.:/-]{1,180}',str(exc)) else type(exc).__name__
     record={'status':'rejected' if completed else 'failed','stage':stage,'error_code':code,
             'request_id':q.get('request_id'),'request_sha256':digest(q),
-            'transport_completed':completed,'elapsed_seconds':elapsed,
+            'transport_completed':completed,'process_returned':completed,'reply_validated':False,
+            'reply_bytes_sha256':hashlib.sha256((directory/'reply.json').read_bytes()).hexdigest() if (directory/'reply.json').exists() else None,
+            'elapsed_seconds':elapsed,
             'usage':usage or dict(wire.rt.UNKNOWN_USAGE),'automatic_retry':False}
     save(directory/'failure.json',record)
     result={'schema':'mindthus.single-cycle-host-failure.v1','condition':condition,
@@ -326,8 +405,7 @@ def _failure(root,condition,directory,q,stage,exc,*,elapsed=None,usage=None,comp
             'reason':code,'failure_stage':stage,'consumption_complete':False,
             'failure_record':str(directory/'failure.json'),'pending_local_handoff':True,
             'external_request_repeated':False,'usage':record['usage']}
-    save(root/'results'/f'{condition}.json',result)
-    return result
+    return _publish_terminal(root,condition,result)
 
 
 def drive(root,condition):
@@ -341,7 +419,7 @@ def drive(root,condition):
 def _drive(root,condition):
     frozen=verify(root);ep=root/'episodes'/condition
     terminal=root/'results'/f'{condition}.json'
-    if terminal.exists(): return read_record(terminal)
+    if terminal.exists(): return _verified_terminal(root,condition,frozen)
     for path in sorted((root/'host-calls'/condition).glob('*/failure.json')):
         # Interruption between recording rejection and publishing its terminal result.
         fail=read_record(path);q=read_record(path.with_name('request.json'))
@@ -350,12 +428,12 @@ def _drive(root,condition):
                 'reason':fail['error_code'],'failure_stage':fail['stage'],'consumption_complete':False,
                 'failure_record':str(path),'pending_local_handoff':True,
                 'external_request_repeated':False,'usage':fail['usage']}
-        save(terminal,result);return result
+        _publish_terminal(root,condition,result);return _verified_terminal(root,condition,frozen)
     _restore_context(root,condition,frozen)
     work=root/'workspaces'/condition;work.mkdir(parents=True,exist_ok=True)
     session_file=root/'sessions'/f'{condition}.json'
     for _ in range(frozen['maximum_cli_calls_per_branch']+1):
-        result=step(root,condition)
+        result=_step(root,condition)
         if result.get('status')!='awaiting_current_agent':return result
         handoff=read_record(Path(result['host_request']));q=handoff['request']
         label=Path(result['host_request']).parent.name;directory=root/'host-calls'/condition/label
@@ -404,7 +482,7 @@ def _drive(root,condition):
                 require((directory/'reply.json').is_file(),'host_reply_missing')
                 raw=_decode_reply(directory/'reply.json',handoff['output_bytes'])
             except (ContractError,OSError) as exc:
-                return _failure(root,condition,directory,q,'transport_reply',exc,elapsed=elapsed,usage=usage)
+                return _failure(root,condition,directory,q,'transport_reply',exc,elapsed=elapsed,usage=usage,completed=True)
             saved={'status':'complete','context_ref':context,'elapsed_seconds':elapsed,'usage':usage,
                    'requested_model':frozen['model'],'service_model_attestation':'not_observed',
                    'request_binding':expected,'reply_sha256':digest(raw)}
