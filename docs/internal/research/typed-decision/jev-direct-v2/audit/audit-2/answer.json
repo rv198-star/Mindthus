@@ -1,0 +1,24 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "阻塞",
+      "location": "experiments/jev_direct/router.py:consume；experiments/jev_direct/pilot.py:run_case",
+      "problem": "当 SELA 和 MPG 分别选中不同的原始请求范围时，consume 仅因两者都在 selected 中，就把低分的 companion 检查标为 satisfied_by_included_companion，不列入 unconfirmed_companion_scopes。例如 SELA 负责范围 A、MPG 负责范围 B，而 A 的具体载体实际需要 MPG 检查时，下游被要求按各自声明的范围执行；即使完全漏掉 A 的 MPG 检查，只要声称使用了两种已加载方法，也可在没有 route_objection 的情况下交付。",
+      "required_fix": "按义务所属范围核对 companion 覆盖；另一个范围已选中同名方法不能自动视为满足。范围覆盖未确认时，要求在该范围完成检查，或明确作 source-based 异议与有限答复。"
+    },
+    {
+      "severity": "阻塞",
+      "location": "experiments/jev_direct/pilot.py:verify；experiments/jev_direct/pilot.py:run_case",
+      "problem": "跨臂仍未核对身份。第一臂完成后，同时更新 freeze.json 的 case raw 或试验策略及 freeze-binding.json 中对应摘要，verify 即可通过；第二臂只检查自己的 run-start.json，不检查已完成第一臂的 freeze_sha256 和 raw_sha256，因此能以不同输入或策略形成表面配对。",
+      "required_fix": "启动任一臂及接受缓存结果前，核对同一 case 另一臂已记录的冻结配置和原始输入摘要；不一致时停止配对比较。"
+    },
+    {
+      "severity": "重要",
+      "location": "experiments/jev_direct/router.py:consume；experiments/jev_direct/pilot.py:run_case",
+      "problem": "当 COMPANION.mpg.sela 判定为 required、但 REL.mpg.sela 判定 MPG 在 SELA 前时，依赖边形成环。consume 虽标记 ordering_unresolved，仍按字母序给出 MPG、SELA 的 load_order；下游没有针对该冲突的必需异议或降级检查，可能按相反顺序完成路径判断并直接交付。",
+      "required_fix": "冲突时不要把字母序呈现为可执行的依赖顺序；要求先解决 SELA 前置检查，无法解决则明确异议并有限答复。"
+    }
+  ],
+  "summary": "仅依据所给文本作只读复核，未运行工具。全局 MODE 不再清空独立选中的方法；正常封存结果的 wall_seconds 也覆盖路由与材料装载。剩余问题是跨范围 companion 的错误满足、跨臂冻结身份未互核，以及冲突依赖仍可被当作执行顺序；不据此宣称路由整体合格。"
+}

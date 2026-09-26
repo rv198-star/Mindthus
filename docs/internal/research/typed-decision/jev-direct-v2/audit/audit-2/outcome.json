@@ -1,0 +1,19 @@
+{
+  "status": "complete",
+  "exit_code": 0,
+  "elapsed_seconds": 78.07209589425474,
+  "contexts": [
+    "01a0dffa-86e4-71e1-83a3-867fd1008cb3"
+  ],
+  "usage": [
+    {
+      "input_tokens": 24821,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 4159,
+      "reasoning_output_tokens": 3458
+    }
+  ],
+  "tool_events": 0,
+  "model_service_attestation": "not_observed"
+}

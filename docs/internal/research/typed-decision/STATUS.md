@@ -1,12 +1,26 @@
 # Typed Decision — recovery entry
 
-Active branch: `experiment/typed-decision-runtime`.
+Active branch: `experiment/jev-direct-full-context`.
 Integration evidence checkpoint: `e8b36184d8b5de550a41a1c61b87ae2e9d298e4a`.
 Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current direct-Jev requirement — full input prepared; single-State capacity rejected
+## Current compact direct-Jev implementation — offline/audit complete, matched pilot next
+
+Owner approved compact full-catalog routing descriptions plus at most one Jev-directed original-source read.
+Branch experiment/jev-direct-full-context; original full-State capacity failure and old②negative outcome preserved.
+Read [implementation and trial protocol](jev-direct-v2/PLAN.md) and [engineering](jev-direct-v2/ENGINEERING.md).
+Jev is the first semantic processor; no LLM organizer, candidates or user summary. 71 typed questions share
+original task + all10 entry cards/8 routable methods +6 cognitive primitives. At most2 detail topics in one
+optional second batch, with all original task/card context preserved. Target methods and scoped companion
+references really load; the direct execution host is not given using-mindthus entry prose.
+39 new offline tests; final full1756 pass/0skip; lifecycle98/98. Independent review REVISE→REVISE→scoped PASS.
+Cases A1/B1/C1/D1/E-first/F-late retain original user sources but discard former author method nominations.
+New matched⓪/③ pilot pending; no new business model calls at this checkpoint. No default adoption or
+native-plugin activation claim. Preserve six-source development limitations; freeze before outcomes.
+
+## Previous direct-Jev requirement — full input prepared; single-State capacity rejected
 
 Owner approved a distinct ③ direct-Jev architecture and explicitly requires original user request
 plus complete SKILLS and methodology descriptions, with no pre-route LLM shortlist or summary.

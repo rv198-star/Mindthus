@@ -1,0 +1,30 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "阻塞",
+      "location": "experiments/jev_direct/router.py:consume；experiments/jev_direct/pilot.py:run_case",
+      "problem": "原 SKILL 的 SELA↔MPG 直载义务未被双向保障。现有逻辑只在已选 MPG 且 companion 观测达到 0.60 时补入 SELA；若涉及具体载体的任务只选中 SELA，或趋势型 MPG 的 companion 观测低于阈值，下游又被禁止另选方法、无法读取缺失方法，仍可能交付违反原方法必要约束的答案。",
+      "required_fix": "在现有路由轮次内处理双向条件性 companion：条件成立时纳入并实际加载原文；条件未能确认时明确标记约束未满足、降级交付，不把概率阈值视为义务豁免。"
+    },
+    {
+      "severity": "阻塞",
+      "location": "experiments/jev_direct/router.py:consume",
+      "problem": "单一全局 MODE 只要不是 judgment，就清空所有已选方法。可触发场景是同一请求既有资料缺失、需说明无法判断的部分，又有独立可完成的 SRA 等判断部分：MODE=acquire 会抹掉后者的高置信路由，下游也拿不到其原方法。这与按范围支持多阶段任务的设计不符。",
+      "required_fix": "保留独立可执行范围的已选方法，仅对缺资料的范围作局部限制；不要用全局 acquire 或 unclear 清空其他范围。"
+    },
+    {
+      "severity": "阻塞",
+      "location": "experiments/jev_direct/pilot.py:verify；experiments/jev_direct/pilot.py:run_case",
+      "problem": "freeze.json 的 cases 和试验策略未作跨臂身份核对。第一臂完成后若修改同一 case id 的 raw，verify 仍可通过，第二臂会用不同原始输入运行，形成表面配对、实则不配对的对照。",
+      "required_fix": "在每臂结果中记录并核对冻结配置摘要或原始 case 摘要；运行另一臂及读取缓存结果时，发现同一 case 的摘要不一致即停止比较。"
+    },
+    {
+      "severity": "重要",
+      "location": "experiments/jev_direct/pilot.py:run_case；docs/internal/research/typed-decision/jev-direct-v2/PLAN.md",
+      "problem": "计划把完整单臂墙钟时间列为次要终点，但结果只汇总 host_seconds，未计入③的 Jev 路由和材料装载时间。若据此比较两臂速度，会系统性漏计③的开销。",
+      "required_fix": "记录从每臂开始至终态的墙钟耗时，保留 host_seconds 作为分项；没有完整耗时前不作速度或净开销优势结论。"
+    }
+  ],
+  "summary": "就提供的代码与原 SKILL 而言，③保留全目录卡片、原始输入与最多两轮路由，未见路由前 LLM 整理；精简卡片也明确不冒充无损原文。但条件性原方法义务、混合任务的多方法保留，以及配对输入和耗时核对存在可触发缺口。此结论不沿用②的结果，也不预设③优于⓪。"
+}

@@ -1,0 +1,196 @@
+{
+  "schema": "mindthus.direct-routing-cards.v1",
+  "authoring": "offline curated routing projection; not lossless full text; canonical sources control",
+  "source_revision": "8ca8c6ebd6d263472382f31f94a6788fb628d2b9",
+  "cards": {
+    "3l5s": {
+      "core": "Three Layers (Discovery, Definition, Resolution) and BTGSB (Baseline, Target, Gap, Strategy, Breakdown) turn noisy signals into a falsifiable problem and accepted problems into verifiable executable work.",
+      "when": "Use for unclear problem identity, unreliable symptom-to-solution jumps, repeated unexplained rework, or an accepted task too vague or large to execute.",
+      "boundary": "Do not force three layers for ordinary edits or known actions. Single-layer BTGSB is sufficient for a clear problem. Merely discussing a complex subject is not a durable Mission.",
+      "neighbors": "EDSP owns structural ambiguity or a malformed binary; SRA owns allocation once options and a shared resource are judgeable. TPlan owns persistent Mission state, not problem definition.",
+      "output": "Restatable falsifiable problem or a concrete gap, strategy and next executable action with acceptance evidence.",
+      "composition": "Can precede EDSP if problem identification exposes unstable axes, or SRA when it produces judgeable options. Do not insert it before every already-clear specialized judgment.",
+      "sources": [
+        "skills/3l5s/SKILL.md",
+        "docs/methodologies/3l5s.md"
+      ],
+      "activation": "routable"
+    },
+    "edsp": {
+      "core": "Extreme Deduction first establishes a structural coordinate system by varying key variables to extremes; Scenario Projection is a supplement after that structure is stable.",
+      "when": "Ambiguous qualitative judgment, apparently valid competing statements, false binary, unstable evaluation axes, or a concrete choice needing stable structural boundaries.",
+      "boundary": "Do not replace missing facts, domain research, runtime evidence, or user value judgment. A malformed binary needs diagnosis before a provisional winner. A legitimate tradeoff need not have one universal winner.",
+      "neighbors": "Unlike 3L5S, the uncertainty is the structural relationship, not just an unclear task. Unlike SRA, the options or axes may not yet be stable. WAE needs an actual agentic controller mismatch, not any conceptual boundary.",
+      "output": "Decisive variables, structural distinction or malformed-proposition diagnosis; situated guidance and evidence that could change it.",
+      "composition": "Can precede SRA: first establish valid comparable alternatives, then allocate. Can support strategic lenses without claiming every strategic choice as its own.",
+      "sources": [
+        "skills/edsp/SKILL.md",
+        "docs/methodologies/edsp.md"
+      ],
+      "activation": "routable"
+    },
+    "sela": {
+      "core": "System Efficiency over Local Advantage examines long-term system-level cost-effectiveness pressure against real local strengths; local value can survive in niche, transition or premium use.",
+      "when": "A scalable or automated system challenges a genuine craft, expert, internal or local advantage; the direction or timing of a paradigm shift is at issue.",
+      "boundary": "A bare price comparison or build-versus-rent choice is not enough. System efficiency does not erase hard harm, dignity, user values, transition or timing constraints.",
+      "neighbors": "SELA calibrates long-term direction; MPG owns the concrete actor/carrier/exposure/path commitment when that determines action. They are siblings, not a hierarchy.",
+      "output": "Evidence-bounded direction judgment with fair comparison, scalability, user tolerance, timing and limits.",
+      "composition": "If a concrete carrier/exposure/path/continue-exit commitment is present, the original MPG SKILL must actually be read before action judgment; SELA supports direction and MPG owns the path. This conditional duty is not waived by a low route score. Without that action scope, SELA can stand alone.",
+      "sources": [
+        "skills/sela/SKILL.md",
+        "docs/methodologies/sela.md"
+      ],
+      "activation": "routable"
+    },
+    "mpg": {
+      "core": "Mainline-Path Game: a plausible long-term direction does not ensure that an actor survives the path through a particular carrier, vehicle or concentrated exposure.",
+      "when": "Existing mainline plus nonlinear counterforces/cost/delay/fragility and a concrete actor choosing commitment, timing, carrier, continuation, pause, exit or switch.",
+      "boundary": "Not for bare trend prediction without actor/carrier/exposure. Merely checking whether a historical answer followed MPG is an evidence-review task, not automatic MPG execution.",
+      "neighbors": "SELA calibrates direction. SRA allocates a shared resource among multiple judgeable alternatives; MPG handles a selected mainline and how its carrier crosses path risk.",
+      "output": "Plain-language direction-versus-current-path thesis, then bounded posture, exposure, optionality, triggers and conditions challenging the mainline.",
+      "composition": "When the mainline relies on system-efficiency/trend claims, SELA support must be actually loaded and checked before path strategy. This obligation is conditional on that claim, not on a keyword.",
+      "sources": [
+        "skills/mpg/SKILL.md",
+        "docs/methodologies/mpg.md"
+      ],
+      "activation": "routable"
+    },
+    "sra": {
+      "core": "Scarce Resource Allocation protects the minimum sufficient support for the real target and risk floor, then assigns the next meaningful tranche by risk-adjusted marginal value.",
+      "when": "Multiple sufficiently judgeable actions or bundles compete for a named common scarce resource in a decision window. Default Lite; Full for real bundles, multiple constraints, fixed thresholds or major commitments.",
+      "boundary": "Do not invent target, authority, resource, contribution or evidence. One required action or a cheaper direct trial stays direct. Unknown benefit is not zero; utilization is not the goal.",
+      "neighbors": "EDSP/3L5S stabilize questions or candidates first. MPG owns single-mainline carrier and exit risk. TPlan retains Mission state and continuation authority.",
+      "output": "A small allocation frame, contraction identifying the floor, replenishment selecting next tranche, displaced-work posture, reserve/ceiling and rerank trigger; use whole thresholds for indivisible work.",
+      "composition": "Can follow EDSP with the resulting feasible alternatives as a true prerequisite. Do not allocate to an option before its necessary structural validity is established.",
+      "sources": [
+        "skills/sra/SKILL.md",
+        "docs/methodologies/sra.md"
+      ],
+      "activation": "routable"
+    },
+    "wae": {
+      "core": "Workflow controls deterministic order; Agentic reasoning resolves uncertain semantic choices; Evidence constrains factual claims. Ownership follows result-changing semantic choice, not code depth.",
+      "when": "Both an agent/LLM/skill/script/schema/workflow/evidence-gate system AND an actual suspected controller mismatch: structure passed as truth, uncertain choices hidden in delegation, drifting agent loops, or evidence not constraining claims.",
+      "boundary": "Not every boundary, workflow, conceptual definition, review or formatting task is WAE. Syntax errors implementing an already-decided rule need execution repair, not a fresh ownership theory.",
+      "neighbors": "EDSP handles ordinary conceptual/structural boundaries. TPlan owns durable Mission state and authority. A Skill being discussed does not alone establish controller mismatch.",
+      "output": "Minimal control allocation first: path vs truth uncertainty, required evidence, reversibility/blast radius; refine ownership only when delegation still hides a semantic choice.",
+      "composition": "Can constrain execution or support another real owner. A complete deterministic delegation ends ownership analysis; avoid recursive design or mandatory four-quadrant paperwork.",
+      "sources": [
+        "skills/wae/SKILL.md",
+        "docs/methodologies/wae.md"
+      ],
+      "activation": "routable"
+    },
+    "tvg": {
+      "core": "Thinking Value-Gain improves a bounded existing AI artifact toward a defined useful outcome, grounded judgment, evidence, tradeoffs and downstream usability.",
+      "when": "An existing named text/module is generic, thin, weak in judgment, over-expanded or unusable downstream, and the target value and boundaries can be stated.",
+      "boundary": "Not generic lengthening and not an all-purpose audit. TVG audit is only an exit check for an active TVG loop. No bounded artifact plus value-gain target means no TVG. Broken canonical model returns to root-cause repair.",
+      "neighbors": "Strategy/problem/control/code/release audits use their relevant owner first. TPlan manages long-running Mission state, not artifact strengthening.",
+      "output": "Concrete grounded improvement to the artifact, with a bounded exit test and stop when another round lacks plausible value.",
+      "composition": "Can follow a real owner artifact only when value gain is needed, not as mandatory polishing of every answer.",
+      "sources": [
+        "skills/tvg/SKILL.md",
+        "docs/methodologies/tvg.md"
+      ],
+      "activation": "routable"
+    },
+    "tplan": {
+      "core": "OKR-Runtime keeps an agent Mission attached to persistent task state, acceptance evidence, decision hooks, recovery and authority.",
+      "when": "A real Mission needs durable state, resumable work, evidence/acceptance, human authority, task addition/selection/subtraction or safe closure.",
+      "boundary": "Ordinary complexity or writing a one-off plan is insufficient. Scripts validate shape/legality/references, not semantic truth. Do not invent or mutate a Mission while merely analyzing an example.",
+      "neighbors": "3L5S defines problems/tasks; SRA ranks judgeable shared-resource uses; WAE assesses control mismatch. TPlan owns legal state transitions and continuation, not these judgments.",
+      "output": "Mission-relative next authorized step or state/evidence/decision update, with explicit recovery/stop boundaries; Lite for short reversible paths.",
+      "composition": "Other methods may inform Mission gates while existing state/authority owners remain intact. No automatic four-agent orchestration.",
+      "sources": [
+        "skills/tplan/SKILL.md",
+        "docs/methodologies/tplan.md"
+      ],
+      "activation": "routable"
+    },
+    "using-mindthus": {
+      "activation": "reference_only",
+      "core": "Entry triage, framing, partial-truth and situated-goal obligations are represented by the routing protocol and cognitive cards. This entry is not reloaded by the downstream Agent on the direct arm.",
+      "sources": [
+        "skills/using-mindthus/SKILL.md"
+      ]
+    },
+    "case-prep": {
+      "activation": "explicit_only",
+      "core": "Only an explicit request to prepare/export/package current Mindthus judgment or TPlan cases permits case preparation. Never auto-export or publish. Outside this text-only pilot, hand to its existing authorized host rather than pretending a route is an export.",
+      "sources": [
+        "skills/case-prep/SKILL.md"
+      ]
+    }
+  },
+  "primitives": {
+    "frame": {
+      "question": "Would accepting the current wording without first checking its framing make a local or implementation-level claim control a broader judgment? A legitimate narrow task, preference or constraint is not itself bias.",
+      "instruction": "Check whether the problem is framed at the right level. Preserve valid local truth, but do not let it decide a broader claim without support. Do not disagree just to display skepticism.",
+      "path": "docs/methodologies/primitives/frame-fitness-check.md"
+    },
+    "whole": {
+      "question": "Does this request contest an essence/definition or reduce a whole object to one mechanism, metric or component, so its actual result-controlling responsibilities must be distinguished?",
+      "instruction": "Identify the actual object, the mechanism and what controls success/failure before deciding whether a reduction is sufficient. Accept a truly sufficient simple explanation; do not invent extra machinery.",
+      "path": "docs/methodologies/primitives/whole-elephant-protocol.md"
+    },
+    "context": {
+      "question": "Would changing the actual actor, decision timing, goal or acceptable tradeoff change the judgment, requiring explicit situated-goal calibration?",
+      "instruction": "Let the actual user/actor goal and acceptable tradeoffs control the situated judgment while facts still constrain it. Do not invent purchase timing or erase legitimate preferences.",
+      "path": "docs/methodologies/primitives/decision-context-calibration.md"
+    },
+    "spiral": {
+      "question": "Does the supplied current trajectory show repeated local repair, negative feedback, or added layers without decision-relevant progress, requiring an anti-spiral check?",
+      "instruction": "Recheck the original goal, actual progress and expected value before another same-path repair. Prefer subtraction or upstream correction when supported; ordinary useful iteration is not a reason to stop.",
+      "path": "docs/methodologies/anti-spiral-self-audit.md"
+    },
+    "root": {
+      "question": "Has supplied evidence already identified a wrong canonical assumption/rule/owner whose downstream symptom patches preserve the cause? A merely suspected root is not confirmed.",
+      "instruction": "When evidence establishes the broken canonical cause, replace that rule at its owner with intended behavior and verify downstream impact. When it is only a hypothesis, preserve uncertainty and obtain evidence.",
+      "path": "docs/methodologies/primitives/root-cause-replacement.md"
+    },
+    "aspect": {
+      "question": "Do multiple applicable cognitive perspectives compete for the same visible thesis, requiring one controlling perspective with others retained as constraints or support?",
+      "instruction": "For each actual scope, state one controlling thesis; keep other applicable perspectives as explicit support or constraints rather than a toothless average. Separate independent tasks rather than forcing one global winner.",
+      "path": "docs/methodologies/primitives/aspect-ownership.md"
+    }
+  },
+  "source_sha256": {
+    "docs/methodologies/3l5s.md": "7092b00104ca50baa4d56fdc11f4038ee4008822d7f119dcb362311df2ee80f7",
+    "docs/methodologies/anti-spiral-self-audit.md": "91618a2788ec9d8dcacd078c782be1792c89008793b6074c6085da80cfe5044d",
+    "docs/methodologies/edsp.md": "4439125a8de2ca4286a350e59052a5047d6af374058f3f306e107371c25f07b8",
+    "docs/methodologies/mpg.md": "b1d4e291d49f3ec93e2b146bcf4f1f1f8e859a3f0a5b1ecd156613e23d502d55",
+    "docs/methodologies/primitives/aspect-ownership.md": "51ed019cbcc93ff5a38cf24c129fc3773edeb33ddda0b578e65b932d6a2dbae0",
+    "docs/methodologies/primitives/decision-context-calibration.md": "506df8ecb01eeec891a7bb4368f9e9f5b703d7afca5c18a0e48e5a963fdd53b3",
+    "docs/methodologies/primitives/frame-fitness-check.md": "441a1339773de2c26a99fe8ede7302ac0bdf185a5bc6f624ea6bfb4cea20781f",
+    "docs/methodologies/primitives/root-cause-replacement.md": "a3c617524a840fd5c3f7e6fee1d301f1cc21cbe49a37f335ef2bedf57b144b64",
+    "docs/methodologies/primitives/whole-elephant-protocol.md": "2995f919c2cfc70a22fb4e7f4b660b510f959fa159b156a0e63a55233ce1e2f9",
+    "docs/methodologies/sela.md": "e875bc1f20d6b61d51442a0acb82994b97c1538c967537c0c54b8ea6d2e7ff85",
+    "docs/methodologies/sra.md": "4ac80a3afa9e4e57b9868c262f6fa4ad7a08288b31ce5ec57d4c442a5f16e7a1",
+    "docs/methodologies/tplan.md": "55f42e113c9d5d4193687dd46b75c7e84407ea034b39de424214505e653a95ed",
+    "docs/methodologies/tvg.md": "c7676f327eb5cf69389827cd4be59f93523e943652e3abfa2a22713a68aa5c11",
+    "docs/methodologies/wae.md": "99629f77d0159dfa5bef0ff8e31afdb6e11ae9faac2c730c01ef3892eb1e3604",
+    "skills/3l5s/SKILL.md": "fe472b01eeaf724c047f6db486d0f860b82e5b47be2d4f1b5ebf3376e839cbb1",
+    "skills/case-prep/SKILL.md": "e49f51f388290296349f7956536f0ee718edb2efc9ca11cddcd74e37e393f249",
+    "skills/edsp/SKILL.md": "4de72a21f227b77711cb8f48212e8f3cb42d5b3b0cd1b911ca3284aad40e240c",
+    "skills/mpg/SKILL.md": "1a8e4e5f7a382e24a266befd3b9f58b329253a0ecf49e55b0e9f5690eccf6bc0",
+    "skills/sela/SKILL.md": "71b34d7ae2b6312c41ed904dba00cc9bea6615d6e73a537ac20e5cd29fb1b9ad",
+    "skills/sra/SKILL.md": "da08964986a73f618f8ee55096f06da2f9f60abec711e4d3a04ddcfc05abf514",
+    "skills/tplan/SKILL.md": "dbd00b73b2c965c5a687cb12602874226c87e07f9695354f05683a832761ed96",
+    "skills/tvg/SKILL.md": "f1ede50d063ba72dc39e9f13c0721a079f31c58c892f486675126472bf67e7de",
+    "skills/using-mindthus/SKILL.md": "9eb89affdbd468d40f0c222d085492193a8a81b99f05a56da1bc515aefbeee19",
+    "skills/wae/SKILL.md": "f5ec807d2bfe91847671eb61d5150b43c464cda378bd2dbb8b7e91db372c7496"
+  },
+  "policy": {
+    "version": "direct-two-level.v1",
+    "max_route_rounds": 2,
+    "max_detail_topics": 2,
+    "max_state_bytes": 60000,
+    "max_request_bytes": 240000,
+    "optional_primitive_threshold": 0.6,
+    "role_min_probability": 0.5,
+    "read_threshold": 0.55,
+    "low_confidence_is_answer_veto": false,
+    "score_is_routing_authority": false
+  },
+  "evidence_boundary": "User input contains tasks, claims and constraints, not automatic facts. Method examples are rules illustrations, not the answer. Never infer permission or factual validation from a routing score."
+}
