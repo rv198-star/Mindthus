@@ -6,7 +6,20 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current OpenRouter continuation — explicit serving change; live trial pending
+## Current OpenRouter checkpoint — code/freeze delivered; inference launch denied
+
+Owner-authorized OpenRouter continuation is implemented (f20c71f) and frozen (c79596e).
+Read [result](route-control-v0.2/single-cycle-repair-v1/openrouter-channel-v1/RESULT.md).
+One E② drive-codex launch was denied by OpenAI tool safety before execution. No alternate
+request form or retry followed. Both new E/F roots contain only preparation:0 intents,
+0 outcomes,0 unknown requests. New Jev/Codex/CPA=0; anonymous review not run.
+Old E⓪ remains completed with3 original host calls and all45 baseline files unchanged.
+Do not call a previous successful key-auth GET a successful inference request.
+Full engineering1654(1649 pass,5skip),serving23,lifecycle95/95 are verified; no model winner.
+Use the explicit OpenRouter roots/identity if execution is later permitted; do not mutate
+old TypeSafe roots or regenerate E⓪. main/defaultSkill unchanged, #211 NOT QUALIFIED.
+
+## Previous OpenRouter continuation — explicit serving change; live trial pending
 
 Owner explicitly requested OpenRouter to finish the existing single repair cycle. Read
 [same-cycle channel plan](route-control-v0.2/single-cycle-repair-v1/OPENROUTER-PLAN.md).

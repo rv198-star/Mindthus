@@ -1,0 +1,45 @@
+{
+  "schema": "mindthus.openrouter-channel-attempt.v1",
+  "checked_at_utc": "2026-09-26T09:18:32.816869+00:00",
+  "authorization": "Owner explicitly requested OpenRouter for the existing single-cycle test",
+  "preflight_commit": "c79596efd663b1f14dbba68573b9daa87f57d3e2",
+  "operation": "single-cycle-repair-v1/run.py drive-codex, E, jev_committed, explicit OpenRouter Jev serving",
+  "attempts": 1,
+  "outcome": "tool_safety_denied_before_execution",
+  "message": "此工具调用被 OpenAI 的安全检查屏蔽。请仔细检查你发送的内容。",
+  "new_model_calls": {
+    "Jev": 0,
+    "Codex": 0,
+    "CPA": 0
+  },
+  "roots": {
+    "E": {
+      "path": "/srv/agentdock/tmp/mindthus-single-cycle-openrouter-E-20260926",
+      "prepared": true,
+      "intents": 0,
+      "outcomes": 0,
+      "unknown": [],
+      "result": "UNRUN",
+      "freeze_sha256": "7f4c0607205b3ddfafa0c94455a341b683a4b1a2c7cffb22caee9e55da205b8d"
+    },
+    "F": {
+      "path": "/srv/agentdock/tmp/mindthus-single-cycle-openrouter-F-20260926",
+      "prepared": true,
+      "intents": 0,
+      "outcomes": 0,
+      "unknown": [],
+      "result": "UNRUN",
+      "freeze_sha256": "fc8bb489d2ad4e7355485eee205d9d512247aa40493181d674baccaf144fd5fb"
+    }
+  },
+  "credentials_in_record": false,
+  "automatic_retry": false,
+  "qualification": "NOT QUALIFIED",
+  "quality_review": "UNRUN",
+  "old_baseline": {
+    "files_checked": 45,
+    "all_unchanged": true,
+    "host_calls_previously_completed": 3,
+    "rerun": false
+  }
+}
