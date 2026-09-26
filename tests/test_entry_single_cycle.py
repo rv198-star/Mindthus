@@ -429,5 +429,62 @@ class PortableDriverTests(unittest.TestCase):
         schema=self.driver.schema_for(q);self.assertEqual(schema['properties']['issues']['maxItems'],1)
 
 
+
+
+class OpenRouterServingTests(PortableDriverTests):
+    """Only explicit serving changes; all responses here are offline fixtures."""
+    def test_both_pinned_serving_paths_are_admitted(self):
+        from experiments.typed_decision.providers import TypeSafeJevProvider, OpenRouterJevProvider
+        from experiments.typed_decision.contracts import provider_configuration
+        a,b=TypeSafeJevProvider(),OpenRouterJevProvider()
+        runtime._validate_provider(a);runtime._validate_provider(b)
+        self.assertEqual(provider_configuration(a)['engine'],provider_configuration(b)['engine'])
+        self.assertNotEqual(provider_configuration(a)['serving'],provider_configuration(b)['serving'])
+
+    def test_other_model_and_endpoint_are_not_admitted(self):
+        from dataclasses import replace
+        from experiments.typed_decision.providers import OpenRouterJevProvider, ChatProvider
+        for provider in (OpenRouterJevProvider('typesafe/jev-1.14'),ChatProvider('test/other-model')):
+            with self.assertRaises(ContractError):runtime._validate_provider(provider)
+        provider=OpenRouterJevProvider()
+        provider.serving_identity=replace(provider.serving_identity,endpoint='https://example.com/decisions')
+        with self.assertRaises(ContractError):runtime._validate_provider(provider)
+
+    def test_explicit_openrouter_freeze_without_network(self):
+        import json
+        self.source['documents'][-1]['id']='source-limit'
+        source=self.root/'source.json';source.write_text(json.dumps(self.source))
+        target=self.root/'openrouter'
+        frozen=self.driver.prepare(target,source,'E',0,'initial',[], 'fixture-host','high',
+                                   '/usr/bin/true','local://fixture',serving='openrouter')
+        self.assertEqual(self.driver.verify(target),frozen)
+        self.assertEqual(frozen['provider_configuration']['serving']['provider'],'openrouter')
+        self.assertEqual(frozen['provider_configuration']['serving']['requested_model'],'typesafe/jev-1.13')
+        self.assertFalse((target/'episodes').exists())
+        before=(target/'freeze.json').read_bytes()
+        with self.assertRaises(ContractError):
+            self.driver.prepare(target,source,'E',0,'initial',[], 'fixture-host','high',
+                                '/usr/bin/true','local://fixture',serving='typesafe')
+        self.assertEqual((target/'freeze.json').read_bytes(),before)
+
+    def test_serving_substitution_rejected_by_existing_admission(self):
+        from experiments.typed_decision.providers import TypeSafeJevProvider,OpenRouterJevProvider
+        data=f.packet();hs=self.driver.hooks(data['authority']['owner_ref'])
+        root=self.root/'admission'
+        admission=runtime.prepare_admission(root,TypeSafeJevProvider(),data,REPO,hs,authorization_ref='fixture')
+        bundle,*_=runtime._bundle(REPO)
+        with self.assertRaisesRegex(ContractError,'v03_live_identity'):
+            runtime._admit(admission,root,data,OpenRouterJevProvider(),bundle,hs)
+
+    def test_invalid_driver_serving_rejected(self):
+        with self.assertRaises(ContractError):self.driver._new_provider('automatic-fallback')
+
+    def test_native_material_unchanged_by_provider_selection(self):
+        from experiments.typed_decision.providers import OpenRouterJevProvider
+        data=f.packet();before=cmp.prepare_condition(data,'pure_codex',REPO)
+        runtime._validate_provider(OpenRouterJevProvider())
+        self.assertEqual(before,cmp.prepare_condition(data,'pure_codex',REPO))
+        self.assertEqual(before['loaded_methods'],{})
+
 if __name__=='__main__':
     unittest.main()

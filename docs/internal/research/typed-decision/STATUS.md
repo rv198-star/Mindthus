@@ -6,7 +6,22 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current recovery — final code verified; existing E⓪ complete; E② not yet run
+## Current OpenRouter continuation — explicit serving change; live trial pending
+
+Owner explicitly requested OpenRouter to finish the existing single repair cycle. Read
+[same-cycle channel plan](route-control-v0.2/single-cycle-repair-v1/OPENROUTER-PLAN.md).
+Jev engine remains 1.13, served as `typesafe/jev-1.13` via OpenRouter Decisions; actual
+resolved snapshot/provider are observations. No TypeSafe credential retrieval or silent fallback.
+Old TypeSafe freeze/E⓪ are untouched and old code is retained at
+`/srv/agentdock/worktrees/mindthus-single-cycle-typesafe-c184467`.
+Only explicit provider admission/driver selection changed; source questions, thresholds,
+consumer semantics and host settings unchanged. Final full regression:1654 run,1649 pass,5 skip;
+23 serving/comparison checks pass; lifecycle95/95. Initial broad check had one stale error-name
+assertion, updated without changing the rejection behavior. E⓪ is reused, not regenerated.
+New roots E/F are documented in OPENROUTER-PLAN.md, with at most8 total Jev calls in this cycle.
+No live result or quality winner at this checkpoint. main/default skills remain unchanged.
+
+## Previous recovery — final code verified; existing E⓪ complete; E② not yet run
 
 Code base `ea05409a1afef88afa049460147b4cffbff9e3f1`; task `tsk_94fd2ef722b6bb96`.
 Read [actual recovery](route-control-v0.2/single-cycle-repair-v1/recovery-ea05409/RECOVERY.md).

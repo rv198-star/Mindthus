@@ -89,9 +89,18 @@ def _validate_provider(provider, experiment_condition=None):
     if experiment_condition == 'codex_observation_committed':
         require(isinstance(provider, CurrentAgentObserver), 'v03_explicit_control_backend')
     else:
+        # The decision engine is fixed; its explicitly selected serving path is
+        # recorded by prepare_admission/_admit. No fallback or model switch occurs.
+        allowed = {
+            ('typesafe', 'systemone-v1', 'jev-1.13.0', 'https://api.typesafe.ai/v1/systemone'),
+            ('openrouter', 'decisions-alpha-v1', 'typesafe/jev-1.13',
+             'https://openrouter.ai/api/alpha/decisions'),
+        }
+        selected = tuple(serving[k] for k in ('provider', 'transport', 'requested_model', 'endpoint'))
+        engine = provider_configuration(provider)['engine']
         require(experiment_condition is None and getattr(provider, 'is_live', None) is True
-                and serving['provider'] == 'typesafe' and serving['transport'] == 'systemone-v1'
-                and serving['requested_model'] == 'jev-1.13.0', 'v03_official_jev_required')
+                and selected in allowed and engine['implementation'] == 'jev'
+                and engine['model_family'] == 'jev-1.13', 'v03_pinned_jev_serving_required')
 
 
 def _host_identity(hook, expected, live):

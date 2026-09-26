@@ -115,7 +115,7 @@ class ComparisonTests(unittest.TestCase):
 
     def test_codex_control_needs_explicit_experimental_admission(self):
         provider=self.provider();hooks=dict(executor=self.executor,corrector=self.corrector,arbitrator=self.arbitrator,organizer=None)
-        with self.assertRaisesRegex(ContractError,'official_jev'):
+        with self.assertRaisesRegex(ContractError,'pinned_jev_serving'):
             runtime.prepare_admission(self.root,provider,self.data,REPO,hooks,authorization_ref='synthetic-test')
         admission=runtime.prepare_admission(self.root,provider,self.data,REPO,hooks,authorization_ref='synthetic-test',
                                            experiment_condition='codex_observation_committed')

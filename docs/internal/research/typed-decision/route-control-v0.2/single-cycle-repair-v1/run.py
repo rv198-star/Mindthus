@@ -20,9 +20,9 @@ sys.path.insert(0, str(REPO))
 from experiments.typed_decision import comparison_v03 as cmp, route_control_v03 as runtime
 from experiments.typed_decision import evaluation_integrity as ev, source_direct_v03 as sd
 from experiments.typed_decision import relationship_assessment as rel
-from experiments.typed_decision.contracts import digest, canonical, require
+from experiments.typed_decision.contracts import digest, canonical, require, provider_configuration
 from experiments.typed_decision.current_host import CurrentAgentHost, submit_response
-from experiments.typed_decision.providers import TypeSafeJevProvider
+from experiments.typed_decision.providers import TypeSafeJevProvider, OpenRouterJevProvider
 from experiments.typed_decision.session import read_record, write_once, implementation_digest, RecoveryRequired
 
 # Reuse only the already-tested wire schema and mechanical ref/hash normalizer.
@@ -43,8 +43,17 @@ def hooks(owner):
                 organizer=CurrentAgentHost(owner,role='organize'),arbitrator=CurrentAgentHost(owner,role='arbitration'))
 
 
-def prepare(root, source_path, scenario, cutoff, phase, missing, model, effort, binary, host_endpoint):
+def _new_provider(serving, **kwargs):
+    require(serving in ('typesafe', 'openrouter'), 'single_cycle_serving_required')
+    cls, model = ((TypeSafeJevProvider, 'jev-1.13.0') if serving == 'typesafe'
+                  else (OpenRouterJevProvider, 'typesafe/jev-1.13'))
+    return cls(model=model, choice_rounding=True, **kwargs)
+
+
+def prepare(root, source_path, scenario, cutoff, phase, missing, model, effort, binary, host_endpoint,
+            serving='typesafe'):
     require(not root.exists() and not root.is_relative_to(REPO),'fresh_external_root_required')
+    selected_provider = provider_configuration(_new_provider(serving))
     raw=json.loads(source_path.read_text());source=raw.get('payload',raw)
     window=ev.prepare_prefix(source,cutoff,auxiliary_availability={'source-limit':1 if scenario=='E' else 0},
                              phase=phase,missing_original=missing)
@@ -62,7 +71,8 @@ def prepare(root, source_path, scenario, cutoff, phase, missing, model, effort, 
         'host_config_sha256':wire.sha(Path.home()/'.codex/config.toml') if (Path.home()/'.codex/config.toml').exists() else None,
         'same_branch_context_required':True,'source_protocol':'entry-selected, not native plugin auto-activation',
         'conditions':list(CONDITIONS),'maximum_jev_calls':4,'maximum_cli_calls_per_branch':8,
-        'qualification':False,'automatic_retries':0}
+        'qualification':False,'automatic_retries':0, 'jev_serving':serving,
+        'provider_configuration':selected_provider}
     save(root/'freeze.json',frozen)
     for condition in CONDITIONS:
         p=branch_packet(frozen,condition);save(root/'inputs'/f'{condition}.json',p)
@@ -85,6 +95,8 @@ def verify(root):
             and frozen['driver_sha256']==wire.sha(__file__) and frozen['adapter_sha256']==wire.sha(ADAPTER)
             and frozen['plan_sha256']==wire.sha(HERE/'PLAN.md')
             and frozen['entry_sha256']==wire.sha(REPO/'skills/using-mindthus/SKILL.md'),'single_cycle_freeze_changed')
+    require(frozen['provider_configuration']==provider_configuration(_new_provider(frozen['jev_serving'])),
+            'single_cycle_serving_changed')
     config=Path.home()/'.codex/config.toml'
     require(frozen['host_config_sha256']==(wire.sha(config) if config.exists() else None)
             and frozen['codex_binary_sha256']==wire.sha(frozen['codex_binary']), 'single_cycle_host_configuration_changed')
@@ -100,7 +112,8 @@ def provider(root,condition):
         require(len(records)<=frozen['maximum_jev_calls'],'single_cycle_jev_cap')
         # Session already persisted the intent before this one bounded transport.
         return wire.deadline_post_json(url,headers,body,min(timeout,60))
-    return TypeSafeJevProvider(model='jev-1.13.0',choice_rounding=True,transport=transport)
+    frozen=read_record(root/'freeze.json')
+    return _new_provider(frozen['jev_serving'],transport=transport)
 
 
 def step(root,condition,response_path=None):
@@ -228,8 +241,9 @@ def main():
     parser.add_argument('--model',default='gpt-6-sol');parser.add_argument('--effort',default='xhigh')
     parser.add_argument('--codex',default=shutil.which('codex'));parser.add_argument('--host-endpoint',default='configured-current-host')
     parser.add_argument('--condition',choices=CONDITIONS);parser.add_argument('--reply',type=Path)
+    parser.add_argument('--serving',choices=('typesafe','openrouter'),default='typesafe')
     args=parser.parse_args();root=args.root.resolve()
-    if args.action=='prepare':result=prepare(root,args.source,args.scenario,args.cutoff,args.phase,args.missing,args.model,args.effort,args.codex,args.host_endpoint)
+    if args.action=='prepare':result=prepare(root,args.source,args.scenario,args.cutoff,args.phase,args.missing,args.model,args.effort,args.codex,args.host_endpoint,args.serving)
     elif args.action=='step':result=step(root,args.condition,args.reply)
     else:result=drive(root,args.condition)
     print(json.dumps({k:result.get(k) for k in ('schema','status','reason','consumption_complete','delivery','host_request')},ensure_ascii=False))
