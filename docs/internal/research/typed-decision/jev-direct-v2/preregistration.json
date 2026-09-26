@@ -1,0 +1,87 @@
+{
+  "implementation_commit": "a1425b599ad33e9fdb44c4a589300ca7ba63d1c5",
+  "freeze_sha256": "8eae3b070937cae0ce1014787f20196214a6666712785fa0f3f52e6d548f75d5",
+  "root": "/srv/agentdock/tmp/mindthus-jev-direct-v2-live",
+  "scenarios": [
+    "A1",
+    "B1",
+    "C1",
+    "D1",
+    "E-window",
+    "F-window"
+  ],
+  "arms": {
+    "native": "⓪ current entry",
+    "direct": "③ compact direct Jev"
+  },
+  "execution_order": {
+    "A1": [
+      "native",
+      "direct"
+    ],
+    "B1": [
+      "direct",
+      "native"
+    ],
+    "C1": [
+      "native",
+      "direct"
+    ],
+    "D1": [
+      "direct",
+      "native"
+    ],
+    "E-window": [
+      "native",
+      "direct"
+    ],
+    "F-window": [
+      "direct",
+      "native"
+    ]
+  },
+  "states": {
+    "A1": {
+      "raw_sha256": "f1fb54fde97adeee66ccb0bbbd2b8d90978a6342f882052b0f5ee5d55e4bfdb9",
+      "state_bytes": 14136,
+      "question_count": 71,
+      "request_bytes": 78107
+    },
+    "B1": {
+      "raw_sha256": "fa673cdf7bc9bd8374e26da3a0ac983bb0407d2dfb05af82f3d42eb42b578c59",
+      "state_bytes": 14465,
+      "question_count": 71,
+      "request_bytes": 78436
+    },
+    "C1": {
+      "raw_sha256": "b746ff5957179fed2914977ce4dcebe00b91878e8e8cd71137903e23f575b9f2",
+      "state_bytes": 14717,
+      "question_count": 71,
+      "request_bytes": 78688
+    },
+    "D1": {
+      "raw_sha256": "6a423906bb606ae430f4d7ab9af8f11c23f29a7ed375e59696b9be1d6542e7e0",
+      "state_bytes": 15042,
+      "question_count": 71,
+      "request_bytes": 80005
+    },
+    "E-window": {
+      "raw_sha256": "39fd33b1cfad80e1b46385eea994bf3292fd6101dd11d5f78469ceb99809a273",
+      "state_bytes": 14135,
+      "question_count": 71,
+      "request_bytes": 78122
+    },
+    "F-window": {
+      "raw_sha256": "3fdc87a40548a8f5d1d5218beb50d2e5e9a3a3209770be81659080ea688a6fd8",
+      "state_bytes": 30519,
+      "question_count": 71,
+      "request_bytes": 100394
+    }
+  },
+  "max_case_workers": 2,
+  "max_jev_requests": 12,
+  "max_host_calls_per_arm": 4,
+  "max_content_reviews": 12,
+  "old_②_results": "unchanged and not used as paired baselines",
+  "new_business_calls_before_freeze": 0
+}
