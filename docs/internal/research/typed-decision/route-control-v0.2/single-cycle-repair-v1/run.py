@@ -9,6 +9,8 @@ import argparse
 import importlib.util
 import json
 import os
+import re
+import signal
 import shutil
 import subprocess
 import sys
@@ -20,8 +22,8 @@ sys.path.insert(0, str(REPO))
 from experiments.typed_decision import comparison_v03 as cmp, route_control_v03 as runtime
 from experiments.typed_decision import evaluation_integrity as ev, source_direct_v03 as sd
 from experiments.typed_decision import relationship_assessment as rel
-from experiments.typed_decision.contracts import digest, canonical, require, provider_configuration
-from experiments.typed_decision.current_host import CurrentAgentHost, submit_response
+from experiments.typed_decision.contracts import digest, canonical, require, provider_configuration, ContractError
+from experiments.typed_decision.current_host import CurrentAgentHost, submit_response, validate_submission
 from experiments.typed_decision.providers import TypeSafeJevProvider, OpenRouterJevProvider
 from experiments.typed_decision.session import read_record, write_once, implementation_digest, RecoveryRequired
 
@@ -118,6 +120,9 @@ def provider(root,condition):
 
 def step(root,condition,response_path=None):
     frozen=verify(root);require(condition in frozen['conditions'],'condition')
+    terminal=root/'results'/f'{condition}.json'
+    if terminal.exists():
+        return read_record(terminal)
     ep=root/'episodes'/condition;p=read_record(root/'inputs'/f'{condition}.json')
     if response_path:
         value=json.loads(response_path.read_text());submit_response(ep,REPO,value.get('payload',value))
@@ -129,7 +134,9 @@ def step(root,condition,response_path=None):
 
 
 def schema_for(q):
-    schema=wire.schema_for(q);kind=q.get('schema','')
+    # JSON round-trip breaks EACH alias occurrence; deepcopy preserves sibling aliases.
+    # The historical adapter stays immutable for old frozen runs.
+    schema=rel.clone(wire.schema_for(q));kind=q.get('schema','')
     if kind.endswith('native-request.v1'):
         schema['properties']['artifact_action']=wire.enum(q['artifact_actions'])
         schema['properties']['requested_methods']=wire.arr(wire.enum(q['condition_packet']['method_catalog']))
@@ -146,10 +153,74 @@ def schema_for(q):
         if status:
             schema['properties'][status]=wire.enum(['bounded_answer','unresolved'] if status=='scope_status' else ['answer','bounded_answer','unresolved'])
             schema['required'].append(status)
-    return schema
+    source=q.get('original_input') or q.get('condition_packet',{}).get('original_input',{})
+    source_ids=[d['id'] for d in source.get('documents',[])]
+    def constrain(node):
+        if not isinstance(node,dict): return
+        props=node.get('properties',{})
+        if 'source_ids' in props:
+            props['source_ids']=wire.arr(wire.enum(source_ids)) if source_ids else {'type':'array','items':{'type':'string'},'maxItems':0}
+            props['source_ids']['uniqueItems']=True
+        if 'source_id' in props:
+            props['source_id']=wire.enum(source_ids) if source_ids else {'type':'string','enum':[]}
+        for value in props.values(): constrain(value)
+        constrain(node.get('items'))
+    constrain(schema)
+    props=schema['properties']
+    if 'performed_methods' in props:
+        methods=(q.get('loaded_methods') or q.get('condition_packet',{}).get('loaded_methods',{}))
+        props['performed_methods']=(wire.arr(wire.enum(methods)) if methods else
+                                   {'type':'array','items':{'type':'string'},'maxItems':0})
+        props['performed_methods']['uniqueItems']=True
+    if kind.endswith('organize-request.v1'):
+        fields=props['issues']['items']['properties']
+        for name in ('actor','goal','scope'):
+            fields[name]={'type':'string','description':'A natural-language description, not an identifier or a placeholder.'}
+        fields['candidates']['uniqueItems']=True
+    if 'text' in props:
+        props['text']['description']='Actual complete user-facing answer; empty only for an explicit retain/read_methods action. Not a version or ID.'
+    # New coverage/string nodes must also be independent of wire.STR and one another.
+    return rel.clone(schema)
+
+
+def _wire_check(value, spec, path='reply'):
+    """Validate only the subset emitted above; runtime semantic validators still apply."""
+    def check(ok, code): require(ok, 'host_wire:' + path + ':' + code)
+    if 'anyOf' in spec:
+        for branch in spec['anyOf']:
+            try: _wire_check(value,branch,path); return
+            except ContractError: pass
+        check(False,'anyOf')
+    kind=spec.get('type')
+    check((kind=='object' and type(value) is dict) or (kind=='array' and type(value) is list)
+          or (kind=='string' and type(value) is str) or (kind=='boolean' and type(value) is bool)
+          or (kind=='null' and value is None), 'type')
+    if 'enum' in spec: check(value in spec['enum'],'enum')
+    if kind=='object':
+        props=spec['properties']
+        check(set(spec.get('required',[])) <= set(value),'required')
+        if spec.get('additionalProperties') is False: check(set(value) <= set(props),'extra_fields')
+        for key,item in value.items():
+            if key in props: _wire_check(item,props[key],path+'.'+key)
+    elif kind=='array':
+        check(len(value)>=spec.get('minItems',0) and len(value)<=spec.get('maxItems',100000),'count')
+        if spec.get('uniqueItems'): check(len({digest(x) for x in value})==len(value),'duplicate')
+        for i,item in enumerate(value): _wire_check(item,spec['items'],path+'.'+str(i))
+    elif kind=='string' and 'pattern' in spec:
+        check(re.search(spec['pattern'],value) is not None,'pattern')
+
+
+def _unique_rows(raw, name, field):
+    if name in raw:
+        values=[row[field] for row in raw[name]]
+        require(len(values)==len(set(values)),'host_wire:'+name+':duplicate_identity')
 
 
 def normalize(raw,q,usage):
+    _wire_check(raw,schema_for(q))
+    for name,key in (('issues','id'),('accepted','issue_id'),('decisions','finding_id'),
+                     ('revisions','issue_id'),('dispositions','finding_id')):
+        _unique_rows(raw,name,key)
     kind=q.get('schema','');raw=rel.clone(raw)
     if kind.endswith('native-request.v1') and raw['artifact_action']=='retain':
         require(raw['text']=='' and q['candidate'] is not None,'retain_requires_empty_text')
@@ -169,30 +240,142 @@ def normalize(raw,q,usage):
     return out
 
 
+
+def _prompt(q, handoff):
+    return ('只根据当前原始材料与已提供入口处理任务，不调用工具，不读其他分支。输出规定JSON。'
+            '正文是实际中文回答，不是ID或版本号；goal/scope/理由使用完整自然语言。'
+            'source_ids只能引用输出格式列出的真实文档ID。保留必要未知，正文不超过700字。'
+            '仅当本次schema包含artifact_action时，retain使用空text、read_methods请求所需方法；'
+            '非read_methods时requested_methods为空。其他阶段按本次request返回。\n'+canonical({'request':q,'host_instruction':handoff['instruction']}).decode())
+
+
+def _decode_reply(path, limit):
+    def pairs(items):
+        result={}
+        for key,value in items:
+            require(key not in result,'host_reply_duplicate_json_key');result[key]=value
+        return result
+    def invalid_constant(_): raise ContractError('host_reply_nonfinite_json')
+    content=path.read_bytes();require(len(content)<=limit,'host_reply_size')
+    try: result=json.loads(content,object_pairs_hook=pairs,parse_constant=invalid_constant)
+    except (UnicodeError,json.JSONDecodeError): raise ContractError('host_reply_invalid_json') from None
+    require(type(result) is dict,'host_reply_not_object')
+    wire.no_secrets(result)
+    return result
+
+
+def _binding(q, schema, prompt, frozen):
+    return {'request_id':q['request_id'],'request_sha256':digest(q),
+            'prompt_sha256':digest(prompt),'schema_sha256':digest(schema),
+            'model_requested':frozen['model'],'reasoning_effort':frozen['reasoning_effort']}
+
+
+def _load_completed(directory,q,frozen,limit):
+    intent=read_record(directory/'intent.json')
+    require(read_record(directory/'request.json')==q,'host_cache_request_changed')
+    schema=json.loads((directory/'schema.json').read_text())
+    prompt=(directory/'prompt.txt').read_text()
+    expected=_binding(q,schema,prompt,frozen)
+    require(schema==schema_for(q) and all(intent.get(k)==v for k,v in expected.items()),'host_cache_binding_changed')
+    result=read_record(directory/'outcome.json')
+    require(result.get('status')=='complete' and result.get('request_binding')==expected,'host_cache_outcome_changed')
+    raw=_decode_reply(directory/'reply.json',limit)
+    require(result.get('reply_sha256')==digest(raw),'host_cache_reply_changed')
+    require(isinstance(result.get('context_ref'),str) and bool(result['context_ref']),'host_context_missing')
+    require(intent.get('prior_context') is None or intent['prior_context']==result['context_ref'],'host_resume_context_changed')
+    return raw,result
+
+
+def _restore_context(root,condition,frozen):
+    """An outcome saved before session.json is sufficient; an intent alone is not."""
+    contexts=set()
+    for path in sorted((root/'host-calls'/condition).glob('*/outcome.json')):
+        directory=path.parent;intent=read_record(directory/'intent.json')
+        q=read_record(directory/'request.json')
+        _,out=_load_completed(directory,q,frozen,intent['output_bytes'])
+        if not intent['independent_context']: contexts.add(out['context_ref'])
+    require(len(contexts)<=1,'host_branch_context_changed')
+    session_file=root/'sessions'/f'{condition}.json'
+    if contexts: save(session_file,{'context_ref':next(iter(contexts))})
+    elif session_file.exists(): raise ContractError('host_session_without_completed_call')
+
+
+def _run_cli(cmd,prompt,env,timeout):
+    # Stop local descendants on timeout; do not claim this cancels server-side work.
+    proc=subprocess.Popen(cmd,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,
+                          text=True,env=env,start_new_session=True)
+    try: stdout,stderr=proc.communicate(prompt,timeout=timeout)
+    except BaseException:
+        try: os.killpg(proc.pid,signal.SIGKILL)
+        except ProcessLookupError: pass
+        proc.communicate()
+        raise
+    return subprocess.CompletedProcess(cmd,proc.returncode,stdout,stderr)
+
+
+def _failure(root,condition,directory,q,stage,exc,*,elapsed=None,usage=None,completed=False):
+    # Codes describe local checks. Never export arbitrary server text or raw tracebacks.
+    code=str(exc) if isinstance(exc,ContractError) and re.fullmatch(r'[A-Za-z0-9_.:/-]{1,180}',str(exc)) else type(exc).__name__
+    record={'status':'rejected' if completed else 'failed','stage':stage,'error_code':code,
+            'request_id':q.get('request_id'),'request_sha256':digest(q),
+            'transport_completed':completed,'elapsed_seconds':elapsed,
+            'usage':usage or dict(wire.rt.UNKNOWN_USAGE),'automatic_retry':False}
+    save(directory/'failure.json',record)
+    result={'schema':'mindthus.single-cycle-host-failure.v1','condition':condition,
+            'status':'host_reply_rejected' if completed else 'host_transport_failed',
+            'reason':code,'failure_stage':stage,'consumption_complete':False,
+            'failure_record':str(directory/'failure.json'),'pending_local_handoff':True,
+            'external_request_repeated':False,'usage':record['usage']}
+    save(root/'results'/f'{condition}.json',result)
+    return result
+
+
 def drive(root,condition):
-    frozen=verify(root);ep=root/'episodes'/condition;work=root/'workspaces'/condition;work.mkdir(parents=True,exist_ok=True)
+    verify(root)
+    require(condition in CONDITIONS,'condition')
+    # The Episode lock protects state; this outer lock covers the actual CLI call too.
+    with wire.rt._locked(root/'.host-driver.lock'):
+        return _drive(root,condition)
+
+
+def _drive(root,condition):
+    frozen=verify(root);ep=root/'episodes'/condition
+    terminal=root/'results'/f'{condition}.json'
+    if terminal.exists(): return read_record(terminal)
+    for path in sorted((root/'host-calls'/condition).glob('*/failure.json')):
+        # Interruption between recording rejection and publishing its terminal result.
+        fail=read_record(path);q=read_record(path.with_name('request.json'))
+        result={'schema':'mindthus.single-cycle-host-failure.v1','condition':condition,
+                'status':'host_reply_rejected' if fail['transport_completed'] else 'host_transport_failed',
+                'reason':fail['error_code'],'failure_stage':fail['stage'],'consumption_complete':False,
+                'failure_record':str(path),'pending_local_handoff':True,
+                'external_request_repeated':False,'usage':fail['usage']}
+        save(terminal,result);return result
+    _restore_context(root,condition,frozen)
+    work=root/'workspaces'/condition;work.mkdir(parents=True,exist_ok=True)
     session_file=root/'sessions'/f'{condition}.json'
     for _ in range(frozen['maximum_cli_calls_per_branch']+1):
         result=step(root,condition)
         if result.get('status')!='awaiting_current_agent':return result
         handoff=read_record(Path(result['host_request']));q=handoff['request']
         label=Path(result['host_request']).parent.name;directory=root/'host-calls'/condition/label
+        schema=schema_for(q);prompt=_prompt(q,handoff)
+        expected=_binding(q,schema,prompt,frozen)
         if (directory/'outcome.json').exists():
-            saved=read_record(directory/'outcome.json');raw=json.loads((directory/'reply.json').read_text())
+            raw,saved=_load_completed(directory,q,frozen,handoff['output_bytes'])
+            intent=read_record(directory/'intent.json')
+            require(all(intent.get(k)==v for k,v in expected.items()),'host_cached_handoff_changed')
         else:
             if (directory/'intent.json').exists():raise RecoveryRequired('single_cycle_cli_unknown_do_not_repeat')
             require(len(list((root/'host-calls'/condition).glob('*/intent.json')))<frozen['maximum_cli_calls_per_branch'],'single_cycle_cli_cap')
             directory.mkdir(parents=True,exist_ok=True)
-            schema=schema_for(q);(directory/'schema.json').write_text(json.dumps(schema,ensure_ascii=False))
-            prompt=('只根据当前原始材料与已提供入口处理任务，不调用工具，不读其他分支。输出JSON。'
-                    '保留必要未知，正文不超过700字。retain时text为空；非read_methods时requested_methods为空。'
-                    '按当前request的明确字段与范围返回。\n'+canonical({'request':q,'host_instruction':handoff['instruction']}).decode())
+            save(directory/'request.json',q)
+            (directory/'schema.json').write_text(json.dumps(schema,ensure_ascii=False))
             (directory/'prompt.txt').write_text(prompt)
             independent=handoff['role']=='arbitration'
             prior=read_record(session_file)['context_ref'] if session_file.exists() and not independent else None
-            save(directory/'intent.json',{'request_id':q['request_id'],'request_sha256':digest(q),
-                'prompt_sha256':digest(prompt),'model_requested':frozen['model'],'reasoning_effort':frozen['reasoning_effort'],
-                'prior_context':prior,'schema_sha256':digest(schema)})
+            save(directory/'intent.json',{**expected,'prior_context':prior,
+                'independent_context':independent,'output_bytes':handoff['output_bytes']})
             cmd=[frozen['codex_binary'],'exec']+(['resume'] if prior else [])
             cmd+=['--skip-git-repo-check','-m',frozen['model'],'-c','model_reasoning_effort='+json.dumps(frozen['reasoning_effort']),
                   '-c','features.shell_tool=false','--json','--output-schema',str(directory/'schema.json'),'-o',str(directory/'reply.json')]
@@ -200,37 +383,47 @@ def drive(root,condition):
             env=os.environ.copy()
             for key in ('TYPESAFE_API_KEY','OPENROUTER_API_KEY','MINDTHUS_HOST_API_KEY'):env.pop(key,None)
             start=time.monotonic()
-            try:
-                proc=subprocess.run(cmd,input=prompt,text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env,
-                                    timeout=min(240,handoff['allowance_seconds']))
-            except subprocess.TimeoutExpired:
-                save(directory/'failure.json',{'status':'timeout','elapsed_seconds':time.monotonic()-start});raise
-            events=[]
+            try: proc=_run_cli(cmd,prompt,env,min(240,handoff['allowance_seconds']))
+            except (subprocess.TimeoutExpired,OSError) as exc:
+                return _failure(root,condition,directory,q,'transport',exc,elapsed=time.monotonic()-start)
+            elapsed=time.monotonic()-start;events=[]
             for line in proc.stdout.splitlines():
-                try:events.append(json.loads(line))
-                except ValueError:pass
-            contexts=[e['thread_id'] for e in events if e.get('type')=='thread.started']
-            context=contexts[-1] if contexts else prior
-            tools=[e for e in events if (e.get('item') or {}).get('type') in ('command_execution','mcp_tool_call','web_search')]
-            if proc.returncode or not context or tools or not (directory/'reply.json').exists():
-                save(directory/'failure.json',{'status':'host_failed','returncode':proc.returncode,
-                    'tool_events':len(tools),'context_observed':bool(context),'elapsed_seconds':time.monotonic()-start})
-                raise RuntimeError('host_call_failed; no retry')
-            raw=json.loads((directory/'reply.json').read_text());wire.no_secrets(raw)
-            uses=[e.get('usage') for e in events if e.get('type')=='turn.completed' and e.get('usage')]
+                try: e=json.loads(line)
+                except ValueError: continue
+                if isinstance(e,dict):events.append(e)
+            contexts={e['thread_id'] for e in events if e.get('type')=='thread.started' and isinstance(e.get('thread_id'),str)}
+            tools=[e for e in events if (e.get('item') or {}).get('type') in ('command_execution','mcp_tool_call','web_search','file_change')]
+            uses=[e.get('usage') for e in events if e.get('type')=='turn.completed' and isinstance(e.get('usage'),dict)]
             u=uses[-1] if uses else {}
-            saved={'status':'complete','context_ref':context,'elapsed_seconds':time.monotonic()-start,
-                   'usage':{'input_tokens':u.get('input_tokens'),'output_tokens':u.get('output_tokens'),'cost_usd':None},
-                   'requested_model':frozen['model'],'service_model_attestation':'not_observed','reply_sha256':digest(raw)}
+            usage={'input_tokens':u.get('input_tokens'),'output_tokens':u.get('output_tokens'),'cost_usd':None}
+            try:
+                require(proc.returncode==0 and not tools,'host_cli_failed_or_used_tools')
+                require(len(contexts)==1,'host_context_missing_or_ambiguous')
+                context=next(iter(contexts))
+                require(prior is None or context==prior,'host_resume_context_changed')
+                require((directory/'reply.json').is_file(),'host_reply_missing')
+                raw=_decode_reply(directory/'reply.json',handoff['output_bytes'])
+            except (ContractError,OSError) as exc:
+                return _failure(root,condition,directory,q,'transport_reply',exc,elapsed=elapsed,usage=usage)
+            saved={'status':'complete','context_ref':context,'elapsed_seconds':elapsed,'usage':usage,
+                   'requested_model':frozen['model'],'service_model_attestation':'not_observed',
+                   'request_binding':expected,'reply_sha256':digest(raw)}
             save(directory/'outcome.json',saved)
-            if not independent:
-                if session_file.exists():require(read_record(session_file)['context_ref']==context,'branch_context_changed')
-                else:save(session_file,{'context_ref':context})
-        reply=normalize(raw,q,saved['usage'])
-        submit_response(ep,REPO,{'schema':'mindthus.current-host-response.v1','request_id':handoff['request_id'],
-            'request_sha256':handoff['request_sha256'],'owner_ref':handoff['owner_ref'],
-            'host_context_ref':saved['context_ref'],'elapsed_seconds':saved['elapsed_seconds'],'reply':reply})
-    raise RuntimeError('bounded_driver_steps_exhausted')
+            if not independent:save(session_file,{'context_ref':context})
+        try:
+            reply=normalize(raw,q,saved['usage'])
+            submission={'schema':'mindthus.current-host-response.v1','request_id':handoff['request_id'],
+                'request_sha256':handoff['request_sha256'],'owner_ref':handoff['owner_ref'],
+                'host_context_ref':saved['context_ref'],'elapsed_seconds':saved['elapsed_seconds'],'reply':reply}
+            validate_submission(submission,handoff,REPO)
+            save(directory/'submission.json',submission)
+            submit_response(ep,REPO,submission)
+        except (ContractError,KeyError,TypeError,ValueError) as exc:
+            return _failure(root,condition,directory,q,'reply_validation',exc,
+                elapsed=saved['elapsed_seconds'],usage=saved['usage'],completed=True)
+        save(directory/'consumption.json',{'status':'response_staged','submission_sha256':digest(submission),
+            'request_id':handoff['request_id'],'semantic_acceptance':False})
+    raise RecoveryRequired('bounded_driver_steps_exhausted')
 
 
 def main():

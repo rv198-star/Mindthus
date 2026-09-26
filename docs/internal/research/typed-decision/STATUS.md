@@ -6,7 +6,21 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current official return — real Jev restored; E② host output invalid
+## Current host wire repair — code and offline recovery fixed; no new business inference
+
+Baseline e813b27. Read [repair report](route-control-v0.2/single-cycle-repair-v1/host-wire-repair-v1/RESULT.md).
+Active driver now isolates schema nodes before mutation, constrains/validates actual source IDs,
+rejects duplicate identities before normalization, records invalid replies separately from completed
+transport, verifies cached request/schema/prompt/reply/context, and restores known outcomes without
+reissuing unknown calls. A driver lock spans actual CLI work. Historical wire adapter stays intact.
+35 new offline regressions; related235 pass; full1689 (1684 pass,5skip,0fail); lifecycle96/96.
+Independent code review timed out at180s; no verdict or independent PASS. New Jev/E/F calls=0.
+Previous E② remains a failed host reply, not repaired retrospectively. Old roots/answers remain.
+New driver/schema/prompt requires an explicit technical successor freeze, not editing old hashes;
+recheck baseline comparability before a new paired run. Old code worktree: mindthus-host-before-e813b27.
+#211 remains NOT QUALIFIED. Next: bounded successor validation, not key/channel changes.
+
+## Previous official return — real Jev restored; E② host output invalid
 
 Owner explicitly switched back to official TypeSafe. Read
 [actual official result](route-control-v0.2/single-cycle-repair-v1/official-return-v1/RESULT.md).

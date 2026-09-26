@@ -1,0 +1,12 @@
+{
+  "model_requested": "gpt-6-sol",
+  "reasoning_effort": "xhigh",
+  "source_sha256": {
+    "docs/internal/research/typed-decision/route-control-v0.2/single-cycle-repair-v1/run.py": "2bb415a338956ac01300f3c95e9774278918cb5e0c87678483ca6636b2d52d23",
+    "tests/test_host_driver_integrity.py": "62335b345bd8e9b8701731da8c06b11fcbfb3e685be26c79da3e82080d09d1ba",
+    "experiments/typed_decision/current_host.py": "2bf362f6c5efcdf21cfa804231e1efa00323f83c2d50c804527a97321c646604"
+  },
+  "prompt_sha256": "c85ef84cd82d08481d941ff1bebbcd7e96b849c99a704ecbac52df70124a2b82",
+  "model_calls_max": 1,
+  "business_trial": false
+}

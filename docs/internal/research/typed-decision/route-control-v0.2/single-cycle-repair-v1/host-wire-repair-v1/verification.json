@@ -1,0 +1,31 @@
+{
+  "baseline": "e813b277f8abe715ef85d46cb928c404665e1194",
+  "tracked_before": 3075,
+  "unchanged": 3072,
+  "expected_changed": [
+    "docs/internal/research/typed-decision/STATUS.md",
+    "docs/internal/research/typed-decision/route-control-v0.2/single-cycle-repair-v1/run.py",
+    "tests/test-lifecycle-registry.json"
+  ],
+  "new_test_methods": 35,
+  "focused_tests": 235,
+  "full_tests": {
+    "run": 1689,
+    "passed": 1684,
+    "skipped": 5,
+    "failed": 0,
+    "seconds": 181.726
+  },
+  "lifecycle": {
+    "registered": 96,
+    "executable": 96
+  },
+  "runtime_core_changed": false,
+  "historical_adapter_changed": false,
+  "default_skills_changed": false,
+  "new_business_jev_calls": 0,
+  "new_business_codex_calls": 0,
+  "independent_code_review": "one timeout; no PASS",
+  "driver_sha256": "2bb415a338956ac01300f3c95e9774278918cb5e0c87678483ca6636b2d52d23",
+  "test_sha256": "62335b345bd8e9b8701731da8c06b11fcbfb3e685be26c79da3e82080d09d1ba"
+}
