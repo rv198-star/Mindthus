@@ -1,0 +1,22 @@
+{
+  "parent_head": "c184467ea69eeec8689b0f83802e8b755a5b04ed",
+  "source_head": "f20c71fc92c2a35fa33993e354f7c3d0e51deaff",
+  "plan_sha256": "ffb2aaeacfa3ece7e196aeca9c3a08b4933c7ea8dd6c2052ec1a1b00c9c11d08",
+  "roots": {
+    "E": "/srv/agentdock/tmp/mindthus-single-cycle-openrouter-E-20260926",
+    "F": "/srv/agentdock/tmp/mindthus-single-cycle-openrouter-F-20260926"
+  },
+  "E_baseline": {
+    "root": "/srv/agentdock/tmp/mindthus-single-cycle-E-first-ea05409",
+    "result_sha256": "b3bd5078b156b4e6e46d6c931327b1d786c89959ac8b7cd8d4881aaeff5c572f",
+    "reused_not_regenerated": true,
+    "packet_host_entry_equality_verified": true
+  },
+  "max_new_jev_requests": 8,
+  "max_review_cli_requests": 4,
+  "no_CPA": true,
+  "inference_started": false,
+  "test_run": 1654,
+  "test_passed": 1649,
+  "test_skipped": 5
+}
