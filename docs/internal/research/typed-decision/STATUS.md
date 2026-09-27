@@ -6,7 +6,17 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current host transport boundary — partial controls verified, A1 direct not sent
+## Current A1 direct — forward-only limited transport recovery protocol adopted
+
+The scheme owner adopted the bounded connection-before-send / official recoverable-401
+exception. [Protocol and implementation](jev-direct-v2/a1-direct-transport-v2/IMPLEMENTATION.md)
+use the previously parsed candidate at invocation scope for both arms. Registration
+retains the old freeze, failures, delivered native answer and native 2/4 debit; only
+A1/direct is authorized in this successor. Five targeted wiring/boundary tests passed.
+This checkpoint precedes live execution; consult this folder's RESULT.md when present.
+No auth probes, global settings changes, new channel, or R2 reopening.
+
+## Previous host transport boundary — partial controls verified, A1 direct not sent
 
 The exact `0.158.0-alpha.2` binary and official tagged source were checked without
 model probes. Read the [scoped control findings, parser fixtures and count supplement](jev-direct-v2/host-transport-boundary-2026-09-27/RESULT.md).

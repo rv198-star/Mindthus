@@ -1,0 +1,20 @@
+{
+  "version": "mindthus.generation-scheduling.v2",
+  "authority": "Scheme owner adopted limited transport recovery exception in current user instruction",
+  "effective": "forward only, after technical successor registration; no retroactive qualification",
+  "max_generation_work_in_flight": 1,
+  "gap_after_confirmed_generation_work_end_seconds": 60,
+  "applies_to": ["native", "direct", "Jev layer 1", "Jev layer 2", "host", "host read continuation"],
+  "within_invocation_exceptions": [
+    "Bound evidence confirms a connection-establishment failure before generation payload send",
+    "Explicit official recoverable HTTP 401 establishes non-acceptance for generation; existing official authentication manager refreshes the same account and resubmits"
+  ],
+  "recovery_constraints": ["serial", "unchanged input and linked request identity", "existing official bounded recovery", "original invocation timeout", "no outer recovery loop"],
+  "not_exempt": ["generic request timed out", "post-send stream interruption", "uncertain acceptance", "safety or permission refusal"],
+  "unclassified_observed_resubmission": "preserve return and limitation; stop subsequent dispatch pending request-bound evidence reconciliation",
+  "account_credentials_channel_switch_for_refusal": false,
+  "no_future_401_proof_required": true,
+  "counting": "Separate driver retries, CLI starts, observed internal recovery logs, connection/authentication/generation attempts. Unobservable counts and timing remain null; include recovery in measured invocation wall time.",
+  "history": "Keep all prior intents, failures, answers, freezes and debits. A1/native remains delivered with old request-level compliance limitation and 2/4 CLI attempts used. Its 119s invocation is not a matched performance baseline.",
+  "scope_this_turn": "A1/direct only, official Jev jev-1.13.0 first; at most two Jev calls, original host budgets; first full answer or explicit failure then return. No auth probes. No safety-setting changes."
+}

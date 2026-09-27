@@ -98,6 +98,9 @@ class SerialRequests:
 
     def call(self, label, invoke):
         with _locked(self.root/'.lock'):
+            if self.batch:
+                from .transport_profile import guard
+                guard(self.batch)
             directories,previous,labels=self._validate()
             require(label not in labels,'serial_request_already_completed')
             began_wait=self.monotonic()

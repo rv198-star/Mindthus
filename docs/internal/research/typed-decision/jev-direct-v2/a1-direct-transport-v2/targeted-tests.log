@@ -1,0 +1,10 @@
+test_both_arms_send_exact_candidate_without_mutating_contract (test_jev_direct_transport_profile.TransportProfileTests.test_both_arms_send_exact_candidate_without_mutating_contract) ... ok
+test_no_log_is_not_proof_zero_recovery_or_one_http_attempt (test_jev_direct_transport_profile.TransportProfileTests.test_no_log_is_not_proof_zero_recovery_or_one_http_attempt) ... ok
+test_observed_unclassified_resubmit_preserves_return_and_blocks_next_dispatch (test_jev_direct_transport_profile.TransportProfileTests.test_observed_unclassified_resubmit_preserves_return_and_blocks_next_dispatch) ... ok
+test_protocol_preserves_timing_budget_and_refusal_boundary (test_jev_direct_transport_profile.TransportProfileTests.test_protocol_preserves_timing_budget_and_refusal_boundary) ... ok
+test_unbound_401_text_cannot_self_authorize_resend (test_jev_direct_transport_profile.TransportProfileTests.test_unbound_401_text_cannot_self_authorize_resend) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.013s
+
+OK

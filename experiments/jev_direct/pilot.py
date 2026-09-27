@@ -66,7 +66,9 @@ def verify_frozen_inputs(root):
 
 def verify(root):
     f=verify_frozen_inputs(root)
-    require(f['code_hashes']==identity(REPO),'pilot_code_drift')
+    from .transport_profile import active
+    successor=active(root)
+    require(successor is not None or f['code_hashes']==identity(REPO),'pilot_code_drift')
     return f
 
 def exact_tree(root):
@@ -93,10 +95,15 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
         scheduler=scheduler or SerialRequests(batch/'serial')
         require(scheduler.root.resolve()==batch/'serial' and scheduler.gap==60,'pilot_serial_root')
         scheduler.validate()
+    from .transport_profile import active,guard,observe
+    profile=active(Path(f['root']))
+    guard(Path(f['root']))
     directory=Path(root)/label;directory.mkdir(parents=True,exist_ok=True)
     sending=api_schema(schema)
     prompt='根据原始任务与实际已加载规则完成当前请求。工具关闭；需要资料时只按schema请求读取，不虚构事实或执行结果。输出规定JSON，不输出隐藏推理。\n'+canonical(request).decode()
     intent={'request_sha256':digest(request),'prompt_sha256':digest(prompt),'schema_sha256':digest(schema),'api_schema_sha256':digest(sending),'model':f['host_model'],'effort':f['host_effort'],'prior_context':prior,'timeout_seconds':timeout or f['host_timeout']}
+    if profile:
+        intent.update(transport_successor_sha256=digest(profile),protocol_sha256=profile['protocol_sha256'],transport_overrides_sha256=profile['overrides_sha256'])
     if (directory/'intent.json').exists():
         require(read_record(directory/'intent.json')==intent,'pilot_call_identity_changed')
         if not (directory/'outcome.json').exists():raise RecoveryRequired('pilot_unknown_call_no_retry')
@@ -118,6 +125,9 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
     work=directory/'workspace';work.mkdir(exist_ok=True)
     cmd=[f['binary'],'exec']+(['resume'] if prior else [])
     cmd+=['--skip-git-repo-check','-m',f['host_model'],'-c','model_reasoning_effort='+json.dumps(f['host_effort']),'-c','features.shell_tool=false','--json','--output-schema',str(directory/'schema.api.json'),'-o',str(directory/'reply.json')]
+    if profile:
+        for override in profile['overrides']:cmd+=['-c',override]
+        save(directory/'effective-transport-config.json',{'successor_sha256':digest(profile),'protocol_sha256':profile['protocol_sha256'],'overrides':profile['overrides'],'overrides_sha256':profile['overrides_sha256'],'scope':'CLI invocation only','model':f['host_model'],'effort':f['host_effort']})
     cmd+=([prior,'-'] if prior else ['--sandbox','read-only','-C',str(work),'-'])
     env=os.environ.copy()
     for k in ('TYPESAFE_API_KEY','OPENROUTER_API_KEY','MINDTHUS_HOST_API_KEY'):env.pop(k,None)
@@ -128,6 +138,7 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
             nonlocal elapsed,failure
             # Waiting/lock interruption has not sent anything. Only persist the
             # host intent once the serial slot has actually been acquired.
+            guard(Path(f['root']))
             save(directory/'intent.json',intent)
             call_start=time.monotonic()
             cli_returned=False
@@ -136,6 +147,7 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
                 elapsed=time.monotonic()-call_start;cli_returned=True
                 (directory/'cli.stdout.jsonl').write_text(proc.stdout)
                 (directory/'cli.stderr.txt').write_text(proc.stderr)
+                if profile:observe(Path(f['root']),directory,proc,intent)
                 events=parse_events(proc.stdout)
                 contexts={e['thread_id'] for e in events if e.get('type')=='thread.started' and isinstance(e.get('thread_id'),str)}
                 terminal=proc.returncode==0 and len(contexts)==1 and sum(e.get('type')=='turn.completed' for e in events)==1 and not any(e.get('type')=='turn.failed' for e in events)
@@ -192,6 +204,11 @@ def run_case(root,case_id,arm,provider=None,*,scheduler=None):
         scheduler.validate()
         if provider is not None:
             require(not provider.is_live,'pilot_injected_live_provider_bypasses_serial')
+    from .transport_profile import active,guard
+    profile=active(root)
+    if profile:
+        require([case_id,arm] in profile['dispatch_scope'],'transport_dispatch_scope')
+        guard(root)
     c=next(c for c in f['cases'] if c['id']==case_id);raw=c['raw'];dest=root/'runs'/case_id/arm
     with _locked(root/('.'+case_id+'.pair-lock')):
         # Both arms bind the same freeze; rewriting freeze plus its adjacent checksum
@@ -209,6 +226,7 @@ def run_case(root,case_id,arm,provider=None,*,scheduler=None):
             old=read_record(start);require(old['freeze_sha256']==digest(f) and old['raw_sha256']==digest(raw),'pilot_arm_input_changed')
         else:save(start,{'freeze_sha256':digest(f),'raw_sha256':digest(raw),'started_at':datetime.now(timezone.utc).isoformat()})
         if (dest/'result.json').exists():return unseal(dest)
+        if profile:save(dest/'technical-identity.json',{'successor_sha256':digest(profile),'protocol_sha256':profile['protocol_sha256']})
         pack=r.load_pack(REPO);loaded={};decision=None;reads=[];methods=[]
         if arm=='direct':
             require(not (dest/'host').exists() or (dest/'route/result.json').exists(),'pilot_host_before_route')
