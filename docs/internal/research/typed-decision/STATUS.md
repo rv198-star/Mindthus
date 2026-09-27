@@ -6,6 +6,18 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current local offline handoff — prepared, business still UNRUN
+
+Read [local readiness](jev-direct-v2/local-offline-v1/READINESS.md) and the support-review packet.
+Engineering 71d292b79 adds explicit local CLI binding and batch-wide serial intervals without
+changing source inputs, 71 questions, method cards, thresholds or inference budgets. Offline
+fixtures cover both arms on all six cases; 33 simulated calls have 60-second end-to-start gaps.
+80 focused direct/local tests pass; four lifecycle checks pass after selecting local Python.
+Exact first-layer Jev bodies and initial native prompts are archived with hashes; dependent
+requests remain conditional, fixture replies are not live answers. Zero external model calls.
+Historical safety refusals remain preserved: this is a cautious pause, not a new local business
+failure or approval to rerun. Quality and net benefit remain unmeasured; ChatGPT owns independent review.
+
 ## Current observable re-test — official probe passed; full business still not launched
 
 Read [actual code changes and re-test](jev-direct-v2/channel-retest-v1/RESULT.md).
