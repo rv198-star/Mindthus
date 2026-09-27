@@ -6,7 +6,18 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current B1 direct — owner-approved compensation delivered; old unknown retained
+## Current six-case checkpoint — all twelve actual answers delivered
+
+Execution source: `f31f8147da689cb0ce29c86ecde857003b8563b8`.
+Read [the twelve-path report and raw evidence](jev-direct-v2/remaining-nine-v2/RESULT.md)
+and [all original answers](jev-direct-v2/remaining-nine-v2/ANSWERS.md).
+The authorized remaining nine paths delivered; no new unknown or internal recovery observed.
+Old B1 serial/000004 remains risk_accepted_remote_unknown, without fabricated completion.
+B/C/D/F EFFORT contract errors and unresolved methods remain visible. A1 transport mismatch
+excludes paired performance; B1 total cost is incomplete. No new content/model review;
+real delivery is complete, comparative quality and net benefit await independent review.
+
+## Previous B1 direct — owner-approved compensation delivered; old unknown retained
 
 Implementation: `0cddccc1fcbca6c38a081536e085802b25e58be6`.
 Read [the original B1 answer, route, accepted-risk linkage and evidence](jev-direct-v2/B1-compensation-v1/RESULT.md).

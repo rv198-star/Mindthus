@@ -1,0 +1,2385 @@
+{
+  "file_count": 476,
+  "files": {
+    "B1-compensation-execution.json": {
+      "sha256": "e00784a96b2be79cd364c4b76a7224a8502d78695b1542c3a418156743d15dfe",
+      "bytes": 1381,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/B1-compensation-execution.json"
+    },
+    "B1-compensation-host-success.json": {
+      "sha256": "a5075cda68228c72a593bcd4d4e9eaaf643d0ea7d5fb5e56a594756df1ba7285",
+      "bytes": 30850,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/B1-compensation-host-success.json"
+    },
+    "B1-compensation-request-link.json": {
+      "sha256": "29a9b82d7b124b9b549a6682388c6143f3d08b90e792aa72400a3c2329a7dabd",
+      "bytes": 937,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/B1-compensation-request-link.json"
+    },
+    "B1-compensation-successor-binding.json": {
+      "sha256": "09a03df8a2f2a79a4e8d5c50ed9789f2ad9a361184f38cb51a3a047565073629",
+      "bytes": 205,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/B1-compensation-successor-binding.json"
+    },
+    "B1-compensation-successor.json": {
+      "sha256": "d28cae6cb2af4b83c7f4ad2d6a5bbf2483d0d9887ff5449d6737efe50327b97d",
+      "bytes": 18109,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/B1-compensation-successor.json"
+    },
+    "B1-compensation-summary.json": {
+      "sha256": "b846e0b45c9a660a1c496199bd2900e21799115f048579eaf666e2a04a410f2e",
+      "bytes": 5716,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/B1-compensation-summary.json"
+    },
+    "continuation.json": {
+      "sha256": "a5afb4f0b541f8707d81b2982bbccf5acb763ae2b3cf38b7cc1807eff4a53f46",
+      "bytes": 2166,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/continuation.json"
+    },
+    "execution-disposition.json": {
+      "sha256": "fcd6aedb66f2787cb6fa9c9e81ff8bbe42f62fd32bd85c46c3d6b7875b3ef6fc",
+      "bytes": 1960,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/execution-disposition.json"
+    },
+    "freeze-binding.json": {
+      "sha256": "30a6d58afcfc97051b56de41c748c00c77df08dfdc26f16185a4e822dba8931f",
+      "bytes": 672,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/freeze-binding.json"
+    },
+    "freeze.json": {
+      "sha256": "7f8d8d899eaa319ff9128572f40cf8ecdbcb0f7fc5d30673d79e5ec32526dce8",
+      "bytes": 34409,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/freeze.json"
+    },
+    "host-api-error.json": {
+      "sha256": "659103fe34d711836fdc1beeba8444852aa7ae6f8f1dbccefe9f61422bf470dc",
+      "bytes": 276,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/host-api-error.json"
+    },
+    "host-session-provenance.json": {
+      "sha256": "076770ddda0853efd433d2c101cc6fa5ef6f0ef678a5a818ca4cda3f1dd01f8a",
+      "bytes": 704,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/host-session-provenance.json"
+    },
+    "remaining-five-execution.json": {
+      "sha256": "5cfe3af56cef5a7dd8979219d3ee71ad7b93fcbd54c72276bc1145f9c8cf38f1",
+      "bytes": 694,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-five-execution.json"
+    },
+    "remaining-five-observation.json": {
+      "sha256": "37217ba42131c493f888cc00249b6626f613f9d0c5d80ed4c203e511267fbd30",
+      "bytes": 4193,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-five-observation.json"
+    },
+    "remaining-five-preflight.json": {
+      "sha256": "9dfce02da813765a42ca3044aa94492f5b15b4f919af510c3185cbf1d5bc0a5e",
+      "bytes": 607,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-five-preflight.json"
+    },
+    "remaining-five-scope-binding.json": {
+      "sha256": "ba116838ce3f99c0c756da6fbdc269207b073f31d32dddb5bdb7a5ff5a815d24",
+      "bytes": 205,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-five-scope-binding.json"
+    },
+    "remaining-five-scope.json": {
+      "sha256": "61321eae3d50bdf5897af380c443849fd595deaaad8d2a549bb32472360c2b95",
+      "bytes": 15233,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-five-scope.json"
+    },
+    "remaining-nine-checkpoints/B1-native.json": {
+      "sha256": "b71d8327a5023891910a3405bef8bfc685305697ebafb4638fc4eeeb09847da9",
+      "bytes": 1585,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-checkpoints/B1-native.json"
+    },
+    "remaining-nine-checkpoints/C1-direct.json": {
+      "sha256": "50dc567ea94ad5e12d79f36aabcdebbf33e2ca58016ea0c4503a9573670dc9c0",
+      "bytes": 1760,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-checkpoints/C1-direct.json"
+    },
+    "remaining-nine-checkpoints/C1-native.json": {
+      "sha256": "1ff0d4158a3dd7267163a97b6f798a90e8a61676320b3d21852ac281692298fd",
+      "bytes": 1577,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-checkpoints/C1-native.json"
+    },
+    "remaining-nine-checkpoints/D1-direct.json": {
+      "sha256": "a42a379a7233584d4419d12fcd3353f07d71099fbb36fd9b27ff7ce8674a2723",
+      "bytes": 1635,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-checkpoints/D1-direct.json"
+    },
+    "remaining-nine-checkpoints/D1-native.json": {
+      "sha256": "c7a50d4e19507df5336f21cd3ff5cc51ba258487802e07d8cca14bd2acae4ac9",
+      "bytes": 1386,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-checkpoints/D1-native.json"
+    },
+    "remaining-nine-checkpoints/E-window-direct.json": {
+      "sha256": "6d5d0a995511594852ad2831afd7887c6659791bdc1b3a43fc99f6d32b1cf014",
+      "bytes": 1412,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-checkpoints/E-window-direct.json"
+    },
+    "remaining-nine-checkpoints/E-window-native.json": {
+      "sha256": "0b2fb7e907b3cc119eb083b7b66e4045e9e4a67bf936ae83a2259a255f62a372",
+      "bytes": 1157,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-checkpoints/E-window-native.json"
+    },
+    "remaining-nine-checkpoints/F-window-direct.json": {
+      "sha256": "cd30175731d12d1c3243aef1c4107f190c4099103ceaee6b3aca665c7f51fc1e",
+      "bytes": 1398,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-checkpoints/F-window-direct.json"
+    },
+    "remaining-nine-checkpoints/F-window-native.json": {
+      "sha256": "2f3945e5aabf6ca51efa72a6c7fefccfcb39d8edada841e8d466986827701f0e",
+      "bytes": 1511,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-checkpoints/F-window-native.json"
+    },
+    "remaining-nine-execution.json": {
+      "sha256": "7153f48cd4aae76ed743c5b3707d66122a6def67836e737d7eecc601132409a5",
+      "bytes": 12594,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-execution.json"
+    },
+    "remaining-nine-host-terminals.json": {
+      "sha256": "89e0ced1752b5a1df9b689fb3552270bd1bb0a713ec1467250cd0216888e400f",
+      "bytes": 468375,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-host-terminals.json"
+    },
+    "remaining-nine-successor-binding.json": {
+      "sha256": "8df10b517d6668e56f24bbfed059d378956cb525d3beb54d035d196b3630edf4",
+      "bytes": 205,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-successor-binding.json"
+    },
+    "remaining-nine-successor.json": {
+      "sha256": "ff90cf29f6cb28922f12044ffc24e891f136f20ddb92b73a15fa50f549d95b30",
+      "bytes": 23272,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/remaining-nine-successor.json"
+    },
+    "runs/A1/direct/host/0/cli.stderr.txt": {
+      "sha256": "5553a50f6bb26589f7b1ccc3500fa0f9a2d773e5a394eb0815d64bfeafcf498b",
+      "bytes": 288,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/cli.stderr.txt"
+    },
+    "runs/A1/direct/host/0/cli.stdout.jsonl": {
+      "sha256": "d75f42793c2dc7774db016e985210258df8b39ba8f9c57ca595d82dfa9a6d4de",
+      "bytes": 460,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/cli.stdout.jsonl"
+    },
+    "runs/A1/direct/host/0/effective-transport-config.json": {
+      "sha256": "26439d2a173804ebab60271bf9c28b98cf0c28bbb839326917603fd13cbe4211",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/effective-transport-config.json"
+    },
+    "runs/A1/direct/host/0/host-session-observation.json": {
+      "sha256": "3b47693b90f925c4c6302511fe0c4f6007a4b19612f259fa5472c2640d38b4e9",
+      "bytes": 254,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/host-session-observation.json"
+    },
+    "runs/A1/direct/host/0/intent.json": {
+      "sha256": "e5b6f98214562d03289e02a33d19c20437b764781f80af6e395a23b2935794c3",
+      "bytes": 823,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/intent.json"
+    },
+    "runs/A1/direct/host/0/outcome.json": {
+      "sha256": "cb47318c800cdd1ee487f5cab47d5cfa818c839bcd136a1dd120a5cb0e0d9ce9",
+      "bytes": 828,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/outcome.json"
+    },
+    "runs/A1/direct/host/0/prompt.txt": {
+      "sha256": "88b14c0b50c8eebe96479d4d1304a0f080bd60464a10075bd4485f3a543fe6e3",
+      "bytes": 3504,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/prompt.txt"
+    },
+    "runs/A1/direct/host/0/reply.json": {
+      "sha256": "24be6bf9ab8cee7f1b560afb942ec3188949ee8f6709a7959eedc534db49d600",
+      "bytes": 101,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/reply.json"
+    },
+    "runs/A1/direct/host/0/request.json": {
+      "sha256": "acd929f17f84974e268def4d5529ebd729678ee543659bc9ee3303eba5f82af8",
+      "bytes": 3435,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/request.json"
+    },
+    "runs/A1/direct/host/0/schema-binding.json": {
+      "sha256": "16224aa28a4d1dbb025fb5f7ba69637c2b838bc30c421e98cb9d7cb77737973b",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/schema-binding.json"
+    },
+    "runs/A1/direct/host/0/schema.api.json": {
+      "sha256": "4c22b896efa4d1cc875e18b2c3e12d5c5f6e5ad3d928ffa5bd1e6aa0683ab87c",
+      "bytes": 439,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/schema.api.json"
+    },
+    "runs/A1/direct/host/0/schema.json": {
+      "sha256": "e2848af0a22039278f9f9b5bfab609ee709cb9e49d3d74bdead4826bb40d8c83",
+      "bytes": 458,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/schema.json"
+    },
+    "runs/A1/direct/host/0/transport-observation-v2.json": {
+      "sha256": "12643c07df58f62e99854d08813a8e0067517bc52e1869d7a386643978fd294b",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/host/0/transport-observation-v2.json"
+    },
+    "runs/A1/direct/result.json": {
+      "sha256": "dd3f5e6270af53532bdfffe3088182b65f9bee586356afb4a10461dbf9c93fe7",
+      "bytes": 2768,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/result.json"
+    },
+    "runs/A1/direct/route/binding.json": {
+      "sha256": "d3a20fd92dc00c51922fe0f8ca867d44c9befab7bcb070a0b9440eace0568c29",
+      "bytes": 859,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/route/binding.json"
+    },
+    "runs/A1/direct/route/evidence-seal.json": {
+      "sha256": "53b9009a740c6e386f6ae210c9c4d0674fe706bb66668388c1fdbd2a5c589ee0",
+      "bytes": 1113,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/route/evidence-seal.json"
+    },
+    "runs/A1/direct/route/level-1/journal/calls/0b3bfda46c7ab84931fe7b4efc9c41ee7edede8a828f9617984e4c5442c3c56e/intent.json": {
+      "sha256": "c8c52cd8470403d0cb2773f2305775c98dd019686db8f01f19298c8f42ee63b2",
+      "bytes": 65011,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/route/level-1/journal/calls/0b3bfda46c7ab84931fe7b4efc9c41ee7edede8a828f9617984e4c5442c3c56e/intent.json"
+    },
+    "runs/A1/direct/route/level-1/journal/calls/0b3bfda46c7ab84931fe7b4efc9c41ee7edede8a828f9617984e4c5442c3c56e/outcome.json": {
+      "sha256": "7b091c5dd3bca5cfb752a5efdd149d780a11760fe416b69d1c8cd64a7f248664",
+      "bytes": 13154,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/route/level-1/journal/calls/0b3bfda46c7ab84931fe7b4efc9c41ee7edede8a828f9617984e4c5442c3c56e/outcome.json"
+    },
+    "runs/A1/direct/route/level-1/journal/calls/0b3bfda46c7ab84931fe7b4efc9c41ee7edede8a828f9617984e4c5442c3c56e/provider-receipt.json": {
+      "sha256": "2556ff3f3ee033e833cb9cf0f79c79b430580d4ad029cc0d90c0c7a51a3a683d",
+      "bytes": 10228,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/route/level-1/journal/calls/0b3bfda46c7ab84931fe7b4efc9c41ee7edede8a828f9617984e4c5442c3c56e/provider-receipt.json"
+    },
+    "runs/A1/direct/route/level-1/journal/policy.json": {
+      "sha256": "2ef3b586afa23806d79499af8a0e438bfbc451f15b0d96a550768f1e5bcd59bf",
+      "bytes": 1743,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/route/level-1/journal/policy.json"
+    },
+    "runs/A1/direct/route/level-1/journal/resolved-runtime.json": {
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/route/level-1/journal/resolved-runtime.json"
+    },
+    "runs/A1/direct/route/level-1/request.json": {
+      "sha256": "39966dd1b33d984e64cf1425345f0090b0a8d4b5396d066d4eee248eb62d40c5",
+      "bytes": 79204,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/route/level-1/request.json"
+    },
+    "runs/A1/direct/route/result.json": {
+      "sha256": "a3c3ab1a2b5c753aff34e000f791ff4d4f50e1ba356700e2bc00f13e458b9e92",
+      "bytes": 1996,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/route/result.json"
+    },
+    "runs/A1/direct/run-start.json": {
+      "sha256": "3598ade05b03ba6636cadf40f0c43cd800e051652f1f3a7c45a3c49d19632ad1",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/run-start.json"
+    },
+    "runs/A1/direct/seal.json": {
+      "sha256": "4d05cddb82911505586a1002c1413dbe92fa736f2bc77ad147195d3a986a68dd",
+      "bytes": 2731,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/seal.json"
+    },
+    "runs/A1/direct/technical-identity.json": {
+      "sha256": "44a9a7e1f47d0066bcbf4c183582eea06417367935a2461f2c3c624894671b11",
+      "bytes": 300,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/direct/technical-identity.json"
+    },
+    "runs/A1/native/host/0/intent.json": {
+      "sha256": "2dd35f6ad2cbb7dcabe43fb101f88438341a975c229e039cd94f0d21efeae1d4",
+      "bytes": 459,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/0/intent.json"
+    },
+    "runs/A1/native/host/0/prompt.txt": {
+      "sha256": "cb554a9feded1e9d2d665fe2eb157f45297a2884e234630d5158e862bb95bba4",
+      "bytes": 15178,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/0/prompt.txt"
+    },
+    "runs/A1/native/host/0/reconciliation.json": {
+      "sha256": "c79515a2869ada901bd7015256e1cfa83fa4e267e203ba4ce23dccfb32e9d03e",
+      "bytes": 357,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/0/reconciliation.json"
+    },
+    "runs/A1/native/host/0/request.json": {
+      "sha256": "1a5b424418eb422297d6acb9989c0104c9efd69a13c05ac77992025e2be0eff8",
+      "bytes": 15109,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/0/request.json"
+    },
+    "runs/A1/native/host/0/schema-failure-receipt.json": {
+      "sha256": "071812305c7c5d5e77cbb4b2ba4b6c06694f71566e7622fde9f0fd5e48c292cd",
+      "bytes": 19157,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/0/schema-failure-receipt.json"
+    },
+    "runs/A1/native/host/0/schema.json": {
+      "sha256": "046e2a51629f37a33e222752dbb30767be8ec88d2689d6ae69292c53e9f50d0a",
+      "bytes": 4489,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/0/schema.json"
+    },
+    "runs/A1/native/host/1/cli.stderr.txt": {
+      "sha256": "1efb5e357fd520d7eca3ec06dd4a87423a7d2fff946862552adcae877b846d13",
+      "bytes": 1876,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/1/cli.stderr.txt"
+    },
+    "runs/A1/native/host/1/cli.stdout.jsonl": {
+      "sha256": "a8cfcc8dd35a1d92e5cd92a095a06f014dad7a21a75e81ecd45d5d62c165f74e",
+      "bytes": 879,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/1/cli.stdout.jsonl"
+    },
+    "runs/A1/native/host/1/host-session-observation.json": {
+      "sha256": "8d3be69d22767a9868a096f38f8cc7301c0a7b05b124509c8cbad29d9bb475a8",
+      "bytes": 254,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/1/host-session-observation.json"
+    },
+    "runs/A1/native/host/1/intent.json": {
+      "sha256": "8e120273833b548cac28aa679f6adb8cb617cbb0cda6336ece2c4537cf71afae",
+      "bytes": 546,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/1/intent.json"
+    },
+    "runs/A1/native/host/1/outcome.json": {
+      "sha256": "36c205dae9a155ede02e37ba5462eef547bbae8f8c54e55790e248cdafa26304",
+      "bytes": 828,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/1/outcome.json"
+    },
+    "runs/A1/native/host/1/prompt.txt": {
+      "sha256": "cb554a9feded1e9d2d665fe2eb157f45297a2884e234630d5158e862bb95bba4",
+      "bytes": 15178,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/1/prompt.txt"
+    },
+    "runs/A1/native/host/1/reply.json": {
+      "sha256": "24be6bf9ab8cee7f1b560afb942ec3188949ee8f6709a7959eedc534db49d600",
+      "bytes": 101,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/1/reply.json"
+    },
+    "runs/A1/native/host/1/request.json": {
+      "sha256": "1a5b424418eb422297d6acb9989c0104c9efd69a13c05ac77992025e2be0eff8",
+      "bytes": 15109,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/1/request.json"
+    },
+    "runs/A1/native/host/1/schema-binding.json": {
+      "sha256": "031f8043a525f177c37364e37133e3c56bd01b540759f1b5a7ee57a7d09fcb68",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/1/schema-binding.json"
+    },
+    "runs/A1/native/host/1/schema.api.json": {
+      "sha256": "73358aad82aea726729399c0ca2d0659ec4064b0c40972a3828b6571030c07d3",
+      "bytes": 4320,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/1/schema.api.json"
+    },
+    "runs/A1/native/host/1/schema.json": {
+      "sha256": "e4af4d3fd34bb7d5f1a368544586c46e0215e80cadc0db8d643903bbc2976557",
+      "bytes": 4358,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/host/1/schema.json"
+    },
+    "runs/A1/native/run-start.json": {
+      "sha256": "4edadb6b1ccaa6d567043b87e871594d3186fe1bd9dd56005a03e2399cd59b9e",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/A1/native/run-start.json"
+    },
+    "runs/B1/direct/host/0/cli.stderr.txt": {
+      "sha256": "1a9436b804e1535c41475b586e9627c836f6400c289fac0152afbac1457fe6f5",
+      "bytes": 288,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/cli.stderr.txt"
+    },
+    "runs/B1/direct/host/0/cli.stdout.jsonl": {
+      "sha256": "f2e151b4493067b9074fd93b3f26493b1f82bd67eabacb6b403bf4afc0b09b3e",
+      "bytes": 1410,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/cli.stdout.jsonl"
+    },
+    "runs/B1/direct/host/0/effective-transport-config.json": {
+      "sha256": "2eb28894fcbd1fa3ae8c5fcd593b24854ddb12d3f912a2180d49ee10fca21df3",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/effective-transport-config.json"
+    },
+    "runs/B1/direct/host/0/host-session-observation.json": {
+      "sha256": "76a6d4ce18f187dcfd3f4c318cf19ad3e9145810d23c5b2ba28f429fd7dbbe2a",
+      "bytes": 253,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/host-session-observation.json"
+    },
+    "runs/B1/direct/host/0/intent.json": {
+      "sha256": "dfcb4aef2eb2f540e6423da378564d4bb00e1728a21411c001b145c9d1a3a664",
+      "bytes": 823,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/intent.json"
+    },
+    "runs/B1/direct/host/0/outcome.json": {
+      "sha256": "68634acf0907e3012bcf664f97f12ef9f6a295fdac4cae005c7ff5b971866309",
+      "bytes": 828,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/outcome.json"
+    },
+    "runs/B1/direct/host/0/prompt.txt": {
+      "sha256": "5e453b24afa3c6b1593d2c85d3d18f504b91b149ae4089ade391a7110a7d91bf",
+      "bytes": 26385,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/prompt.txt"
+    },
+    "runs/B1/direct/host/0/reply.json": {
+      "sha256": "a923c9ad31c9bd14c3f5bd9af2e0e38b4ce3a96277be75bfcfe3bde6ddf0758d",
+      "bytes": 1045,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/reply.json"
+    },
+    "runs/B1/direct/host/0/request.json": {
+      "sha256": "ad912f662abc8d69f15d7e10d98920b26b5575fa3f487b2aefe8ae7315d8fb45",
+      "bytes": 26316,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/request.json"
+    },
+    "runs/B1/direct/host/0/schema-binding.json": {
+      "sha256": "34ee6a4b175d2dddcd13627b02e9718310eea0d1bce7fe6a82a4ab21a0e75889",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/schema-binding.json"
+    },
+    "runs/B1/direct/host/0/schema.api.json": {
+      "sha256": "58e0b3fc075180b448245a3cf47489a505ffffc7ee51012a2d74d8fcbbb40f58",
+      "bytes": 664,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/schema.api.json"
+    },
+    "runs/B1/direct/host/0/schema.json": {
+      "sha256": "d0ece99444d60ca21c102a0136e9dcba1ffaf1641901a9fc9c04be80c951cd76",
+      "bytes": 702,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/schema.json"
+    },
+    "runs/B1/direct/host/0/transport-observation-v2.json": {
+      "sha256": "f4df9dfdfa1ad7a76e3717f0334ce845461a56cf6c9e056cc1228e5b4ed5c15c",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/host/0/transport-observation-v2.json"
+    },
+    "runs/B1/direct/result.json": {
+      "sha256": "08a7992e70c1b4ad3a68a9c7cbc356d77937abf4c1abf5aa87fde619618812f3",
+      "bytes": 26036,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/result.json"
+    },
+    "runs/B1/direct/route/binding.json": {
+      "sha256": "9f7ee42b8bb59c227971c961fa7e4dca8e76d636807fc2283b1760ba9568f494",
+      "bytes": 859,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route/binding.json"
+    },
+    "runs/B1/direct/route/level-1/journal/calls/61784cbf0798ceba12ce2b8dcf0c90a97799011df3848a5904ac0cc9f595a31c/intent.json": {
+      "sha256": "ee2a0a6c99eae1f3fb7f42baa86bd87c9471ece1e5327d1cd5c36b477bf21b45",
+      "bytes": 65011,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route/level-1/journal/calls/61784cbf0798ceba12ce2b8dcf0c90a97799011df3848a5904ac0cc9f595a31c/intent.json"
+    },
+    "runs/B1/direct/route/level-1/journal/calls/61784cbf0798ceba12ce2b8dcf0c90a97799011df3848a5904ac0cc9f595a31c/outcome.json": {
+      "sha256": "937e8a5e09431bf5cce39d02c43b9b7905a82938d6c11028f50964e860fe56f3",
+      "bytes": 8698,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route/level-1/journal/calls/61784cbf0798ceba12ce2b8dcf0c90a97799011df3848a5904ac0cc9f595a31c/outcome.json"
+    },
+    "runs/B1/direct/route/level-1/journal/policy.json": {
+      "sha256": "e112d17a032cdcee3bd7262628f37f3cf678b8d8381d387c4a92cebe8697b39e",
+      "bytes": 1743,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route/level-1/journal/policy.json"
+    },
+    "runs/B1/direct/route/level-1/request.json": {
+      "sha256": "84d72f9b552d9f53e1e2a2f70c0a7bbfd23adf725ea246abd76f574ef5bb1636",
+      "bytes": 79533,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route/level-1/request.json"
+    },
+    "runs/B1/direct/route-compensation/binding.json": {
+      "sha256": "9f7ee42b8bb59c227971c961fa7e4dca8e76d636807fc2283b1760ba9568f494",
+      "bytes": 859,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route-compensation/binding.json"
+    },
+    "runs/B1/direct/route-compensation/evidence-seal.json": {
+      "sha256": "677e522ae169810de3c005ef99b533d9780826af61aa487a79da8eb657d2ee13",
+      "bytes": 1113,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route-compensation/evidence-seal.json"
+    },
+    "runs/B1/direct/route-compensation/level-1/journal/calls/05ff7650c4f16af70592214af2ae4b3c6256f8a5650f8bfd556a9addd2eb25e8/intent.json": {
+      "sha256": "79018e4597155a557c89b9a2e8cef81cda1188d4de6e2a9379ef35f8ec92c581",
+      "bytes": 65011,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route-compensation/level-1/journal/calls/05ff7650c4f16af70592214af2ae4b3c6256f8a5650f8bfd556a9addd2eb25e8/intent.json"
+    },
+    "runs/B1/direct/route-compensation/level-1/journal/calls/05ff7650c4f16af70592214af2ae4b3c6256f8a5650f8bfd556a9addd2eb25e8/outcome.json": {
+      "sha256": "30715329fdaf55a143d715d164fc955ef8f7bd041eeab51387813fc803dd6287",
+      "bytes": 13343,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route-compensation/level-1/journal/calls/05ff7650c4f16af70592214af2ae4b3c6256f8a5650f8bfd556a9addd2eb25e8/outcome.json"
+    },
+    "runs/B1/direct/route-compensation/level-1/journal/calls/05ff7650c4f16af70592214af2ae4b3c6256f8a5650f8bfd556a9addd2eb25e8/provider-receipt.json": {
+      "sha256": "ebd027063d10684f5479753afd427599b7ba567a1187f0cebb11fe25d1e59664",
+      "bytes": 10360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route-compensation/level-1/journal/calls/05ff7650c4f16af70592214af2ae4b3c6256f8a5650f8bfd556a9addd2eb25e8/provider-receipt.json"
+    },
+    "runs/B1/direct/route-compensation/level-1/journal/policy.json": {
+      "sha256": "4a2f900fa989eb2e2c2d941dbfe13269baf9429d748adcb5395e4e1623b2ba84",
+      "bytes": 1743,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route-compensation/level-1/journal/policy.json"
+    },
+    "runs/B1/direct/route-compensation/level-1/journal/resolved-runtime.json": {
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route-compensation/level-1/journal/resolved-runtime.json"
+    },
+    "runs/B1/direct/route-compensation/level-1/request.json": {
+      "sha256": "3c89275f2266cc5374f220e29c69fc7511d2374ab3a0392c035f009796a77aa2",
+      "bytes": 79533,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route-compensation/level-1/request.json"
+    },
+    "runs/B1/direct/route-compensation/result.json": {
+      "sha256": "f048d4c2ec6076fbda8a41cd421efcde89de3633fb7c541439836493d89c7bcb",
+      "bytes": 2061,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/route-compensation/result.json"
+    },
+    "runs/B1/direct/run-start.json": {
+      "sha256": "90a8d1d3f1441f1d7d321934f1a7b4d2ea08b0a4152132744f6db55ba3a2a719",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/run-start.json"
+    },
+    "runs/B1/direct/seal.json": {
+      "sha256": "a97076e98480d9f9d1b841aa3bd96d91702a0293f38646b5562aaade00c89c49",
+      "bytes": 3590,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/seal.json"
+    },
+    "runs/B1/direct/technical-identity-compensation.json": {
+      "sha256": "50345b157f90307cd19c624aede09d2e2254e22362f57ffd7671eda7d5a96c40",
+      "bytes": 300,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/technical-identity-compensation.json"
+    },
+    "runs/B1/direct/technical-identity.json": {
+      "sha256": "75219ea6b47ffe72e0b9a8be0f4922c94089a94d751df773df455bc147570dba",
+      "bytes": 300,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/direct/technical-identity.json"
+    },
+    "runs/B1/native/host/0/cli.stderr.txt": {
+      "sha256": "85375243cc5f72a92283a56639fa86399dab7737ff1f2afbe70bcbd28f8f9d20",
+      "bytes": 1663,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/cli.stderr.txt"
+    },
+    "runs/B1/native/host/0/cli.stdout.jsonl": {
+      "sha256": "4167d16b90b9c795d7be727496555a0f6032f7637ce12c394cdd5cb882f7d1fd",
+      "bytes": 464,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/cli.stdout.jsonl"
+    },
+    "runs/B1/native/host/0/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/effective-transport-config.json"
+    },
+    "runs/B1/native/host/0/host-session-observation.json": {
+      "sha256": "eb730c8b51a164d540f461a6e2997f110e0e0d8f3063023cc78749d35e70c9a0",
+      "bytes": 253,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/host-session-observation.json"
+    },
+    "runs/B1/native/host/0/intent.json": {
+      "sha256": "bf00b76bcf469bd3998a9db34d632c4e1edc2d4e1043ee05b404f5a5033d5258",
+      "bytes": 823,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/intent.json"
+    },
+    "runs/B1/native/host/0/outcome.json": {
+      "sha256": "6962be1167f35690ff33e96ae25624aa8cac7289a59681f2cfc66bc58548d812",
+      "bytes": 828,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/outcome.json"
+    },
+    "runs/B1/native/host/0/prompt.txt": {
+      "sha256": "56cdca57c224e0640aa724569ab4a036cd1bd53dcf5bc1dc7803ef285032a7b0",
+      "bytes": 15507,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/prompt.txt"
+    },
+    "runs/B1/native/host/0/reply.json": {
+      "sha256": "5c021b927b06dbc3a9abcd0dfaf0eba61d598fad405c942f3dcb01d8c739346a",
+      "bytes": 103,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/reply.json"
+    },
+    "runs/B1/native/host/0/request.json": {
+      "sha256": "b1b6587cbc03239d4a3c009d9fc392130ea4df88caf0287c0bdc59fd03d52581",
+      "bytes": 15438,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/request.json"
+    },
+    "runs/B1/native/host/0/schema-binding.json": {
+      "sha256": "031f8043a525f177c37364e37133e3c56bd01b540759f1b5a7ee57a7d09fcb68",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/schema-binding.json"
+    },
+    "runs/B1/native/host/0/schema.api.json": {
+      "sha256": "73358aad82aea726729399c0ca2d0659ec4064b0c40972a3828b6571030c07d3",
+      "bytes": 4320,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/schema.api.json"
+    },
+    "runs/B1/native/host/0/schema.json": {
+      "sha256": "e4af4d3fd34bb7d5f1a368544586c46e0215e80cadc0db8d643903bbc2976557",
+      "bytes": 4358,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/schema.json"
+    },
+    "runs/B1/native/host/0/transport-observation-v2.json": {
+      "sha256": "7ba36e96f06dd0d226f736bc818fefdb83b6cd7246704bcf03151d640034e0cd",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/0/transport-observation-v2.json"
+    },
+    "runs/B1/native/host/1/cli.stderr.txt": {
+      "sha256": "3fa391f0353f6f4cb4bfdcc87ee22289eb6fcc4392b0845b37c3275169a02603",
+      "bytes": 576,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/cli.stderr.txt"
+    },
+    "runs/B1/native/host/1/cli.stdout.jsonl": {
+      "sha256": "8cefafa2b5e3211246a36bbdafa0427a22521a62efdb93310242c1ced9b4db5b",
+      "bytes": 1531,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/cli.stdout.jsonl"
+    },
+    "runs/B1/native/host/1/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/effective-transport-config.json"
+    },
+    "runs/B1/native/host/1/host-session-observation.json": {
+      "sha256": "db24c8c6b45320f3ecc6318679a5348e0bba5a0fffcdf51c2f7c8f93cb923695",
+      "bytes": 253,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/host-session-observation.json"
+    },
+    "runs/B1/native/host/1/intent.json": {
+      "sha256": "6be20ac85db6ac812176bf077b6ea9be0a86209a06cac662f9bf9197c8e7944d",
+      "bytes": 857,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/intent.json"
+    },
+    "runs/B1/native/host/1/outcome.json": {
+      "sha256": "28d28a241bacc10f6093177edd44f86f39cab8658ff52bc5ad1956f9b9e0f6dd",
+      "bytes": 832,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/outcome.json"
+    },
+    "runs/B1/native/host/1/prompt.txt": {
+      "sha256": "1779aea86634435a9156bb2d102160df33f06654cac8a3aeff5e7feda06874ac",
+      "bytes": 25996,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/prompt.txt"
+    },
+    "runs/B1/native/host/1/reply.json": {
+      "sha256": "577226d176a7df471b654f02f06f8626e18cd01af313aa94811f532815cdf5dc",
+      "bytes": 1162,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/reply.json"
+    },
+    "runs/B1/native/host/1/request.json": {
+      "sha256": "d2469430777f98ebf96e158978a55f09ce3cb9ebe78631d7ed8de05d85f3e20f",
+      "bytes": 25927,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/request.json"
+    },
+    "runs/B1/native/host/1/schema-binding.json": {
+      "sha256": "031f8043a525f177c37364e37133e3c56bd01b540759f1b5a7ee57a7d09fcb68",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/schema-binding.json"
+    },
+    "runs/B1/native/host/1/schema.api.json": {
+      "sha256": "73358aad82aea726729399c0ca2d0659ec4064b0c40972a3828b6571030c07d3",
+      "bytes": 4320,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/schema.api.json"
+    },
+    "runs/B1/native/host/1/schema.json": {
+      "sha256": "e4af4d3fd34bb7d5f1a368544586c46e0215e80cadc0db8d643903bbc2976557",
+      "bytes": 4358,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/schema.json"
+    },
+    "runs/B1/native/host/1/transport-observation-v2.json": {
+      "sha256": "5a3c59265ed9bb87704c78ec650e2918bed332bff1a511e66b5b0255e25244e2",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/host/1/transport-observation-v2.json"
+    },
+    "runs/B1/native/result.json": {
+      "sha256": "f7cd3c44188c986b96f15072ade96be1cb68623b33a1be4acede5298e5c49dce",
+      "bytes": 19975,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/result.json"
+    },
+    "runs/B1/native/run-start.json": {
+      "sha256": "2d9a09f1f0bfb5fc56afab8bf8fdc10881a1599beb59aee21157cd7f969798e2",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/run-start.json"
+    },
+    "runs/B1/native/seal.json": {
+      "sha256": "2d46d810d3cfe90f192ccffc1de6fa34cf89157cd4d04d248c2c1ab4c6536215",
+      "bytes": 2837,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/seal.json"
+    },
+    "runs/B1/native/technical-identity.json": {
+      "sha256": "304c50929458337d8ee8c7c2b9dc734453d0459445455e3c125dd719e1ffb3fb",
+      "bytes": 300,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/B1/native/technical-identity.json"
+    },
+    "runs/C1/direct/host/0/cli.stderr.txt": {
+      "sha256": "700e863577260d9d9cabe294739316d89a1279c983e8cbb8a66891e77975766c",
+      "bytes": 576,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/cli.stderr.txt"
+    },
+    "runs/C1/direct/host/0/cli.stdout.jsonl": {
+      "sha256": "a3f82e01bac1ba001b9f28d4556bf00df4d6a70150df7466afa9d3acc1b47b74",
+      "bytes": 1571,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/cli.stdout.jsonl"
+    },
+    "runs/C1/direct/host/0/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/effective-transport-config.json"
+    },
+    "runs/C1/direct/host/0/host-session-observation.json": {
+      "sha256": "f2139e60ae0f353c432fc520e1c35beea2d32c0f15940983ae508db9f2753a8b",
+      "bytes": 253,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/host-session-observation.json"
+    },
+    "runs/C1/direct/host/0/intent.json": {
+      "sha256": "ac4f76c0a24306f08c742704e3acf8a3901a2a66309d299bf5cfcd707529d2e5",
+      "bytes": 823,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/intent.json"
+    },
+    "runs/C1/direct/host/0/outcome.json": {
+      "sha256": "ba36cd870b36b95e72052a16c5d4a6be7508d7d3099f0a741a4ecbf9d36d030f",
+      "bytes": 830,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/outcome.json"
+    },
+    "runs/C1/direct/host/0/prompt.txt": {
+      "sha256": "bf56ca763e68ece91e2a5416c69bf386d2f71865e4ccda7fd2760f7074d29c9c",
+      "bytes": 70016,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/prompt.txt"
+    },
+    "runs/C1/direct/host/0/reply.json": {
+      "sha256": "585bc9191bc1743bab140af07fd246a04674eb01dc4e10c85d13dc141a808d6a",
+      "bytes": 1200,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/reply.json"
+    },
+    "runs/C1/direct/host/0/request.json": {
+      "sha256": "96f50c337f36aa2a5f6d31b61d9d9bb2540f3e5c442ebf7bbb1ce926b4d8a424",
+      "bytes": 69947,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/request.json"
+    },
+    "runs/C1/direct/host/0/schema-binding.json": {
+      "sha256": "cf63411a5785ec1639b1eff84b85d836b9ba8dc08f4ff0c8cda6e2e09b160540",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/schema-binding.json"
+    },
+    "runs/C1/direct/host/0/schema.api.json": {
+      "sha256": "7e46d1ac3f2f4886bb9ecd9b396b997e906020d06537dd74a5f6f14fcb21cb83",
+      "bytes": 958,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/schema.api.json"
+    },
+    "runs/C1/direct/host/0/schema.json": {
+      "sha256": "293f58ef5661a036060a85540137342846d575c70614c6ee634c35f6ede447a0",
+      "bytes": 996,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/schema.json"
+    },
+    "runs/C1/direct/host/0/transport-observation-v2.json": {
+      "sha256": "36790b40459ba0c7a3871eaab65a8cb29ec10fedb41d869924b2ad449f24070e",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/host/0/transport-observation-v2.json"
+    },
+    "runs/C1/direct/result.json": {
+      "sha256": "7b990b56d55a84a6cfb01975499cfec781969a800ed53c222aef42be3373bd89",
+      "bytes": 69275,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/result.json"
+    },
+    "runs/C1/direct/route/binding.json": {
+      "sha256": "437e4515b56a57a71b6c36e2e132ba7a88be543a9f96787d86b3fa27fa4d7784",
+      "bytes": 859,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/route/binding.json"
+    },
+    "runs/C1/direct/route/evidence-seal.json": {
+      "sha256": "7a3a83d2232d107efc4f27a49281c33d1aecf0b1a37f4c7222508e7298468976",
+      "bytes": 1113,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/route/evidence-seal.json"
+    },
+    "runs/C1/direct/route/level-1/journal/calls/0f2eb123d2d7e9468af2f1f46638d7847a0fed99f7dea04f282528538cb1bb85/intent.json": {
+      "sha256": "5bf4b3a6428993296a351fe88e4b71e90a4919ad9fd77fbd46211cea2e1de089",
+      "bytes": 65011,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/route/level-1/journal/calls/0f2eb123d2d7e9468af2f1f46638d7847a0fed99f7dea04f282528538cb1bb85/intent.json"
+    },
+    "runs/C1/direct/route/level-1/journal/calls/0f2eb123d2d7e9468af2f1f46638d7847a0fed99f7dea04f282528538cb1bb85/outcome.json": {
+      "sha256": "5ef0fd6305e4ab1c483b6662244d2aa9f7e34c4d970e0ace717637139916cd6c",
+      "bytes": 13422,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/route/level-1/journal/calls/0f2eb123d2d7e9468af2f1f46638d7847a0fed99f7dea04f282528538cb1bb85/outcome.json"
+    },
+    "runs/C1/direct/route/level-1/journal/calls/0f2eb123d2d7e9468af2f1f46638d7847a0fed99f7dea04f282528538cb1bb85/provider-receipt.json": {
+      "sha256": "4bfe4030d80b3cfda45633acac56754cc5e174941654044ffb90b7fc25a054ef",
+      "bytes": 10439,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/route/level-1/journal/calls/0f2eb123d2d7e9468af2f1f46638d7847a0fed99f7dea04f282528538cb1bb85/provider-receipt.json"
+    },
+    "runs/C1/direct/route/level-1/journal/policy.json": {
+      "sha256": "71d89715cbdded2b7742d1f094aefd1695e9bec5794b889c962870616f687667",
+      "bytes": 1743,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/route/level-1/journal/policy.json"
+    },
+    "runs/C1/direct/route/level-1/journal/resolved-runtime.json": {
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/route/level-1/journal/resolved-runtime.json"
+    },
+    "runs/C1/direct/route/level-1/request.json": {
+      "sha256": "58c0fbf78bfdcaba04186e649d6fc4e18091b75fcaff3fe6623a6d5df9beda49",
+      "bytes": 79785,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/route/level-1/request.json"
+    },
+    "runs/C1/direct/route/result.json": {
+      "sha256": "75fbbb19c8479f6a0a03b33a543701b6f73c56a5afb8ba286e5817ad71900f78",
+      "bytes": 3346,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/route/result.json"
+    },
+    "runs/C1/direct/run-start.json": {
+      "sha256": "8ec899269b40ff4ed4a53598d671889ebcdc9161c4382711da0a46c86853fc0b",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/run-start.json"
+    },
+    "runs/C1/direct/seal.json": {
+      "sha256": "30906ce419aeb7fc92c1061c30f58a59869ff703f124ab273229f5567505e974",
+      "bytes": 2731,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/seal.json"
+    },
+    "runs/C1/direct/technical-identity.json": {
+      "sha256": "304c50929458337d8ee8c7c2b9dc734453d0459445455e3c125dd719e1ffb3fb",
+      "bytes": 300,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/direct/technical-identity.json"
+    },
+    "runs/C1/native/host/0/cli.stderr.txt": {
+      "sha256": "086ac0b7f756bb3cf33fa306787f4721ef4d4cfc5ceba5e0a9105525a94be9b1",
+      "bytes": 288,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/cli.stderr.txt"
+    },
+    "runs/C1/native/host/0/cli.stdout.jsonl": {
+      "sha256": "48c063d24c50589503a183f96dda86fc85859ed0e8946b85adc32e5686ae86ff",
+      "bytes": 464,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/cli.stdout.jsonl"
+    },
+    "runs/C1/native/host/0/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/effective-transport-config.json"
+    },
+    "runs/C1/native/host/0/host-session-observation.json": {
+      "sha256": "5d881eb60df3d821c100009dac2076bcc96fdd96d9b91fd3106283ffa87fd80e",
+      "bytes": 252,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/host-session-observation.json"
+    },
+    "runs/C1/native/host/0/intent.json": {
+      "sha256": "eb93dad7880808742272ea059692faf45698e6332b82587d5c689276f3de2a43",
+      "bytes": 823,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/intent.json"
+    },
+    "runs/C1/native/host/0/outcome.json": {
+      "sha256": "92a7b191ca78d62475ebe79c1748c05dddcd9c494ad7cf74ad3e931184213481",
+      "bytes": 827,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/outcome.json"
+    },
+    "runs/C1/native/host/0/prompt.txt": {
+      "sha256": "30bb768fd43125e88267cc354016917a61a26bd8fcc684b60c88f9933546ca0d",
+      "bytes": 15759,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/prompt.txt"
+    },
+    "runs/C1/native/host/0/reply.json": {
+      "sha256": "9127721fcb4c8b67387691ff4d43c14620cc47fd235cfaada527b72f0044ec97",
+      "bytes": 103,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/reply.json"
+    },
+    "runs/C1/native/host/0/request.json": {
+      "sha256": "b64057158ee9215b52063af3acbe0b52e38d600f241fa2a3186fcefcb89bfde3",
+      "bytes": 15690,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/request.json"
+    },
+    "runs/C1/native/host/0/schema-binding.json": {
+      "sha256": "031f8043a525f177c37364e37133e3c56bd01b540759f1b5a7ee57a7d09fcb68",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/schema-binding.json"
+    },
+    "runs/C1/native/host/0/schema.api.json": {
+      "sha256": "73358aad82aea726729399c0ca2d0659ec4064b0c40972a3828b6571030c07d3",
+      "bytes": 4320,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/schema.api.json"
+    },
+    "runs/C1/native/host/0/schema.json": {
+      "sha256": "e4af4d3fd34bb7d5f1a368544586c46e0215e80cadc0db8d643903bbc2976557",
+      "bytes": 4358,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/schema.json"
+    },
+    "runs/C1/native/host/0/transport-observation-v2.json": {
+      "sha256": "328322ef84cdd3fcef6ebcada937bc33f03bcc2f54d88518d1fd0f00cc07b768",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/0/transport-observation-v2.json"
+    },
+    "runs/C1/native/host/1/cli.stderr.txt": {
+      "sha256": "499ad3932aff2338a4a71081db13727be3b48ace3b676894970e1cd27fd92ab2",
+      "bytes": 576,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/cli.stderr.txt"
+    },
+    "runs/C1/native/host/1/cli.stdout.jsonl": {
+      "sha256": "a784e61ab1fbba7b5e963816ab57ec92ab01a0140cc813794eaa7578fe9c4275",
+      "bytes": 469,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/cli.stdout.jsonl"
+    },
+    "runs/C1/native/host/1/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/effective-transport-config.json"
+    },
+    "runs/C1/native/host/1/host-session-observation.json": {
+      "sha256": "66cbef4aa95441560e5defa7aae0762b8c60b7ef3867eb0b8b803621558bbb77",
+      "bytes": 254,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/host-session-observation.json"
+    },
+    "runs/C1/native/host/1/intent.json": {
+      "sha256": "bd885153733cdf34d691f12f65d5236704527bdb84d48964f9e51954b4c586c0",
+      "bytes": 857,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/intent.json"
+    },
+    "runs/C1/native/host/1/outcome.json": {
+      "sha256": "f373b39547f69967870ed0e4b4b412947b11daa77936474edacfb5f30c153f94",
+      "bytes": 833,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/outcome.json"
+    },
+    "runs/C1/native/host/1/prompt.txt": {
+      "sha256": "77da350a13af4f317a3132b3a843918f5f88db5387bc88a3f088e58129450921",
+      "bytes": 24381,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/prompt.txt"
+    },
+    "runs/C1/native/host/1/reply.json": {
+      "sha256": "44c8099a39555bbf86959855793f286249c4b67d66a8a8611169fbf937ca340a",
+      "bytes": 104,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/reply.json"
+    },
+    "runs/C1/native/host/1/request.json": {
+      "sha256": "69d97ab160777eabbbf17bd8be30e898d34dd0d1a62ce9c62da112945fe398b8",
+      "bytes": 24312,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/request.json"
+    },
+    "runs/C1/native/host/1/schema-binding.json": {
+      "sha256": "031f8043a525f177c37364e37133e3c56bd01b540759f1b5a7ee57a7d09fcb68",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/schema-binding.json"
+    },
+    "runs/C1/native/host/1/schema.api.json": {
+      "sha256": "73358aad82aea726729399c0ca2d0659ec4064b0c40972a3828b6571030c07d3",
+      "bytes": 4320,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/schema.api.json"
+    },
+    "runs/C1/native/host/1/schema.json": {
+      "sha256": "e4af4d3fd34bb7d5f1a368544586c46e0215e80cadc0db8d643903bbc2976557",
+      "bytes": 4358,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/schema.json"
+    },
+    "runs/C1/native/host/1/transport-observation-v2.json": {
+      "sha256": "aff69589d653ea52ba2e642d1ee8bcf9c1f4856adbe1c08e25e9711fc4c2f29d",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/1/transport-observation-v2.json"
+    },
+    "runs/C1/native/host/2/cli.stderr.txt": {
+      "sha256": "88ac065518067ebce30fc198cd50702bbcb2048d39776b0b6cbe12217e921dc4",
+      "bytes": 288,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/cli.stderr.txt"
+    },
+    "runs/C1/native/host/2/cli.stdout.jsonl": {
+      "sha256": "f6777a44adc4aba4c24c05df843cabadbb1b1663009bc2b7b7303ff9826f27d8",
+      "bytes": 1529,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/cli.stdout.jsonl"
+    },
+    "runs/C1/native/host/2/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/effective-transport-config.json"
+    },
+    "runs/C1/native/host/2/host-session-observation.json": {
+      "sha256": "46dfb9555afef592a8ffe944f144911580be30e60ab97479563853c65cc5bb22",
+      "bytes": 253,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/host-session-observation.json"
+    },
+    "runs/C1/native/host/2/intent.json": {
+      "sha256": "103f0d2f2281f0c9a064b57445a3e856b9fff26bbd63afcd70144db404998f96",
+      "bytes": 857,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/intent.json"
+    },
+    "runs/C1/native/host/2/outcome.json": {
+      "sha256": "1ce4afe2278ce202851a9c2a421ada1fd462a4943db99c09cd394c2984de6703",
+      "bytes": 833,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/outcome.json"
+    },
+    "runs/C1/native/host/2/prompt.txt": {
+      "sha256": "c3d557b672ef8a1702f0e8081b26b2e756b02a7dac8061b500a822e4c9d5312e",
+      "bytes": 30718,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/prompt.txt"
+    },
+    "runs/C1/native/host/2/reply.json": {
+      "sha256": "d60a67489361bd02ebf18f24a6948ba2b2733198505e000bc31cb1ea9cd602ed",
+      "bytes": 1155,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/reply.json"
+    },
+    "runs/C1/native/host/2/request.json": {
+      "sha256": "b0ba321b30d502959a9d0bb384b3f59d4a314bd48dbb0d263de2529b077b9bcd",
+      "bytes": 30649,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/request.json"
+    },
+    "runs/C1/native/host/2/schema-binding.json": {
+      "sha256": "031f8043a525f177c37364e37133e3c56bd01b540759f1b5a7ee57a7d09fcb68",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/schema-binding.json"
+    },
+    "runs/C1/native/host/2/schema.api.json": {
+      "sha256": "73358aad82aea726729399c0ca2d0659ec4064b0c40972a3828b6571030c07d3",
+      "bytes": 4320,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/schema.api.json"
+    },
+    "runs/C1/native/host/2/schema.json": {
+      "sha256": "e4af4d3fd34bb7d5f1a368544586c46e0215e80cadc0db8d643903bbc2976557",
+      "bytes": 4358,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/schema.json"
+    },
+    "runs/C1/native/host/2/transport-observation-v2.json": {
+      "sha256": "80adba027f634f3247ebbb875c5c3880975381b4122d7d63bbca7d1754e75bb4",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/host/2/transport-observation-v2.json"
+    },
+    "runs/C1/native/result.json": {
+      "sha256": "d9ed774f332ae40e6a604f7206f76630c7542b11f25da11cfa5fa53495eebcf6",
+      "bytes": 24461,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/result.json"
+    },
+    "runs/C1/native/run-start.json": {
+      "sha256": "86486ba335d49c42413aad49075f1f8074deb3f72238e9ca2ab9754cba97666a",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/run-start.json"
+    },
+    "runs/C1/native/seal.json": {
+      "sha256": "eaf6bbc10ce1b4e38d08acb81252e3ac5ad0bf5e7a753ba39a27ec490902284b",
+      "bytes": 4057,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/seal.json"
+    },
+    "runs/C1/native/technical-identity.json": {
+      "sha256": "304c50929458337d8ee8c7c2b9dc734453d0459445455e3c125dd719e1ffb3fb",
+      "bytes": 300,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/C1/native/technical-identity.json"
+    },
+    "runs/D1/direct/host/0/cli.stderr.txt": {
+      "sha256": "51c91666b2b42236c0b02224711361430a8efa0df8a9a142e02055dc7e5af4fe",
+      "bytes": 288,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/cli.stderr.txt"
+    },
+    "runs/D1/direct/host/0/cli.stdout.jsonl": {
+      "sha256": "a0ed2b70c6d2a2c2bd1b9f114482f2bac96bf7fd56a29d555a5c0b31df5e1e14",
+      "bytes": 1445,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/cli.stdout.jsonl"
+    },
+    "runs/D1/direct/host/0/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/effective-transport-config.json"
+    },
+    "runs/D1/direct/host/0/host-session-observation.json": {
+      "sha256": "cc06a228e38fbfba3da6c0b51f86ee2ad84e0da810541f6ca94f640959ce1741",
+      "bytes": 253,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/host-session-observation.json"
+    },
+    "runs/D1/direct/host/0/intent.json": {
+      "sha256": "041121a94557f46fb256625ba08e45fefc1dfd66babb71529ddd073048e431a1",
+      "bytes": 823,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/intent.json"
+    },
+    "runs/D1/direct/host/0/outcome.json": {
+      "sha256": "c9fb94e3a239eb9a7b22452ee584c92c2dac08f6058d5d8e4a6bc57d3bdf221d",
+      "bytes": 827,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/outcome.json"
+    },
+    "runs/D1/direct/host/0/prompt.txt": {
+      "sha256": "f36bf4e7be4fa3006fdcc0cb307ca8f23bb25563a15a053cb32e6f4f859ffcf6",
+      "bytes": 56694,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/prompt.txt"
+    },
+    "runs/D1/direct/host/0/reply.json": {
+      "sha256": "9e0f0da8a79854d3e551c513eeb7f37804ca5c859115d91ac7f27a55d906c673",
+      "bytes": 1077,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/reply.json"
+    },
+    "runs/D1/direct/host/0/request.json": {
+      "sha256": "d95a53b0e4daa759110651f6599daf02e02464fbedb96560efeb5b55fae46444",
+      "bytes": 56625,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/request.json"
+    },
+    "runs/D1/direct/host/0/schema-binding.json": {
+      "sha256": "b51cc307f2d547a69273e9a54ddb27260af4576e9144a0ce9bc716c981901f75",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/schema-binding.json"
+    },
+    "runs/D1/direct/host/0/schema.api.json": {
+      "sha256": "855f2c9bda303debd19920a7fe8ca525af4652c1d74d661e5622f937470f93fd",
+      "bytes": 1164,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/schema.api.json"
+    },
+    "runs/D1/direct/host/0/schema.json": {
+      "sha256": "c614f14d0451054fa9faa2f1c3c080e063b4381be8c68bfded9eb7195ae616af",
+      "bytes": 1202,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/schema.json"
+    },
+    "runs/D1/direct/host/0/transport-observation-v2.json": {
+      "sha256": "b9feacffaab736e45431a85c9cf876c9b88588fd8cdc5b1b7172fb731c589eda",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/host/0/transport-observation-v2.json"
+    },
+    "runs/D1/direct/result.json": {
+      "sha256": "0280a81b09c1c14f2236fb71677961cc5cbe8450ed97e0098c8a99a78146642b",
+      "bytes": 55299,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/result.json"
+    },
+    "runs/D1/direct/route/binding.json": {
+      "sha256": "35daea13aa0ddde7c989ee0f7eb5f081eec0c3e0fa78e565e0f433ca3860eb32",
+      "bytes": 859,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/route/binding.json"
+    },
+    "runs/D1/direct/route/evidence-seal.json": {
+      "sha256": "f9149810227e170a2b25e81998a471d82de5ef75f093f85d603850c919b173ce",
+      "bytes": 1113,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/route/evidence-seal.json"
+    },
+    "runs/D1/direct/route/level-1/journal/calls/0077af45b1ac833d91231f013ca1fa4303231fc363d711cec2b73ca1fd6a1b21/intent.json": {
+      "sha256": "f53c9aef98da1aca4ba057e48fa18bc773685a5b777dff9305f602d3073cdf4f",
+      "bytes": 66003,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/route/level-1/journal/calls/0077af45b1ac833d91231f013ca1fa4303231fc363d711cec2b73ca1fd6a1b21/intent.json"
+    },
+    "runs/D1/direct/route/level-1/journal/calls/0077af45b1ac833d91231f013ca1fa4303231fc363d711cec2b73ca1fd6a1b21/outcome.json": {
+      "sha256": "0f2f8562bf5fe21e20935d2ed711912d59fabcb66b469071ba3e8ff924e94d55",
+      "bytes": 13629,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/route/level-1/journal/calls/0077af45b1ac833d91231f013ca1fa4303231fc363d711cec2b73ca1fd6a1b21/outcome.json"
+    },
+    "runs/D1/direct/route/level-1/journal/calls/0077af45b1ac833d91231f013ca1fa4303231fc363d711cec2b73ca1fd6a1b21/provider-receipt.json": {
+      "sha256": "f5d00e0290e6bd7005f095678f37c876f5816ef32acc6edc1df08bde5d9d75c1",
+      "bytes": 10449,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/route/level-1/journal/calls/0077af45b1ac833d91231f013ca1fa4303231fc363d711cec2b73ca1fd6a1b21/provider-receipt.json"
+    },
+    "runs/D1/direct/route/level-1/journal/policy.json": {
+      "sha256": "6d8b3d0099d74bde4426a693c4298b3d334bbd0e95f74d9898a6e426ecde521d",
+      "bytes": 1743,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/route/level-1/journal/policy.json"
+    },
+    "runs/D1/direct/route/level-1/journal/resolved-runtime.json": {
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/route/level-1/journal/resolved-runtime.json"
+    },
+    "runs/D1/direct/route/level-1/request.json": {
+      "sha256": "1cbf45b208c98719e5ceb9cb09a09072b488f269ba9e0aaf932dbd32554a5475",
+      "bytes": 81102,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/route/level-1/request.json"
+    },
+    "runs/D1/direct/route/result.json": {
+      "sha256": "39d5d7b150271e6735bbdef80ddebcbd21708a87ee63e5f4abb1855b750497bf",
+      "bytes": 2504,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/route/result.json"
+    },
+    "runs/D1/direct/run-start.json": {
+      "sha256": "40f0455e7bfc9ebb6ebb7f959da8f876a554639154868f4c59b38ff933cd196a",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/run-start.json"
+    },
+    "runs/D1/direct/seal.json": {
+      "sha256": "74c468da1cb31533a180b459b9f2d2ccc0ed93bb126ddab692a42268bf3cfa68",
+      "bytes": 2731,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/seal.json"
+    },
+    "runs/D1/direct/technical-identity.json": {
+      "sha256": "304c50929458337d8ee8c7c2b9dc734453d0459445455e3c125dd719e1ffb3fb",
+      "bytes": 300,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/direct/technical-identity.json"
+    },
+    "runs/D1/native/host/0/cli.stderr.txt": {
+      "sha256": "acffc2745139193ad5a333fc3a4c6f273e4fecac40ba7fcd94b4e9a14bfde21f",
+      "bytes": 576,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/cli.stderr.txt"
+    },
+    "runs/D1/native/host/0/cli.stdout.jsonl": {
+      "sha256": "9706b8f52c49308f6df0047b0df6e8ca2194732664ad848f3a4660141494712f",
+      "bytes": 493,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/cli.stdout.jsonl"
+    },
+    "runs/D1/native/host/0/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/effective-transport-config.json"
+    },
+    "runs/D1/native/host/0/host-session-observation.json": {
+      "sha256": "05017d7841189e600d5f5cb037986cda6b0fe999b760526ee540b015a694b2c5",
+      "bytes": 253,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/host-session-observation.json"
+    },
+    "runs/D1/native/host/0/intent.json": {
+      "sha256": "84435092103fc2f8e34e5cf42b13e804e9cd1017926b67615975aaf88e8eb60f",
+      "bytes": 823,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/intent.json"
+    },
+    "runs/D1/native/host/0/outcome.json": {
+      "sha256": "61371116f4b5090b6265e1f1f23e6f7855aa30b676cead7f0f6f99a0e8f8b3ff",
+      "bytes": 832,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/outcome.json"
+    },
+    "runs/D1/native/host/0/prompt.txt": {
+      "sha256": "a252e20cc044e694a2432e91a7a35929ed8526f2a383af4ab92d477ccec7954d",
+      "bytes": 16084,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/prompt.txt"
+    },
+    "runs/D1/native/host/0/reply.json": {
+      "sha256": "cd005fc9c5bb7376d3cad541b0f2fde1ac49bcdd98bd459c07b2f2b1a85e27b5",
+      "bytes": 126,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/reply.json"
+    },
+    "runs/D1/native/host/0/request.json": {
+      "sha256": "66dcaf6d2452e421b0690ed8d107925b19ccaf0878e1d2d29a3d9e44b052d719",
+      "bytes": 16015,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/request.json"
+    },
+    "runs/D1/native/host/0/schema-binding.json": {
+      "sha256": "031f8043a525f177c37364e37133e3c56bd01b540759f1b5a7ee57a7d09fcb68",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/schema-binding.json"
+    },
+    "runs/D1/native/host/0/schema.api.json": {
+      "sha256": "73358aad82aea726729399c0ca2d0659ec4064b0c40972a3828b6571030c07d3",
+      "bytes": 4320,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/schema.api.json"
+    },
+    "runs/D1/native/host/0/schema.json": {
+      "sha256": "e4af4d3fd34bb7d5f1a368544586c46e0215e80cadc0db8d643903bbc2976557",
+      "bytes": 4358,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/schema.json"
+    },
+    "runs/D1/native/host/0/transport-observation-v2.json": {
+      "sha256": "7726b1d8ac6eab36ea14dd00ce31d8f283c4d63d7ab79d04f97be2f461b9661a",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/0/transport-observation-v2.json"
+    },
+    "runs/D1/native/host/1/cli.stderr.txt": {
+      "sha256": "ed5f5cf0613220890d1eec16e1fec3c3ac898891f113a3b797ed506a074ad96b",
+      "bytes": 576,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/cli.stderr.txt"
+    },
+    "runs/D1/native/host/1/cli.stdout.jsonl": {
+      "sha256": "5e9eb3559ae6d1c089664bd2f0bc3f92441d920ee80bef7689a27628f8b414d6",
+      "bytes": 1334,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/cli.stdout.jsonl"
+    },
+    "runs/D1/native/host/1/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/effective-transport-config.json"
+    },
+    "runs/D1/native/host/1/host-session-observation.json": {
+      "sha256": "f481f8a9700addd6acc05a96dd55e2b44162260b12320bff924c23567d752ef6",
+      "bytes": 253,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/host-session-observation.json"
+    },
+    "runs/D1/native/host/1/intent.json": {
+      "sha256": "75aaab4fea9d9a9733f6b04ec8b89ed968398bf9ff1474a4a27fc92301186482",
+      "bytes": 857,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/intent.json"
+    },
+    "runs/D1/native/host/1/outcome.json": {
+      "sha256": "a5814e5aa2bd1fc87e3638a60edc9d6240dae8bdb8c44c7619661ed09c65f82d",
+      "bytes": 833,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/outcome.json"
+    },
+    "runs/D1/native/host/1/prompt.txt": {
+      "sha256": "c12c238ae3ff4f3f4a5815160878895a845b1b1c9c14c60b28a6fd1ab7d41e68",
+      "bytes": 31432,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/prompt.txt"
+    },
+    "runs/D1/native/host/1/reply.json": {
+      "sha256": "1359f12a5ecd1e7d5934797a1358ef4b7c66ca7ce889446e6d684df61f021ddc",
+      "bytes": 963,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/reply.json"
+    },
+    "runs/D1/native/host/1/request.json": {
+      "sha256": "955fc0cc166ac3cef04adaa1f00b8937e02488ec53a9321f39f96dc2b758f924",
+      "bytes": 31363,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/request.json"
+    },
+    "runs/D1/native/host/1/schema-binding.json": {
+      "sha256": "031f8043a525f177c37364e37133e3c56bd01b540759f1b5a7ee57a7d09fcb68",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/schema-binding.json"
+    },
+    "runs/D1/native/host/1/schema.api.json": {
+      "sha256": "73358aad82aea726729399c0ca2d0659ec4064b0c40972a3828b6571030c07d3",
+      "bytes": 4320,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/schema.api.json"
+    },
+    "runs/D1/native/host/1/schema.json": {
+      "sha256": "e4af4d3fd34bb7d5f1a368544586c46e0215e80cadc0db8d643903bbc2976557",
+      "bytes": 4358,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/schema.json"
+    },
+    "runs/D1/native/host/1/transport-observation-v2.json": {
+      "sha256": "97b30e15fbe02ea643c754db5c9caf88026dcd8f08d4618b812eaa0a549654d7",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/host/1/transport-observation-v2.json"
+    },
+    "runs/D1/native/result.json": {
+      "sha256": "89e26e1226203577fffea46681ce9a286a0d120712f56c54798d2dd02646ea12",
+      "bytes": 24658,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/result.json"
+    },
+    "runs/D1/native/run-start.json": {
+      "sha256": "f10ad17031422ae8664ccae9360c5025dcbad2dfe5f7631212c12e7ca21b3d17",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/run-start.json"
+    },
+    "runs/D1/native/seal.json": {
+      "sha256": "df7366689263be211ed5787bf8b1199946af32a23a6ada84a09ebd9441647599",
+      "bytes": 2837,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/seal.json"
+    },
+    "runs/D1/native/technical-identity.json": {
+      "sha256": "304c50929458337d8ee8c7c2b9dc734453d0459445455e3c125dd719e1ffb3fb",
+      "bytes": 300,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/D1/native/technical-identity.json"
+    },
+    "runs/E-window/direct/host/0/cli.stderr.txt": {
+      "sha256": "7a58ea04975341cceaea03cea3bf07687e20faa4912b1f486c97347d22f1c30d",
+      "bytes": 576,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/cli.stderr.txt"
+    },
+    "runs/E-window/direct/host/0/cli.stdout.jsonl": {
+      "sha256": "fc81a6aff8753b84ad99520693cf342a78f29dfbefff9efe6a5087ae6875da7e",
+      "bytes": 1306,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/cli.stdout.jsonl"
+    },
+    "runs/E-window/direct/host/0/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/effective-transport-config.json"
+    },
+    "runs/E-window/direct/host/0/host-session-observation.json": {
+      "sha256": "d3ec321b71d284aa21803b94c8da908d54d6bb55a4bbd6a8412ad02125a69522",
+      "bytes": 254,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/host-session-observation.json"
+    },
+    "runs/E-window/direct/host/0/intent.json": {
+      "sha256": "45d4f3c23730efc975cbdcf620b78a5d80084d7518df0000620e673444fede5c",
+      "bytes": 823,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/intent.json"
+    },
+    "runs/E-window/direct/host/0/outcome.json": {
+      "sha256": "c801f1a354c824ab131744a402d9b8b3989a8d418bacb82b9e816978875d026a",
+      "bytes": 831,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/outcome.json"
+    },
+    "runs/E-window/direct/host/0/prompt.txt": {
+      "sha256": "97f6a5a1f4700b14d652187f65bb49f2677e33dd9b8cacd21e01be7fa9980499",
+      "bytes": 15343,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/prompt.txt"
+    },
+    "runs/E-window/direct/host/0/reply.json": {
+      "sha256": "f3e6fa2b4f4571fd3caaffa8b3183f4eeb237f2d66b6183d3d6efe7f6af7367a",
+      "bytes": 940,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/reply.json"
+    },
+    "runs/E-window/direct/host/0/request.json": {
+      "sha256": "47aa805e3e83762a6309226f1eefa911001c709e80b7d8a915bc039732f78bc3",
+      "bytes": 15274,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/request.json"
+    },
+    "runs/E-window/direct/host/0/schema-binding.json": {
+      "sha256": "a2ab56b5ab393b99060ea772f1618c0ce5036a76a29480a65681915552127223",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/schema-binding.json"
+    },
+    "runs/E-window/direct/host/0/schema.api.json": {
+      "sha256": "532f84073e8e350bbce59eba5150d4449a8e52cb7ca8dcd136c683d1d1076d8d",
+      "bytes": 571,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/schema.api.json"
+    },
+    "runs/E-window/direct/host/0/schema.json": {
+      "sha256": "88794c8289b626446060657c026bd9a1a16b6a08b445c576e89f871e9e063e49",
+      "bytes": 609,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/schema.json"
+    },
+    "runs/E-window/direct/host/0/transport-observation-v2.json": {
+      "sha256": "7372cd0b37262264e71a416ac6a9fc7b75077a97cc9db2cf41578d659a6ed0b6",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/host/0/transport-observation-v2.json"
+    },
+    "runs/E-window/direct/result.json": {
+      "sha256": "97b6c470fe9a6fcf02857bb36501acb3ca616fd646e66802bfc58726c5313c93",
+      "bytes": 15324,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/result.json"
+    },
+    "runs/E-window/direct/route/binding.json": {
+      "sha256": "75b11f2780861b570e99319d145e8b071df17896214074c85d4e46be7980869a",
+      "bytes": 859,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/route/binding.json"
+    },
+    "runs/E-window/direct/route/evidence-seal.json": {
+      "sha256": "8a0a0437a33cbe736805646129050faaa2024b4c6ef80192398ed986c62a10a8",
+      "bytes": 1113,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/route/evidence-seal.json"
+    },
+    "runs/E-window/direct/route/level-1/journal/calls/beaf913318bd43d2d4c8a9572eae59f308fd11fc6773c5ef386a5abd7fbc8323/intent.json": {
+      "sha256": "4c522b63e4804d4a117a69b73d99993be30080446ab5660e5d51c7130501cf23",
+      "bytes": 65027,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/route/level-1/journal/calls/beaf913318bd43d2d4c8a9572eae59f308fd11fc6773c5ef386a5abd7fbc8323/intent.json"
+    },
+    "runs/E-window/direct/route/level-1/journal/calls/beaf913318bd43d2d4c8a9572eae59f308fd11fc6773c5ef386a5abd7fbc8323/outcome.json": {
+      "sha256": "39ad2f582c4976ca1686bbaa71210f657aa19612dcb01e6372bb2406ec1fd8af",
+      "bytes": 13249,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/route/level-1/journal/calls/beaf913318bd43d2d4c8a9572eae59f308fd11fc6773c5ef386a5abd7fbc8323/outcome.json"
+    },
+    "runs/E-window/direct/route/level-1/journal/calls/beaf913318bd43d2d4c8a9572eae59f308fd11fc6773c5ef386a5abd7fbc8323/provider-receipt.json": {
+      "sha256": "5ea848fed1d3033377b9862adb1e0de6352037305eb3e0375062f587eb7f65a0",
+      "bytes": 10324,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/route/level-1/journal/calls/beaf913318bd43d2d4c8a9572eae59f308fd11fc6773c5ef386a5abd7fbc8323/provider-receipt.json"
+    },
+    "runs/E-window/direct/route/level-1/journal/policy.json": {
+      "sha256": "4230dd6d24f631e402108493dee82db9d96437f14c6f4f48880881e60015627a",
+      "bytes": 1743,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/route/level-1/journal/policy.json"
+    },
+    "runs/E-window/direct/route/level-1/journal/resolved-runtime.json": {
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/route/level-1/journal/resolved-runtime.json"
+    },
+    "runs/E-window/direct/route/level-1/request.json": {
+      "sha256": "94973f6b8a4ac3019e8513163d1ed8e75525e6e9d95bad5f329bc3e418a44f59",
+      "bytes": 79219,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/route/level-1/request.json"
+    },
+    "runs/E-window/direct/route/result.json": {
+      "sha256": "444fa57eeae8ba0b3f0fb6d39e9cc58fb30318686d3a8b1d854fa2486b9b6271",
+      "bytes": 2464,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/route/result.json"
+    },
+    "runs/E-window/direct/run-start.json": {
+      "sha256": "4aecdbac83b9970e837cccbc3716a140d0c04e95c236a54a8078f1aa728fb902",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/run-start.json"
+    },
+    "runs/E-window/direct/seal.json": {
+      "sha256": "23eb4c5771efa03c97a62650c0dfb082137ae05422b61ff489c83ad26777de29",
+      "bytes": 2731,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/seal.json"
+    },
+    "runs/E-window/direct/technical-identity.json": {
+      "sha256": "304c50929458337d8ee8c7c2b9dc734453d0459445455e3c125dd719e1ffb3fb",
+      "bytes": 300,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/direct/technical-identity.json"
+    },
+    "runs/E-window/native/host/0/cli.stderr.txt": {
+      "sha256": "1268302cd0280c8278ab01898eb3f8bf155632e4b6c77dc55bca64bc219ebe93",
+      "bytes": 576,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/cli.stderr.txt"
+    },
+    "runs/E-window/native/host/0/cli.stdout.jsonl": {
+      "sha256": "cf36997fd086bd0059bd1da0f1e4a2adf353bd9fad9ad2a6d2539724a23997e1",
+      "bytes": 558,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/cli.stdout.jsonl"
+    },
+    "runs/E-window/native/host/0/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/effective-transport-config.json"
+    },
+    "runs/E-window/native/host/0/host-session-observation.json": {
+      "sha256": "d43f9d49f80cd5b357d61bdf776793cc7e3676e402b23edf18f05b710fbfe790",
+      "bytes": 253,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/host-session-observation.json"
+    },
+    "runs/E-window/native/host/0/intent.json": {
+      "sha256": "4ee197fdfd31290b56f553785159c82caff0d9ffc8fc16ee1e2fa893f0d3f908",
+      "bytes": 823,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/intent.json"
+    },
+    "runs/E-window/native/host/0/outcome.json": {
+      "sha256": "fb4af4851d497f1cc86c57878dc7c908284964dac114d0031961115efb912366",
+      "bytes": 827,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/outcome.json"
+    },
+    "runs/E-window/native/host/0/prompt.txt": {
+      "sha256": "6cd11bf32856cbffa33054959911895eb2b5188e98ac3fba6e5ec758205a58f7",
+      "bytes": 15177,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/prompt.txt"
+    },
+    "runs/E-window/native/host/0/reply.json": {
+      "sha256": "f0b22481e35e3906c4e111af7050a001d3b068d6ec83c95a5c216a6b4bb7414f",
+      "bytes": 195,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/reply.json"
+    },
+    "runs/E-window/native/host/0/request.json": {
+      "sha256": "ffee9e5d6c5ca89ea10823a7ee832ca4af715491b778f25e25c5c0fa175290cc",
+      "bytes": 15108,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/request.json"
+    },
+    "runs/E-window/native/host/0/schema-binding.json": {
+      "sha256": "031f8043a525f177c37364e37133e3c56bd01b540759f1b5a7ee57a7d09fcb68",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/schema-binding.json"
+    },
+    "runs/E-window/native/host/0/schema.api.json": {
+      "sha256": "73358aad82aea726729399c0ca2d0659ec4064b0c40972a3828b6571030c07d3",
+      "bytes": 4320,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/schema.api.json"
+    },
+    "runs/E-window/native/host/0/schema.json": {
+      "sha256": "e4af4d3fd34bb7d5f1a368544586c46e0215e80cadc0db8d643903bbc2976557",
+      "bytes": 4358,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/schema.json"
+    },
+    "runs/E-window/native/host/0/transport-observation-v2.json": {
+      "sha256": "049049f0895c30eefe98c6b37aa0561480726bb521fc4c09205a5a8555d6922c",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/0/transport-observation-v2.json"
+    },
+    "runs/E-window/native/host/1/cli.stderr.txt": {
+      "sha256": "c40e428edadb3e097885c36ae4560f3084bdd0a94f8366fe895b62ab7391bd2c",
+      "bytes": 576,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/cli.stderr.txt"
+    },
+    "runs/E-window/native/host/1/cli.stdout.jsonl": {
+      "sha256": "04ef45e9b5adfcae07551966c425b029ea82530ae12fa413860c1aa1d26c6618",
+      "bytes": 1095,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/cli.stdout.jsonl"
+    },
+    "runs/E-window/native/host/1/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/effective-transport-config.json"
+    },
+    "runs/E-window/native/host/1/host-session-observation.json": {
+      "sha256": "d1a42d992100304ccfe3768b4c375808aec4ed772dbea9f84394f998d333687b",
+      "bytes": 253,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/host-session-observation.json"
+    },
+    "runs/E-window/native/host/1/intent.json": {
+      "sha256": "73fe06045330c50e501059d2616ea9f893cc16f80e169e719ebb1639d0f98163",
+      "bytes": 857,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/intent.json"
+    },
+    "runs/E-window/native/host/1/outcome.json": {
+      "sha256": "285ebe30fe4b502dd53338e940550bbaca64560ff2db06d1bc776ae9cbcb2bb7",
+      "bytes": 833,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/outcome.json"
+    },
+    "runs/E-window/native/host/1/prompt.txt": {
+      "sha256": "263a9f7dd7d686e942004aa58d12660a974a1d8073e27fc9739abd0d2a43b680",
+      "bytes": 39689,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/prompt.txt"
+    },
+    "runs/E-window/native/host/1/reply.json": {
+      "sha256": "3e684a5a4c5fb88ccad6356f5c33b1a7204176e45f0881b5524d44cf50d16ce4",
+      "bytes": 728,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/reply.json"
+    },
+    "runs/E-window/native/host/1/request.json": {
+      "sha256": "d3de8db6e0842c9fae13447c86d4a0df65b1076974cdb809104b9c3a159557f2",
+      "bytes": 39620,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/request.json"
+    },
+    "runs/E-window/native/host/1/schema-binding.json": {
+      "sha256": "031f8043a525f177c37364e37133e3c56bd01b540759f1b5a7ee57a7d09fcb68",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/schema-binding.json"
+    },
+    "runs/E-window/native/host/1/schema.api.json": {
+      "sha256": "73358aad82aea726729399c0ca2d0659ec4064b0c40972a3828b6571030c07d3",
+      "bytes": 4320,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/schema.api.json"
+    },
+    "runs/E-window/native/host/1/schema.json": {
+      "sha256": "e4af4d3fd34bb7d5f1a368544586c46e0215e80cadc0db8d643903bbc2976557",
+      "bytes": 4358,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/schema.json"
+    },
+    "runs/E-window/native/host/1/transport-observation-v2.json": {
+      "sha256": "480402243e21de30aece2957d27991bf7d444c432c25752986bff37ac8763a9e",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/host/1/transport-observation-v2.json"
+    },
+    "runs/E-window/native/result.json": {
+      "sha256": "0b306b0184a160259638d06b9db396e656d8de1827a38905ec4a2a3ce78e7534",
+      "bytes": 33668,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/result.json"
+    },
+    "runs/E-window/native/run-start.json": {
+      "sha256": "c0a90594313ba478dabd891c2d9548fd6f90abd8b672288d463d8e7f8e5c01f3",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/run-start.json"
+    },
+    "runs/E-window/native/seal.json": {
+      "sha256": "0ab84a64a589e0e6cd212cd7e1200c89c338ba43d91065b512b78dca90985258",
+      "bytes": 2837,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/seal.json"
+    },
+    "runs/E-window/native/technical-identity.json": {
+      "sha256": "304c50929458337d8ee8c7c2b9dc734453d0459445455e3c125dd719e1ffb3fb",
+      "bytes": 300,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/E-window/native/technical-identity.json"
+    },
+    "runs/F-window/direct/host/0/cli.stderr.txt": {
+      "sha256": "dfee24124d20b0062e8a98ed7d3648065376629cdb55c357682562557e360df9",
+      "bytes": 576,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/cli.stderr.txt"
+    },
+    "runs/F-window/direct/host/0/cli.stdout.jsonl": {
+      "sha256": "fc7153a0cb25c66f75624d62eb9a00a26e31b1c568ee70bf84533ca370be132b",
+      "bytes": 1334,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/cli.stdout.jsonl"
+    },
+    "runs/F-window/direct/host/0/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/effective-transport-config.json"
+    },
+    "runs/F-window/direct/host/0/host-session-observation.json": {
+      "sha256": "be5e650c409df1389ba287918908526f1c8ed5b41f191ced50bad16554ef1623",
+      "bytes": 254,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/host-session-observation.json"
+    },
+    "runs/F-window/direct/host/0/intent.json": {
+      "sha256": "8a21351516739393ea433f66ea4c1f233c5bb673af05a3f9fed4e511f9936a7e",
+      "bytes": 823,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/intent.json"
+    },
+    "runs/F-window/direct/host/0/outcome.json": {
+      "sha256": "4a761d8ffaf1119a92a4c4667b0e6395b91b99c9ec34dd448337a880d100d4f1",
+      "bytes": 829,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/outcome.json"
+    },
+    "runs/F-window/direct/host/0/prompt.txt": {
+      "sha256": "a6566895c2055581378f30d947f95e38c26d83a8b5b38f95495290c949d23bd5",
+      "bytes": 20734,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/prompt.txt"
+    },
+    "runs/F-window/direct/host/0/reply.json": {
+      "sha256": "f92c18d4298291644d3ae5eedfbc8c75cdfaa1c3fea7bf82af53dab8ee390903",
+      "bytes": 973,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/reply.json"
+    },
+    "runs/F-window/direct/host/0/request.json": {
+      "sha256": "c1bf4147f0ccc8f317096e942b94b2aec51ee8f4f5e8c84f281e5b9babf3eb2f",
+      "bytes": 20665,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/request.json"
+    },
+    "runs/F-window/direct/host/0/schema-binding.json": {
+      "sha256": "16224aa28a4d1dbb025fb5f7ba69637c2b838bc30c421e98cb9d7cb77737973b",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/schema-binding.json"
+    },
+    "runs/F-window/direct/host/0/schema.api.json": {
+      "sha256": "4c22b896efa4d1cc875e18b2c3e12d5c5f6e5ad3d928ffa5bd1e6aa0683ab87c",
+      "bytes": 439,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/schema.api.json"
+    },
+    "runs/F-window/direct/host/0/schema.json": {
+      "sha256": "e2848af0a22039278f9f9b5bfab609ee709cb9e49d3d74bdead4826bb40d8c83",
+      "bytes": 458,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/schema.json"
+    },
+    "runs/F-window/direct/host/0/transport-observation-v2.json": {
+      "sha256": "e7dde189155b000b89a2ee1b376c0df165b323c59b2f0a51b3ee3c21dc647dd5",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/host/0/transport-observation-v2.json"
+    },
+    "runs/F-window/direct/result.json": {
+      "sha256": "ddc1b51bd4440662c14d7fb4dc8884e14c4d54e0b1b0180e609397d9054f8e7c",
+      "bytes": 4498,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/result.json"
+    },
+    "runs/F-window/direct/route/binding.json": {
+      "sha256": "500d273b93ccb97900ddf70cb38621e7a1b1cea429017f58009de02a95a82732",
+      "bytes": 859,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/route/binding.json"
+    },
+    "runs/F-window/direct/route/evidence-seal.json": {
+      "sha256": "6ff13a2a842fd26078a2fe0625727b6f5f1ae19bc761aaae632c9212c31a5e60",
+      "bytes": 1113,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/route/evidence-seal.json"
+    },
+    "runs/F-window/direct/route/level-1/journal/calls/4b37ca9c1b0f6b27912cc61c9b593441973720d6c72f2fb526da7fe8287f3ebf/intent.json": {
+      "sha256": "9057f844587917bd72f880792aa9476401a8b918da0f999052c8509035bc6b16",
+      "bytes": 70916,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/route/level-1/journal/calls/4b37ca9c1b0f6b27912cc61c9b593441973720d6c72f2fb526da7fe8287f3ebf/intent.json"
+    },
+    "runs/F-window/direct/route/level-1/journal/calls/4b37ca9c1b0f6b27912cc61c9b593441973720d6c72f2fb526da7fe8287f3ebf/outcome.json": {
+      "sha256": "f8c3633483d344f2c678bdb444af66525fdcadf1bb4b5274c7ea8b5232ab462d",
+      "bytes": 13865,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/route/level-1/journal/calls/4b37ca9c1b0f6b27912cc61c9b593441973720d6c72f2fb526da7fe8287f3ebf/outcome.json"
+    },
+    "runs/F-window/direct/route/level-1/journal/calls/4b37ca9c1b0f6b27912cc61c9b593441973720d6c72f2fb526da7fe8287f3ebf/provider-receipt.json": {
+      "sha256": "811f97f8ffe4edd1f65af13f1a323cf00cdb0891a83e611b64d935cf8f627712",
+      "bytes": 10881,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/route/level-1/journal/calls/4b37ca9c1b0f6b27912cc61c9b593441973720d6c72f2fb526da7fe8287f3ebf/provider-receipt.json"
+    },
+    "runs/F-window/direct/route/level-1/journal/policy.json": {
+      "sha256": "7c0e6c99db51f05cf427437e02d3ddabd3331b9cc9aacf6ce3116235a23c51ea",
+      "bytes": 1743,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/route/level-1/journal/policy.json"
+    },
+    "runs/F-window/direct/route/level-1/journal/resolved-runtime.json": {
+      "sha256": "1cdb428e243aa264ad3573aa2392655d988a09e8f89a0856b1f3a74c02b82a4e",
+      "bytes": 172,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/route/level-1/journal/resolved-runtime.json"
+    },
+    "runs/F-window/direct/route/level-1/request.json": {
+      "sha256": "2e099780b146d39cc2b0f99b8f5e064165d458a559c7e89b7cb9dd5b121729ed",
+      "bytes": 101491,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/route/level-1/request.json"
+    },
+    "runs/F-window/direct/route/result.json": {
+      "sha256": "70aef9c3157b0b4f998b29aa5c453a4d26de2207b19d353384b407e84bf58288",
+      "bytes": 2843,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/route/result.json"
+    },
+    "runs/F-window/direct/run-start.json": {
+      "sha256": "31f1f2891f7ae91eec5f6484b56a3e45bd8df064beadc687550c666e8751e486",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/run-start.json"
+    },
+    "runs/F-window/direct/seal.json": {
+      "sha256": "7cf19a85a038e86163b605e1627957e68df66414ca737b8b038a3128c60d1d59",
+      "bytes": 2731,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/seal.json"
+    },
+    "runs/F-window/direct/technical-identity.json": {
+      "sha256": "304c50929458337d8ee8c7c2b9dc734453d0459445455e3c125dd719e1ffb3fb",
+      "bytes": 300,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/direct/technical-identity.json"
+    },
+    "runs/F-window/native/host/0/cli.stderr.txt": {
+      "sha256": "28cf4fa37fa280c38b096c504f7ceb0525ccd17169e08f458178c3b12b67f552",
+      "bytes": 288,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/cli.stderr.txt"
+    },
+    "runs/F-window/native/host/0/cli.stdout.jsonl": {
+      "sha256": "6992666d4deb3f788ce6368096cf8f831614e246f8085778324b18ff57a49988",
+      "bytes": 1448,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/cli.stdout.jsonl"
+    },
+    "runs/F-window/native/host/0/effective-transport-config.json": {
+      "sha256": "9cf354c972c7661e18835c8f71e326081425bb97cd7e789bb1d0e84aa5444012",
+      "bytes": 873,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/effective-transport-config.json"
+    },
+    "runs/F-window/native/host/0/host-session-observation.json": {
+      "sha256": "7905189579f9aba6e259875dc13b2d8b1982b0f7188db4e0f8927f8bde857f0b",
+      "bytes": 252,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/host-session-observation.json"
+    },
+    "runs/F-window/native/host/0/intent.json": {
+      "sha256": "45035e2f70f916f4d7f8652bf44cc39ae7fdb6e50ea3fe737e28b31ee6d01ffb",
+      "bytes": 823,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/intent.json"
+    },
+    "runs/F-window/native/host/0/outcome.json": {
+      "sha256": "5dcfe1aa1ef93792d35fb5b0c9119b0e4056fb6e50f452740f7eac4438cc53fe",
+      "bytes": 829,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/outcome.json"
+    },
+    "runs/F-window/native/host/0/prompt.txt": {
+      "sha256": "4ae63a92fcc76cb7596749981ee813354eb927ba4c038fcc493a7384a9e00398",
+      "bytes": 31561,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/prompt.txt"
+    },
+    "runs/F-window/native/host/0/reply.json": {
+      "sha256": "abe4e4f8659b36f83b7a9cec68766c2cffee1f968901d19130bcb5f1b5a62ac5",
+      "bytes": 1083,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/reply.json"
+    },
+    "runs/F-window/native/host/0/request.json": {
+      "sha256": "26cc867708afbcd2c62fd0c14bbd417eabff35b0401605bca76b65f8c28f038b",
+      "bytes": 31492,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/request.json"
+    },
+    "runs/F-window/native/host/0/schema-binding.json": {
+      "sha256": "031f8043a525f177c37364e37133e3c56bd01b540759f1b5a7ee57a7d09fcb68",
+      "bytes": 360,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/schema-binding.json"
+    },
+    "runs/F-window/native/host/0/schema.api.json": {
+      "sha256": "73358aad82aea726729399c0ca2d0659ec4064b0c40972a3828b6571030c07d3",
+      "bytes": 4320,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/schema.api.json"
+    },
+    "runs/F-window/native/host/0/schema.json": {
+      "sha256": "e4af4d3fd34bb7d5f1a368544586c46e0215e80cadc0db8d643903bbc2976557",
+      "bytes": 4358,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/schema.json"
+    },
+    "runs/F-window/native/host/0/transport-observation-v2.json": {
+      "sha256": "33dd54f4ece7f9fa76eb00c0ef821648eba9a3f07413c4eb159283d63b715dcd",
+      "bytes": 787,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/host/0/transport-observation-v2.json"
+    },
+    "runs/F-window/native/result.json": {
+      "sha256": "ad56617afca06d21b741739642bf99d05b7ae849b56aaa4ed047051cd2a72632",
+      "bytes": 9397,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/result.json"
+    },
+    "runs/F-window/native/run-start.json": {
+      "sha256": "bb0894b6161f8c19cb869a60000ea53906a1542120bf67391bcf515f70c35030",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/run-start.json"
+    },
+    "runs/F-window/native/seal.json": {
+      "sha256": "1886923a6dc18c02de97ac47470903b78e1805c8be8553100a0abae7bb97a27f",
+      "bytes": 1617,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/seal.json"
+    },
+    "runs/F-window/native/technical-identity.json": {
+      "sha256": "304c50929458337d8ee8c7c2b9dc734453d0459445455e3c125dd719e1ffb3fb",
+      "bytes": 300,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/runs/F-window/native/technical-identity.json"
+    },
+    "serial/000000/failure.json": {
+      "sha256": "a2ae6363e77347a292674c13f6c0c50794e6dbe7cb9855c4e0b014e0d818c992",
+      "bytes": 544,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000000/failure.json"
+    },
+    "serial/000000/intent.json": {
+      "sha256": "4e67bddc94956bd27c81d27bde5005015deb97050a3413374eddb5297e6e6874",
+      "bytes": 408,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000000/intent.json"
+    },
+    "serial/000001/completion.json": {
+      "sha256": "66120fb70beaad42124553c50238e676ebdaaddb907ca2cdbb67202496362d23",
+      "bytes": 313,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000001/completion.json"
+    },
+    "serial/000001/intent.json": {
+      "sha256": "568308352f78de694fa7eeed86df6b7832779e90204aab75efd721862c640310",
+      "bytes": 569,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000001/intent.json"
+    },
+    "serial/000002/completion.json": {
+      "sha256": "e0c0e39a22909be430978e6036f030d2bc14b7588373d94de34381a5c3780453",
+      "bytes": 312,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000002/completion.json"
+    },
+    "serial/000002/intent.json": {
+      "sha256": "fef87a09eec5644f6d9bcf58aa225b11cf53f7a00571a6105da85a72008bd697",
+      "bytes": 578,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000002/intent.json"
+    },
+    "serial/000003/completion.json": {
+      "sha256": "b2bcc6e52eb71ee477854d872abfde151a3a468723077bdad2d9ee54431694dd",
+      "bytes": 312,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000003/completion.json"
+    },
+    "serial/000003/intent.json": {
+      "sha256": "7a651184f209e5aba232c72af5d31c6185f4b44c68f26d33d10cfcb030b0fd08",
+      "bytes": 548,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000003/intent.json"
+    },
+    "serial/000004/accepted-unknown.json": {
+      "sha256": "24f3d8c92966cb6660b97da04ee1af293f041a4024709b1c8c71ed816c9ed4c0",
+      "bytes": 703,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000004/accepted-unknown.json"
+    },
+    "serial/000004/intent.json": {
+      "sha256": "cf82c31d68858c0113417cd34703d3ddd3c1924344d2acf0fe6c3b25acc92726",
+      "bytes": 580,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000004/intent.json"
+    },
+    "serial/000005/completion.json": {
+      "sha256": "fd4cc3d08f0837fa6e91309f5449189a4e1cd3ad7a4b1950cdbf8941a978413c",
+      "bytes": 312,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000005/completion.json"
+    },
+    "serial/000005/intent.json": {
+      "sha256": "efef89074b288c349580a5454ec7ce9a933310ff0b0ab2112d73bc6ea809263c",
+      "bytes": 685,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000005/intent.json"
+    },
+    "serial/000006/completion.json": {
+      "sha256": "4a90d856cf27ba7664a9d88717ef26ff62e9d0cfae8c4befd9829778184ae169",
+      "bytes": 312,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000006/completion.json"
+    },
+    "serial/000006/intent.json": {
+      "sha256": "f0464311cfbd7aa94912329bb45f098c060325fcdaf3b7a24ce1ffddb43fb844",
+      "bytes": 548,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000006/intent.json"
+    },
+    "serial/000007/completion.json": {
+      "sha256": "f7a1b06662f2bce7a134a49f2f9db9838102ae059b6e6a9f3c485cc8763be430",
+      "bytes": 311,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000007/completion.json"
+    },
+    "serial/000007/intent.json": {
+      "sha256": "bdd2cb13f7f35bd039e38f538883df6bde278ef10f62a17f235fe6dab6a1cb18",
+      "bytes": 573,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000007/intent.json"
+    },
+    "serial/000008/completion.json": {
+      "sha256": "8405c0f37a5e3b4d02d76e94368ec2e38b40ede88a07324692ce1218899d6054",
+      "bytes": 312,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000008/completion.json"
+    },
+    "serial/000008/intent.json": {
+      "sha256": "d46312bd0854a20a83e623b80bef409658c9478ce3dea3c6d9b377097bc26d03",
+      "bytes": 549,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000008/intent.json"
+    },
+    "serial/000009/completion.json": {
+      "sha256": "77bf047af4268dff9cdfa7b664a8f88a3615952808e8e0dce0a1e708fe8149da",
+      "bytes": 312,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000009/completion.json"
+    },
+    "serial/000009/intent.json": {
+      "sha256": "ef45ed0e2a0e0106f239b5b6c06c03a8da7afac0857279f76b014679baddc799",
+      "bytes": 547,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000009/intent.json"
+    },
+    "serial/000010/completion.json": {
+      "sha256": "ed09bbf8f63b396113f7bc2cbe70f00155f48113be45edafa5a7f1723ac88be1",
+      "bytes": 310,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000010/completion.json"
+    },
+    "serial/000010/intent.json": {
+      "sha256": "b10a5ed3a43bfd13d60ea4ee138055bf1d8d0c8209736a84a632d7c8a41f867d",
+      "bytes": 549,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000010/intent.json"
+    },
+    "serial/000011/completion.json": {
+      "sha256": "a61f93f7f56b1b6dffc81d0eff2bfb3b1f81fe08eba68d39c5d9c91fe39ee97b",
+      "bytes": 313,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000011/completion.json"
+    },
+    "serial/000011/intent.json": {
+      "sha256": "6a753825d026d686bbfbbb38e4a8f4bf4dea263cfb634c54b4d60e4327a276eb",
+      "bytes": 547,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000011/intent.json"
+    },
+    "serial/000012/completion.json": {
+      "sha256": "0e30f4912f2ec0f26507895ed1fc1618642c15d3cc95091137ce41a0bcba5824",
+      "bytes": 311,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000012/completion.json"
+    },
+    "serial/000012/intent.json": {
+      "sha256": "a65f458921ca35d21a6ebc96c945cbb2417830043c1c378d6eaa1ab7d396543e",
+      "bytes": 557,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000012/intent.json"
+    },
+    "serial/000013/completion.json": {
+      "sha256": "a8b774f8b574fff73c664167d7a36ef80f3966b914e1f440b8b138a403b70867",
+      "bytes": 311,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000013/completion.json"
+    },
+    "serial/000013/intent.json": {
+      "sha256": "069d1d352b0ed19139188b347dc859105d8a2cdd1f929440a546f55eab55ea36",
+      "bytes": 549,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000013/intent.json"
+    },
+    "serial/000014/completion.json": {
+      "sha256": "82cd8615378448e6cab313f6104049abebd3bb8c75e3a0461fdab7d45b3bda8e",
+      "bytes": 312,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000014/completion.json"
+    },
+    "serial/000014/intent.json": {
+      "sha256": "61b2892ba803e98e72d55392e321f674235fe26941e6997cc2b24de1e1bb2dd4",
+      "bytes": 556,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000014/intent.json"
+    },
+    "serial/000015/completion.json": {
+      "sha256": "a461ad05346f3c2d2583ab7853655e93b2355931ba3e9298156a09b0f46ae081",
+      "bytes": 311,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000015/completion.json"
+    },
+    "serial/000015/intent.json": {
+      "sha256": "7cc87cd339559b5b652bb372ca141c5d2786f57b46c8a48b812acc0ef92d0ef3",
+      "bytes": 547,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000015/intent.json"
+    },
+    "serial/000016/completion.json": {
+      "sha256": "cec6f6fda1130871fbd5bc670f9528a2dea155016dc6e6ba5e9945d97c6ee592",
+      "bytes": 311,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000016/completion.json"
+    },
+    "serial/000016/intent.json": {
+      "sha256": "9e20f0d30475a12e7a0869b0f4cb3f111b05c6589763f36ec4f9b798c00101e6",
+      "bytes": 543,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000016/intent.json"
+    },
+    "serial/000017/completion.json": {
+      "sha256": "0cbe9e82919998e4416574d7927dbccfb548151d6a7ec89097738009838220d7",
+      "bytes": 312,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000017/completion.json"
+    },
+    "serial/000017/intent.json": {
+      "sha256": "fd4f361b8bdc06252aa0a3976d2fc35f2adcfd5c18c1526c5c78e8d7f908ca6e",
+      "bytes": 550,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000017/intent.json"
+    },
+    "serial/000018/completion.json": {
+      "sha256": "c07961dce37772edf02c7ec7dca40e7d88a9fd5474130a9c636c8dfe8d712a0a",
+      "bytes": 312,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000018/completion.json"
+    },
+    "serial/000018/intent.json": {
+      "sha256": "7d6c25df2628c569ef0c33f7108f002e6764be88d9afc99f4fa0294df3073506",
+      "bytes": 555,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000018/intent.json"
+    },
+    "serial/000019/completion.json": {
+      "sha256": "9805c8eef8073ed9aa9b3483cf67559ef49ba3e2c467bfe55343acaf523cfd65",
+      "bytes": 312,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000019/completion.json"
+    },
+    "serial/000019/intent.json": {
+      "sha256": "a9272421fa9e4932aeb7b324292fe5ab5a7389fa700e0d2065448dfca8b41163",
+      "bytes": 554,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000019/intent.json"
+    },
+    "serial/000020/completion.json": {
+      "sha256": "160c9c70b8522bdbb7d251c56a855ba15fba97a9df3d9b8e92eddcc2dd957f6d",
+      "bytes": 312,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000020/completion.json"
+    },
+    "serial/000020/intent.json": {
+      "sha256": "fdcd2861d0234fe2a6f43193d3db4af1cf846d540c934a42a156b5e2af03bdad",
+      "bytes": 560,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000020/intent.json"
+    },
+    "serial/000021/completion.json": {
+      "sha256": "f41d73e112f441f9e698c1ac6ead0b58b00b3328be6694f4e02a945cf29374c0",
+      "bytes": 311,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000021/completion.json"
+    },
+    "serial/000021/intent.json": {
+      "sha256": "5b134700ad509a68315f2dc61558bb05a097796766fe8acdec594ec7c1b1f388",
+      "bytes": 553,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000021/intent.json"
+    },
+    "serial/000022/completion.json": {
+      "sha256": "b603c89231fa7c79fbb420f1c7c87386ee1c864c982ff84e6478f5c2b83e1a0b",
+      "bytes": 313,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000022/completion.json"
+    },
+    "serial/000022/intent.json": {
+      "sha256": "f7a71978705e74a64a486533b84a8c7eec310700e9612fa867fefe6ce20e2677",
+      "bytes": 559,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000022/intent.json"
+    },
+    "serial/000023/completion.json": {
+      "sha256": "bb4ae45d464fa2cc234838f56d38faf9f3b4fda64613255dbb92a0116034b8ee",
+      "bytes": 311,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000023/completion.json"
+    },
+    "serial/000023/intent.json": {
+      "sha256": "220072b0205f7eea1bb8e93b3e716a8aac88de2d119666ed1e14d2a05353da76",
+      "bytes": 557,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000023/intent.json"
+    },
+    "serial/000024/completion.json": {
+      "sha256": "5770ccc165ccf26931d6f03a8c86eaf88da1ba2e52b5b06890a968f3f2652092",
+      "bytes": 311,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000024/completion.json"
+    },
+    "serial/000024/intent.json": {
+      "sha256": "268b8a228f5c8b1ad81f2815cd7446d32b08ef53e012f9529b6eccd10153cc59",
+      "bytes": 557,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial/000024/intent.json"
+    },
+    "serial-bindings/000000/failure.json": {
+      "sha256": "d5c7804c5d26b170f3aded478c47e7844dba9ed1cc3f1382d2dd9c80fc6c0df2",
+      "bytes": 213,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000000/failure.json"
+    },
+    "serial-bindings/000000/intent.json": {
+      "sha256": "2ebdfb5e2c011060e00a647ab9e5558e558ab5b77bbe71c6dd286df87df1924e",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000000/intent.json"
+    },
+    "serial-bindings/000001/completion.json": {
+      "sha256": "5b404cfaff0795ac161409f7bc1323d4eb37c29ab5aee1b50d15d251018c1160",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000001/completion.json"
+    },
+    "serial-bindings/000001/intent.json": {
+      "sha256": "0603cf7d64e86732549af64cb2702443fa464a19544c42a8be687dadd818e5f6",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000001/intent.json"
+    },
+    "serial-bindings/000002/completion.json": {
+      "sha256": "a2a893b1c104eb16ff05cd4c95a0f49919b15d0bd898a42814c3a0c7c61e0e2b",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000002/completion.json"
+    },
+    "serial-bindings/000002/intent.json": {
+      "sha256": "89b901f410bebc218585f2564b97173190fdf257861d93e8b7e1fa1710095614",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000002/intent.json"
+    },
+    "serial-bindings/000003/completion.json": {
+      "sha256": "61375cec8ad2357cfbcbfaa832ad00f5f1d9b220c661bfea8e7fe02d823d169a",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000003/completion.json"
+    },
+    "serial-bindings/000003/intent.json": {
+      "sha256": "fa6c1b9327201b544ef72c45db26fdce89a2edc86669b265f5bea5ffdc7069f0",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000003/intent.json"
+    },
+    "serial-bindings/000004/accepted-unknown.json": {
+      "sha256": "14bd12836195f1cfec6c79108036eb86df1e3e7f7ae281dd6c9263ec59c2ee87",
+      "bytes": 205,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000004/accepted-unknown.json"
+    },
+    "serial-bindings/000004/intent.json": {
+      "sha256": "21fc92be8e0f7e68050daf19d3af6a49a5ba7c18540a101af137801bddc9e13d",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000004/intent.json"
+    },
+    "serial-bindings/000005/completion.json": {
+      "sha256": "8bf5b152c0513764c3a1b57e6ed0839fc1040df8191e76b4f26fe1f9ba103474",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000005/completion.json"
+    },
+    "serial-bindings/000005/intent.json": {
+      "sha256": "144f57106366a4deccbba89efb68dcc5ae0d603b1a0635d391b4b380d8423d15",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000005/intent.json"
+    },
+    "serial-bindings/000006/completion.json": {
+      "sha256": "a11e3924460667eb066946f3336e7b25ecb050d3350f92911d0278c9e863eb7d",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000006/completion.json"
+    },
+    "serial-bindings/000006/intent.json": {
+      "sha256": "728b9bfaffa77ff157e00b5cb0d3ec00683fec2d0c965c03d25735c6b388832b",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000006/intent.json"
+    },
+    "serial-bindings/000007/completion.json": {
+      "sha256": "4ac136bf27c523a738f5ebe87ac01a34c2c5a0bc2bcdb688e7e84ca4fff4202a",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000007/completion.json"
+    },
+    "serial-bindings/000007/intent.json": {
+      "sha256": "3febb28149a301af3f50fd43691b1f52d627acd33b8cf5254038e131afe5f372",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000007/intent.json"
+    },
+    "serial-bindings/000008/completion.json": {
+      "sha256": "825b275f153f6ecced387647d54f4a09691ca2baa6904221d5b056d8d909f6b2",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000008/completion.json"
+    },
+    "serial-bindings/000008/intent.json": {
+      "sha256": "94dfe742f85a12c2ffab1ed89c97de471409078a0fb21fc502cd48b55b8a9c72",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000008/intent.json"
+    },
+    "serial-bindings/000009/completion.json": {
+      "sha256": "e21096b21ec89e0aa03a6d0772a0828ff15f5d6f6558bece4a02c823d4f0991a",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000009/completion.json"
+    },
+    "serial-bindings/000009/intent.json": {
+      "sha256": "f202c346b6da79a818d57a1a43aa19fbafda9972f07c21b040f9f26334a04253",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000009/intent.json"
+    },
+    "serial-bindings/000010/completion.json": {
+      "sha256": "6719ff395a78cf9efd52e0289afa4ae7675959c35d90f42ba4d6adfbdde8e91e",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000010/completion.json"
+    },
+    "serial-bindings/000010/intent.json": {
+      "sha256": "de15462a0f936b5ead8f1755e6d76cae22c85439160ea099ecaea730dd29703a",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000010/intent.json"
+    },
+    "serial-bindings/000011/completion.json": {
+      "sha256": "914874669990b0f4329037da42a4c103ba007f15862dd21a2bba6916e308a028",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000011/completion.json"
+    },
+    "serial-bindings/000011/intent.json": {
+      "sha256": "21a51f77e3aebd90af6d2783d9cc40e9fe5748bf3dfe579c82cc5b132579536b",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000011/intent.json"
+    },
+    "serial-bindings/000012/completion.json": {
+      "sha256": "7398d09d0a1a45268e7096a226f4652ca21b8849336bdc4ef43ac7f6e617eca8",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000012/completion.json"
+    },
+    "serial-bindings/000012/intent.json": {
+      "sha256": "8870219dd43ea65c5856e63f74526e22cc379b8a1b42efee7ddcfe22d4bf623d",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000012/intent.json"
+    },
+    "serial-bindings/000013/completion.json": {
+      "sha256": "49fe07507f70b3d9c2f7114b8e728c5e8adc514df6674ce453e044100f708b4c",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000013/completion.json"
+    },
+    "serial-bindings/000013/intent.json": {
+      "sha256": "9621ecec9c9b71447c120afdbeb9ab772944724c88bc0a5277bf77eb22d776fa",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000013/intent.json"
+    },
+    "serial-bindings/000014/completion.json": {
+      "sha256": "daf3d70bf1080cf6647d4eda3b0f0b7b66e338e72e65a86efe9a59d3af4c50ba",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000014/completion.json"
+    },
+    "serial-bindings/000014/intent.json": {
+      "sha256": "fbc2b1cce1353e008af2119213cefe584ac0164f244e2195f9416b42179f5fff",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000014/intent.json"
+    },
+    "serial-bindings/000015/completion.json": {
+      "sha256": "299ef284b7c4c51418bba085126ab45fb61cc666d778e9dfe6083e3fab4be543",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000015/completion.json"
+    },
+    "serial-bindings/000015/intent.json": {
+      "sha256": "1fbda7479b0b2683fe2a19f80ed9a1474e2dd653b6f6ac05543b50e15eef3be2",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000015/intent.json"
+    },
+    "serial-bindings/000016/completion.json": {
+      "sha256": "578a40b798fabd6a80f48adea65a91ab8888d8ff0709638091297a7eefed3bda",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000016/completion.json"
+    },
+    "serial-bindings/000016/intent.json": {
+      "sha256": "1e349b36d984addae91e11faacc29a3eb7b019e592e179a35308512b8dd1c77d",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000016/intent.json"
+    },
+    "serial-bindings/000017/completion.json": {
+      "sha256": "f326d2cfd65286945960079394a825a99c4ce2e3a1018592b9afb46f383ef951",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000017/completion.json"
+    },
+    "serial-bindings/000017/intent.json": {
+      "sha256": "53bc01e19618e6b33628fb64e91aa7d8719c71fafd0c6b2c369e6c696a2f7427",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000017/intent.json"
+    },
+    "serial-bindings/000018/completion.json": {
+      "sha256": "7568614fe8c039b2603d0ec35a43a2acc7cb47e0ec1a6d2d63dd3847aa5ffc66",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000018/completion.json"
+    },
+    "serial-bindings/000018/intent.json": {
+      "sha256": "68ace420b51db1ef23408deea528f159eda5db1513d5e4d0ae1513d1b416cf9c",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000018/intent.json"
+    },
+    "serial-bindings/000019/completion.json": {
+      "sha256": "8ce9911351746c6fd10a845e33825fad38cdfaaf40ad9ca9856511fbbc3e3df2",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000019/completion.json"
+    },
+    "serial-bindings/000019/intent.json": {
+      "sha256": "83ab19e2a49eb31ae9260555f748dd48d619309142dedffb4998e4e44d05c2f0",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000019/intent.json"
+    },
+    "serial-bindings/000020/completion.json": {
+      "sha256": "56a9634e916b0a27820924e43c779221e1379ab4aa92eba311e8a80a9e9e8dfb",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000020/completion.json"
+    },
+    "serial-bindings/000020/intent.json": {
+      "sha256": "e11e73d9a7a125c4890553c4a81bd173d930b5512daaecc55f6fbdef25f57e0a",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000020/intent.json"
+    },
+    "serial-bindings/000021/completion.json": {
+      "sha256": "cd6a7bb50336018ed86b9d53c8066b8509297e52670a9628cefc69c1a692ea87",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000021/completion.json"
+    },
+    "serial-bindings/000021/intent.json": {
+      "sha256": "0ead273c804e7e6b9fbae58af8871634617df2735905b6489c25d992f50a3908",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000021/intent.json"
+    },
+    "serial-bindings/000022/completion.json": {
+      "sha256": "647e7f965e89458be29b14daa22f7d4f655157ab3d9081aaa1e551f2cfd6b38c",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000022/completion.json"
+    },
+    "serial-bindings/000022/intent.json": {
+      "sha256": "b4d07809460d6fd7d81cf727f3469ff00f027932ad9d9aed6eb9cdc51a107d70",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000022/intent.json"
+    },
+    "serial-bindings/000023/completion.json": {
+      "sha256": "776be75d8e40283704f50e4cf6911816067b82fabbc468416f7660cb7f2da0bb",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000023/completion.json"
+    },
+    "serial-bindings/000023/intent.json": {
+      "sha256": "6b66da344ca5aa520ab28c68dec1b5fc1542b0c883cc30e7413079c43a8c2807",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000023/intent.json"
+    },
+    "serial-bindings/000024/completion.json": {
+      "sha256": "453f39cf3ca07ad12f36c66e4c7dc8367cd96e2ab6e6ddc936690804dd72c1ca",
+      "bytes": 216,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000024/completion.json"
+    },
+    "serial-bindings/000024/intent.json": {
+      "sha256": "b3c4b0d6f8787f6b0737cc7d6dd459919fb37b4be43248e4a4f3b60b60dcc2e8",
+      "bytes": 212,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/serial-bindings/000024/intent.json"
+    },
+    "technical-retry/A1/native/result.json": {
+      "sha256": "b2470605cea3dc3467e2e0482a3cbbf4d19b47052872379f10cf678b4765de28",
+      "bytes": 1823,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/technical-retry/A1/native/result.json"
+    },
+    "technical-retry/A1/native/run-start.json": {
+      "sha256": "c219a43f11044bb11454ec4fe0c21a2639e7f4103c44931cbe6f5d47077d2a40",
+      "bytes": 340,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/technical-retry/A1/native/run-start.json"
+    },
+    "technical-retry/A1/native/seal.json": {
+      "sha256": "e7d6068ca5a44cf2526464a26bf9c7ad8fe08a804b241247aeffaec29891851a",
+      "bytes": 304,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/technical-retry/A1/native/seal.json"
+    },
+    "technical-retry-execution-caveat.json": {
+      "sha256": "babc60ef606e5b2be8569e20e91c65ff73b77b822819f67c24393ba613bd364f",
+      "bytes": 2429,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/technical-retry-execution-caveat.json"
+    },
+    "technical-retry-preflight.json": {
+      "sha256": "652171af1585c5efe14d4a159b862b6f3afe5bcb31091dfc5e878d9d9df4bd1a",
+      "bytes": 2074,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/technical-retry-preflight.json"
+    },
+    "technical-retry-success-observation.json": {
+      "sha256": "23825d9171adfda6630b45755960ab28dbffa0e659a1e2655acc7595beb7cfa9",
+      "bytes": 18681,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/technical-retry-success-observation.json"
+    },
+    "technical-retry-wall.json": {
+      "sha256": "3902ce717abf2709e688c20f35007d1f7c06adf27b50ee33f55cb4a6b3101641",
+      "bytes": 309,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/technical-retry-wall.json"
+    },
+    "technical-successor-binding.json": {
+      "sha256": "e60b12cb90f79687f87bf06ad455329425194875bfe5b03a4b84528a554911cf",
+      "bytes": 215,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/technical-successor-binding.json"
+    },
+    "technical-successor.json": {
+      "sha256": "37dff620ab7ab402a70ef3dc0d1574ba5afd4e4bed12cbb632fb34852d2f2741",
+      "bytes": 2413,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/technical-successor.json"
+    },
+    "transport-boundary-counts-v2.json": {
+      "sha256": "8f2dcad9b248e18c4f93e36f59fc2d2614a52a63353570a470d8a3788dacf803",
+      "bytes": 3299,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/transport-boundary-counts-v2.json"
+    },
+    "transport-successor-v2-binding.json": {
+      "sha256": "569412ccda4a728f4ae8ead8773e2fcc31bdd0c3f2114494267d7602f5102e99",
+      "bytes": 205,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/transport-successor-v2-binding.json"
+    },
+    "transport-successor-v2.json": {
+      "sha256": "01b4adebcfdb7c3b0ce5d32f68106cc9db3729949d944b3d264036cf29f87a42",
+      "bytes": 9541,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/transport-successor-v2.json"
+    },
+    "transport-v2-delivery.json": {
+      "sha256": "d2c5ad28cfc76d888271e579fe81348b360758260a3f689cf2c9df413fe8c637",
+      "bytes": 3423,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/transport-v2-delivery.json"
+    },
+    "transport-v2-execution.json": {
+      "sha256": "7c933e280cad8cb84b5299de292cd865a71df4318f470f12b350cebb9c556d4e",
+      "bytes": 369,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/transport-v2-execution.json"
+    },
+    "transport-v2-host-success.json": {
+      "sha256": "15490e7702dd1eb9d76ebc1d596d16a71dae4f7b19090841e47abc5d60e0f85a",
+      "bytes": 6865,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/transport-v2-host-success.json"
+    },
+    "transport-v2-preflight.json": {
+      "sha256": "6f4925e10d441693aef4c7917f321956047d65357a1a63125dfd836303829004",
+      "bytes": 897,
+      "original_path": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-live-r2/transport-v2-preflight.json"
+    }
+  }
+}

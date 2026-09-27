@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"01a0e3c9-7f13-7a50-87ce-6aa26f334ad4"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"action\":\"answer\",\"read_paths\":[],\"route_objection\":\"\",\"text\":\"Skills 的工程价值是把一类任务做成可复用的工作能力：何时启用、依据什么材料、怎样执行，以及如何检查结果。把合适的提示词或上下文适时交给模型，是其中的入口机制，不能单独定义整个 Skill。\\n\\n如果一个 Skill 只有一段指令，把它看作模块化提示词很准确。但当它还包含使用边界、工具步骤和验收规则时，只优化提示词措辞，可能让模型“说得更像会做”，却不能保证它选对任务、完成操作或发现失败。所以你的判断抓住了重要的一层，作为对所有 Skills 的本质定义则太窄。\",\"used_methods\":[]}"}}
+{"type":"turn.completed","usage":{"input_tokens":61554,"cached_input_tokens":23424,"cache_write_input_tokens":0,"output_tokens":1526,"reasoning_output_tokens":1285}}
