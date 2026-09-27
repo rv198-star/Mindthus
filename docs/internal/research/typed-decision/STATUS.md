@@ -6,7 +6,20 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current compact direct-Jev checkpoint — implementation delivered; live launch denied
+## Current observable re-test — official probe passed; full business still not launched
+
+Read [actual code changes and re-test](jev-direct-v2/channel-retest-v1/RESULT.md).
+New standalone diagnostic records intended outer MCP arguments (credentials redacted), exact
+HTTP body, command-entered/intent/outcome, and safe provider receipts. It does not edit frozen routing.
+13 new tests and176 related pass; registry99/99. Original frozen code a1425b5 still verifies.
+One TypeSafe minimal inference returned HTTP200/jev-1.13.0, all3 types valid in0.259902s.
+OpenRouter command had one reconciled network error then tool safety denial;0 API requests.
+Formal A1 native starts had network errors; B1 direct official start had network then safety denial.
+Postcheck all12 business paths0 starts/intents/outcomes/results; no content-review output or③winner.
+This fixes diagnostic evidence, not the platform filter. Precise safety trigger remains unknown.
+No alternate launch after business denial, no key/permission change, and no semantic retry.
+
+## Previous compact direct-Jev checkpoint — implementation delivered; live launch denied
 
 Code a1425b5; preregistered paired freeze1100b4b. Read [actual delivery/status](jev-direct-v2/RESULT.md).
 One original business batch launch was rejected before execution by tool safety. Subsequent read-only

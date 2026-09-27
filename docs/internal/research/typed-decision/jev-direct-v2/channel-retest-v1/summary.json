@@ -1,0 +1,27 @@
+{
+  "typesafe": {
+    "http_status": 200,
+    "resolved_runtime": {
+      "model": "jev-1.13.0",
+      "provider": "TypeSafe"
+    },
+    "valid_result_count": 3,
+    "seconds": 0.2599023599177599,
+    "usage": {
+      "cost_usd": null,
+      "input_tokens": 434,
+      "output_tokens": 62
+    }
+  },
+  "openrouter": "not_executed_tool_safety_denial_after_reconciled_network_error",
+  "business": "all_12_paths_unrun_after_launch_denial",
+  "tests_new": 13,
+  "tests_related": 176,
+  "lifecycle_registered": 99,
+  "business_frozen_code": "a1425b599ad33e9fdb44c4a589300ca7ba63d1c5",
+  "business_freeze_sha256": "8eae3b070937cae0ce1014787f20196214a6666712785fa0f3f52e6d548f75d5",
+  "new_provider_requests": 1,
+  "new_business_requests": 0,
+  "precise_safety_trigger": "not_disclosed",
+  "old_negative_results_modified": false
+}
