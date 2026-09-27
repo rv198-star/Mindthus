@@ -2,7 +2,7 @@
 from copy import deepcopy
 from dataclasses import asdict
 from pathlib import Path
-import json,tempfile,unittest,subprocess
+import json,tempfile,unittest,subprocess,shutil
 from unittest.mock import patch
 from experiments.jev_direct import router as r,pilot as p
 from experiments.typed_decision.contracts import DecisionResult,BatchResult,ResolvedRuntime,ContractError,digest
@@ -130,7 +130,7 @@ class RouterTests(unittest.TestCase):
 class PilotTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name)/'trial'
-        self.f=p.prepare(self.root,[{'id':'X','scenario':'A','raw':RAW,'provenance':'offline fixture'}]);self.commands=[];self.read_first=False
+        self.f=p.prepare(self.root,[{'id':'X','scenario':'A','raw':RAW,'provenance':'offline fixture'}],binary=shutil.which('codex'));self.commands=[];self.read_first=False
     def cli(self,cmd,prompt,env,timeout):
         self.commands.append(cmd);q=json.loads(prompt.split('\n',1)[1]);route=q['route'];loaded=q['loaded_materials']
         used=list(route['methods']) if route else []

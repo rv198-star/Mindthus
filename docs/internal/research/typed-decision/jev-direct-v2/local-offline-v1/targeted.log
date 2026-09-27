@@ -1,0 +1,15 @@
+................................................................................F...
+======================================================================
+FAIL: test_cli_reports_valid_registry (tests.test_test_lifecycle.TestLifecycleTests.test_cli_reports_valid_registry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/Projects/Github/Mindthus/tests/test_test_lifecycle.py", line 64, in test_cli_reports_valid_registry
+    self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 69 != 0 : You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+
+
+----------------------------------------------------------------------
+Ran 84 tests in 12.369s
+
+FAILED (failures=1)

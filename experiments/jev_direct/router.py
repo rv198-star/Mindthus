@@ -203,7 +203,7 @@ def consume(answers,pack):
             'uncertainty_instruction':'Preserve supported work and identify missing facts or routing uncertainty locally. A named-method ambiguity is not a ban on responding. Genuine permissions and evidence limits remain binding.'}
 
 
-def evaluate_layer(root,state,pack,provider,freeze_identity):
+def evaluate_layer(root,state,pack,provider,freeze_identity,scheduler=None):
     specs=questions(state,pack);view=project_context(specs,state)
     limits=Limits(max_calls=1,max_seconds=60,max_request_bytes=pack['policy']['max_request_bytes'])
     scope=VERSION+'-'+digest([str(root),state])
@@ -216,12 +216,25 @@ def evaluate_layer(root,state,pack,provider,freeze_identity):
             'authorization_ref':'Owner approved two-level direct routing and matched trial; fixed PLAN.md',
             'freeze_sha256':freeze_identity}
     save(root/'request.json',{'state':state,'questions':[s.to_dict() for s in specs], 'admission':admission})
-    with Session(root/'journal',provider,scope=scope,limits=limits,live_admission=admission) as session:
-        result=session.evaluate(specs,state)
-    return {k:asdict(v) for k,v in result.items()}
+    def evaluate():
+        with Session(root/'journal',provider,scope=scope,limits=limits,live_admission=admission) as session:
+            result=session.evaluate(specs,state)
+        return {k:asdict(v) for k,v in result.items()}
+    if scheduler and not list((root/'journal/calls').glob('*/intent.json')):
+        def scheduled():
+            result=evaluate()
+            if provider.is_live and not provider.response_receipt():
+                # An HTTP/timeout error without a recorded response is not proof
+                # the remote request ended. Preserve the scheduler's bare intent.
+                from experiments.typed_decision.session import RecoveryRequired
+                raise RecoveryRequired('direct_remote_completion_unknown')
+            return result
+        # The cooldown occurs BEFORE Session starts its inference-time budget.
+        return scheduler.call('jev:'+str(root),scheduled)
+    return evaluate()
 
 
-def route(root,raw,repo,freeze_identity,provider=None):
+def route(root,raw,repo,freeze_identity,provider=None,*,scheduler=None):
     root=Path(root);repo=Path(repo);pack=load_pack(repo)
     provider=provider or TypeSafeJevProvider(model='jev-1.13.0',choice_rounding=True,transport=deadline_post_json)
     with _locked(root/'.route-lock'):
@@ -236,13 +249,13 @@ def route(root,raw,repo,freeze_identity,provider=None):
             observed={str(p.relative_to(root)):file_hash(p) for p in sorted(root.rglob('*.json')) if p.name not in ('result.json','evidence-seal.json')}
             require(seal=={'result_sha256':digest(result),'files':observed},'direct_route_evidence_changed')
             return result
-        first=evaluate_layer(root/'level-1',state,pack,provider,freeze_identity)
+        first=evaluate_layer(root/'level-1',state,pack,provider,freeze_identity,scheduler)
         requested,deferred=requested_details(first,pack);rounds=1;answers=first;detail_error=None
         if requested:
             try:second=expanded_state(state,requested,pack,repo)
             except ContractError as exc:detail_error=str(exc)
             else:
-                answers=evaluate_layer(root/'level-2',second,pack,provider,freeze_identity);rounds=2
+                answers=evaluate_layer(root/'level-2',second,pack,provider,freeze_identity,scheduler);rounds=2
         decision=consume(answers,pack)
         decision.update(rounds=rounds,requested_details=requested,deferred_details=deferred,
                         detail_error=detail_error,pre_route_llm_calls=0,

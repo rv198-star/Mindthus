@@ -30,12 +30,12 @@ def material(repo,path):
     require(not p.is_symlink() and p.is_file() and p.resolve().is_relative_to(Path(repo).resolve()),'pilot_material_path')
     return {'sha256':r.file_hash(p),'content':p.read_bytes().decode('utf8')}
 
-def prepare(root,cases):
+def prepare(root,cases,*,binary=None,serial_gap_seconds=None):
     root=Path(root).resolve();require(not root.exists() and not root.is_relative_to(REPO),'pilot_fresh_root')
     pack=r.load_pack(REPO)
     for c in cases:r.validate_input(c['raw'])
     require(len({c['id'] for c in cases})==len(cases),'pilot_unique_cases')
-    config=Path.home()/'.codex/config.toml';binary=Path('/usr/bin/codex').resolve();sources=dict(pack['source_sha256'])
+    config=Path.home()/'.codex/config.toml';binary=Path(binary or '/usr/bin/codex').resolve();sources=dict(pack['source_sha256'])
     for p in sorted((REPO/'skills').glob('**/*.md')):
         if p.is_file() and not p.is_symlink():sources[str(p.relative_to(REPO))]=r.file_hash(p)
     f={'schema':'mindthus.direct-two-level-pilot.v1','source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=REPO,text=True).strip(),
@@ -47,6 +47,9 @@ def prepare(root,cases):
        'same_branch_context':True,'semantic_retries':0,'reviewer_calls_max':2*len(cases),'review_timeout_seconds':480,
        'primary_endpoint':'delivered answer quality and needless blockage; secondary complete calls/tokens/time',
        'claims':'paired development test; no native-plugin automatic-activation or statistical-superiority claim'}
+    if serial_gap_seconds is not None:
+        require(serial_gap_seconds==60,'pilot_serial_gap')
+        f['serial_policy']={'max_in_flight':1,'gap_after_completion_seconds':60}
     save(root/'freeze.json',f)
     save(root/'freeze-binding.json',{'freeze_sha256':digest(f),'case_sha256':{c['id']:digest(c['raw']) for c in cases}})
     return f
@@ -75,7 +78,7 @@ def safe_code(exc):
     s=str(exc)
     return s if isinstance(exc,ContractError) and re.fullmatch(r'[A-Za-z0-9_.:/-]{1,180}',s) else type(exc).__name__
 
-def host_call(root,label,request,schema,f,prior=None,timeout=None):
+def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None):
     """One frozen request; a bare intent is never resubmitted."""
     directory=Path(root)/label;directory.mkdir(parents=True,exist_ok=True)
     prompt='根据原始任务与实际已加载规则完成当前请求。工具关闭；需要资料时只按schema请求读取，不虚构事实或执行结果。输出规定JSON，不输出隐藏推理。\n'+canonical(request).decode()
@@ -100,8 +103,24 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None):
     env=os.environ.copy()
     for k in ('TYPESAFE_API_KEY','OPENROUTER_API_KEY','MINDTHUS_HOST_API_KEY'):env.pop(k,None)
     start=time.monotonic();usage={'input_tokens':None,'output_tokens':None,'cached_input_tokens':None,'cost_usd':None};context=None;returned=False;reply=None
+    elapsed=0.0
     try:
-        proc=wire._run_cli(cmd,prompt,env,timeout or f['host_timeout']);returned=True;events=[]
+        def invoke():
+            nonlocal elapsed
+            call_start=time.monotonic()
+            try:
+                proc=wire._run_cli(cmd,prompt,env,timeout or f['host_timeout'])
+                if scheduler:
+                    terminal=False
+                    for line in proc.stdout.splitlines():
+                        try:event=json.loads(line)
+                        except ValueError:continue
+                        if isinstance(event,dict) and event.get('type')=='turn.completed':terminal=True
+                    if proc.returncode!=0 or not terminal:
+                        raise RecoveryRequired('pilot_remote_completion_unknown')
+                return proc
+            finally:elapsed=time.monotonic()-call_start
+        proc=scheduler.call('host:'+str(directory),invoke) if scheduler else invoke();returned=True;events=[]
         for line in proc.stdout.splitlines():
             try:e=json.loads(line)
             except ValueError:continue
@@ -118,15 +137,22 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None):
         reply=wire._decode_reply(directory/'reply.json',65536);wire._wire_check(reply,schema)
         out={'status':'complete','reply_sha256':digest(reply)}
     except (ContractError,OSError,subprocess.TimeoutExpired) as exc:out={'status':'failed','error':safe_code(exc)}
-    out.update(request_sha256=digest(request),schema_sha256=digest(schema),context_ref=context,elapsed_seconds=time.monotonic()-start,usage=usage,process_returned=returned,requested_model=f['host_model'],service_model_attestation='not_observed',automatic_retry=False)
+    out.update(request_sha256=digest(request),schema_sha256=digest(schema),context_ref=context,elapsed_seconds=elapsed,dispatch_wall_seconds=time.monotonic()-start,usage=usage,process_returned=returned,requested_model=f['host_model'],service_model_attestation='not_observed',automatic_retry=False)
     save(directory/'outcome.json',out);return reply,out
 
 def answer_schema(paths):
     reads={'type':'array','items':enum(paths),'uniqueItems':True} if paths else {'type':'array','items':{'type':'string'},'maxItems':0}
     return obj({'action':enum(['answer','read']),'text':{'type':'string'},'read_paths':reads,'used_methods':{'type':'array','items':enum(ROUTABLE),'uniqueItems':True},'route_objection':{'type':'string'}})
 
-def run_case(root,case_id,arm,provider=None):
+def run_case(root,case_id,arm,provider=None,*,scheduler=None):
     root=Path(root).resolve();f=verify(root);require(arm in ARMS,'pilot_arm')
+    if f.get('serial_policy'):
+        from .serial import SerialRequests
+        scheduler=scheduler or SerialRequests(root/'serial')
+        require(scheduler.root.resolve()==(root/'serial').resolve(),'pilot_serial_root')
+        require(scheduler.gap==60,'pilot_serial_gap')
+        if provider is not None:
+            require(not provider.is_live,'pilot_injected_live_provider_bypasses_serial')
     c=next(c for c in f['cases'] if c['id']==case_id);raw=c['raw'];dest=root/'runs'/case_id/arm
     with _locked(root/('.'+case_id+'.pair-lock')):
         # Both arms bind the same freeze; rewriting freeze plus its adjacent checksum
@@ -147,7 +173,7 @@ def run_case(root,case_id,arm,provider=None):
         pack=r.load_pack(REPO);loaded={};decision=None;reads=[];methods=[]
         if arm=='direct':
             require(not (dest/'host').exists() or (dest/'route/result.json').exists(),'pilot_host_before_route')
-            decision=r.route(dest/'route',raw,REPO,digest(f),provider)
+            decision=r.route(dest/'route',raw,REPO,digest(f),provider,scheduler=scheduler)
             loaded=r.execution_materials(decision,pack,REPO);methods=list(decision['methods'])
             allowed=[p for p in f['source_hashes'] if any(p.startswith('skills/'+m+'/') or p==f'docs/methodologies/{m}.md' for m in methods+decision.get('companion_reference_methods',[]))]
             instruction=('Execute the committed methods in their declared scopes and conditional dependency order. Do not rerun method discovery or silently substitute another method. If materially unsuitable, give a source-based route_objection and a useful bounded answer. For sequential methods let the later judgment use the earlier established result in the answer; reading order alone is not that evidence. No named method or an uncertain route still permits a bounded response or necessary clarification; authority and facts remain constrained.')
@@ -161,7 +187,7 @@ def run_case(root,case_id,arm,provider=None):
                 'answer_contract':'Give the actual user-facing answer within 900 Chinese characters unless the user requires less. Hide routing labels. For action=read return empty text and no method claims; for action=answer read_paths must be empty. References and assumptions are not observed execution.'}
             remaining=f['max_host_seconds_per_arm']-total
             if remaining<=0:return seal(dest,{'case':case_id,'arm':arm,'status':'host_budget_exhausted','text':'','route':decision,'host_calls':n,'host_seconds':total})
-            reply,out=host_call(dest/'host',str(n),request,schema,f,prior=prior,timeout=min(f['host_timeout'],remaining));total+=out['elapsed_seconds']
+            reply,out=host_call(dest/'host',str(n),request,schema,f,prior=prior,timeout=min(f['host_timeout'],remaining),scheduler=scheduler);total+=out['elapsed_seconds']
             if out['status']!='complete':return seal(dest,{'case':case_id,'arm':arm,'status':'host_failed','text':'','route':decision,'host_calls':n+1,'reason':out.get('error'),'host_seconds':total,'quality':'not_scored'})
             prior=out['context_ref']
             try:
