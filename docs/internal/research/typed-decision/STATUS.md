@@ -6,7 +6,24 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current A1 native — answer delivered; CLI internal retries limit execution compliance
+## Current host transport boundary — partial controls verified, A1 direct not sent
+
+The exact `0.158.0-alpha.2` binary and official tagged source were checked without
+model probes. Read the [scoped control findings, parser fixtures and count supplement](jev-direct-v2/host-transport-boundary-2026-09-27/RESULT.md).
+Actual config parsing rejects overrides of the reserved built-in `openai` provider.
+An experiment-only alias retaining official managed authentication parses retry=0/0,
+websockets=false and unbounded_connection_retries=false, but remains INACTIVE:
+the independent HTTP 401 auth-recovery loop can resubmit without the external 60s gate.
+The strict per-actual-request rule is not silently weakened; A1/direct remains NOT SENT.
+No runtime code, global config, authentication or safety settings changed. No new
+business model calls, Jev requests, content reviews or active technical successor.
+A1/native's original three-line answer stays delivered; old files and 2/4 consumed
+host-CLI attempts remain intact. Underlying attempts and remote overlap stay unknown;
+the source/logs support connection-stage failures but neither prove all attempts ended
+nor establish that background tasks exist. A narrowly defined no-generation transport/
+401-rejection exception is proposed for the scheme owner, not adopted. R2 stays CLOSED.
+
+## Previous A1 native — answer delivered; CLI internal retries limit execution compliance
 
 Format repair code is pinned at `0659bc5d7e08c82998ff3a507b4870651186241c`.
 Read the [real A1 retry result, raw answer, reconciliation and scoped tests](jev-direct-v2/a1-native-format-repair-2026-09-27/RESULT.md).

@@ -1,0 +1,18 @@
+PASS: actual baseline config/read completed without a model turn
+PASS: actual built-in openai overrides rejected during parsing
+PASS: official alias candidate parsed; ordinary retries and websockets disabled in parsed config
+PASS: candidate remains inactive for both arms, with no reset or matched-latency claim
+PASS: user config fingerprint unchanged; same recorded executable as the real A1 call
+PASS: unchanged historical evidence freeze.json
+PASS: unchanged historical evidence runs/A1/native/host/1/cli.stderr.txt
+PASS: unchanged historical evidence runs/A1/native/host/1/cli.stdout.jsonl
+PASS: unchanged historical evidence runs/A1/native/host/1/intent.json
+PASS: unchanged historical evidence runs/A1/native/host/1/outcome.json
+PASS: unchanged historical evidence runs/A1/native/host/1/reply.json
+PASS: unchanged historical evidence technical-retry-success-observation.json
+PASS: unchanged historical evidence technical-retry/A1/native/result.json
+PASS: unchanged historical evidence technical-successor.json
+PASS: five internal retry logs bind to the original successful turn; four UI notices are distinct
+PASS: underlying attempt/overlap counts stay unknown, not inferred as six
+PASS: outer retry scope is explicit; no new business dispatch or budget reset
+Checks cover fixture parsing and record integrity, not a live transport acceptance claim.

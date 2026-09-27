@@ -1,0 +1,29 @@
+{
+  "schema": "mindthus.transport-profile-candidate.v1",
+  "status": "parser_verified_not_activated",
+  "applies_to": [
+    "native",
+    "direct"
+  ],
+  "parent_evidence_commit": "c6bb209d3fe12f258056caaf0e6ad0cca92058d1",
+  "parent_freeze_sha256": "2701fad01df0d3f192fe9507dac1508fc554697ab42391a5476034585c8fc3b8",
+  "parent_technical_successor_sha256": "3ec7fb142ef423e4a63acc4b4e0aa0098f7d3f795107303833f11338adb04c54",
+  "host_model": "gpt-6-sol",
+  "host_effort": "xhigh",
+  "candidate_overrides": [
+    "model_provider=\"mindthus_official_http\"",
+    "model_providers.mindthus_official_http.name=\"OpenAI\"",
+    "model_providers.mindthus_official_http.requires_openai_auth=true",
+    "model_providers.mindthus_official_http.request_max_retries=0",
+    "model_providers.mindthus_official_http.stream_max_retries=0",
+    "model_providers.mindthus_official_http.supports_websockets=false",
+    "features.unbounded_connection_retries=false"
+  ],
+  "overrides_sha256": "24db7d9dbd3cdd6f26e7660f6883ee9772eb78bc9f7a49eb984025f9ed6fc151",
+  "authentication": "existing official managed authentication; no token extracted or substituted",
+  "endpoint": "default official endpoint chosen by existing authentication; no base_url override",
+  "unclosed_mechanism": "HTTP 401 auth-recovery loop is independent of request_max_retries and stream_max_retries",
+  "active_runtime_successor_created": false,
+  "budgets_reset": false,
+  "new_latency_matched_to_old_119_seconds": false
+}

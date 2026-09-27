@@ -1,0 +1,181 @@
+{
+  "official_tag": "rust-v0.158.0-alpha.2",
+  "tag_object": "3ccf947fb92b3bc936aada20f9b92ed5ebbba22d",
+  "source_commit": "10382da79a2a2d6e8ae221fa63077215389c1ad2",
+  "binary_version": "codex-cli 0.158.0-alpha.2",
+  "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex",
+  "binary_sha256": "c3e30211bd454da70ceb4d9cbc2e05fe6466812ab05c311c3bbff6addeb14202",
+  "source_binding_limit": "official version tag and observed parser behavior; not a reproducible-build attestation",
+  "official_configuration_reference": "https://learn.chatgpt.com/docs/config-file/config-reference",
+  "config_sha256_before": "3c6d381551a3fa6292656d483234d3b35efae65d32ecb1303febec4ae1b95468",
+  "config_sha256_after": "3c6d381551a3fa6292656d483234d3b35efae65d32ecb1303febec4ae1b95468",
+  "sources": [
+    {
+      "path": "codex-rs/model-provider-info/src/lib.rs",
+      "url": "https://github.com/openai/codex/blob/10382da79a2a2d6e8ae221fa63077215389c1ad2/codex-rs/model-provider-info/src/lib.rs",
+      "excerpts": [
+        {
+          "start_line": 62,
+          "end_line": 72,
+          "text": "\nconst DEFAULT_STREAM_IDLE_TIMEOUT_MS: u64 = 300_000;\nconst DEFAULT_STREAM_MAX_RETRIES: u64 = 5;\nconst DEFAULT_REQUEST_MAX_RETRIES: u64 = 4;\nconst DEFAULT_AWS_CREDENTIAL_EXPORT_TIMEOUT_MS: u64 = 30_000;\nconst DEFAULT_AWS_AUTH_REFRESH_TIMEOUT_MS: u64 = 300_000;\npub const DEFAULT_WEBSOCKET_CONNECT_TIMEOUT_MS: u64 = 15_000;\n/// Hard cap for user-configured `stream_max_retries`.\nconst MAX_STREAM_MAX_RETRIES: u64 = 100;\n/// Hard cap for user-configured `request_max_retries`.\nconst MAX_REQUEST_MAX_RETRIES: u64 = 100;"
+        },
+        {
+          "start_line": 174,
+          "end_line": 193,
+          "text": "    /// Maximum number of times to retry a failed HTTP request to this provider.\n    pub request_max_retries: Option<u64>,\n    /// Number of times to retry reconnecting a dropped streaming response before failing.\n    pub stream_max_retries: Option<u64>,\n    /// Idle timeout (in milliseconds) to wait for activity on a streaming response before treating\n    /// the connection as lost.\n    pub stream_idle_timeout_ms: Option<u64>,\n    /// Maximum time (in milliseconds) to wait for a websocket connection attempt before treating\n    /// it as failed.\n    pub websocket_connect_timeout_ms: Option<u64>,\n    /// Does this provider require an OpenAI API Key or ChatGPT login token? If true,\n    /// user is presented with login screen on first run, and login preference and token/key\n    /// are stored in auth.json. If false (which is the default), login screen is skipped,\n    /// and API key (if needed) comes from the \"env_key\" environment variable.\n    #[serde(default)]\n    pub requires_openai_auth: bool,\n    /// Whether this provider supports the Responses API WebSocket transport.\n    #[serde(default)]\n    pub supports_websockets: bool,\n    /// Whether this provider supports the standalone web-search endpoint."
+        },
+        {
+          "start_line": 414,
+          "end_line": 449,
+          "text": "    /// Builds an API provider with managed residency taking precedence over configured headers.\n    pub fn to_api_provider(&self, auth_mode: Option<AuthMode>) -> CodexResult<ApiProvider> {\n        let default_base_url = if matches!(\n            auth_mode,\n            Some(\n                AuthMode::Chatgpt\n                    | AuthMode::ChatgptAuthTokens\n                    | AuthMode::Headers\n                    | AuthMode::AgentIdentity\n                    | AuthMode::PersonalAccessToken\n            )\n        ) {\n            CHATGPT_CODEX_BASE_URL\n        } else {\n            \"https://api.openai.com/v1\"\n        };\n        let base_url = self\n            .base_url\n            .clone()\n            .unwrap_or_else(|| default_base_url.to_string());\n\n        let mut headers = self.build_header_map()?;\n        if let Some(requirement) = read_managed_residency_requirement() {\n            let value = match requirement {\n                ResidencyRequirement::Us => HeaderValue::from_static(\"us\"),\n            };\n            headers.insert(RESIDENCY_HEADER_NAME, value);\n        }\n        let retry = ApiRetryConfig {\n            max_attempts: self.request_max_retries(),\n            base_delay: Duration::from_millis(200),\n            retry_429: false,\n            retry_5xx: true,\n            retry_transport: true,\n        };\n"
+        },
+        {
+          "start_line": 486,
+          "end_line": 508,
+          "text": "    /// Effective maximum number of request retries for this provider.\n    pub fn request_max_retries(&self) -> u64 {\n        self.request_max_retries\n            .unwrap_or(DEFAULT_REQUEST_MAX_RETRIES)\n            .min(MAX_REQUEST_MAX_RETRIES)\n    }\n\n    /// Effective maximum number of stream reconnection attempts for this provider.\n    pub fn stream_max_retries(&self) -> u64 {\n        self.stream_max_retries\n            .unwrap_or(DEFAULT_STREAM_MAX_RETRIES)\n            .min(MAX_STREAM_MAX_RETRIES)\n    }\n\n    /// Effective idle timeout for streaming responses.\n    pub fn stream_idle_timeout(&self) -> Duration {\n        self.stream_idle_timeout_ms\n            .map(Duration::from_millis)\n            .unwrap_or(Duration::from_millis(DEFAULT_STREAM_IDLE_TIMEOUT_MS))\n    }\n\n    /// Effective timeout for websocket connect attempts.\n    pub fn websocket_connect_timeout(&self) -> Duration {"
+        },
+        {
+          "start_line": 601,
+          "end_line": 607,
+          "text": "    pub fn is_openai(&self) -> bool {\n        self.name == OPENAI_PROVIDER_NAME\n    }\n\n    pub fn supports_codex_backend_routes(&self) -> bool {\n        self.is_openai()\n            && self.base_url.as_deref().is_none_or(|base_url| {"
+        },
+        {
+          "start_line": 679,
+          "end_line": 723,
+          "text": "/// Merge configured providers into the built-in provider catalog.\n///\n/// Configured providers extend the built-in set. Built-in providers are not\n/// generally overridable, but built-in Amazon Bedrock providers allow the user\n/// to customize their endpoint, authentication, headers, and AWS settings.\npub fn merge_configured_model_providers(\n    mut model_providers: HashMap<String, ModelProviderInfo>,\n    configured_model_providers: HashMap<String, ModelProviderInfo>,\n) -> Result<HashMap<String, ModelProviderInfo>, String> {\n    for (key, mut provider) in configured_model_providers {\n        if matches!(\n            key.as_str(),\n            AMAZON_BEDROCK_PROVIDER_ID | AMAZON_BEDROCK_RUNTIME_PROVIDER_ID\n        ) {\n            provider\n                .validate_bedrock_override()\n                .map_err(|message| format!(\"model_providers.{key} {message}\"))?;\n            let base_url_override = provider.base_url.take();\n            let auth_override = provider.auth.take();\n            let aws_override = provider.aws.take();\n            let http_headers_override = provider.http_headers.take();\n            if let Some(built_in_provider) = model_providers.get_mut(&key) {\n                built_in_provider.base_url = base_url_override;\n                built_in_provider.auth = auth_override;\n                if let Some(aws_override) = aws_override {\n                    built_in_provider.aws = Some(aws_override);\n                }\n                if let Some(http_headers_override) = http_headers_override {\n                    built_in_provider\n                        .http_headers\n                        .get_or_insert_default()\n                        .extend(http_headers_override);\n                }\n            }\n        } else {\n            model_providers.entry(key).or_insert(provider);\n        }\n    }\n\n    Ok(model_providers)\n}\n\npub fn create_oss_provider(default_provider_port: u16, wire_api: WireApi) -> ModelProviderInfo {\n    // These CODEX_OSS_ environment variables are experimental: we may\n    // switch to reading values from config.toml instead."
+        }
+      ],
+      "cached_source_file_sha256": "e41cff1d2d9da70e621cd7ee0e2775441ced3646fdf55dd0f6fe26f3b6667944"
+    },
+    {
+      "path": "codex-rs/config/src/config_toml.rs",
+      "url": "https://github.com/openai/codex/blob/10382da79a2a2d6e8ae221fa63077215389c1ad2/codex-rs/config/src/config_toml.rs",
+      "excerpts": [
+        {
+          "start_line": 935,
+          "end_line": 965,
+          "text": "pub fn validate_reserved_model_provider_ids(\n    model_providers: &HashMap<String, ModelProviderInfo>,\n) -> Result<(), String> {\n    let mut conflicts = model_providers\n        .keys()\n        .filter(|key| {\n            !matches!(\n                key.as_str(),\n                AMAZON_BEDROCK_PROVIDER_ID | AMAZON_BEDROCK_RUNTIME_PROVIDER_ID\n            ) && RESERVED_MODEL_PROVIDER_IDS.contains(&key.as_str())\n        })\n        .map(|key| format!(\"`{key}`\"))\n        .collect::<Vec<_>>();\n    conflicts.sort_unstable();\n    if conflicts.is_empty() {\n        Ok(())\n    } else {\n        Err(format!(\n            \"model_providers contains reserved built-in provider IDs: {}. \\\nBuilt-in providers cannot be overridden. Rename your custom provider (for example, `openai-custom`).\",\n            conflicts.join(\", \")\n        ))\n    }\n}\n\npub fn validate_model_providers(\n    model_providers: &HashMap<String, ModelProviderInfo>,\n) -> Result<(), String> {\n    validate_reserved_model_provider_ids(model_providers)?;\n    for (key, provider) in model_providers {\n        if matches!("
+        }
+      ],
+      "cached_source_file_sha256": "75732f32bea1aed55d355cccda6614d95c89ae7a5d8e844831d6012f240cd523"
+    },
+    {
+      "path": "codex-rs/core/src/responses_retry.rs",
+      "url": "https://github.com/openai/codex/blob/10382da79a2a2d6e8ae221fa63077215389c1ad2/codex-rs/core/src/responses_retry.rs",
+      "excerpts": [
+        {
+          "start_line": 62,
+          "end_line": 140,
+          "text": "    };\n    let retry_count = retry_state.retries.saturating_add(1);\n    let Some(delay) = err.retry_delay(retry_count) else {\n        return Err(err);\n    };\n\n    if turn_context\n        .config\n        .features\n        .enabled(Feature::UnboundedConnectionRetries)\n        && matches!(request, ResponsesStreamRequest::Sampling)\n        && matches!(err.details(), CodexErrorDetails::ConnectionFailed(_))\n        && !turn_context.session_source.is_internal()\n        && !turn_context.provider.info().is_amazon_bedrock()\n    {\n        let retry_delay = retry_state.connection_retry_delay;\n        warn!(\n            turn_id = %turn_context.sub_id,\n            error = %err,\n            ?retry_delay,\n            \"stream connection failed; waiting to retry\"\n        );\n        sess.notify_stream_error(turn_context, \"Reconnecting... waiting for network\", err)\n            .await;\n        retry_state.connection_retries = retry_state.connection_retries.saturating_add(1);\n        codex_client::record_retry!(retry_state.connection_retries, retry_delay, operation);\n        tokio::time::sleep(retry_delay).await;\n        retry_state.connection_retry_delay = retry_delay\n            .saturating_mul(2)\n            .min(MAX_CONNECTION_RETRY_DELAY);\n        return Ok(());\n    }\n\n    // TODO(anp): Respect server retry advice before issuing the fallback HTTP request.\n    if retry_state.retries >= max_retries\n        && client_session.try_switch_fallback_transport(\n            &turn_context.session_telemetry,\n            turn_context.model_info(),\n        )\n    {\n        sess.send_event(\n            turn_context,\n            EventMsg::Warning(WarningEvent {\n                message: format!(\"Falling back from WebSockets to HTTPS transport. {err:#}\"),\n            }),\n        )\n        .await;\n        retry_state.retries = 0;\n        return Ok(());\n    }\n\n    if retry_state.retries < max_retries {\n        retry_state.retries = retry_count;\n        log_retry(request, turn_context, &err, retry_count, max_retries, delay);\n\n        // In release builds, hide the first websocket retry notification to reduce noisy\n        // transient reconnect messages. In debug builds, keep full visibility for diagnosis.\n        let report_error = retry_count > 1\n            || cfg!(debug_assertions)\n            || !sess.services.model_client.responses_websocket_enabled();\n        if report_error {\n            // Surface retry information to any UI/front-end so the user understands what is\n            // happening instead of staring at a seemingly frozen screen.\n            sess.notify_stream_error(\n                turn_context,\n                format!(\"Reconnecting... {retry_count}/{max_retries}\"),\n                err,\n            )\n            .await;\n        }\n        codex_client::record_retry!(retry_count, delay, operation);\n        tokio::time::sleep(delay).await;\n        return Ok(());\n    }\n\n    sess.services\n        .thread_extension_data\n        .insert(ExhaustedResponseRetry {\n            turn_id: turn_context.sub_id.clone(),"
+        }
+      ],
+      "cached_source_file_sha256": "942d254a0bdafcfde72f309854e6c6728a300ad2e4a1fa83475b02e6d93bfdb5"
+    },
+    {
+      "path": "codex-rs/core/src/client.rs",
+      "url": "https://github.com/openai/codex/blob/10382da79a2a2d6e8ae221fa63077215389c1ad2/codex-rs/core/src/client.rs",
+      "excerpts": [
+        {
+          "start_line": 644,
+          "end_line": 663,
+          "text": "    pub(crate) fn force_http_fallback(\n        &self,\n        session_telemetry: &SessionTelemetry,\n        _model_info: &ModelInfo,\n    ) -> bool {\n        let websocket_enabled = self.responses_websocket_enabled();\n        let activated =\n            websocket_enabled && !self.state.disable_websockets.swap(true, Ordering::Relaxed);\n        if activated {\n            warn!(\"falling back to HTTP\");\n            session_telemetry.counter(\n                \"codex.transport.fallback_to_http\",\n                /*inc*/ 1,\n                &[(\"from_wire_api\", \"responses_websocket\")],\n            );\n        }\n\n        self.store_cached_websocket_session(WebsocketSession::default());\n        activated\n    }"
+        },
+        {
+          "start_line": 1019,
+          "end_line": 1030,
+          "text": "    /// WebSocket use is controlled by provider capability and session-scoped fallback state.\n    pub fn responses_websocket_enabled(&self) -> bool {\n        if !self.state.provider.info().supports_websockets\n            || self.state.disable_websockets.load(Ordering::Relaxed)\n        {\n            return false;\n        }\n\n        true\n    }\n\n    /// Returns auth + provider configuration resolved from the current session auth state."
+        },
+        {
+          "start_line": 1205,
+          "end_line": 1242,
+          "text": "    /// Both startup prewarm and in-turn `needs_new` reconnects call this path so handshake\n    /// behavior remains consistent across both flows.\n    #[allow(clippy::too_many_arguments)]\n    async fn connect_websocket(\n        &self,\n        session_telemetry: &SessionTelemetry,\n        api_provider: codex_api::Provider,\n        api_auth: SharedAuthProvider,\n        responses_metadata: &CodexResponsesMetadata,\n        auth_context: AuthRequestTelemetryContext,\n        request_route_telemetry: RequestRouteTelemetry,\n        responses_headers: &ApiHeaderMap,\n    ) -> std::result::Result<ApiWebSocketConnection, ApiError> {\n        let mut headers = self.build_websocket_headers(responses_metadata).await;\n        headers.extend(responses_headers.clone());\n        let websocket_telemetry = ModelClientSession::build_websocket_telemetry(\n            session_telemetry,\n            auth_context.clone(),\n            request_route_telemetry,\n            self.state.auth_env_telemetry.clone(),\n        );\n        let websocket_connect_timeout = self.state.provider.info().websocket_connect_timeout();\n        let start = Instant::now();\n        let result = match tokio::time::timeout(\n            websocket_connect_timeout,\n            ApiWebSocketResponsesClient::new(api_provider, api_auth).connect(\n                &self.http_client_factory,\n                headers,\n                codex_login::default_client::default_headers(),\n                /*turn_state*/ None,\n                Some(websocket_telemetry),\n            ),\n        )\n        .await\n        {\n            Ok(result) => result,\n            Err(_) => Err(ApiError::Transport(TransportError::Timeout)),\n        };"
+        },
+        {
+          "start_line": 1618,
+          "end_line": 1627,
+          "text": "        inference_trace: &InferenceTraceContext,\n    ) -> Result<ResponseStream> {\n        let auth_manager = self.client.state.provider.auth_manager();\n        let mut auth_recovery = auth_manager\n            .as_ref()\n            .map(AuthManager::unauthorized_recovery);\n        let mut provider_auth_recovery_attempted = false;\n        let mut pending_retry = PendingUnauthorizedRetry::default();\n        loop {\n            let client_setup = self"
+        },
+        {
+          "start_line": 1724,
+          "end_line": 1756,
+          "text": "                    );\n                    return Ok(stream);\n                }\n                Err(ApiError::Transport(unauthorized_transport))\n                    if self\n                        .client\n                        .state\n                        .provider\n                        .is_recoverable_auth_error(&unauthorized_transport) =>\n                {\n                    let response_debug_context =\n                        extract_response_debug_context(&unauthorized_transport);\n                    inference_trace_attempt.record_failed(\n                        &unauthorized_transport,\n                        response_debug_context.request_id.as_deref(),\n                        /*output_items*/ &[],\n                    );\n                    pending_retry = PendingUnauthorizedRetry::from_recovery(\n                        handle_unauthorized(\n                            unauthorized_transport,\n                            &mut auth_recovery,\n                            &mut provider_auth_recovery_attempted,\n                            session_telemetry,\n                            &self.client.state.provider,\n                            self.client.event_sender.as_ref(),\n                            responses_metadata.turn_id.as_deref(),\n                        )\n                        .await?,\n                    );\n                    continue;\n                }\n                Err(err) => {\n                    let response_debug_context ="
+        },
+        {
+          "start_line": 1850,
+          "end_line": 1897,
+          "text": "            };\n            let request_session_telemetry = if warmup {\n                // `generate=false` prewarm is connection setup, not an inference request.\n                session_telemetry.clone()\n            } else {\n                session_telemetry_for_request(session_telemetry, &request)\n            };\n            match self\n                .websocket_connection(WebsocketConnectParams {\n                    session_telemetry,\n                    api_provider: client_setup.api_provider,\n                    auth_revision: client_setup.auth_revision,\n                    api_auth: client_setup.api_auth,\n                    auth_owner_generation: client_setup.auth_owner_generation,\n                    responses_metadata: &websocket_metadata,\n                    auth_context: request_auth_context,\n                    request_route_telemetry: RequestRouteTelemetry::for_endpoint(\"/responses\"),\n                    responses_headers: &responses_headers,\n                })\n                .await\n            {\n                Ok(_) => {}\n                Err(ApiError::Transport(TransportError::Http { status, .. }))\n                    if status == StatusCode::UPGRADE_REQUIRED =>\n                {\n                    return Ok(WebsocketStreamOutcome::FallbackToHttp);\n                }\n                Err(ApiError::Transport(unauthorized_transport))\n                    if provider.is_recoverable_auth_error(&unauthorized_transport) =>\n                {\n                    pending_retry = PendingUnauthorizedRetry::from_recovery(\n                        handle_unauthorized(\n                            unauthorized_transport,\n                            &mut auth_recovery,\n                            &mut provider_auth_recovery_attempted,\n                            session_telemetry,\n                            &provider,\n                            self.client.event_sender.as_ref(),\n                            responses_metadata.turn_id.as_deref(),\n                        )\n                        .await?,\n                    );\n                    continue;\n                }\n                Err(err) => return Err(provider.map_api_error(err)),\n            }\n\n            // Measure the complete logical request, not only the websocket delta."
+        },
+        {
+          "start_line": 2071,
+          "end_line": 2118,
+          "text": "    pub async fn prewarm_websocket(\n        &mut self,\n        prompt: &Prompt,\n        model_info: &ModelInfo,\n        session_telemetry: &SessionTelemetry,\n        effort: Option<ReasoningEffortConfig>,\n        summary: ReasoningSummaryConfig,\n        service_tier: Option<String>,\n        responses_metadata: &CodexResponsesMetadata,\n    ) -> Result<()> {\n        if !self.client.responses_websocket_enabled() {\n            return Ok(());\n        }\n        if self.websocket_session.last_request.is_some() {\n            return Ok(());\n        }\n\n        let disabled_trace = InferenceTraceContext::disabled();\n        match self\n            .stream_responses_websocket(\n                prompt,\n                model_info,\n                session_telemetry,\n                effort,\n                summary,\n                service_tier,\n                responses_metadata,\n                /*warmup*/ true,\n                current_span_w3c_trace_context(),\n                &disabled_trace,\n            )\n            .await\n        {\n            Ok(WebsocketStreamOutcome::Stream(mut stream)) => {\n                // Wait for the v2 warmup request to complete before sending the first turn request.\n                while let Some(event) = stream.next().await {\n                    match event {\n                        Ok(ResponseEvent::Completed { .. }) => break,\n                        Err(err) => return Err(err),\n                        _ => {}\n                    }\n                }\n                Ok(())\n            }\n            Ok(WebsocketStreamOutcome::FallbackToHttp) => {\n                self.try_switch_fallback_transport(session_telemetry, model_info);\n                Ok(())\n            }"
+        },
+        {
+          "start_line": 2531,
+          "end_line": 2544,
+          "text": "async fn handle_unauthorized(\n    transport: TransportError,\n    auth_recovery: &mut Option<UnauthorizedRecovery>,\n    provider_auth_recovery_attempted: &mut bool,\n    session_telemetry: &SessionTelemetry,\n    provider: &SharedModelProvider,\n    event_sender: Option<&Sender<ProtocolEvent>>,\n    turn_id: Option<&str>,\n) -> Result<UnauthorizedRecoveryExecution> {\n    let debug = extract_response_debug_context(&transport);\n    if !*provider_auth_recovery_attempted {\n        *provider_auth_recovery_attempted = true;\n        let messages = provider.auth_recovery_messages();\n        if let Some(messages) = messages {"
+        },
+        {
+          "start_line": 2584,
+          "end_line": 2625,
+          "text": "    }\n\n    if let Some(recovery) = auth_recovery\n        && recovery.has_next()\n    {\n        let mode = recovery.mode_name();\n        let phase = recovery.step_name();\n        return match recovery.next().await {\n            Ok(step_result) => {\n                session_telemetry.record_auth_recovery(\n                    mode,\n                    phase,\n                    \"recovery_succeeded\",\n                    debug.request_id.as_deref(),\n                    debug.cf_ray.as_deref(),\n                    debug.auth_error.as_deref(),\n                    debug.auth_error_code.as_deref(),\n                    /*recovery_reason*/ None,\n                    step_result.auth_state_changed(),\n                );\n                emit_feedback_auth_recovery_tags(\n                    mode,\n                    phase,\n                    \"recovery_succeeded\",\n                    debug.request_id.as_deref(),\n                    debug.cf_ray.as_deref(),\n                    debug.auth_error.as_deref(),\n                    debug.auth_error_code.as_deref(),\n                );\n                Ok(UnauthorizedRecoveryExecution { mode, phase })\n            }\n            Err(RefreshTokenError::Policy(error)) => Err(CodexErr::Fatal(error.to_string())),\n            Err(RefreshTokenError::Permanent(failed)) => {\n                session_telemetry.record_auth_recovery(\n                    mode,\n                    phase,\n                    \"recovery_failed_permanent\",\n                    debug.request_id.as_deref(),\n                    debug.cf_ray.as_deref(),\n                    debug.auth_error.as_deref(),\n                    debug.auth_error_code.as_deref(),\n                    /*recovery_reason*/ None,"
+        }
+      ],
+      "cached_source_file_sha256": "e219da2a64e1ee02aeb3cb34707c1f67b5434e0a5929ba2f31c81644ed7afbb6"
+    },
+    {
+      "path": "codex-rs/codex-client/src/retry.rs",
+      "url": "https://github.com/openai/codex/blob/10382da79a2a2d6e8ae221fa63077215389c1ad2/codex-rs/codex-client/src/retry.rs",
+      "excerpts": [
+        {
+          "start_line": 22,
+          "end_line": 42,
+          "text": "    pub fn should_retry(&self, err: &TransportError, attempt: u64, max_attempts: u64) -> bool {\n        if attempt >= max_attempts {\n            return false;\n        }\n        match err {\n            TransportError::Http { status, .. } => {\n                (self.retry_429 && status.as_u16() == 429)\n                    || (self.retry_5xx && status.is_server_error())\n            }\n            TransportError::Timeout\n            | TransportError::Connection(_)\n            | TransportError::Network(_) => self.retry_transport,\n            TransportError::Build(_)\n            | TransportError::RetryLimit\n            | TransportError::Policy(_)\n            | TransportError::ResponseTooLarge { .. } => false,\n        }\n    }\n}\n\npub fn backoff(base: Duration, attempt: u64) -> Duration {"
+        },
+        {
+          "start_line": 89,
+          "end_line": 121,
+          "text": "    F: Fn(Request, u64) -> Fut,\n    Fut: Future<Output = Result<T, TransportError>>,\n{\n    for attempt in 0..=policy.max_attempts {\n        let req = make_req();\n        match op(req, attempt).await {\n            Ok(resp) => return Ok(resp),\n            Err(err)\n                if policy\n                    .retry_on\n                    .should_retry(&err, attempt, policy.max_attempts) =>\n            {\n                let retry_attempt = attempt + 1;\n                // TODO(anp): Respect Retry-After from HTTP responses before retrying the request.\n                let delay = backoff(policy.base_delay, retry_attempt);\n                crate::record_retry!(retry_attempt, delay, RetryOperation::HttpRequest);\n                tokio::time::sleep(delay).await;\n            }\n            Err(err) => return Err(err),\n        }\n    }\n    Err(TransportError::RetryLimit)\n}\n"
+        }
+      ],
+      "cached_source_file_sha256": "02668d5ae9471f2864c48ed860ec9e9e2d9c04ff18ebc9fed2cdc572183f1d27"
+    },
+    {
+      "path": "codex-rs/features/src/lib.rs",
+      "url": "https://github.com/openai/codex/blob/10382da79a2a2d6e8ae221fa63077215389c1ad2/codex-rs/features/src/lib.rs",
+      "excerpts": [
+        {
+          "start_line": 1283,
+          "end_line": 1288,
+          "text": "    FeatureSpec {\n        id: Feature::UnboundedConnectionRetries,\n        key: \"unbounded_connection_retries\",\n        stage: Stage::Stable,\n        default_enabled: true,\n    },"
+        }
+      ],
+      "cached_source_file_sha256": "de12b68a5d990c29a81064ee5f427bc34a2ca0d459beaecac6001c57a880f920"
+    },
+    {
+      "path": "codex-rs/model-provider/src/auth.rs",
+      "url": "https://github.com/openai/codex/blob/10382da79a2a2d6e8ae221fa63077215389c1ad2/codex-rs/model-provider/src/auth.rs",
+      "excerpts": [
+        {
+          "start_line": 184,
+          "end_line": 207,
+          "text": "/// Returns the provider-scoped auth manager when this provider uses command-backed auth.\n///\n/// Providers without custom auth continue using the caller-supplied base manager, when present.\npub(crate) fn auth_manager_for_provider(\n    auth_manager: Option<Arc<AuthManager>>,\n    provider: &ModelProviderInfo,\n) -> Option<Arc<AuthManager>> {\n    match provider.auth.clone() {\n        Some(config) => Some(AuthManager::external_bearer_only(config)),\n        None => auth_manager,\n    }\n}\n\npub(crate) fn resolve_provider_auth(\n    auth: Option<&CodexAuth>,\n    provider: &ModelProviderInfo,\n) -> codex_protocol::error::Result<SharedAuthProvider> {\n    if let Some(auth) = bearer_auth_for_provider(provider)? {\n        return Ok(Arc::new(auth));\n    }\n\n    if !provider.requires_openai_auth && provider.auth.is_none() {\n        return Ok(unauthenticated_auth_provider());\n    }"
+        }
+      ],
+      "cached_source_file_sha256": "aa11de73be036e212f47c3a7e38836d4f9d1ff777250d8a8afabe6c37744fea7"
+    },
+    {
+      "path": "codex-rs/model-provider/src/provider.rs",
+      "url": "https://github.com/openai/codex/blob/10382da79a2a2d6e8ae221fa63077215389c1ad2/codex-rs/model-provider/src/provider.rs",
+      "excerpts": [
+        {
+          "start_line": 189,
+          "end_line": 199,
+          "text": "\n    /// Returns whether this transport failure can be recovered by provider-scoped authentication.\n    ///\n    /// The default preserves existing unauthorized-response handling. Providers with other\n    /// authentication failure shapes may recognize additional response or request-signing errors.\n    fn is_recoverable_auth_error(&self, error: &TransportError) -> bool {\n        matches!(\n            error,\n            TransportError::Http { status, .. } if *status == http::StatusCode::UNAUTHORIZED\n        )\n    }"
+        }
+      ],
+      "cached_source_file_sha256": "220aec748413e20b9aaf917ce32f7f5ee07d62253e5765c619d6fe78a1d92e54"
+    }
+  ],
+  "source_cache_note": "GitHub connector text saved locally for scoped inspection; hashes bind the UTF-8 cache, not an upstream signed release artifact."
+}

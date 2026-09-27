@@ -1,0 +1,15 @@
+{
+  "label": "builtin-override",
+  "overrides": [
+    "model_providers.openai.name=\"OpenAI\"",
+    "model_providers.openai.request_max_retries=0",
+    "model_providers.openai.stream_max_retries=0",
+    "model_providers.openai.supports_websockets=false"
+  ],
+  "methods_sent": [
+    "initialize"
+  ],
+  "returncode": 1,
+  "elapsed_seconds": 0.022107958007836714,
+  "stderr": "Error: model_providers contains reserved built-in provider IDs: `openai`. Built-in providers cannot be overridden. Rename your custom provider (for example, `openai-custom`).\nin `model_providers`\n\n"
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "mindthus.transport-control-evidence.v1",
+  "parent_commit": "c6bb209d3fe12f258056caaf0e6ad0cca92058d1",
+  "files": {
+    "RESULT.md": "e06dd501605a32dc6b368820e2827fdc71cc79bee87fd2cd2f1a09907ff22971",
+    "baseline.json": "84a663f226195a26a5b96490fb1f93d8d5f72e3848a23b9c9c8d4eefaedbbdcf",
+    "builtin-override.json": "034af3c582e1e80e4fd7189a8f0613db5290a4a394a42e89a2110a2d84c97c81",
+    "candidate-official-alias.json": "1e8708c65a1159599cb5cc26c3cb87067f38bc969386f67fa2e5a6a0e3c4aff8",
+    "candidate-profile.json": "7a35bccf14303efda6ab17c4dad7323dd9453749426d7306b15261df809a7971",
+    "check_evidence.py": "ad4741ffa6d05b9189c329fe270492983aea88f8d01ed791d73882dc889930c2",
+    "config-read-only-check.py": "28df37a9eb0b64eae55cd657cece130b722dd471e573649ec7b5a011f050726b",
+    "counts-supplement.json": "8f2dcad9b248e18c4f93e36f59fc2d2614a52a63353570a470d8a3788dacf803",
+    "official-source-evidence.json": "4f0c2f7d7b49e18129cdabf2c2423520afc4dbef92ad4097359f0089dab31f1a",
+    "validation.log": "b8577f482d54db2e4a120f6ba248c191b0d4f44652459a0dd6e527498eeba00d"
+  },
+  "business_model_calls_this_turn": 0,
+  "scope": "configuration parsing, pinned official source, existing A1 record interpretation; no live profile activation"
+}

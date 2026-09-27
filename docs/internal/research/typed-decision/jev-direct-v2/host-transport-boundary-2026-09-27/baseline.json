@@ -1,0 +1,25 @@
+{
+  "label": "baseline",
+  "overrides": [],
+  "methods_sent": [
+    "initialize",
+    "initialized",
+    "config/read"
+  ],
+  "initialize": {
+    "userAgent": "Codex Desktop/0.158.0-alpha.2 (Mac OS 27.0.0; arm64) dumb (mindthus_config_read_only; 1)",
+    "codexHome": "/Users/william/.codex",
+    "platformFamily": "unix",
+    "platformOs": "macos"
+  },
+  "parsed_config": {
+    "model": "gpt-6-sol",
+    "model_provider": null,
+    "model_reasoning_effort": "xhigh",
+    "model_providers": {},
+    "unbounded_connection_retries": null
+  },
+  "returncode": 0,
+  "elapsed_seconds": 0.167666207998991,
+  "stderr": ""
+}
