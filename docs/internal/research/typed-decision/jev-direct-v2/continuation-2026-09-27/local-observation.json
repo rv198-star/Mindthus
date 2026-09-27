@@ -1,0 +1,28 @@
+{
+  "observed_at_utc": "2026-09-27T10:29:28.110Z",
+  "source": "read-only local filesystem and process-name snapshot; exec chunk 87a134",
+  "local_roots": [
+    {
+      "root": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-offline-r1",
+      "fixture_files": 381,
+      "nonfixture_call_evidence_names": []
+    },
+    {
+      "root": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-offline-v1",
+      "fixture_files": 2,
+      "nonfixture_call_evidence_names": []
+    },
+    {
+      "root": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-offline-v2",
+      "fixture_files": 315,
+      "nonfixture_call_evidence_names": []
+    },
+    {
+      "root": "/Users/william/Documents/Codex/2026-09-27/mindthus-jev-direct-offline-v3",
+      "fixture_files": 315,
+      "nonfixture_call_evidence_names": []
+    }
+  ],
+  "local_pilot_process_candidates": [],
+  "scope": "local snapshots only; remote OCI roots and global execution exclusivity not verified"
+}

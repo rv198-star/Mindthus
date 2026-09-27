@@ -6,6 +6,18 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Current continuation — no new business request; historical denial awaiting disposition
+
+The 2026-09-27 continuation protected the original local working tree before fetch;
+remote remained 64eac4946c82f33e039d14dae062613407e3cc21. Read the
+[scoped continuation record](jev-direct-v2/continuation-2026-09-27/RESULT.md).
+No business launch was submitted and no new local model failure or safety denial
+was observed. The current session exposes no historical-denial appeal interface;
+no administrator/platform recovery disposition has been obtained. All twelve paths
+remain UNRUN, with no answers or measured cost/quality/net benefit. The original
+ChatGPT channel was verified and notified. This is a cautious pause under the user's
+explicit handoff boundary, not a new engineering finding; R2 closure below stands.
+
 ## Current local repair R2 — four engineering findings independently closed
 
 The original ChatGPT task returned scoped PASS on 7d07e4fac after R2: all four
