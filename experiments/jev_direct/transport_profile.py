@@ -13,6 +13,8 @@ DOC = BASE/'docs/internal/research/typed-decision/jev-direct-v2'
 CANDIDATE = DOC/'host-transport-boundary-2026-09-27/candidate-profile.json'
 PROTOCOL = DOC/'a1-direct-transport-v2/PROTOCOL.json'
 NAME = 'transport-successor-v2.json'
+SCOPE_NAME = 'remaining-five-scope.json'
+REMAINING = [(case, arm) for case, arms in [('B1',('direct','native')),('C1',('native','direct')),('D1',('direct','native')),('E-window',('native','direct')),('F-window',('direct','native'))] for arm in arms]
 
 
 def register(root):
@@ -56,6 +58,11 @@ def active(root):
     if not (root/NAME).exists():return None
     x = read_record(root/NAME)
     require(read_record(root/'transport-successor-v2-binding.json') == {'sha256':digest(x)}, 'transport_binding_changed')
+    if (root/SCOPE_NAME).exists():
+        parent=x; x=read_record(root/SCOPE_NAME)
+        require(read_record(root/'remaining-five-scope-binding.json')=={'sha256':digest(x)}
+                and x['parent_transport_successor_sha256']==digest(parent)
+                and x['dispatch_scope']==[list(pair) for pair in REMAINING], 'transport_scope_binding_changed')
     candidate=json.loads(CANDIDATE.read_text());protocol=json.loads(PROTOCOL.read_text())
     require(x['root']==str(root.resolve()) and x['code_hashes']==p.identity(BASE)
             and x['parent_freeze_sha256']==digest(read_record(root/'freeze.json'))
@@ -97,3 +104,31 @@ def observe(root, directory, proc, intent):
     save(Path(directory)/'transport-observation-v2.json',x)
     if uncertain:save(Path(root)/'transport-stop-v2.json',{'host_directory':str(directory),'observation_sha256':digest(x)})
     return x
+
+
+def register_remaining(root):
+    """Append the owner's B–F authorization; no old freeze, scope or debit rewrite."""
+    from . import pilot as p
+    from .serial import SerialRequests
+    root=Path(root).resolve();p.verify_frozen_inputs(root);guard(root)
+    SerialRequests(root/'serial').validate()
+    parent=read_record(root/NAME)
+    require(read_record(root/'transport-successor-v2-binding.json')=={'sha256':digest(parent)},'transport_parent_binding')
+    require(all((root/k).is_file() and p.r.file_hash(root/k)==v for k,v in parent['historical_files'].items()),'transport_history_changed')
+    native=p.unseal(root/'technical-retry/A1/native');direct=p.unseal(root/'runs/A1/direct')
+    require(native['status']==direct['status']=='delivered','scope_A1_not_delivered')
+    require(native['host_evidence_sha256']==digest(p.exact_tree(root/'runs/A1/native/host')),'scope_native_history_changed')
+    require(not any((root/'runs'/case/arm).exists() for case,arm in REMAINING),'scope_remaining_already_started')
+    x={**parent,'schema':'mindthus.remaining-five-scope.v1',
+       'parent_transport_successor_sha256':digest(parent),
+       'registered_at':datetime.now(timezone.utc).isoformat(),
+       'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=BASE,text=True).strip(),
+       'code_hashes':p.identity(BASE),'dispatch_scope':[list(pair) for pair in REMAINING],
+       'scope_authority':'Current owner instruction: run the ten B1–F paths in this order under generation-scheduling.v2; prior A1-only record remains historical',
+       'historical_files':p.exact_tree(root),
+       'consumed_host_cli':{'A1/native':2,'A1/direct':1,**{c+'/'+a:0 for c,a in REMAINING}},
+       'consumed_jev_business_calls':1,'direct_remaining_host_cli':3,
+       'direct_remaining_seconds':900-direct['host_seconds'],
+       'remaining_path_budgets':{c+'/'+a:{'host_calls':4,'host_seconds':900,'jev_layers':2 if a=='direct' else 0} for c,a in REMAINING}}
+    save(root/SCOPE_NAME,x);save(root/'remaining-five-scope-binding.json',{'sha256':digest(x)})
+    return active(root)
