@@ -49,9 +49,18 @@ class SerialRequests:
             labels[intent['label']]=end;last=end
         if self.batch:
             # Use actual host/provider intents, including other scenarios/arms and reviews.
-            paths=list((self.batch/'runs').glob('*/*/host/*/intent.json'))
-            paths+=list((self.batch/'reviews').glob('**/intent.json'))
-            paths+=list((self.batch/'runs').glob('*/*/route/level-*/journal/calls/*/intent.json'))
+            locations=[(self.batch/'runs','*/*/host/*'),
+                       (self.batch/'reviews','**'),
+                       (self.batch/'runs','*/*/route/level-*/journal/calls/*')]
+            paths=set()
+            for root,pattern in locations:
+                # Discover from BOTH directions. Request/prompt/schema-only
+                # preparation is not evidence that anything was sent.
+                for name in ('intent.json','outcome.json','reply.json','provider-receipt.json'):
+                    for evidence in root.glob(pattern+'/'+name):
+                        intent_path=evidence.with_name('intent.json')
+                        require(intent_path.is_file(),'serial_orphan_response_evidence')
+                        paths.add(intent_path)
             observed=set()
             for path in paths:
                 read_record(path)

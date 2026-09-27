@@ -150,5 +150,40 @@ class LocalPilotTests(fixtures.PilotTests):
             with self.assertRaisesRegex(RecoveryRequired,'unknown_request'):
                 p.host_call(self.root/'reviews/X','1',{},p.obj({}),self.f)
             cli.assert_not_called()
+    def orphan_response_fixture(self,completed):
+        self.root=Path(self.tmp.name)/'partial-restore'
+        cases=self.f['cases']+[dict(self.f['cases'][0],id='Y')]
+        self.f=p.prepare(self.root,cases,binary=self.f['binary'],serial_gap_seconds=60)
+        self.gate=SerialRequests(self.root/'serial',clock=self.clock.time,monotonic=self.clock.time,sleep=self.clock.sleep)
+        if completed:self.run_arm('native')
+        else:
+            def interrupted(cmd,prompt,env,timeout):
+                self.cli(cmd,prompt,env,timeout)
+                raise KeyboardInterrupt()
+            with patch.object(p.wire,'_run_cli',side_effect=interrupted):
+                with self.assertRaises(KeyboardInterrupt):
+                    p.run_case(self.root,'X','native',Provider(),scheduler=self.gate)
+        shutil.rmtree(self.root/'serial');shutil.rmtree(self.root/'serial-bindings')
+        (self.root/'runs/X/native/host/0/intent.json').unlink()
+        with patch.object(p.wire,'_run_cli') as cli:
+            with self.assertRaisesRegex(ContractError,'orphan_response_evidence'):
+                p.run_case(self.root,'Y','native',Provider(),scheduler=self.gate)
+            cli.assert_not_called()
+        self.assertFalse((self.root/'serial/000000/intent.json').exists())
+    def test_orphan_outcome_from_completed_case_blocks_other_case(self):
+        self.orphan_response_fixture(True)
+        self.assertTrue((self.root/'runs/X/native/result.json').exists())
+    def test_orphan_reply_after_interrupt_blocks_other_case(self):
+        self.orphan_response_fixture(False)
+        self.assertFalse((self.root/'runs/X/native/host/0/outcome.json').exists())
+    def test_prepared_material_only_can_resume_as_first_send(self):
+        with patch.object(self.gate,'call',side_effect=KeyboardInterrupt):
+            with self.assertRaises(KeyboardInterrupt):self.run_arm('native')
+        directory=self.root/'runs/X/native/host/0'
+        self.assertTrue((directory/'request.json').exists())
+        self.assertFalse((directory/'intent.json').exists())
+        self.assertFalse((directory/'reply.json').exists())
+        self.assertEqual(self.run_arm('native')['status'],'delivered')
+        self.assertEqual(len(self.commands),1)
 
 if __name__=='__main__':unittest.main()
