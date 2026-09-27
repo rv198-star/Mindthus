@@ -6,7 +6,25 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current six-case checkpoint — all twelve actual answers delivered
+## Current six-case closure — execution and independent content review CLOSED
+
+Fixed reviewed evidence: `929f8595fe5d3bccb0d061fbee7b019bc0a953a7`.
+Read [the archived independent review](jev-direct-v2/remaining-nine-v2/INDEPENDENT-CONTENT-REVIEW.md)
+and [the closure decision](jev-direct-v2/remaining-nine-v2/CLOSURE.md).
+All twelve final answers are usable for their six input windows, including preserved
+technical failures/compensation; this is not a fault-free first-attempt rate.
+③ has local routing/efficiency value, but no demonstrated general quality advantage.
+Keep it opt-in research; default adoption remains **NOT QUALIFIED**. Default
+using-mindthus and main remain unchanged. This closes only this batch's paired execution
+and content-review subtask, not #211's possible default-adoption objective.
+R2's four engineering findings remain CLOSED. Old B1 remote state/cost remains unknown.
+EFFORT contract errors, unexercised second layer, unseen/multi-turn tasks and cost
+stability are future research/release boundaries; they do not extend this batch.
+The review was one unblinded independent content pass, with 12/12 final reply blob SHAs
+checked; it was not two anonymous reviews, a new engineering audit or independent
+recomputation of all 476 evidence hashes. No new model calls or answer regeneration.
+
+## Previous six-case execution checkpoint — all twelve actual answers delivered
 
 Execution source: `f31f8147da689cb0ce29c86ecde857003b8563b8`.
 Read [the twelve-path report and raw evidence](jev-direct-v2/remaining-nine-v2/RESULT.md)
