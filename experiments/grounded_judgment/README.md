@@ -97,3 +97,13 @@ active_wait_seconds、session_seconds、loading_seconds、usage、cost、transpo
 全批单生成在途且明确结束后≥60秒；176次全部用完对应至少175次间隔，单冷却约175分钟，
 尚未含模型、装载、恢复或人工停顿。金额预算待供应商计价及原始用量确定，当前unknown。
 是否值得这种额外介入必须允许被否定；未见8例尚未封存。
+
+## GJ-01–04 接口修正
+
+B的每题实际请求携带与消费者共用的output_contract，命题回复使用support/deny/unresolved，
+不是true/false；Choice、等级、none/ambiguous、依据与弃权分别说明。检查请求同样带合同。
+B/C均看到固定consumption_rules，执行者不需从开发夹具猜规则。
+检查LOC/OK各自绑定具名发现并独立看全文；wire验证上下文依赖。返回后才检查依据是否相容。
+C的OK依据标为程序的post-return LOC关联，不是模型原生引文；不再填首句占位符。
+未决证据候选仍保留，但不输出成已采纳来源；低置信度none不等于确定缺失。
+规范性目标缺失可由独立规范表判正确，模型弃权或错误依据不能因同样返回none而获成功。

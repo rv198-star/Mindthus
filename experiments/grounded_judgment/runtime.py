@@ -13,7 +13,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from experiments.typed_decision.contracts import DecisionSpec, canonical, digest, require
 from . import BASELINE
-from .core import index, specs, adapt, blank, compose, ROUNDS, OPTIONS, TEXT
+from .core import index, specs, adapt, blank, compose, ROUNDS, OPTIONS, TEXT, agent_contract, accepted_none, CONSUMPTION_RULES
 
 
 def write(path,value):
@@ -86,7 +86,9 @@ def all_specs_for_agent(src):
                 criteria.update(none='没有对应位置',ambiguous='不能确定位置')
             if q in ('T','S'):criteria={'true':'原文支持此命题','false':'原文不支持此命题；缺证不等于相反事实已证实'}
             if q.startswith('I_'):criteria=['无实质影响','措辞或限定','改变建议或主要结论']
-            result.append({'id':q,'question':TEXT[q],'criteria':criteria})
+            kind='assess_proposition' if q in ('T','S') else 'rate' if q.startswith('I_') else 'select'
+            spec=DecisionSpec(q,TEXT[q],criteria,('source','bindings'),kind=kind)
+            result.append({**asdict(spec),'output_contract':agent_contract(spec)})
     return result
 
 
@@ -95,7 +97,7 @@ def finish_atoms(root,s):
         for q in group:
             if q not in s['atoms']:
                 s['atoms'][q]=blank(q,'dependency_missing')
-    if s['atoms']['E'].get('value')=='none':
+    if accepted_none(s['atoms']['E']):
         for q,val in [('ES','missing'),('ER','insufficient')]:
             a=blank(q,'evidence_missing');a.update(value=val,provenance='deterministic_absence')
             s['atoms'][q]=a
@@ -112,10 +114,11 @@ def check_specs(s):
     out=[]
     for f in s['composition']['findings']:
         key=f['finding_id']
+        binding='检查finding_id='+key+'：'+canonical(f).decode()+'。独立读取完整首稿，不依赖同批其他答案。'
         choices={k:v['exact_text'] for k,v in src['candidates'].items()};choices['none']='没有相关句'
-        out.append(DecisionSpec('LOC.'+key,'哪一首稿句对应这项发现？',choices,('source','draft','finding')))
-        out.append(DecisionSpec('OK.'+key,'首稿是否落实这项发现的keep/action且未升级证据上限？',
-                               {'true':'已落实','false':'未落实'},('source','draft','finding'),kind='assess_proposition'))
+        out.append(DecisionSpec('LOC.'+key,binding+' 哪一首稿句对应此发现？',choices,('source','draft','findings','draft_index','consumption_rules')))
+        out.append(DecisionSpec('OK.'+key,binding+' 首稿是否落实此发现的keep/action且未升级证据上限？',
+                               {'true':'已落实','false':'未落实'},('source','draft','findings','draft_index','consumption_rules'),kind='assess_proposition'))
     return out
 
 
@@ -137,8 +140,7 @@ def request(root):
             payload['questions']=[asdict(q) for q in qs]
         elif phase=='atoms':
             payload.update(questions=all_specs_for_agent(s['source']),dependency_order=ROUNDS,
-              output_contract={'keys':['value','semantic_state','unresolved_reason','basis_refs'],
-                               'probability':'Do not self-report confidence. Categorical results only.'},
+              output_contract={'per_question':'Use each question.output_contract; no draft, confidence or extra keys.'},
               instruction='仅输出原子结果，按三轮依赖顺序内部绑定，未适用题保留未决。不得输出首稿或自行生成发现。')
         elif phase in ('draft','revision'):
             payload={'source':s['source'],'findings':s['composition'], 'loaded_materials':s['loaded'],
@@ -160,6 +162,12 @@ def request(root):
                 payload['questions']=[asdict(q) for q in cs]
                 payload['draft_index']=index([{'id':'draft','revision':'1','text':s['draft'],'role':'assistant',
                                               'order':0,'origin':'assistant','available':True}])
+        if s['arm'] in ('B','C'):
+            payload['consumption_rules']=CONSUMPTION_RULES
+            if phase=='check':
+                payload['question_bindings']={q['id']:q['id'].split('.',1)[1] for q in payload['questions']}
+                if s['arm']=='B':
+                    payload['output_contract']={q.id:agent_contract(q) for q in cs}
         role='jev' if s['arm']=='C' and (phase.startswith('round') or phase=='check') else 'host'
         body={'sequence':s['call_count'],'arm':s['arm'],'phase':phase,'role':role,
               'simulation':s['simulation'],'baseline':BASELINE,'payload':payload,
@@ -238,17 +246,22 @@ def accept(root,envelope):
                     src=req['payload']['draft_index'];check={};revise=False
                     cs=check_specs(s);require(set(raw)<=set(q.id for q in cs),'check_ids')
                     for q in cs:
-                        # Generic source refs are supplied via B basis refs / fixed finding context for C.
-                        bindings={'G':{'value':next(iter(src['candidates'])),'semantic_state':'support'}}
-                        check[q.id]=adapt(src,q,raw[q.id],s['arm'],bindings) if q.id in raw else blank(q.id,'missing_result')
+                        # OK evaluates full draft independently. It gets no same-batch LOC.
+                        check[q.id]=adapt(src,q,raw[q.id],s['arm'],{}) if q.id in raw else blank(q.id,'missing_result')
                     for f in s['composition']['findings']:
                         loc=check['LOC.'+f['finding_id']];ok=check['OK.'+f['finding_id']]
                         valid_loc=loc['semantic_state']=='support' and loc['value'] in src['candidates']
                         # none+deny: absent required content, a bounded omission can be repaired.
                         absent=loc['semantic_state']=='support' and loc['value']=='none'
-                        if ok['semantic_state']=='deny' and (valid_loc or absent):revise=True
-                        if ok['semantic_state']=='support' and absent:
+                        if s['arm']=='C' and loc['semantic_state']=='support':
+                            # Post-return linkage, not a fabricated native Jev citation.
+                            ok['basis_refs']=[loc['value']] if valid_loc else []
+                            ok['basis_origin']='runtime_post_return_LOC_link'
+                        compatible=(valid_loc and loc['value'] in ok['basis_refs']) or (
+                            absent and not loc['basis_refs'] and not ok['basis_refs'])
+                        if not compatible or (ok['semantic_state']=='support' and absent):
                             ok.update(semantic_state='unresolved',unresolved_reason='check_conflict')
+                        elif ok['semantic_state']=='deny':revise=True
                 s['check']=check;append(root,'check',check);s['phase']='revision' if revise else 'done'
             s['pending']=None
         except (ValueError,KeyError,TypeError) as e:

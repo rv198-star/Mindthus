@@ -101,6 +101,50 @@ def specs(src, round_no, atoms=None):
     return result
 
 
+# Shared by request contracts and consumers. These describe the accepted design,
+# not additional questions or semantic nomination.
+AGENT_FIELDS = ('value','semantic_state','unresolved_reason','basis_refs')
+PROPOSITION_STATES = ('support','deny','unresolved')
+CONSUMPTION_RULES = {
+    'sufficient+support':'retain the inference within its stated conditions',
+    'overreach+deny':'limit C; preserve the supported part of P',
+    'contradicts+deny':'recheck P/C without declaring either fact verified',
+    'insufficient_or_conflicting':'unresolved, not a confirmed content error',
+    'target':'reanchor only if T=deny AND TB=different_G_C with bound G/C evidence',
+    'evidence':'consume only adopted values; source origin is not semantic support',
+    'impact':'I_T/I_R are conditional impacts, consumed only for their established finding',
+    'unknown':'method/relationship uncertainty does not block unrelated supported work',
+    'check':'independent LOC and OK over full draft; join after return; incompatible basis never revises',
+    'limits':'one relation, two findings, one check, at most one revision',
+}
+
+
+def agent_contract(spec):
+    proposition=spec.kind=='assess_proposition'
+    return {'fields':list(AGENT_FIELDS), 'kind':spec.kind,
+        'value_enum':list(PROPOSITION_STATES) if proposition else
+                     list(spec.criteria) if spec.kind=='select' else [0,1,2],
+        'semantic_states':list(PROPOSITION_STATES) if proposition else ['support','unresolved','unlocated'],
+        'mapping': 'true proposition -> support; false/not-supported -> deny; abstention -> unresolved. Never return true/false or confidence.' if proposition else
+                   'Selected enum/level -> support; abstention -> unresolved; unavailable locator -> unlocated.',
+        'null_value':not proposition,
+        'reason':'Nonempty for unresolved/unlocated; null when a decision is adopted. none with source basis means source_absence; ambiguous means no reliable locator.',
+        'basis':'Unique candidate IDs from source (draft_index for checks). Located Choice includes its chosen ID. none outside checks requires source evidence; valid IDs do not certify semantics.',
+        'check_basis':'LOC cites its selected draft ID. OK independently cites the relevant draft ID(s). For whole-draft omission LOC=none, OK=deny, both basis_refs=[]; do not depend on the other same-batch answer.',
+        'probability':None}
+
+
+def accepted_none(atom):
+    return (atom.get('value')=='none' and atom.get('semantic_state')=='unresolved'
+            and atom.get('unresolved_reason')=='source_absence' and bool(atom.get('basis_refs')))
+
+
+def adopted_value(atom):
+    if atom.get('semantic_state')=='support' or atom.get('provenance')=='deterministic_absence':
+        return atom.get('value')
+    return None
+
+
 def blank(q, reason, state='unresolved'):
     return dict(question_id=q, refs=[],value=None,semantic_state=state,
                 unresolved_reason=reason,basis_refs=[],provenance=None,raw_result_ref=None,probability=None)
@@ -131,23 +175,35 @@ def adapt(src, spec, raw, arm, atoms):
             if spec.id in ('ER','ES'):basis=[ref_id(atoms,k) for k in ('E','P') if ref_id(atoms,k) in src['candidates']]
             reason='low_confidence' if state=='unresolved' else None
         else:
-            require(arm=='B' and set(raw)=={'value','semantic_state','unresolved_reason','basis_refs'},'agent_shape')
+            contract=agent_contract(spec)
+            require(arm=='B' and set(raw)==set(contract['fields']),'agent_shape')
             val=raw['value'];state=raw['semantic_state'];reason=raw['unresolved_reason'];basis=raw['basis_refs']
-            require(state in ('support','deny','unresolved','unlocated'),'agent_state')
+            require(state in contract['semantic_states'],'agent_state')
             require(isinstance(basis,list) and len(basis)==len(set(basis)),'agent_basis')
             if spec.kind=='select': require(val in spec.criteria or (val is None and state!='support'),'choice')
             elif spec.kind=='rate': require(type(val) is int and val in (0,1,2) or (val is None and state=='unresolved'),'score')
-            else:require(val in ('support','deny','unresolved') and val==state,'proposition')
+            else:require(val in contract['value_enum'] and val==state,'proposition')
             if spec.kind!='assess_proposition': require(state!='deny','categorical_not_deny')
-            if state=='unresolved':require(isinstance(reason,str) and reason,'abstention_reason')
+            if state in ('unresolved','unlocated'):require(isinstance(reason,str) and reason,'abstention_reason')
         require(all(k in src['candidates'] for k in basis),'basis_unknown')
         for k in basis:validate_ref(src,src['candidates'][k])
         if spec.id in ('G','O','C','P','E'):
             if val in src['candidates']:
                 validate_ref(src,src['candidates'][val]);a['refs']=[val];basis=[val]
-            elif state=='support':state='unlocated';reason='no_position' if val=='none' else 'ambiguous'
-        elif arm=='B' and not basis:
+            elif state=='support':
+                if val=='none':
+                    # Jev has no native citation field: retain the inspected full-source
+                    # scope explicitly, never label this as a model-selected quote.
+                    if arm=='C':
+                        basis=list(src['candidates']);a['basis_origin']='runtime_full_source_scope'
+                    state='unresolved';reason='source_absence' if basis else 'missing_basis'
+                else:state='unlocated';reason='ambiguous'
+        elif arm=='B' and not basis and not spec.id.startswith(('LOC.','OK.')):
             state='unresolved';reason='missing_basis'
+        if spec.id.startswith('LOC.') and state=='support' and val in src['candidates']:
+            if arm=='B':require(val in basis,'locator_basis_mismatch')
+            else:basis=[val];a['basis_origin']='model_locator_selection'
+            a['refs']=[val]
         if state=='support' and val in ('insufficient','unlocated'):
             state='unresolved';reason='insufficient_basis' if val=='insufficient' else 'unlocated'
         if spec.id=='TB' and val=='different_G_C' and state=='support':
@@ -175,7 +231,7 @@ def compose(src, atoms):
     findings=[];goal='unresolved';relation='unresolved'
     def finding(key,action,qs):
         return dict(finding_id=key,goal_ref=refs['G'],object_ref=refs['O'],premise_ref=refs['P'],
-            claim_ref=refs['C'],evidence_ref=refs['E'],evidence_origin=v('ES'),evidence_relation=v('ER'),
+            claim_ref=refs['C'],evidence_ref=refs['E'],evidence_origin=adopted_value(atoms.get('ES',{})),evidence_relation=adopted_value(atoms.get('ER',{})),
             relation=v('R'),keep_exact_text=quote('P'),limit_target_exact_text=quote('C'),action=action,
             uncertainty=bound,source_question_ids=qs,
             requirement={'reanchor':'按所引G/O重新回答；不自动反转C真假。',
@@ -207,8 +263,9 @@ def compose(src, atoms):
 def score_atom(atom, norm):
     """Independent supplied norm, never a new model judge. All samples remain denominator."""
     incomplete={'low_confidence','coverage_miss','contract_error','missing_basis','missing_result',
-                'ambiguous','no_position','unlocated','abstain','provider_error','missing_context'}
-    completed=atom['semantic_state']!='invalid' and atom['unresolved_reason'] not in incomplete
+                'ambiguous','unlocated','abstain','provider_error','missing_context','dependency_missing'}
+    completed=(atom['semantic_state']!='invalid' and atom['unresolved_reason'] not in incomplete
+               and bool(atom.get('basis_refs')))
     # Exact independently frozen field match, including normative uncertainty and source basis.
     ok=completed and all(atom.get(k)==norm[k] for k in ('value','semantic_state','unresolved_reason','basis_refs'))
     return {'denominator':1,'success':int(ok),'completed':completed}

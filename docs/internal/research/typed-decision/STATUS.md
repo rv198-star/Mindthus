@@ -6,6 +6,17 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Grounded judgment — GJ-01–04 scoped repair, re-review pending
+
+Reviewed implementation: `5488e2d88fe65914d1dba85fb3168a14d0f081ce` (independent REVISE).
+Read [the four fixes and new offline evidence](grounded-judgment-v0/offline-repair-r1/RESULT.md).
+B request/response contracts, check finding/basis linkage, unresolved evidence consumption,
+and normative absent-goal scoring repaired. Original41 plus12 counterexamples pass53/53;
+new public simulation traces are separate from unchanged offline-v1 records.
+No model calls, new questions/rounds, design changes or budget authorization. This is author
+verification awaiting scoped implementation re-review, not independent PASS or quality gain.
+Design baseline and closed R2/old six-case conclusions remain unchanged.
+
 ## Grounded judgment — authorized offline prototype delivered, implementation review pending
 
 Read [the scoped implementation and offline evidence](grounded-judgment-v0/offline-v1/RESULT.md).
