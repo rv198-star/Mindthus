@@ -6,7 +6,22 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current A1 direct — actual answer delivered under forward-only transport v2
+## Current remaining-five execution — B1 real transport failure, remote state unknown
+
+Execution source: `71bd3b7a4dfc635563c0d4845efb5c61c3058a16`.
+Read [the actual B1 attempt, precise blocker and preserved evidence](jev-direct-v2/remaining-five-v2/RESULT.md).
+The owner's ten-path scope was appended under the existing generation-scheduling.v2.
+One official B1/direct Jev layer-1 call encountered `ProviderError:transport_failure`
+after 7.987117s. No provider receipt or confirmed remote terminal; serial slot 000004
+remains an unknown request. The adapter did not retain lower network-stage detail,
+so pre-send failure cannot be inferred. No new safety/permission refusal observed.
+Same-batch subsequent dispatch stopped under the existing one-in-flight rule; no retry,
+host start, alternate channel or fabricated completion. Active wait 60.005245s;
+whole execution wall 68.190610s. B1 has no route/answer; next nine paths not sent.
+Both A1 answers/debits remain; Jev attempts now total2 (one prior return, one unknown).
+Remaining-five execution is NOT complete; no new quality/net-benefit conclusion.
+
+## Previous A1 direct — actual answer delivered under forward-only transport v2
 
 Implementation: `7d90845486daad1467f53caf6ffc791ef16c56d4`.
 Read [the real A1/direct result, raw answer, timing and evidence](jev-direct-v2/a1-direct-transport-v2/RESULT.md).

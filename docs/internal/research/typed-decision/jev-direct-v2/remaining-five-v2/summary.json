@@ -1,0 +1,153 @@
+{
+  "schema": "mindthus.remaining-five-attempt.v1",
+  "source_commit": "71bd3b7a4dfc635563c0d4845efb5c61c3058a16",
+  "scope_sha256": "761741c53cfd32b525db9f01e2f6647c9ee83f7f33ce1fb04b24f223a4bb199e",
+  "parent_transport_successor_sha256": "239204bf08c04fa31a534cce205a8cea397336f0382b6a04eb95f37c4f6b5340",
+  "status": "blocked_by_current_unknown_send_not_completed",
+  "affected_scope": "remaining dispatch in the same max-one-in-flight generation batch",
+  "blocker": {
+    "path": "B1/direct",
+    "stage": "official Jev layer 1",
+    "call_key": "61784cbf0798ceba12ce2b8dcf0c90a97799011df3848a5904ac0cc9f595a31c",
+    "context_sha256": "51ef46018348dc8a28aa9cce14a66d49271d794b71fb07dc2ccde6f9fe29b046",
+    "created_at": "2026-09-27T14:42:30.102682+00:00",
+    "original_saved_error": "ProviderError:transport_failure",
+    "error_layer": "Jev Python HTTP transport, before provider response receipt",
+    "remote_terminal": "unknown",
+    "generation_payload_sent": "unknown",
+    "provider_receipt_present": false,
+    "serial_completion_present": false,
+    "serial_guard": "serial_unknown_request_no_resubmit",
+    "original_network_detail": "Not retained by existing adapter: URLError/TimeoutError/socket.timeout collapse to transport_failure. Cannot identify DNS/TLS/connection/read stage retrospectively.",
+    "safety_or_permission_refusal_observed": false,
+    "protocol_exception_applicable": false,
+    "exception_reason": "No bound evidence of pre-send failure or recoverable HTTP 401",
+    "needed_evidence": "Request-bound provider or existing transport evidence establishing non-acceptance or a remote terminal; no specific named recovery document presumed"
+  },
+  "new_counts": {
+    "logical_jev_calls": 1,
+    "jev_transport_invocations": 1,
+    "host_cli_starts": 0,
+    "outer_driver_retries": 0,
+    "observed_internal_recovery": 0,
+    "actual_http_requests": null,
+    "actual_generation_attempts": null,
+    "observed_returned_model_outputs": 0,
+    "unknown_logical_calls": 1
+  },
+  "times_seconds": {
+    "active_wait": 60.00524545801454,
+    "monotonic_gap_lower_bound": 60.00536425001337,
+    "jev_evaluate_until_local_error": 7.9871174579893705,
+    "host_cli": 0,
+    "path_wall": 68.1824952919851,
+    "whole_execution_wall": 68.19061045898707,
+    "other_loading_validation_bookkeeping_residual": 0.19824754298315383,
+    "pure_http": null,
+    "auth_recovery": null,
+    "connection_recovery": null,
+    "remote_generation": null
+  },
+  "usage": {
+    "cost_usd": null,
+    "input_tokens": null,
+    "output_tokens": null
+  },
+  "actual_route": null,
+  "actual_loaded_methods": null,
+  "actual_answer": null,
+  "preserved": {
+    "A1_native_answer": "apple\npear\nplum",
+    "A1_direct_answer": "apple\npear\nplum",
+    "A1_native_host_used": 2,
+    "A1_direct_host_used": 1,
+    "prior_jev_calls": 1,
+    "now_jev_attempts_including_unknown": 2,
+    "B1_direct_layer1_attempt_consumed": 1,
+    "B1_host_used": 0,
+    "all_other_new_host_calls": 0,
+    "remaining_paths_budget_reset": false
+  },
+  "comparability": {
+    "B1_original_and_71_questions_and_catalog_match": true,
+    "host_profile_planned_identical_for_both_arms": true,
+    "new_host_profile_effect_observed": false,
+    "B_to_F_paired_results_available": false,
+    "A1_performance_excluded": true,
+    "no_cost_inferred_from_tokens": true
+  },
+  "paths": [
+    {
+      "case": "A1",
+      "arm": "native",
+      "status": "delivered_old_execution_limited",
+      "answer": "apple\npear\nplum"
+    },
+    {
+      "case": "A1",
+      "arm": "direct",
+      "status": "delivered_protocol_v2",
+      "answer": "apple\npear\nplum"
+    },
+    {
+      "case": "B1",
+      "arm": "native",
+      "status": "UNRUN_blocked_by_same_batch_unknown",
+      "answer": null
+    },
+    {
+      "case": "B1",
+      "arm": "direct",
+      "status": "transport_failure_remote_status_unknown",
+      "answer": null
+    },
+    {
+      "case": "C1",
+      "arm": "native",
+      "status": "UNRUN_blocked_by_same_batch_unknown",
+      "answer": null
+    },
+    {
+      "case": "C1",
+      "arm": "direct",
+      "status": "UNRUN_blocked_by_same_batch_unknown",
+      "answer": null
+    },
+    {
+      "case": "D1",
+      "arm": "native",
+      "status": "UNRUN_blocked_by_same_batch_unknown",
+      "answer": null
+    },
+    {
+      "case": "D1",
+      "arm": "direct",
+      "status": "UNRUN_blocked_by_same_batch_unknown",
+      "answer": null
+    },
+    {
+      "case": "E-window",
+      "arm": "native",
+      "status": "UNRUN_blocked_by_same_batch_unknown",
+      "answer": null
+    },
+    {
+      "case": "E-window",
+      "arm": "direct",
+      "status": "UNRUN_blocked_by_same_batch_unknown",
+      "answer": null
+    },
+    {
+      "case": "F-window",
+      "arm": "native",
+      "status": "UNRUN_blocked_by_same_batch_unknown",
+      "answer": null
+    },
+    {
+      "case": "F-window",
+      "arm": "direct",
+      "status": "UNRUN_blocked_by_same_batch_unknown",
+      "answer": null
+    }
+  ]
+}
