@@ -6,7 +6,19 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current local repair R2 — three findings independently closed, orphan-return fix pending review
+## Current local repair R2 — four engineering findings independently closed
+
+The original ChatGPT task returned scoped PASS on 7d07e4fac after R2: all four
+engineering findings in this repair chain are closed. Read the [actual independent
+response](jev-direct-v2/local-repair-r2/R2-INDEPENDENT-REVIEW.md). It independently
+ran the three new tests and rechecked the two original orphan-response probes:
+both now block before sending, while preparation-only recovery still sends once.
+R1 findings 2/3/4 remain closed; no repeated full audit. The reviewer did not perform
+a fresh 383-file archive integrity audit; that limitation remains. Real business
+paths remain twelve UNRUN, quality/net benefit unmeasured, historical execution pause
+unchanged. Direct task messaging and feedback retrieval completed without user relay.
+
+## Previous local repair R2 — three findings independently closed, orphan-return fix pending review
 
 The original ChatGPT task independently re-reviewed 8acbdc403: findings 2/3/4 are
 closed, and 73 scoped tests passed independently. Finding 1 retained one gap: orphan
