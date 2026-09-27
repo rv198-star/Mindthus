@@ -41,11 +41,27 @@ class SerialRequests:
             gap=intent['actual_gap_seconds']
             require((last is None and gap is None) or (last is not None and self._number(gap) and gap>=self.gap),'serial_gap_invalid')
             outcome=directory/'completion.json'
-            if not outcome.exists():raise RecoveryRequired('serial_unknown_request_no_resubmit')
-            end=read_record(outcome)
-            require(read_record(anchor/'completion.json')=={'completion_sha256':digest(end)},'serial_completion_binding_changed')
-            require(end['intent_sha256']==digest(intent) and end['status']=='returned','serial_completion_identity')
-            require(self._number(end['ended_at_epoch']) and self._number(end['request_elapsed_seconds']) and end['request_elapsed_seconds']>=0,'serial_end_time_invalid')
+            failure=directory/'failure.json'
+            require(not (outcome.exists() and failure.exists()),'serial_conflicting_terminal')
+            if failure.exists():
+                from .host_boundary import validate_reconciliation
+                end=read_record(failure);host=Path(end['host_directory'])
+                require(self.batch is not None and host.is_relative_to(self.batch/'runs')
+                        and intent['label']=='host:'+str(host),'serial_failure_identity')
+                receipt=validate_reconciliation(host)
+                require(read_record(anchor/'failure.json')=={'failure_sha256':digest(end)},'serial_failure_binding_changed')
+                require(end['status']=='confirmed_request_failure' and end['intent_sha256']==digest(intent)
+                        and end['reconciliation_sha256']==digest(read_record(host/'reconciliation.json'))
+                        and end['ended_at_epoch']==receipt['ended_at_epoch']
+                        and receipt['started_at_epoch']>=intent['started_at_epoch']
+                        and end['request_elapsed_seconds'] is None,'serial_failure_receipt_changed')
+            else:
+                if not outcome.exists():raise RecoveryRequired('serial_unknown_request_no_resubmit')
+                end=read_record(outcome)
+                require(read_record(anchor/'completion.json')=={'completion_sha256':digest(end)},'serial_completion_binding_changed')
+                require(end['intent_sha256']==digest(intent) and end['status']=='returned','serial_completion_identity')
+                require(self._number(end['request_elapsed_seconds']) and end['request_elapsed_seconds']>=0,'serial_end_time_invalid')
+            require(self._number(end['ended_at_epoch']),'serial_end_time_invalid')
             labels[intent['label']]=end;last=end
         if self.batch:
             # Use actual host/provider intents, including other scenarios/arms and reviews.
@@ -56,7 +72,7 @@ class SerialRequests:
             for root,pattern in locations:
                 # Discover from BOTH directions. Request/prompt/schema-only
                 # preparation is not evidence that anything was sent.
-                for name in ('intent.json','outcome.json','reply.json','provider-receipt.json'):
+                for name in ('intent.json','outcome.json','reply.json','provider-receipt.json','reconciliation.json','schema-failure-receipt.json'):
                     for evidence in root.glob(pattern+'/'+name):
                         intent_path=evidence.with_name('intent.json')
                         require(intent_path.is_file(),'serial_orphan_response_evidence')
@@ -66,8 +82,12 @@ class SerialRequests:
                 read_record(path)
                 label=('jev:'+str(path.parents[3]) if path.parent.parent.name=='calls' else 'host:'+str(path.parent))
                 require(label in labels,'serial_business_binding_missing')
-                if not path.with_name('outcome.json').exists():raise RecoveryRequired('serial_business_outcome_unknown')
-                read_record(path.with_name('outcome.json'));observed.add(label)
+                if not path.with_name('outcome.json').exists():
+                    if labels[label]['status']!='confirmed_request_failure':raise RecoveryRequired('serial_business_outcome_unknown')
+                    from .host_boundary import validate_reconciliation
+                    validate_reconciliation(path.parent)
+                else:read_record(path.with_name('outcome.json'))
+                observed.add(label)
             bound={label for label in labels if label.startswith(('host:','jev:'))}
             require(bound==observed,'serial_business_evidence_missing')
         return directories,last,labels
@@ -83,15 +103,19 @@ class SerialRequests:
             began_wait=self.monotonic()
             continuous=previous is not None and digest(previous)==self._last_completion
             end_mono=self._last_end if continuous else began_wait
+            waited=0.0
             if previous is not None:
                 while self.monotonic()-end_mono < self.gap:
+                    wait_start=self.monotonic()
                     self.sleep(min(60,self.gap-(self.monotonic()-end_mono)))
+                    waited+=self.monotonic()-wait_start
             start_mono=self.monotonic();start=self.clock()
             gap=None if previous is None else start_mono-end_mono
             intent={'label':label,'started_at_epoch':start,
                     'previous_completion_sha256':digest(previous) if previous else None,
                     'previous_end_epoch':previous['ended_at_epoch'] if previous else None,
                     'actual_gap_seconds':gap,
+                    'active_wait_seconds':waited,
                     'gap_basis':'first_call' if previous is None else 'monotonic' if continuous else 'restart_conservative_lower_bound',
                     'wall_gap_seconds':None if previous is None else start-previous['ended_at_epoch']}
             directory=self.root/f'{len(directories):06d}';anchor=self.anchors/directory.name

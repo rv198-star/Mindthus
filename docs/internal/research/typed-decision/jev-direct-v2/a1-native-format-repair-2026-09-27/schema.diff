@@ -1,0 +1,22 @@
+--- local-contract.json
++++ api-schema.json
+@@ -101,8 +101,7 @@
+           "skills/wae/resources/ownership-closure.md",
+           "skills/wae/templates/control-boundary-worksheet.md"
+         ]
+-      },
+-      "uniqueItems": true
++      }
+     },
+     "used_methods": {
+       "type": "array",
+@@ -118,8 +117,7 @@
+           "tvg",
+           "wae"
+         ]
+-      },
+-      "uniqueItems": true
++      }
+     },
+     "route_objection": {
+       "type": "string"

@@ -7,6 +7,7 @@ from experiments.typed_decision.relationship_runtime import save,_locked
 from experiments.typed_decision.session import read_record,RecoveryRequired
 from . import router as r
 from .full_context import ROUTABLE
+from .host_boundary import api_schema,parse_events,cli_schema_failure
 REPO=Path(__file__).resolve().parents[2]
 ADAPTER=REPO/'docs/internal/research/typed-decision/route-control-v0.2/single-cycle-repair-v1/run.py'
 spec=importlib.util.spec_from_file_location('direct_cli_transport',ADAPTER)
@@ -54,13 +55,18 @@ def prepare(root,cases,*,binary=None,serial_gap_seconds=None):
     save(root/'freeze-binding.json',{'freeze_sha256':digest(f),'case_sha256':{c['id']:digest(c['raw']) for c in cases}})
     return f
 
-def verify(root):
+def verify_frozen_inputs(root):
     root=Path(root).resolve();f=read_record(root/'freeze.json')
     require(read_record(root/'freeze-binding.json')=={'freeze_sha256':digest(f),'case_sha256':{c['id']:digest(c['raw']) for c in f['cases']}},'pilot_freeze_changed')
-    require(f['root']==str(root) and f['code_hashes']==identity(REPO),'pilot_code_drift')
+    require(f['root']==str(root),'pilot_root_changed')
     require(all(material(REPO,p)['sha256']==h for p,h in f['source_hashes'].items()),'pilot_source_drift')
     config=Path.home()/'.codex/config.toml'
     require(f['binary_sha256']==r.file_hash(f['binary']) and f['config_sha256']==(r.file_hash(config) if config.exists() else None),'pilot_host_drift')
+    return f
+
+def verify(root):
+    f=verify_frozen_inputs(root)
+    require(f['code_hashes']==identity(REPO),'pilot_code_drift')
     return f
 
 def exact_tree(root):
@@ -88,47 +94,69 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
         require(scheduler.root.resolve()==batch/'serial' and scheduler.gap==60,'pilot_serial_root')
         scheduler.validate()
     directory=Path(root)/label;directory.mkdir(parents=True,exist_ok=True)
+    sending=api_schema(schema)
     prompt='根据原始任务与实际已加载规则完成当前请求。工具关闭；需要资料时只按schema请求读取，不虚构事实或执行结果。输出规定JSON，不输出隐藏推理。\n'+canonical(request).decode()
-    intent={'request_sha256':digest(request),'prompt_sha256':digest(prompt),'schema_sha256':digest(schema),'model':f['host_model'],'effort':f['host_effort'],'prior_context':prior,'timeout_seconds':timeout or f['host_timeout']}
+    intent={'request_sha256':digest(request),'prompt_sha256':digest(prompt),'schema_sha256':digest(schema),'api_schema_sha256':digest(sending),'model':f['host_model'],'effort':f['host_effort'],'prior_context':prior,'timeout_seconds':timeout or f['host_timeout']}
     if (directory/'intent.json').exists():
         require(read_record(directory/'intent.json')==intent,'pilot_call_identity_changed')
         if not (directory/'outcome.json').exists():raise RecoveryRequired('pilot_unknown_call_no_retry')
         out=read_record(directory/'outcome.json')
-        require(read_record(directory/'request.json')==request and json.loads((directory/'schema.json').read_text())==schema and (directory/'prompt.txt').read_text()==prompt,'pilot_cached_request_changed')
+        require(read_record(directory/'request.json')==request and json.loads((directory/'schema.json').read_text())==schema and json.loads((directory/'schema.api.json').read_text())==sending and (directory/'prompt.txt').read_text()==prompt,'pilot_cached_request_changed')
         reply=None
         if out['status']=='complete':
             reply=wire._decode_reply(directory/'reply.json',65536)
             require(digest(reply)==out['reply_sha256'],'pilot_cached_reply_changed')
         return reply,out
     require(not (directory/'reply.json').exists(),'pilot_unbound_reply')
-    save(directory/'request.json',request);(directory/'schema.json').write_text(json.dumps(schema,ensure_ascii=False));(directory/'prompt.txt').write_text(prompt)
+    save(directory/'request.json',request)
+    for name,value in (('schema.json',schema),('schema.api.json',sending)):
+        path=directory/name
+        if path.exists():require(json.loads(path.read_text())==value,'pilot_prepared_schema_changed')
+        else:path.write_bytes(canonical(value)+b'\n')
+    (directory/'prompt.txt').write_text(prompt)
+    save(directory/'schema-binding.json',{'local_contract_sha256':digest(schema),'api_schema_sha256':digest(sending),'projection':'remove_uniqueItems_at_schema_nodes_v1'})
     work=directory/'workspace';work.mkdir(exist_ok=True)
     cmd=[f['binary'],'exec']+(['resume'] if prior else [])
-    cmd+=['--skip-git-repo-check','-m',f['host_model'],'-c','model_reasoning_effort='+json.dumps(f['host_effort']),'-c','features.shell_tool=false','--json','--output-schema',str(directory/'schema.json'),'-o',str(directory/'reply.json')]
+    cmd+=['--skip-git-repo-check','-m',f['host_model'],'-c','model_reasoning_effort='+json.dumps(f['host_effort']),'-c','features.shell_tool=false','--json','--output-schema',str(directory/'schema.api.json'),'-o',str(directory/'reply.json')]
     cmd+=([prior,'-'] if prior else ['--sandbox','read-only','-C',str(work),'-'])
     env=os.environ.copy()
     for k in ('TYPESAFE_API_KEY','OPENROUTER_API_KEY','MINDTHUS_HOST_API_KEY'):env.pop(k,None)
     start=time.monotonic();usage={'input_tokens':None,'output_tokens':None,'cached_input_tokens':None,'cost_usd':None};context=None;returned=False;reply=None
-    elapsed=0.0
+    elapsed=0.0;failure=None
     try:
         def invoke():
-            nonlocal elapsed
+            nonlocal elapsed,failure
             # Waiting/lock interruption has not sent anything. Only persist the
             # host intent once the serial slot has actually been acquired.
             save(directory/'intent.json',intent)
             call_start=time.monotonic()
+            cli_returned=False
             try:
                 proc=wire._run_cli(cmd,prompt,env,timeout or f['host_timeout'])
-                if scheduler:
-                    terminal=False
-                    for line in proc.stdout.splitlines():
-                        try:event=json.loads(line)
-                        except ValueError:continue
-                        if isinstance(event,dict) and event.get('type')=='turn.completed':terminal=True
-                    if proc.returncode!=0 or not terminal:
-                        raise RecoveryRequired('pilot_remote_completion_unknown')
+                elapsed=time.monotonic()-call_start;cli_returned=True
+                (directory/'cli.stdout.jsonl').write_text(proc.stdout)
+                (directory/'cli.stderr.txt').write_text(proc.stderr)
+                events=parse_events(proc.stdout)
+                contexts={e['thread_id'] for e in events if e.get('type')=='thread.started' and isinstance(e.get('thread_id'),str)}
+                terminal=proc.returncode==0 and len(contexts)==1 and sum(e.get('type')=='turn.completed' for e in events)==1 and not any(e.get('type')=='turn.failed' for e in events)
+                if terminal:
+                    # Current stdout may omit turn IDs; any IDs it does expose
+                    # must agree within this dedicated CLI invocation.
+                    turns={e['turn_id'] for e in events if e.get('type') in ('turn.started','turn.completed') and e.get('turn_id')}
+                    terminal=len(turns)<=1 and all(e.get('thread_id',next(iter(contexts))) in contexts for e in events if e.get('type')=='turn.completed')
+                if not terminal and len(contexts)==1:
+                    context=next(iter(contexts))
+                    try:failure=cli_schema_failure(directory,context)
+                    except (ContractError,ValueError,KeyError,OSError):pass
+                if not terminal and failure is None:
+                    raise RecoveryRequired('pilot_remote_completion_unknown')
                 return proc
-            finally:elapsed=time.monotonic()-call_start
+            except (OSError,subprocess.TimeoutExpired) as exc:
+                save(directory/'transport-observation.json',{'status':'unknown','local_error':type(exc).__name__,'automatic_retry':False})
+                raise RecoveryRequired('pilot_remote_completion_unknown') from exc
+            finally:
+                if not cli_returned:elapsed=time.monotonic()-call_start
+                save(directory/'host-session-observation.json',{'cli_wall_seconds':elapsed,'process_returned':cli_returned,'http_seconds':None,'remote_terminal_inferred_from_exit':False})
         proc=scheduler.call('host:'+str(directory),invoke) if scheduler else invoke();returned=True;events=[]
         for line in proc.stdout.splitlines():
             try:e=json.loads(line)
@@ -139,14 +167,15 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
         if uses:
             for k in usage:
                 if k!='cost_usd':usage[k]=uses[-1].get(k)
+        if failure is not None:raise ContractError('pilot_confirmed_invalid_json_schema')
         require(proc.returncode==0,'pilot_cli_failed')
         require(not any((e.get('item') or {}).get('type') in ('command_execution','mcp_tool_call','web_search','file_change') for e in events),'pilot_tool_use')
         require(len(contexts)==1,'pilot_context_missing');context=next(iter(contexts))
         require(prior is None or context==prior,'pilot_context_changed')
         reply=wire._decode_reply(directory/'reply.json',65536);wire._wire_check(reply,schema)
         out={'status':'complete','reply_sha256':digest(reply)}
-    except (ContractError,OSError,subprocess.TimeoutExpired) as exc:out={'status':'failed','error':safe_code(exc)}
-    out.update(request_sha256=digest(request),schema_sha256=digest(schema),context_ref=context,elapsed_seconds=elapsed,dispatch_wall_seconds=time.monotonic()-start,usage=usage,process_returned=returned,requested_model=f['host_model'],service_model_attestation='not_observed',automatic_retry=False)
+    except ContractError as exc:out={'status':'failed','error':safe_code(exc),'failure_kind':'request_schema' if failure else 'local_validation'}
+    out.update(request_sha256=digest(request),schema_sha256=digest(schema),api_schema_sha256=digest(sending),context_ref=failure['thread_id'] if failure else context,elapsed_seconds=elapsed,dispatch_wall_seconds=time.monotonic()-start,usage=usage,process_returned=returned,requested_model=f['host_model'],service_model_attestation='not_observed',automatic_retry=False)
     save(directory/'outcome.json',out);return reply,out
 
 def answer_schema(paths):
