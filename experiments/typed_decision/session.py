@@ -339,6 +339,7 @@ class Session:
             'projected_request_bytes': request_bytes,
             'created_at': datetime.now(timezone.utc).isoformat(),
         })
+        diagnostic = None
         begin = time.monotonic()
         self.calls_made += 1
         clear_receipt = getattr(self.provider, 'clear_receipt', None)
@@ -352,6 +353,7 @@ class Session:
             if time.monotonic() - begin > remaining:
                 raise ProviderError('deadline_exceeded')
         except (ProviderError, ContractError) as exc:
+            diagnostic = exc.diagnostic if isinstance(exc, ProviderError) else None
             # Persist a bounded error type, never arbitrary remote/provider text.
             batch = BatchResult({
                 spec.id: DecisionResult(
@@ -389,6 +391,12 @@ class Session:
             'projected_request_bytes': request_bytes,
             'evidence_kind': self.evidence_kind,
         }
+        if diagnostic is not None:
+            write_once(directory / 'transport-diagnostic.json', {
+                'call_key': key, 'intent_sha256': digest(read_record(intent)),
+                'context_sha256': identity['context_sha256'],
+                'questions_sha256': digest(identity['questions']),
+                'diagnostic': diagnostic})
         write_once(outcome, record)
         self.records.append({'call_key': key, 'reused': False})
         return batch.results

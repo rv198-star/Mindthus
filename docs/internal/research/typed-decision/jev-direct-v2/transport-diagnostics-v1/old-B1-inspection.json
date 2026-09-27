@@ -1,0 +1,33 @@
+{
+  "inspection_scope": "One bounded read of existing B1/direct runtime files, serial/000004 and its anchor, and the three related checkpoint/observation files; compare against baseline committed evidence index. No network or model probes.",
+  "baseline": "6b21dc333ef49da1e866a1690d0ad89af05c1901",
+  "call_key": "61784cbf0798ceba12ce2b8dcf0c90a97799011df3848a5904ac0cc9f595a31c",
+  "context_sha256": "51ef46018348dc8a28aa9cce14a66d49271d794b71fb07dc2ccde6f9fe29b046",
+  "files": {
+    "remaining-five-checkpoints/B1-direct.json": "4b04be147d1a31de11a736fbbca065dc192e1b2dfcc567b6a9350e3bc6eba306",
+    "remaining-five-execution.json": "5cfe3af56cef5a7dd8979219d3ee71ad7b93fcbd54c72276bc1145f9c8cf38f1",
+    "remaining-five-observation.json": "37217ba42131c493f888cc00249b6626f613f9d0c5d80ed4c203e511267fbd30",
+    "runs/B1/direct/route/binding.json": "9f7ee42b8bb59c227971c961fa7e4dca8e76d636807fc2283b1760ba9568f494",
+    "runs/B1/direct/route/level-1/journal/calls/61784cbf0798ceba12ce2b8dcf0c90a97799011df3848a5904ac0cc9f595a31c/intent.json": "ee2a0a6c99eae1f3fb7f42baa86bd87c9471ece1e5327d1cd5c36b477bf21b45",
+    "runs/B1/direct/route/level-1/journal/calls/61784cbf0798ceba12ce2b8dcf0c90a97799011df3848a5904ac0cc9f595a31c/outcome.json": "937e8a5e09431bf5cce39d02c43b9b7905a82938d6c11028f50964e860fe56f3",
+    "runs/B1/direct/route/level-1/journal/policy.json": "e112d17a032cdcee3bd7262628f37f3cf678b8d8381d387c4a92cebe8697b39e",
+    "runs/B1/direct/route/level-1/request.json": "84d72f9b552d9f53e1e2a2f70c0a7bbfd23adf725ea246abd76f574ef5bb1636",
+    "runs/B1/direct/run-start.json": "90a8d1d3f1441f1d7d321934f1a7b4d2ea08b0a4152132744f6db55ba3a2a719",
+    "runs/B1/direct/technical-identity.json": "75219ea6b47ffe72e0b9a8be0f4922c94089a94d751df773df455bc147570dba",
+    "serial/000004/intent.json": "cf82c31d68858c0113417cd34703d3ddd3c1924344d2acf0fe6c3b25acc92726",
+    "serial-bindings/000004/intent.json": "21fc92be8e0f7e68050daf19d3af6a49a5ba7c18540a101af137801bddc9e13d"
+  },
+  "new_request_bound_evidence_found": false,
+  "all_inspected_files_unchanged_from_baseline": true,
+  "provider_receipt_present": false,
+  "structured_transport_diagnostic_present": false,
+  "serial_completion_present": false,
+  "saved_reasons": [
+    "ProviderError:transport_failure"
+  ],
+  "conclusion": "现存材料不能进一步归因；发送/受理与远端终态仍unknown。",
+  "new_model_requests": 0,
+  "old_attempt_retained": true,
+  "protocol_changed": false,
+  "technical_retry_authorized": false
+}

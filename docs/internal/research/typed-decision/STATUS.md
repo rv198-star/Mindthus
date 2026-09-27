@@ -6,7 +6,18 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current remaining-five execution — B1 real transport failure, remote state unknown
+## Current diagnostic repair — no new model request, B1 remains unknown
+
+Read [the bounded transport diagnostic repair and old-call inspection](jev-direct-v2/transport-diagnostics-v1/RESULT.md).
+Compatible errors now carry safe phase/type/errno/SSL/hashed response-ID observations
+through worker IPC into a call-bound immutable diagnostic sidecar. Twenty-five affected
+offline tests pass, including actual fork/Pipe persistence and credential non-disclosure.
+A single inspection found the same twelve B1 records, unchanged from baseline; no new
+request-bound receipt or terminal evidence. B1 serial/000004 remains unknown. No request,
+completion fabrication, budget reset, protocol change or technical retry authorization.
+The owner's proposed one-call compensation remains pending explicit confirmation.
+
+## Previous remaining-five execution — B1 real transport failure, remote state unknown
 
 Execution source: `71bd3b7a4dfc635563c0d4845efb5c61c3058a16`.
 Read [the actual B1 attempt, precise blocker and preserved evidence](jev-direct-v2/remaining-five-v2/RESULT.md).

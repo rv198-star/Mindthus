@@ -14,7 +14,8 @@ from pathlib import Path
 from . import relationship_assessment as rel
 from .contracts import canonical, digest, project_context, provider_configuration, require
 from .providers import ProviderError, post_json
-from .session import implementation_digest, read_record
+from .session import implementation_digest, read_record, safe_failure_reason
+from .transport_diagnostics import Observation, exception_type
 
 SCHEMA = 'mindthus.relationship-live-admission.v1'
 ENDPOINT = 'https://cpa.72live.com/v1/chat/completions'
@@ -45,14 +46,17 @@ def no_secrets(value):
 
 
 def _http_worker(conn, url, headers, body, timeout):
+    observation = Observation(body)
+    observation.at('worker_transport_call')
     try:
         raw = post_json(url, headers, body, timeout)
         no_secrets(raw)
         conn.send(('ok', raw))
     except Exception as exc:
         # Do not serialize headers, secrets, arbitrary server text or tracebacks.
-        reason = str(exc) if isinstance(exc, ProviderError) else type(exc).__name__
-        conn.send(('error', reason))
+        reason = safe_failure_reason(exc).removeprefix('ProviderError:') if isinstance(exc, ProviderError) else exception_type(exc)
+        diagnostic = (exc.diagnostic if isinstance(exc, ProviderError) else None) or observation.failure(exc)
+        conn.send(('error', {'code': reason, 'diagnostic': diagnostic}))
     finally:
         conn.close()
 
@@ -63,6 +67,8 @@ def deadline_post_json(url, headers, body, timeout):
     Termination cannot cancel remote work; a timeout stays a failed billed attempt,
     never permission to resend. Parent interruption leaves the entry's intent unknown.
     """
+    observation = Observation(body)
+    observation.at('parent_worker_wait')
     require(0 < timeout <= 90, 'invalid_deadline')
     no_secrets(body)
     ctx = multiprocessing.get_context('fork')
@@ -72,13 +78,13 @@ def deadline_post_json(url, headers, body, timeout):
     writer.close()
     try:
         if not reader.poll(timeout):
-            raise ProviderError('deadline_exceeded')
+            raise ProviderError('deadline_exceeded', diagnostic=observation.failure(TimeoutError()))
         try:
             status, value = reader.recv()
         except EOFError:
-            raise ProviderError('transport_worker_failed') from None
+            raise ProviderError('transport_worker_failed', diagnostic=observation.failure(EOFError())) from None
         if status != 'ok':
-            raise ProviderError(value)
+            raise ProviderError(value['code'], diagnostic=value['diagnostic'])
         return value
     finally:
         reader.close()

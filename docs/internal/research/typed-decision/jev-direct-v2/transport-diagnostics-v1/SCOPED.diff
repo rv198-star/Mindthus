@@ -1,0 +1,264 @@
+diff --git a/experiments/typed_decision/providers.py b/experiments/typed_decision/providers.py
+index 4d40c09d2..53551a459 100644
+--- a/experiments/typed_decision/providers.py
++++ b/experiments/typed_decision/providers.py
+@@ -11,6 +11,7 @@ import math
+ import os
+ import re
+ import socket
++import ssl
+ import urllib.error
+ import urllib.parse
+ import urllib.request
+@@ -30,13 +31,19 @@ from .contracts import (
+     require,
+ )
+ 
++from .transport_diagnostics import Observation, ObservedHTTPSHandler
++
+ Transport = Callable[[str, dict, dict, float], dict]
+ JEV_CAPABILITIES = frozenset({'select', 'assess_proposition', 'rate'})
+ _JEV_MODEL_RE = re.compile(r'^(?:typesafe/)?jev-(\d+\.\d+)(?:\.\d+)?(?:-\d{8})?$')
+ 
+ 
+ class ProviderError(RuntimeError):
+-    """Bounded error code only; response bodies and credentials stay out of logs."""
++    """Compatible code plus optional bounded transport diagnostics."""
++
++    def __init__(self, code, *, diagnostic=None):
++        super().__init__(code)
++        self.diagnostic = diagnostic
+ 
+ 
+ class _NoRedirect(urllib.request.HTTPRedirectHandler):
+@@ -54,9 +61,13 @@ def post_json(url: str, headers: dict, body: dict, timeout: float) -> dict:
+     payload = canonical(body)
+     require(len(payload) <= 262144, 'HTTP request exceeds 256 KiB')
+     request = urllib.request.Request(url, data=payload, headers=headers, method='POST')
++    observation = Observation(body)
+     try:
+-        with urllib.request.build_opener(_NoRedirect).open(request, timeout=timeout) as response:
++        with urllib.request.build_opener(_NoRedirect, ObservedHTTPSHandler(observation)).open(request, timeout=timeout) as response:
++            observation.response(response.status, response.headers)
++            observation.at('response_body_read')
+             raw = response.read(1048577)
++            observation.at('response_body_read_complete')
+             if len(raw) > 1048576:
+                 raise ProviderError('response_too_large')
+             result = json.loads(raw)
+@@ -64,11 +75,12 @@ def post_json(url: str, headers: dict, body: dict, timeout: float) -> dict:
+                 raise ProviderError('invalid_json_shape')
+             return result
+     except urllib.error.HTTPError as exc:
+-        raise ProviderError(f'http_{exc.code}') from None
+-    except (urllib.error.URLError, TimeoutError, socket.timeout):
+-        raise ProviderError('transport_failure') from None
+-    except (ValueError, UnicodeDecodeError):
+-        raise ProviderError('invalid_json') from None
++        observation.response(exc.code, exc.headers)
++        raise ProviderError(f'http_{exc.code}', diagnostic=observation.failure(exc)) from None
++    except (urllib.error.URLError, TimeoutError, socket.timeout, ssl.SSLError) as exc:
++        raise ProviderError('transport_failure', diagnostic=observation.failure(exc)) from None
++    except (ValueError, UnicodeDecodeError) as exc:
++        raise ProviderError('invalid_json', diagnostic=observation.failure(exc)) from None
+ 
+ 
+ def _jev_model_family(value: str) -> str:
+diff --git a/experiments/typed_decision/relationship_live.py b/experiments/typed_decision/relationship_live.py
+index b4c6f1acd..ebd1ecd13 100644
+--- a/experiments/typed_decision/relationship_live.py
++++ b/experiments/typed_decision/relationship_live.py
+@@ -14,7 +14,8 @@ from pathlib import Path
+ from . import relationship_assessment as rel
+ from .contracts import canonical, digest, project_context, provider_configuration, require
+ from .providers import ProviderError, post_json
+-from .session import implementation_digest, read_record
++from .session import implementation_digest, read_record, safe_failure_reason
++from .transport_diagnostics import Observation, exception_type
+ 
+ SCHEMA = 'mindthus.relationship-live-admission.v1'
+ ENDPOINT = 'https://cpa.72live.com/v1/chat/completions'
+@@ -45,14 +46,17 @@ def no_secrets(value):
+ 
+ 
+ def _http_worker(conn, url, headers, body, timeout):
++    observation = Observation(body)
++    observation.at('worker_transport_call')
+     try:
+         raw = post_json(url, headers, body, timeout)
+         no_secrets(raw)
+         conn.send(('ok', raw))
+     except Exception as exc:
+         # Do not serialize headers, secrets, arbitrary server text or tracebacks.
+-        reason = str(exc) if isinstance(exc, ProviderError) else type(exc).__name__
+-        conn.send(('error', reason))
++        reason = safe_failure_reason(exc).removeprefix('ProviderError:') if isinstance(exc, ProviderError) else exception_type(exc)
++        diagnostic = (exc.diagnostic if isinstance(exc, ProviderError) else None) or observation.failure(exc)
++        conn.send(('error', {'code': reason, 'diagnostic': diagnostic}))
+     finally:
+         conn.close()
+ 
+@@ -63,6 +67,8 @@ def deadline_post_json(url, headers, body, timeout):
+     Termination cannot cancel remote work; a timeout stays a failed billed attempt,
+     never permission to resend. Parent interruption leaves the entry's intent unknown.
+     """
++    observation = Observation(body)
++    observation.at('parent_worker_wait')
+     require(0 < timeout <= 90, 'invalid_deadline')
+     no_secrets(body)
+     ctx = multiprocessing.get_context('fork')
+@@ -72,13 +78,13 @@ def deadline_post_json(url, headers, body, timeout):
+     writer.close()
+     try:
+         if not reader.poll(timeout):
+-            raise ProviderError('deadline_exceeded')
++            raise ProviderError('deadline_exceeded', diagnostic=observation.failure(TimeoutError()))
+         try:
+             status, value = reader.recv()
+         except EOFError:
+-            raise ProviderError('transport_worker_failed') from None
++            raise ProviderError('transport_worker_failed', diagnostic=observation.failure(EOFError())) from None
+         if status != 'ok':
+-            raise ProviderError(value)
++            raise ProviderError(value['code'], diagnostic=value['diagnostic'])
+         return value
+     finally:
+         reader.close()
+diff --git a/experiments/typed_decision/session.py b/experiments/typed_decision/session.py
+index 6c2056cde..64a65ab2a 100644
+--- a/experiments/typed_decision/session.py
++++ b/experiments/typed_decision/session.py
+@@ -339,6 +339,7 @@ class Session:
+             'projected_request_bytes': request_bytes,
+             'created_at': datetime.now(timezone.utc).isoformat(),
+         })
++        diagnostic = None
+         begin = time.monotonic()
+         self.calls_made += 1
+         clear_receipt = getattr(self.provider, 'clear_receipt', None)
+@@ -352,6 +353,7 @@ class Session:
+             if time.monotonic() - begin > remaining:
+                 raise ProviderError('deadline_exceeded')
+         except (ProviderError, ContractError) as exc:
++            diagnostic = exc.diagnostic if isinstance(exc, ProviderError) else None
+             # Persist a bounded error type, never arbitrary remote/provider text.
+             batch = BatchResult({
+                 spec.id: DecisionResult(
+@@ -389,6 +391,12 @@ class Session:
+             'projected_request_bytes': request_bytes,
+             'evidence_kind': self.evidence_kind,
+         }
++        if diagnostic is not None:
++            write_once(directory / 'transport-diagnostic.json', {
++                'call_key': key, 'intent_sha256': digest(read_record(intent)),
++                'context_sha256': identity['context_sha256'],
++                'questions_sha256': digest(identity['questions']),
++                'diagnostic': diagnostic})
+         write_once(outcome, record)
+         self.records.append({'call_key': key, 'reused': False})
+         return batch.results
+diff --git a/experiments/typed_decision/transport_diagnostics.py b/experiments/typed_decision/transport_diagnostics.py
+new file mode 100644
+index 000000000..4af059af3
+--- /dev/null
++++ b/experiments/typed_decision/transport_diagnostics.py
+@@ -0,0 +1,99 @@
++"""Bounded observations on the existing urllib HTTPS transport, not retry authority."""
++from datetime import datetime, timezone
++import hashlib
++import http.client
++import socket
++import ssl
++import time
++import urllib.error
++import urllib.request
++from .contracts import digest
++
++
++def now():
++    return datetime.now(timezone.utc).isoformat()
++
++
++def exception_type(exc):
++    # Never serialize repr/message or an arbitrary user-defined class name.
++    for cls in (urllib.error.HTTPError, urllib.error.URLError, ssl.SSLCertVerificationError,
++                ssl.SSLError, socket.gaierror, ConnectionRefusedError, ConnectionResetError,
++                BrokenPipeError, TimeoutError, EOFError, UnicodeDecodeError, ValueError, OSError):
++        if isinstance(exc, cls):return cls.__name__
++    return 'OtherException' if exc is not None else None
++
++
++def integer(value):
++    return int(value) if isinstance(value,int) and not isinstance(value,bool) and -(2**31)<=value<2**31 else None
++
++
++class Observation:
++    def __init__(self, body):
++        self.started_at=now();self.began=time.monotonic();self.request_sha256=digest(body)
++        self.stage='http_open';self.events=[];self.pre_send=False
++        self.response_received=False;self.http_status=None;self.ids={}
++
++    def at(self, stage):
++        self.stage=stage
++        if len(self.events)<16:self.events.append(stage)
++
++    def response(self, status, headers):
++        self.response_received=True;self.http_status=integer(status)
++        self.at('response_headers_received')
++        # Hash allowlisted identifiers: neither arbitrary headers nor reflected secrets persist.
++        for key in ('x-request-id','request-id','x-correlation-id','cf-ray'):
++            value=headers.get(key) if headers is not None else None
++            if isinstance(value,str) and 0<len(value)<=256:
++                self.ids[key]={'sha256':hashlib.sha256(value.encode()).hexdigest()}
++
++    def failure(self, exc):
++        reason=exc.reason if isinstance(exc,urllib.error.URLError) else None
++        inner=reason if isinstance(reason,BaseException) else exc
++        return {'schema':'mindthus.transport-diagnostic.v1','request_sha256':self.request_sha256,
++                'started_at':self.started_at,'ended_at':now(),'local_elapsed_seconds':time.monotonic()-self.began,
++                'exception_type':exception_type(exc),'reason_type':exception_type(reason) if isinstance(reason,BaseException) else ('str' if isinstance(reason,str) else None),
++                'errno':integer(getattr(inner,'errno',None)),
++                'ssl_error_code':integer(getattr(inner,'errno',None)) if isinstance(inner,ssl.SSLError) else None,
++                'ssl_verify_code':integer(getattr(inner,'verify_code',None)) if isinstance(inner,ssl.SSLCertVerificationError) else None,
++                'observed_stage':self.stage,'stage_events':list(self.events),
++                'http_response_received':self.response_received,'http_status':self.http_status,
++                'response_identifiers_sha256':self.ids,
++                'generation_send_status':'pre_send' if self.pre_send else 'unknown',
++                'pre_send_basis':'HTTPSConnection.connect raised before generation HTTP write' if self.pre_send else None,
++                'provider_acceptance':'unknown','remote_terminal':'unknown'}
++
++
++class ObservedHTTPSConnection(http.client.HTTPSConnection):
++    def __init__(self, *args, observation, **kwargs):
++        self.observation=observation
++        super().__init__(*args,**kwargs)
++
++    def connect(self):
++        self.observation.at('connection_establishment')
++        try:super().connect()
++        except OSError:
++            self.observation.pre_send=True
++            self.observation.at('connection_establishment_failed')
++            raise
++        self.observation.at('connection_established')
++
++    def send(self, data):
++        # Establish before generation write; proxy CONNECT/TLS are connection setup.
++        if self.sock is None and self.auto_open:self.connect()
++        self.observation.at('request_write')
++        super().send(data)
++        self.observation.at('local_write_returned')  # not evidence of provider acceptance
++
++    def getresponse(self):
++        self.observation.at('response_headers_wait')
++        return super().getresponse()
++
++
++class ObservedHTTPSHandler(urllib.request.HTTPSHandler):
++    def __init__(self, observation):
++        super().__init__();self.observation=observation
++
++    def https_open(self, req):
++        def connection(*args, **kwargs):
++            return ObservedHTTPSConnection(*args,observation=self.observation,**kwargs)
++        return self.do_open(connection,req,context=self._context)

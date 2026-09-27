@@ -1,0 +1,30 @@
+test_http_error_keeps_code_and_hashed_id_not_acceptance (test_transport_diagnostics.DiagnosticTests.test_http_error_keeps_code_and_hashed_id_not_acceptance) ... ok
+test_observed_connect_failure_retains_errno_without_secret (test_transport_diagnostics.DiagnosticTests.test_observed_connect_failure_retains_errno_without_secret) ... ok
+test_post_response_read_timeout_does_not_establish_remote_terminal (test_transport_diagnostics.DiagnosticTests.test_post_response_read_timeout_does_not_establish_remote_terminal) ... ok
+test_real_fork_preserves_diagnostic_and_session_binding_without_secrets (test_transport_diagnostics.DiagnosticTests.test_real_fork_preserves_diagnostic_and_session_binding_without_secrets) ... ok
+test_ssl_error_retains_numeric_code_without_message (test_transport_diagnostics.DiagnosticTests.test_ssl_error_retains_numeric_code_without_message) ... ok
+test_unobserved_urlerror_reason_cannot_claim_pre_send (test_transport_diagnostics.DiagnosticTests.test_unobserved_urlerror_reason_cannot_claim_pre_send) ... ok
+test_worker_deadline_remains_unknown (test_transport_diagnostics.DiagnosticTests.test_worker_deadline_remains_unknown) ... ok
+test_llm_abstain_preserved (test_typed_decision.ProviderTests.test_llm_abstain_preserved) ... ok
+test_llm_does_not_fabricate_probability_support (test_typed_decision.ProviderTests.test_llm_does_not_fabricate_probability_support) ... ok
+test_llm_extra_fields_and_truncation_rejected (test_typed_decision.ProviderTests.test_llm_extra_fields_and_truncation_rejected) ... ok
+test_llm_select_has_unknown_confidence_and_strict_schema (test_typed_decision.ProviderTests.test_llm_select_has_unknown_confidence_and_strict_schema) ... ok
+test_malformed_top_level_or_usage_is_a_typed_error (test_typed_decision.ProviderTests.test_malformed_top_level_or_usage_is_a_typed_error) ... ok
+test_native_api_mapping_and_no_secret_in_identity (test_typed_decision.ProviderTests.test_native_api_mapping_and_no_secret_in_identity) ... ok
+test_native_missing_key_fails_without_transport (test_typed_decision.ProviderTests.test_native_missing_key_fails_without_transport) ... ok
+test_native_wrong_model_invalid_choices_and_missing_answers (test_typed_decision.ProviderTests.test_native_wrong_model_invalid_choices_and_missing_answers) ... ok
+test_openrouter_jev_mapping_accepts_resolved_snapshot_and_cost (test_typed_decision.ProviderTests.test_openrouter_jev_mapping_accepts_resolved_snapshot_and_cost) ... ok
+test_openrouter_jev_rejects_alias_missing_key_and_wrong_family (test_typed_decision.ProviderTests.test_openrouter_jev_rejects_alias_missing_key_and_wrong_family) ... ok
+test_pin_aliases_rejected (test_typed_decision.ProviderTests.test_pin_aliases_rejected) ... ok
+test_redirect_rejected (test_typed_decision.ProviderTests.test_redirect_rejected) ... ok
+test_same_jev_engine_can_use_distinct_serving_paths (test_typed_decision.ProviderTests.test_same_jev_engine_can_use_distinct_serving_paths) ... ok
+test_wire_body_budget_is_checked_before_network (test_typed_decision.ProviderTests.test_wire_body_budget_is_checked_before_network) ... ok
+test_persisted_result_reused_after_new_session (test_typed_decision.SessionTests.test_persisted_result_reused_after_new_session) ... ok
+test_interrupted_intent_is_not_reissued (test_typed_decision.SessionTests.test_interrupted_intent_is_not_reissued) ... ok
+test_provider_failure_does_not_leak_exception_text (test_typed_decision.SessionTests.test_provider_failure_does_not_leak_exception_text) ... ok
+test_deadline_transport_kills_stalled_worker_without_network (test_relationship_live.D3Tests.test_deadline_transport_kills_stalled_worker_without_network) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 0.118s
+
+OK

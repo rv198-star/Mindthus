@@ -11,6 +11,7 @@ import math
 import os
 import re
 import socket
+import ssl
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -30,13 +31,19 @@ from .contracts import (
     require,
 )
 
+from .transport_diagnostics import Observation, ObservedHTTPSHandler
+
 Transport = Callable[[str, dict, dict, float], dict]
 JEV_CAPABILITIES = frozenset({'select', 'assess_proposition', 'rate'})
 _JEV_MODEL_RE = re.compile(r'^(?:typesafe/)?jev-(\d+\.\d+)(?:\.\d+)?(?:-\d{8})?$')
 
 
 class ProviderError(RuntimeError):
-    """Bounded error code only; response bodies and credentials stay out of logs."""
+    """Compatible code plus optional bounded transport diagnostics."""
+
+    def __init__(self, code, *, diagnostic=None):
+        super().__init__(code)
+        self.diagnostic = diagnostic
 
 
 class _NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -54,9 +61,13 @@ def post_json(url: str, headers: dict, body: dict, timeout: float) -> dict:
     payload = canonical(body)
     require(len(payload) <= 262144, 'HTTP request exceeds 256 KiB')
     request = urllib.request.Request(url, data=payload, headers=headers, method='POST')
+    observation = Observation(body)
     try:
-        with urllib.request.build_opener(_NoRedirect).open(request, timeout=timeout) as response:
+        with urllib.request.build_opener(_NoRedirect, ObservedHTTPSHandler(observation)).open(request, timeout=timeout) as response:
+            observation.response(response.status, response.headers)
+            observation.at('response_body_read')
             raw = response.read(1048577)
+            observation.at('response_body_read_complete')
             if len(raw) > 1048576:
                 raise ProviderError('response_too_large')
             result = json.loads(raw)
@@ -64,11 +75,12 @@ def post_json(url: str, headers: dict, body: dict, timeout: float) -> dict:
                 raise ProviderError('invalid_json_shape')
             return result
     except urllib.error.HTTPError as exc:
-        raise ProviderError(f'http_{exc.code}') from None
-    except (urllib.error.URLError, TimeoutError, socket.timeout):
-        raise ProviderError('transport_failure') from None
-    except (ValueError, UnicodeDecodeError):
-        raise ProviderError('invalid_json') from None
+        observation.response(exc.code, exc.headers)
+        raise ProviderError(f'http_{exc.code}', diagnostic=observation.failure(exc)) from None
+    except (urllib.error.URLError, TimeoutError, socket.timeout, ssl.SSLError) as exc:
+        raise ProviderError('transport_failure', diagnostic=observation.failure(exc)) from None
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise ProviderError('invalid_json', diagnostic=observation.failure(exc)) from None
 
 
 def _jev_model_family(value: str) -> str:
