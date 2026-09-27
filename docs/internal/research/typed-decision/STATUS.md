@@ -6,7 +6,19 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current local offline handoff — prepared, business still UNRUN
+## Current local repair R1 — independent REVISE addressed, re-review pending
+
+The independent ChatGPT audit of e418d9af returned REVISE on missing/corrupt serial
+records, pre-cooldown host intents, a review-entry bypass and wall-clock jumps.
+Read [scoped repair](jev-direct-v2/local-repair-r1/REPAIR.md). Engineering 05f9116e3
+binds serial records to independent anchors and business intents, moves host intents
+after cooldown, enforces serial policy at host_call, and uses monotonic intervals
+with a conservative full wait on restart. 73 affected tests pass. New offline six-case
+paired evidence has 383 indexed files and 33 simulated calls; all 32 gaps are 60s.
+Original semantics and budgets remain unchanged. Independent re-review is pending;
+do not promote author tests to independent PASS. All twelve real paths remain UNRUN.
+
+## Previous local offline handoff — prepared, business still UNRUN
 
 Read [local readiness](jev-direct-v2/local-offline-v1/READINESS.md) and the support-review packet.
 Engineering 71d292b79 adds explicit local CLI binding and batch-wide serial intervals without
