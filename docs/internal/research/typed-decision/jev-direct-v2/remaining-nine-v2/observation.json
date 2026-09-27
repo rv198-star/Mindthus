@@ -1,0 +1,26 @@
+{
+  "B1_compensation_call_key": "05ff7650c4f16af70592214af2ae4b3c6256f8a5650f8bfd556a9addd2eb25e8",
+  "question_count": 71,
+  "status_counts": {
+    "ok": 70,
+    "provider_error": 1
+  },
+  "contract_errors": {
+    "EFFORT": {
+      "reason": "answer_contract:ContractError:weighted_rating/distribution_mismatch",
+      "status": "provider_error",
+      "uncertainty": null,
+      "value": null
+    }
+  },
+  "effort": null,
+  "unresolved_methods": [
+    "3l5s",
+    "edsp"
+  ],
+  "review_source": "User relayed ChatGPT unblinded content review; not independently rerun here",
+  "diagnosis": "pass",
+  "minimal_repair": "pass",
+  "verification": "pass",
+  "scope": "content only; not audit PASS or comparative benefit"
+}

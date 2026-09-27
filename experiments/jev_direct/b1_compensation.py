@@ -28,7 +28,14 @@ def accepted(root, directory, intent):
 
 def guard_label(root,label):
     root=Path(root)
-    if (root/NAME).exists():
+    if (root/'remaining-nine-successor.json').exists():
+        from .transport_profile import active
+        scope=active(root)['dispatch_scope'];allowed=[]
+        for case,arm in scope:
+            allowed+=['host:'+str(root/'runs'/case/arm/'host'/str(n)) for n in range(4)]
+            if arm=='direct':allowed+=['jev:'+str(root/'runs'/case/arm/'route'/level) for level in ('level-1','level-2')]
+        require(label in allowed,'remaining_nine_dispatch_scope')
+    elif (root/NAME).exists():
         allowed=['jev:'+str(root/'runs/B1/direct/route-compensation'/level) for level in ('level-1','level-2')]
         allowed+=['host:'+str(root/'runs/B1/direct/host'/str(n)) for n in range(4)]
         require(label in allowed,'B1_compensation_dispatch_scope')

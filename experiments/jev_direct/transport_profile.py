@@ -70,6 +70,12 @@ def active(root):
         require(read_record(root/'B1-compensation-successor-binding.json')=={'sha256':digest(x)}
                 and x['parent_scope_sha256']==digest(parent) and x['dispatch_scope']==[['B1','direct']]
                 and x['typed_decision_implementation']==implementation_digest(), 'B1_successor_changed')
+    if (root/'remaining-nine-successor.json').exists():
+        parent=x; x=read_record(root/'remaining-nine-successor.json')
+        require(read_record(root/'remaining-nine-successor-binding.json')=={'sha256':digest(x)}
+                and x['parent_compensation_successor_sha256']==digest(parent)
+                and x['dispatch_scope']==[list(pair) for pair in REMAINING if pair!=('B1','direct')]
+                and x['extra_compensation_calls_remaining']==0, 'remaining_nine_binding')
     candidate=json.loads(CANDIDATE.read_text());protocol=json.loads(PROTOCOL.read_text())
     require(x['root']==str(root.resolve()) and x['code_hashes']==p.identity(BASE)
             and x['parent_freeze_sha256']==digest(read_record(root/'freeze.json'))
@@ -138,4 +144,29 @@ def register_remaining(root):
        'direct_remaining_seconds':900-direct['host_seconds'],
        'remaining_path_budgets':{c+'/'+a:{'host_calls':4,'host_seconds':900,'jev_layers':2 if a=='direct' else 0} for c,a in REMAINING}}
     save(root/SCOPE_NAME,x);save(root/'remaining-five-scope-binding.json',{'sha256':digest(x)})
+    return active(root)
+
+
+def register_nine(root):
+    from . import pilot as p,b1_compensation as b
+    from .serial import SerialRequests
+    root=Path(root).resolve();f=p.verify_frozen_inputs(root);guard(root)
+    SerialRequests(root/'serial').validate()
+    parent=read_record(root/b.NAME)
+    require(read_record(root/'B1-compensation-successor-binding.json')=={'sha256':digest(parent)},'nine_parent_binding')
+    require(all((root/k).is_file() and p.r.file_hash(root/k)==v for k,v in parent['historical_files'].items()),'nine_history_changed')
+    require(p.unseal(root/'runs/B1/direct')['status']=='delivered','nine_B1_not_delivered')
+    scope=[list(pair) for pair in REMAINING if pair!=('B1','direct')]
+    require(not any((root/'runs'/c/a).exists() for c,a in scope),'nine_path_already_started')
+    x={**parent,'schema':'mindthus.remaining-nine.v1','parent_compensation_successor_sha256':digest(parent),
+       'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=BASE,text=True).strip(),
+       'registered_at':datetime.now(timezone.utc).isoformat(),'code_hashes':p.identity(BASE),
+       'dispatch_scope':scope,'historical_files':p.exact_tree(root),
+       'owner_authorization':'Explicit continuation after d3a58c613: B1/native; C1 native/direct; D1 direct/native; E-window native/direct; F-window direct/native.',
+       'extra_compensation_calls_remaining':0,'consumed_jev_business_calls':3,
+       'consumed_host_cli':{'A1/native':2,'A1/direct':1,'B1/direct':1,**{c+'/'+a:0 for c,a in scope}},
+       'new_layer1_attempts_max':0,
+       'new_layer1_attempts_max_scope':'No additional B1 technical compensation; untouched paths retain original normal first/optional-second layers',
+       'known_old_risk_continues':True,'new_unknown_exception':False}
+    save(root/'remaining-nine-successor.json',x);save(root/'remaining-nine-successor-binding.json',{'sha256':digest(x)})
     return active(root)
