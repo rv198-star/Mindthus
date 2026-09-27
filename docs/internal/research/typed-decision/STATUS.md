@@ -13,7 +13,9 @@ and [falsifiable matched-control acceptance proposal](grounded-judgment-v0/ACCEP
 This is a separate capability design: original-span binding, premise/claim/evidence relations,
 and at most one bounded draft correction. No frozen code/material change, model call or new
 batch authorization. Old six-case closure and default adoption NOT QUALIFIED below stand.
-Ten question templates follow explicit dependencies; Agent receives the same fine-grained
+Design review REVISE received on `d3b923035ae549d966ada9c70616bc8c80717670`;
+four bounded contract corrections are now documented for re-review, not declared passed.
+Thirteen explicit fields retain three pre-answer rounds; Agent receives the same fine-grained
 questions in the control. Unseen acceptance variants are not yet supplied or claimed tested.
 
 ## Current six-case closure — execution and independent content review CLOSED
