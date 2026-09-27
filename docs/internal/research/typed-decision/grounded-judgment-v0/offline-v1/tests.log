@@ -1,0 +1,46 @@
+test_agent_cannot_smuggle_draft (tests.test_grounded_judgment.GroundedTests.test_agent_cannot_smuggle_draft) ... ok
+test_agent_probability_not_accepted (tests.test_grounded_judgment.GroundedTests.test_agent_probability_not_accepted) ... ok
+test_all_denominators_and_normative_uncertainty_pair (tests.test_grounded_judgment.GroundedTests.test_all_denominators_and_normative_uncertainty_pair) ... ok
+test_all_public_traces_and_counts (tests.test_grounded_judgment.GroundedTests.test_all_public_traces_and_counts) ... ok
+test_atomic_then_combine_then_draft (tests.test_grounded_judgment.GroundedTests.test_atomic_then_combine_then_draft) ... ok
+test_check_support_with_no_location_is_unresolved (tests.test_grounded_judgment.GroundedTests.test_check_support_with_no_location_is_unresolved) ... ok
+test_conflict_basis_missing_invalid (tests.test_grounded_judgment.GroundedTests.test_conflict_basis_missing_invalid) ... ok
+test_contradiction_table (tests.test_grounded_judgment.GroundedTests.test_contradiction_table) ... ok
+test_correct_uncertainty_counts_in_same_denominator (tests.test_grounded_judgment.GroundedTests.test_correct_uncertainty_counts_in_same_denominator) ... ok
+test_duplicate_document_rejected (tests.test_grounded_judgment.GroundedTests.test_duplicate_document_rejected) ... ok
+test_early_revision_disallowed (tests.test_grounded_judgment.GroundedTests.test_early_revision_disallowed) ... ok
+test_exact_13_three_rounds_and_e_dependency (tests.test_grounded_judgment.GroundedTests.test_exact_13_three_rounds_and_e_dependency) ... ok
+test_incompatible_relation_s_is_unresolved (tests.test_grounded_judgment.GroundedTests.test_incompatible_relation_s_is_unresolved) ... ok
+test_jev_distribution_and_weighted_contract (tests.test_grounded_judgment.GroundedTests.test_jev_distribution_and_weighted_contract) ... ok
+test_jev_low_choice_abstains (tests.test_grounded_judgment.GroundedTests.test_jev_low_choice_abstains) ... ok
+test_jev_wire_conversion_no_network (tests.test_grounded_judgment.GroundedTests.test_jev_wire_conversion_no_network) ... ok
+test_measurements_unknown_not_invented (tests.test_grounded_judgment.GroundedTests.test_measurements_unknown_not_invented) ... ok
+test_missing_e_keeps_conditional_reasoning (tests.test_grounded_judgment.GroundedTests.test_missing_e_keeps_conditional_reasoning) ... ok
+test_missing_image_cannot_be_direct (tests.test_grounded_judgment.GroundedTests.test_missing_image_cannot_be_direct) ... ok
+test_native_read_normal_resources_and_duplicate_rejected (tests.test_grounded_judgment.GroundedTests.test_native_read_normal_resources_and_duplicate_rejected) ... ok
+test_no_finding_no_jev_check (tests.test_grounded_judgment.GroundedTests.test_no_finding_no_jev_check) ... ok
+test_no_method_material_preload (tests.test_grounded_judgment.GroundedTests.test_no_method_material_preload) ... ok
+test_offsets_unicode_pairs_and_context (tests.test_grounded_judgment.GroundedTests.test_offsets_unicode_pairs_and_context) ... ok
+test_one_check_one_revision (tests.test_grounded_judgment.GroundedTests.test_one_check_one_revision) ... ok
+test_overflow_no_truncation (tests.test_grounded_judgment.GroundedTests.test_overflow_no_truncation) ... ok
+test_pending_interrupted_transaction_is_not_replayed (tests.test_grounded_judgment.GroundedTests.test_pending_interrupted_transaction_is_not_replayed) ... ok
+test_request_is_idempotent (tests.test_grounded_judgment.GroundedTests.test_request_is_idempotent) ... ok
+test_safety_refusal_stops_without_form_change (tests.test_grounded_judgment.GroundedTests.test_safety_refusal_stops_without_form_change) ... ok
+test_score_failure_does_not_erase_finding (tests.test_grounded_judgment.GroundedTests.test_score_failure_does_not_erase_finding) ... ok
+test_simulation_cannot_fill_real_exchange (tests.test_grounded_judgment.GroundedTests.test_simulation_cannot_fill_real_exchange) ... ok
+test_single_variable_pairs (tests.test_grounded_judgment.GroundedTests.test_single_variable_pairs) ... ok
+test_source_identity_not_support (tests.test_grounded_judgment.GroundedTests.test_source_identity_not_support) ... ok
+test_sufficient_not_only_synonym (tests.test_grounded_judgment.GroundedTests.test_sufficient_not_only_synonym) ... ok
+test_tampered_event_stops (tests.test_grounded_judgment.GroundedTests.test_tampered_event_stops) ... ok
+test_tampered_quote_revision_hash_and_offset (tests.test_grounded_judgment.GroundedTests.test_tampered_quote_revision_hash_and_offset) ... ok
+test_target_denial_alone_is_not_finding (tests.test_grounded_judgment.GroundedTests.test_target_denial_alone_is_not_finding) ... ok
+test_target_denial_with_refs (tests.test_grounded_judgment.GroundedTests.test_target_denial_with_refs) ... ok
+test_two_findings_check_is_four_questions (tests.test_grounded_judgment.GroundedTests.test_two_findings_check_is_four_questions) ... ok
+test_unknown_stops_without_retry (tests.test_grounded_judgment.GroundedTests.test_unknown_stops_without_retry) ... ok
+test_wrong_request_does_not_advance (tests.test_grounded_judgment.GroundedTests.test_wrong_request_does_not_advance) ... ok
+test_wrong_round_atoms_rejected (tests.test_grounded_judgment.GroundedTests.test_wrong_round_atoms_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 41 tests in 0.489s
+
+OK

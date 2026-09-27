@@ -6,6 +6,19 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Grounded judgment — authorized offline prototype delivered, implementation review pending
+
+Read [the scoped implementation and offline evidence](grounded-judgment-v0/offline-v1/RESULT.md).
+Independent module `experiments/grounded_judgment` implements source locators, 13-item
+three-round dependencies, B/C adapters, shared findings, draft/check/revision ordering,
+file-exchange records and separate measurement fields. Forty-one targeted offline tests
+pass; twelve public synthetic traces reproduce both single-variable development pairs.
+No real model requests, budget increase, frozen design edits or old experiment changes.
+Design baseline remains `006731c43a48099d41bfbc5f3421bd5267a6404f`.
+Offline scope is complete; independent implementation review, unseen-material sealing,
+authorized live executor/scheduling hookup and actual model validation remain later work.
+Synthetic returns do not establish Jev quality gain; default adoption stays NOT QUALIFIED.
+
 ## Grounded judgment — scoped design review PASS; implementation/live validation separate
 
 Design baseline: `006731c43a48099d41bfbc5f3421bd5267a6404f`.
@@ -14,7 +27,8 @@ Read [the actual independent design-review conclusion](grounded-judgment-v0/INDE
 [the acceptance contract](grounded-judgment-v0/ACCEPTANCE.md).
 All scoped design revisions are CLOSED, including unresolved-result scoring; no further
 revision or repeat review is pending. This PASS is design-only, not an implementation test
-or evidence of answer quality. Prototype implementation and real validation remain uncompleted.
+or evidence of answer quality. At that design-review checkpoint prototype implementation and real validation were uncompleted;
+see the newer offline implementation checkpoint above for current implementation status.
 The next stage is implementation under the existing contract and preregistered acceptance
 preparation, subject to corresponding user authorization; do not expand the design again.
 No model execution or added budget is authorized by this review, and unseen variants are
