@@ -63,6 +63,13 @@ def active(root):
         require(read_record(root/'remaining-five-scope-binding.json')=={'sha256':digest(x)}
                 and x['parent_transport_successor_sha256']==digest(parent)
                 and x['dispatch_scope']==[list(pair) for pair in REMAINING], 'transport_scope_binding_changed')
+    from .b1_compensation import NAME as compensation_name
+    if (root/compensation_name).exists():
+        parent=x; x=read_record(root/compensation_name)
+        from experiments.typed_decision.session import implementation_digest
+        require(read_record(root/'B1-compensation-successor-binding.json')=={'sha256':digest(x)}
+                and x['parent_scope_sha256']==digest(parent) and x['dispatch_scope']==[['B1','direct']]
+                and x['typed_decision_implementation']==implementation_digest(), 'B1_successor_changed')
     candidate=json.loads(CANDIDATE.read_text());protocol=json.loads(PROTOCOL.read_text())
     require(x['root']==str(root.resolve()) and x['code_hashes']==p.identity(BASE)
             and x['parent_freeze_sha256']==digest(read_record(root/'freeze.json'))

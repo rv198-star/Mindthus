@@ -37,13 +37,20 @@ class SerialRequests:
             require(read_record(anchor/'intent.json')=={'intent_sha256':digest(intent)},'serial_intent_binding_changed')
             require(isinstance(intent['label'],str) and intent['label'] not in labels,'serial_duplicate_label')
             require(self._number(intent['started_at_epoch']),'serial_start_time_invalid')
-            require(intent['previous_completion_sha256']==(digest(last) if last else None),'serial_chain_changed')
+            prior_unknown=last is not None and last['status']=='risk_accepted_remote_unknown'
+            require(intent['previous_completion_sha256']==(digest(last) if last and not prior_unknown else None),'serial_chain_changed')
+            require(intent.get('previous_disposition_sha256')==(digest(last) if prior_unknown else None),'serial_disposition_chain_changed')
             gap=intent['actual_gap_seconds']
             require((last is None and gap is None) or (last is not None and self._number(gap) and gap>=self.gap),'serial_gap_invalid')
             outcome=directory/'completion.json'
             failure=directory/'failure.json'
             require(not (outcome.exists() and failure.exists()),'serial_conflicting_terminal')
-            if failure.exists():
+            disposition=directory/'accepted-unknown.json'
+            if disposition.exists():
+                require(not outcome.exists() and not failure.exists(),'serial_conflicting_disposition')
+                from .b1_compensation import accepted
+                end=accepted(self.batch,directory,intent)
+            elif failure.exists():
                 from .host_boundary import validate_reconciliation
                 end=read_record(failure);host=Path(end['host_directory'])
                 require(self.batch is not None and host.is_relative_to(self.batch/'runs')
@@ -61,13 +68,14 @@ class SerialRequests:
                 require(read_record(anchor/'completion.json')=={'completion_sha256':digest(end)},'serial_completion_binding_changed')
                 require(end['intent_sha256']==digest(intent) and end['status']=='returned','serial_completion_identity')
                 require(self._number(end['request_elapsed_seconds']) and end['request_elapsed_seconds']>=0,'serial_end_time_invalid')
-            require(self._number(end['ended_at_epoch']),'serial_end_time_invalid')
+            require(self._number(end['local_disposition_at_epoch'] if end['status']=='risk_accepted_remote_unknown' else end['ended_at_epoch']),'serial_end_time_invalid')
             labels[intent['label']]=end;last=end
         if self.batch:
             # Use actual host/provider intents, including other scenarios/arms and reviews.
             locations=[(self.batch/'runs','*/*/host/*'),
                        (self.batch/'reviews','**'),
-                       (self.batch/'runs','*/*/route/level-*/journal/calls/*')]
+                       (self.batch/'runs','*/*/route/level-*/journal/calls/*'),
+                       (self.batch/'runs/B1/direct','route-compensation/level-*/journal/calls/*')]
             paths=set()
             for root,pattern in locations:
                 # Discover from BOTH directions. Request/prompt/schema-only
@@ -101,6 +109,8 @@ class SerialRequests:
             if self.batch:
                 from .transport_profile import guard
                 guard(self.batch)
+                from .b1_compensation import guard_label
+                guard_label(self.batch,label)
             directories,previous,labels=self._validate()
             require(label not in labels,'serial_request_already_completed')
             began_wait=self.monotonic()
@@ -114,13 +124,17 @@ class SerialRequests:
                     waited+=self.monotonic()-wait_start
             start_mono=self.monotonic();start=self.clock()
             gap=None if previous is None else start_mono-end_mono
+            accepted_unknown=previous is not None and previous['status']=='risk_accepted_remote_unknown'
+            reference_epoch=None if previous is None else previous['local_disposition_at_epoch'] if accepted_unknown else previous['ended_at_epoch']
             intent={'label':label,'started_at_epoch':start,
-                    'previous_completion_sha256':digest(previous) if previous else None,
-                    'previous_end_epoch':previous['ended_at_epoch'] if previous else None,
+                    'previous_completion_sha256':digest(previous) if previous and not accepted_unknown else None,
+                    'previous_end_epoch':reference_epoch if not accepted_unknown else None,
                     'actual_gap_seconds':gap,
                     'active_wait_seconds':waited,
                     'gap_basis':'first_call' if previous is None else 'monotonic' if continuous else 'restart_conservative_lower_bound',
-                    'wall_gap_seconds':None if previous is None else start-previous['ended_at_epoch']}
+                    'wall_gap_seconds':None if previous is None else start-reference_epoch}
+            if accepted_unknown:
+                intent.update(previous_disposition_sha256=digest(previous),previous_disposition_epoch=reference_epoch,gap_basis='monotonic_wait_after_risk_acceptance_not_remote_completion')
             directory=self.root/f'{len(directories):06d}';anchor=self.anchors/directory.name
             save(directory/'intent.json',intent)
             save(anchor/'intent.json',{'intent_sha256':digest(intent)})

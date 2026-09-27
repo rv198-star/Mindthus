@@ -226,11 +226,12 @@ def run_case(root,case_id,arm,provider=None,*,scheduler=None):
             old=read_record(start);require(old['freeze_sha256']==digest(f) and old['raw_sha256']==digest(raw),'pilot_arm_input_changed')
         else:save(start,{'freeze_sha256':digest(f),'raw_sha256':digest(raw),'started_at':datetime.now(timezone.utc).isoformat()})
         if (dest/'result.json').exists():return unseal(dest)
-        if profile:save(dest/'technical-identity.json',{'successor_sha256':digest(profile),'protocol_sha256':profile['protocol_sha256']})
+        if profile:save(dest/('technical-identity-compensation.json' if profile.get('schema')=='mindthus.B1-one-compensation.v1' else 'technical-identity.json'),{'successor_sha256':digest(profile),'protocol_sha256':profile['protocol_sha256']})
         pack=r.load_pack(REPO);loaded={};decision=None;reads=[];methods=[]
         if arm=='direct':
             require(not (dest/'host').exists() or (dest/'route/result.json').exists(),'pilot_host_before_route')
-            decision=r.route(dest/'route',raw,REPO,digest(f),provider,scheduler=scheduler)
+            route_dir=dest/('route-compensation' if profile and profile.get('schema')=='mindthus.B1-one-compensation.v1' else 'route')
+            decision=r.route(route_dir,raw,REPO,digest(f),provider,scheduler=scheduler)
             loaded=r.execution_materials(decision,pack,REPO);methods=list(decision['methods'])
             allowed=[p for p in f['source_hashes'] if any(p.startswith('skills/'+m+'/') or p==f'docs/methodologies/{m}.md' for m in methods+decision.get('companion_reference_methods',[]))]
             instruction=('Execute the committed methods in their declared scopes and conditional dependency order. Do not rerun method discovery or silently substitute another method. If materially unsuitable, give a source-based route_objection and a useful bounded answer. For sequential methods let the later judgment use the earlier established result in the answer; reading order alone is not that evidence. No named method or an uncertain route still permits a bounded response or necessary clarification; authority and facts remain constrained.')
