@@ -1,0 +1,8 @@
+{
+  "error": {
+    "message": "Invalid schema for response_format 'codex_output_schema': In context=('properties', 'read_paths'), 'uniqueItems' is not permitted.",
+    "type": "invalid_request_error",
+    "param": "text.format.schema",
+    "code": "invalid_json_schema"
+  }
+}

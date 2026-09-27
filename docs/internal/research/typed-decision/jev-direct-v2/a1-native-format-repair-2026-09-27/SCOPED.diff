@@ -1,0 +1,521 @@
+diff --git a/experiments/jev_direct/host_boundary.py b/experiments/jev_direct/host_boundary.py
+new file mode 100644
+index 000000000..4a1f9ad09
+--- /dev/null
++++ b/experiments/jev_direct/host_boundary.py
+@@ -0,0 +1,174 @@
++"""API schema projection and request-bound CLI archive failure receipts.
++
++Only a confirmed schema failure can be reconciled here. An exit code, timeout,
++unstructured error, or safety refusal never grants another dispatch.
++"""
++from copy import deepcopy
++from datetime import datetime
++import json
++from pathlib import Path
++from experiments.typed_decision.contracts import digest, require
++from experiments.typed_decision.relationship_runtime import save, _locked
++from experiments.typed_decision.session import read_record
++from .router import file_hash
++
++
++def api_schema(contract):
++    """Visit schema nodes, not property names or data inside enum/default values."""
++    result = deepcopy(contract)
++    def visit(node):
++        if not isinstance(node, dict):
++            return
++        node.pop('uniqueItems', None)  # confirmed invalid_json_schema, 2026-09-27
++        for key in ('properties', '$defs', 'definitions', 'patternProperties'):
++            for child in node.get(key, {}).values():
++                visit(child)
++        for key in ('items', 'additionalProperties', 'contains', 'not', 'if', 'then', 'else'):
++            visit(node.get(key))
++        for key in ('anyOf', 'oneOf', 'allOf', 'prefixItems'):
++            for child in node.get(key, []):
++                visit(child)
++    visit(result)
++    return result
++
++
++def parse_events(text):
++    events = []
++    for line in text.splitlines():
++        try:
++            event = json.loads(line)
++        except ValueError:
++            continue
++        if isinstance(event, dict):
++            events.append(event)
++    return events
++
++
++def bound_schema_failure(events, directory, thread_id):
++    """Use archive event_msg/task_complete, never reinterpret stdout turn.failed.
++
++    session_meta + turn_context + exact UserMessage bind thread, turn, workspace,
++    model and prompt to the immutable request. The receipt retains exact request/start/terminal events and projected metadata;
++    original event hashes and line numbers bind that projection to the archive.
++    """
++    directory = Path(directory)
++    intent = read_record(directory/'intent.json')
++    require(digest(read_record(directory/'request.json')) == intent['request_sha256'], 'host_request_binding')
++    require(digest((directory/'prompt.txt').read_text()) == intent['prompt_sha256'], 'host_prompt_binding')
++    require(digest(json.loads((directory/'schema.json').read_text())) == intent['schema_sha256'], 'host_schema_binding')
++    metas = [e for e in events if e.get('type') == 'session_meta']
++    require(len(metas) == 1 and metas[0]['payload'].get('id') == thread_id, 'host_archive_thread')
++    workspace = str((directory/'workspace').resolve())
++    require(metas[0]['payload'].get('cwd') == workspace, 'host_archive_workspace')
++    messages = [e for e in events if e.get('type') == 'event_msg'
++                and e.get('payload', {}).get('type') == 'item_completed'
++                and e['payload'].get('item', {}).get('type') == 'UserMessage'
++                and e['payload'].get('thread_id') == thread_id
++                and len(e['payload']['item'].get('content', [])) == 1
++                and e['payload']['item']['content'][0].get('type') == 'text'
++                and e['payload']['item']['content'][0].get('text') == (directory/'prompt.txt').read_text()]
++    require(len(messages) == 1, 'host_archive_prompt')
++    message = messages[0]; turn = message['payload'].get('turn_id')
++    require(isinstance(turn, str) and turn, 'host_archive_turn')
++    contexts = [e for e in events if e.get('type') == 'turn_context' and e['payload'].get('turn_id') == turn]
++    starts = [e for e in events if e.get('type') == 'event_msg' and e['payload'].get('type') == 'task_started' and e['payload'].get('turn_id') == turn]
++    ends = [e for e in events if e.get('type') == 'event_msg' and e['payload'].get('type') == 'task_complete' and e['payload'].get('turn_id') == turn]
++    require(len(contexts) == len(starts) == len(ends) == 1, 'host_archive_terminal_missing')
++    context, start, end = contexts[0], starts[0], ends[0]
++    require(context['payload'].get('cwd') == workspace and context['payload'].get('model') == intent['model']
++            and context['payload'].get('effort') == intent['effort'], 'host_archive_context')
++    selected = [metas[0], start, context, message, end]
++    require([events.index(e) for e in selected] == sorted(events.index(e) for e in selected), 'host_archive_order')
++    payload = end['payload']
++    require(payload.get('last_agent_message') is None and isinstance(payload.get('error'), dict), 'host_archive_not_failure')
++    try:
++        error = json.loads(payload['error']['message'])['error']
++    except (KeyError, ValueError, TypeError):
++        error = {}
++    require((error.get('type'), error.get('code'), error.get('param')) ==
++            ('invalid_request_error', 'invalid_json_schema', 'text.format.schema'), 'host_not_schema_failure')
++    duration = payload.get('duration_ms')
++    require(type(duration) in (int, float) and duration >= 0, 'host_archive_duration')
++    end_epoch = datetime.fromisoformat(end['timestamp'].replace('Z', '+00:00')).timestamp()
++    start_epoch = datetime.fromisoformat(start['timestamp'].replace('Z', '+00:00')).timestamp()
++    require(end_epoch >= start_epoch, 'host_archive_time')
++    return {'status': 'confirmed_request_failure', 'failure_kind': 'invalid_json_schema',
++            'automatic_retry': False, 'request_sha256': intent['request_sha256'],
++            'intent_sha256': digest(intent), 'thread_id': thread_id, 'turn_id': turn,
++            'error': error, 'started_at_epoch': start_epoch, 'ended_at_epoch': end_epoch,
++            'host_session_seconds': duration/1000, 'http_seconds': None,
++            'binding_events': selected}
++
++
++def binding_events(events):
++    result = deepcopy(events)
++    fields = {'session_meta': ('id', 'cwd', 'timestamp', 'cli_version', 'model_provider'),
++              'turn_context': ('turn_id', 'cwd', 'model', 'effort')}
++    for event in result:
++        if event.get('type') in fields:
++            event['payload'] = {k: event['payload'].get(k) for k in fields[event['type']]}
++    return result
++
++
++def capture_schema_failure(directory, archive, thread_id):
++    archive = Path(archive)
++    lines = archive.read_text().splitlines()
++    originals = [json.loads(line) for line in lines]
++    events = binding_events(originals)
++    receipt = bound_schema_failure(events, directory, thread_id)
++    receipt.update(archive_path=str(archive), archive_sha256=file_hash(archive),
++                   archive_line_numbers=[events.index(e)+1 for e in receipt['binding_events']],
++                   archive_original_event_sha256=[digest(originals[events.index(e)]) for e in receipt['binding_events']],
++                   export_scope='exact start/request/terminal events; session and turn metadata projected')
++    save(Path(directory)/'schema-failure-receipt.json', receipt)
++    return receipt
++
++
++def validate_receipt(directory):
++    receipt = read_record(Path(directory)/'schema-failure-receipt.json')
++    core = bound_schema_failure(receipt['binding_events'], directory, receipt['thread_id'])
++    require(all(receipt.get(k) == v for k, v in core.items()), 'host_failure_receipt_changed')
++    return receipt
++
++
++def cli_schema_failure(directory, thread_id):
++    """Discover only the archive named by this invocation's thread.started."""
++    archives = list((Path.home()/'.codex/sessions').glob('*/*/*/*-'+thread_id+'.jsonl'))
++    require(len(archives) == 1, 'host_archive_unavailable')
++    return capture_schema_failure(directory, archives[0], thread_id)
++
++
++def validate_reconciliation(directory):
++    directory = Path(directory)
++    receipt = validate_receipt(directory)
++    record = read_record(directory/'reconciliation.json')
++    require(record == {'status': 'confirmed_request_failure', 'receipt_sha256': digest(receipt),
++                       'intent_sha256': digest(read_record(directory/'intent.json')),
++                       'automatic_retry': False}, 'host_reconciliation_changed')
++    return receipt
++
++
++def reconcile_schema_failure(batch, directory, archive, thread_id):
++    """Append evidence; retain the old bare intent and do not invent completion."""
++    batch, directory = Path(batch).resolve(), Path(directory).resolve()
++    require(directory.is_relative_to(batch/'runs'), 'host_reconcile_outside_batch')
++    with _locked(batch/'serial/.lock'):
++        slots = [p.parent for p in (batch/'serial').glob('*/intent.json')
++                 if read_record(p).get('label') == 'host:'+str(directory)]
++        require(len(slots) == 1, 'host_reconcile_serial_binding')
++        slot = slots[0]; intent = read_record(slot/'intent.json')
++        require(not (slot/'completion.json').exists() and not (directory/'outcome.json').exists(), 'host_reconcile_already_returned')
++        anchor = batch/'serial-bindings'/slot.name
++        require(read_record(anchor/'intent.json') == {'intent_sha256': digest(intent)}, 'host_reconcile_anchor')
++        receipt = capture_schema_failure(directory, archive, thread_id)
++        require(receipt['started_at_epoch'] >= intent['started_at_epoch'], 'host_reconcile_time')
++        record = {'status': 'confirmed_request_failure', 'receipt_sha256': digest(receipt),
++                  'intent_sha256': digest(read_record(directory/'intent.json')), 'automatic_retry': False}
++        save(directory/'reconciliation.json', record)
++        failure = {'status': 'confirmed_request_failure', 'intent_sha256': digest(intent),
++                   'ended_at_epoch': receipt['ended_at_epoch'], 'request_elapsed_seconds': None,
++                   'host_session_seconds': receipt['host_session_seconds'],
++                   'host_directory': str(directory), 'reconciliation_sha256': digest(record)}
++        save(slot/'failure.json', failure)
++        save(anchor/'failure.json', {'failure_sha256': digest(failure)})
++        return record
+diff --git a/experiments/jev_direct/pilot.py b/experiments/jev_direct/pilot.py
+index 9b3f8f9ae..46cbd40e6 100644
+--- a/experiments/jev_direct/pilot.py
++++ b/experiments/jev_direct/pilot.py
+@@ -7,6 +7,7 @@ from experiments.typed_decision.relationship_runtime import save,_locked
+ from experiments.typed_decision.session import read_record,RecoveryRequired
+ from . import router as r
+ from .full_context import ROUTABLE
++from .host_boundary import api_schema,parse_events,cli_schema_failure
+ REPO=Path(__file__).resolve().parents[2]
+ ADAPTER=REPO/'docs/internal/research/typed-decision/route-control-v0.2/single-cycle-repair-v1/run.py'
+ spec=importlib.util.spec_from_file_location('direct_cli_transport',ADAPTER)
+@@ -54,15 +55,20 @@ def prepare(root,cases,*,binary=None,serial_gap_seconds=None):
+     save(root/'freeze-binding.json',{'freeze_sha256':digest(f),'case_sha256':{c['id']:digest(c['raw']) for c in cases}})
+     return f
+ 
+-def verify(root):
++def verify_frozen_inputs(root):
+     root=Path(root).resolve();f=read_record(root/'freeze.json')
+     require(read_record(root/'freeze-binding.json')=={'freeze_sha256':digest(f),'case_sha256':{c['id']:digest(c['raw']) for c in f['cases']}},'pilot_freeze_changed')
+-    require(f['root']==str(root) and f['code_hashes']==identity(REPO),'pilot_code_drift')
++    require(f['root']==str(root),'pilot_root_changed')
+     require(all(material(REPO,p)['sha256']==h for p,h in f['source_hashes'].items()),'pilot_source_drift')
+     config=Path.home()/'.codex/config.toml'
+     require(f['binary_sha256']==r.file_hash(f['binary']) and f['config_sha256']==(r.file_hash(config) if config.exists() else None),'pilot_host_drift')
+     return f
+ 
++def verify(root):
++    f=verify_frozen_inputs(root)
++    require(f['code_hashes']==identity(REPO),'pilot_code_drift')
++    return f
++
+ def exact_tree(root):
+     return {str(p.relative_to(root)):r.file_hash(p) for p in sorted(Path(root).rglob('*')) if p.is_file() and not p.name.startswith('.') and p.name!='seal.json'}
+ def seal(root,result):
+@@ -88,47 +94,69 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
+         require(scheduler.root.resolve()==batch/'serial' and scheduler.gap==60,'pilot_serial_root')
+         scheduler.validate()
+     directory=Path(root)/label;directory.mkdir(parents=True,exist_ok=True)
++    sending=api_schema(schema)
+     prompt='根据原始任务与实际已加载规则完成当前请求。工具关闭；需要资料时只按schema请求读取，不虚构事实或执行结果。输出规定JSON，不输出隐藏推理。\n'+canonical(request).decode()
+-    intent={'request_sha256':digest(request),'prompt_sha256':digest(prompt),'schema_sha256':digest(schema),'model':f['host_model'],'effort':f['host_effort'],'prior_context':prior,'timeout_seconds':timeout or f['host_timeout']}
++    intent={'request_sha256':digest(request),'prompt_sha256':digest(prompt),'schema_sha256':digest(schema),'api_schema_sha256':digest(sending),'model':f['host_model'],'effort':f['host_effort'],'prior_context':prior,'timeout_seconds':timeout or f['host_timeout']}
+     if (directory/'intent.json').exists():
+         require(read_record(directory/'intent.json')==intent,'pilot_call_identity_changed')
+         if not (directory/'outcome.json').exists():raise RecoveryRequired('pilot_unknown_call_no_retry')
+         out=read_record(directory/'outcome.json')
+-        require(read_record(directory/'request.json')==request and json.loads((directory/'schema.json').read_text())==schema and (directory/'prompt.txt').read_text()==prompt,'pilot_cached_request_changed')
++        require(read_record(directory/'request.json')==request and json.loads((directory/'schema.json').read_text())==schema and json.loads((directory/'schema.api.json').read_text())==sending and (directory/'prompt.txt').read_text()==prompt,'pilot_cached_request_changed')
+         reply=None
+         if out['status']=='complete':
+             reply=wire._decode_reply(directory/'reply.json',65536)
+             require(digest(reply)==out['reply_sha256'],'pilot_cached_reply_changed')
+         return reply,out
+     require(not (directory/'reply.json').exists(),'pilot_unbound_reply')
+-    save(directory/'request.json',request);(directory/'schema.json').write_text(json.dumps(schema,ensure_ascii=False));(directory/'prompt.txt').write_text(prompt)
++    save(directory/'request.json',request)
++    for name,value in (('schema.json',schema),('schema.api.json',sending)):
++        path=directory/name
++        if path.exists():require(json.loads(path.read_text())==value,'pilot_prepared_schema_changed')
++        else:path.write_bytes(canonical(value)+b'\n')
++    (directory/'prompt.txt').write_text(prompt)
++    save(directory/'schema-binding.json',{'local_contract_sha256':digest(schema),'api_schema_sha256':digest(sending),'projection':'remove_uniqueItems_at_schema_nodes_v1'})
+     work=directory/'workspace';work.mkdir(exist_ok=True)
+     cmd=[f['binary'],'exec']+(['resume'] if prior else [])
+-    cmd+=['--skip-git-repo-check','-m',f['host_model'],'-c','model_reasoning_effort='+json.dumps(f['host_effort']),'-c','features.shell_tool=false','--json','--output-schema',str(directory/'schema.json'),'-o',str(directory/'reply.json')]
++    cmd+=['--skip-git-repo-check','-m',f['host_model'],'-c','model_reasoning_effort='+json.dumps(f['host_effort']),'-c','features.shell_tool=false','--json','--output-schema',str(directory/'schema.api.json'),'-o',str(directory/'reply.json')]
+     cmd+=([prior,'-'] if prior else ['--sandbox','read-only','-C',str(work),'-'])
+     env=os.environ.copy()
+     for k in ('TYPESAFE_API_KEY','OPENROUTER_API_KEY','MINDTHUS_HOST_API_KEY'):env.pop(k,None)
+     start=time.monotonic();usage={'input_tokens':None,'output_tokens':None,'cached_input_tokens':None,'cost_usd':None};context=None;returned=False;reply=None
+-    elapsed=0.0
++    elapsed=0.0;failure=None
+     try:
+         def invoke():
+-            nonlocal elapsed
++            nonlocal elapsed,failure
+             # Waiting/lock interruption has not sent anything. Only persist the
+             # host intent once the serial slot has actually been acquired.
+             save(directory/'intent.json',intent)
+             call_start=time.monotonic()
++            cli_returned=False
+             try:
+                 proc=wire._run_cli(cmd,prompt,env,timeout or f['host_timeout'])
+-                if scheduler:
+-                    terminal=False
+-                    for line in proc.stdout.splitlines():
+-                        try:event=json.loads(line)
+-                        except ValueError:continue
+-                        if isinstance(event,dict) and event.get('type')=='turn.completed':terminal=True
+-                    if proc.returncode!=0 or not terminal:
+-                        raise RecoveryRequired('pilot_remote_completion_unknown')
++                elapsed=time.monotonic()-call_start;cli_returned=True
++                (directory/'cli.stdout.jsonl').write_text(proc.stdout)
++                (directory/'cli.stderr.txt').write_text(proc.stderr)
++                events=parse_events(proc.stdout)
++                contexts={e['thread_id'] for e in events if e.get('type')=='thread.started' and isinstance(e.get('thread_id'),str)}
++                terminal=proc.returncode==0 and len(contexts)==1 and sum(e.get('type')=='turn.completed' for e in events)==1 and not any(e.get('type')=='turn.failed' for e in events)
++                if terminal:
++                    # Current stdout may omit turn IDs; any IDs it does expose
++                    # must agree within this dedicated CLI invocation.
++                    turns={e['turn_id'] for e in events if e.get('type') in ('turn.started','turn.completed') and e.get('turn_id')}
++                    terminal=len(turns)<=1 and all(e.get('thread_id',next(iter(contexts))) in contexts for e in events if e.get('type')=='turn.completed')
++                if not terminal and len(contexts)==1:
++                    context=next(iter(contexts))
++                    try:failure=cli_schema_failure(directory,context)
++                    except (ContractError,ValueError,KeyError,OSError):pass
++                if not terminal and failure is None:
++                    raise RecoveryRequired('pilot_remote_completion_unknown')
+                 return proc
+-            finally:elapsed=time.monotonic()-call_start
++            except (OSError,subprocess.TimeoutExpired) as exc:
++                save(directory/'transport-observation.json',{'status':'unknown','local_error':type(exc).__name__,'automatic_retry':False})
++                raise RecoveryRequired('pilot_remote_completion_unknown') from exc
++            finally:
++                if not cli_returned:elapsed=time.monotonic()-call_start
++                save(directory/'host-session-observation.json',{'cli_wall_seconds':elapsed,'process_returned':cli_returned,'http_seconds':None,'remote_terminal_inferred_from_exit':False})
+         proc=scheduler.call('host:'+str(directory),invoke) if scheduler else invoke();returned=True;events=[]
+         for line in proc.stdout.splitlines():
+             try:e=json.loads(line)
+@@ -139,14 +167,15 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
+         if uses:
+             for k in usage:
+                 if k!='cost_usd':usage[k]=uses[-1].get(k)
++        if failure is not None:raise ContractError('pilot_confirmed_invalid_json_schema')
+         require(proc.returncode==0,'pilot_cli_failed')
+         require(not any((e.get('item') or {}).get('type') in ('command_execution','mcp_tool_call','web_search','file_change') for e in events),'pilot_tool_use')
+         require(len(contexts)==1,'pilot_context_missing');context=next(iter(contexts))
+         require(prior is None or context==prior,'pilot_context_changed')
+         reply=wire._decode_reply(directory/'reply.json',65536);wire._wire_check(reply,schema)
+         out={'status':'complete','reply_sha256':digest(reply)}
+-    except (ContractError,OSError,subprocess.TimeoutExpired) as exc:out={'status':'failed','error':safe_code(exc)}
+-    out.update(request_sha256=digest(request),schema_sha256=digest(schema),context_ref=context,elapsed_seconds=elapsed,dispatch_wall_seconds=time.monotonic()-start,usage=usage,process_returned=returned,requested_model=f['host_model'],service_model_attestation='not_observed',automatic_retry=False)
++    except ContractError as exc:out={'status':'failed','error':safe_code(exc),'failure_kind':'request_schema' if failure else 'local_validation'}
++    out.update(request_sha256=digest(request),schema_sha256=digest(schema),api_schema_sha256=digest(sending),context_ref=failure['thread_id'] if failure else context,elapsed_seconds=elapsed,dispatch_wall_seconds=time.monotonic()-start,usage=usage,process_returned=returned,requested_model=f['host_model'],service_model_attestation='not_observed',automatic_retry=False)
+     save(directory/'outcome.json',out);return reply,out
+ 
+ def answer_schema(paths):
+diff --git a/experiments/jev_direct/serial.py b/experiments/jev_direct/serial.py
+index 6811e3723..958ea5e88 100644
+--- a/experiments/jev_direct/serial.py
++++ b/experiments/jev_direct/serial.py
+@@ -41,11 +41,27 @@ class SerialRequests:
+             gap=intent['actual_gap_seconds']
+             require((last is None and gap is None) or (last is not None and self._number(gap) and gap>=self.gap),'serial_gap_invalid')
+             outcome=directory/'completion.json'
+-            if not outcome.exists():raise RecoveryRequired('serial_unknown_request_no_resubmit')
+-            end=read_record(outcome)
+-            require(read_record(anchor/'completion.json')=={'completion_sha256':digest(end)},'serial_completion_binding_changed')
+-            require(end['intent_sha256']==digest(intent) and end['status']=='returned','serial_completion_identity')
+-            require(self._number(end['ended_at_epoch']) and self._number(end['request_elapsed_seconds']) and end['request_elapsed_seconds']>=0,'serial_end_time_invalid')
++            failure=directory/'failure.json'
++            require(not (outcome.exists() and failure.exists()),'serial_conflicting_terminal')
++            if failure.exists():
++                from .host_boundary import validate_reconciliation
++                end=read_record(failure);host=Path(end['host_directory'])
++                require(self.batch is not None and host.is_relative_to(self.batch/'runs')
++                        and intent['label']=='host:'+str(host),'serial_failure_identity')
++                receipt=validate_reconciliation(host)
++                require(read_record(anchor/'failure.json')=={'failure_sha256':digest(end)},'serial_failure_binding_changed')
++                require(end['status']=='confirmed_request_failure' and end['intent_sha256']==digest(intent)
++                        and end['reconciliation_sha256']==digest(read_record(host/'reconciliation.json'))
++                        and end['ended_at_epoch']==receipt['ended_at_epoch']
++                        and receipt['started_at_epoch']>=intent['started_at_epoch']
++                        and end['request_elapsed_seconds'] is None,'serial_failure_receipt_changed')
++            else:
++                if not outcome.exists():raise RecoveryRequired('serial_unknown_request_no_resubmit')
++                end=read_record(outcome)
++                require(read_record(anchor/'completion.json')=={'completion_sha256':digest(end)},'serial_completion_binding_changed')
++                require(end['intent_sha256']==digest(intent) and end['status']=='returned','serial_completion_identity')
++                require(self._number(end['request_elapsed_seconds']) and end['request_elapsed_seconds']>=0,'serial_end_time_invalid')
++            require(self._number(end['ended_at_epoch']),'serial_end_time_invalid')
+             labels[intent['label']]=end;last=end
+         if self.batch:
+             # Use actual host/provider intents, including other scenarios/arms and reviews.
+@@ -56,7 +72,7 @@ class SerialRequests:
+             for root,pattern in locations:
+                 # Discover from BOTH directions. Request/prompt/schema-only
+                 # preparation is not evidence that anything was sent.
+-                for name in ('intent.json','outcome.json','reply.json','provider-receipt.json'):
++                for name in ('intent.json','outcome.json','reply.json','provider-receipt.json','reconciliation.json','schema-failure-receipt.json'):
+                     for evidence in root.glob(pattern+'/'+name):
+                         intent_path=evidence.with_name('intent.json')
+                         require(intent_path.is_file(),'serial_orphan_response_evidence')
+@@ -66,8 +82,12 @@ class SerialRequests:
+                 read_record(path)
+                 label=('jev:'+str(path.parents[3]) if path.parent.parent.name=='calls' else 'host:'+str(path.parent))
+                 require(label in labels,'serial_business_binding_missing')
+-                if not path.with_name('outcome.json').exists():raise RecoveryRequired('serial_business_outcome_unknown')
+-                read_record(path.with_name('outcome.json'));observed.add(label)
++                if not path.with_name('outcome.json').exists():
++                    if labels[label]['status']!='confirmed_request_failure':raise RecoveryRequired('serial_business_outcome_unknown')
++                    from .host_boundary import validate_reconciliation
++                    validate_reconciliation(path.parent)
++                else:read_record(path.with_name('outcome.json'))
++                observed.add(label)
+             bound={label for label in labels if label.startswith(('host:','jev:'))}
+             require(bound==observed,'serial_business_evidence_missing')
+         return directories,last,labels
+@@ -83,15 +103,19 @@ class SerialRequests:
+             began_wait=self.monotonic()
+             continuous=previous is not None and digest(previous)==self._last_completion
+             end_mono=self._last_end if continuous else began_wait
++            waited=0.0
+             if previous is not None:
+                 while self.monotonic()-end_mono < self.gap:
++                    wait_start=self.monotonic()
+                     self.sleep(min(60,self.gap-(self.monotonic()-end_mono)))
++                    waited+=self.monotonic()-wait_start
+             start_mono=self.monotonic();start=self.clock()
+             gap=None if previous is None else start_mono-end_mono
+             intent={'label':label,'started_at_epoch':start,
+                     'previous_completion_sha256':digest(previous) if previous else None,
+                     'previous_end_epoch':previous['ended_at_epoch'] if previous else None,
+                     'actual_gap_seconds':gap,
++                    'active_wait_seconds':waited,
+                     'gap_basis':'first_call' if previous is None else 'monotonic' if continuous else 'restart_conservative_lower_bound',
+                     'wall_gap_seconds':None if previous is None else start-previous['ended_at_epoch']}
+             directory=self.root/f'{len(directories):06d}';anchor=self.anchors/directory.name
+diff --git a/experiments/jev_direct/technical_retry.py b/experiments/jev_direct/technical_retry.py
+new file mode 100644
+index 000000000..2023829f6
+--- /dev/null
++++ b/experiments/jev_direct/technical_retry.py
+@@ -0,0 +1,116 @@
++"""One explicitly authorized A1/native format-repair attempt in the SAME ledger.
++
++No automatic retry, routing, read continuation, new budget, or replacement freeze.
++Registration is separate from dispatch so the repaired code is committed first.
++"""
++from datetime import datetime, timezone
++from pathlib import Path
++import json
++import subprocess
++import time
++from experiments.typed_decision.contracts import digest, require, ContractError
++from experiments.typed_decision.relationship_runtime import save, _locked
++from experiments.typed_decision.session import read_record
++from . import pilot as p
++from .host_boundary import api_schema, validate_reconciliation
++from .serial import SerialRequests
++
++
++def lineage(root):
++    root = Path(root).resolve(); f = p.verify_frozen_inputs(root)
++    old = root/'runs/A1/native/host/0'
++    receipt = validate_reconciliation(old)
++    require(not (root/'runs/A1/native/result.json').exists(), 'retry_original_already_terminal')
++    require(f['max_host_calls_per_arm'] == 4 and f['host_model'] == 'gpt-6-sol'
++            and f['host_effort'] == 'xhigh' and f.get('serial_policy', {}).get('max_in_flight') == 1,
++            'retry_frozen_policy')
++    request = read_record(old/'request.json'); schema = json.loads((old/'schema.json').read_text())
++    case = next(c for c in f['cases'] if c['id'] == 'A1')
++    require(request['original_input'] == case['raw'] and request['route'] is None
++            and request['loaded_materials'] == {} and schema == p.answer_schema(request['readable_paths']),
++            'retry_original_request_changed')
++    require(request['entry_skill'] == p.material(p.REPO, 'skills/using-mindthus/SKILL.md')
++            and request['method_catalog'] == p.entry_catalog(p.REPO)
++            and request['readable_paths'] == sorted(f['source_hashes']), 'retry_entry_changed')
++    return f, old, request, schema, receipt
++
++
++def register(root):
++    root = Path(root).resolve()
++    with _locked(root/'.A1.pair-lock'):
++        f, old, request, schema, receipt = lineage(root)
++        SerialRequests(root/'serial').validate()
++        require([x.name for x in sorted(old.parent.iterdir()) if x.is_dir()] == ['0'], 'retry_attempt_already_present')
++        # Use the observed shell wall as a conservative debit, not as HTTP time.
++        times = [line.split()[1] for line in (root/'operator.stderr.txt').read_text().splitlines()
++                 if line.startswith('real ') and len(line.split()) == 2]
++        require(len(times) == 1, 'retry_previous_wall_missing')
++        debit = float(times[0]); require(debit >= receipt['host_session_seconds'], 'retry_previous_wall_invalid')
++        identity = {'schema': 'mindthus.a1-native-format-successor.v1', 'root': str(root),
++                    'parent_freeze_sha256': digest(f), 'parent_source_commit': f['source_commit'],
++                    'source_commit': subprocess.check_output(['git','rev-parse','HEAD'], cwd=p.REPO, text=True).strip(),
++                    'code_hashes': p.identity(p.REPO), 'case': 'A1', 'arm': 'native',
++                    'request_sha256': digest(request), 'local_contract_sha256': digest(schema),
++                    'api_schema_sha256': digest(api_schema(schema)), 'old_receipt_sha256': digest(receipt),
++                    'previous_attempts': 1, 'remaining_attempts_before': 3, 'max_new_host_calls': 1,
++                    'next_host_slot': '1', 'previous_host_session_seconds': receipt['host_session_seconds'],
++                    'previous_budget_debit_seconds': debit,
++                    'previous_wall_evidence_sha256': p.r.file_hash(root/'operator.stderr.txt'),
++                    'automatic_retry': False, 'read_continuation': False}
++        save(root/'technical-successor.json', identity)
++        save(root/'technical-successor-binding.json', {'successor_sha256': digest(identity)})
++        return identity
++
++
++def run_once(root, *, scheduler=None):
++    root = Path(root).resolve(); began = time.monotonic()
++    with _locked(root/'.A1.pair-lock'):
++        f, old, request, schema, receipt = lineage(root)
++        successor = read_record(root/'technical-successor.json')
++        require(read_record(root/'technical-successor-binding.json') == {'successor_sha256': digest(successor)}, 'retry_identity_changed')
++        require(successor['root'] == str(root) and successor['parent_freeze_sha256'] == digest(f)
++                and successor['code_hashes'] == p.identity(p.REPO)
++                and successor['old_receipt_sha256'] == digest(receipt)
++                and successor['request_sha256'] == digest(request)
++                and successor['local_contract_sha256'] == digest(schema)
++                and successor['api_schema_sha256'] == digest(api_schema(schema)), 'retry_lineage_changed')
++        require((successor['previous_attempts'], successor['remaining_attempts_before'], successor['max_new_host_calls'], successor['next_host_slot']) == (1,3,1,'1'), 'retry_budget_changed')
++        require(successor['previous_wall_evidence_sha256'] == p.r.file_hash(root/'operator.stderr.txt'), 'retry_wall_evidence_changed')
++        require(successor['previous_budget_debit_seconds'] >= receipt['host_session_seconds'], 'retry_budget_debit_changed')
++        scheduler = scheduler or SerialRequests(root/'serial')
++        require(scheduler.root == root/'serial' and scheduler.gap == 60, 'retry_serial_root')
++        scheduler.validate()
++        dest = root/'technical-retry/A1/native'
++        if (dest/'result.json').exists():
++            result = p.unseal(dest)
++            require(result['host_evidence_sha256'] == digest(p.exact_tree(old.parent)), 'retry_host_evidence_changed')
++            return result
++        require({x.name for x in old.parent.iterdir() if x.is_dir()} <= {'0','1'}, 'retry_unexpected_attempt')
++        save(dest/'run-start.json', {'freeze_sha256': digest(f), 'raw_sha256': digest(request['original_input']),
++                                  'started_at': datetime.now(timezone.utc).isoformat()})
++        loaded_seconds = time.monotonic()-began
++        remaining = f['max_host_seconds_per_arm']-successor['previous_budget_debit_seconds']
++        require(remaining >= f['host_timeout'], 'retry_time_budget')
++        reply, outcome = p.host_call(old.parent, '1', request, schema, f, timeout=f['host_timeout'], scheduler=scheduler)
++        result = {'case': 'A1', 'arm': 'native', 'status': 'host_failed', 'text': '',
++                  'technical_successor_sha256': digest(successor), 'new_host_calls': 1,
++                  'total_host_attempts': 2, 'remaining_host_attempts': 2,
++                  'host_evidence_sha256': digest(p.exact_tree(old.parent)),
++                  'loading_seconds': loaded_seconds, 'new_host_session_seconds': outcome['elapsed_seconds'],
++                  'host_dispatch_wall_seconds': outcome['dispatch_wall_seconds'],
++                  'http_seconds': None, 'quality': 'not_scored', 'outcome': outcome,
++                  'original_reply_path': str(old.parent/'1/reply.json') if reply is not None else None}
++        if outcome['status'] == 'complete':
++            try:
++                if reply['action'] == 'read':
++                    require(reply['text'] == '' and reply['used_methods'] == [] and reply['read_paths'], 'pilot_read_shape')
++                    result.update(status='read_requested', requested_reads=reply['read_paths'])
++                else:
++                    require(not reply['read_paths'] and reply['text'].strip(), 'pilot_answer_required')
++                    actual = {m for m in p.ROUTABLE if f'skills/{m}/SKILL.md' in request['loaded_materials']}
++                    require(set(reply['used_methods']) <= actual, 'pilot_unread_method_claim')
++                    result.update(status='delivered', text=reply['text'], used_methods=reply['used_methods'],
++                                  route_objection=reply['route_objection'], quality='requires_independent_content_review')
++            except ContractError as exc:
++                result.update(status='host_reply_rejected', reason=p.safe_code(exc))
++        return p.seal(dest, result)

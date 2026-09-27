@@ -6,7 +6,24 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current A1 native — explicit live API schema failure, no answer
+## Current A1 native — answer delivered; CLI internal retries limit execution compliance
+
+Format repair code is pinned at `0659bc5d7e08c82998ff3a507b4870651186241c`.
+Read the [real A1 retry result, raw answer, reconciliation and scoped tests](jev-direct-v2/a1-native-format-repair-2026-09-27/RESULT.md).
+The original failed attempt is now reliably reconciled as invalid_json_schema without
+rewriting its intent/freeze. One additional operator host invocation returned the correct
+three-line answer; the API accepted the projected schema and full local validation passed.
+The same batch ledger retains 2/4 host CLI attempts consumed (2 remaining by that counter).
+New CLI wall 119.215100s, active wait 60.007606s, full command wall 179.60s; HTTP time/cost unknown.
+However, original CLI logs show five internal sampling retries and WebSocket-to-HTTPS
+fallback within that invocation. The batch scheduler did not gate those internal retries;
+strict per-request 60s spacing and absence of unknown overlapping remote attempts are not
+established. Do not count this execution-compliance dimension as PASS or hide it behind
+`automatic_retry=false` in the outer driver. No further calls or settings changes followed.
+The other eleven paths remain UNRUN; Jev, content reviewers and main were untouched.
+R2's four engineering findings remain CLOSED; paired quality/net benefit is still unknown.
+
+## Previous A1 native — explicit live API schema failure, no answer
 
 One authorized A1/native host call ran from source 79acb4e3e using gpt-6-sol/xhigh;
 the real host session ended with invalid_json_schema: read_paths.uniqueItems is not

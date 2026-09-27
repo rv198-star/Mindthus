@@ -1,0 +1,33 @@
+{
+  "new_host_cli_invocations": 1,
+  "total_host_cli_invocations": 2,
+  "remaining_by_frozen_host_invocation_counter": 2,
+  "underlying_remote_request_attempt_count": null,
+  "active_wait_seconds": 60.00760637500207,
+  "gap_lower_bound_seconds": 60.00827641601791,
+  "gap_basis": "restart_conservative_lower_bound",
+  "preflight_loading_seconds": 0.19524079200346023,
+  "new_cli_wall_seconds": 119.21509970800253,
+  "new_archive_task_seconds": 111.551,
+  "dispatch_wall_seconds": 179.2591211249819,
+  "run_result_wall_seconds": 179.269232,
+  "operator_wall_seconds": 179.4659076660173,
+  "whole_command_wall_seconds": 179.6,
+  "other_operator_overhead_seconds": 0.04796079100924544,
+  "old_archive_task_seconds": 28.518,
+  "old_whole_command_wall_seconds": 30.22,
+  "old_driver_cli_monotonic_seconds": null,
+  "http_seconds": null,
+  "usage_new": {
+    "cached_input_tokens": 0,
+    "cost_usd": null,
+    "input_tokens": 23711,
+    "output_tokens": 84
+  },
+  "usage_old": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "cost_usd": null
+  },
+  "remaining_host_seconds_under_conservative_debit": 750.5649002919974
+}

@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/jev_direct/pilot.py", line 228, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/jev_direct/pilot.py", line 226, in main
+    out=prepare(a.root,json.loads(a.cases.read_text())) if a.action=='prepare' else run_case(a.root,a.case,a.arm)
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/jev_direct/pilot.py", line 200, in run_case
+    reply,out=host_call(dest/'host',str(n),request,schema,f,prior=prior,timeout=min(f['host_timeout'],remaining),scheduler=scheduler);total+=out['elapsed_seconds']
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/jev_direct/pilot.py", line 132, in host_call
+    proc=scheduler.call('host:'+str(directory),invoke) if scheduler else invoke();returned=True;events=[]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/jev_direct/serial.py", line 100, in call
+    result=invoke()
+           ^^^^^^^^
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/jev_direct/pilot.py", line 129, in invoke
+    raise RecoveryRequired('pilot_remote_completion_unknown')
+experiments.typed_decision.session.RecoveryRequired: pilot_remote_completion_unknown
+real 30.22
+user 2.77
+sys 1.28

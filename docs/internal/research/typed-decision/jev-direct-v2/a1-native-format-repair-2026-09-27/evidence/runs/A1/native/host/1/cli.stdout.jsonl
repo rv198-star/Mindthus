@@ -1,0 +1,9 @@
+{"type":"thread.started","thread_id":"01a0e301-2b01-7390-afd3-7e9fca05bfab"}
+{"type":"turn.started"}
+{"type":"error","message":"Reconnecting... 2/5 (request timed out)"}
+{"type":"error","message":"Reconnecting... 3/5 (request timed out)"}
+{"type":"error","message":"Reconnecting... 4/5 (request timed out)"}
+{"type":"error","message":"Reconnecting... 5/5 (request timed out)"}
+{"type":"item.completed","item":{"id":"item_0","type":"error","message":"Falling back from WebSockets to HTTPS transport. request timed out"}}
+{"type":"item.completed","item":{"id":"item_1","type":"agent_message","text":"{\"action\":\"answer\",\"read_paths\":[],\"route_objection\":\"\",\"text\":\"apple\\npear\\nplum\",\"used_methods\":[]}"}}
+{"type":"turn.completed","usage":{"input_tokens":23711,"cached_input_tokens":0,"cache_write_input_tokens":0,"output_tokens":84,"reasoning_output_tokens":46}}
