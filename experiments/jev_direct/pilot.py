@@ -49,7 +49,7 @@ def prepare(root,cases,*,binary=None,serial_gap_seconds=None):
        'claims':'paired development test; no native-plugin automatic-activation or statistical-superiority claim'}
     if serial_gap_seconds is not None:
         require(serial_gap_seconds==60,'pilot_serial_gap')
-        f['serial_policy']={'max_in_flight':1,'gap_after_completion_seconds':60}
+        f['serial_policy']={'max_in_flight':1,'gap_after_completion_seconds':60,'ledger_version':2}
     save(root/'freeze.json',f)
     save(root/'freeze-binding.json',{'freeze_sha256':digest(f),'case_sha256':{c['id']:digest(c['raw']) for c in cases}})
     return f
@@ -80,6 +80,13 @@ def safe_code(exc):
 
 def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None):
     """One frozen request; a bare intent is never resubmitted."""
+    if f.get('serial_policy'):
+        from .serial import SerialRequests
+        batch=Path(f['root']).resolve()
+        require(Path(root).resolve().is_relative_to(batch),'pilot_host_outside_batch')
+        scheduler=scheduler or SerialRequests(batch/'serial')
+        require(scheduler.root.resolve()==batch/'serial' and scheduler.gap==60,'pilot_serial_root')
+        scheduler.validate()
     directory=Path(root)/label;directory.mkdir(parents=True,exist_ok=True)
     prompt='根据原始任务与实际已加载规则完成当前请求。工具关闭；需要资料时只按schema请求读取，不虚构事实或执行结果。输出规定JSON，不输出隐藏推理。\n'+canonical(request).decode()
     intent={'request_sha256':digest(request),'prompt_sha256':digest(prompt),'schema_sha256':digest(schema),'model':f['host_model'],'effort':f['host_effort'],'prior_context':prior,'timeout_seconds':timeout or f['host_timeout']}
@@ -95,7 +102,6 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
         return reply,out
     require(not (directory/'reply.json').exists(),'pilot_unbound_reply')
     save(directory/'request.json',request);(directory/'schema.json').write_text(json.dumps(schema,ensure_ascii=False));(directory/'prompt.txt').write_text(prompt)
-    save(directory/'intent.json',intent)
     work=directory/'workspace';work.mkdir(exist_ok=True)
     cmd=[f['binary'],'exec']+(['resume'] if prior else [])
     cmd+=['--skip-git-repo-check','-m',f['host_model'],'-c','model_reasoning_effort='+json.dumps(f['host_effort']),'-c','features.shell_tool=false','--json','--output-schema',str(directory/'schema.json'),'-o',str(directory/'reply.json')]
@@ -107,6 +113,9 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
     try:
         def invoke():
             nonlocal elapsed
+            # Waiting/lock interruption has not sent anything. Only persist the
+            # host intent once the serial slot has actually been acquired.
+            save(directory/'intent.json',intent)
             call_start=time.monotonic()
             try:
                 proc=wire._run_cli(cmd,prompt,env,timeout or f['host_timeout'])
@@ -151,6 +160,7 @@ def run_case(root,case_id,arm,provider=None,*,scheduler=None):
         scheduler=scheduler or SerialRequests(root/'serial')
         require(scheduler.root.resolve()==(root/'serial').resolve(),'pilot_serial_root')
         require(scheduler.gap==60,'pilot_serial_gap')
+        scheduler.validate()
         if provider is not None:
             require(not provider.is_live,'pilot_injected_live_provider_bypasses_serial')
     c=next(c for c in f['cases'] if c['id']==case_id);raw=c['raw'];dest=root/'runs'/case_id/arm

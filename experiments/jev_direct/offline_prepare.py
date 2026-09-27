@@ -41,7 +41,7 @@ def prepare(root,binary):
     with patch.object(socket.socket,'connect',side_effect=AssertionError('offline_network_forbidden')):
         f=p.prepare(root/'prepared',cases,binary=binary,serial_gap_seconds=60)
         fixture=p.prepare(root/'fixtures',cases,binary=binary,serial_gap_seconds=60)
-        clock=Clock();gate=SerialRequests(root/'fixtures/serial',clock=clock.time,sleep=clock.sleep)
+        clock=Clock();gate=SerialRequests(root/'fixtures/serial',clock=clock.time,monotonic=clock.time,sleep=clock.sleep)
         result=[]
         for case in cases:
             cid=case['id'];raw=case['raw'];state=r.initial_state(raw,pack);specs=r.questions(state,pack)
@@ -87,7 +87,7 @@ def prepare(root,binary):
         # Synthetic routing provider itself is in-memory. These additional fake calls
         # verify that the same gate enforces Jev/host interleaving across a restart.
         for label in ['jev-fixture','host-fixture','jev-second-layer-fixture']:
-            SerialRequests(root/'fixtures/serial',clock=clock.time,sleep=clock.sleep).call(label,lambda:None)
+            SerialRequests(root/'fixtures/serial',clock=clock.time,monotonic=clock.time,sleep=clock.sleep).call(label,lambda:None)
     unchanged=['max_jev_calls','max_jev_calls_per_case','reserve_per_jev_usd',
                'max_host_calls_per_arm','max_host_seconds_per_arm','host_timeout',
                'host_model','host_effort','semantic_retries','reviewer_calls_max','review_timeout_seconds']

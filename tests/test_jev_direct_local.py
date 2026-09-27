@@ -2,6 +2,7 @@
 import json
 import tempfile
 import subprocess
+import shutil
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -25,11 +26,11 @@ class SerialTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
         self.root=Path(self.tmp.name);self.clock=Clock()
-        self.gate=SerialRequests(self.root,clock=self.clock.time,sleep=self.clock.sleep)
+        self.gate=SerialRequests(self.root,clock=self.clock.time,monotonic=self.clock.time,sleep=self.clock.sleep)
     def test_end_to_start_and_restart(self):
         def call():self.clock.now+=17;return 'done'
         self.gate.call('host',call)
-        gate=SerialRequests(self.root,clock=self.clock.time,sleep=self.clock.sleep)
+        gate=SerialRequests(self.root,clock=self.clock.time,monotonic=self.clock.time,sleep=self.clock.sleep)
         gate.call('jev',call)
         self.assertEqual(read_record(self.root/'000001/intent.json')['actual_gap_seconds'],60)
         self.assertEqual(self.clock.waits,[60])
@@ -61,6 +62,26 @@ class SerialTests(unittest.TestCase):
             r.route(self.root/'route',RAW,REPO,'0'*64,provider,scheduler=self.gate)
         with self.assertRaisesRegex(RecoveryRequired,'unknown_request'):
             self.gate.call('next',lambda:self.fail('invoked'))
+    def test_corrupt_completed_intent_is_rejected(self):
+        self.gate.call('host',lambda:None)
+        (self.root/'000000/intent.json').write_text('{broken')
+        with patch.object(p.wire,'_run_cli') as cli:
+            with self.assertRaises(Exception):self.gate.call('jev',cli)
+            cli.assert_not_called()
+    def test_wall_jump_does_not_skip_monotonic_cooldown(self):
+        wall=Clock();mono=Clock()
+        gate=SerialRequests(self.root,clock=wall.time,monotonic=mono.time,sleep=mono.sleep)
+        gate.call('host',lambda:None);mono.now+=1;wall.now+=120
+        gate.call('jev',lambda:None)
+        self.assertEqual(mono.waits,[59])
+        self.assertEqual(read_record(self.root/'000001/intent.json')['actual_gap_seconds'],60)
+    def test_restart_ignores_wall_and_monotonic_discontinuity(self):
+        self.gate.call('host',lambda:None)
+        wall=Clock();wall.now+=10000;mono=Clock();mono.now=1
+        gate=SerialRequests(self.root,clock=wall.time,monotonic=mono.time,sleep=mono.sleep)
+        gate.call('jev',lambda:None)
+        self.assertEqual(mono.waits,[60])
+        self.assertEqual(read_record(self.root/'000001/intent.json')['gap_basis'],'restart_conservative_lower_bound')
 
 
 class LocalPilotTests(fixtures.PilotTests):
@@ -68,7 +89,7 @@ class LocalPilotTests(fixtures.PilotTests):
         super().setUp()
         self.root=Path(self.tmp.name)/'serial-trial'
         self.f=p.prepare(self.root,self.f['cases'],binary=self.f['binary'],serial_gap_seconds=60)
-        self.clock=Clock();self.gate=SerialRequests(self.root/'serial',clock=self.clock.time,sleep=self.clock.sleep)
+        self.clock=Clock();self.gate=SerialRequests(self.root/'serial',clock=self.clock.time,monotonic=self.clock.time,sleep=self.clock.sleep)
     def run_arm(self,arm='direct',provider=None):
         with patch.object(p.wire,'_run_cli',side_effect=self.cli):
             return p.run_case(self.root,'X',arm,provider or Provider(),scheduler=self.gate)
@@ -93,5 +114,41 @@ class LocalPilotTests(fixtures.PilotTests):
                 p.run_case(self.root,'X','native',Provider(),scheduler=self.gate)
         with self.assertRaisesRegex(RecoveryRequired,'unknown_request'):
             self.gate.call('next',lambda:self.fail('invoked'))
+    def test_lost_serial_directory_blocks_other_scenario(self):
+        with patch.object(p.wire,'_run_cli',side_effect=KeyboardInterrupt):
+            with self.assertRaises(KeyboardInterrupt):
+                p.run_case(self.root,'X','native',Provider(),scheduler=self.gate)
+        shutil.rmtree(self.root/'serial')
+        with patch.object(p.wire,'_run_cli') as cli:
+            with self.assertRaisesRegex(ContractError,'binding_missing'):self.run_arm('direct')
+            cli.assert_not_called()
+    def test_lost_serial_and_anchor_still_detected_from_business_intent(self):
+        with patch.object(p.wire,'_run_cli',side_effect=KeyboardInterrupt):
+            with self.assertRaises(KeyboardInterrupt):
+                p.run_case(self.root,'X','native',Provider(),scheduler=self.gate)
+        shutil.rmtree(self.root/'serial');shutil.rmtree(self.root/'serial-bindings')
+        with self.assertRaisesRegex(ContractError,'business_binding_missing'):
+            self.gate.call('unrelated-scenario',lambda:self.fail('invoked'))
+    def test_cooldown_interrupt_has_no_host_send_intent_and_can_resume(self):
+        self.gate.call('previous',lambda:None)
+        with patch.object(self.gate,'sleep',side_effect=KeyboardInterrupt):
+            with self.assertRaises(KeyboardInterrupt):self.run_arm('native')
+        self.assertFalse((self.root/'runs/X/native/host/0/intent.json').exists())
+        self.assertEqual(self.commands,[])
+        self.assertEqual(self.run_arm('native')['status'],'delivered')
+        self.assertEqual(len(self.commands),1)
+    def test_direct_host_call_enforces_policy_without_explicit_scheduler(self):
+        with _locked(self.root/'serial/.lock'),patch.object(p.wire,'_run_cli') as cli:
+            with self.assertRaises(RecoveryRequired):
+                p.host_call(self.root/'reviews/X','1',{},p.obj({}),self.f)
+            cli.assert_not_called()
+    def test_direct_review_style_call_blocks_unknown_business_request(self):
+        with patch.object(p.wire,'_run_cli',side_effect=KeyboardInterrupt):
+            with self.assertRaises(KeyboardInterrupt):
+                p.run_case(self.root,'X','native',Provider(),scheduler=self.gate)
+        with patch.object(p.wire,'_run_cli') as cli:
+            with self.assertRaisesRegex(RecoveryRequired,'unknown_request'):
+                p.host_call(self.root/'reviews/X','1',{},p.obj({}),self.f)
+            cli.assert_not_called()
 
 if __name__=='__main__':unittest.main()
