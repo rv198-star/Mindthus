@@ -6,7 +6,20 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current continuation — no new business request; historical denial awaiting disposition
+## Current A1 native — explicit live API schema failure, no answer
+
+One authorized A1/native host call ran from source 79acb4e3e using gpt-6-sol/xhigh;
+the real host session ended with invalid_json_schema: read_paths.uniqueItems is not
+permitted. Read the [A1 result and original evidence](jev-direct-v2/a1-native-live-2026-09-27/RESULT.md).
+No Jev, other paths, content reviews, schema changes or retries. Host session duration
+28.518s; full command wall 30.22s; active cooldown wait 0s for the first call.
+The driver retained intents and raised pilot_remote_completion_unknown; the separately
+preserved real CLI task_complete error establishes the explicit failure without rewriting
+the journal. No answer; other eleven paths UNRUN. Four engineering findings remain CLOSED.
+Historical refusals stay preserved; the former named-receipt project gate was withdrawn
+by the user before this narrowly scoped A1 execution. No general release/adoption claim.
+
+## Previous continuation — no new business request; historical denial awaiting disposition
 
 The 2026-09-27 continuation protected the original local working tree before fetch;
 remote remained 64eac4946c82f33e039d14dae062613407e3cc21. Read the

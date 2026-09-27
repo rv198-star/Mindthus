@@ -1,0 +1,50 @@
+{
+  "recorded_at_utc": "2026-09-27T11:41:45.784849+00:00",
+  "source_commit": "79acb4e3e4c7cb23045c40168af01818d50ed507",
+  "parent_implementation_commit": "a1425b599ad33e9fdb44c4a589300ca7ba63d1c5",
+  "independently_accepted_code": "7d07e4facb875d8f07dab5bacac1b417878aa5fe",
+  "parent_freeze_sha256": "8eae3b070937cae0ce1014787f20196214a6666712785fa0f3f52e6d548f75d5",
+  "previous_local_prepared_freeze_sha256": "a7216cff1d2ab090a0015b6f222f3de45196a61c9c6c874d51a3164828e7a512",
+  "technical_successor_freeze_sha256": "2701fad01df0d3f192fe9507dac1508fc554697ab42391a5476034585c8fc3b8",
+  "reason": "R2 implementation, local binary/path and current config identity; no old freeze changed",
+  "current_turn_authorized_paths": [
+    "A1/native"
+  ],
+  "all_other_paths": "not dispatched in this turn",
+  "parent_business_jev_used": 0,
+  "remaining_jev_calls": 12,
+  "parent_business_host_used": 0,
+  "A1_host_max_calls": 4,
+  "A1_host_max_request_seconds": 900,
+  "per_call_timeout_seconds": 360,
+  "serial_gap_seconds": 60,
+  "historical_safety_evidence_retained": true,
+  "historical_scope_basis": "A1 individual attempts are recorded as network errors; historical safety denials name whole-batch launch and B1/direct; no new approval claimed",
+  "remote_preflight": {
+    "tool": "nexusdock_exec_command",
+    "session_id": "session-390d80e066d50886e229959e",
+    "exit_code": 0,
+    "root": "/srv/agentdock/tmp/mindthus-jev-direct-v2-live",
+    "root_exists": true,
+    "A1_native_exists": false,
+    "call_evidence": [],
+    "matching_pilot_processes": [],
+    "freeze_file_sha256": "78127a2165ed36c55605aa1a35a89b864d61fdd3fd9fc5609c95c3d47f1af912"
+  },
+  "local_preflight": {
+    "discovered_roots": [
+      "mindthus-jev-direct-offline-r1",
+      "mindthus-jev-direct-offline-v1",
+      "mindthus-jev-direct-offline-v2",
+      "mindthus-jev-direct-offline-v3"
+    ],
+    "nonfixture_call_evidence": [],
+    "matching_pilot_processes": [],
+    "binary_unchanged": true,
+    "config_changed": true
+  },
+  "fetch_error": "fatal: unable to access https://github.com/rv198-star/Mindthus/: LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443",
+  "unknown_requests_found": false,
+  "completed_A1_found": false,
+  "calls_sent_during_preparation": 0
+}
