@@ -94,6 +94,10 @@ E为none时ES=缺失、ER=不能判定；不额外发问求齐。若P是明确�
 provenance, raw_result_ref`。位置/关系value使用上表枚举；命题semantic_state为
 `support / deny / unresolved`；无位置为 `unlocated`，合同错误为 `invalid`，均不得当deny。
 T的deny还须TB=明确不同目标且G/C有效一致，才能成为有依据否定。
+这里的unresolved是消费状态，不直接决定计分。规范要求的证据不足、条件未定或目标未明确，
+在原文依据与原因正确时可以是成功的原子判断；低置信度、定位失败或合同错误导致的未完成判断则不能。
+用现有value、semantic_state、unresolved_reason、basis_refs对照独立规范表区分，
+不修改适配器或组合规则；详细分母及条件反转口径见 [验收定义](ACCEPTANCE.md#失败分层)。
 
 - C/Jev适配：暂定Noul≥0.8→support、≤0.2→deny，中间unresolved；Choice合同有效且所选
   概率≥0.8才消费，否则unresolved。保留供应商原始概率及来源；数值门槛不是准确率保证。

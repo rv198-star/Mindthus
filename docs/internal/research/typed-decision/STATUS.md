@@ -13,8 +13,10 @@ and [falsifiable matched-control acceptance proposal](grounded-judgment-v0/ACCEP
 This is a separate capability design: original-span binding, premise/claim/evidence relations,
 and at most one bounded draft correction. No frozen code/material change, model call or new
 batch authorization. Old six-case closure and default adoption NOT QUALIFIED below stand.
-Design review REVISE received on `d3b923035ae549d966ada9c70616bc8c80717670`;
-four bounded contract corrections are now documented for re-review, not declared passed.
+Scoped design re-review of `c9fc2759ec0b48bc3a4b273bd6a252724fa9539d` closed items 1–3
+and accepted the B/C interface. Only unresolved-result scoring required clarification:
+normatively correct uncertainty can pass; incomplete judgment cannot. That wording is now
+synchronized for single-definition recheck, not implementation testing or quality acceptance.
 Thirteen explicit fields retain three pre-answer rounds; Agent receives the same fine-grained
 questions in the control. Unseen acceptance variants are not yet supplied or claimed tested.
 
