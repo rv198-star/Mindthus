@@ -6,6 +6,16 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## New design only — grounded atomic judgment proposal
+
+Read [the concrete question set and consumption examples](grounded-judgment-v0/DESIGN.md)
+and [falsifiable matched-control acceptance proposal](grounded-judgment-v0/ACCEPTANCE.md).
+This is a separate capability design: original-span binding, premise/claim/evidence relations,
+and at most one bounded draft correction. No frozen code/material change, model call or new
+batch authorization. Old six-case closure and default adoption NOT QUALIFIED below stand.
+Ten question templates follow explicit dependencies; Agent receives the same fine-grained
+questions in the control. Unseen acceptance variants are not yet supplied or claimed tested.
+
 ## Current six-case closure — execution and independent content review CLOSED
 
 Fixed reviewed evidence: `929f8595fe5d3bccb0d061fbee7b019bc0a953a7`.
