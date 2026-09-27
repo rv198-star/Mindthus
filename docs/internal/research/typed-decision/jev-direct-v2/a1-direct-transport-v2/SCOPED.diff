@@ -1,0 +1,196 @@
+diff --git a/experiments/jev_direct/pilot.py b/experiments/jev_direct/pilot.py
+index 46cbd40e6..98e032c67 100644
+--- a/experiments/jev_direct/pilot.py
++++ b/experiments/jev_direct/pilot.py
+@@ -66,7 +66,9 @@ def verify_frozen_inputs(root):
+ 
+ def verify(root):
+     f=verify_frozen_inputs(root)
+-    require(f['code_hashes']==identity(REPO),'pilot_code_drift')
++    from .transport_profile import active
++    successor=active(root)
++    require(successor is not None or f['code_hashes']==identity(REPO),'pilot_code_drift')
+     return f
+ 
+ def exact_tree(root):
+@@ -93,10 +95,15 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
+         scheduler=scheduler or SerialRequests(batch/'serial')
+         require(scheduler.root.resolve()==batch/'serial' and scheduler.gap==60,'pilot_serial_root')
+         scheduler.validate()
++    from .transport_profile import active,guard,observe
++    profile=active(Path(f['root']))
++    guard(Path(f['root']))
+     directory=Path(root)/label;directory.mkdir(parents=True,exist_ok=True)
+     sending=api_schema(schema)
+     prompt='根据原始任务与实际已加载规则完成当前请求。工具关闭；需要资料时只按schema请求读取，不虚构事实或执行结果。输出规定JSON，不输出隐藏推理。\n'+canonical(request).decode()
+     intent={'request_sha256':digest(request),'prompt_sha256':digest(prompt),'schema_sha256':digest(schema),'api_schema_sha256':digest(sending),'model':f['host_model'],'effort':f['host_effort'],'prior_context':prior,'timeout_seconds':timeout or f['host_timeout']}
++    if profile:
++        intent.update(transport_successor_sha256=digest(profile),protocol_sha256=profile['protocol_sha256'],transport_overrides_sha256=profile['overrides_sha256'])
+     if (directory/'intent.json').exists():
+         require(read_record(directory/'intent.json')==intent,'pilot_call_identity_changed')
+         if not (directory/'outcome.json').exists():raise RecoveryRequired('pilot_unknown_call_no_retry')
+@@ -118,6 +125,9 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
+     work=directory/'workspace';work.mkdir(exist_ok=True)
+     cmd=[f['binary'],'exec']+(['resume'] if prior else [])
+     cmd+=['--skip-git-repo-check','-m',f['host_model'],'-c','model_reasoning_effort='+json.dumps(f['host_effort']),'-c','features.shell_tool=false','--json','--output-schema',str(directory/'schema.api.json'),'-o',str(directory/'reply.json')]
++    if profile:
++        for override in profile['overrides']:cmd+=['-c',override]
++        save(directory/'effective-transport-config.json',{'successor_sha256':digest(profile),'protocol_sha256':profile['protocol_sha256'],'overrides':profile['overrides'],'overrides_sha256':profile['overrides_sha256'],'scope':'CLI invocation only','model':f['host_model'],'effort':f['host_effort']})
+     cmd+=([prior,'-'] if prior else ['--sandbox','read-only','-C',str(work),'-'])
+     env=os.environ.copy()
+     for k in ('TYPESAFE_API_KEY','OPENROUTER_API_KEY','MINDTHUS_HOST_API_KEY'):env.pop(k,None)
+@@ -128,6 +138,7 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
+             nonlocal elapsed,failure
+             # Waiting/lock interruption has not sent anything. Only persist the
+             # host intent once the serial slot has actually been acquired.
++            guard(Path(f['root']))
+             save(directory/'intent.json',intent)
+             call_start=time.monotonic()
+             cli_returned=False
+@@ -136,6 +147,7 @@ def host_call(root,label,request,schema,f,prior=None,timeout=None,scheduler=None
+                 elapsed=time.monotonic()-call_start;cli_returned=True
+                 (directory/'cli.stdout.jsonl').write_text(proc.stdout)
+                 (directory/'cli.stderr.txt').write_text(proc.stderr)
++                if profile:observe(Path(f['root']),directory,proc,intent)
+                 events=parse_events(proc.stdout)
+                 contexts={e['thread_id'] for e in events if e.get('type')=='thread.started' and isinstance(e.get('thread_id'),str)}
+                 terminal=proc.returncode==0 and len(contexts)==1 and sum(e.get('type')=='turn.completed' for e in events)==1 and not any(e.get('type')=='turn.failed' for e in events)
+@@ -192,6 +204,11 @@ def run_case(root,case_id,arm,provider=None,*,scheduler=None):
+         scheduler.validate()
+         if provider is not None:
+             require(not provider.is_live,'pilot_injected_live_provider_bypasses_serial')
++    from .transport_profile import active,guard
++    profile=active(root)
++    if profile:
++        require([case_id,arm] in profile['dispatch_scope'],'transport_dispatch_scope')
++        guard(root)
+     c=next(c for c in f['cases'] if c['id']==case_id);raw=c['raw'];dest=root/'runs'/case_id/arm
+     with _locked(root/('.'+case_id+'.pair-lock')):
+         # Both arms bind the same freeze; rewriting freeze plus its adjacent checksum
+@@ -209,6 +226,7 @@ def run_case(root,case_id,arm,provider=None,*,scheduler=None):
+             old=read_record(start);require(old['freeze_sha256']==digest(f) and old['raw_sha256']==digest(raw),'pilot_arm_input_changed')
+         else:save(start,{'freeze_sha256':digest(f),'raw_sha256':digest(raw),'started_at':datetime.now(timezone.utc).isoformat()})
+         if (dest/'result.json').exists():return unseal(dest)
++        if profile:save(dest/'technical-identity.json',{'successor_sha256':digest(profile),'protocol_sha256':profile['protocol_sha256']})
+         pack=r.load_pack(REPO);loaded={};decision=None;reads=[];methods=[]
+         if arm=='direct':
+             require(not (dest/'host').exists() or (dest/'route/result.json').exists(),'pilot_host_before_route')
+diff --git a/experiments/jev_direct/serial.py b/experiments/jev_direct/serial.py
+index 958ea5e88..9d1fa6232 100644
+--- a/experiments/jev_direct/serial.py
++++ b/experiments/jev_direct/serial.py
+@@ -98,6 +98,9 @@ class SerialRequests:
+ 
+     def call(self, label, invoke):
+         with _locked(self.root/'.lock'):
++            if self.batch:
++                from .transport_profile import guard
++                guard(self.batch)
+             directories,previous,labels=self._validate()
+             require(label not in labels,'serial_request_already_completed')
+             began_wait=self.monotonic()
+diff --git a/experiments/jev_direct/transport_profile.py b/experiments/jev_direct/transport_profile.py
+new file mode 100644
+index 000000000..62432546b
+--- /dev/null
++++ b/experiments/jev_direct/transport_profile.py
+@@ -0,0 +1,99 @@
++"""Forward-only experiment profile; leaves historical freezes and outcomes intact."""
++from pathlib import Path
++import json
++import re
++import subprocess
++from datetime import datetime, timezone
++from experiments.typed_decision.contracts import digest, require
++from experiments.typed_decision.relationship_runtime import save
++from experiments.typed_decision.session import read_record, RecoveryRequired
++
++BASE = Path(__file__).resolve().parents[2]
++DOC = BASE/'docs/internal/research/typed-decision/jev-direct-v2'
++CANDIDATE = DOC/'host-transport-boundary-2026-09-27/candidate-profile.json'
++PROTOCOL = DOC/'a1-direct-transport-v2/PROTOCOL.json'
++NAME = 'transport-successor-v2.json'
++
++
++def register(root):
++    from . import pilot as p
++    from .serial import SerialRequests
++    root = Path(root).resolve(); f = p.verify_frozen_inputs(root)
++    SerialRequests(root/'serial').validate()
++    native = p.unseal(root/'technical-retry/A1/native')
++    require(native['status'] == 'delivered' and native['total_host_attempts'] == 2,
++            'transport_native_history_required')
++    require(native['host_evidence_sha256'] == digest(p.exact_tree(root/'runs/A1/native/host')),
++            'transport_native_evidence_changed')
++    require(not (root/'runs/A1/direct').exists(), 'transport_direct_already_started')
++    candidate = json.loads(CANDIDATE.read_text()); protocol = json.loads(PROTOCOL.read_text())
++    require(digest(candidate['candidate_overrides']) == candidate['overrides_sha256'], 'transport_candidate_changed')
++    prior = read_record(root/'technical-successor.json')
++    require(digest(f) == candidate['parent_freeze_sha256'] and
++            digest(prior) == candidate['parent_technical_successor_sha256'], 'transport_parent_changed')
++    historical = p.exact_tree(root)
++    value = {'schema':'mindthus.transport-successor.v2','root':str(root),
++        'registered_at':datetime.now(timezone.utc).isoformat(),
++        'parent_freeze_sha256':digest(f),'parent_technical_successor_sha256':digest(prior),
++        'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=BASE,text=True).strip(),
++        'code_hashes':p.identity(BASE),'candidate_sha256':digest(candidate),
++        'protocol':protocol,'protocol_sha256':digest(protocol),
++        'overrides':candidate['candidate_overrides'],'overrides_sha256':candidate['overrides_sha256'],
++        'applies_to':['native','direct'],'dispatch_scope':[['A1','direct']],
++        'historical_files':historical,'budgets_reset':False,
++        'consumed_host_cli':{'A1/native':2,'A1/direct':0},
++        'native_remaining_host_cli':2,'native_remaining_seconds':f['max_host_seconds_per_arm']-prior['previous_budget_debit_seconds']-native['new_host_session_seconds'],
++        'direct_remaining_host_cli':f['max_host_calls_per_arm'],
++        'direct_remaining_seconds':f['max_host_seconds_per_arm'],
++        'historical_underlying_requests':None,'performance_matched_to_old_native':False}
++    save(root/NAME,value); save(root/'transport-successor-v2-binding.json',{'sha256':digest(value)})
++    return value
++
++
++def active(root):
++    from . import pilot as p
++    root = Path(root)
++    if not (root/NAME).exists():return None
++    x = read_record(root/NAME)
++    require(read_record(root/'transport-successor-v2-binding.json') == {'sha256':digest(x)}, 'transport_binding_changed')
++    candidate=json.loads(CANDIDATE.read_text());protocol=json.loads(PROTOCOL.read_text())
++    require(x['root']==str(root.resolve()) and x['code_hashes']==p.identity(BASE)
++            and x['parent_freeze_sha256']==digest(read_record(root/'freeze.json'))
++            and x['candidate_sha256']==digest(candidate)
++            and x['overrides']==candidate['candidate_overrides']
++            and x['overrides_sha256']==digest(x['overrides'])
++            and x['protocol']==protocol and x['protocol_sha256']==digest(protocol), 'transport_identity_changed')
++    require(all((root/k).is_file() and p.r.file_hash(root/k)==v for k,v in x['historical_files'].items()),
++            'transport_history_changed')
++    return x
++
++
++def guard(root):
++    if (Path(root)/'transport-stop-v2.json').exists():
++        raise RecoveryRequired('transport_unclassified_recovery_stop')
++
++
++def observe(root, directory, proc, intent):
++    """Observable log counts, never inferred HTTP totals. Ambiguous resend stops later work.
++
++    Normal official auth recovery remains enabled. Any observed recovery lacking a
++    bound 401/non-acceptance record is left for evidence reconciliation, not guessed.
++    """
++    text=proc.stdout+'\n'+proc.stderr
++    sampling=len(re.findall(r'retrying sampling request', text, re.I))
++    reconnect=len(re.findall(r'Reconnecting\.\.\.', text))
++    auth=len(re.findall(r'auth_recovery|recovery_succeeded|\b401\b', text, re.I))
++    fallback=len(re.findall(r'falling back|fallback|prewarm', text, re.I))
++    uncertain=bool(sampling or reconnect or auth or fallback)
++    x={'schema':'mindthus.invocation-transport-observation.v2',
++       'request_sha256':intent['request_sha256'],'transport_successor_sha256':intent['transport_successor_sha256'],
++       'outer_driver_retries':0,'cli_starts':1,'sampling_retry_log_count':sampling,
++       'reconnect_notice_count':reconnect,'auth_or_401_log_count':auth,'fallback_or_prewarm_log_count':fallback,
++       'actual_underlying_request_count':None,'generation_attempt_count':None,
++       'connection_recovery_seconds':None,'authentication_recovery_seconds':None,
++       'observation':'unclassified_recovery_requires_reconciliation' if uncertain else 'no_recovery_observed',
++       'no_recovery_observed_is_not_zero_http_proof':True,
++       'stop_subsequent_dispatch':uncertain}
++    save(Path(directory)/'transport-observation-v2.json',x)
++    if uncertain:save(Path(root)/'transport-stop-v2.json',{'host_directory':str(directory),'observation_sha256':digest(x)})
++    return x

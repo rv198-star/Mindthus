@@ -6,15 +6,20 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current A1 direct — forward-only limited transport recovery protocol adopted
+## Current A1 direct — actual answer delivered under forward-only transport v2
 
-The scheme owner adopted the bounded connection-before-send / official recoverable-401
-exception. [Protocol and implementation](jev-direct-v2/a1-direct-transport-v2/IMPLEMENTATION.md)
-use the previously parsed candidate at invocation scope for both arms. Registration
-retains the old freeze, failures, delivered native answer and native 2/4 debit; only
-A1/direct is authorized in this successor. Five targeted wiring/boundary tests passed.
-This checkpoint precedes live execution; consult this folder's RESULT.md when present.
-No auth probes, global settings changes, new channel, or R2 reopening.
+Implementation: `7d90845486daad1467f53caf6ffc791ef16c56d4`.
+Read [the real A1/direct result, raw answer, timing and evidence](jev-direct-v2/a1-direct-transport-v2/RESULT.md).
+Official Jev jev-1.13.0 returned one full-catalog 71-question layer: direct, no named
+method, no second-layer read. One gpt-6-sol/xhigh host CLI returned the actual three-line
+answer `apple / pear / plum`, identical to the preserved native answer and correct for A1.
+The existing candidate is active only at invocation scope; archive metadata confirms
+mindthus_official_http. No internal recovery/401 observed; underlying HTTP totals remain
+unknown. Two new generation works returned, driver retries 0; active wait 119.969186s,
+Jev evaluate 1.958979s, host CLI 17.237451s, complete wall 139.469893s.
+Old native remains delivered with its original execution limitation and 2/4 debit.
+Direct host used 1/4; other ten paths UNRUN. No reliable speed/cost comparison across
+these different transport conditions; net benefit not established. No R2 reopening.
 
 ## Previous host transport boundary — partial controls verified, A1 direct not sent
 

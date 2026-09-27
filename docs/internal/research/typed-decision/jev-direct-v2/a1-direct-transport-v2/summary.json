@@ -1,0 +1,152 @@
+{
+  "schema": "mindthus.a1-direct-delivery.v2",
+  "code_commit": "7d90845486daad1467f53caf6ffc791ef16c56d4",
+  "successor_sha256": "239204bf08c04fa31a534cce205a8cea397336f0382b6a04eb95f37c4f6b5340",
+  "protocol_sha256": "f6ca147aad5a2abc7098033d30bd265974084df8afd6325d6e1158efd6d4aa01",
+  "route": {
+    "mode": "direct",
+    "methods": {},
+    "rounds": 1,
+    "questions_per_round": 71,
+    "requested_details": [],
+    "full_catalog_each_round": true,
+    "pre_route_llm_calls": 0
+  },
+  "actual_material_paths": [],
+  "actual_entry": null,
+  "actual_answer": "apple\npear\nplum",
+  "status": "delivered",
+  "counts": {
+    "new_outer_driver_retries": 0,
+    "new_host_cli_starts": 1,
+    "new_jev_evaluations": 1,
+    "new_jev_transport_invocations": 1,
+    "observed_successful_generation_works": 2,
+    "successful_host_generations_lower_bound": 1,
+    "host_underlying_requests": null,
+    "host_generation_attempts_exact": null,
+    "observed_sampling_retry_logs": 0,
+    "observed_authentication_or_401_logs": 0,
+    "observed_connection_recovery_logs": 0,
+    "historical_native_host_cli_starts": 2,
+    "historical_native_underlying_requests": null
+  },
+  "times_seconds": {
+    "active_wait": 119.9691860830062,
+    "first_wait": 60.00521837500855,
+    "jev_to_host_active_wait": 59.963967707997654,
+    "jev_to_host_monotonic_gap": 60.00012495799456,
+    "jev_evaluate_including_validation": 1.9589794170169625,
+    "host_cli_session": 17.237450707994867,
+    "archived_host_task": 6.971,
+    "host_dispatch_including_wait": 77.21727074999944,
+    "operator_wall": 139.4698927910067,
+    "path_wall": 139.260724,
+    "other_loading_validation_bookkeeping_residual": 0.30427658298867755,
+    "loading_only": null,
+    "pure_http": null,
+    "authentication_recovery": null,
+    "connection_recovery": null
+  },
+  "usage": {
+    "jev": {
+      "cost_usd": null,
+      "input_tokens": 15530,
+      "output_tokens": 3596
+    },
+    "host": {
+      "cached_input_tokens": 0,
+      "cost_usd": null,
+      "input_tokens": 20040,
+      "output_tokens": 90
+    },
+    "cost_total_usd": null
+  },
+  "budgets": {
+    "native_host_used": 2,
+    "native_host_remaining": 2,
+    "direct_host_used": 1,
+    "direct_host_remaining": 3,
+    "direct_host_seconds_remaining": 882.7625492920051,
+    "direct_jev_used": 1,
+    "direct_jev_unused_allowance": 1,
+    "unused_allowance_is_not_semantic_retry_authorization": true
+  },
+  "exceptions": {
+    "observed": false,
+    "statement": "No 401, authentication recovery, sampling retry, WebSocket prewarm or fallback observed in invocation logs; no authentication probe performed. Unobserved internal HTTP totals remain unknown.",
+    "current_logical_unresolved_sends": 0,
+    "historical_underlying_send_status": "unknown; preserved; neither proved completed nor presumed background work"
+  },
+  "comparison": {
+    "native_answer": "apple\npear\nplum",
+    "direct_answer": "apple\npear\nplum",
+    "both_content_matches_fixed_A1": true,
+    "native_old_execution_compliance": "limited",
+    "speed_comparison_valid": false,
+    "cost_comparison_valid": false,
+    "net_benefit": "not established"
+  },
+  "paths": [
+    {
+      "case": "A1",
+      "arm": "native",
+      "status": "delivered_with_old_execution_limitation"
+    },
+    {
+      "case": "A1",
+      "arm": "direct",
+      "status": "delivered_under_v2"
+    },
+    {
+      "case": "B1",
+      "arm": "native",
+      "status": "UNRUN"
+    },
+    {
+      "case": "B1",
+      "arm": "direct",
+      "status": "UNRUN"
+    },
+    {
+      "case": "C1",
+      "arm": "native",
+      "status": "UNRUN"
+    },
+    {
+      "case": "C1",
+      "arm": "direct",
+      "status": "UNRUN"
+    },
+    {
+      "case": "D1",
+      "arm": "native",
+      "status": "UNRUN"
+    },
+    {
+      "case": "D1",
+      "arm": "direct",
+      "status": "UNRUN"
+    },
+    {
+      "case": "E-window",
+      "arm": "native",
+      "status": "UNRUN"
+    },
+    {
+      "case": "E-window",
+      "arm": "direct",
+      "status": "UNRUN"
+    },
+    {
+      "case": "F-window",
+      "arm": "native",
+      "status": "UNRUN"
+    },
+    {
+      "case": "F-window",
+      "arm": "direct",
+      "status": "UNRUN"
+    }
+  ]
+}
