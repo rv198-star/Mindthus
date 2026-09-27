@@ -6,19 +6,23 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## New design only — grounded atomic judgment proposal
+## Grounded judgment — scoped design review PASS; implementation/live validation separate
 
-Read [the concrete question set and consumption examples](grounded-judgment-v0/DESIGN.md)
-and [falsifiable matched-control acceptance proposal](grounded-judgment-v0/ACCEPTANCE.md).
-This is a separate capability design: original-span binding, premise/claim/evidence relations,
-and at most one bounded draft correction. No frozen code/material change, model call or new
-batch authorization. Old six-case closure and default adoption NOT QUALIFIED below stand.
-Scoped design re-review of `c9fc2759ec0b48bc3a4b273bd6a252724fa9539d` closed items 1–3
-and accepted the B/C interface. Only unresolved-result scoring required clarification:
-normatively correct uncertainty can pass; incomplete judgment cannot. That wording is now
-synchronized for single-definition recheck, not implementation testing or quality acceptance.
-Thirteen explicit fields retain three pre-answer rounds; Agent receives the same fine-grained
-questions in the control. Unseen acceptance variants are not yet supplied or claimed tested.
+Design baseline: `006731c43a48099d41bfbc5f3421bd5267a6404f`.
+Read [the actual independent design-review conclusion](grounded-judgment-v0/INDEPENDENT-DESIGN-REVIEW.md),
+[the question/consumption contract](grounded-judgment-v0/DESIGN.md) and
+[the acceptance contract](grounded-judgment-v0/ACCEPTANCE.md).
+All scoped design revisions are CLOSED, including unresolved-result scoring; no further
+revision or repeat review is pending. This PASS is design-only, not an implementation test
+or evidence of answer quality. Prototype implementation and real validation remain uncompleted.
+The next stage is implementation under the existing contract and preregistered acceptance
+preparation, subject to corresponding user authorization; do not expand the design again.
+No model execution or added budget is authorized by this review, and unseen variants are
+not claimed sealed. Retain 13 items, three pre-answer rounds, at most one draft check and
+one revision, and the original-Agent / fine-question-Agent / Jev three-arm comparison.
+Old six-case execution/content review remains complete; R2 findings remain CLOSED.
+General Jev quality gain and monetary ROI remain unestablished; default adoption remains
+NOT QUALIFIED. Ties or evidence against added intervention value remain valid outcomes.
 
 ## Current six-case closure — execution and independent content review CLOSED
 
