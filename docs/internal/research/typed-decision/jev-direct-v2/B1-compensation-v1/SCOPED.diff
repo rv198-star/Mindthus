@@ -1,0 +1,190 @@
+diff --git a/experiments/jev_direct/b1_compensation.py b/experiments/jev_direct/b1_compensation.py
+new file mode 100644
+index 000000000..37dd4325c
+--- /dev/null
++++ b/experiments/jev_direct/b1_compensation.py
+@@ -0,0 +1,73 @@
++"""Owner-approved, one-call B1 compensation; the named old remote request stays unknown."""
++from pathlib import Path
++from datetime import datetime,timezone
++import subprocess,time
++from experiments.typed_decision.contracts import require,digest
++from experiments.typed_decision.relationship_runtime import save
++from experiments.typed_decision.session import read_record,implementation_digest
++
++OLD_KEY='61784cbf0798ceba12ce2b8dcf0c90a97799011df3848a5904ac0cc9f595a31c'
++NAME='B1-compensation-successor.json'
++
++
++def accepted(root, directory, intent):
++    root=Path(root);directory=Path(directory)
++    require(directory==root/'serial/000004','B1_exception_slot')
++    x=read_record(directory/'accepted-unknown.json')
++    require(read_record(root/'serial-bindings/000004/accepted-unknown.json')=={'sha256':digest(x)},'B1_exception_anchor')
++    old=root/'runs/B1/direct/route/level-1/journal/calls'/OLD_KEY
++    require(x['old_call_key']==OLD_KEY and x['status']=='risk_accepted_remote_unknown'
++            and x['intent_sha256']==digest(intent)
++            and intent['label']=='jev:'+str(old.parents[2])
++            and x['business_intent_sha256']==digest(read_record(old/'intent.json'))
++            and x['business_outcome_sha256']==digest(read_record(old/'outcome.json'))
++            and x['successor_sha256']==digest(read_record(root/NAME)), 'B1_exception_binding')
++    require(not (directory/'completion.json').exists() and not (old/'provider-receipt.json').exists(),'B1_old_unknown_changed')
++    return x
++
++
++def guard_label(root,label):
++    root=Path(root)
++    if (root/NAME).exists():
++        allowed=['jev:'+str(root/'runs/B1/direct/route-compensation'/level) for level in ('level-1','level-2')]
++        allowed+=['host:'+str(root/'runs/B1/direct/host'/str(n)) for n in range(4)]
++        require(label in allowed,'B1_compensation_dispatch_scope')
++
++
++def register(root):
++    from . import pilot as p,transport_profile as t,router as r
++    root=Path(root).resolve();f=p.verify_frozen_inputs(root);t.guard(root)
++    parent=read_record(root/t.SCOPE_NAME)
++    require(read_record(root/'remaining-five-scope-binding.json')=={'sha256':digest(parent)},'B1_parent_binding')
++    require(all((root/k).is_file() and r.file_hash(root/k)==v for k,v in parent['historical_files'].items()),'B1_history_changed')
++    require(sorted(q.name for q in (root/'serial').glob('[0-9]*'))==[f'{n:06d}' for n in range(5)],'B1_serial_count')
++    require(not (root/'runs/B1/direct/route-compensation').exists() and not (root/'runs/B1/direct/host').exists(),'B1_compensation_already_started')
++    old=root/'runs/B1/direct/route/level-1/journal/calls'/OLD_KEY
++    outcome=read_record(old/'outcome.json');intent=read_record(root/'serial/000004/intent.json')
++    require({v['reason'] for v in outcome['results'].values()}=={'ProviderError:transport_failure'},'B1_not_transport_failure')
++    req=read_record(root/'runs/B1/direct/route/level-1/request.json');pack=r.load_pack(p.REPO)
++    raw=next(c['raw'] for c in f['cases'] if c['id']=='B1')
++    state=r.initial_state(raw,pack)
++    require(req['state']==state and req['questions']==[q.to_dict() for q in r.questions(state,pack)],'B1_input_changed')
++    x={**parent,'schema':'mindthus.B1-one-compensation.v1','parent_scope_sha256':digest(parent),
++       'registered_at':datetime.now(timezone.utc).isoformat(),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=p.REPO,text=True).strip(),
++       'code_hashes':p.identity(p.REPO),'typed_decision_implementation':implementation_digest(),
++       'dispatch_scope':[['B1','direct']],'historical_files':p.exact_tree(root),
++       'owner_authorization':'Owner explicitly approved the proposed single B1 compensation after a583e8be03d6e19891539ce21748d31cfa3038be',
++       'old_call_key':OLD_KEY,'original_layer1_state_sha256':digest(state),'original_questions_sha256':digest(req['questions']),
++       'extra_jev_call_budget':1,'B1_jev_attempts_already_used':1,'B1_max_total_jev_attempts':3,
++       'batch_jev_attempts_already_used':2,'batch_max_jev_attempts':f['max_jev_calls']+1,
++       'new_layer1_attempts_max':1,'original_optional_layer2_allowance':1,
++       'consumed_jev_business_calls':2,
++       'risks_accepted':['possible duplicate computation and billing','old remote work may overlap new request'],
++       'old_remote_terminal':'unknown','wait_proves_no_remote_overlap':False,
++       'protocol_exception':'Named old call only; generation-scheduling.v2 otherwise unchanged. Local single sender and >=60s spacing; first usable return; no retry of a new unknown; no safety/permission refusal exception.'}
++    save(root/NAME,x);save(root/'B1-compensation-successor-binding.json',{'sha256':digest(x)})
++    disposition={'status':'risk_accepted_remote_unknown','old_call_key':OLD_KEY,'intent_sha256':digest(intent),
++        'business_intent_sha256':digest(read_record(old/'intent.json')),'business_outcome_sha256':digest(outcome),
++        'successor_sha256':digest(x),'local_disposition_at_epoch':time.time(),
++        'remote_terminal':'unknown','is_completion':False}
++    save(root/'serial/000004/accepted-unknown.json',disposition)
++    save(root/'serial-bindings/000004/accepted-unknown.json',{'sha256':digest(disposition)})
++    accepted(root,root/'serial/000004',intent)
++    return t.active(root)
+diff --git a/experiments/jev_direct/pilot.py b/experiments/jev_direct/pilot.py
+index 98e032c67..ef07c37ac 100644
+--- a/experiments/jev_direct/pilot.py
++++ b/experiments/jev_direct/pilot.py
+@@ -226,11 +226,12 @@ def run_case(root,case_id,arm,provider=None,*,scheduler=None):
+             old=read_record(start);require(old['freeze_sha256']==digest(f) and old['raw_sha256']==digest(raw),'pilot_arm_input_changed')
+         else:save(start,{'freeze_sha256':digest(f),'raw_sha256':digest(raw),'started_at':datetime.now(timezone.utc).isoformat()})
+         if (dest/'result.json').exists():return unseal(dest)
+-        if profile:save(dest/'technical-identity.json',{'successor_sha256':digest(profile),'protocol_sha256':profile['protocol_sha256']})
++        if profile:save(dest/('technical-identity-compensation.json' if profile.get('schema')=='mindthus.B1-one-compensation.v1' else 'technical-identity.json'),{'successor_sha256':digest(profile),'protocol_sha256':profile['protocol_sha256']})
+         pack=r.load_pack(REPO);loaded={};decision=None;reads=[];methods=[]
+         if arm=='direct':
+             require(not (dest/'host').exists() or (dest/'route/result.json').exists(),'pilot_host_before_route')
+-            decision=r.route(dest/'route',raw,REPO,digest(f),provider,scheduler=scheduler)
++            route_dir=dest/('route-compensation' if profile and profile.get('schema')=='mindthus.B1-one-compensation.v1' else 'route')
++            decision=r.route(route_dir,raw,REPO,digest(f),provider,scheduler=scheduler)
+             loaded=r.execution_materials(decision,pack,REPO);methods=list(decision['methods'])
+             allowed=[p for p in f['source_hashes'] if any(p.startswith('skills/'+m+'/') or p==f'docs/methodologies/{m}.md' for m in methods+decision.get('companion_reference_methods',[]))]
+             instruction=('Execute the committed methods in their declared scopes and conditional dependency order. Do not rerun method discovery or silently substitute another method. If materially unsuitable, give a source-based route_objection and a useful bounded answer. For sequential methods let the later judgment use the earlier established result in the answer; reading order alone is not that evidence. No named method or an uncertain route still permits a bounded response or necessary clarification; authority and facts remain constrained.')
+diff --git a/experiments/jev_direct/serial.py b/experiments/jev_direct/serial.py
+index 9d1fa6232..781cb7e89 100644
+--- a/experiments/jev_direct/serial.py
++++ b/experiments/jev_direct/serial.py
+@@ -37,13 +37,20 @@ class SerialRequests:
+             require(read_record(anchor/'intent.json')=={'intent_sha256':digest(intent)},'serial_intent_binding_changed')
+             require(isinstance(intent['label'],str) and intent['label'] not in labels,'serial_duplicate_label')
+             require(self._number(intent['started_at_epoch']),'serial_start_time_invalid')
+-            require(intent['previous_completion_sha256']==(digest(last) if last else None),'serial_chain_changed')
++            prior_unknown=last is not None and last['status']=='risk_accepted_remote_unknown'
++            require(intent['previous_completion_sha256']==(digest(last) if last and not prior_unknown else None),'serial_chain_changed')
++            require(intent.get('previous_disposition_sha256')==(digest(last) if prior_unknown else None),'serial_disposition_chain_changed')
+             gap=intent['actual_gap_seconds']
+             require((last is None and gap is None) or (last is not None and self._number(gap) and gap>=self.gap),'serial_gap_invalid')
+             outcome=directory/'completion.json'
+             failure=directory/'failure.json'
+             require(not (outcome.exists() and failure.exists()),'serial_conflicting_terminal')
+-            if failure.exists():
++            disposition=directory/'accepted-unknown.json'
++            if disposition.exists():
++                require(not outcome.exists() and not failure.exists(),'serial_conflicting_disposition')
++                from .b1_compensation import accepted
++                end=accepted(self.batch,directory,intent)
++            elif failure.exists():
+                 from .host_boundary import validate_reconciliation
+                 end=read_record(failure);host=Path(end['host_directory'])
+                 require(self.batch is not None and host.is_relative_to(self.batch/'runs')
+@@ -61,13 +68,14 @@ class SerialRequests:
+                 require(read_record(anchor/'completion.json')=={'completion_sha256':digest(end)},'serial_completion_binding_changed')
+                 require(end['intent_sha256']==digest(intent) and end['status']=='returned','serial_completion_identity')
+                 require(self._number(end['request_elapsed_seconds']) and end['request_elapsed_seconds']>=0,'serial_end_time_invalid')
+-            require(self._number(end['ended_at_epoch']),'serial_end_time_invalid')
++            require(self._number(end['local_disposition_at_epoch'] if end['status']=='risk_accepted_remote_unknown' else end['ended_at_epoch']),'serial_end_time_invalid')
+             labels[intent['label']]=end;last=end
+         if self.batch:
+             # Use actual host/provider intents, including other scenarios/arms and reviews.
+             locations=[(self.batch/'runs','*/*/host/*'),
+                        (self.batch/'reviews','**'),
+-                       (self.batch/'runs','*/*/route/level-*/journal/calls/*')]
++                       (self.batch/'runs','*/*/route/level-*/journal/calls/*'),
++                       (self.batch/'runs/B1/direct','route-compensation/level-*/journal/calls/*')]
+             paths=set()
+             for root,pattern in locations:
+                 # Discover from BOTH directions. Request/prompt/schema-only
+@@ -101,6 +109,8 @@ class SerialRequests:
+             if self.batch:
+                 from .transport_profile import guard
+                 guard(self.batch)
++                from .b1_compensation import guard_label
++                guard_label(self.batch,label)
+             directories,previous,labels=self._validate()
+             require(label not in labels,'serial_request_already_completed')
+             began_wait=self.monotonic()
+@@ -114,13 +124,17 @@ class SerialRequests:
+                     waited+=self.monotonic()-wait_start
+             start_mono=self.monotonic();start=self.clock()
+             gap=None if previous is None else start_mono-end_mono
++            accepted_unknown=previous is not None and previous['status']=='risk_accepted_remote_unknown'
++            reference_epoch=None if previous is None else previous['local_disposition_at_epoch'] if accepted_unknown else previous['ended_at_epoch']
+             intent={'label':label,'started_at_epoch':start,
+-                    'previous_completion_sha256':digest(previous) if previous else None,
+-                    'previous_end_epoch':previous['ended_at_epoch'] if previous else None,
++                    'previous_completion_sha256':digest(previous) if previous and not accepted_unknown else None,
++                    'previous_end_epoch':reference_epoch if not accepted_unknown else None,
+                     'actual_gap_seconds':gap,
+                     'active_wait_seconds':waited,
+                     'gap_basis':'first_call' if previous is None else 'monotonic' if continuous else 'restart_conservative_lower_bound',
+-                    'wall_gap_seconds':None if previous is None else start-previous['ended_at_epoch']}
++                    'wall_gap_seconds':None if previous is None else start-reference_epoch}
++            if accepted_unknown:
++                intent.update(previous_disposition_sha256=digest(previous),previous_disposition_epoch=reference_epoch,gap_basis='monotonic_wait_after_risk_acceptance_not_remote_completion')
+             directory=self.root/f'{len(directories):06d}';anchor=self.anchors/directory.name
+             save(directory/'intent.json',intent)
+             save(anchor/'intent.json',{'intent_sha256':digest(intent)})
+diff --git a/experiments/jev_direct/transport_profile.py b/experiments/jev_direct/transport_profile.py
+index ba10e082c..57bc4f2c7 100644
+--- a/experiments/jev_direct/transport_profile.py
++++ b/experiments/jev_direct/transport_profile.py
+@@ -63,6 +63,13 @@ def active(root):
+         require(read_record(root/'remaining-five-scope-binding.json')=={'sha256':digest(x)}
+                 and x['parent_transport_successor_sha256']==digest(parent)
+                 and x['dispatch_scope']==[list(pair) for pair in REMAINING], 'transport_scope_binding_changed')
++    from .b1_compensation import NAME as compensation_name
++    if (root/compensation_name).exists():
++        parent=x; x=read_record(root/compensation_name)
++        from experiments.typed_decision.session import implementation_digest
++        require(read_record(root/'B1-compensation-successor-binding.json')=={'sha256':digest(x)}
++                and x['parent_scope_sha256']==digest(parent) and x['dispatch_scope']==[['B1','direct']]
++                and x['typed_decision_implementation']==implementation_digest(), 'B1_successor_changed')
+     candidate=json.loads(CANDIDATE.read_text());protocol=json.loads(PROTOCOL.read_text())
+     require(x['root']==str(root.resolve()) and x['code_hashes']==p.identity(BASE)
+             and x['parent_freeze_sha256']==digest(read_record(root/'freeze.json'))

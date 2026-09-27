@@ -6,7 +6,21 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Current diagnostic repair — no new model request, B1 remains unknown
+## Current B1 direct — owner-approved compensation delivered; old unknown retained
+
+Implementation: `0cddccc1fcbca6c38a081536e085802b25e58be6`.
+Read [the original B1 answer, route, accepted-risk linkage and evidence](jev-direct-v2/B1-compensation-v1/RESULT.md).
+Owner explicitly approved exactly one additional B1 layer-1 attempt, accepting possible
+duplicate work/billing and overlap. Old serial/000004 remains remote-unknown without a
+completion; its narrowly bound disposition is risk_accepted_remote_unknown.
+The compensation returned one full-catalog 71-question Jev layer, WAE primary for U,
+no detail read. One gpt-6-sol/xhigh host loaded WAE SKILL+methodology and delivered the
+first actual answer without route objection. No recovery logs or new unknown observed.
+New Jev evaluate3.833971s, host CLI37.460029s, waits119.952124s, full wall161.527518s.
+A1 answers unchanged; B1/native and other eight paths still UNRUN. B1 has no paired
+quality/performance result yet; old unknown cost/state remains a limitation, not erased.
+
+## Previous diagnostic repair — no new model request, B1 remains unknown
 
 Read [the bounded transport diagnostic repair and old-call inspection](jev-direct-v2/transport-diagnostics-v1/RESULT.md).
 Compatible errors now carry safe phase/type/errno/SSL/hashed response-ID observations
