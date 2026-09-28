@@ -63,8 +63,10 @@ def prepare(batch, inputs, *, simulation=True, admission=None):
         require(admission.get('binary'),'host_binary_required')
         require(admission['jev_timeout']<=90,'jev_deadline_limit')
         from .materials import verify_materials
-        sealed,manifest=verify_materials(admission['materials_root'])
+        sealed,manifest=verify_materials(admission['materials_root'],admission.get('mode','formal'))
         require(sealed==inputs and digest(manifest)==admission['acceptance_seal_sha256'],'acceptance_material_binding')
+        if admission.get('mode')=='exploratory':
+            require(admission.get('total_limits')=={'logical':88,'jev':16,'host':72},'exploratory_total_limits')
     batch.mkdir(parents=True);(batch/'calls').mkdir();(batch/'runs').mkdir()
     config={'schema':'mindthus.grounded-dispatch.v1','simulation':simulation,'design_baseline':rt.BASELINE,
       'parent_implementation':'d7da2e4cc4b60fcbb4e90c6176a25e3745feb88b',
@@ -217,6 +219,10 @@ class Dispatcher:
             req=rt.request(run)
             if req is None:return rt.state(run)
             require(req['simulation'] is self.config['simulation'],'run_mode_mismatch')
+            limits=(self.config.get('admission') or {}).get('total_limits')
+            if limits:
+                prior=[rt.read(p/'request.json') for p in (self.root/'calls').iterdir()]
+                require(len(prior)<limits['logical'] and sum(r['role']==req['role'] for r in prior)<limits[req['role']],'batch_call_budget_exhausted')
             began=self.monotonic()
             outbound=wire(req,self.config);directory=self.root/'calls'/f'{len(list((self.root/"calls").iterdir())):06d}'
             directory.mkdir();key=run_name+':'+str(req['sequence'])

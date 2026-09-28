@@ -1,0 +1,126 @@
+{
+  "skills-text": {
+    "documents": [
+      {
+        "id": "S0",
+        "revision": "1",
+        "text": "Skills 的工程价值不就是把合适的提示词或上下文在合适时机注入模型吗？所以 Skills 本质上还是提示词工程，对吧？",
+        "origin": "user",
+        "role": "user",
+        "order": 0,
+        "available": true
+      },
+      {
+        "id": "S1",
+        "revision": "1",
+        "text": "本例讨论的Skill由按需载入的说明文字和参考文字组成。",
+        "origin": "given",
+        "role": "source",
+        "order": 1,
+        "available": true
+      },
+      {
+        "id": "S2",
+        "revision": "1",
+        "text": "请回应这场争论，判断以上解释对本例是否充分、它能否用于概括Skills；说明你的理由。",
+        "origin": "user",
+        "role": "user",
+        "order": 2,
+        "available": true
+      }
+    ]
+  },
+  "skills-validator": {
+    "documents": [
+      {
+        "id": "S0",
+        "revision": "1",
+        "text": "Skills 的工程价值不就是把合适的提示词或上下文在合适时机注入模型吗？所以 Skills 本质上还是提示词工程，对吧？",
+        "origin": "user",
+        "role": "user",
+        "order": 0,
+        "available": true
+      },
+      {
+        "id": "S1",
+        "revision": "1",
+        "text": "本例讨论的Skill由按需载入的说明文字和参考文字，以及独立执行并能否决不合格结果的校验程序组成。",
+        "origin": "given",
+        "role": "source",
+        "order": 1,
+        "available": true
+      },
+      {
+        "id": "S2",
+        "revision": "1",
+        "text": "请回应这场争论，判断以上解释对本例是否充分、它能否用于概括Skills；说明你的理由。",
+        "origin": "user",
+        "role": "user",
+        "order": 2,
+        "available": true
+      }
+    ]
+  },
+  "4k-usability": {
+    "documents": [
+      {
+        "id": "F0",
+        "revision": "1",
+        "text": "以下是缺失原图的历史争论摘录，不能逐字核验原帖。原帖被转述为：Mac mini外接27寸4K，默认1080大小太大，设1440大小又可能影响性能，所以只能用5K。momo被转述为：装BetterDisplay就解决分辨率适配问题了。MikeZTM被转述为：PPI是物理特性，任何软件都没用，只会更模糊。",
+        "origin": "reported",
+        "role": "source",
+        "order": 0,
+        "available": true
+      },
+      {
+        "id": "F1",
+        "revision": "1",
+        "text": "本例我已经有27寸4K屏幕，我要解决的是界面大小不合适、日常使用不舒服的问题。",
+        "origin": "user",
+        "role": "user",
+        "order": 1,
+        "available": true
+      },
+      {
+        "id": "F2",
+        "revision": "1",
+        "text": "请判断争论中的重要结论及理由，给出针对我的目标的建议。原图、具体机型、实际设置和实测对比都没有提供。",
+        "origin": "user",
+        "role": "user",
+        "order": 2,
+        "available": true
+      }
+    ]
+  },
+  "4k-density": {
+    "documents": [
+      {
+        "id": "F0",
+        "revision": "1",
+        "text": "以下是缺失原图的历史争论摘录，不能逐字核验原帖。原帖被转述为：Mac mini外接27寸4K，默认1080大小太大，设1440大小又可能影响性能，所以只能用5K。momo被转述为：装BetterDisplay就解决分辨率适配问题了。MikeZTM被转述为：PPI是物理特性，任何软件都没用，只会更模糊。",
+        "origin": "reported",
+        "role": "source",
+        "order": 0,
+        "available": true
+      },
+      {
+        "id": "F1",
+        "revision": "1",
+        "text": "本例我已经有27寸4K屏幕，我要解决的是让它的物理像素密度达到同尺寸5K屏幕水平的问题。",
+        "origin": "user",
+        "role": "user",
+        "order": 1,
+        "available": true
+      },
+      {
+        "id": "F2",
+        "revision": "1",
+        "text": "请判断争论中的重要结论及理由，给出针对我的目标的建议。原图、具体机型、实际设置和实测对比都没有提供。",
+        "origin": "user",
+        "role": "user",
+        "order": 2,
+        "available": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "mode": "exploratory",
+  "execution_authorized": true,
+  "authorization_ref": "current-user:Mindthus-211-four-case-exploratory-88-logical-16-Jev-72-host",
+  "materials_root": "/Users/william/.codex/tmp/gj-exploratory-v1-materials",
+  "acceptance_seal_sha256": "5b4db0d71f8fe6e51af6e6ade20354eb13de762e9c3a3e0cf284e3467dab061a",
+  "call_limits": {
+    "A": 6,
+    "B": 7,
+    "C": 9
+  },
+  "total_limits": {
+    "logical": 88,
+    "jev": 16,
+    "host": 72
+  },
+  "host_timeout": 360,
+  "jev_timeout": 60,
+  "binary": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex"
+}

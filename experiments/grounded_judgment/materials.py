@@ -22,8 +22,12 @@ def import_materials(root, bundle):
     rt.write(root/'manifest.json',manifest);return manifest
 
 
-def verify_materials(root):
+def verify_materials(root, mode="formal"):
     root=Path(root);m=rt.read(root/'manifest.json');inputs=rt.read(root/'inputs.json')
     require(digest(inputs)==m['inputs_sha256'] and digest(rt.read(root/'norms.evaluation-only.json'))==m['norms_sha256'],'material_digest')
-    require(m['sealed_for_acceptance'] is True and len(inputs)==8 and m['owner_seal_ref'],'acceptance_not_sealed')
+    if mode=='exploratory':
+        require(len(inputs)==4 and m['provenance']=='executor_prepared_public_exploratory' and not m['sealed_for_acceptance'],'exploratory_scope')
+    else:
+        require(mode=='formal','material_mode')
+        require(m['sealed_for_acceptance'] is True and len(inputs)==8 and m['owner_seal_ref'],'acceptance_not_sealed')
     return inputs,m
