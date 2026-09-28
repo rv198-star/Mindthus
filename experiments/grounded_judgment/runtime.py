@@ -184,6 +184,11 @@ def accept(root,envelope):
         s=state(root);require(not s['stopped'],'run_stopped');req=s['pending'];require(req is not None,'no_pending_request')
         require(envelope.get('request_sha256')==req['request_sha256'],'wrong_request')
         require(envelope.get('simulation') is s['simulation'],'mode_mismatch')
+        # Dispatch-owned runs import only the matching persisted transport receipt.
+        # Legacy standalone file exchange retains its original contract.
+        if (root/'dispatch-owner.json').exists():
+            from .dispatch import validate_import
+            validate_import(root,req,envelope)
         status=envelope.get('status');require(status in ('returned','failed','unknown','safety_refusal'),'terminal_status')
         # Persist exact raw exchange before adapting. Never infers terminal from exit status.
         append(root,'response',envelope)

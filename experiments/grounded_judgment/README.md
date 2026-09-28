@@ -75,13 +75,16 @@ active_wait_seconds、session_seconds、loading_seconds、usage、cost、transpo
 运行root墙钟包含文件交换期间的人为停顿，不能拿它冒充连续模型处理耗时。
 模拟计数是模拟逻辑交换，真实模型调用为0。真实运行的计量字段是执行者观测，不是本工具独立认证。
 
-## 后续真实执行接线与建议上限（未授权）
+## 派发接线与后续预算（真实执行未授权）
 
 同一可执行入口可用 `init --external-evidence` 记录真实外部返回；这只改证据模式，
 不授权发送。该模式要求原入口和目录材料存在，不能用空材料削弱A。
-由未来获授权的现有官方执行机制消费request，再以绑定证据导入response；
-本模块不另造客户端/平台，也不自己执行联网、60秒调度或全批单发送者控制。
-真实批次前须由执行者接好这两项既有调度约束，核验实现，封存验收材料并取得预算/执行授权。
+新增 `dispatch.py` 已将request接到既有官方执行适配器，并复用SerialRequests完成
+全批单发送者和明确终态后60秒冷却。新增batch采用dispatch-owned receipt导入；旧文件交换保持。
+本轮只用模拟传输与时钟验证，真实批次仍须封存验收材料并取得预算/执行授权。
+可执行入口、材料导入格式及原始离线证据见
+[派发接线报告](../../docs/internal/research/typed-decision/grounded-judgment-v0/offline-dispatch-v1/RESULT.md)及
+[运行入口](../../docs/internal/research/typed-decision/grounded-judgment-v0/offline-dispatch-v1/RUN.md)。
 请求明确记录官方jev-1.13.0或gpt-6-sol/xhigh、mindthus_official_http；请求配置不是服务端型号证明。
 
 | 每例上限 | A原入口 | B精细提示Agent | C/Jev |

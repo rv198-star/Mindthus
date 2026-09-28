@@ -1,0 +1,581 @@
+{
+  "simulation": true,
+  "public_development": true,
+  "holdout": false,
+  "real_model_calls": 0,
+  "simulated_clock_seconds": 870.0,
+  "calls": [
+    {
+      "phase": "round1",
+      "role": "jev",
+      "at": 0.0
+    },
+    {
+      "phase": "round2",
+      "role": "jev",
+      "at": 62.0
+    },
+    {
+      "phase": "round3",
+      "role": "jev",
+      "at": 124.0
+    },
+    {
+      "phase": "draft",
+      "role": "host",
+      "at": 186.0
+    },
+    {
+      "phase": "draft",
+      "role": "host",
+      "at": 248.0
+    },
+    {
+      "phase": "check",
+      "role": "jev",
+      "at": 310.0
+    },
+    {
+      "phase": "revision",
+      "role": "host",
+      "at": 372.0
+    },
+    {
+      "phase": "atoms",
+      "role": "host",
+      "at": 434.0
+    },
+    {
+      "phase": "draft",
+      "role": "host",
+      "at": 496.0
+    },
+    {
+      "phase": "draft",
+      "role": "host",
+      "at": 558.0
+    },
+    {
+      "phase": "check",
+      "role": "host",
+      "at": 620.0
+    },
+    {
+      "phase": "revision",
+      "role": "host",
+      "at": 682.0
+    },
+    {
+      "phase": "draft",
+      "role": "host",
+      "at": 744.0
+    },
+    {
+      "phase": "draft",
+      "role": "host",
+      "at": 806.0
+    },
+    {
+      "phase": "check",
+      "role": "host",
+      "at": 868.0
+    }
+  ],
+  "arms": {
+    "C": {
+      "phase": "done",
+      "stopped": null,
+      "call_count": 7,
+      "read_count": 1,
+      "draft": "【模拟首稿】这是一份供离线接线验证的答案，不是模型能力证据。",
+      "final": "【模拟修订】保留原文给定前提，限定结论；仅测试一次修订的接线。",
+      "check_count": 1,
+      "revision_count": 1,
+      "measurements": [
+        {
+          "active_wait_seconds": 0.0,
+          "cli_starts": 0,
+          "cost": null,
+          "loading_seconds": 0.0,
+          "logical_calls": 1,
+          "observed_recoveries": null,
+          "phase": "round1",
+          "role": "jev",
+          "session_seconds": 2.0,
+          "simulation": true,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000000/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          }
+        },
+        {
+          "active_wait_seconds": 60.0,
+          "cli_starts": 0,
+          "cost": null,
+          "loading_seconds": 0.0,
+          "logical_calls": 1,
+          "observed_recoveries": null,
+          "phase": "round2",
+          "role": "jev",
+          "session_seconds": 2.0,
+          "simulation": true,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000001/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          }
+        },
+        {
+          "active_wait_seconds": 60.0,
+          "cli_starts": 0,
+          "cost": null,
+          "loading_seconds": 0.0,
+          "logical_calls": 1,
+          "observed_recoveries": null,
+          "phase": "round3",
+          "role": "jev",
+          "session_seconds": 2.0,
+          "simulation": true,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000002/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          }
+        },
+        {
+          "active_wait_seconds": 60.0,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "7adfda17bc60ed605525b4322b105d508d9359fd5be7c2f4107ffc31ae38955a",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "0b314eabcee425ecdeb64d43a8560c2890eee3737f55f1f4a98c5b1ebb878b26"
+          },
+          "phase": "draft",
+          "role": "host",
+          "session_seconds": 2.0,
+          "simulation": true,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000003/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          }
+        },
+        {
+          "active_wait_seconds": 60.0,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "636550ee49ed5eb3c1afbadd7e5373911f6a658ad9663ec084d9529300668e95",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "0b314eabcee425ecdeb64d43a8560c2890eee3737f55f1f4a98c5b1ebb878b26"
+          },
+          "phase": "draft",
+          "role": "host",
+          "session_seconds": 2.0,
+          "simulation": true,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000004/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          }
+        },
+        {
+          "active_wait_seconds": 60.0,
+          "cli_starts": 0,
+          "cost": null,
+          "loading_seconds": 0.0,
+          "logical_calls": 1,
+          "observed_recoveries": null,
+          "phase": "check",
+          "role": "jev",
+          "session_seconds": 2.0,
+          "simulation": true,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000005/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          }
+        },
+        {
+          "phase": "revision",
+          "role": "host",
+          "simulation": true,
+          "logical_calls": 1,
+          "cli_starts": 1,
+          "observed_recoveries": {
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "request_sha256": "8566a391a32562a622b30270f8f3237a87990a18ce17ba414472f84c12c317f9",
+            "transport_successor_sha256": "0b314eabcee425ecdeb64d43a8560c2890eee3737f55f1f4a98c5b1ebb878b26",
+            "outer_driver_retries": 0,
+            "cli_starts": 1,
+            "sampling_retry_log_count": 0,
+            "reconnect_notice_count": 0,
+            "auth_or_401_log_count": 0,
+            "fallback_or_prewarm_log_count": 0,
+            "actual_underlying_request_count": null,
+            "generation_attempt_count": null,
+            "connection_recovery_seconds": null,
+            "authentication_recovery_seconds": null,
+            "observation": "no_recovery_observed",
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "stop_subsequent_dispatch": false
+          },
+          "underlying_requests": null,
+          "active_wait_seconds": 60.0,
+          "session_seconds": 2.0,
+          "loading_seconds": 0.0,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          },
+          "cost": null,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000006/terminal.json"
+        }
+      ]
+    },
+    "B": {
+      "phase": "done",
+      "stopped": null,
+      "call_count": 5,
+      "read_count": 1,
+      "draft": "【模拟首稿】这是一份供离线接线验证的答案，不是模型能力证据。",
+      "final": "【模拟修订】保留原文给定前提，限定结论；仅测试一次修订的接线。",
+      "check_count": 1,
+      "revision_count": 1,
+      "measurements": [
+        {
+          "active_wait_seconds": 60.0,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "6154d8e5279e5fcae3eb070c2a27beacbc31f7a56bc453c3ba53cd70c3746b91",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "0b314eabcee425ecdeb64d43a8560c2890eee3737f55f1f4a98c5b1ebb878b26"
+          },
+          "phase": "atoms",
+          "role": "host",
+          "session_seconds": 2.0,
+          "simulation": true,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000007/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          }
+        },
+        {
+          "active_wait_seconds": 60.0,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "155d260cf5541ea15f26a89b5f2a500f900216f540cefe991be3037aca0f580e",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "0b314eabcee425ecdeb64d43a8560c2890eee3737f55f1f4a98c5b1ebb878b26"
+          },
+          "phase": "draft",
+          "role": "host",
+          "session_seconds": 2.0,
+          "simulation": true,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000008/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          }
+        },
+        {
+          "active_wait_seconds": 60.0,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "59bb900f332e6da9714f00a27372c73ec66c35bd65dc26dc8058e705f322a5f7",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "0b314eabcee425ecdeb64d43a8560c2890eee3737f55f1f4a98c5b1ebb878b26"
+          },
+          "phase": "draft",
+          "role": "host",
+          "session_seconds": 2.0,
+          "simulation": true,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000009/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          }
+        },
+        {
+          "active_wait_seconds": 60.0,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "012b507cb10ac915d9b13863c0e7a203cd8c4f1c2b0805fe5fe2e500a9006196",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "0b314eabcee425ecdeb64d43a8560c2890eee3737f55f1f4a98c5b1ebb878b26"
+          },
+          "phase": "check",
+          "role": "host",
+          "session_seconds": 2.0,
+          "simulation": true,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000010/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          }
+        },
+        {
+          "phase": "revision",
+          "role": "host",
+          "simulation": true,
+          "logical_calls": 1,
+          "cli_starts": 1,
+          "observed_recoveries": {
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "request_sha256": "e6609943aecb58e44b6075604124a538073e869b7e42d7074b6b6130eb01fc90",
+            "transport_successor_sha256": "0b314eabcee425ecdeb64d43a8560c2890eee3737f55f1f4a98c5b1ebb878b26",
+            "outer_driver_retries": 0,
+            "cli_starts": 1,
+            "sampling_retry_log_count": 0,
+            "reconnect_notice_count": 0,
+            "auth_or_401_log_count": 0,
+            "fallback_or_prewarm_log_count": 0,
+            "actual_underlying_request_count": null,
+            "generation_attempt_count": null,
+            "connection_recovery_seconds": null,
+            "authentication_recovery_seconds": null,
+            "observation": "no_recovery_observed",
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "stop_subsequent_dispatch": false
+          },
+          "underlying_requests": null,
+          "active_wait_seconds": 60.0,
+          "session_seconds": 2.0,
+          "loading_seconds": 0.0,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          },
+          "cost": null,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000011/terminal.json"
+        }
+      ]
+    },
+    "A": {
+      "phase": "done",
+      "stopped": null,
+      "call_count": 3,
+      "read_count": 1,
+      "draft": "【模拟首稿】这是一份供离线接线验证的答案，不是模型能力证据。",
+      "final": "【模拟首稿】这是一份供离线接线验证的答案，不是模型能力证据。",
+      "check_count": 1,
+      "revision_count": 0,
+      "measurements": [
+        {
+          "active_wait_seconds": 60.0,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "428ea3d04a1acc497d522ef684f3bdedca694565058c6892019a4ca96cbc8227",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "0b314eabcee425ecdeb64d43a8560c2890eee3737f55f1f4a98c5b1ebb878b26"
+          },
+          "phase": "draft",
+          "role": "host",
+          "session_seconds": 2.0,
+          "simulation": true,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000012/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          }
+        },
+        {
+          "active_wait_seconds": 60.0,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "20cc42d2e34aec4b7d1ada1184a675e6e1e3ec526ed30bfaa7b3fa631cd686d9",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "0b314eabcee425ecdeb64d43a8560c2890eee3737f55f1f4a98c5b1ebb878b26"
+          },
+          "phase": "draft",
+          "role": "host",
+          "session_seconds": 2.0,
+          "simulation": true,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000013/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          }
+        },
+        {
+          "phase": "check",
+          "role": "host",
+          "simulation": true,
+          "logical_calls": 1,
+          "cli_starts": 1,
+          "observed_recoveries": {
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "request_sha256": "f8b6d003f8e7964c550b1969c32e47096e7a27f822f9249f6e13066aa05a6bb7",
+            "transport_successor_sha256": "0b314eabcee425ecdeb64d43a8560c2890eee3737f55f1f4a98c5b1ebb878b26",
+            "outer_driver_retries": 0,
+            "cli_starts": 1,
+            "sampling_retry_log_count": 0,
+            "reconnect_notice_count": 0,
+            "auth_or_401_log_count": 0,
+            "fallback_or_prewarm_log_count": 0,
+            "actual_underlying_request_count": null,
+            "generation_attempt_count": null,
+            "connection_recovery_seconds": null,
+            "authentication_recovery_seconds": null,
+            "observation": "no_recovery_observed",
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "stop_subsequent_dispatch": false
+          },
+          "underlying_requests": null,
+          "active_wait_seconds": 60.0,
+          "session_seconds": 2.0,
+          "loading_seconds": 0.0,
+          "usage": {
+            "input_tokens": 100,
+            "output_tokens": 10
+          },
+          "cost": null,
+          "transport_evidence": "/private/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/mindthus-gj-dispatch-3b1xi4tq/simulation/calls/000014/terminal.json"
+        }
+      ]
+    }
+  },
+  "unknown_actual_http_counts": true,
+  "cost": null
+}

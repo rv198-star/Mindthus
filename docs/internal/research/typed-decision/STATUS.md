@@ -6,6 +6,18 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Grounded judgment — dispatch integration implemented, offline evidence ready
+
+User-authorized wiring stage complete; see [new code scope and offline evidence](grounded-judgment-v0/offline-dispatch-v1/RESULT.md).
+Existing official transports and generation-scheduling.v2 are connected to the file exchange,
+with batch single sender, cooldown, terminal binding and receipt-checked import. Thirty-one
+scoped tests pass (27 new wiring + four affected exchange regressions). One public simulated
+A/B/C trace includes three rounds, material read, draft, check, revision and cross-arm cooldown.
+Real API calls/host CLI starts: zero. No credentials read, no budget increase or sealed holdout.
+Next: scoped review of new wiring, owner acceptance materials and separately authorized real
+batch parameters. Closed GJ-01–04/core/design, old R2 and six-case conclusions remain closed;
+6/7/9 remain proposals, default adoption NOT QUALIFIED, no claimed Jev quality or monetary ROI.
+
 ## Grounded judgment — offline repair and scoped review CLOSED
 
 Fixed reviewed implementation: `d7da2e4cc4b60fcbb4e90c6176a25e3745feb88b`.

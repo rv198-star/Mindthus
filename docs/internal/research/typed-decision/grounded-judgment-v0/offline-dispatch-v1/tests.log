@@ -1,0 +1,36 @@
+test_diagnostic_from_other_request_cannot_clear_unknown (tests.test_grounded_dispatch.BoundaryTests.test_diagnostic_from_other_request_cannot_clear_unknown) ... ok
+test_duplicate_host_paths_are_failure_after_terminal (tests.test_grounded_dispatch.BoundaryTests.test_duplicate_host_paths_are_failure_after_terminal) ... ok
+test_import_cannot_bypass_dispatch_receipt (tests.test_grounded_dispatch.BoundaryTests.test_import_cannot_bypass_dispatch_receipt) ... ok
+test_local_write_is_not_pre_send (tests.test_grounded_dispatch.BoundaryTests.test_local_write_is_not_pre_send) ... ok
+test_materials_are_separate_and_dev_is_not_sealed (tests.test_grounded_dispatch.BoundaryTests.test_materials_are_separate_and_dev_is_not_sealed) ... ok
+test_no_auth_or_transport_during_demo (tests.test_grounded_dispatch.BoundaryTests.test_no_auth_or_transport_during_demo) ... ok
+test_official_host_adapter_with_mock_cli_only (tests.test_grounded_dispatch.BoundaryTests.test_official_host_adapter_with_mock_cli_only) ... ok
+test_official_jev_adapter_with_mock_transport_only (tests.test_grounded_dispatch.BoundaryTests.test_official_jev_adapter_with_mock_transport_only) ... ok
+test_receipt_for_identical_input_other_case_rejected (tests.test_grounded_dispatch.BoundaryTests.test_receipt_for_identical_input_other_case_rejected) ... ok
+test_terminal_before_start_is_unknown (tests.test_grounded_dispatch.BoundaryTests.test_terminal_before_start_is_unknown) ... ok
+test_wire_digest_tamper_stops_import (tests.test_grounded_dispatch.BoundaryTests.test_wire_digest_tamper_stops_import) ... ok
+test_binding_and_serial_evidence (tests.test_grounded_dispatch.Wiring.test_binding_and_serial_evidence) ... ok
+test_budget_and_completed_no_extra_call (tests.test_grounded_dispatch.Wiring.test_budget_and_completed_no_extra_call) ... ok
+test_complete_three_arms_wire_to_import (tests.test_grounded_dispatch.Wiring.test_complete_three_arms_wire_to_import) ... ok
+test_cross_arm_and_restart_cooldown (tests.test_grounded_dispatch.Wiring.test_cross_arm_and_restart_cooldown) ... ok
+test_explicit_failure_separate_from_success (tests.test_grounded_dispatch.Wiring.test_explicit_failure_separate_from_success) ... ok
+test_nonzero_timeout_and_wrong_thread_not_terminal (tests.test_grounded_dispatch.Wiring.test_nonzero_timeout_and_wrong_thread_not_terminal) ... ok
+test_permission_stops_batch (tests.test_grounded_dispatch.Wiring.test_permission_stops_batch) ... ok
+test_presend_failure_terminal_can_continue_other_arm (tests.test_grounded_dispatch.Wiring.test_presend_failure_terminal_can_continue_other_arm) ... ok
+test_real_admission_missing_no_transport (tests.test_grounded_dispatch.Wiring.test_real_admission_missing_no_transport) ... ok
+test_simulation_cannot_import_real (tests.test_grounded_dispatch.Wiring.test_simulation_cannot_import_real) ... ok
+test_single_sender (tests.test_grounded_dispatch.Wiring.test_single_sender) ... ok
+test_unclassified_recovery_preserves_result_stops_next (tests.test_grounded_dispatch.Wiring.test_unclassified_recovery_preserves_result_stops_next) ... ok
+test_unimported_call_never_resent (tests.test_grounded_dispatch.Wiring.test_unimported_call_never_resent) ... ok
+test_unknown_stops_without_completion_or_retry (tests.test_grounded_dispatch.Wiring.test_unknown_stops_without_completion_or_retry) ... ok
+test_wire_contract_compatible_without_mutation (tests.test_grounded_dispatch.Wiring.test_wire_contract_compatible_without_mutation) ... ok
+test_wrong_turn_and_plain_error_remain_unknown (tests.test_grounded_dispatch.Wiring.test_wrong_turn_and_plain_error_remain_unknown) ... ok
+test_request_is_idempotent (tests.test_grounded_judgment.GroundedTests.test_request_is_idempotent) ... ok
+test_wrong_request_does_not_advance (tests.test_grounded_judgment.GroundedTests.test_wrong_request_does_not_advance) ... ok
+test_simulation_cannot_fill_real_exchange (tests.test_grounded_judgment.GroundedTests.test_simulation_cannot_fill_real_exchange) ... ok
+test_unknown_stops_without_retry (tests.test_grounded_judgment.GroundedTests.test_unknown_stops_without_retry) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.897s
+
+OK

@@ -7,8 +7,13 @@ from .development import export
 
 
 def main():
-    p=argparse.ArgumentParser(description='Offline/file-exchange prototype; never sends model requests.')
+    p=argparse.ArgumentParser(description='Grounded prototype; dispatch-step is the explicit admitted transport boundary.')
     sub=p.add_subparsers(dest='command',required=True)
+    s=sub.add_parser('dispatch-demo');s.add_argument('--out',required=True)
+    s=sub.add_parser('import-materials');s.add_argument('--out',required=True);s.add_argument('--bundle',required=True)
+    s=sub.add_parser('dispatch-prepare');s.add_argument('--batch',required=True);s.add_argument('--inputs',required=True)
+    s.add_argument('--admission',help='Explicit live execution/budget admission JSON; omitted means simulation only')
+    s=sub.add_parser('dispatch-step');s.add_argument('--batch',required=True);s.add_argument('--run',required=True)
     s=sub.add_parser('prepare-input');s.add_argument('--documents',required=True);s.add_argument('--repo',required=True)
     s=sub.add_parser('wire');s.add_argument('--root',required=True)
     s=sub.add_parser('demo');s.add_argument('--out',required=True)
@@ -19,7 +24,20 @@ def main():
         s=sub.add_parser(op);s.add_argument('--root',required=True)
         if op=='accept':s.add_argument('--reply',required=True)
     a=p.parse_args()
-    if a.command=='prepare-input':
+    if a.command=='dispatch-demo':
+        from .dispatch_demo import export as dispatch_export
+        result=dispatch_export(a.out)
+    elif a.command=='import-materials':
+        from .materials import import_materials
+        result=import_materials(a.out,read(a.bundle))
+    elif a.command=='dispatch-prepare':
+        from .dispatch import prepare
+        result=prepare(a.batch,read(a.inputs),simulation=not bool(a.admission),admission=read(a.admission) if a.admission else None)
+    elif a.command=='dispatch-step':
+        from .dispatch import Dispatcher,OfficialAdapters
+        s=Dispatcher(a.batch,OfficialAdapters()).step(a.run)
+        result={k:s[k] for k in ('phase','stopped','call_count','final')}
+    elif a.command=='prepare-input':
         from .exchange import prepare_input
         result=prepare_input(read(a.documents),a.repo)
     elif a.command=='wire':

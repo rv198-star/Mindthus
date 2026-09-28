@@ -1,0 +1,23 @@
+{
+  "kind": "offline_dispatch_wiring_only",
+  "design_baseline": "006731c43a48099d41bfbc5f3421bd5267a6404f",
+  "real_model_calls": 0,
+  "files_sha256": {
+    "experiments/grounded_judgment/__init__.py": "07e61da77cfbb97027acbdadaafe831f8c1c02d04d92aafc1335fafada14b558",
+    "experiments/grounded_judgment/__main__.py": "0d879835ddfb203e634eac3315370e7696e21c57693b94562e75f61a4ae3196e",
+    "experiments/grounded_judgment/core.py": "b82b8f5b07821e65d72d68b5e70f0597fb7ca063ef0ca062d7928931dd1a36f5",
+    "experiments/grounded_judgment/development.py": "b8f6278576d8c0be55855ea5725fb839e24f6d5e06b841b9238c980c29a0ce97",
+    "experiments/grounded_judgment/dispatch.py": "9336ce9eb13abb7465b0017468af3bae1f7187909ab0837ba587fb2fc293db64",
+    "experiments/grounded_judgment/dispatch_demo.py": "14c631f262b4312b697043c40b436165bfaf319c5f765508b2e9b5b51b8ef934",
+    "experiments/grounded_judgment/exchange.py": "a1c15f886e8bebb2a9b3f4c2556bea679573e0b6cca9822106dea4051b6d15a5",
+    "experiments/grounded_judgment/materials.py": "5af534294a0eafad31f54c21c4c9de4449cb70c7073b6cf09d7dc4faf6e89ad8",
+    "experiments/grounded_judgment/runtime.py": "186acd6a75ef821e6fe17a1f0f36113671349150f678e966ebc068cc9321f644",
+    "tests/test_grounded_dispatch.py": "9967b2cfa3a39504c744fe515e71c6a935a0092b522bf579b3a98dd6fd14ba5c",
+    "docs/internal/research/typed-decision/grounded-judgment-v0/offline-dispatch-v1/RESULT.md": "ffafd80a0d1e8c70a86018d3d3768b6ae259a1e10deea391cffaf4624da93275",
+    "docs/internal/research/typed-decision/grounded-judgment-v0/offline-dispatch-v1/RUN.md": "568db8022ca38cd8763a8247dc831ec3cbbb6b89530dcc6b82552c3c35ae6bac",
+    "docs/internal/research/typed-decision/grounded-judgment-v0/offline-dispatch-v1/admission.example.json": "a41eafaefdd70bed1f210d091b1516c94dd6991978a37ab37afb5917e859ff98",
+    "docs/internal/research/typed-decision/grounded-judgment-v0/offline-dispatch-v1/demo.stdout.json": "7f1665af277c2aafb9b2569ef52a43cbacf913ce5438c85eeb4b8382209bd216",
+    "docs/internal/research/typed-decision/grounded-judgment-v0/offline-dispatch-v1/tests.log": "9da816569acdb3b28bc2365335e9b0bf1377b3d684462c9eb91171a5323e77fc",
+    "docs/internal/research/typed-decision/grounded-judgment-v0/offline-dispatch-v1/trace.jsonl": "e38dea1e3a2dde821d2e37d1ed4358800b596de9f1af0778f0c6bd2dd3b8f7e1"
+  }
+}
