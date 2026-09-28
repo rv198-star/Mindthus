@@ -232,7 +232,7 @@ def compose(src, atoms):
     def finding(key,action,qs):
         return dict(finding_id=key,goal_ref=refs['G'],object_ref=refs['O'],premise_ref=refs['P'],
             claim_ref=refs['C'],evidence_ref=refs['E'],evidence_origin=adopted_value(atoms.get('ES',{})),evidence_relation=adopted_value(atoms.get('ER',{})),
-            relation=v('R'),keep_exact_text=quote('P'),limit_target_exact_text=quote('C'),action=action,
+            relation=adopted_value(atoms.get('R',{})),keep_exact_text=quote('P'),limit_target_exact_text=quote('C'),action=action,
             uncertainty=bound,source_question_ids=qs,
             requirement={'reanchor':'按所引G/O重新回答；不自动反转C真假。',
                          'limit':'保留P在给定范围成立的部分；不得仅凭P断言完整C，说明缺少的关系证据。',

@@ -130,4 +130,45 @@ class RepairTests(unittest.TestCase):
         self.assertEqual(a['basis_refs'],list(src['candidates']))
         self.assertEqual(c.score_atom(a,self.norm(a))['success'],1)
 
+    def target_with_relation(self, low=False):
+        req=self.until('round3','C');raw=simulated(req,rt.state(self.root),self.case)
+        qs={q['id']:DecisionSpec(**q) for q in req['payload']['questions']}
+        raw['T']=model_value(qs['T'],'deny',[],'C')
+        raw['TB']=model_value(qs['TB'],'different_G_C',[],'C')
+        if low:raw['R']=self.lower(raw['R'],'overreach')
+        return self.send(req,raw)
+    def test_gj03_target_keeps_low_R_only_in_raw_and_limitations(self):
+        s=self.target_with_relation(low=True);before=copy.deepcopy(s['atoms'])
+        got=c.compose(s['source'],s['atoms'])
+        self.assertEqual(got['goal'],'reanchor')
+        self.assertEqual(got['relation'],'unresolved')
+        self.assertEqual(len(got['findings']),1)
+        self.assertEqual(got['findings'][0]['action'],'reanchor')
+        self.assertIsNone(got['findings'][0]['relation'])
+        self.assertEqual(got['limitations']['R'],'low_confidence')
+        self.assertEqual(s['atoms']['R']['value'],'overreach')
+        self.assertEqual(s['atoms'],before)
+    def test_gj03_target_never_promotes_missing_or_invalid_R(self):
+        s=self.target_with_relation()
+        for replacement in (None,{**s['atoms']['R'],'semantic_state':'invalid','unresolved_reason':'contract_error'}):
+            with self.subTest(replacement=replacement):
+                atoms=copy.deepcopy(s['atoms'])
+                if replacement is None:atoms.pop('R')
+                else:atoms['R']=replacement
+                got=c.compose(s['source'],atoms)
+                self.assertEqual(got['goal'],'reanchor')
+                self.assertEqual(len(got['findings']),1)
+                self.assertIsNone(got['findings'][0]['relation'])
+                if replacement is not None:self.assertEqual(got['limitations']['R'],'contract_error')
+    def test_gj03_adopted_R_retained_for_target_and_inference(self):
+        s=self.target_with_relation()
+        for relation,action in (('overreach','limit'),('contradicts','recheck'),('sufficient','retain')):
+            with self.subTest(relation=relation):
+                atoms=copy.deepcopy(s['atoms']);atoms['R']['value']=relation
+                atoms['S']['semantic_state']='support' if relation=='sufficient' else 'deny'
+                got=c.compose(s['source'],atoms)
+                self.assertEqual(got['goal'],'reanchor');self.assertEqual(got['relation'],action)
+                self.assertTrue(all(f['relation']==relation for f in got['findings']))
+                self.assertEqual(len(got['findings']),1 if relation=='sufficient' else 2)
+
 if __name__=='__main__':unittest.main()
