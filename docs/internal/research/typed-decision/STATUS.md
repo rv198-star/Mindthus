@@ -6,6 +6,18 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
+## Grounded judgment — authorized exploratory batch partially delivered; new unknown stops dispatch
+
+Four public exploratory cases/12 A/B/C paths authorized at 88 logical / 16 Jev / 72 host hard caps.
+Frozen input/admission implementation: `b48839852097c92b373ee1befcafe1586a325572`.
+[Actual partial results, answers and stop evidence](grounded-judgment-v0/exploratory-v1/RESULT.md).
+Skills text A/B delivered (3 host calls each); Skills-validator B atoms returned then draft
+call 000007 failed with `Connection failed: error sending request`, remote send state unknown.
+8 host CLI calls consumed, 0 Jev; 2 delivered / 1 unknown / 9 not sent. No retries or new risk exception.
+Missing official Jev environment credential separately kept C unsent; not a provider failure.
+Batch stopped under existing serial rules. No holdout, reversal sensitivity, Jev increment or
+quality/default-adoption conclusion. Do not reset unknown/budgets or silently start another batch.
+
 ## Grounded judgment — dispatch integration implemented, offline evidence ready
 
 User-authorized wiring stage complete; see [new code scope and offline evidence](grounded-judgment-v0/offline-dispatch-v1/RESULT.md).
