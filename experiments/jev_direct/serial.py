@@ -26,6 +26,10 @@ class SerialRequests:
     def _number(self, x):
         return type(x) in (int,float) and math.isfinite(x)
 
+    def _accepted_unknown(self,directory,intent):
+        from .b1_compensation import accepted
+        return accepted(self.batch,directory,intent)
+
     def _validate(self):
         directories = sorted(p for p in self.root.glob('[0-9]*') if p.is_dir())
         anchors = sorted(p for p in self.anchors.glob('[0-9]*') if p.is_dir())
@@ -48,8 +52,7 @@ class SerialRequests:
             disposition=directory/'accepted-unknown.json'
             if disposition.exists():
                 require(not outcome.exists() and not failure.exists(),'serial_conflicting_disposition')
-                from .b1_compensation import accepted
-                end=accepted(self.batch,directory,intent)
+                end=self._accepted_unknown(directory,intent)
             elif failure.exists():
                 from .host_boundary import validate_reconciliation
                 end=read_record(failure);host=Path(end['host_directory'])

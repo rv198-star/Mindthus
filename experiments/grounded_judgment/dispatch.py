@@ -196,7 +196,8 @@ class Dispatcher:
         require(adapter.simulation is self.config['simulation'],'adapter_mode_mismatch')
         self.config_sha256=digest(self.config)
         self.clock=clock;self.monotonic=monotonic
-        self.serial=SerialRequests(self.root/'serial',clock=clock,monotonic=monotonic,sleep=sleep)
+        from .resume_000007 import NamedSerial
+        self.serial=NamedSerial(self.root/'serial',clock=clock,monotonic=monotonic,sleep=sleep)
         require(self.serial.batch is None,'historical_batch_not_allowed')
 
     def step(self,run_name):
@@ -204,12 +205,13 @@ class Dispatcher:
         with _locked(self.root/'.dispatch.lock'):
             require(digest(self.config)==self.config_sha256==digest(rt.read(self.root/'batch.json')),'batch_configuration_changed')
             require(digest(rt.read(self.root/'inputs.json'))==self.config['inputs_sha256'],'batch_inputs_changed')
-            require(not (self.root/'STOP.json').exists(),'batch_stopped')
+            from .resume_000007 import guard,REQUEST
+            successor=guard(self.root)
             self.serial.validate()
             if not self.config['simulation']:
                 require(self.config['admission']['execution_authorized'] is True,'batch_not_authorized')
                 require(hashlib.sha256(Path(self.config['admission']['binary']).read_bytes()).hexdigest()==self.config['host_binary_sha256'],'host_binary_changed')
-                require(all(digest((REPO/p).read_text())==h for p,h in self.config['source_sha256'].items()),'source_changed')
+                require(all(digest((REPO/p).read_text())==h for p,h in (successor['source_sha256'] if successor else self.config['source_sha256']).items()),'source_changed')
             run=self.root/'runs'/run_name;s=rt.state(run)
             if s['stopped'] or s['phase']=='done':return s
             # No automatic replay after crash between intent/raw/terminal/import writes.
@@ -228,6 +230,10 @@ class Dispatcher:
             directory.mkdir();key=run_name+':'+str(req['sequence'])
             binding={'call_key':key,'request_sha256':req['request_sha256'],'wire_sha256':digest(outbound),
               'batch_sha256':digest(self.config),'simulation':self.config['simulation']}
+            if successor and key==successor['retry_call_key']:
+                old=rt.read(self.root/'calls/000007/request.json')
+                require(req['payload']==old['payload'] and req['phase']=='draft','technical_retry_input_changed')
+                binding['compensates_request_sha256']=REQUEST
             rt.write(directory/'request.json',req);rt.write(directory/'wire.json',outbound);rt.write(directory/'binding.json',binding)
             loading=self.monotonic()-began;terminal=None;envelope=None
             def invoke():
@@ -276,7 +282,7 @@ class Dispatcher:
               'outer_driver_retries':0,'logical_calls':1,'actual_http_count':None,
               'generation_attempt_count':None,'connection_recovery_seconds':None,'authentication_recovery_seconds':None})
             if terminal['status'] in ('unknown','safety_refusal') or (terminal['transport_observation'] or {}).get('stop_subsequent_dispatch'):
-                rt.write(self.root/'STOP.json',{'call_key':key,'terminal_sha256':digest(terminal),'reason':terminal['status']})
+                rt.write(self.root/('STOP-'+directory.name+'.json' if (self.root/'STOP.json').exists() else 'STOP.json'),{'call_key':key,'terminal_sha256':digest(terminal),'reason':terminal['status']})
             return result
 
 
