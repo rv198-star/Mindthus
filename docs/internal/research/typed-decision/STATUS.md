@@ -6,16 +6,24 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Grounded judgment — only GJ-03 relation consumption recheck pending
+## Grounded judgment — offline repair and scoped review CLOSED
 
-Independent review of `f7d75a8f21af8bbd2571c6ba187d75a24f158fd9` closed
-GJ-01/02/04 and accepted the original GJ-03 ES/ER/none fixes. The remaining raw R
-leak into target findings is repaired with adopted_value; independent reanchor survives.
-Read [the one-line fix and nine targeted checks](grounded-judgment-v0/offline-repair-r2/RESULT.md).
-No other closed item/design reopened, no model call or budget increase. Only this residual
-awaits scoped recheck; this is not general implementation/quality acceptance.
+Fixed reviewed implementation: `d7da2e4cc4b60fcbb4e90c6176a25e3745feb88b`.
+Read [the actual independent PASS and closure](grounded-judgment-v0/offline-repair-r2/INDEPENDENT-REVIEW.md).
+GJ-03's last unresolved-R consumption defect is CLOSED; GJ-01/02/04 retain their prior
+CLOSED conclusions without re-audit. The entire offline repair/review chain is complete,
+with no remaining rework or pending review. Independent rerun: 3 new + 6 affected tests,
+9 pass/0 fail/0 skip; the unchanged earlier reproducer also passes, not a new business sample.
+This PASS covers the single engineering fix, not Jev judgment improvement or default adoption.
 
-## Grounded judgment — GJ-01–04 scoped repair, re-review pending
+Next substantive stage: existing real dispatch/scheduling integration and new-batch acceptance
+preparation under corresponding authorization. Unseen-material sealing, real three-arm runs
+and quality evaluation remain incomplete; per-case6/7/9 call limits remain unapproved budget
+proposals. Design baseline `006731c43a48099d41bfbc5f3421bd5267a6404f`, 13 items,
+three pre-answer rounds and one check/revision cap remain. No model call or budget increase
+from this closure. Old six-case conclusions/R2 closures stand; default adoption NOT QUALIFIED.
+
+## Previous checkpoint — GJ-01–04 repair submitted for re-review
 
 Reviewed implementation: `5488e2d88fe65914d1dba85fb3168a14d0f081ce` (independent REVISE).
 Read [the four fixes and new offline evidence](grounded-judgment-v0/offline-repair-r1/RESULT.md).
@@ -26,7 +34,7 @@ No model calls, new questions/rounds, design changes or budget authorization. Th
 verification awaiting scoped implementation re-review, not independent PASS or quality gain.
 Design baseline and closed R2/old six-case conclusions remain unchanged.
 
-## Grounded judgment — authorized offline prototype delivered, implementation review pending
+## Previous checkpoint — offline prototype submitted for implementation review
 
 Read [the scoped implementation and offline evidence](grounded-judgment-v0/offline-v1/RESULT.md).
 Independent module `experiments/grounded_judgment` implements source locators, 13-item
