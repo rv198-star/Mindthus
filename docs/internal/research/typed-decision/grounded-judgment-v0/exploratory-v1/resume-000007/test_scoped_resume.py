@@ -1,12 +1,17 @@
-import tempfile,shutil
+import tempfile,gzip,json
 from pathlib import Path
 from unittest.mock import patch
 from experiments.grounded_judgment import resume_000007 as r,runtime as rt
 from experiments.typed_decision.session import RecoveryRequired
-from experiments.typed_decision.contracts import ContractError
+from experiments.typed_decision.contracts import ContractError,canonical
 from experiments.grounded_judgment.dispatch_demo import Clock
 with tempfile.TemporaryDirectory() as tmp:
- root=Path(tmp)/'batch';shutil.copytree('/Users/william/.codex/tmp/gj-exploratory-v1-run',root)
+ root=Path(tmp)/'batch';root.mkdir()
+ archive=Path(__file__).resolve().parents[1]/'raw-evidence.jsonl.gz'
+ with gzip.open(archive,'rt') as source:
+  for line in source:
+   row=json.loads(line);target=root/row['path'];target.parent.mkdir(parents=True,exist_ok=True)
+   target.write_bytes(canonical(row['record'])+b'\n')
  with patch.object(r,'load_official_credential',return_value={'loaded':True,'simulation':True}):r.register(root)
  s=rt.state(root/'runs/skills-validator-B')
  assert s['call_count']==2 and s['host_logical_calls']==2 and s['atoms'] and s['composition'] and s['pending'] is None
