@@ -6,7 +6,35 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
 
-## Grounded judgment — four-case exploration delivered; no clear Jev judgment increment observed
+## Grounded judgment — exploratory execution and independent content review COMPLETE
+
+Fixed reviewed commit: `7a4625481eba3374cba766f33d89d43c792771bc`.
+[Archived actual independent content review](grounded-judgment-v0/exploratory-v1/resume-000007/INDEPENDENT-CONTENT-REVIEW.md).
+Status: **execution complete; content review complete; current use shows no clear adoption benefit**.
+The three-round grounded judgment scheme does not enter default handling and is not currently
+recommended for routine trials. This closes this batch, without a second batch or added budget.
+
+ChatGPT read four inputs, preregistered evaluation points, twelve draft/check/final products and
+four C atomic records in one group-aware, read-only review; not blind testing, statistical proof,
+an engineering audit or new model review. All three arms were basically usable and adjusted to
+both condition reversals. Skills-text C's more direct acceptance of the adequate local explanation
+is retained as a local wording advantage, without attributing it to a Jev finding.
+
+C's zero findings/checks mostly reflect unresolved judgments and missing dependencies, not
+completed relationship judgments confirming no correction was needed. In 4K, G was adopted,
+but C localization 0.58/0.66 and O localization 0.79/0.60 fell below 0.8. In Skills, P and C
+selected the same conclusion sentence, with P probability 0.98/0.95. Threshold alone is not an
+established cause; contributions of wording, candidates, adoption rules and model ability remain
+unseparated. These are capability/coverage observations, not reopened engineering defects.
+
+Keep 35 calls (27 host + 8 Jev), about 17 minutes processing and 34 minutes active waiting;
+skipped rounds/checks preclude claiming equal-work net benefit. Code, all raw products, unresolved
+results, failures and 000007 risk acceptance remain intact; old remote status and fees stay unknown.
+Old ③ routing's local efficiency observation and opt-in research positioning, GJ/R2 CLOSED,
+main/default Skill and default adoption NOT QUALIFIED remain unchanged. No rerun, threshold
+change, additional audit, or follow-up acknowledgement submission is needed for this closure.
+
+## Previous checkpoint — four-case exploration delivered; no clear Jev judgment increment observed
 
 [All twelve raw products, comparison and actual costs](grounded-judgment-v0/exploratory-v1/resume-000007/RESULT.md).
 Execution source successor: `54a4baf6ca77c59ed3927b122a056c3c786d5288`.
