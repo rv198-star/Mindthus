@@ -7,6 +7,7 @@ import argparse
 from dataclasses import asdict
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import time
@@ -22,7 +23,7 @@ from experiments.jev_direct.transport_profile import CANDIDATE, PROTOCOL, observ
 from experiments.typed_decision.contracts import DecisionSpec, digest, canonical, require
 from experiments.typed_decision.cli_defaults import host_configuration
 from experiments.typed_decision.relationship_live import no_secrets
-from experiments.typed_decision.relationship_runtime import _locked, save
+from experiments.typed_decision.relationship_runtime import _locked
 from experiments.typed_decision.providers import ProviderError, TypeSafeJevProvider
 from experiments.typed_decision.session import RecoveryRequired, read_record
 
@@ -33,6 +34,11 @@ CHECKS={
  'Q_TARGET':'候选答复把用户已明确的目标、对象、质量门槛或时间窗口换成另一项，并由此给出当前建议。不把合理偏好或门槛本身当偏差；如答复明确条件化区分多个目标，则不据此报错。',
  'Q_SCOPE':'候选答复仅凭一个局部成立的事实或限制，就肯定或否定整个当前结论，而给定条件没有支持这一步。局部条件确实决定当前目标时应否定此命题；允许简单解释充分，也不把缺证判为相反事实已证实。'}
 HANDLING='''核对下列被支持的具名检测。检测是可能错误的模型评估，允许有依据地拒绝；不能强制反对用户。只核对一次：明确当前有效目标，保留正确的局部事实，指出实际需要限定的候选句或说明为何检测误报，然后给出完整最终回答。不得增加外部事实、工具或新一轮复核。text必须是无Markdown围栏的JSON字符串，含且仅含goal_refs、keep_refs、candidate_refs（均为source.candidates内的唯一ID数组）、disposition（adopted/rejected/unresolved）、reason（非空字符串）、final（完整非空回答）。三类引用均至少一项；引用只证明原文位置，不证明语义。'''
+
+def persist(path,value):
+    """Mutable checkpoints only; requests/returns/receipts use write-once rt.write."""
+    path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
+    tmp=path.with_name(path.name+'.checkpoint-tmp');tmp.write_bytes(canonical(value)+b'\n');os.replace(tmp,path)
 
 def document(id,text,order,role='user'):
     return {'id':id,'revision':'1','text':text,'order':order,'role':role,
@@ -135,13 +141,20 @@ def consume(item,state,req,status,response,materials):
 
 class Driver:
     def __init__(self,batch,adapter,clock=time.time,monotonic=time.monotonic,sleep=time.sleep):
-        self.root=Path(batch);self.config=rt.read(self.root/'batch.json');self.adapter=adapter
+        self.root=Path(batch);self.parent_config=rt.read(self.root/'batch.json');self.config=self.parent_config;self.adapter=adapter
+        if (self.root/'local-prelaunch-successor.json').exists():
+            x=rt.read(self.root/'local-prelaunch-successor.json')
+            require(x['parent_batch_sha256']==digest(self.parent_config),'local_successor_parent')
+            proof=rt.read(self.root/'calls/000000/local-prelaunch-proof.json')
+            require(digest(proof)==x['proof_sha256'] and proof['offline_launch_invocations']==0
+                    and proof['original_configuration_sha256']==digest(self.parent_config),'local_successor_proof')
+            self.config=x['effective_config']
         require(adapter.simulation is self.config['simulation'],'adapter_mode_mismatch')
         self.clock=clock;self.monotonic=monotonic
         self.serial=SerialRequests(self.root/'serial',clock=clock,monotonic=monotonic,sleep=sleep)
     def step(self,item,state,arm,phase):
         require(not (self.root/'STOP.json').exists(),'batch_stopped_no_resubmit')
-        require(digest(rt.read(self.root/'batch.json'))==digest(self.config),'batch_changed')
+        require(digest(rt.read(self.root/'batch.json'))==digest(self.parent_config),'batch_changed')
         for path,sha in self.config['source_sha256'].items():require(digest((REPO/path).read_text())==sha,'source_changed')
         require(hashlib.sha256(Path(self.config['admission']['binary']).read_bytes()).hexdigest()==self.config['host_binary_sha256'],'binary_changed')
         require(digest(rt.read(DOC/'cases.business.json'))==self.config['cases_sha256'],'input_changed')
@@ -192,7 +205,8 @@ class Driver:
         require((status,response,error)==(terminal['status'],terminal['response'],terminal['error']),'terminal_content')
         consume(item,state,req,status,response,rt.read(self.root/'materials.json'))
         state['measurements'].append({'local_call':directory.name,'arm':arm,'phase':req['phase'],'role':role,**terminal})
-        save(self.root/'states'/(item['case_id']+'.json'),state)
+        rt.write(directory/'state.after.json',state)
+        persist(self.root/'states'/(item['case_id']+'.json'),state)
         rt.write(directory/'import.json',{'binding':binding,'state_sha256':digest(state),'status':state['arms'][arm]['status'],'outer_retries':0})
         if status in ('unknown','safety_refusal') or (terminal['transport_observation'] or {}).get('stop_subsequent_dispatch'):
             rt.write(self.root/'STOP.json',{'call_key':binding['call_key'],'reason':status,'terminal_sha256':digest(terminal)})
@@ -211,7 +225,8 @@ def prepare():
     config={'schema':'mindthus.bias-trigger.batch.v1','simulation':False,'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=REPO,text=True).strip(),
             'authorization_ref':'Owner: OK，那现在开始测试吧 (2026-10-01); design c8507534e4c7b8e331150b2eb0715ff3ceabf9c0',
             'limits':{'logical':64,'host':56,'jev':8},'host_configuration':host_configuration(),
-            'admission':{'binary':binary,'host_timeout':360,'jev_timeout':60},'overrides':profile['candidate_overrides'],
+            'admission':{'binary':binary,'host_timeout':360,'jev_timeout':60},'host_timeout':360,'jev_timeout':60,
+            'overrides':profile['candidate_overrides'],
             'protocol':rt.read(PROTOCOL),'host_binary_sha256':hashlib.sha256(Path(binary).read_bytes()).hexdigest(),
             'source_sha256':{p:digest((REPO/p).read_text()) for p in paths},'cases_sha256':digest(cases),
             'norms_sha256':digest(rt.read(DOC/'norms.evaluation-only.json')),'materials_sha256':digest(packet['materials']),
@@ -234,11 +249,11 @@ def checkpoint():
     result={'cases':rows,'logical_calls':len(calls),'host_calls':sum(m['role']=='host' for m in calls),'jev_calls':sum(m['role']=='jev' for m in calls),
             'session_seconds':sum(m['session_seconds'] for m in calls),'active_wait_seconds':sum(m['active_wait_seconds'] for m in calls),
             'holdout':False,'cost':None,'exact_http_requests':None,'batch_sha256':digest(rt.read(BATCH/'batch.json')),'simulation':False}
-    save(DOC/'summary.json',result)
+    persist(DOC/'summary.json',result)
     answers=DOC/'answers';answers.mkdir(exist_ok=True)
     for row in rows:
         for arm,data in row['arms'].items():
-            save(answers/(row['case_id']+'-'+arm+'.json'),{'case_id':row['case_id'],'arm':arm,'candidate_sha256':row['snapshot_sha256'],
+            persist(answers/(row['case_id']+'-'+arm+'.json'),{'case_id':row['case_id'],'arm':arm,'candidate_sha256':row['snapshot_sha256'],
                           'draft':row['candidate'],'calls':row['calls'][arm],**data})
     return result
 

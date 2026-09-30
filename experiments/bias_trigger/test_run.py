@@ -80,5 +80,12 @@ class Wiring(unittest.TestCase):
             with self.assertRaises(RecoveryRequired):serial.call('third',unknown)
             with self.assertRaises(RecoveryRequired):serial.call('fourth',lambda:None)
             self.assertFalse((Path(tmp)/'serial/000002/completion.json').exists())
+    def test_mutable_checkpoints_and_adapter_timeouts(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p=Path(tmp)/'state.json';r.persist(p,{'calls':0});r.persist(p,{'calls':1})
+            self.assertEqual(json.loads(p.read_text()),{'calls':1})
+        import inspect
+        source=inspect.getsource(r.prepare)
+        self.assertIn("'host_timeout':360,'jev_timeout':60",source)
 
 if __name__=='__main__':unittest.main()
