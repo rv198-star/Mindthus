@@ -36,6 +36,8 @@ class Wiring(unittest.TestCase):
         r.consume(self.item,self.s,req,'returned',{'kind':'read','text':'','read_paths':['method'],'objection':''},{'method':'original text'})
         self.baseline();b=r.request(self.item,self.s,'B','detect',True);c=r.request(self.item,self.s,'C','detect',True)
         for key in ('source','candidate','loaded_materials'):self.assertEqual(b['payload'][key],c['payload'][key])
+        self.assertEqual(b,json.loads(json.dumps(b)))
+        self.assertEqual(c,json.loads(json.dumps(c)))
         self.assertEqual(len(c['payload']['questions']),2)
         self.assertEqual(r.jev_payload(c)['questions']['Q_TARGET']['type'],'noul')
     def test_candidate_change_is_blocked(self):

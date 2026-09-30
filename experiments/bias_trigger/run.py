@@ -82,7 +82,7 @@ def request(item,state,arm,phase,simulation=False):
     body={'sequence':seq,'arm':arm,'phase':phase,'role':role,'simulation':simulation,
           'baseline':'bias-trigger-v1','payload':payload,
           'requested_configuration':{'model':'jev-1.13.0','provider':'official'} if role=='jev' else host_configuration()}
-    return {**body,'request_sha256':digest(body)}
+    return json.loads(canonical({**body,'request_sha256':digest(body)}))
 
 def outbound(req,config):
     if req['role']=='jev':return {'body':jev_payload(req),'endpoint':TypeSafeJevProvider().serving_identity.endpoint}
@@ -149,6 +149,10 @@ class Driver:
             require(digest(proof)==x['proof_sha256'] and proof['offline_launch_invocations']==0
                     and proof['original_configuration_sha256']==digest(self.parent_config),'local_successor_proof')
             self.config=x['effective_config']
+            if (self.root/'serialization-successor.json').exists():
+                y=rt.read(self.root/'serialization-successor.json')
+                require(y['parent_successor_sha256']==digest(x),'serialization_successor_parent')
+                self.config=y['effective_config']
         require(adapter.simulation is self.config['simulation'],'adapter_mode_mismatch')
         self.clock=clock;self.monotonic=monotonic
         self.serial=SerialRequests(self.root/'serial',clock=clock,monotonic=monotonic,sleep=sleep)
