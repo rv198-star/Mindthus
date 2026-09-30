@@ -67,8 +67,10 @@ def prepare(batch, inputs, *, simulation=True, admission=None):
         from .materials import verify_materials
         sealed,manifest=verify_materials(admission['materials_root'],admission.get('mode','formal'))
         require(sealed==inputs and digest(manifest)==admission['acceptance_seal_sha256'],'acceptance_material_binding')
-        if admission.get('mode')=='exploratory':
-            require(admission.get('total_limits')=={'logical':88,'jev':16,'host':72},'exploratory_total_limits')
+        if admission.get('mode') in ('exploratory','extended_exploratory'):
+            limits=({'logical':88,'jev':16,'host':72} if admission['mode']=='exploratory'
+                    else {'logical':176,'jev':32,'host':144})
+            require(admission.get('total_limits')==limits,'exploratory_total_limits')
     batch.mkdir(parents=True);(batch/'calls').mkdir();(batch/'runs').mkdir()
     config={'schema':'mindthus.grounded-dispatch.v1','simulation':simulation,'design_baseline':rt.BASELINE,
       'parent_implementation':'d7da2e4cc4b60fcbb4e90c6176a25e3745feb88b',

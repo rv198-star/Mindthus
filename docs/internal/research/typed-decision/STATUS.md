@@ -16,6 +16,15 @@ Old frozen requests, review evidence and answers retain `gpt-6-sol`; no prior ba
 Archived one-off drivers remain historical assets, not new-batch entry points.
 This configuration change makes no new quality or price claim and starts no model request.
 
+## Current continuation — eight new exploratory extensions authorized
+
+Owner now authorizes eight executor-prepared extensions / 24 A/B/C paths, with 176 logical,
+144 host and 32 Jev hard caps. These are not independent holdout; business inputs and separate
+norms are fixed before inference. See [the scope and single-condition pairs](grounded-judgment-v0/extended-exploratory-v1/PLAN.md).
+New runs use Sol 6.1; prior batches are not rerun. No technical retry, reviewer model, threshold
+change or extension of old named unknown dispositions is authorized. Old conclusions below
+remain historical conclusions for their own implementation/input/model windows.
+
 ## Grounded judgment — exploratory execution and independent content review COMPLETE
 
 Fixed reviewed commit: `7a4625481eba3374cba766f33d89d43c792771bc`.

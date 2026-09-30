@@ -1,0 +1,11 @@
+--- record-source-1
++++ record-source-2
+@@ -31,7 +31,7 @@
+     "revision": "1",
+     "text": "案例记录：同一设备、同一任务、其余设置固定，调整前误读12字，调整后误读3字。",
+     "order": 3,
+-    "origin": "direct",
++    "origin": "reported",
+     "role": "source",
+     "available": true
+   },
