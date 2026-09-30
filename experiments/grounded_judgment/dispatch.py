@@ -221,7 +221,7 @@ class Dispatcher:
                 require(all(digest((REPO/p).read_text())==h for p,h in (successor['source_sha256'] if successor else self.config['source_sha256']).items()),'source_changed')
             run=self.root/'runs'/run_name;s=rt.state(run)
             if s['stopped'] or s['phase']=='done':return s
-            if successor and successor.get('kind') in ('named_unknown_000047_continuation','named_unknown_000049_retry'):
+            if successor and successor.get('kind') in ('named_unknown_000047_continuation','named_unknown_000049_retry','missing_three_compensation'):
                 require(run_name in successor['allowed_paths'],'named_remaining_paths_only')
             # No automatic replay after crash between intent/raw/terminal/import writes.
             for previous in sorted((self.root/'calls').iterdir()):
@@ -242,6 +242,9 @@ class Dispatcher:
               'batch_sha256':digest(self.config),'simulation':self.config['simulation']}
             if successor:
                 binding['technical_successor_sha256']=digest(successor)
+            if successor and successor.get('kind')=='missing_three_compensation':
+                from .complete_missing import retry_binding
+                binding.update(retry_binding(self.root,successor,key,req))
             if successor and key==successor['retry_call_key']:
                 old=rt.read(self.root/'calls'/successor.get('compensates_local_call','000007')/'request.json')
                 require(req['payload']==old['payload'] and req['phase']=='draft','technical_retry_input_changed')

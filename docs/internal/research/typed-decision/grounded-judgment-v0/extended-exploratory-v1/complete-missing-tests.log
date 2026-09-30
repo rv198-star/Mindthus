@@ -1,0 +1,42 @@
+test_format_compensation_allows_only_sending_contract_clarification (tests.test_grounded_complete_missing.MissingThree.test_format_compensation_allows_only_sending_contract_clarification) ... ERROR
+test_new_unknown_and_changed_delivered_answer_block_continuation (tests.test_grounded_complete_missing.MissingThree.test_new_unknown_and_changed_delivered_answer_block_continuation) ... ERROR
+test_unknown_draft_requires_exact_old_input_and_identity (tests.test_grounded_complete_missing.MissingThree.test_unknown_draft_requires_exact_old_input_and_identity) ... ERROR
+
+======================================================================
+ERROR: test_format_compensation_allows_only_sending_contract_clarification (tests.test_grounded_complete_missing.MissingThree.test_format_compensation_allows_only_sending_contract_clarification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/tests/test_grounded_complete_missing.py", line 29, in test_format_compensation_allows_only_sending_contract_clarification
+    rt.write(root/'calls'/m.RETRIES[key]['local_call']/'request.json',old)
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/grounded_judgment/runtime.py", line 21, in write
+    with open(path,'xb') as f:f.write(canonical(value)+b'\n')
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/tmpkst_pq8r/calls/000011/request.json'
+
+======================================================================
+ERROR: test_new_unknown_and_changed_delivered_answer_block_continuation (tests.test_grounded_complete_missing.MissingThree.test_new_unknown_and_changed_delivered_answer_block_continuation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/tests/test_grounded_complete_missing.py", line 40, in test_new_unknown_and_changed_delivered_answer_block_continuation
+    for slot in ('000047','000049'):rt.write(root/'calls'/slot/'terminal.json',{'status':'unknown'})
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/grounded_judgment/runtime.py", line 21, in write
+    with open(path,'xb') as f:f.write(canonical(value)+b'\n')
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/tmp_x6v9c9v/calls/000047/terminal.json'
+
+======================================================================
+ERROR: test_unknown_draft_requires_exact_old_input_and_identity (tests.test_grounded_complete_missing.MissingThree.test_unknown_draft_requires_exact_old_input_and_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/tests/test_grounded_complete_missing.py", line 15, in test_unknown_draft_requires_exact_old_input_and_identity
+    rt.write(root/'calls/000047/request.json',old)
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/grounded_judgment/runtime.py", line 21, in write
+    with open(path,'xb') as f:f.write(canonical(value)+b'\n')
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/var/folders/kf/bs17ldg51nbd7hjg2685pps40000gn/T/tmpbe6_dbub/calls/000047/request.json'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.003s
+
+FAILED (errors=3)
