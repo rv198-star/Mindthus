@@ -37,6 +37,9 @@ def verified(root):
 
 class NamedSerial(SerialRequests):
     def _accepted_unknown(self,directory,intent):
+        if (self.root.parent/'retry-000049.json').exists():
+            from .resume_000049 import accepted
+            return accepted(self.root.parent,directory,intent)
         if (self.root.parent/'risk-accepted-000047.json').exists():
             from .resume_000047 import accepted
             return accepted(self.root.parent,directory,intent)
@@ -51,6 +54,9 @@ class NamedSerial(SerialRequests):
 
 def guard(root):
     root=Path(root);stops=list(root.glob('STOP*.json'))
+    if (root/'retry-000049.json').exists():
+        from .resume_000049 import verified as verify_49
+        return verify_49(root)
     if (root/'risk-accepted-000047.json').exists():
         from .resume_000047 import verified as verify_47
         return verify_47(root)

@@ -212,7 +212,7 @@ class Dispatcher:
         with _locked(self.root/'.dispatch.lock'):
             require(digest(self.config)==self.config_sha256==digest(rt.read(self.root/'batch.json')),'batch_configuration_changed')
             require(digest(rt.read(self.root/'inputs.json'))==self.config['inputs_sha256'],'batch_inputs_changed')
-            from .resume_000007 import guard,REQUEST
+            from .resume_000007 import guard
             successor=guard(self.root)
             self.serial.validate()
             if not self.config['simulation']:
@@ -221,12 +221,13 @@ class Dispatcher:
                 require(all(digest((REPO/p).read_text())==h for p,h in (successor['source_sha256'] if successor else self.config['source_sha256']).items()),'source_changed')
             run=self.root/'runs'/run_name;s=rt.state(run)
             if s['stopped'] or s['phase']=='done':return s
-            if successor and successor.get('kind')=='named_unknown_000047_continuation':
-                require(run_name in successor['allowed_paths'],'named_47_remaining_paths_only')
+            if successor and successor.get('kind') in ('named_unknown_000047_continuation','named_unknown_000049_retry'):
+                require(run_name in successor['allowed_paths'],'named_remaining_paths_only')
             # No automatic replay after crash between intent/raw/terminal/import writes.
             for previous in sorted((self.root/'calls').iterdir()):
                 require((previous/'import.json').exists(),'unimported_dispatch_requires_reconciliation')
-            require(s['call_count']<self.config['call_limits'][s['arm']],'call_budget_exhausted')
+            path_limit=(successor or {}).get('path_limits',{}).get(run_name,self.config['call_limits'][s['arm']])
+            require(s['call_count']<path_limit,'call_budget_exhausted')
             req=rt.request(run)
             if req is None:return rt.state(run)
             require(req['simulation'] is self.config['simulation'],'run_mode_mismatch')
@@ -242,9 +243,10 @@ class Dispatcher:
             if successor:
                 binding['technical_successor_sha256']=digest(successor)
             if successor and key==successor['retry_call_key']:
-                old=rt.read(self.root/'calls/000007/request.json')
+                old=rt.read(self.root/'calls'/successor.get('compensates_local_call','000007')/'request.json')
                 require(req['payload']==old['payload'] and req['phase']=='draft','technical_retry_input_changed')
-                binding['compensates_request_sha256']=REQUEST
+                require(old['request_sha256']==successor['request_sha256'],'technical_retry_parent_changed')
+                binding['compensates_request_sha256']=old['request_sha256']
             rt.write(directory/'request.json',req);rt.write(directory/'wire.json',outbound);rt.write(directory/'binding.json',binding)
             loading=self.monotonic()-began;terminal=None;envelope=None
             def invoke():
