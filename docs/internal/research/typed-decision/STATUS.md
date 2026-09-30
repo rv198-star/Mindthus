@@ -6,6 +6,24 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
+## Current checkpoint — three prior batches archived; new bias-detection design only
+
+Owner requested archiving the existing tests and checking a new hypothesis: direct detection of
+locally true reasoning that controls the wrong overall decision, followed by a bounded workflow.
+[Archive index](EXPERIMENT-ARCHIVE-2026-10-01.md) preserves old six-case routing, four-case grounded
+exploration and eight-case extension separately, including all failures, unknowns and original conclusions.
+The eight-case independent external review is still separate/pending; no new PASS is claimed.
+Current three-round grounded v0 is archived without tuning or further calls, not universal Jev failure.
+
+[New design proposal and four single-condition scenario pairs](bias-trigger-v1/DESIGN.md) compare
+the same actual Sol 6.1 candidate, two direct cognitive checks and a common one-time handling branch.
+Materials are public executor-authored hypothetical cases, not holdout or original-image replay.
+Sol 5.6 experience is a historical hypothesis, not a current-model limitation; weaker-host comparison
+is a possible later phase, not authorized execution or an assumed Jev advantage.
+This checkpoint changes documentation/material proposals only: no new code, model/API/auth request,
+budget, safety setting, previous score or default adoption change. Proposed new 64-call ceiling is
+unapproved and does not consume or transfer the old batch's unused budget.
+
 ## Current CLI setting — Sol 6.1 for future verification
 
 Owner selected `gpt-6.1-sol/xhigh` on 2026-09-30, primarily for rate considerations.
