@@ -146,3 +146,82 @@
 {"dispatch": "record-source-2-B", "phase": "draft", "prior_calls": 1, "at_epoch": 1790774386.476667}
 {"returned": "record-source-2-B", "phase": "draft", "stopped": "unknown", "batch_calls": 50, "at_epoch": 1790774788.1712708}
 {"batch_stop": true, "path": "record-source-2-B", "reason": "named_47_new_stop"}
+{"credential": {"entry": "/Users/william/.config/jev-jarvis/env", "loaded": true, "provider": "TypeSafe official", "model": "jev-1.13.0"}}
+{"order": ["display-goal-1-A", "display-goal-1-B", "display-goal-1-C", "display-goal-2-C", "display-goal-2-B", "display-goal-2-A", "mechanism-object-1-B", "mechanism-object-1-C", "mechanism-object-1-A", "mechanism-object-2-A", "mechanism-object-2-C", "mechanism-object-2-B", "record-source-1-C", "record-source-1-A", "record-source-1-B", "record-source-2-B", "record-source-2-A", "record-source-2-C", "skills-scope-1-A", "skills-scope-1-B", "skills-scope-1-C", "skills-scope-2-C", "skills-scope-2-B", "skills-scope-2-A"], "no_retries": true, "started_epoch": 1790777562.586037}
+{"path_end": "display-goal-1-A", "phase": "done", "stopped": null}
+{"path_end": "display-goal-1-B", "phase": "done", "stopped": null}
+{"path_end": "display-goal-1-C", "phase": "done", "stopped": null}
+{"path_end": "display-goal-2-C", "phase": "draft", "stopped": "format_failure"}
+{"path_end": "display-goal-2-B", "phase": "done", "stopped": null}
+{"path_end": "display-goal-2-A", "phase": "done", "stopped": null}
+{"path_end": "mechanism-object-1-B", "phase": "done", "stopped": null}
+{"path_end": "mechanism-object-1-C", "phase": "done", "stopped": null}
+{"path_end": "mechanism-object-1-A", "phase": "done", "stopped": null}
+{"path_end": "mechanism-object-2-A", "phase": "draft", "stopped": "format_failure"}
+{"path_end": "mechanism-object-2-C", "phase": "done", "stopped": null}
+{"path_end": "mechanism-object-2-B", "phase": "done", "stopped": null}
+{"path_end": "record-source-1-C", "phase": "done", "stopped": null}
+{"path_end": "record-source-1-A", "phase": "done", "stopped": null}
+{"path_end": "record-source-1-B", "phase": "draft", "stopped": "unknown"}
+{"dispatch": "record-source-2-B", "phase": "draft", "prior_calls": 2, "at_epoch": 1790777574.39275}
+{"returned": "record-source-2-B", "phase": "check", "stopped": null, "batch_calls": 51, "at_epoch": 1790777733.9378188}
+{"dispatch": "record-source-2-B", "phase": "check", "prior_calls": 3, "at_epoch": 1790777734.662452}
+{"returned": "record-source-2-B", "phase": "done", "stopped": null, "batch_calls": 52, "at_epoch": 1790777853.0367281}
+{"path_end": "record-source-2-B", "phase": "done", "stopped": null}
+{"dispatch": "record-source-2-A", "phase": "draft", "prior_calls": 0, "at_epoch": 1790777854.4398699}
+{"returned": "record-source-2-A", "phase": "check", "stopped": null, "batch_calls": 53, "at_epoch": 1790778024.365749}
+{"dispatch": "record-source-2-A", "phase": "check", "prior_calls": 1, "at_epoch": 1790778024.9896152}
+{"returned": "record-source-2-A", "phase": "done", "stopped": null, "batch_calls": 54, "at_epoch": 1790778134.3620229}
+{"path_end": "record-source-2-A", "phase": "done", "stopped": null}
+{"dispatch": "record-source-2-C", "phase": "round1", "prior_calls": 0, "at_epoch": 1790778135.701487}
+{"returned": "record-source-2-C", "phase": "round2", "stopped": null, "batch_calls": 55, "at_epoch": 1790778195.720313}
+{"dispatch": "record-source-2-C", "phase": "round2", "prior_calls": 1, "at_epoch": 1790778196.329403}
+{"returned": "record-source-2-C", "phase": "round3", "stopped": null, "batch_calls": 56, "at_epoch": 1790778257.463789}
+{"dispatch": "record-source-2-C", "phase": "round3", "prior_calls": 2, "at_epoch": 1790778258.075003}
+{"returned": "record-source-2-C", "phase": "draft", "stopped": null, "batch_calls": 57, "at_epoch": 1790778318.273121}
+{"dispatch": "record-source-2-C", "phase": "draft", "prior_calls": 3, "at_epoch": 1790778318.917419}
+{"returned": "record-source-2-C", "phase": "done", "stopped": null, "batch_calls": 58, "at_epoch": 1790778464.092861}
+{"path_end": "record-source-2-C", "phase": "done", "stopped": null}
+{"dispatch": "skills-scope-1-A", "phase": "draft", "prior_calls": 0, "at_epoch": 1790778465.5135}
+{"returned": "skills-scope-1-A", "phase": "check", "stopped": null, "batch_calls": 59, "at_epoch": 1790778574.465169}
+{"dispatch": "skills-scope-1-A", "phase": "check", "prior_calls": 1, "at_epoch": 1790778575.083308}
+{"returned": "skills-scope-1-A", "phase": "done", "stopped": null, "batch_calls": 60, "at_epoch": 1790778686.635693}
+{"path_end": "skills-scope-1-A", "phase": "done", "stopped": null}
+{"dispatch": "skills-scope-1-B", "phase": "atoms", "prior_calls": 0, "at_epoch": 1790778688.030933}
+{"returned": "skills-scope-1-B", "phase": "draft", "stopped": null, "batch_calls": 61, "at_epoch": 1790778857.879874}
+{"dispatch": "skills-scope-1-B", "phase": "draft", "prior_calls": 1, "at_epoch": 1790778858.56476}
+{"returned": "skills-scope-1-B", "phase": "done", "stopped": null, "batch_calls": 62, "at_epoch": 1790778979.235272}
+{"path_end": "skills-scope-1-B", "phase": "done", "stopped": null}
+{"dispatch": "skills-scope-1-C", "phase": "round1", "prior_calls": 0, "at_epoch": 1790778980.6636748}
+{"returned": "skills-scope-1-C", "phase": "round2", "stopped": null, "batch_calls": 63, "at_epoch": 1790779040.583543}
+{"dispatch": "skills-scope-1-C", "phase": "round2", "prior_calls": 1, "at_epoch": 1790779041.201316}
+{"returned": "skills-scope-1-C", "phase": "round3", "stopped": null, "batch_calls": 64, "at_epoch": 1790779102.280245}
+{"dispatch": "skills-scope-1-C", "phase": "round3", "prior_calls": 2, "at_epoch": 1790779102.895811}
+{"returned": "skills-scope-1-C", "phase": "draft", "stopped": null, "batch_calls": 65, "at_epoch": 1790779162.876204}
+{"dispatch": "skills-scope-1-C", "phase": "draft", "prior_calls": 3, "at_epoch": 1790779163.503847}
+{"returned": "skills-scope-1-C", "phase": "done", "stopped": null, "batch_calls": 66, "at_epoch": 1790779302.8317518}
+{"path_end": "skills-scope-1-C", "phase": "done", "stopped": null}
+{"dispatch": "skills-scope-2-C", "phase": "round1", "prior_calls": 0, "at_epoch": 1790779304.308108}
+{"returned": "skills-scope-2-C", "phase": "round2", "stopped": null, "batch_calls": 67, "at_epoch": 1790779363.6007192}
+{"dispatch": "skills-scope-2-C", "phase": "round2", "prior_calls": 1, "at_epoch": 1790779364.208653}
+{"returned": "skills-scope-2-C", "phase": "round3", "stopped": null, "batch_calls": 68, "at_epoch": 1790779429.1845398}
+{"dispatch": "skills-scope-2-C", "phase": "round3", "prior_calls": 2, "at_epoch": 1790779429.802207}
+{"returned": "skills-scope-2-C", "phase": "draft", "stopped": null, "batch_calls": 69, "at_epoch": 1790779491.084057}
+{"dispatch": "skills-scope-2-C", "phase": "draft", "prior_calls": 3, "at_epoch": 1790779491.720383}
+{"returned": "skills-scope-2-C", "phase": "done", "stopped": null, "batch_calls": 70, "at_epoch": 1790779638.687907}
+{"path_end": "skills-scope-2-C", "phase": "done", "stopped": null}
+{"dispatch": "skills-scope-2-B", "phase": "atoms", "prior_calls": 0, "at_epoch": 1790779640.209263}
+{"returned": "skills-scope-2-B", "phase": "draft", "stopped": null, "batch_calls": 71, "at_epoch": 1790779857.791845}
+{"dispatch": "skills-scope-2-B", "phase": "draft", "prior_calls": 1, "at_epoch": 1790779858.420653}
+{"returned": "skills-scope-2-B", "phase": "check", "stopped": null, "batch_calls": 72, "at_epoch": 1790780009.902452}
+{"dispatch": "skills-scope-2-B", "phase": "check", "prior_calls": 2, "at_epoch": 1790780010.5587158}
+{"returned": "skills-scope-2-B", "phase": "done", "stopped": null, "batch_calls": 73, "at_epoch": 1790780137.0270011}
+{"path_end": "skills-scope-2-B", "phase": "done", "stopped": null}
+{"dispatch": "skills-scope-2-A", "phase": "draft", "prior_calls": 0, "at_epoch": 1790780138.68434}
+{"returned": "skills-scope-2-A", "phase": "draft", "stopped": null, "batch_calls": 74, "at_epoch": 1790780257.861892}
+{"dispatch": "skills-scope-2-A", "phase": "draft", "prior_calls": 1, "at_epoch": 1790780258.676546}
+{"returned": "skills-scope-2-A", "phase": "check", "stopped": null, "batch_calls": 75, "at_epoch": 1790780415.310477}
+{"dispatch": "skills-scope-2-A", "phase": "check", "prior_calls": 2, "at_epoch": 1790780416.042371}
+{"returned": "skills-scope-2-A", "phase": "done", "stopped": null, "batch_calls": 76, "at_epoch": 1790780537.6956742}
+{"path_end": "skills-scope-2-A", "phase": "done", "stopped": null}
+{"completed_batch": true, "counts": {"logical_calls": 76, "host_calls": 52, "jev_calls": 24}}

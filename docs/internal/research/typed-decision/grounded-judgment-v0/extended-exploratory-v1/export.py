@@ -21,7 +21,7 @@ def main():
     with open(HERE/'calls.jsonl','w') as f:
         for record in calls:f.write(json.dumps(record,ensure_ascii=False,separators=(',',':'))+'\n')
     source_names={None:'initial'}
-    for name,label in (('read-contract-successor.json','read_contract_successor'),('risk-accepted-000047.json','named_000047_successor')):
+    for name,label in (('read-contract-successor.json','read_contract_successor'),('risk-accepted-000047.json','named_000047_successor'),('retry-000049.json','named_000049_compensation_successor')):
         if (BATCH/name).exists():source_names[digest(rt.read(BATCH/name))]=label
     def source_group(c):return source_names.get(c['binding'].get('technical_successor_sha256'),'unrecognized_successor')
     index=[]
@@ -80,6 +80,12 @@ def main():
         summary['named_risk_disposition']={'source_commit':rt.read(BATCH/'risk-accepted-000047.json')['source_commit'],
             'sha256':digest(rt.read(BATCH/'risk-accepted-000047.json')),'old_remote_status':'unknown','replayed':False,
             'accepted_call':'000047','budgets_reset':False}
+    if (BATCH/'retry-000049.json').exists():
+        grant=rt.read(BATCH/'retry-000049.json')
+        summary['named_sse_compensation']={'source_commit':grant['source_commit'],'sha256':digest(grant),
+            'old_call':'000049','old_remote_status':'unknown','retry_call_key':grant['retry_call_key'],
+            'compensation_calls':[c['local_call'] for c in calls if c['binding'].get('compensates_request_sha256')==grant['request_sha256']],
+            'path_limits':grant['path_limits'],'total_limits':grant['limits'],'budgets_reset':False}
     summary['local_format_failure_paths']=sum(r['status']=='format_failure' for r in summary['paths'])
     summary['delivered_paths']=sum(r['status']=='delivered' for r in summary['paths'])
     summary['arm_totals']={a:{'logical_calls':sum(r['calls'] for r in summary['paths'] if r['path'].endswith('-'+a)),
@@ -106,7 +112,9 @@ def main():
           'raw_usage_in_calls_jsonl':True,'not_cross_provider_cost':True}
     observations=[c.get('terminal',{}).get('transport_observation') for c in calls if c['request']['role']=='host']
     summary['host_transport_observations']={'cli_starts':sum((c.get('envelope',{}).get('measurement',{}).get('cli_starts') or 0) for c in calls),
-          'outer_driver_retries':0,'exact_underlying_requests':None,
+          'outer_driver_retries':0,'outer_driver_retry_scope':'automatic_loop_only',
+          'authorized_technical_compensations':sum('compensates_request_sha256' in c['binding'] for c in calls),
+          'exact_underlying_requests':None,
           'generation_attempt_count':None,
           'observed_log_counts':{k:sum((o or {}).get(k) or 0 for o in observations) for k in ('auth_or_401_log_count','fallback_or_prewarm_log_count','reconnect_notice_count','sampling_retry_log_count')}}
     summary['observed_recovery_stops']=sum(bool((p.get('terminal',{}).get('transport_observation') or {}).get('stop_subsequent_dispatch')) for p in calls)

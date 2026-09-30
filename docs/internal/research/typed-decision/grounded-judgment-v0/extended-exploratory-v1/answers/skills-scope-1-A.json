@@ -1,21 +1,101 @@
 {
   "path": "skills-scope-1-A",
-  "status": "not_sent",
-  "phase": "draft",
-  "calls": 0,
-  "host_calls": 0,
+  "status": "delivered",
+  "phase": "done",
+  "calls": 2,
+  "host_calls": 2,
   "jev_calls": 0,
   "reads": 0,
-  "checks": 0,
+  "checks": 1,
   "revisions": 0,
-  "draft": null,
-  "check": null,
-  "final": null,
+  "draft": "成立。按题设，这份 Skill 将说明与参考文字组织为可按需调用的模块，调用时把相关文字送入模型上下文，因此其载入机制可以用“模块化提示与上下文注入”解释。结论限定于本情境中的这份 Skill 及其载入机制，无须扩展到所有 Skill 或完整运行流程。",
+  "check": {
+    "basis_text": "成立。按题设，这份 Skill 将说明与参考文字组织为可按需调用的模块，调用时把相关文字送入模型上下文，因此其载入机制可以用“模块化提示与上下文注入”解释。结论限定于本情境中的这份 Skill 及其载入机制，无须扩展到所有 Skill 或完整运行流程。",
+    "needs_revision": false
+  },
+  "final": "成立。按题设，这份 Skill 将说明与参考文字组织为可按需调用的模块，调用时把相关文字送入模型上下文，因此其载入机制可以用“模块化提示与上下文注入”解释。结论限定于本情境中的这份 Skill 及其载入机制，无须扩展到所有 Skill 或完整运行流程。",
   "atoms": {},
   "composition": null,
-  "measurements": [],
-  "session_seconds": 0,
-  "active_wait_seconds": 0,
+  "measurements": [
+    {
+      "active_wait_seconds": 54.67769462498836,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0010017089662142098,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "85ac489b458164d2c33a439c9906e39ed1c3fe621fe7f80412c285da6aeda82f",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 50.428652208007406,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000058/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 24944,
+        "output_tokens": 465,
+        "reasoning_output_tokens": 358
+      }
+    },
+    {
+      "active_wait_seconds": 55.523271208046935,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0007501249783672392,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "899837cf51f1510ce7f77317e3a45994027c24e1ef4eea6269751f58b7d4eb43",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "check",
+      "role": "host",
+      "session_seconds": 52.10079766699346,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000059/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 20342,
+        "output_tokens": 462,
+        "reasoning_output_tokens": 360
+      }
+    }
+  ],
+  "session_seconds": 102.52944987500086,
+  "active_wait_seconds": 110.2009658330353,
   "local_failures": [],
   "skipped_phases": [],
   "atom_states": {
@@ -25,7 +105,35 @@
     "unlocated": 0,
     "invalid": 0
   },
-  "call_ids": [],
-  "raw_returns": [],
-  "source_groups": []
+  "call_ids": [
+    "000058",
+    "000059"
+  ],
+  "raw_returns": [
+    {
+      "local_call": "000058",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "answer",
+        "objection": "",
+        "read_paths": [],
+        "text": "成立。按题设，这份 Skill 将说明与参考文字组织为可按需调用的模块，调用时把相关文字送入模型上下文，因此其载入机制可以用“模块化提示与上下文注入”解释。结论限定于本情境中的这份 Skill 及其载入机制，无须扩展到所有 Skill 或完整运行流程。"
+      }
+    },
+    {
+      "local_call": "000059",
+      "phase": "check",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "basis_text": "成立。按题设，这份 Skill 将说明与参考文字组织为可按需调用的模块，调用时把相关文字送入模型上下文，因此其载入机制可以用“模块化提示与上下文注入”解释。结论限定于本情境中的这份 Skill 及其载入机制，无须扩展到所有 Skill 或完整运行流程。",
+        "needs_revision": false
+      }
+    }
+  ],
+  "source_groups": [
+    "named_000049_compensation_successor"
+  ]
 }

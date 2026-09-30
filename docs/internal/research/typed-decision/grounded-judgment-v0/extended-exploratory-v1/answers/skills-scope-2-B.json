@@ -1,31 +1,561 @@
 {
   "path": "skills-scope-2-B",
-  "status": "not_sent",
-  "phase": "atoms",
-  "calls": 0,
-  "host_calls": 0,
+  "status": "delivered",
+  "phase": "done",
+  "calls": 3,
+  "host_calls": 3,
   "jev_calls": 0,
   "reads": 0,
-  "checks": 0,
+  "checks": 1,
   "revisions": 0,
-  "draft": null,
-  "check": null,
-  "final": null,
-  "atoms": {},
-  "composition": null,
-  "measurements": [],
-  "session_seconds": 0,
-  "active_wait_seconds": 0,
+  "draft": "原结论需要限缩：给定前提支持局部解释，尚不足以确立关于“所有Skill”的断言。\n\n本情境中这份Skill的文件只有说明文字和参考文字，调用时将它们按需交给模型。在这一给定条件下，用模块化提示与上下文注入描述这份Skill向模型提供文本的过程是合理的。\n\n但从这一个情境推广到所有Skill，还缺少不同实现具有相同载入机制、且这一解释能够覆盖其载入流程的关系证据。因此，是否适用于所有Skill仍无法确定。这里采用的是人工情境中的前提，并未核实实际产品机制。",
+  "check": {
+    "LOC.inference": {
+      "basis_refs": [
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "LOC.inference",
+      "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+      "refs": [
+        "w006"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w006"
+    },
+    "OK.inference": {
+      "basis_refs": [
+        "w003",
+        "w007",
+        "w010"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "OK.inference",
+      "raw_result_ref": "f6909ba9e8efbcc3358adad0a236987cfcff0b4bbda8e9aa39d79ecfd1b7c31e",
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "check_conflict",
+      "value": "support"
+    }
+  },
+  "final": "原结论需要限缩：给定前提支持局部解释，尚不足以确立关于“所有Skill”的断言。\n\n本情境中这份Skill的文件只有说明文字和参考文字，调用时将它们按需交给模型。在这一给定条件下，用模块化提示与上下文注入描述这份Skill向模型提供文本的过程是合理的。\n\n但从这一个情境推广到所有Skill，还缺少不同实现具有相同载入机制、且这一解释能够覆盖其载入流程的关系证据。因此，是否适用于所有Skill仍无法确定。这里采用的是人工情境中的前提，并未核实实际产品机制。",
+  "atoms": {
+    "C": {
+      "basis_refs": [
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "C",
+      "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+      "refs": [
+        "w003"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w003"
+    },
+    "E": {
+      "basis_refs": [
+        "w002"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "E",
+      "raw_result_ref": "9a1217acbce8d07c70fb47e702c6cf92941b48bf219a33ec4dfee0b19f25e1b1",
+      "refs": [
+        "w002"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w002"
+    },
+    "ER": {
+      "basis_refs": [
+        "w002"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "ER",
+      "raw_result_ref": "16e630a3bb018bbecd496488faf5b2298a3c18a44f74e826fac3a81f5780957d",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "supports"
+    },
+    "ES": {
+      "basis_refs": [
+        "w000",
+        "w002"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "ES",
+      "raw_result_ref": "c658ae5632d29ff5316e30548937b2b01ea47b6b829f4c3a5c985eb9a3e315b2",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "given"
+    },
+    "G": {
+      "basis_refs": [
+        "w001"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "G",
+      "raw_result_ref": "433ceabdbb5ae2df1e0e6ced351125451341dcffe23cb8ce701169381dde35b4",
+      "refs": [
+        "w001"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w001"
+    },
+    "I_R": {
+      "basis_refs": [
+        "w001",
+        "w002",
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "I_R",
+      "raw_result_ref": "dd524858e17be519b18d5cfc37189695fddd0381a95f8a046d7d9e0be2c05f56",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": 2
+    },
+    "I_T": {
+      "basis_refs": [
+        "w001",
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "I_T",
+      "raw_result_ref": "f1e3a294f1d4df08fecf5c6a9d27d84872897abd92c8029e14b79b2dd42caa1f",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": 2
+    },
+    "O": {
+      "basis_refs": [
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "O",
+      "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+      "refs": [
+        "w003"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w003"
+    },
+    "P": {
+      "basis_refs": [
+        "w002"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "P",
+      "raw_result_ref": "9a1217acbce8d07c70fb47e702c6cf92941b48bf219a33ec4dfee0b19f25e1b1",
+      "refs": [
+        "w002"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w002"
+    },
+    "R": {
+      "basis_refs": [
+        "w002",
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "R",
+      "raw_result_ref": "ca26ec0054ebed8ff8f2dfa8e112e87b2b551ca58b5ce9b9d5779a305e961654",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "overreach"
+    },
+    "S": {
+      "basis_refs": [
+        "w002",
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "S",
+      "raw_result_ref": "949d67350d4a7438f25a1dd52748b652073ee04302b338f88b6cf8f9e8c2fc06",
+      "refs": [],
+      "semantic_state": "deny",
+      "unresolved_reason": null,
+      "value": "deny"
+    },
+    "T": {
+      "basis_refs": [
+        "w001",
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "T",
+      "raw_result_ref": "a45e19d56839a579ab95370ef4a80e2805c4e03df752e8a41d9de51cf32ce7bb",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "support"
+    },
+    "TB": {
+      "basis_refs": [
+        "w001",
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "TB",
+      "raw_result_ref": "4c04b5a55c852118856365b0dc93ee3a6a6a74e0a4394d0d8143eea5731d0824",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "match"
+    }
+  },
+  "composition": {
+    "evidence_conflict": false,
+    "external_fact_verified": false,
+    "findings": [
+      {
+        "action": "limit",
+        "claim_ref": "w003",
+        "evidence_origin": "given",
+        "evidence_ref": "w002",
+        "evidence_relation": "supports",
+        "finding_id": "inference",
+        "goal_ref": "w001",
+        "keep_exact_text": "本情境中这份Skill的文件只有说明文字和参考文字，调用时将它们按需交给模型。",
+        "limit_target_exact_text": "因此，所有Skill的载入机制可以用模块化提示与上下文注入解释。",
+        "object_ref": "w003",
+        "premise_ref": "w002",
+        "relation": "overreach",
+        "requirement": "保留P在给定范围成立的部分；不得仅凭P断言完整C，说明缺少的关系证据。",
+        "source_question_ids": [
+          "P",
+          "C",
+          "R",
+          "S"
+        ],
+        "uncertainty": "conditional_on_given"
+      }
+    ],
+    "goal": "retain",
+    "limitations": {},
+    "premise_status": "conditional_on_given",
+    "relation": "limit"
+  },
+  "measurements": [
+    {
+      "active_wait_seconds": 54.48470216698479,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0013372499961405993,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "df15f52bcbd6aeba6281c09c6e638e9a07cfaca15e662b999a3f6c37c688a41a",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "atoms",
+      "role": "host",
+      "session_seconds": 159.08432137500495,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000070/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 25766,
+        "output_tokens": 2702,
+        "reasoning_output_tokens": 2335
+      }
+    },
+    {
+      "active_wait_seconds": 55.28783037501853,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0010777499992400408,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "e0d430ac61579d6146a942c34eed09f5225a7e06b0a89792336b18343c69d386",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 92.0609190420364,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000071/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 25513,
+        "output_tokens": 1212,
+        "reasoning_output_tokens": 1034
+      }
+    },
+    {
+      "active_wait_seconds": 55.100204584014136,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0010255409870296717,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "493cb8e3e74be3820b5d6e9d2a0021176b5a69d6e4145c0e99b1778a019f3842",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "check",
+      "role": "host",
+      "session_seconds": 67.10339904099237,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000072/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 24711,
+        "output_tokens": 872,
+        "reasoning_output_tokens": 799
+      }
+    }
+  ],
+  "session_seconds": 318.2486394580337,
+  "active_wait_seconds": 164.87273712601746,
   "local_failures": [],
   "skipped_phases": [],
   "atom_states": {
-    "support": 0,
-    "deny": 0,
+    "support": 12,
+    "deny": 1,
     "unresolved": 0,
     "unlocated": 0,
     "invalid": 0
   },
-  "call_ids": [],
-  "raw_returns": [],
-  "source_groups": []
+  "call_ids": [
+    "000070",
+    "000071",
+    "000072"
+  ],
+  "raw_returns": [
+    {
+      "local_call": "000070",
+      "phase": "atoms",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "C": {
+          "basis_refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "E": {
+          "basis_refs": [
+            "w002"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w002"
+        },
+        "ER": {
+          "basis_refs": [
+            "w002"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w000",
+            "w002"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "given"
+        },
+        "G": {
+          "basis_refs": [
+            "w001"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w001"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w001",
+            "w002",
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w001",
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "O": {
+          "basis_refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "P": {
+          "basis_refs": [
+            "w002"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w002"
+        },
+        "R": {
+          "basis_refs": [
+            "w002",
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "overreach"
+        },
+        "S": {
+          "basis_refs": [
+            "w002",
+            "w003"
+          ],
+          "semantic_state": "deny",
+          "unresolved_reason": null,
+          "value": "deny"
+        },
+        "T": {
+          "basis_refs": [
+            "w001",
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "TB": {
+          "basis_refs": [
+            "w001",
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      }
+    },
+    {
+      "local_call": "000071",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "answer",
+        "objection": "",
+        "read_paths": [],
+        "text": "原结论需要限缩：给定前提支持局部解释，尚不足以确立关于“所有Skill”的断言。\n\n本情境中这份Skill的文件只有说明文字和参考文字，调用时将它们按需交给模型。在这一给定条件下，用模块化提示与上下文注入描述这份Skill向模型提供文本的过程是合理的。\n\n但从这一个情境推广到所有Skill，还缺少不同实现具有相同载入机制、且这一解释能够覆盖其载入流程的关系证据。因此，是否适用于所有Skill仍无法确定。这里采用的是人工情境中的前提，并未核实实际产品机制。"
+      }
+    },
+    {
+      "local_call": "000072",
+      "phase": "check",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "LOC.inference": {
+          "basis_refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "OK.inference": {
+          "basis_refs": [
+            "w003",
+            "w007",
+            "w010"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        }
+      }
+    }
+  ],
+  "source_groups": [
+    "named_000049_compensation_successor"
+  ]
 }

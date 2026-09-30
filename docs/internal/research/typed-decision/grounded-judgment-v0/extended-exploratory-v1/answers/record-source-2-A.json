@@ -1,21 +1,101 @@
 {
   "path": "record-source-2-A",
-  "status": "not_sent",
-  "phase": "draft",
-  "calls": 0,
-  "host_calls": 0,
+  "status": "delivered",
+  "phase": "done",
+  "calls": 2,
+  "host_calls": 2,
   "jev_calls": 0,
   "reads": 0,
-  "checks": 0,
+  "checks": 1,
   "revisions": 0,
-  "draft": null,
-  "check": null,
-  "final": null,
+  "draft": "不能支持这条完整的核验结论。材料明确说明情境为人工构造、数字为合成案例记录；“案例记录”及发言者陈述不能证明已经直接核对原始记录。即使写明设备、任务及其余设置相同，也不改变材料的来源性质。\n\n可以支持的限定结论是：“按给定的合成案例记录，调整后误读数由12字降至3字，减少9字。”这是情境内的数值比较，不能据此确认真实设备的调整效果。\n\n若要保留“已直接核对原始记录”的说法，需要提供可追溯的原始记录及实际核对依据。",
+  "check": {
+    "basis_text": "不能支持这条完整的核验结论。材料明确说明情境为人工构造、数字为合成案例记录；“案例记录”及发言者陈述不能证明已经直接核对原始记录。即使写明设备、任务及其余设置相同，也不改变材料的来源性质。",
+    "needs_revision": false
+  },
+  "final": "不能支持这条完整的核验结论。材料明确说明情境为人工构造、数字为合成案例记录；“案例记录”及发言者陈述不能证明已经直接核对原始记录。即使写明设备、任务及其余设置相同，也不改变材料的来源性质。\n\n可以支持的限定结论是：“按给定的合成案例记录，调整后误读数由12字降至3字，减少9字。”这是情境内的数值比较，不能据此确认真实设备的调整效果。\n\n若要保留“已直接核对原始记录”的说法，需要提供可追溯的原始记录及实际核对依据。",
   "atoms": {},
   "composition": null,
-  "measurements": [],
-  "session_seconds": 0,
-  "active_wait_seconds": 0,
+  "measurements": [
+    {
+      "active_wait_seconds": 54.57866408402333,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.00116154202260077,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "11410d6bc7b75aaf648afc91314ced5160064faa29540e10f27c702084f617ea",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 111.42499974998645,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000052/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 25636,
+        "output_tokens": 1736,
+        "reasoning_output_tokens": 1552
+      }
+    },
+    {
+      "active_wait_seconds": 55.60573795804521,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0009871670044958591,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "3b840171486aebd5fccd03d4bc89c42b552f391e67bae0fb9dfdff266612c418",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "check",
+      "role": "host",
+      "session_seconds": 49.93951516598463,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000053/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 21111,
+        "output_tokens": 402,
+        "reasoning_output_tokens": 311
+      }
+    }
+  ],
+  "session_seconds": 161.36451491597109,
+  "active_wait_seconds": 110.18440204206854,
   "local_failures": [],
   "skipped_phases": [],
   "atom_states": {
@@ -25,7 +105,35 @@
     "unlocated": 0,
     "invalid": 0
   },
-  "call_ids": [],
-  "raw_returns": [],
-  "source_groups": []
+  "call_ids": [
+    "000052",
+    "000053"
+  ],
+  "raw_returns": [
+    {
+      "local_call": "000052",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "answer",
+        "objection": "",
+        "read_paths": [],
+        "text": "不能支持这条完整的核验结论。材料明确说明情境为人工构造、数字为合成案例记录；“案例记录”及发言者陈述不能证明已经直接核对原始记录。即使写明设备、任务及其余设置相同，也不改变材料的来源性质。\n\n可以支持的限定结论是：“按给定的合成案例记录，调整后误读数由12字降至3字，减少9字。”这是情境内的数值比较，不能据此确认真实设备的调整效果。\n\n若要保留“已直接核对原始记录”的说法，需要提供可追溯的原始记录及实际核对依据。"
+      }
+    },
+    {
+      "local_call": "000053",
+      "phase": "check",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "basis_text": "不能支持这条完整的核验结论。材料明确说明情境为人工构造、数字为合成案例记录；“案例记录”及发言者陈述不能证明已经直接核对原始记录。即使写明设备、任务及其余设置相同，也不改变材料的来源性质。",
+        "needs_revision": false
+      }
+    }
+  ],
+  "source_groups": [
+    "named_000049_compensation_successor"
+  ]
 }

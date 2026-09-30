@@ -16,22 +16,27 @@ Old frozen requests, review evidence and answers retain `gpt-6-sol`; no prior ba
 Archived one-off drivers remain historical assets, not new-batch entry points.
 This configuration change makes no new quality or price claim and starts no model request.
 
-## Current eight-case continuation — PARTIAL, second unknown stops dispatch
+## Current eight-case exploration — execution ended, independent content review pending
 
-Eight executor-prepared extensions/24 A/B/C paths, Sol 6.1/xhigh, not independent holdout.
-Current: 12 delivered, 2 format failures, 2 unknown, 8 not sent; 50 calls (35 host, 15 Jev),
-no replay/reviewer model/budget increase. [Exact 50-call errors and checkpoint](grounded-judgment-v0/extended-exploratory-v1/CHECKPOINT-000050.md).
-Owner accepted 000047 risk; source 02687f24f289f9ed9ae9d65d1138dd39bc921d91 continued nine
-unsent paths without replay. Reported-source B atoms returned, then 000049 / record-source-2-B:1
-lost its SSE stream. New request SHA 0817e559b299453a5902667c85da2e69ec5b3280eb0bee4c66d0b2d35b4a800a.
-It remains unknown, distinct from 000047's subprocess timeout; no new safety refusal.
-Proposed bounded additional-risk policy is pending, not active. Original 176/144/32 caps
-suffice; Owner's 2–3x overrun allowance is recorded but not used. Full-batch assessment
-is incomplete. [Products, counts and timing](grounded-judgment-v0/extended-exploratory-v1/RESULT.md).
-Old results apply only to historical windows. Closed GJ/R2, main/default Skill,
-default NOT QUALIFIED and ROI-Beta scope remain unchanged.
+Sol 6.1/xhigh, official Jev 1.13.0, eight executor-prepared extensions / 24 A/B/C paths,
+not independent holdout. All paths were actually dispatched: 21 delivered, 2 local format
+failures, 1 undelivered remote unknown; no unsent path remains. 76 calls (52 host / 24 Jev)
+within original 176/144/32 caps. [Raw products, limitations and executor comparison](grounded-judgment-v0/extended-exploratory-v1/RESULT.md).
+Owner's SSE retry request led to one named compensation, source
+b0a7467acc3d38ba2ede62786c01dd5a73cf354a. 000050 returned; prior 000049 remains
+risk-accepted/remote-unknown, exact wire and prior atom/composition digests preserved.
+000047 remains separately risk-accepted/remote-unknown and was never replayed.
+No new unknown or safety refusal occurred during the 26-call continuation. No generic
+unknown exception, channel/configuration change, quota reset or reviewer model call.
+C's eight cases have no adopted finding/check; raw P/C choose the same claim window,
+seven R are unresolved and one adopted R differs from the frozen norm. Final answers
+are not proof of Jev atom correctness. Executor observes no clear important C correction
+of A/B, with three missing products and source-record ambiguity retained. This is not an
+independent review PASS or universal conclusion. Independent new-batch content review
+remains pending. Old results keep their own scope; GJ/R2 CLOSED, main/default Skill,
+default NOT QUALIFIED and ROI-Beta boundary remain unchanged.
 
-## Current continuation — eight new exploratory extensions authorized
+## Original eight-case authorization — historical scope
 
 Owner now authorizes eight executor-prepared extensions / 24 A/B/C paths, with 176 logical,
 144 host and 32 Jev hard caps. These are not independent holdout; business inputs and separate

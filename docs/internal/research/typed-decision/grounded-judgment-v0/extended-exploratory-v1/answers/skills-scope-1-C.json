@@ -1,31 +1,562 @@
 {
   "path": "skills-scope-1-C",
-  "status": "not_sent",
-  "phase": "round1",
-  "calls": 0,
-  "host_calls": 0,
-  "jev_calls": 0,
+  "status": "delivered",
+  "phase": "done",
+  "calls": 4,
+  "host_calls": 1,
+  "jev_calls": 3,
   "reads": 0,
   "checks": 0,
   "revisions": 0,
-  "draft": null,
+  "draft": "在题设前提下，结论成立，范围限于这份 Skill 的载入机制。\n\n说明文字和参考文字按 Skill 单元组织，调用时按需交给模型，因此可以用“模块化提示与上下文注入”解释这一过程。\n\n这是基于人工构造情境的条件判断，不构成对真实产品实现的验证，也不足以概括所有 Skill 或其完整执行机制。",
   "check": null,
-  "final": null,
-  "atoms": {},
-  "composition": null,
-  "measurements": [],
-  "session_seconds": 0,
-  "active_wait_seconds": 0,
+  "final": "在题设前提下，结论成立，范围限于这份 Skill 的载入机制。\n\n说明文字和参考文字按 Skill 单元组织，调用时按需交给模型，因此可以用“模块化提示与上下文注入”解释这一过程。\n\n这是基于人工构造情境的条件判断，不构成对真实产品实现的验证，也不足以概括所有 Skill 或其完整执行机制。",
+  "atoms": {
+    "C": {
+      "basis_refs": [
+        "w003"
+      ],
+      "probability": 0.99,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.99,
+        "probabilities": {
+          "ambiguous": 0.0,
+          "none": 0.01,
+          "w000": 0.0,
+          "w001": 0.0,
+          "w002": 0.0,
+          "w003": 0.99
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "C",
+      "raw_result_ref": "a4f08135b64a6c4d16047731d7ad0357dd9698e6980629293f08e80bbdd1d384",
+      "refs": [
+        "w003"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w003"
+    },
+    "E": {
+      "basis_refs": [
+        "w002"
+      ],
+      "probability": 0.69,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.63,
+        "probabilities": {
+          "ambiguous": 0.0,
+          "none": 0.02,
+          "w000": 0.0,
+          "w001": 0.01,
+          "w002": 0.69,
+          "w003": 0.28
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "E",
+      "raw_result_ref": "40540c504584996d37e5ef3f7026549f781b93ecd6829654d9d934eeab3ab468",
+      "refs": [
+        "w002"
+      ],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "low_confidence",
+      "value": "w002"
+    },
+    "ER": {
+      "basis_refs": [],
+      "probability": null,
+      "provenance": null,
+      "question_id": "ER",
+      "raw_result_ref": null,
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "dependency_missing",
+      "value": null
+    },
+    "ES": {
+      "basis_refs": [],
+      "probability": null,
+      "provenance": null,
+      "question_id": "ES",
+      "raw_result_ref": null,
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "dependency_missing",
+      "value": null
+    },
+    "G": {
+      "basis_refs": [
+        "w001"
+      ],
+      "probability": 1.0,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 1.0,
+        "probabilities": {
+          "ambiguous": 0.0,
+          "none": 0.0,
+          "w000": 0.0,
+          "w001": 1.0,
+          "w002": 0.0,
+          "w003": 0.0
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "G",
+      "raw_result_ref": "a3f57ca7e79270d36b491473c2e9d515e4aeaed720342dafd644e2a1fa4482d0",
+      "refs": [
+        "w001"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w001"
+    },
+    "I_R": {
+      "basis_refs": [],
+      "probability": null,
+      "provenance": null,
+      "question_id": "I_R",
+      "raw_result_ref": null,
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "dependency_missing",
+      "value": null
+    },
+    "I_T": {
+      "basis_refs": [
+        "w001",
+        "w003",
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.29,
+        "probabilities": {
+          "0": 0.18,
+          "1": 0.11,
+          "2": 0.71
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "I_T",
+      "raw_result_ref": "2fa1987b25bda7a41c85f5ea8f44f9f242dd0d4219a8676389e5ec808d5aae3a",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": 1.53
+    },
+    "O": {
+      "basis_refs": [
+        "w003"
+      ],
+      "probability": 0.89,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.85,
+        "probabilities": {
+          "ambiguous": 0.0,
+          "none": 0.0,
+          "w000": 0.0,
+          "w001": 0.11,
+          "w002": 0.0,
+          "w003": 0.89
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "O",
+      "raw_result_ref": "bc52702a2f263d3ef3c01d350f318118fcdad3144107f1469eefed21224b6b34",
+      "refs": [
+        "w003"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w003"
+    },
+    "P": {
+      "basis_refs": [
+        "w003"
+      ],
+      "probability": 0.71,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.65,
+        "probabilities": {
+          "ambiguous": 0.0,
+          "none": 0.02,
+          "w000": 0.0,
+          "w001": 0.01,
+          "w002": 0.26,
+          "w003": 0.71
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "P",
+      "raw_result_ref": "f832431db9d166085e6e9dd9db7df4d63a7af8b1f8b720671d369a5d048b7fb7",
+      "refs": [
+        "w003"
+      ],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "low_confidence",
+      "value": "w003"
+    },
+    "R": {
+      "basis_refs": [],
+      "probability": null,
+      "provenance": null,
+      "question_id": "R",
+      "raw_result_ref": null,
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "dependency_missing",
+      "value": null
+    },
+    "S": {
+      "basis_refs": [],
+      "probability": null,
+      "provenance": null,
+      "question_id": "S",
+      "raw_result_ref": null,
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "dependency_missing",
+      "value": null
+    },
+    "T": {
+      "basis_refs": [
+        "w001",
+        "w003",
+        "w003"
+      ],
+      "probability": 0.34,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": null,
+      "question_id": "T",
+      "raw_result_ref": "4584762b1c028ad8024a29f944df958d73254ad9f02b98c8c81a0e6b53c0d2d5",
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "low_confidence",
+      "value": 0.34
+    },
+    "TB": {
+      "basis_refs": [
+        "w001",
+        "w003",
+        "w003"
+      ],
+      "probability": 0.61,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.48,
+        "probabilities": {
+          "different_G_C": 0.12,
+          "insufficient": 0.61,
+          "match": 0.14,
+          "unlocated": 0.13
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "TB",
+      "raw_result_ref": "5d77a6a4d0b449a56c45977d7ff39f78cfbc23dd3120fe548595f843efeaff07",
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "low_confidence",
+      "value": "insufficient"
+    }
+  },
+  "composition": {
+    "evidence_conflict": false,
+    "external_fact_verified": false,
+    "findings": [],
+    "goal": "unresolved",
+    "limitations": {
+      "E": "low_confidence",
+      "ER": "dependency_missing",
+      "ES": "dependency_missing",
+      "I_R": "dependency_missing",
+      "P": "low_confidence",
+      "R": "dependency_missing",
+      "S": "dependency_missing",
+      "T": "low_confidence",
+      "TB": "low_confidence"
+    },
+    "premise_status": "premise_unverified",
+    "relation": "unresolved"
+  },
+  "measurements": [
+    {
+      "active_wait_seconds": 54.698035250010435,
+      "cli_starts": 0,
+      "cost": null,
+      "loading_seconds": 0.001020000025164336,
+      "logical_calls": 1,
+      "observed_recoveries": null,
+      "phase": "round1",
+      "role": "jev",
+      "session_seconds": 1.3438615829800256,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000062/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "input_tokens": 3473,
+        "output_tokens": 222
+      }
+    },
+    {
+      "active_wait_seconds": 55.50501829094719,
+      "cli_starts": 0,
+      "cost": null,
+      "loading_seconds": 0.0009892500238493085,
+      "logical_calls": 1,
+      "observed_recoveries": null,
+      "phase": "round2",
+      "role": "jev",
+      "session_seconds": 1.6479884159634821,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000063/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "input_tokens": 3631,
+        "output_tokens": 149
+      }
+    },
+    {
+      "active_wait_seconds": 55.423674207995646,
+      "cli_starts": 0,
+      "cost": null,
+      "loading_seconds": 0.0010844580247066915,
+      "logical_calls": 1,
+      "observed_recoveries": null,
+      "phase": "round3",
+      "role": "jev",
+      "session_seconds": 0.541506625013426,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000064/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "input_tokens": 3862,
+        "output_tokens": 85
+      }
+    },
+    {
+      "active_wait_seconds": 55.364644500019494,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.001020708994474262,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "bc7e1af5cf5da04b0ac47d9c734e76c6dd1d3ca69a4736e9e77053ef81c5100b",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 79.89645812497474,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000065/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 25215,
+        "output_tokens": 1029,
+        "reasoning_output_tokens": 908
+      }
+    }
+  ],
+  "session_seconds": 83.42981474893168,
+  "active_wait_seconds": 220.99137224897277,
   "local_failures": [],
   "skipped_phases": [],
   "atom_states": {
-    "support": 0,
+    "support": 4,
     "deny": 0,
-    "unresolved": 0,
+    "unresolved": 9,
     "unlocated": 0,
     "invalid": 0
   },
-  "call_ids": [],
-  "raw_returns": [],
-  "source_groups": []
+  "call_ids": [
+    "000062",
+    "000063",
+    "000064",
+    "000065"
+  ],
+  "raw_returns": [
+    {
+      "local_call": "000062",
+      "phase": "round1",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "C": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.99
+            },
+            "source": "provider_distribution"
+          },
+          "value": "w003"
+        },
+        "G": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 1.0,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 1.0,
+              "w002": 0.0,
+              "w003": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "w001"
+        },
+        "O": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.85,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.11,
+              "w002": 0.0,
+              "w003": 0.89
+            },
+            "source": "provider_distribution"
+          },
+          "value": "w003"
+        }
+      }
+    },
+    {
+      "local_call": "000063",
+      "phase": "round2",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "E": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.63,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.02,
+              "w000": 0.0,
+              "w001": 0.01,
+              "w002": 0.69,
+              "w003": 0.28
+            },
+            "source": "provider_distribution"
+          },
+          "value": "w002"
+        },
+        "P": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.65,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.02,
+              "w000": 0.0,
+              "w001": 0.01,
+              "w002": 0.26,
+              "w003": 0.71
+            },
+            "source": "provider_distribution"
+          },
+          "value": "w003"
+        }
+      }
+    },
+    {
+      "local_call": "000064",
+      "phase": "round3",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "I_T": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.29,
+            "probabilities": {
+              "0": 0.18,
+              "1": 0.11,
+              "2": 0.71
+            },
+            "source": "provider_distribution"
+          },
+          "value": 1.53
+        },
+        "T": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": null,
+          "value": 0.34
+        },
+        "TB": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.48,
+            "probabilities": {
+              "different_G_C": 0.12,
+              "insufficient": 0.61,
+              "match": 0.14,
+              "unlocated": 0.13
+            },
+            "source": "provider_distribution"
+          },
+          "value": "insufficient"
+        }
+      }
+    },
+    {
+      "local_call": "000065",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "answer",
+        "objection": "",
+        "read_paths": [],
+        "text": "在题设前提下，结论成立，范围限于这份 Skill 的载入机制。\n\n说明文字和参考文字按 Skill 单元组织，调用时按需交给模型，因此可以用“模块化提示与上下文注入”解释这一过程。\n\n这是基于人工构造情境的条件判断，不构成对真实产品实现的验证，也不足以概括所有 Skill 或其完整执行机制。"
+      }
+    }
+  ],
+  "source_groups": [
+    "named_000049_compensation_successor"
+  ]
 }

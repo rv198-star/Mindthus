@@ -76,19 +76,19 @@
   "review_scope": "Compare first/final core judgments, not style or number of methods; grouping concealed, not independently blind execution.",
   "products": {
     "X1": {
-      "draft": null,
-      "final": null,
-      "delivery_status": "not_sent"
+      "draft": "成立。按题设，这份 Skill 将说明与参考文字组织为可按需调用的模块，调用时把相关文字送入模型上下文，因此其载入机制可以用“模块化提示与上下文注入”解释。结论限定于本情境中的这份 Skill 及其载入机制，无须扩展到所有 Skill 或完整运行流程。",
+      "final": "成立。按题设，这份 Skill 将说明与参考文字组织为可按需调用的模块，调用时把相关文字送入模型上下文，因此其载入机制可以用“模块化提示与上下文注入”解释。结论限定于本情境中的这份 Skill 及其载入机制，无须扩展到所有 Skill 或完整运行流程。",
+      "delivery_status": "delivered"
     },
     "X2": {
-      "draft": null,
-      "final": null,
-      "delivery_status": "not_sent"
+      "draft": "在题设前提下，结论成立，范围限于这份 Skill 的载入机制。\n\n说明文字和参考文字按 Skill 单元组织，调用时按需交给模型，因此可以用“模块化提示与上下文注入”解释这一过程。\n\n这是基于人工构造情境的条件判断，不构成对真实产品实现的验证，也不足以概括所有 Skill 或其完整执行机制。",
+      "final": "在题设前提下，结论成立，范围限于这份 Skill 的载入机制。\n\n说明文字和参考文字按 Skill 单元组织，调用时按需交给模型，因此可以用“模块化提示与上下文注入”解释这一过程。\n\n这是基于人工构造情境的条件判断，不构成对真实产品实现的验证，也不足以概括所有 Skill 或其完整执行机制。",
+      "delivery_status": "delivered"
     },
     "X3": {
-      "draft": null,
-      "final": null,
-      "delivery_status": "not_sent"
+      "draft": "在题设前提下，这个结论成立。这份 Skill 的说明与参考文字在调用时按需交给模型，因此用“模块化提示与上下文注入”解释其载入机制是合理的。\n\n结论限于题设中的这份 Skill 及其载入机制，不能据此概括所有 Skill 的完整实现。由于这是人工构造情境，该判断是基于给定前提的推论，并不表示实际产品机制已经得到验证。",
+      "final": "在题设前提下，这个结论成立。这份 Skill 的说明与参考文字在调用时按需交给模型，因此用“模块化提示与上下文注入”解释其载入机制是合理的。\n\n结论限于题设中的这份 Skill 及其载入机制，不能据此概括所有 Skill 的完整实现。由于这是人工构造情境，该判断是基于给定前提的推论，并不表示实际产品机制已经得到验证。",
+      "delivery_status": "delivered"
     }
   }
 }

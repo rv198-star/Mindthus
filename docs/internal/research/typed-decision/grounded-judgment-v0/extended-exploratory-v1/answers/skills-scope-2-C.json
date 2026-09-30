@@ -1,31 +1,606 @@
 {
   "path": "skills-scope-2-C",
-  "status": "not_sent",
-  "phase": "round1",
-  "calls": 0,
-  "host_calls": 0,
-  "jev_calls": 0,
+  "status": "delivered",
+  "phase": "done",
+  "calls": 4,
+  "host_calls": 1,
+  "jev_calls": 3,
   "reads": 0,
   "checks": 0,
   "revisions": 0,
-  "draft": null,
+  "draft": "“所有 Skill”这一普遍结论，不能由给定前提推出。\n\n按本情境设定，用“模块化提示与上下文注入”描述这份 Skill 的说明与参考文字按需交给模型的过程，是合理的。但单个实例不足以证明所有 Skill 都适用；现有材料也没有证实存在反例，因此不能把推广依据不足说成已确认的事实错误。\n\n更严谨的表述是：“在本情境设定下，这份 Skill 的文字载入过程可以用模块化提示与上下文注入解释；能否推广到所有 Skill，仍需进一步证据。”",
   "check": null,
-  "final": null,
-  "atoms": {},
-  "composition": null,
-  "measurements": [],
-  "session_seconds": 0,
-  "active_wait_seconds": 0,
+  "final": "“所有 Skill”这一普遍结论，不能由给定前提推出。\n\n按本情境设定，用“模块化提示与上下文注入”描述这份 Skill 的说明与参考文字按需交给模型的过程，是合理的。但单个实例不足以证明所有 Skill 都适用；现有材料也没有证实存在反例，因此不能把推广依据不足说成已确认的事实错误。\n\n更严谨的表述是：“在本情境设定下，这份 Skill 的文字载入过程可以用模块化提示与上下文注入解释；能否推广到所有 Skill，仍需进一步证据。”",
+  "atoms": {
+    "C": {
+      "basis_refs": [
+        "w003"
+      ],
+      "probability": 0.99,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.99,
+        "probabilities": {
+          "ambiguous": 0.0,
+          "none": 0.01,
+          "w000": 0.0,
+          "w001": 0.0,
+          "w002": 0.0,
+          "w003": 0.99
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "C",
+      "raw_result_ref": "a4f08135b64a6c4d16047731d7ad0357dd9698e6980629293f08e80bbdd1d384",
+      "refs": [
+        "w003"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w003"
+    },
+    "E": {
+      "basis_refs": [
+        "w002"
+      ],
+      "probability": 0.6,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.52,
+        "probabilities": {
+          "ambiguous": 0.0,
+          "none": 0.03,
+          "w000": 0.0,
+          "w001": 0.01,
+          "w002": 0.6,
+          "w003": 0.36
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "E",
+      "raw_result_ref": "25ec57d053a769de21b0be9cc0682279d60d5d23cf1460797aa4c1164a0110f1",
+      "refs": [
+        "w002"
+      ],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "low_confidence",
+      "value": "w002"
+    },
+    "ER": {
+      "basis_refs": [],
+      "probability": null,
+      "provenance": null,
+      "question_id": "ER",
+      "raw_result_ref": null,
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "dependency_missing",
+      "value": null
+    },
+    "ES": {
+      "basis_refs": [],
+      "probability": null,
+      "provenance": null,
+      "question_id": "ES",
+      "raw_result_ref": null,
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "dependency_missing",
+      "value": null
+    },
+    "G": {
+      "basis_refs": [
+        "w001"
+      ],
+      "probability": 1.0,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.99,
+        "probabilities": {
+          "ambiguous": 0.0,
+          "none": 0.0,
+          "w000": 0.0,
+          "w001": 1.0,
+          "w002": 0.0,
+          "w003": 0.0
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "G",
+      "raw_result_ref": "8d189296c1c95a2417c12a781a2a7899f05e49d26fc854c3796db41822d53922",
+      "refs": [
+        "w001"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w001"
+    },
+    "I_R": {
+      "basis_refs": [
+        "w003",
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.09,
+        "probabilities": {
+          "0": 0.14,
+          "1": 0.33,
+          "2": 0.53
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "I_R",
+      "raw_result_ref": "797a70fbe8436a02abb999b719bed7ee10206c43318cfcb5316d51dccf72ded8",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": 1.39
+    },
+    "I_T": {
+      "basis_refs": [],
+      "probability": null,
+      "provenance": "provider_distribution",
+      "question_id": "I_T",
+      "raw_result_ref": "974a863debc36087a2424bf2687dfe38ac7162816716a7b572c5b9c86a9b4a7d",
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "provider_error",
+      "value": null
+    },
+    "O": {
+      "basis_refs": [
+        "w003"
+      ],
+      "probability": 0.9,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.88,
+        "probabilities": {
+          "ambiguous": 0.0,
+          "none": 0.0,
+          "w000": 0.0,
+          "w001": 0.1,
+          "w002": 0.0,
+          "w003": 0.9
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "O",
+      "raw_result_ref": "b4a738f96bfabf6b331a2effd049733fc9463ae0edc2c776e87ceeb9ee14543c",
+      "refs": [
+        "w003"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w003"
+    },
+    "P": {
+      "basis_refs": [
+        "w003"
+      ],
+      "probability": 0.84,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.79,
+        "probabilities": {
+          "ambiguous": 0.0,
+          "none": 0.01,
+          "w000": 0.0,
+          "w001": 0.0,
+          "w002": 0.15,
+          "w003": 0.84
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "P",
+      "raw_result_ref": "d67fada102b26af3971efaefcb0166372233253525eb8aef181e7d3f2e69034a",
+      "refs": [
+        "w003"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w003"
+    },
+    "R": {
+      "basis_refs": [
+        "w003",
+        "w003"
+      ],
+      "probability": 0.42,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.27,
+        "probabilities": {
+          "contradicts": 0.01,
+          "insufficient": 0.2,
+          "overreach": 0.35,
+          "sufficient": 0.42,
+          "unrelated": 0.02
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "R",
+      "raw_result_ref": "24ccdf25b6dae7842516378e61b37143c119e4b28d6ad6f2ed0b3004557b42f5",
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "low_confidence",
+      "value": "sufficient"
+    },
+    "S": {
+      "basis_refs": [
+        "w003",
+        "w003"
+      ],
+      "probability": 0.26,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": null,
+      "question_id": "S",
+      "raw_result_ref": "b97bccfd17666b9e7c2cbb4e7bfb5f0d42af613d60549d531615fd53c8e5d25d",
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "low_confidence",
+      "value": 0.26
+    },
+    "T": {
+      "basis_refs": [
+        "w001",
+        "w003",
+        "w003"
+      ],
+      "probability": 0.3,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": null,
+      "question_id": "T",
+      "raw_result_ref": "8ec4819f42cf4202018bbab2a4f59b54195679c665d043bd16bd1ceaf1271442",
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "low_confidence",
+      "value": 0.3
+    },
+    "TB": {
+      "basis_refs": [
+        "w001",
+        "w003",
+        "w003"
+      ],
+      "probability": 0.52,
+      "provenance": "provider_distribution",
+      "provider_uncertainty": {
+        "confidence": 0.36,
+        "probabilities": {
+          "different_G_C": 0.16,
+          "insufficient": 0.52,
+          "match": 0.17,
+          "unlocated": 0.15
+        },
+        "source": "provider_distribution"
+      },
+      "question_id": "TB",
+      "raw_result_ref": "0e42b6fcf6781780db3c08c019c593310578ce76993256781628629fcfec3039",
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "low_confidence",
+      "value": "insufficient"
+    }
+  },
+  "composition": {
+    "evidence_conflict": false,
+    "external_fact_verified": false,
+    "findings": [],
+    "goal": "unresolved",
+    "limitations": {
+      "E": "low_confidence",
+      "ER": "dependency_missing",
+      "ES": "dependency_missing",
+      "I_T": "provider_error",
+      "R": "low_confidence",
+      "S": "low_confidence",
+      "T": "low_confidence",
+      "TB": "low_confidence"
+    },
+    "premise_status": "premise_unverified",
+    "relation": "unresolved"
+  },
+  "measurements": [
+    {
+      "active_wait_seconds": 54.55807987495791,
+      "cli_starts": 0,
+      "cost": null,
+      "loading_seconds": 0.0011733339633792639,
+      "logical_calls": 1,
+      "observed_recoveries": null,
+      "phase": "round1",
+      "role": "jev",
+      "session_seconds": 0.844302375044208,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000066/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "input_tokens": 3480,
+        "output_tokens": 222
+      }
+    },
+    {
+      "active_wait_seconds": 55.51752104202751,
+      "cli_starts": 0,
+      "cost": null,
+      "loading_seconds": 0.0010332079837098718,
+      "logical_calls": 1,
+      "observed_recoveries": null,
+      "phase": "round2",
+      "role": "jev",
+      "session_seconds": 5.527963250002358,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000067/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "input_tokens": 3638,
+        "output_tokens": 149
+      }
+    },
+    {
+      "active_wait_seconds": 55.44146262499271,
+      "cli_starts": 0,
+      "cost": null,
+      "loading_seconds": 0.0010742080048657954,
+      "logical_calls": 1,
+      "observed_recoveries": null,
+      "phase": "round3",
+      "role": "jev",
+      "session_seconds": 1.8319345000199974,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000068/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "input_tokens": 4842,
+        "output_tokens": 179
+      }
+    },
+    {
+      "active_wait_seconds": 55.314287165994756,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.001119915978051722,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "07fa67b507f91fa3133d6519ce23d0e5aa090e744ebdef018215f7539f529d89",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 87.54330712504452,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000069/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 25390,
+        "output_tokens": 1323,
+        "reasoning_output_tokens": 1153
+      }
+    }
+  ],
+  "session_seconds": 95.74750725011108,
+  "active_wait_seconds": 220.8313507079729,
   "local_failures": [],
   "skipped_phases": [],
   "atom_states": {
-    "support": 0,
+    "support": 5,
     "deny": 0,
-    "unresolved": 0,
+    "unresolved": 8,
     "unlocated": 0,
     "invalid": 0
   },
-  "call_ids": [],
-  "raw_returns": [],
-  "source_groups": []
+  "call_ids": [
+    "000066",
+    "000067",
+    "000068",
+    "000069"
+  ],
+  "raw_returns": [
+    {
+      "local_call": "000066",
+      "phase": "round1",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "C": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.99
+            },
+            "source": "provider_distribution"
+          },
+          "value": "w003"
+        },
+        "G": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 1.0,
+              "w002": 0.0,
+              "w003": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "value": "w001"
+        },
+        "O": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.88,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.1,
+              "w002": 0.0,
+              "w003": 0.9
+            },
+            "source": "provider_distribution"
+          },
+          "value": "w003"
+        }
+      }
+    },
+    {
+      "local_call": "000067",
+      "phase": "round2",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "E": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.52,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.03,
+              "w000": 0.0,
+              "w001": 0.01,
+              "w002": 0.6,
+              "w003": 0.36
+            },
+            "source": "provider_distribution"
+          },
+          "value": "w002"
+        },
+        "P": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.79,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.15,
+              "w003": 0.84
+            },
+            "source": "provider_distribution"
+          },
+          "value": "w003"
+        }
+      }
+    },
+    {
+      "local_call": "000068",
+      "phase": "round3",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "I_R": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.09,
+            "probabilities": {
+              "0": 0.14,
+              "1": 0.33,
+              "2": 0.53
+            },
+            "source": "provider_distribution"
+          },
+          "value": 1.39
+        },
+        "I_T": {
+          "reason": "answer_contract:ContractError:weighted_rating/distribution_mismatch",
+          "status": "provider_error",
+          "uncertainty": null,
+          "value": null
+        },
+        "R": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.27,
+            "probabilities": {
+              "contradicts": 0.01,
+              "insufficient": 0.2,
+              "overreach": 0.35,
+              "sufficient": 0.42,
+              "unrelated": 0.02
+            },
+            "source": "provider_distribution"
+          },
+          "value": "sufficient"
+        },
+        "S": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": null,
+          "value": 0.26
+        },
+        "T": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": null,
+          "value": 0.3
+        },
+        "TB": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.36,
+            "probabilities": {
+              "different_G_C": 0.16,
+              "insufficient": 0.52,
+              "match": 0.17,
+              "unlocated": 0.15
+            },
+            "source": "provider_distribution"
+          },
+          "value": "insufficient"
+        }
+      }
+    },
+    {
+      "local_call": "000069",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "answer",
+        "objection": "",
+        "read_paths": [],
+        "text": "“所有 Skill”这一普遍结论，不能由给定前提推出。\n\n按本情境设定，用“模块化提示与上下文注入”描述这份 Skill 的说明与参考文字按需交给模型的过程，是合理的。但单个实例不足以证明所有 Skill 都适用；现有材料也没有证实存在反例，因此不能把推广依据不足说成已确认的事实错误。\n\n更严谨的表述是：“在本情境设定下，这份 Skill 的文字载入过程可以用模块化提示与上下文注入解释；能否推广到所有 Skill，仍需进一步证据。”"
+      }
+    }
+  ],
+  "source_groups": [
+    "named_000049_compensation_successor"
+  ]
 }
