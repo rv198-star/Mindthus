@@ -20,6 +20,10 @@ def main():
         calls.append({'local_call':directory.name,**files})
     with open(HERE/'calls.jsonl','w') as f:
         for record in calls:f.write(json.dumps(record,ensure_ascii=False,separators=(',',':'))+'\n')
+    source_names={None:'initial'}
+    for name,label in (('read-contract-successor.json','read_contract_successor'),('risk-accepted-000047.json','named_000047_successor')):
+        if (BATCH/name).exists():source_names[digest(rt.read(BATCH/name))]=label
+    def source_group(c):return source_names.get(c['binding'].get('technical_successor_sha256'),'unrecognized_successor')
     index=[]
     with tarfile.open(HERE/'business-evidence.tar.gz','w:gz') as archive:
         for path in sorted(BATCH.rglob('*.json')):
@@ -55,7 +59,7 @@ def main():
             'transport_status':c.get('terminal',{}).get('status'),
             'import_error':c.get('import',{}).get('error'),
             'response':c.get('envelope',{}).get('response')} for c in related]
-        row['source_groups']=list(dict.fromkeys('read_contract_successor' if c['binding'].get('technical_successor_sha256') else 'initial' for c in related))
+        row['source_groups']=list(dict.fromkeys(source_group(c) for c in related))
         (HERE/'answers'/(row['path']+'.json')).write_text(json.dumps(row,ensure_ascii=False,indent=2)+'\n')
         text='# '+row['path']+'\n\n状态：'+row['status']+'\n\n## 首稿\n\n'+(row['draft'] or '无')
         text+='\n\n## 检查\n\n```json\n'+json.dumps(row['check'],ensure_ascii=False,indent=2)+'\n```'
@@ -64,14 +68,18 @@ def main():
             text+='\n## 原始返回与失败（不是答案）\n\n```json\n'+json.dumps({'local_failures':row['local_failures'],'returns':row['raw_returns']},ensure_ascii=False,indent=2)+'\n```\n'
         (HERE/'answers'/(row['path']+'.md')).write_text(text)
     summary['transport_source_groups']={}
-    for label in ('initial','read_contract_successor'):
-        group=[c for c in calls if ('read_contract_successor' if c['binding'].get('technical_successor_sha256') else 'initial')==label]
+    for label in dict.fromkeys(source_group(c) for c in calls):
+        group=[c for c in calls if source_group(c)==label]
         summary['transport_source_groups'][label]={'logical_calls':len(group),
           'session_seconds':sum(c.get('terminal',{}).get('session_seconds') or 0 for c in group),
           'active_wait_seconds':sum((c.get('envelope',{}).get('measurement') or {}).get('active_wait_seconds') or 0 for c in group)}
     if (BATCH/'read-contract-successor.json').exists():
         summary['technical_successor']={'source_commit':rt.read(BATCH/'read-contract-successor.json')['source_commit'],
             'sha256':digest(rt.read(BATCH/'read-contract-successor.json')),'retry':False}
+    if (BATCH/'risk-accepted-000047.json').exists():
+        summary['named_risk_disposition']={'source_commit':rt.read(BATCH/'risk-accepted-000047.json')['source_commit'],
+            'sha256':digest(rt.read(BATCH/'risk-accepted-000047.json')),'old_remote_status':'unknown','replayed':False,
+            'accepted_call':'000047','budgets_reset':False}
     summary['local_format_failure_paths']=sum(r['status']=='format_failure' for r in summary['paths'])
     summary['delivered_paths']=sum(r['status']=='delivered' for r in summary['paths'])
     summary['arm_totals']={a:{'logical_calls':sum(r['calls'] for r in summary['paths'] if r['path'].endswith('-'+a)),
@@ -104,6 +112,18 @@ def main():
     summary['observed_recovery_stops']=sum(bool((p.get('terminal',{}).get('transport_observation') or {}).get('stop_subsequent_dispatch')) for p in calls)
     summary['execution_source']=rt.read(BATCH/'execution-source.json')
     summary['full_path_denominator']=24;summary['atomic_denominator_per_arm']=8*13
+    # Windows are local execution measurements; pauses never prove remote completion.
+    log=[]
+    for line in (HERE/'execution.log').read_text().splitlines() if (HERE/'execution.log').exists() else []:
+        try:log.append(json.loads(line))
+        except ValueError:pass
+    windows=[]
+    for event in log:
+        if 'started_epoch' in event:windows.append({'started_epoch':event['started_epoch'],'last_returned_epoch':None})
+        if 'returned' in event and windows:windows[-1]['last_returned_epoch']=event['at_epoch']
+    summary['execution_windows']=windows
+    summary['local_execution_window_seconds']=sum(w['last_returned_epoch']-w['started_epoch'] for w in windows if w['last_returned_epoch'] is not None)
+    summary['wall_outside_local_execution_windows_seconds']=summary.get('first_send_to_last_terminal_seconds',0)-summary['local_execution_window_seconds']
     summary['reference_scope']='Raw records are immutable; no hash recomputation claimed as independent audit.'
     (HERE/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps({k:summary[k] for k in ('logical_calls','host_calls','jev_calls','returned_calls','unknown_calls','failed_calls')},ensure_ascii=False))

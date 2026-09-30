@@ -16,21 +16,20 @@ Old frozen requests, review evidence and answers retain `gpt-6-sol`; no prior ba
 Archived one-off drivers remain historical assets, not new-batch entry points.
 This configuration change makes no new quality or price claim and starts no model request.
 
-## Current eight-case continuation — PARTIAL, new unknown stops dispatch
+## Current eight-case continuation — PARTIAL, second unknown stops dispatch
 
-Owner-authorized executor-prepared eight extensions/24 A/B/C paths use Sol 6.1/xhigh;
-not independent holdout. Actual: 12 delivered, 2 local read-format failures, 1 unknown,
-9 not sent; 48 calls (33 host, 15 Jev), no retries/reviewer model/budget increase.
-[Raw products, costs and exact stop evidence](grounded-judgment-v0/extended-exploratory-v1/RESULT.md).
-Call 000047 / record-source-1-B:1 hit the frozen 360-second local timeout without a bound
-remote completion; request SHA 3f5d271f948d80feb91dc7083080d48a05a69fafda03c020cf3ba8aba1f38c5c.
-Not a safety refusal; not proof of non-submission. No automatic replay or new unknown
-exception. Remaining execution and new full-batch content assessment are incomplete.
-Sending read-contract clarification 3a408a43aa4869de37fbdc1291517bfbdd4e71f9 preserves
-all prior failures and 34 ended calls; no judgment contract or threshold change.
-Old conclusions below apply only to their historical windows; they are not a conclusion
-for this unfinished eight-case batch. Main/default Skill, closed GJ/R2 and ROI-Beta scope
-are unchanged.
+Eight executor-prepared extensions/24 A/B/C paths, Sol 6.1/xhigh, not independent holdout.
+Current: 12 delivered, 2 format failures, 2 unknown, 8 not sent; 50 calls (35 host, 15 Jev),
+no replay/reviewer model/budget increase. [Exact 50-call errors and checkpoint](grounded-judgment-v0/extended-exploratory-v1/CHECKPOINT-000050.md).
+Owner accepted 000047 risk; source 02687f24f289f9ed9ae9d65d1138dd39bc921d91 continued nine
+unsent paths without replay. Reported-source B atoms returned, then 000049 / record-source-2-B:1
+lost its SSE stream. New request SHA 0817e559b299453a5902667c85da2e69ec5b3280eb0bee4c66d0b2d35b4a800a.
+It remains unknown, distinct from 000047's subprocess timeout; no new safety refusal.
+Proposed bounded additional-risk policy is pending, not active. Original 176/144/32 caps
+suffice; Owner's 2–3x overrun allowance is recorded but not used. Full-batch assessment
+is incomplete. [Products, counts and timing](grounded-judgment-v0/extended-exploratory-v1/RESULT.md).
+Old results apply only to historical windows. Closed GJ/R2, main/default Skill,
+default NOT QUALIFIED and ROI-Beta scope remain unchanged.
 
 ## Current continuation — eight new exploratory extensions authorized
 

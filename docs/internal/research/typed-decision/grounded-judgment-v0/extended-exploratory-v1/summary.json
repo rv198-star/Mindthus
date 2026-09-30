@@ -6692,10 +6692,10 @@
     },
     {
       "path": "record-source-2-B",
-      "status": "not_sent",
-      "phase": "atoms",
-      "calls": 0,
-      "host_calls": 0,
+      "status": "unknown",
+      "phase": "draft",
+      "calls": 2,
+      "host_calls": 2,
       "jev_calls": 0,
       "reads": 0,
       "checks": 0,
@@ -6703,23 +6703,446 @@
       "draft": null,
       "check": null,
       "final": null,
-      "atoms": {},
-      "composition": null,
-      "measurements": [],
-      "session_seconds": 0,
-      "active_wait_seconds": 0,
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "C",
+          "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "E": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "E",
+          "raw_result_ref": "03ebe6690658449b496758e363674b8b2cdefe633c2d133a57b6419dc3d6f693",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "ER": {
+          "basis_refs": [
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ER",
+          "raw_result_ref": "81d47e0ddc4b1532f49412ce0091a0280181a17440d3996c5843b87f78366f5f",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ES",
+          "raw_result_ref": "8f8775442547b7a125d7b7cb0a3bcf9b56401bd8e665b122e9fe94bc638dad9c",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "reported"
+        },
+        "G": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "G",
+          "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w003",
+            "w004",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_R",
+          "raw_result_ref": "c08302efdec65db854a22d42e0a0d24fad6b4accd8a8a65e3df76b61cb54bd56",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w003",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_T",
+          "raw_result_ref": "b7a4627ac4570a0a09ef899eeb91921d83a9a2343f9683aaeb8733d92b8c9a26",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "O": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "O",
+          "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "P": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "P",
+          "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+          "refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "R": {
+          "basis_refs": [
+            "w004",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "R",
+          "raw_result_ref": "b1e80050f5116f60388aa408afcbc9b7976dda9b840dd3c67cd8f37c21d10fba",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "overreach"
+        },
+        "S": {
+          "basis_refs": [
+            "w004",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "S",
+          "raw_result_ref": "1a735ca0302d33254dc90828070f4ae959e075e46ab83281d0086d0819af62ee",
+          "refs": [],
+          "semantic_state": "deny",
+          "unresolved_reason": null,
+          "value": "deny"
+        },
+        "T": {
+          "basis_refs": [
+            "w003",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "T",
+          "raw_result_ref": "a5522af77f58f8e6391eaa34b1fc0a4bdc4563524f6cbd37cf953c66d3830f8d",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "TB": {
+          "basis_refs": [
+            "w003",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "TB",
+          "raw_result_ref": "28d41119b06235843c617c821a8708eb740438148fc1918317e962c300fbb1df",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [
+          {
+            "action": "limit",
+            "claim_ref": "w006",
+            "evidence_origin": "reported",
+            "evidence_ref": "w005",
+            "evidence_relation": "supports",
+            "finding_id": "inference",
+            "goal_ref": "w003",
+            "keep_exact_text": "发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。",
+            "limit_target_exact_text": "因此，本情境已直接核对原始记录，确认这一次调整减少了误读。",
+            "object_ref": "w006",
+            "premise_ref": "w004",
+            "relation": "overreach",
+            "requirement": "保留P在给定范围成立的部分；不得仅凭P断言完整C，说明缺少的关系证据。",
+            "source_question_ids": [
+              "P",
+              "C",
+              "R",
+              "S"
+            ],
+            "uncertainty": "premise_unverified"
+          }
+        ],
+        "goal": "retain",
+        "limitations": {},
+        "premise_status": "premise_unverified",
+        "relation": "limit"
+      },
+      "measurements": [
+        {
+          "active_wait_seconds": 60.01027933403384,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0014513750211335719,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "197ada26578bd937957e47c36b6f647d1152cd4f242e39f9a9c07805c54f402a",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+          },
+          "phase": "atoms",
+          "role": "host",
+          "session_seconds": 338.4230825830018,
+          "simulation": false,
+          "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000048/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 27083,
+            "output_tokens": 3473,
+            "reasoning_output_tokens": 3106
+          }
+        },
+        {
+          "active_wait_seconds": 53.21750562498346,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0014521669945679605,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "0817e559b299453a5902667c85da2e69ec5b3280eb0bee4c66d0b2d35b4a800a",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+          },
+          "phase": "draft",
+          "role": "host",
+          "session_seconds": 343.27506708400324,
+          "simulation": false,
+          "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000049/terminal.json",
+          "underlying_requests": null,
+          "usage": null
+        }
+      ],
+      "session_seconds": 681.698149667005,
+      "active_wait_seconds": 113.2277849590173,
       "local_failures": [],
       "skipped_phases": [],
       "atom_states": {
-        "support": 0,
-        "deny": 0,
+        "support": 12,
+        "deny": 1,
         "unresolved": 0,
         "unlocated": 0,
         "invalid": 0
       },
-      "call_ids": [],
-      "raw_returns": [],
-      "source_groups": []
+      "call_ids": [
+        "000048",
+        "000049"
+      ],
+      "raw_returns": [
+        {
+          "local_call": "000048",
+          "phase": "atoms",
+          "transport_status": "returned",
+          "import_error": null,
+          "response": {
+            "C": {
+              "basis_refs": [
+                "w006"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": "w006"
+            },
+            "E": {
+              "basis_refs": [
+                "w005"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": "w005"
+            },
+            "ER": {
+              "basis_refs": [
+                "w004",
+                "w005"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": "supports"
+            },
+            "ES": {
+              "basis_refs": [
+                "w005"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": "reported"
+            },
+            "G": {
+              "basis_refs": [
+                "w003"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": "w003"
+            },
+            "I_R": {
+              "basis_refs": [
+                "w003",
+                "w004",
+                "w006"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": 2
+            },
+            "I_T": {
+              "basis_refs": [
+                "w003",
+                "w006"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": 2
+            },
+            "O": {
+              "basis_refs": [
+                "w006"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": "w006"
+            },
+            "P": {
+              "basis_refs": [
+                "w004"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": "w004"
+            },
+            "R": {
+              "basis_refs": [
+                "w004",
+                "w006"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": "overreach"
+            },
+            "S": {
+              "basis_refs": [
+                "w004",
+                "w006"
+              ],
+              "semantic_state": "deny",
+              "unresolved_reason": null,
+              "value": "deny"
+            },
+            "T": {
+              "basis_refs": [
+                "w003",
+                "w006"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": "support"
+            },
+            "TB": {
+              "basis_refs": [
+                "w003",
+                "w006"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": "match"
+            }
+          }
+        },
+        {
+          "local_call": "000049",
+          "phase": "draft",
+          "transport_status": "unknown",
+          "import_error": null,
+          "response": null
+        }
+      ],
+      "source_groups": [
+        "named_000047_successor"
+      ]
     },
     {
       "path": "record-source-2-C",
@@ -6940,15 +7363,15 @@
     }
   ],
   "batch_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff",
-  "logical_calls": 48,
-  "host_calls": 33,
+  "logical_calls": 50,
+  "host_calls": 35,
   "jev_calls": 15,
   "simulation": false,
   "holdout": false,
   "cost": null,
   "exact_http_requests": null,
-  "session_seconds": 3021.2070899158716,
-  "active_wait_seconds": 2761.7333732531406,
+  "session_seconds": 3702.9052395828767,
+  "active_wait_seconds": 2874.961158212158,
   "transport_source_groups": {
     "initial": {
       "logical_calls": 34,
@@ -6959,12 +7382,25 @@
       "logical_calls": 14,
       "session_seconds": 1343.3589587088209,
       "active_wait_seconds": 810.9515222111368
+    },
+    "named_000047_successor": {
+      "logical_calls": 2,
+      "session_seconds": 681.698149667005,
+      "active_wait_seconds": 113.2277849590173
     }
   },
   "technical_successor": {
     "source_commit": "3a408a43aa4869de37fbdc1291517bfbdd4e71f9",
     "sha256": "7c061ff787f10c88f969390903e71a612fcf4dff63ec9db7098782fcf693e3d5",
     "retry": false
+  },
+  "named_risk_disposition": {
+    "source_commit": "02687f24f289f9ed9ae9d65d1138dd39bc921d91",
+    "sha256": "53247d88526de49ce7f6bd8ee66e9fa804d9fbb32f4b30dbe1c0fc762a29f625",
+    "old_remote_status": "unknown",
+    "replayed": false,
+    "accepted_call": "000047",
+    "budgets_reset": false
   },
   "local_format_failure_paths": 2,
   "delivered_paths": 12,
@@ -6977,11 +7413,11 @@
       "active_wait_seconds": 763.862939209037
     },
     "B": {
-      "logical_calls": 13,
-      "host_calls": 13,
+      "logical_calls": 15,
+      "host_calls": 15,
       "jev_calls": 0,
-      "session_seconds": 1628.5036877059028,
-      "active_wait_seconds": 760.4475276291487
+      "session_seconds": 2310.201837372908,
+      "active_wait_seconds": 873.675312588166
     },
     "C": {
       "logical_calls": 21,
@@ -6991,21 +7427,21 @@
       "active_wait_seconds": 1237.422906414955
     }
   },
-  "first_send_to_last_terminal_seconds": 6690.068148136139,
-  "returned_calls": 47,
-  "unknown_calls": 1,
+  "first_send_to_last_terminal_seconds": 13924.855620861053,
+  "returned_calls": 48,
+  "unknown_calls": 2,
   "failed_calls": 0,
   "safety_refusal_calls": 0,
   "raw_usage_by_provider": {
     "host": {
-      "calls_with_usage": 32,
-      "calls_missing_usage": 1,
+      "calls_with_usage": 33,
+      "calls_missing_usage": 2,
       "known_numeric_fields_sum": {
-        "output_tokens": 39329,
-        "input_tokens": 859823,
-        "cache_write_input_tokens": 0,
+        "reasoning_output_tokens": 36865,
+        "input_tokens": 886906,
+        "output_tokens": 42802,
         "cached_input_tokens": 94720,
-        "reasoning_output_tokens": 33759
+        "cache_write_input_tokens": 0
       },
       "raw_usage_in_calls_jsonl": true,
       "not_cross_provider_cost": true
@@ -7022,7 +7458,7 @@
     }
   },
   "host_transport_observations": {
-    "cli_starts": 33,
+    "cli_starts": 35,
     "outer_driver_retries": 0,
     "exact_underlying_requests": null,
     "generation_attempt_count": null,
@@ -7043,5 +7479,21 @@
   },
   "full_path_denominator": 24,
   "atomic_denominator_per_arm": 104,
+  "execution_windows": [
+    {
+      "started_epoch": 1790760862.092427,
+      "last_returned_epoch": 1790764521.506407
+    },
+    {
+      "started_epoch": 1790765361.749703,
+      "last_returned_epoch": 1790767553.279475
+    },
+    {
+      "started_epoch": 1790773971.533685,
+      "last_returned_epoch": 1790774788.1712708
+    }
+  ],
+  "local_execution_window_seconds": 6667.581337928772,
+  "wall_outside_local_execution_windows_seconds": 7257.2742829322815,
   "reference_scope": "Raw records are immutable; no hash recomputation claimed as independent audit."
 }
