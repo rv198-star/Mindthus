@@ -6,7 +6,16 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — three prior batches archived; new bias-detection design only
+## Current checkpoint — direct bias-detection batch AUTHORIZED
+
+Owner authorized the new eight-window test on 2026-10-01: “OK，那现在开始测试吧”.
+[Execution registration](bias-trigger-v1/EXECUTION.md) adopts the 64/56/8 logical/host/Jev
+hard caps, Sol 6.1/xhigh and existing official transport/cooldown without added retries.
+The old design-only checkpoint below remains historical; actual results will be recorded separately.
+New minimal wiring reuses the existing adapters; eight targeted offline checks pass.
+This authorization does not reopen old trials or extend named unknown exceptions.
+
+## Historical checkpoint — three prior batches archived; new bias-detection design only
 
 Owner requested archiving the existing tests and checking a new hypothesis: direct detection of
 locally true reasoning that controls the wrong overall decision, followed by a bounded workflow.
