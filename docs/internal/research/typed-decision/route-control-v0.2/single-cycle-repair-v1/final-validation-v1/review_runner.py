@@ -1,6 +1,9 @@
 """One explicitly authorized isolated review; writes only visible answer and safe telemetry."""
 from pathlib import Path
 import subprocess,os,json,hashlib,time,signal,sys
+REPO=next(p for p in Path(__file__).resolve().parents if (p/'experiments/typed_decision').is_dir())
+sys.path.insert(0,str(REPO))
+from experiments.typed_decision.cli_defaults import HOST_MODEL, HOST_EFFORT
 BASE=Path('/srv/agentdock/tmp/mindthus-final-validation-f9d130f')
 def sha(b):return hashlib.sha256(b).hexdigest()
 def obj(p):return {'type':'object','properties':p,'required':list(p),'additionalProperties':False}
@@ -13,8 +16,8 @@ def run(label,body,schema=SCHEMA,seconds=480):
  (directory/'schema.json').write_text(json.dumps(schema,ensure_ascii=False))
  (directory/'prompt.txt').write_text(body)
  work=directory/'workspace';work.mkdir(exist_ok=True)
- cmd=['/usr/bin/codex','exec','--skip-git-repo-check','-m','gpt-6-sol','-c','model_reasoning_effort="xhigh"','-c','features.shell_tool=false','--sandbox','read-only','-C',str(work),'--json','--output-schema',str(directory/'schema.json'),'-o',str(directory/'answer.json'),'-']
- intent={'label':label,'requested_model':'gpt-6-sol','reasoning_effort':'xhigh','timeout_seconds':seconds,'prompt_sha256':sha(body.encode()),'schema_sha256':sha((directory/'schema.json').read_bytes()),'maximum_calls':1,'automatic_retry':False}
+ cmd=['/usr/bin/codex','exec','--skip-git-repo-check','-m',HOST_MODEL,'-c','model_reasoning_effort='+json.dumps(HOST_EFFORT),'-c','features.shell_tool=false','--sandbox','read-only','-C',str(work),'--json','--output-schema',str(directory/'schema.json'),'-o',str(directory/'answer.json'),'-']
+ intent={'label':label,'requested_model':HOST_MODEL,'reasoning_effort':HOST_EFFORT,'timeout_seconds':seconds,'prompt_sha256':sha(body.encode()),'schema_sha256':sha((directory/'schema.json').read_bytes()),'maximum_calls':1,'automatic_retry':False}
  (directory/'intent.json').write_text(json.dumps(intent,indent=2));print('REVIEW_STARTED',label,flush=True)
  env=os.environ.copy()
  for k in ('TYPESAFE_API_KEY','OPENROUTER_API_KEY','MINDTHUS_HOST_API_KEY'):env.pop(k,None)

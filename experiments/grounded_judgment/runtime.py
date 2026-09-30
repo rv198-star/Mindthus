@@ -12,6 +12,7 @@ import time
 from contextlib import contextmanager
 from pathlib import Path
 from experiments.typed_decision.contracts import DecisionSpec, canonical, digest, require
+from experiments.typed_decision.cli_defaults import host_configuration
 from . import BASELINE
 from .core import index, specs, adapt, blank, compose, ROUNDS, OPTIONS, TEXT, agent_contract, accepted_none, CONSUMPTION_RULES
 
@@ -53,7 +54,7 @@ def state(root):
     return copy.deepcopy(records[-1]['payload'])
 
 
-def init(root,documents,arm,*,simulation=True,materials=None,initial_paths=None):
+def init(root,documents,arm,*,simulation=True,materials=None,initial_paths=None,host_config=None):
     root=Path(root);require(arm in ('A','B','C'),'arm')
     root.mkdir(parents=True,exist_ok=False);(root/'events').mkdir()
     source=index(documents);materials=materials or {};initial_paths=initial_paths or []
@@ -61,6 +62,7 @@ def init(root,documents,arm,*,simulation=True,materials=None,initial_paths=None)
         require('skills/using-mindthus/SKILL.md' in initial_paths and 'method_catalog' in initial_paths,'real_entry_required')
     require(all(p in materials for p in initial_paths),'initial_materials')
     s={'arm':arm,'simulation':simulation,'source':source,'materials':materials,
+       'host_configuration':copy.deepcopy(host_config if host_config is not None else host_configuration()),
        'loaded':{p:materials[p] for p in initial_paths},'initial_paths':initial_paths,
        'phase':'draft' if arm=='A' else 'atoms' if arm=='B' else 'round1',
        'atoms':{},'composition':None,'draft':None,'final':None,'pending':None,'call_count':0,
@@ -172,7 +174,7 @@ def request(root):
         body={'sequence':s['call_count'],'arm':s['arm'],'phase':phase,'role':role,
               'simulation':s['simulation'],'baseline':BASELINE,'payload':payload,
               'requested_configuration':{'model':'jev-1.13.0','provider':'official'} if role=='jev' else
-              {'model':'gpt-6-sol','reasoning_effort':'xhigh','transport_profile':'mindthus_official_http'}}
+              s.get('host_configuration',{'model':'gpt-6-sol','reasoning_effort':'xhigh','transport_profile':'mindthus_official_http'})}
         req=json.loads(canonical({**body,'request_sha256':digest(body)}))
         s['pending']=req;append(root,'request',req);append(root,'state',s)
         return req

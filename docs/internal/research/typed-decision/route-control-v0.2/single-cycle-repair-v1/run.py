@@ -26,6 +26,7 @@ from experiments.typed_decision import relationship_assessment as rel
 from experiments.typed_decision.contracts import digest, canonical, require, provider_configuration, ContractError
 from experiments.typed_decision.current_host import CurrentAgentHost, submit_response, validate_submission
 from experiments.typed_decision.providers import TypeSafeJevProvider, OpenRouterJevProvider
+from experiments.typed_decision.cli_defaults import HOST_MODEL, HOST_EFFORT
 from experiments.typed_decision.session import read_record, write_once, implementation_digest, RecoveryRequired
 
 # Reuse only the already-tested wire schema and mechanical ref/hash normalizer.
@@ -509,7 +510,7 @@ def main():
     parser.add_argument('--root',type=Path,required=True);parser.add_argument('--source',type=Path)
     parser.add_argument('--scenario',choices=['E','F']);parser.add_argument('--cutoff',type=int)
     parser.add_argument('--phase',choices=ev.PHASES,default='initial');parser.add_argument('--missing',action='append',default=[])
-    parser.add_argument('--model',default='gpt-6-sol');parser.add_argument('--effort',default='xhigh')
+    parser.add_argument('--model',default=HOST_MODEL);parser.add_argument('--effort',default=HOST_EFFORT)
     parser.add_argument('--codex',default=shutil.which('codex'));parser.add_argument('--host-endpoint',default='configured-current-host')
     parser.add_argument('--condition',choices=CONDITIONS);parser.add_argument('--reply',type=Path)
     parser.add_argument('--serving',choices=('typesafe','openrouter'),default='typesafe')

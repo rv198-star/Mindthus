@@ -38,6 +38,35 @@ class Wiring(unittest.TestCase):
         self.assertIn('uniqueItems',json.dumps(w['local_schema']))
         self.assertEqual(before,req)
         self.assertEqual(set(w['local_schema']['required']),{q['id'] for q in req['payload']['questions']})
+    def test_new_batch_all_host_phases_use_sol61_and_jev_is_unchanged(self):
+        result=export(Path(self.tmp.name)/'models')
+        config=rt.read(Path(self.tmp.name)/'models/batch.json')
+        self.assertEqual(config['host_configuration']['model'],'gpt-6.1-sol')
+        roles=set();arms=set();phases=set()
+        for directory in sorted((Path(self.tmp.name)/'models/calls').iterdir()):
+            req=rt.read(directory/'request.json');out=rt.read(directory/'wire.json');roles.add(req['role'])
+            if req['role']=='host':
+                arms.add(req['arm']);phases.add(req['phase'])
+                self.assertEqual(req['requested_configuration'],config['host_configuration'])
+                self.assertEqual((out['model'],out['effort']),('gpt-6.1-sol','xhigh'))
+            else:self.assertEqual(out['body']['model'],'jev-1.13.0')
+        self.assertEqual(roles,{'host','jev'});self.assertEqual(arms,set('ABC'))
+        self.assertTrue({'atoms','draft','check','revision'}<=phases)
+        self.assertEqual(result['real_model_calls'],0)
+    def test_legacy_run_and_pending_request_keep_old_model(self):
+        legacy={'model':'gpt-6-sol','reasoning_effort':'xhigh','transport_profile':'mindthus_official_http'}
+        root=Path(self.tmp.name)/'legacy';rt.init(root,self.case['documents'],'A')
+        s=rt.state(root);s.pop('host_configuration');rt.append(root,'state',s)
+        req=rt.request(root);before=copy.deepcopy(req)
+        self.assertEqual(req['requested_configuration'],legacy)
+        self.assertEqual(wire(req,{'overrides':[]})['model'],'gpt-6-sol')
+        self.assertEqual(rt.request(root),before)
+        self.assertEqual(digest({k:v for k,v in req.items() if k!='request_sha256'}),req['request_sha256'])
+    def test_model_mismatch_rejected_before_transport(self):
+        req=rt.request(self.root/'runs'/self.run_name('A'))
+        config=copy.deepcopy(self.driver.config);config['host_configuration']['model']='gpt-6-sol'
+        with self.assertRaisesRegex(ValueError,'host_configuration_mismatch'):wire(req,config)
+        self.assertEqual(self.adapter.invocations,[])
     def test_binding_and_serial_evidence(self):
         self.driver.step(self.run_name())
         d=self.root/'calls/000000';b=rt.read(d/'binding.json');t=rt.read(d/'terminal.json')
@@ -138,7 +167,7 @@ class BoundaryTests(unittest.TestCase):
         def run(cmd,prompt,env,timeout):
             self.assertEqual(prompt,out['prompt']);self.assertEqual(env,{})
             for override in config['overrides']:self.assertIn(override,cmd)
-            self.assertIn('gpt-6-sol',cmd);self.assertIn('model_reasoning_effort="xhigh"',cmd)
+            self.assertEqual(cmd[cmd.index('-m')+1],'gpt-6.1-sol');self.assertIn('model_reasoning_effort="xhigh"',cmd)
             rt.write(d/'reply.json',response)
             return subprocess.CompletedProcess(cmd,0,'\n'.join(json.dumps(e) for e in [
               {'type':'thread.started','thread_id':'t'},{'type':'turn.completed'}]),'')

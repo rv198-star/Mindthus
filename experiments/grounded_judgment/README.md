@@ -85,7 +85,9 @@ active_wait_seconds、session_seconds、loading_seconds、usage、cost、transpo
 可执行入口、材料导入格式及原始离线证据见
 [派发接线报告](../../docs/internal/research/typed-decision/grounded-judgment-v0/offline-dispatch-v1/RESULT.md)及
 [运行入口](../../docs/internal/research/typed-decision/grounded-judgment-v0/offline-dispatch-v1/RUN.md)。
-请求明确记录官方jev-1.13.0或gpt-6-sol/xhigh、mindthus_official_http；请求配置不是服务端型号证明。
+新运行请求明确记录官方jev-1.13.0或gpt-6.1-sol/xhigh、mindthus_official_http；请求配置不是服务端型号证明。
+2026-09-30起按Owner选择统一新宿主/CLI评阅默认值；旧gpt-6-sol请求和答案保留，不回测。
+新batch和各臂state冻结host_configuration，实际wire与请求必须一致；历史state缺此字段时沿用旧型号。
 
 | 每例上限 | A原入口 | B精细提示Agent | C/Jev |
 |---|---:|---:|---:|

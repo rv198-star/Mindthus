@@ -13,6 +13,7 @@ from . import runtime as rt
 from .exchange import jev_payload, jev_results
 from .core import agent_contract
 from experiments.typed_decision.contracts import DecisionSpec, canonical, digest, require
+from experiments.typed_decision.cli_defaults import host_configuration
 from experiments.typed_decision.providers import ProviderError, TypeSafeJevProvider
 from experiments.typed_decision.session import RecoveryRequired, read_record
 from experiments.typed_decision.relationship_runtime import _locked
@@ -52,7 +53,8 @@ def prepare(batch, inputs, *, simulation=True, admission=None):
     batch=Path(batch);require(not batch.exists(),'batch_exists')
     require(inputs and all(k and k.replace('-','').replace('_','').isalnum() for k in inputs),'case_ids')
     profile=rt.read(CANDIDATE);protocol=rt.read(PROTOCOL)
-    require(profile['host_model']=='gpt-6-sol' and profile['host_effort']=='xhigh','host_identity')
+    # The archived candidate supplies transport overrides, not a new run's model.
+    host_config=host_configuration()
     require(digest(profile['candidate_overrides'])==profile['overrides_sha256'],'profile_digest')
     if not simulation:
         require(isinstance(admission,dict) and admission.get('execution_authorized') is True,'batch_not_authorized')
@@ -74,6 +76,7 @@ def prepare(batch, inputs, *, simulation=True, admission=None):
       'protocol':protocol,'protocol_sha256':digest(protocol),
       'scope':'A/B/C all pre-rounds, reads, draft, check, revision; no old risk exceptions',
       'overrides':profile['candidate_overrides'],'overrides_sha256':digest(profile['candidate_overrides']),
+      'host_configuration':host_config,
       'call_limits':PROPOSALS if simulation else admission['call_limits'],
       'budget_status':'simulation_caps_only' if simulation else 'explicit_admission',
       'host_binary_sha256':None if simulation else hashlib.sha256(Path(admission['binary']).read_bytes()).hexdigest(),
@@ -85,7 +88,7 @@ def prepare(batch, inputs, *, simulation=True, admission=None):
         require(set(packet)<= {'documents','materials','initial_paths'},'input_packet_keys')
         for arm in PROPOSALS:
             rt.init(batch/'runs'/(case+'-'+arm),packet['documents'],arm,simulation=simulation,
-                    materials=packet.get('materials'),initial_paths=packet.get('initial_paths'))
+                    materials=packet.get('materials'),initial_paths=packet.get('initial_paths'),host_config=host_config)
             rt.write(batch/'runs'/(case+'-'+arm)/'dispatch-owner.json',{'batch':str(batch.resolve()),'batch_sha256':digest(config)})
     return config
 
@@ -93,9 +96,11 @@ def prepare(batch, inputs, *, simulation=True, admission=None):
 def wire(req, config):
     body=dict(req);sha=body.pop('request_sha256');require(digest(body)==sha,'request_digest')
     if req['role']=='jev':return {'body':jev_payload(req),'endpoint':TypeSafeJevProvider().serving_identity.endpoint}
+    host_config=config.get('host_configuration',{'model':'gpt-6-sol','reasoning_effort':'xhigh','transport_profile':'mindthus_official_http'})
+    require(req['requested_configuration']==host_config,'host_configuration_mismatch')
     contract=host_schema(req)
     return {'prompt':'根据以下完整请求输出规定JSON；工具关闭，必要材料只用read请求。\n'+canonical(req['payload']).decode(),
-      'local_schema':contract,'api_schema':api_schema(contract),'model':'gpt-6-sol','effort':'xhigh',
+      'local_schema':contract,'api_schema':api_schema(contract),'model':host_config['model'],'effort':host_config['reasoning_effort'],
       'overrides':config['overrides']}
 
 
@@ -114,7 +119,7 @@ class OfficialAdapters:
         work=directory/'workspace';work.mkdir()
         rt.write(directory/'schema.api.json',outbound['api_schema'])
         cmd=[config['admission']['binary'],'exec','--skip-git-repo-check','-m',outbound['model'],
-             '-c','model_reasoning_effort="xhigh"','-c','features.shell_tool=false','--json',
+             '-c','model_reasoning_effort='+json.dumps(outbound['effort']),'-c','features.shell_tool=false','--json',
              '--output-schema',str(directory/'schema.api.json'),'-o',str(directory/'reply.json')]
         for option in outbound['overrides']:cmd+=['-c',option]
         cmd+=['--sandbox','read-only','-C',str(work),'-']

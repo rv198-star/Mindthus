@@ -4,7 +4,17 @@ Active branch: `experiment/jev-direct-full-context`.
 Integration evidence checkpoint: `e8b36184d8b5de550a41a1c61b87ae2e9d298e4a`.
 Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`.
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
-Local main was `7c0eab827547afe2b2a5a1aa972c7a8fb5606db8` and was not advanced.
+Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
+
+## Current CLI setting — Sol 6.1 for future verification
+
+Owner selected `gpt-6.1-sol/xhigh` on 2026-09-30, primarily for rate considerations.
+New grounded A/B/C host requests and the current single-cycle CLI/review entry defaults use
+this setting; the existing official HTTP overrides and official Jev `jev-1.13.0` are retained.
+New batch/run records freeze the model before sending and reject request/wire mismatch.
+Old frozen requests, review evidence and answers retain `gpt-6-sol`; no prior batch is rerun.
+Archived one-off drivers remain historical assets, not new-batch entry points.
+This configuration change makes no new quality or price claim and starts no model request.
 
 ## Grounded judgment — exploratory execution and independent content review COMPLETE
 
