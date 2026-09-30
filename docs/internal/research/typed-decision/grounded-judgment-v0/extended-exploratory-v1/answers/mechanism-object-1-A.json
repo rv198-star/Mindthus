@@ -1,0 +1,247 @@
+{
+  "path": "mechanism-object-1-A",
+  "status": "delivered",
+  "phase": "done",
+  "calls": 4,
+  "host_calls": 4,
+  "jev_calls": 0,
+  "reads": 2,
+  "checks": 1,
+  "revisions": 0,
+  "draft": "在限定的“模型生成摘要”环节，模块化提示与上下文注入是充分的流程层面解释：模型依据按需载入的指令和原文生成摘要。\n\n它覆盖指令的模块化加载、原文进入上下文，以及这些输入如何引导摘要生成。verify.sh 控制是否允许进入生成环节，属于前置准入检查；它的存在不否定对生成环节的上述解释，也不能据此认定脚本主导摘要内容。\n\n这里的“充分”限于输入组织与生成路径。它不解释模型内部的推断算法，也不证明摘要忠实、稳定或可重复；这些结论需要另行核验。若讨论整个服务，则还须解释签名检查及其阻断机制。",
+  "check": {
+    "basis_text": "在限定的“模型生成摘要”环节，模块化提示与上下文注入是充分的流程层面解释：模型依据按需载入的指令和原文生成摘要。\n\n它覆盖指令的模块化加载、原文进入上下文，以及这些输入如何引导摘要生成。verify.sh 控制是否允许进入生成环节，属于前置准入检查；它的存在不否定对生成环节的上述解释，也不能据此认定脚本主导摘要内容。\n\n这里的“充分”限于输入组织与生成路径。它不解释模型内部的推断算法，也不证明摘要忠实、稳定或可重复；这些结论需要另行核验。若讨论整个服务，则还须解释签名检查及其阻断机制。",
+    "needs_revision": false
+  },
+  "final": "在限定的“模型生成摘要”环节，模块化提示与上下文注入是充分的流程层面解释：模型依据按需载入的指令和原文生成摘要。\n\n它覆盖指令的模块化加载、原文进入上下文，以及这些输入如何引导摘要生成。verify.sh 控制是否允许进入生成环节，属于前置准入检查；它的存在不否定对生成环节的上述解释，也不能据此认定脚本主导摘要内容。\n\n这里的“充分”限于输入组织与生成路径。它不解释模型内部的推断算法，也不证明摘要忠实、稳定或可重复；这些结论需要另行核验。若讨论整个服务，则还须解释签名检查及其阻断机制。",
+  "atoms": {},
+  "composition": null,
+  "measurements": [
+    {
+      "active_wait_seconds": 58.67948141600937,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0008019999950192869,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "1dde14571ec407ba45c2a1b70719f65e59552e8e3fc277fbd72c6a4b4a949217",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 63.55678441701457,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000024/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 25510,
+        "output_tokens": 865,
+        "reasoning_output_tokens": 774
+      }
+    },
+    {
+      "active_wait_seconds": 59.13489899999695,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.001245209015905857,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "69572cbb396cf7a8984485640c23028a8fab44daabe25195c2d8b087799c9ce1",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 58.340236541000195,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000025/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 32372,
+        "output_tokens": 694,
+        "reasoning_output_tokens": 654
+      }
+    },
+    {
+      "active_wait_seconds": 58.95422716700705,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.001444958965294063,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "241cde9ec254924f65c73cf897173586628db2a6213c10879f797864bb81f13d",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 76.61617158300942,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000026/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 35407,
+        "output_tokens": 1234,
+        "reasoning_output_tokens": 1034
+      }
+    },
+    {
+      "active_wait_seconds": 59.009972999978345,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0006069579976610839,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "c04b694ae10b2efd5a33a576ad8e6dbc9564bf51a4d9e1c6509c30a12a6de047",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "check",
+      "role": "host",
+      "session_seconds": 58.62769333401229,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000027/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 21044,
+        "output_tokens": 681,
+        "reasoning_output_tokens": 486
+      }
+    }
+  ],
+  "session_seconds": 257.1408858750365,
+  "active_wait_seconds": 235.7785805829917,
+  "local_failures": [],
+  "skipped_phases": [],
+  "atom_states": {
+    "support": 0,
+    "deny": 0,
+    "unresolved": 0,
+    "unlocated": 0,
+    "invalid": 0
+  },
+  "call_ids": [
+    "000024",
+    "000025",
+    "000026",
+    "000027"
+  ],
+  "raw_returns": [
+    {
+      "local_call": "000024",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "read",
+        "objection": "",
+        "read_paths": [
+          "docs/methodologies/primitives/entry-triage.md",
+          "docs/methodologies/primitives/frame-fitness-check.md",
+          "docs/methodologies/primitives/whole-elephant-protocol.md"
+        ],
+        "text": ""
+      }
+    },
+    {
+      "local_call": "000025",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "read",
+        "objection": "",
+        "read_paths": [
+          "skills/using-mindthus/resources/fidelity-contract.md"
+        ],
+        "text": ""
+      }
+    },
+    {
+      "local_call": "000026",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "answer",
+        "objection": "",
+        "read_paths": [],
+        "text": "在限定的“模型生成摘要”环节，模块化提示与上下文注入是充分的流程层面解释：模型依据按需载入的指令和原文生成摘要。\n\n它覆盖指令的模块化加载、原文进入上下文，以及这些输入如何引导摘要生成。verify.sh 控制是否允许进入生成环节，属于前置准入检查；它的存在不否定对生成环节的上述解释，也不能据此认定脚本主导摘要内容。\n\n这里的“充分”限于输入组织与生成路径。它不解释模型内部的推断算法，也不证明摘要忠实、稳定或可重复；这些结论需要另行核验。若讨论整个服务，则还须解释签名检查及其阻断机制。"
+      }
+    },
+    {
+      "local_call": "000027",
+      "phase": "check",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "basis_text": "在限定的“模型生成摘要”环节，模块化提示与上下文注入是充分的流程层面解释：模型依据按需载入的指令和原文生成摘要。\n\n它覆盖指令的模块化加载、原文进入上下文，以及这些输入如何引导摘要生成。verify.sh 控制是否允许进入生成环节，属于前置准入检查；它的存在不否定对生成环节的上述解释，也不能据此认定脚本主导摘要内容。\n\n这里的“充分”限于输入组织与生成路径。它不解释模型内部的推断算法，也不证明摘要忠实、稳定或可重复；这些结论需要另行核验。若讨论整个服务，则还须解释签名检查及其阻断机制。",
+        "needs_revision": false
+      }
+    }
+  ],
+  "source_groups": [
+    "initial"
+  ]
+}

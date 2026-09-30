@@ -1,0 +1,193 @@
+{
+  "path": "record-source-1-A",
+  "status": "delivered",
+  "phase": "done",
+  "calls": 3,
+  "host_calls": 3,
+  "jev_calls": 0,
+  "reads": 1,
+  "checks": 1,
+  "revisions": 0,
+  "draft": "不能完整支持。当前可直接核对的是给定的合成案例记录：调整前误读12字、调整后3字，减少9字。但直接读到案例记录，不等于已核对原始记录；材料明确声明情境为人工构造、数字为合成，不能据此证明真实设备表现或实际调整的因果效果。\n\n可改为：“根据给定合成案例记录，在同一设备、同一任务、其余设置固定的设定下，调整后误读由12字降至3字，减少9字。该比较仅在本构造情境内成立。”",
+  "check": {
+    "basis_text": "但直接读到案例记录，不等于已核对原始记录；材料明确声明情境为人工构造、数字为合成，不能据此证明真实设备表现或实际调整的因果效果。\n该比较仅在本构造情境内成立。",
+    "needs_revision": false
+  },
+  "final": "不能完整支持。当前可直接核对的是给定的合成案例记录：调整前误读12字、调整后3字，减少9字。但直接读到案例记录，不等于已核对原始记录；材料明确声明情境为人工构造、数字为合成，不能据此证明真实设备表现或实际调整的因果效果。\n\n可改为：“根据给定合成案例记录，在同一设备、同一任务、其余设置固定的设定下，调整后误读由12字降至3字，减少9字。该比较仅在本构造情境内成立。”",
+  "atoms": {},
+  "composition": null,
+  "measurements": [
+    {
+      "active_wait_seconds": 57.25993716705125,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.00540791597450152,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "f136920cb0289ff31be385a00b60895ff307ffb5973f1b67d02e9c57683f33cf",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 73.619777584041,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000043/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 25634,
+        "output_tokens": 1135,
+        "reasoning_output_tokens": 1034
+      }
+    },
+    {
+      "active_wait_seconds": 58.04189358296571,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0012956670252606273,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "fdc199b5015dece34aec491b2388064e69e1540fe65dc80ed05548c956f7d89b",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 106.86901083303383,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000044/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 13696,
+        "input_tokens": 28390,
+        "output_tokens": 1717,
+        "reasoning_output_tokens": 1552
+      }
+    },
+    {
+      "active_wait_seconds": 57.902496583003085,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0007929170387797058,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "fd8aaf406dd44b4e07bf0aa003b1bfa9dfa5f3761770875a286dafd2aa96688f",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "check",
+      "role": "host",
+      "session_seconds": 57.527181208948605,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000045/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 20896,
+        "output_tokens": 705,
+        "reasoning_output_tokens": 624
+      }
+    }
+  ],
+  "session_seconds": 238.01596962602343,
+  "active_wait_seconds": 173.20432733302005,
+  "local_failures": [],
+  "skipped_phases": [],
+  "atom_states": {
+    "support": 0,
+    "deny": 0,
+    "unresolved": 0,
+    "unlocated": 0,
+    "invalid": 0
+  },
+  "call_ids": [
+    "000043",
+    "000044",
+    "000045"
+  ],
+  "raw_returns": [
+    {
+      "local_call": "000043",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "read",
+        "objection": "材料明确标注为合成案例，而待核验结论声称已核对原始记录；需读取入口分诊与定框适配规则，厘清证据层级和结论边界。",
+        "read_paths": [
+          "docs/methodologies/primitives/entry-triage.md",
+          "docs/methodologies/primitives/frame-fitness-check.md"
+        ],
+        "text": ""
+      }
+    },
+    {
+      "local_call": "000044",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "answer",
+        "objection": "",
+        "read_paths": [],
+        "text": "不能完整支持。当前可直接核对的是给定的合成案例记录：调整前误读12字、调整后3字，减少9字。但直接读到案例记录，不等于已核对原始记录；材料明确声明情境为人工构造、数字为合成，不能据此证明真实设备表现或实际调整的因果效果。\n\n可改为：“根据给定合成案例记录，在同一设备、同一任务、其余设置固定的设定下，调整后误读由12字降至3字，减少9字。该比较仅在本构造情境内成立。”"
+      }
+    },
+    {
+      "local_call": "000045",
+      "phase": "check",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "basis_text": "但直接读到案例记录，不等于已核对原始记录；材料明确声明情境为人工构造、数字为合成，不能据此证明真实设备表现或实际调整的因果效果。\n该比较仅在本构造情境内成立。",
+        "needs_revision": false
+      }
+    }
+  ],
+  "source_groups": [
+    "read_contract_successor"
+  ]
+}

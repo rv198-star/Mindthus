@@ -1,0 +1,149 @@
+{
+  "path": "mechanism-object-2-A",
+  "status": "format_failure",
+  "phase": "draft",
+  "calls": 2,
+  "host_calls": 2,
+  "jev_calls": 0,
+  "reads": 1,
+  "checks": 0,
+  "revisions": 0,
+  "draft": null,
+  "check": null,
+  "final": null,
+  "atoms": {},
+  "composition": null,
+  "measurements": [
+    {
+      "active_wait_seconds": 58.57108220900409,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0007247090106830001,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "3910f14ba52085784c02507b8b9b83299ab8a4049b3f889cbbbf4fd141b5a96a",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 41.96769016695907,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000028/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 25492,
+        "output_tokens": 408,
+        "reasoning_output_tokens": 341
+      }
+    },
+    {
+      "active_wait_seconds": 59.11969087499892,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0010718749836087227,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "bb473e3b36c51b21a31d129c548c1cfd01a8fbd8541a2a9a56e7056d404e41ee",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 44.862642291991506,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000029/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 32160,
+        "output_tokens": 512,
+        "reasoning_output_tokens": 435
+      }
+    }
+  ],
+  "session_seconds": 86.83033245895058,
+  "active_wait_seconds": 117.69077308400301,
+  "local_failures": [
+    {
+      "message": "read_only_before_first_draft",
+      "type": "ContractError"
+    }
+  ],
+  "skipped_phases": [],
+  "atom_states": {
+    "support": 0,
+    "deny": 0,
+    "unresolved": 0,
+    "unlocated": 0,
+    "invalid": 0
+  },
+  "call_ids": [
+    "000028",
+    "000029"
+  ],
+  "raw_returns": [
+    {
+      "local_call": "000028",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "read",
+        "objection": "",
+        "read_paths": [
+          "docs/methodologies/primitives/entry-triage.md",
+          "docs/methodologies/primitives/frame-fitness-check.md",
+          "docs/methodologies/primitives/whole-elephant-protocol.md"
+        ],
+        "text": ""
+      }
+    },
+    {
+      "local_call": "000029",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "read",
+        "objection": "",
+        "read_paths": [
+          "skills/using-mindthus/resources/fidelity-contract.md"
+        ],
+        "text": "将按 using-mindthus 入口判断整个摘要服务的解释是否充分；需读取其运行合同，确认整体对象审计与无法运行校验时的输出要求。"
+      }
+    }
+  ],
+  "source_groups": [
+    "initial"
+  ]
+}

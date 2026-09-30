@@ -16,6 +16,22 @@ Old frozen requests, review evidence and answers retain `gpt-6-sol`; no prior ba
 Archived one-off drivers remain historical assets, not new-batch entry points.
 This configuration change makes no new quality or price claim and starts no model request.
 
+## Current eight-case continuation — PARTIAL, new unknown stops dispatch
+
+Owner-authorized executor-prepared eight extensions/24 A/B/C paths use Sol 6.1/xhigh;
+not independent holdout. Actual: 12 delivered, 2 local read-format failures, 1 unknown,
+9 not sent; 48 calls (33 host, 15 Jev), no retries/reviewer model/budget increase.
+[Raw products, costs and exact stop evidence](grounded-judgment-v0/extended-exploratory-v1/RESULT.md).
+Call 000047 / record-source-1-B:1 hit the frozen 360-second local timeout without a bound
+remote completion; request SHA 3f5d271f948d80feb91dc7083080d48a05a69fafda03c020cf3ba8aba1f38c5c.
+Not a safety refusal; not proof of non-submission. No automatic replay or new unknown
+exception. Remaining execution and new full-batch content assessment are incomplete.
+Sending read-contract clarification 3a408a43aa4869de37fbdc1291517bfbdd4e71f9 preserves
+all prior failures and 34 ended calls; no judgment contract or threshold change.
+Old conclusions below apply only to their historical windows; they are not a conclusion
+for this unfinished eight-case batch. Main/default Skill, closed GJ/R2 and ROI-Beta scope
+are unchanged.
+
 ## Current continuation — eight new exploratory extensions authorized
 
 Owner now authorizes eight executor-prepared extensions / 24 A/B/C paths, with 176 logical,

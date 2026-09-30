@@ -1,0 +1,109 @@
+{
+  "case": "display-goal-2",
+  "source_documents": [
+    {
+      "available": true,
+      "id": "context",
+      "order": 0,
+      "origin": "given",
+      "revision": "1",
+      "role": "source",
+      "text": "以下是人工构造的争论情境，用于判断分析，不是产品实测或原始截图的完整复现。我目前有一台27寸4K显示器，既可以调设置，也可以考虑换屏。"
+    },
+    {
+      "available": true,
+      "id": "goal",
+      "order": 1,
+      "origin": "user",
+      "revision": "1",
+      "role": "user",
+      "text": "本次目标是改善现有屏幕上的界面大小与文字阅读体验。"
+    },
+    {
+      "available": true,
+      "id": "premise",
+      "order": 2,
+      "origin": "given",
+      "revision": "1",
+      "role": "source",
+      "text": "给定条件：同为27寸时，5K面板的物理像素密度高于4K面板。"
+    },
+    {
+      "available": true,
+      "id": "claim",
+      "order": 3,
+      "origin": "claim",
+      "revision": "1",
+      "role": "user",
+      "text": "因此，接下来优先比较27寸5K机型的面板规格和价格。"
+    },
+    {
+      "available": true,
+      "id": "request",
+      "order": 4,
+      "origin": "user",
+      "revision": "1",
+      "role": "user",
+      "text": "请判断这个建议与本次目标的关系，并给出下一步。"
+    }
+  ],
+  "preregistered_norms": {
+    "allowed_basis_by_document": {
+      "claim": [
+        "w005"
+      ],
+      "context": [
+        "w000",
+        "w001",
+        "w002"
+      ],
+      "goal": [
+        "w003"
+      ],
+      "premise": [
+        "w004"
+      ],
+      "request": [
+        "w006"
+      ]
+    },
+    "atom_scoring": "按各侧规范与原文语义人工核对；允许等价窗口，未决仍计入13项分母，不用单一字符串代替语义评价。",
+    "decisive_condition": {
+      "change": "先回应现有屏的调整目标；高PPI事实保留，不能用购屏建议替代当前目标。",
+      "relation": "insufficient",
+      "s": "unresolved",
+      "target": "reanchor"
+    },
+    "dimensions": [
+      "目标和对象保留",
+      "证据身份及推导强度",
+      "保留正确内容并按条件改变",
+      "完成核心交付且无新无据事实"
+    ],
+    "forbidden": [
+      "把合成记录称为真实产品实测",
+      "把reported称为直接核验",
+      "默认反对充分的局部解释",
+      "从一例推广全部"
+    ],
+    "provenance": "executor_prepared_before_inference_not_independent"
+  },
+  "review_scope": "Compare first/final core judgments, not style or number of methods; grouping concealed, not independently blind execution.",
+  "products": {
+    "X1": {
+      "draft": "比较27寸5K机型与阅读体验可能有关，但现有信息不足以确定它应当成为优先下一步。本次目标是改善现有屏幕上的界面大小与文字阅读体验。\n\n给定条件：同为27寸时，5K面板的物理像素密度高于4K面板。这一条件尚未说明当前不适是否由像素密度造成，也未建立像素密度更高与优先比较5K规格、价格之间的关系。\n\n下一步先明确具体不适：界面偏小、字号偏小，还是文字观感不佳；记录现有屏幕的缩放比例和应用字号，逐项调整，并用相同内容、相同阅读距离比较效果。若调整后仍有未满足的需求，再针对这些需求评估5K方案是否能带来改善，进而比较机型规格和价格。",
+      "final": "比较27寸5K机型与阅读体验可能有关，但现有信息不足以确定它应当成为优先下一步。本次目标是改善现有屏幕上的界面大小与文字阅读体验。\n\n给定条件：同为27寸时，5K面板的物理像素密度高于4K面板。这一条件尚未说明当前不适是否由像素密度造成，也未建立像素密度更高与优先比较5K规格、价格之间的关系。\n\n下一步先明确具体不适：界面偏小、字号偏小，还是文字观感不佳；记录现有屏幕的缩放比例和应用字号，逐项调整，并用相同内容、相同阅读距离比较效果。若调整后仍有未满足的需求，再针对这些需求评估5K方案是否能带来改善，进而比较机型规格和价格。",
+      "delivery_status": "delivered"
+    },
+    "X2": {
+      "draft": "本次应先尝试调整现有27寸4K的显示设置；优先比较5K机型，把“改善当前屏幕的阅读体验”提前转成了“选购新屏幕”。\n\n同尺寸5K的物理像素密度更高，但这不能证明现有4K通过设置无法满足你的目标。它是后续换屏比较的依据，不足以决定当前步骤的优先级。\n\n下一步：在系统显示设置中试几个缩放档位，用常读的文档或网页，在日常观看距离下比较界面大小、文字清晰度和可用空间。若已满足需求，就继续使用；若仍有无法接受的问题，再针对这些问题比较5K机型的实际显示体验、规格和价格。缩放调整不会增加面板的物理像素密度。",
+      "final": "本次应先尝试调整现有27寸4K的显示设置；优先比较5K机型，把“改善当前屏幕的阅读体验”提前转成了“选购新屏幕”。\n\n同尺寸5K的物理像素密度更高，但这不能证明现有4K通过设置无法满足你的目标。它是后续换屏比较的依据，不足以决定当前步骤的优先级。\n\n下一步：在系统显示设置中试几个缩放档位，用常读的文档或网页，在日常观看距离下比较界面大小、文字清晰度和可用空间。若已满足需求，就继续使用；若仍有无法接受的问题，再针对这些问题比较5K机型的实际显示体验、规格和价格。缩放调整不会增加面板的物理像素密度。",
+      "delivery_status": "delivered"
+    },
+    "X3": {
+      "draft": null,
+      "final": null,
+      "delivery_status": "format_failure"
+    }
+  }
+}

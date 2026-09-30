@@ -1,0 +1,126 @@
+{"credential": {"entry": "/Users/william/.config/jev-jarvis/env", "loaded": true, "provider": "TypeSafe official", "model": "jev-1.13.0"}}
+{"order": ["display-goal-1-A", "display-goal-1-B", "display-goal-1-C", "display-goal-2-C", "display-goal-2-B", "display-goal-2-A", "mechanism-object-1-B", "mechanism-object-1-C", "mechanism-object-1-A", "mechanism-object-2-A", "mechanism-object-2-C", "mechanism-object-2-B", "record-source-1-C", "record-source-1-A", "record-source-1-B", "record-source-2-B", "record-source-2-A", "record-source-2-C", "skills-scope-1-A", "skills-scope-1-B", "skills-scope-1-C", "skills-scope-2-C", "skills-scope-2-B", "skills-scope-2-A"], "no_retries": true, "started_epoch": 1790760862.092427}
+{"dispatch": "display-goal-1-A", "phase": "draft", "prior_calls": 0, "at_epoch": 1790760862.099802}
+{"returned": "display-goal-1-A", "phase": "check", "stopped": null, "batch_calls": 1, "at_epoch": 1790760930.6271958}
+{"dispatch": "display-goal-1-A", "phase": "check", "prior_calls": 1, "at_epoch": 1790760930.6434188}
+{"returned": "display-goal-1-A", "phase": "done", "stopped": null, "batch_calls": 2, "at_epoch": 1790761032.315994}
+{"path_end": "display-goal-1-A", "phase": "done", "stopped": null}
+{"dispatch": "display-goal-1-B", "phase": "atoms", "prior_calls": 0, "at_epoch": 1790761032.489696}
+{"returned": "display-goal-1-B", "phase": "draft", "stopped": null, "batch_calls": 3, "at_epoch": 1790761205.346014}
+{"dispatch": "display-goal-1-B", "phase": "draft", "prior_calls": 1, "at_epoch": 1790761205.362456}
+{"returned": "display-goal-1-B", "phase": "done", "stopped": null, "batch_calls": 4, "at_epoch": 1790761327.169332}
+{"path_end": "display-goal-1-B", "phase": "done", "stopped": null}
+{"dispatch": "display-goal-1-C", "phase": "round1", "prior_calls": 0, "at_epoch": 1790761327.380507}
+{"returned": "display-goal-1-C", "phase": "round2", "stopped": null, "batch_calls": 5, "at_epoch": 1790761388.532827}
+{"dispatch": "display-goal-1-C", "phase": "round2", "prior_calls": 1, "at_epoch": 1790761388.549386}
+{"returned": "display-goal-1-C", "phase": "round3", "stopped": null, "batch_calls": 6, "at_epoch": 1790761449.16573}
+{"dispatch": "display-goal-1-C", "phase": "round3", "prior_calls": 2, "at_epoch": 1790761449.1930602}
+{"returned": "display-goal-1-C", "phase": "draft", "stopped": null, "batch_calls": 7, "at_epoch": 1790761509.89051}
+{"dispatch": "display-goal-1-C", "phase": "draft", "prior_calls": 3, "at_epoch": 1790761509.956488}
+{"returned": "display-goal-1-C", "phase": "done", "stopped": null, "batch_calls": 8, "at_epoch": 1790761649.000591}
+{"path_end": "display-goal-1-C", "phase": "done", "stopped": null}
+{"dispatch": "display-goal-2-C", "phase": "round1", "prior_calls": 0, "at_epoch": 1790761649.2684429}
+{"returned": "display-goal-2-C", "phase": "round2", "stopped": null, "batch_calls": 9, "at_epoch": 1790761712.695462}
+{"dispatch": "display-goal-2-C", "phase": "round2", "prior_calls": 1, "at_epoch": 1790761712.711704}
+{"returned": "display-goal-2-C", "phase": "round3", "stopped": null, "batch_calls": 10, "at_epoch": 1790761774.109832}
+{"dispatch": "display-goal-2-C", "phase": "round3", "prior_calls": 2, "at_epoch": 1790761774.136729}
+{"returned": "display-goal-2-C", "phase": "draft", "stopped": null, "batch_calls": 11, "at_epoch": 1790761834.7903712}
+{"dispatch": "display-goal-2-C", "phase": "draft", "prior_calls": 3, "at_epoch": 1790761834.8273962}
+{"returned": "display-goal-2-C", "phase": "draft", "stopped": "format_failure", "batch_calls": 12, "at_epoch": 1790761951.73529}
+{"path_end": "display-goal-2-C", "phase": "draft", "stopped": "format_failure"}
+{"dispatch": "display-goal-2-B", "phase": "atoms", "prior_calls": 0, "at_epoch": 1790761952.1206021}
+{"returned": "display-goal-2-B", "phase": "draft", "stopped": null, "batch_calls": 13, "at_epoch": 1790762095.0378702}
+{"dispatch": "display-goal-2-B", "phase": "draft", "prior_calls": 1, "at_epoch": 1790762095.054639}
+{"returned": "display-goal-2-B", "phase": "check", "stopped": null, "batch_calls": 14, "at_epoch": 1790762267.858133}
+{"dispatch": "display-goal-2-B", "phase": "check", "prior_calls": 2, "at_epoch": 1790762267.885191}
+{"returned": "display-goal-2-B", "phase": "done", "stopped": null, "batch_calls": 15, "at_epoch": 1790762388.813395}
+{"path_end": "display-goal-2-B", "phase": "done", "stopped": null}
+{"dispatch": "display-goal-2-A", "phase": "draft", "prior_calls": 0, "at_epoch": 1790762389.134303}
+{"returned": "display-goal-2-A", "phase": "draft", "stopped": null, "batch_calls": 16, "at_epoch": 1790762484.3372889}
+{"dispatch": "display-goal-2-A", "phase": "draft", "prior_calls": 1, "at_epoch": 1790762484.3527858}
+{"returned": "display-goal-2-A", "phase": "check", "stopped": null, "batch_calls": 17, "at_epoch": 1790762646.970046}
+{"dispatch": "display-goal-2-A", "phase": "check", "prior_calls": 2, "at_epoch": 1790762646.996908}
+{"returned": "display-goal-2-A", "phase": "done", "stopped": null, "batch_calls": 18, "at_epoch": 1790762765.396977}
+{"path_end": "display-goal-2-A", "phase": "done", "stopped": null}
+{"dispatch": "mechanism-object-1-B", "phase": "atoms", "prior_calls": 0, "at_epoch": 1790762765.757619}
+{"returned": "mechanism-object-1-B", "phase": "draft", "stopped": null, "batch_calls": 19, "at_epoch": 1790762998.738837}
+{"dispatch": "mechanism-object-1-B", "phase": "draft", "prior_calls": 1, "at_epoch": 1790762998.757605}
+{"returned": "mechanism-object-1-B", "phase": "done", "stopped": null, "batch_calls": 20, "at_epoch": 1790763160.856195}
+{"path_end": "mechanism-object-1-B", "phase": "done", "stopped": null}
+{"dispatch": "mechanism-object-1-C", "phase": "round1", "prior_calls": 0, "at_epoch": 1790763161.265794}
+{"returned": "mechanism-object-1-C", "phase": "round2", "stopped": null, "batch_calls": 21, "at_epoch": 1790763222.217906}
+{"dispatch": "mechanism-object-1-C", "phase": "round2", "prior_calls": 1, "at_epoch": 1790763222.2401369}
+{"returned": "mechanism-object-1-C", "phase": "round3", "stopped": null, "batch_calls": 22, "at_epoch": 1790763282.72834}
+{"dispatch": "mechanism-object-1-C", "phase": "round3", "prior_calls": 2, "at_epoch": 1790763282.755602}
+{"returned": "mechanism-object-1-C", "phase": "draft", "stopped": null, "batch_calls": 23, "at_epoch": 1790763343.343841}
+{"dispatch": "mechanism-object-1-C", "phase": "draft", "prior_calls": 3, "at_epoch": 1790763343.3805199}
+{"returned": "mechanism-object-1-C", "phase": "done", "stopped": null, "batch_calls": 24, "at_epoch": 1790763520.6865122}
+{"path_end": "mechanism-object-1-C", "phase": "done", "stopped": null}
+{"dispatch": "mechanism-object-1-A", "phase": "draft", "prior_calls": 0, "at_epoch": 1790763521.134869}
+{"returned": "mechanism-object-1-A", "phase": "draft", "stopped": null, "batch_calls": 25, "at_epoch": 1790763644.224614}
+{"dispatch": "mechanism-object-1-A", "phase": "draft", "prior_calls": 1, "at_epoch": 1790763644.241958}
+{"returned": "mechanism-object-1-A", "phase": "draft", "stopped": null, "batch_calls": 26, "at_epoch": 1790763762.6428201}
+{"dispatch": "mechanism-object-1-A", "phase": "draft", "prior_calls": 2, "at_epoch": 1790763762.6859012}
+{"returned": "mechanism-object-1-A", "phase": "check", "stopped": null, "batch_calls": 27, "at_epoch": 1790763899.263009}
+{"dispatch": "mechanism-object-1-A", "phase": "check", "prior_calls": 3, "at_epoch": 1790763899.303037}
+{"returned": "mechanism-object-1-A", "phase": "done", "stopped": null, "batch_calls": 28, "at_epoch": 1790764017.956436}
+{"path_end": "mechanism-object-1-A", "phase": "done", "stopped": null}
+{"dispatch": "mechanism-object-2-A", "phase": "draft", "prior_calls": 0, "at_epoch": 1790764018.45037}
+{"returned": "mechanism-object-2-A", "phase": "draft", "stopped": null, "batch_calls": 29, "at_epoch": 1790764119.846866}
+{"dispatch": "mechanism-object-2-A", "phase": "draft", "prior_calls": 1, "at_epoch": 1790764119.862854}
+{"returned": "mechanism-object-2-A", "phase": "draft", "stopped": "format_failure", "batch_calls": 30, "at_epoch": 1790764224.767257}
+{"path_end": "mechanism-object-2-A", "phase": "draft", "stopped": "format_failure"}
+{"dispatch": "mechanism-object-2-C", "phase": "round1", "prior_calls": 0, "at_epoch": 1790764225.282041}
+{"returned": "mechanism-object-2-C", "phase": "round2", "stopped": null, "batch_calls": 31, "at_epoch": 1790764288.5457091}
+{"dispatch": "mechanism-object-2-C", "phase": "round2", "prior_calls": 1, "at_epoch": 1790764288.561874}
+{"returned": "mechanism-object-2-C", "phase": "round3", "stopped": null, "batch_calls": 32, "at_epoch": 1790764349.33954}
+{"dispatch": "mechanism-object-2-C", "phase": "round3", "prior_calls": 2, "at_epoch": 1790764349.3662038}
+{"returned": "mechanism-object-2-C", "phase": "draft", "stopped": null, "batch_calls": 33, "at_epoch": 1790764409.975274}
+{"dispatch": "mechanism-object-2-C", "phase": "draft", "prior_calls": 3, "at_epoch": 1790764410.015885}
+{"returned": "mechanism-object-2-C", "phase": "draft", "stopped": null, "batch_calls": 34, "at_epoch": 1790764521.506407}
+{"batch_stop": true, "path": "mechanism-object-2-C", "reason": null}
+{"credential": {"entry": "/Users/william/.config/jev-jarvis/env", "loaded": true, "provider": "TypeSafe official", "model": "jev-1.13.0"}}
+{"order": ["display-goal-1-A", "display-goal-1-B", "display-goal-1-C", "display-goal-2-C", "display-goal-2-B", "display-goal-2-A", "mechanism-object-1-B", "mechanism-object-1-C", "mechanism-object-1-A", "mechanism-object-2-A", "mechanism-object-2-C", "mechanism-object-2-B", "record-source-1-C", "record-source-1-A", "record-source-1-B", "record-source-2-B", "record-source-2-A", "record-source-2-C", "skills-scope-1-A", "skills-scope-1-B", "skills-scope-1-C", "skills-scope-2-C", "skills-scope-2-B", "skills-scope-2-A"], "no_retries": true, "started_epoch": 1790765361.749703}
+{"path_end": "display-goal-1-A", "phase": "done", "stopped": null}
+{"path_end": "display-goal-1-B", "phase": "done", "stopped": null}
+{"path_end": "display-goal-1-C", "phase": "done", "stopped": null}
+{"path_end": "display-goal-2-C", "phase": "draft", "stopped": "format_failure"}
+{"path_end": "display-goal-2-B", "phase": "done", "stopped": null}
+{"path_end": "display-goal-2-A", "phase": "done", "stopped": null}
+{"path_end": "mechanism-object-1-B", "phase": "done", "stopped": null}
+{"path_end": "mechanism-object-1-C", "phase": "done", "stopped": null}
+{"path_end": "mechanism-object-1-A", "phase": "done", "stopped": null}
+{"path_end": "mechanism-object-2-A", "phase": "draft", "stopped": "format_failure"}
+{"dispatch": "mechanism-object-2-C", "phase": "draft", "prior_calls": 4, "at_epoch": 1790765368.075714}
+{"returned": "mechanism-object-2-C", "phase": "done", "stopped": null, "batch_calls": 35, "at_epoch": 1790765530.153244}
+{"path_end": "mechanism-object-2-C", "phase": "done", "stopped": null}
+{"dispatch": "mechanism-object-2-B", "phase": "atoms", "prior_calls": 0, "at_epoch": 1790765531.227343}
+{"returned": "mechanism-object-2-B", "phase": "draft", "stopped": null, "batch_calls": 36, "at_epoch": 1790765773.7891278}
+{"dispatch": "mechanism-object-2-B", "phase": "draft", "prior_calls": 1, "at_epoch": 1790765774.2367868}
+{"returned": "mechanism-object-2-B", "phase": "draft", "stopped": null, "batch_calls": 37, "at_epoch": 1790765920.3341491}
+{"dispatch": "mechanism-object-2-B", "phase": "draft", "prior_calls": 2, "at_epoch": 1790765920.796431}
+{"returned": "mechanism-object-2-B", "phase": "check", "stopped": null, "batch_calls": 38, "at_epoch": 1790766086.040639}
+{"dispatch": "mechanism-object-2-B", "phase": "check", "prior_calls": 3, "at_epoch": 1790766086.521384}
+{"returned": "mechanism-object-2-B", "phase": "done", "stopped": null, "batch_calls": 39, "at_epoch": 1790766200.662623}
+{"path_end": "mechanism-object-2-B", "phase": "done", "stopped": null}
+{"dispatch": "record-source-1-C", "phase": "round1", "prior_calls": 0, "at_epoch": 1790766201.7470772}
+{"returned": "record-source-1-C", "phase": "round2", "stopped": null, "batch_calls": 40, "at_epoch": 1790766261.878269}
+{"dispatch": "record-source-1-C", "phase": "round2", "prior_calls": 1, "at_epoch": 1790766262.2978408}
+{"returned": "record-source-1-C", "phase": "round3", "stopped": null, "batch_calls": 41, "at_epoch": 1790766322.579849}
+{"dispatch": "record-source-1-C", "phase": "round3", "prior_calls": 2, "at_epoch": 1790766323.0344021}
+{"returned": "record-source-1-C", "phase": "draft", "stopped": null, "batch_calls": 42, "at_epoch": 1790766383.238484}
+{"dispatch": "record-source-1-C", "phase": "draft", "prior_calls": 3, "at_epoch": 1790766383.766112}
+{"returned": "record-source-1-C", "phase": "done", "stopped": null, "batch_calls": 43, "at_epoch": 1790766524.4796999}
+{"path_end": "record-source-1-C", "phase": "done", "stopped": null}
+{"dispatch": "record-source-1-A", "phase": "draft", "prior_calls": 0, "at_epoch": 1790766525.702067}
+{"returned": "record-source-1-A", "phase": "draft", "stopped": null, "batch_calls": 44, "at_epoch": 1790766658.0086951}
+{"dispatch": "record-source-1-A", "phase": "draft", "prior_calls": 1, "at_epoch": 1790766658.468508}
+{"returned": "record-source-1-A", "phase": "check", "stopped": null, "batch_calls": 45, "at_epoch": 1790766824.964672}
+{"dispatch": "record-source-1-A", "phase": "check", "prior_calls": 2, "at_epoch": 1790766825.441934}
+{"returned": "record-source-1-A", "phase": "done", "stopped": null, "batch_calls": 46, "at_epoch": 1790766942.5296462}
+{"path_end": "record-source-1-A", "phase": "done", "stopped": null}
+{"dispatch": "record-source-1-B", "phase": "atoms", "prior_calls": 0, "at_epoch": 1790766943.758313}
+{"returned": "record-source-1-B", "phase": "draft", "stopped": null, "batch_calls": 47, "at_epoch": 1790767133.375322}
+{"dispatch": "record-source-1-B", "phase": "draft", "prior_calls": 1, "at_epoch": 1790767134.043315}
+{"returned": "record-source-1-B", "phase": "draft", "stopped": "unknown", "batch_calls": 48, "at_epoch": 1790767553.279475}
+{"batch_stop": true, "path": "record-source-1-B", "reason": "read_repair_no_new_stop"}

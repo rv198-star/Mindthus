@@ -1,0 +1,445 @@
+{
+  "path": "record-source-1-B",
+  "status": "unknown",
+  "phase": "draft",
+  "calls": 2,
+  "host_calls": 2,
+  "jev_calls": 0,
+  "reads": 0,
+  "checks": 0,
+  "revisions": 0,
+  "draft": null,
+  "check": null,
+  "final": null,
+  "atoms": {
+    "C": {
+      "basis_refs": [
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "C",
+      "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+      "refs": [
+        "w006"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w006"
+    },
+    "E": {
+      "basis_refs": [
+        "w005"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "E",
+      "raw_result_ref": "03ebe6690658449b496758e363674b8b2cdefe633c2d133a57b6419dc3d6f693",
+      "refs": [
+        "w005"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w005"
+    },
+    "ER": {
+      "basis_refs": [
+        "w004",
+        "w005"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "ER",
+      "raw_result_ref": "81d47e0ddc4b1532f49412ce0091a0280181a17440d3996c5843b87f78366f5f",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "supports"
+    },
+    "ES": {
+      "basis_refs": [],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "ES",
+      "raw_result_ref": "6256bdfb9ff168a7778a3000bbb388b6126161c1acdcba9bf3aa387fa04d9117",
+      "refs": [],
+      "semantic_state": "invalid",
+      "unresolved_reason": "contract_error",
+      "value": null
+    },
+    "G": {
+      "basis_refs": [
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "G",
+      "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+      "refs": [
+        "w003"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w003"
+    },
+    "I_R": {
+      "basis_refs": [
+        "w001",
+        "w003",
+        "w004",
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "I_R",
+      "raw_result_ref": "f3735b7ec6ce21811d7efbf9fdf49b1994fd7b21bf49575eea1c2a1d0613f6bb",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": 2
+    },
+    "I_T": {
+      "basis_refs": [
+        "w003",
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "I_T",
+      "raw_result_ref": "48675848ce83b904c3c20b1b953450f1975af7bb513369d27ebb9622b8364d0c",
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "未建立C替换G目标的发现，该条件性影响不适用。",
+      "value": null
+    },
+    "O": {
+      "basis_refs": [
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "O",
+      "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+      "refs": [
+        "w006"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w006"
+    },
+    "P": {
+      "basis_refs": [
+        "w004"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "P",
+      "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+      "refs": [
+        "w004"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w004"
+    },
+    "R": {
+      "basis_refs": [
+        "w001",
+        "w004",
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "R",
+      "raw_result_ref": "dec438a198b44af77a7343f8328452231f08d583aabbf454f50187bbc7aec1bc",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "overreach"
+    },
+    "S": {
+      "basis_refs": [
+        "w001",
+        "w004",
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "S",
+      "raw_result_ref": "a97226b9b8ebad9b19bd26d00dc702328bfa6c69192bda4cdfa3e02e66e9951f",
+      "refs": [],
+      "semantic_state": "deny",
+      "unresolved_reason": null,
+      "value": "deny"
+    },
+    "T": {
+      "basis_refs": [
+        "w003",
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "T",
+      "raw_result_ref": "a5522af77f58f8e6391eaa34b1fc0a4bdc4563524f6cbd37cf953c66d3830f8d",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "support"
+    },
+    "TB": {
+      "basis_refs": [
+        "w003",
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "TB",
+      "raw_result_ref": "28d41119b06235843c617c821a8708eb740438148fc1918317e962c300fbb1df",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "match"
+    }
+  },
+  "composition": {
+    "evidence_conflict": false,
+    "external_fact_verified": false,
+    "findings": [
+      {
+        "action": "limit",
+        "claim_ref": "w006",
+        "evidence_origin": null,
+        "evidence_ref": "w005",
+        "evidence_relation": "supports",
+        "finding_id": "inference",
+        "goal_ref": "w003",
+        "keep_exact_text": "发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。",
+        "limit_target_exact_text": "因此，本情境已直接核对原始记录，确认这一次调整减少了误读。",
+        "object_ref": "w006",
+        "premise_ref": "w004",
+        "relation": "overreach",
+        "requirement": "保留P在给定范围成立的部分；不得仅凭P断言完整C，说明缺少的关系证据。",
+        "source_question_ids": [
+          "P",
+          "C",
+          "R",
+          "S"
+        ],
+        "uncertainty": "premise_unverified"
+      }
+    ],
+    "goal": "retain",
+    "limitations": {
+      "ES": "contract_error",
+      "I_T": "未建立C替换G目标的发现，该条件性影响不适用。"
+    },
+    "premise_status": "premise_unverified",
+    "relation": "limit"
+  },
+  "measurements": [
+    {
+      "active_wait_seconds": 57.22569741704501,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0017683340120129287,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "ae88ec88b813e6244e79165c3a5efd4e9bbe77ef5248b79ea596e41de7b042e6",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "atoms",
+      "role": "host",
+      "session_seconds": 130.6971667909529,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000046/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 27081,
+        "output_tokens": 2299,
+        "reasoning_output_tokens": 1903
+      }
+    },
+    {
+      "active_wait_seconds": 57.1137985829846,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.002533291990403086,
+      "logical_calls": 1,
+      "observed_recoveries": null,
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 360.032817624975,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000047/terminal.json",
+      "underlying_requests": null,
+      "usage": null
+    }
+  ],
+  "session_seconds": 490.7299844159279,
+  "active_wait_seconds": 114.33949600002961,
+  "local_failures": [],
+  "skipped_phases": [],
+  "atom_states": {
+    "support": 10,
+    "deny": 1,
+    "unresolved": 1,
+    "unlocated": 0,
+    "invalid": 1
+  },
+  "call_ids": [
+    "000046",
+    "000047"
+  ],
+  "raw_returns": [
+    {
+      "local_call": "000046",
+      "phase": "atoms",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "C": {
+          "basis_refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "E": {
+          "basis_refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "ER": {
+          "basis_refs": [
+            "w004",
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w001",
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "given"
+        },
+        "G": {
+          "basis_refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w001",
+            "w003",
+            "w004",
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w003",
+            "w006"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "未建立C替换G目标的发现，该条件性影响不适用。",
+          "value": null
+        },
+        "O": {
+          "basis_refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "P": {
+          "basis_refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "R": {
+          "basis_refs": [
+            "w001",
+            "w004",
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "overreach"
+        },
+        "S": {
+          "basis_refs": [
+            "w001",
+            "w004",
+            "w006"
+          ],
+          "semantic_state": "deny",
+          "unresolved_reason": null,
+          "value": "deny"
+        },
+        "T": {
+          "basis_refs": [
+            "w003",
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "TB": {
+          "basis_refs": [
+            "w003",
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      }
+    },
+    {
+      "local_call": "000047",
+      "phase": "draft",
+      "transport_status": "unknown",
+      "import_error": null,
+      "response": null
+    }
+  ],
+  "source_groups": [
+    "read_contract_successor"
+  ]
+}

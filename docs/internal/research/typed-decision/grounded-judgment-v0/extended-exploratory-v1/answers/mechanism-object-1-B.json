@@ -1,0 +1,454 @@
+{
+  "path": "mechanism-object-1-B",
+  "status": "delivered",
+  "phase": "done",
+  "calls": 2,
+  "host_calls": 2,
+  "jev_calls": 0,
+  "reads": 0,
+  "checks": 0,
+  "revisions": 0,
+  "draft": "在题设描述的机制层级、且对象仅限于通过校验后的摘要生成环节时，这项解释充分：模块化提示说明按需提供指令，上下文注入说明把原文交给模型作为摘要依据。\n\nverify.sh 的签名校验决定是否进入生成环节，属于前置准入；它不否定上述局部解释，但也不在该解释的覆盖范围内。该解释同样不能证明摘要质量，或完整说明模型内部计算机制。\n\n以上判断以给定的人工构造情境为条件，不代表产品实测或外部事实核验。",
+  "check": null,
+  "final": "在题设描述的机制层级、且对象仅限于通过校验后的摘要生成环节时，这项解释充分：模块化提示说明按需提供指令，上下文注入说明把原文交给模型作为摘要依据。\n\nverify.sh 的签名校验决定是否进入生成环节，属于前置准入；它不否定上述局部解释，但也不在该解释的覆盖范围内。该解释同样不能证明摘要质量，或完整说明模型内部计算机制。\n\n以上判断以给定的人工构造情境为条件，不代表产品实测或外部事实核验。",
+  "atoms": {
+    "C": {
+      "basis_refs": [
+        "w005"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "C",
+      "raw_result_ref": "03ebe6690658449b496758e363674b8b2cdefe633c2d133a57b6419dc3d6f693",
+      "refs": [
+        "w005"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w005"
+    },
+    "E": {
+      "basis_refs": [
+        "w004"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "E",
+      "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+      "refs": [
+        "w004"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w004"
+    },
+    "ER": {
+      "basis_refs": [
+        "w004"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "ER",
+      "raw_result_ref": "1816306a243c457c7a8616481d7ce71e27c5740fd63e83d1429ab3687b9a348e",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "supports"
+    },
+    "ES": {
+      "basis_refs": [
+        "w000",
+        "w004"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "ES",
+      "raw_result_ref": "6378c049ed3c3c36f4e7dc413ff235ceba19b3a7c0e25c72f4134b59a0cd4d1d",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "given"
+    },
+    "G": {
+      "basis_refs": [
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "G",
+      "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+      "refs": [
+        "w006"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w006"
+    },
+    "I_R": {
+      "basis_refs": [
+        "w001",
+        "w004",
+        "w005",
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "I_R",
+      "raw_result_ref": "ee4416ec747f6d8748a9038d645d669afede72dd2044825e336a43c7ea1d4850",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": 2
+    },
+    "I_T": {
+      "basis_refs": [
+        "w001",
+        "w005",
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "I_T",
+      "raw_result_ref": "cb6817002c86dce40d9faf1dba74a4b50ce07146e4e0818cb97ccb394244d560",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": 2
+    },
+    "O": {
+      "basis_refs": [
+        "w001"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "O",
+      "raw_result_ref": "433ceabdbb5ae2df1e0e6ced351125451341dcffe23cb8ce701169381dde35b4",
+      "refs": [
+        "w001"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w001"
+    },
+    "P": {
+      "basis_refs": [
+        "w004"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "P",
+      "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+      "refs": [
+        "w004"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w004"
+    },
+    "R": {
+      "basis_refs": [
+        "w001",
+        "w004",
+        "w005"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "R",
+      "raw_result_ref": "e28ed964069f9cd2663bf5b19aaca9b4a52218816477d413e511e34f917e76bd",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "sufficient"
+    },
+    "S": {
+      "basis_refs": [
+        "w001",
+        "w004",
+        "w005"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "S",
+      "raw_result_ref": "72db0935a6c5cc80dca86cd28fdde04b274693c2cac58fc78ff9a569810a5b62",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "support"
+    },
+    "T": {
+      "basis_refs": [
+        "w001",
+        "w005",
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "T",
+      "raw_result_ref": "49d1b3619c4f5ce4aaaa44d8b70a306dfcad81c4798b8c4acb817413047cfe6c",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "support"
+    },
+    "TB": {
+      "basis_refs": [
+        "w001",
+        "w005",
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "TB",
+      "raw_result_ref": "c511bec531887a7841486c8d6752e5f1c01b833cf97546d23662b5f0c8755056",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "match"
+    }
+  },
+  "composition": {
+    "evidence_conflict": false,
+    "external_fact_verified": false,
+    "findings": [],
+    "goal": "retain",
+    "limitations": {},
+    "premise_status": "conditional_on_given",
+    "relation": "retain"
+  },
+  "measurements": [
+    {
+      "active_wait_seconds": 58.9558822090039,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0009990420076064765,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "ccdcad8888710ec2f70cedce407ee23f1d4c631228de104315ad013666450c5e",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "atoms",
+      "role": "host",
+      "session_seconds": 173.3272031660308,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000018/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 26661,
+        "output_tokens": 3245,
+        "reasoning_output_tokens": 2860
+      }
+    },
+    {
+      "active_wait_seconds": 59.2294902499998,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0008001250098459423,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "9276cc615934ad8032f70d2e068473ee4a1722a9c6ed7cf4bde87fb02058f215",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 102.01613500004169,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000019/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 25729,
+        "output_tokens": 1663,
+        "reasoning_output_tokens": 1498
+      }
+    }
+  ],
+  "session_seconds": 275.3433381660725,
+  "active_wait_seconds": 118.1853724590037,
+  "local_failures": [],
+  "skipped_phases": [],
+  "atom_states": {
+    "support": 13,
+    "deny": 0,
+    "unresolved": 0,
+    "unlocated": 0,
+    "invalid": 0
+  },
+  "call_ids": [
+    "000018",
+    "000019"
+  ],
+  "raw_returns": [
+    {
+      "local_call": "000018",
+      "phase": "atoms",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "C": {
+          "basis_refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "E": {
+          "basis_refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "ER": {
+          "basis_refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w000",
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "given"
+        },
+        "G": {
+          "basis_refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w001",
+            "w004",
+            "w005",
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w001",
+            "w005",
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "O": {
+          "basis_refs": [
+            "w001"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w001"
+        },
+        "P": {
+          "basis_refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "R": {
+          "basis_refs": [
+            "w001",
+            "w004",
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "sufficient"
+        },
+        "S": {
+          "basis_refs": [
+            "w001",
+            "w004",
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "T": {
+          "basis_refs": [
+            "w001",
+            "w005",
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "TB": {
+          "basis_refs": [
+            "w001",
+            "w005",
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      }
+    },
+    {
+      "local_call": "000019",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "answer",
+        "objection": "",
+        "read_paths": [],
+        "text": "在题设描述的机制层级、且对象仅限于通过校验后的摘要生成环节时，这项解释充分：模块化提示说明按需提供指令，上下文注入说明把原文交给模型作为摘要依据。\n\nverify.sh 的签名校验决定是否进入生成环节，属于前置准入；它不否定上述局部解释，但也不在该解释的覆盖范围内。该解释同样不能证明摘要质量，或完整说明模型内部计算机制。\n\n以上判断以给定的人工构造情境为条件，不代表产品实测或外部事实核验。"
+      }
+    }
+  ],
+  "source_groups": [
+    "initial"
+  ]
+}

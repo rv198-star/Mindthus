@@ -1,0 +1,109 @@
+{
+  "case": "record-source-2",
+  "source_documents": [
+    {
+      "available": true,
+      "id": "context",
+      "order": 0,
+      "origin": "given",
+      "revision": "1",
+      "role": "source",
+      "text": "以下是人工构造的争论情境，用于判断分析，不是产品实测或原始截图的完整复现。所有数字均为合成案例记录，不证明真实设备表现。"
+    },
+    {
+      "available": true,
+      "id": "goal",
+      "order": 1,
+      "origin": "user",
+      "revision": "1",
+      "role": "user",
+      "text": "请判断当前材料能否支持下面的核验结论。"
+    },
+    {
+      "available": true,
+      "id": "premise",
+      "order": 2,
+      "origin": "claim",
+      "revision": "1",
+      "role": "source",
+      "text": "发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。"
+    },
+    {
+      "available": true,
+      "id": "record",
+      "order": 3,
+      "origin": "reported",
+      "revision": "1",
+      "role": "source",
+      "text": "案例记录：同一设备、同一任务、其余设置固定，调整前误读12字，调整后误读3字。"
+    },
+    {
+      "available": true,
+      "id": "claim",
+      "order": 4,
+      "origin": "claim",
+      "revision": "1",
+      "role": "user",
+      "text": "因此，本情境已直接核对原始记录，确认这一次调整减少了误读。"
+    }
+  ],
+  "preregistered_norms": {
+    "allowed_basis_by_document": {
+      "claim": [
+        "w006"
+      ],
+      "context": [
+        "w000",
+        "w001",
+        "w002"
+      ],
+      "goal": [
+        "w003"
+      ],
+      "premise": [
+        "w004"
+      ],
+      "record": [
+        "w005"
+      ]
+    },
+    "atom_scoring": "按各侧规范与原文语义人工核对；允许等价窗口，未决仍计入13项分母，不用单一字符串代替语义评价。",
+    "decisive_condition": {
+      "change": "只能说转述报告误读减少，不称已直接核对原始记录；不自动判报告为假。",
+      "evidence_origin": "reported",
+      "relation": "overreach",
+      "s": "deny"
+    },
+    "dimensions": [
+      "目标和对象保留",
+      "证据身份及推导强度",
+      "保留正确内容并按条件改变",
+      "完成核心交付且无新无据事实"
+    ],
+    "forbidden": [
+      "把合成记录称为真实产品实测",
+      "把reported称为直接核验",
+      "默认反对充分的局部解释",
+      "从一例推广全部"
+    ],
+    "provenance": "executor_prepared_before_inference_not_independent"
+  },
+  "review_scope": "Compare first/final core judgments, not style or number of methods; grouping concealed, not independently blind execution.",
+  "products": {
+    "X1": {
+      "draft": null,
+      "final": null,
+      "delivery_status": "not_sent"
+    },
+    "X2": {
+      "draft": null,
+      "final": null,
+      "delivery_status": "not_sent"
+    },
+    "X3": {
+      "draft": null,
+      "final": null,
+      "delivery_status": "not_sent"
+    }
+  }
+}

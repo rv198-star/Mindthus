@@ -1,0 +1,109 @@
+{
+  "case": "display-goal-1",
+  "source_documents": [
+    {
+      "available": true,
+      "id": "context",
+      "order": 0,
+      "origin": "given",
+      "revision": "1",
+      "role": "source",
+      "text": "以下是人工构造的争论情境，用于判断分析，不是产品实测或原始截图的完整复现。我目前有一台27寸4K显示器，既可以调设置，也可以考虑换屏。"
+    },
+    {
+      "available": true,
+      "id": "goal",
+      "order": 1,
+      "origin": "user",
+      "revision": "1",
+      "role": "user",
+      "text": "本次目标是比较换到更高物理像素密度面板的购屏方案。"
+    },
+    {
+      "available": true,
+      "id": "premise",
+      "order": 2,
+      "origin": "given",
+      "revision": "1",
+      "role": "source",
+      "text": "给定条件：同为27寸时，5K面板的物理像素密度高于4K面板。"
+    },
+    {
+      "available": true,
+      "id": "claim",
+      "order": 3,
+      "origin": "claim",
+      "revision": "1",
+      "role": "user",
+      "text": "因此，接下来优先比较27寸5K机型的面板规格和价格。"
+    },
+    {
+      "available": true,
+      "id": "request",
+      "order": 4,
+      "origin": "user",
+      "revision": "1",
+      "role": "user",
+      "text": "请判断这个建议与本次目标的关系，并给出下一步。"
+    }
+  ],
+  "preregistered_norms": {
+    "allowed_basis_by_document": {
+      "claim": [
+        "w005"
+      ],
+      "context": [
+        "w000",
+        "w001",
+        "w002"
+      ],
+      "goal": [
+        "w003"
+      ],
+      "premise": [
+        "w004"
+      ],
+      "request": [
+        "w006"
+      ]
+    },
+    "atom_scoring": "按各侧规范与原文语义人工核对；允许等价窗口，未决仍计入13项分母，不用单一字符串代替语义评价。",
+    "decisive_condition": {
+      "change": "比较5K规格价格与购屏目标相符；不承诺预算内必有合适产品。",
+      "relation": "sufficient",
+      "s": "support",
+      "target": "retain"
+    },
+    "dimensions": [
+      "目标和对象保留",
+      "证据身份及推导强度",
+      "保留正确内容并按条件改变",
+      "完成核心交付且无新无据事实"
+    ],
+    "forbidden": [
+      "把合成记录称为真实产品实测",
+      "把reported称为直接核验",
+      "默认反对充分的局部解释",
+      "从一例推广全部"
+    ],
+    "provenance": "executor_prepared_before_inference_not_independent"
+  },
+  "review_scope": "Compare first/final core judgments, not style or number of methods; grouping concealed, not independently blind execution.",
+  "products": {
+    "X1": {
+      "draft": "该建议与本次目标直接一致。按给定条件，同为27寸时，5K比4K具有更高的物理像素密度，因此优先比较27寸5K机型是合理的候选筛选方向。\n\n下一步：以现有27寸4K为基准，整理27寸5K候选的原生分辨率、实际尺寸、PPI和价格，再结合预算及现有设备的连接、输出支持筛选具体机型。",
+      "final": "该建议与本次目标直接一致。按给定条件，同为27寸时，5K比4K具有更高的物理像素密度，因此优先比较27寸5K机型是合理的候选筛选方向。\n\n下一步：以现有27寸4K为基准，整理27寸5K候选的原生分辨率、实际尺寸、PPI和价格，再结合预算及现有设备的连接、输出支持筛选具体机型。",
+      "delivery_status": "delivered"
+    },
+    "X2": {
+      "draft": "在题设条件下，这个建议与本次目标一致：同为27寸，5K面板的物理像素密度高于4K，因此优先比较27寸5K机型有依据。它支持确定比较方向，尚不足以确定最终购买哪款。\n\n下一步列出候选机型，核对实际尺寸、原生分辨率与物理像素密度，再比较价格、预算匹配度和电脑输出兼容性。具体产品参数与价格仍需核实；当前判断仅基于给定条件。",
+      "final": "在题设条件下，这个建议与本次目标一致：同为27寸，5K面板的物理像素密度高于4K，因此优先比较27寸5K机型有依据。它支持确定比较方向，尚不足以确定最终购买哪款。\n\n下一步列出候选机型，核对实际尺寸、原生分辨率与物理像素密度，再比较价格、预算匹配度和电脑输出兼容性。具体产品参数与价格仍需核实；当前判断仅基于给定条件。",
+      "delivery_status": "delivered"
+    },
+    "X3": {
+      "draft": "这个建议与本次目标一致。在给定条件下，同为27寸的5K面板比4K面板具有更高物理像素密度，因此优先比较27寸5K机型的规格和价格是合理的。\n\n下一步列出候选机型，核对实际尺寸、原生分辨率和物理像素密度，再比较面板规格、价格及设备兼容性。题设支持这个比较方向，但尚不足以确定具体哪款值得购买。",
+      "final": "这个建议与本次目标一致。在给定条件下，同为27寸的5K面板比4K面板具有更高物理像素密度，因此优先比较27寸5K机型的规格和价格是合理的。\n\n下一步列出候选机型，核对实际尺寸、原生分辨率和物理像素密度，再比较面板规格、价格及设备兼容性。题设支持这个比较方向，但尚不足以确定具体哪款值得购买。",
+      "delivery_status": "delivered"
+    }
+  }
+}

@@ -1,0 +1,636 @@
+{
+  "path": "mechanism-object-2-B",
+  "status": "delivered",
+  "phase": "done",
+  "calls": 4,
+  "host_calls": 4,
+  "jev_calls": 0,
+  "reads": 1,
+  "checks": 1,
+  "revisions": 0,
+  "draft": "对整个摘要服务而言，这项解释不充分：模块化提示和上下文注入能说明校验通过后的输入组织与生成环节，签名校验及退出码则控制是否允许进入生成。\n\n在给定的人工构造情境中，可以保留这项描述：“通过后把按需载入的指令和原文交给模型生成摘要。”它覆盖指令按需载入、指令与原文交给模型这一段，但没有覆盖服务先运行verify.sh检查输入签名、非零退出码阻断生成的控制作用。\n\n完整解释应纳入“先校验，失败停止，通过后生成”的控制关系。现有材料没有建立模块化提示和上下文注入足以解释校验与阻断环节的关系证据，因此不能从这一段生成机制推出对整个服务的解释已经充分。此判断以给定情境为条件，不代表产品事实已获实测验证。",
+  "check": {
+    "LOC.inference": {
+      "basis_refs": [
+        "w008"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "LOC.inference",
+      "raw_result_ref": "8faa7561356c4c9cc630c874622bdc72372446376b55248f555916dc63889576",
+      "refs": [
+        "w008"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w008"
+    },
+    "OK.inference": {
+      "basis_refs": [
+        "w003",
+        "w008",
+        "w010"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "OK.inference",
+      "raw_result_ref": "fb1fabe0d669565208d1c32b35a16dba62b276bdb5537c440bc1eb12d5ebba92",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "support"
+    }
+  },
+  "final": "对整个摘要服务而言，这项解释不充分：模块化提示和上下文注入能说明校验通过后的输入组织与生成环节，签名校验及退出码则控制是否允许进入生成。\n\n在给定的人工构造情境中，可以保留这项描述：“通过后把按需载入的指令和原文交给模型生成摘要。”它覆盖指令按需载入、指令与原文交给模型这一段，但没有覆盖服务先运行verify.sh检查输入签名、非零退出码阻断生成的控制作用。\n\n完整解释应纳入“先校验，失败停止，通过后生成”的控制关系。现有材料没有建立模块化提示和上下文注入足以解释校验与阻断环节的关系证据，因此不能从这一段生成机制推出对整个服务的解释已经充分。此判断以给定情境为条件，不代表产品事实已获实测验证。",
+  "atoms": {
+    "C": {
+      "basis_refs": [
+        "w005"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "C",
+      "raw_result_ref": "03ebe6690658449b496758e363674b8b2cdefe633c2d133a57b6419dc3d6f693",
+      "refs": [
+        "w005"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w005"
+    },
+    "E": {
+      "basis_refs": [
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "E",
+      "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+      "refs": [
+        "w003"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w003"
+    },
+    "ER": {
+      "basis_refs": [
+        "w003",
+        "w004"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "ER",
+      "raw_result_ref": "5722843b21e1578b6c2857ebc93f30a2a15555b650e2d13ef3ea08b1b620418a",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "supports"
+    },
+    "ES": {
+      "basis_refs": [
+        "w000",
+        "w003"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "ES",
+      "raw_result_ref": "270e09a708f9c93c05159457d5310cebe2bff8136d874e611740bb9bccfaaf4f",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "given"
+    },
+    "G": {
+      "basis_refs": [
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "G",
+      "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+      "refs": [
+        "w006"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w006"
+    },
+    "I_R": {
+      "basis_refs": [
+        "w001",
+        "w003",
+        "w005",
+        "w006"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "I_R",
+      "raw_result_ref": "286e75bf84261af42ab35de117bc5ddda508c88ce7abf4a26c96a43478878439",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": 2
+    },
+    "I_T": {
+      "basis_refs": [
+        "w006",
+        "w001",
+        "w005"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "I_T",
+      "raw_result_ref": "634b34f0a133829328edbcdc0a0943e84b42f82e36acfece30751462b19a79ed",
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "G与C明确匹配，未建立目标替换发现，该影响题不适用。",
+      "value": null
+    },
+    "O": {
+      "basis_refs": [
+        "w001"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "O",
+      "raw_result_ref": "433ceabdbb5ae2df1e0e6ced351125451341dcffe23cb8ce701169381dde35b4",
+      "refs": [
+        "w001"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w001"
+    },
+    "P": {
+      "basis_refs": [
+        "w004"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "P",
+      "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+      "refs": [
+        "w004"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w004"
+    },
+    "R": {
+      "basis_refs": [
+        "w001",
+        "w002",
+        "w004",
+        "w005"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "R",
+      "raw_result_ref": "b29bb4170ea9d7846ea595fd277c2b21b3b1fec74251df90adfd40a887b0399e",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "overreach"
+    },
+    "S": {
+      "basis_refs": [
+        "w001",
+        "w002",
+        "w004",
+        "w005"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "S",
+      "raw_result_ref": "5f6288838914fc5fd427ce6409a60382f6f792883bc12d943f3c38b9bce7fa00",
+      "refs": [],
+      "semantic_state": "deny",
+      "unresolved_reason": null,
+      "value": "deny"
+    },
+    "T": {
+      "basis_refs": [
+        "w006",
+        "w001",
+        "w005"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "T",
+      "raw_result_ref": "9ab2b36cbbb00315e486ed06ed0d0b384ede4191353b6f5729952b0f400dbf84",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "support"
+    },
+    "TB": {
+      "basis_refs": [
+        "w006",
+        "w001",
+        "w005"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "TB",
+      "raw_result_ref": "f535a73f0d6dab7802d23804561d693f125bf54b6c1aa98eeb4aaeb3ed1f8e6a",
+      "refs": [],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "match"
+    }
+  },
+  "composition": {
+    "evidence_conflict": false,
+    "external_fact_verified": false,
+    "findings": [
+      {
+        "action": "limit",
+        "claim_ref": "w005",
+        "evidence_origin": "given",
+        "evidence_ref": "w003",
+        "evidence_relation": "supports",
+        "finding_id": "inference",
+        "goal_ref": "w006",
+        "keep_exact_text": "通过后把按需载入的指令和原文交给模型生成摘要。",
+        "limit_target_exact_text": "对于当前讨论的对象，用模块化提示和上下文注入解释工作机制已经充分。",
+        "object_ref": "w001",
+        "premise_ref": "w004",
+        "relation": "overreach",
+        "requirement": "保留P在给定范围成立的部分；不得仅凭P断言完整C，说明缺少的关系证据。",
+        "source_question_ids": [
+          "P",
+          "C",
+          "R",
+          "S"
+        ],
+        "uncertainty": "conditional_on_given"
+      }
+    ],
+    "goal": "retain",
+    "limitations": {
+      "I_T": "G与C明确匹配，未建立目标替换发现，该影响题不适用。"
+    },
+    "premise_status": "conditional_on_given",
+    "relation": "limit"
+  },
+  "measurements": [
+    {
+      "active_wait_seconds": 57.496452459017746,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0014411659794859588,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "0906651344710bc35a3719463862f4f73773eea40d824e07a1ffb11f4d7d150b",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "atoms",
+      "role": "host",
+      "session_seconds": 183.7449870419805,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000035/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 26817,
+        "output_tokens": 3322,
+        "reasoning_output_tokens": 2908
+      }
+    },
+    {
+      "active_wait_seconds": 58.20839595905272,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0008991669747047126,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "dc484d22d7bf7fc9b304e761d811448f7ee2f4131a4d87f17a2cc56c3ff7fd3d",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 86.46966583398171,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000036/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 13696,
+        "input_tokens": 25746,
+        "output_tokens": 1271,
+        "reasoning_output_tokens": 1172
+      }
+    },
+    {
+      "active_wait_seconds": 58.07906216697302,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0015975419664755464,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "f85923e2445e6092d7d59521ebe6e9cf78870d1ad0a36cc199bd19bfd89d5cee",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 105.69107800000347,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000037/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 19968,
+        "input_tokens": 32802,
+        "output_tokens": 1592,
+        "reasoning_output_tokens": 1355
+      }
+    },
+    {
+      "active_wait_seconds": 58.04856358404504,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0008736670133657753,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "f1779be95a0a8277792c7d91757d656f10f1e677555f0cc4e3f8ee56de1940d7",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "check",
+      "role": "host",
+      "session_seconds": 54.559772124979645,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000038/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 26172,
+        "output_tokens": 428,
+        "reasoning_output_tokens": 355
+      }
+    }
+  ],
+  "session_seconds": 430.4655030009453,
+  "active_wait_seconds": 231.83247416908853,
+  "local_failures": [],
+  "skipped_phases": [],
+  "atom_states": {
+    "support": 11,
+    "deny": 1,
+    "unresolved": 1,
+    "unlocated": 0,
+    "invalid": 0
+  },
+  "call_ids": [
+    "000035",
+    "000036",
+    "000037",
+    "000038"
+  ],
+  "raw_returns": [
+    {
+      "local_call": "000035",
+      "phase": "atoms",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "C": {
+          "basis_refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "E": {
+          "basis_refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "ER": {
+          "basis_refs": [
+            "w003",
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w000",
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "given"
+        },
+        "G": {
+          "basis_refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w001",
+            "w003",
+            "w005",
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w006",
+            "w001",
+            "w005"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "G与C明确匹配，未建立目标替换发现，该影响题不适用。",
+          "value": null
+        },
+        "O": {
+          "basis_refs": [
+            "w001"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w001"
+        },
+        "P": {
+          "basis_refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "R": {
+          "basis_refs": [
+            "w001",
+            "w002",
+            "w004",
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "overreach"
+        },
+        "S": {
+          "basis_refs": [
+            "w001",
+            "w002",
+            "w004",
+            "w005"
+          ],
+          "semantic_state": "deny",
+          "unresolved_reason": null,
+          "value": "deny"
+        },
+        "T": {
+          "basis_refs": [
+            "w006",
+            "w001",
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "TB": {
+          "basis_refs": [
+            "w006",
+            "w001",
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      }
+    },
+    {
+      "local_call": "000036",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "read",
+        "objection": "需要补充解释范围与整体控制关系的判断要求，以保留生成阶段的正确解释，并判断它为何不足以覆盖整个摘要服务。",
+        "read_paths": [
+          "docs/methodologies/primitives/entry-triage.md",
+          "docs/methodologies/primitives/frame-fitness-check.md",
+          "docs/methodologies/primitives/whole-elephant-protocol.md"
+        ],
+        "text": ""
+      }
+    },
+    {
+      "local_call": "000037",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "answer",
+        "objection": "",
+        "read_paths": [],
+        "text": "对整个摘要服务而言，这项解释不充分：模块化提示和上下文注入能说明校验通过后的输入组织与生成环节，签名校验及退出码则控制是否允许进入生成。\n\n在给定的人工构造情境中，可以保留这项描述：“通过后把按需载入的指令和原文交给模型生成摘要。”它覆盖指令按需载入、指令与原文交给模型这一段，但没有覆盖服务先运行verify.sh检查输入签名、非零退出码阻断生成的控制作用。\n\n完整解释应纳入“先校验，失败停止，通过后生成”的控制关系。现有材料没有建立模块化提示和上下文注入足以解释校验与阻断环节的关系证据，因此不能从这一段生成机制推出对整个服务的解释已经充分。此判断以给定情境为条件，不代表产品事实已获实测验证。"
+      }
+    },
+    {
+      "local_call": "000038",
+      "phase": "check",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "LOC.inference": {
+          "basis_refs": [
+            "w008"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w008"
+        },
+        "OK.inference": {
+          "basis_refs": [
+            "w003",
+            "w008",
+            "w010"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        }
+      }
+    }
+  ],
+  "source_groups": [
+    "read_contract_successor"
+  ]
+}
