@@ -6,7 +6,30 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — direct bias-detection batch AUTHORIZED
+## Current checkpoint — direct bias-detection batch COMPLETE
+
+2026-10-01: all eight windows / 24 paths delivered. Runtime successor:
+`65a89634f481578c8ba25671978ce6eaf9254cc9`; fixed inputs/design:
+`c8507534e4c7b8e331150b2eb0715ff3ceabf9c0`.
+[Results](bias-trigger-v1/RESULT.md), [unaltered answers](bias-trigger-v1/ANSWERS.md),
+[raw evidence index](bias-trigger-v1/evidence-index.json) and measurements are saved.
+
+Executor group-aware reading: current Sol 6.1 answers satisfy the eight core conditions
+and all four reversals. B/C complete the same negative checks; no actual answer required
+correction. Jev average check latency 1.046s vs CLI LLM 36.742s is a practical performance
+signal, not evidence of additional correction quality, positive-error sensitivity or a
+pure-model speed benchmark. This is not general Jev failure or a default adoption PASS.
+
+24 actual model calls = 16 host CLI + 8 official Jev. Conservative budget debits remain
+25/64 (17/56 host, 8/8 Jev), including one proven local pre-CLI configuration failure.
+Its original unknown/error and scoped reconciliation are preserved; another successful
+B return was imported after a JSON tuple/list binding fix without resending. No new
+unresolved remote status, real model retries or observed internal recovery.
+External independent content review remains separate. No extra batch, weaker-host call,
+reviewer model, old-trial rewrite, default Skill/main or ROI-Beta change. GJ/R2 CLOSED
+and default adoption NOT QUALIFIED remain.
+
+## Historical checkpoint — direct bias-detection batch AUTHORIZED
 
 Owner authorized the new eight-window test on 2026-10-01: “OK，那现在开始测试吧”.
 [Execution registration](bias-trigger-v1/EXECUTION.md) adopts the 64/56/8 logical/host/Jev

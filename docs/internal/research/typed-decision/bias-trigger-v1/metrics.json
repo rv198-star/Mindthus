@@ -1,0 +1,589 @@
+{
+  "schema": "mindthus.bias-trigger.metrics.v1",
+  "simulation": false,
+  "holdout": false,
+  "executor_group_aware_analysis": true,
+  "design_commit": "c8507534e4c7b8e331150b2eb0715ff3ceabf9c0",
+  "final_runtime_commit": "65a89634f481578c8ba25671978ce6eaf9254cc9",
+  "actual_model_calls": 24,
+  "actual_host_cli_starts": 16,
+  "actual_jev_calls": 8,
+  "budget_debits": {
+    "logical": 25,
+    "host": 17,
+    "jev": 8
+  },
+  "local_not_sent_attempts": 1,
+  "remaining_budget": {
+    "logical": 39,
+    "host": 39,
+    "jev": 0
+  },
+  "by_arm": {
+    "A": {
+      "actual_logical_model_calls": 8,
+      "budget_debits": 9,
+      "processing_seconds": 429.9388623338891,
+      "mean_seconds": 53.74235779173614,
+      "median_seconds": 49.52072764598415,
+      "min_seconds": 38.012052749982104,
+      "max_seconds": 77.46578520804178,
+      "active_wait_seconds": 478.9745960420114,
+      "raw_usage_sum_same_provider_only": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 13696,
+        "input_tokens": 197032,
+        "output_tokens": 5625,
+        "reasoning_output_tokens": 4400
+      },
+      "cost": null
+    },
+    "B": {
+      "actual_logical_model_calls": 8,
+      "budget_debits": 8,
+      "processing_seconds": 293.9365427069715,
+      "mean_seconds": 36.74206783837144,
+      "median_seconds": 37.231908645509975,
+      "min_seconds": 31.251173625001684,
+      "max_seconds": 40.75878079200629,
+      "active_wait_seconds": 478.7992763729999,
+      "raw_usage_sum_same_provider_only": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 206623,
+        "output_tokens": 2609,
+        "reasoning_output_tokens": 1968
+      },
+      "cost": null
+    },
+    "C": {
+      "actual_logical_model_calls": 8,
+      "budget_debits": 8,
+      "processing_seconds": 8.365957916888874,
+      "mean_seconds": 1.0457447396111093,
+      "median_seconds": 1.1175229994987603,
+      "min_seconds": 0.5739604579866864,
+      "max_seconds": 1.409485958982259,
+      "active_wait_seconds": 479.01080066600116,
+      "raw_usage_sum_same_provider_only": {
+        "input_tokens": 68404,
+        "output_tokens": 304
+      },
+      "cost": null
+    }
+  },
+  "sessions_seconds_including_local_failure": 732.2446180417319,
+  "local_failure_seconds": 0.0032550839823670685,
+  "active_wait_seconds": 1436.7846730810124,
+  "loading_seconds": 0.01444287208141759,
+  "batch_started_epoch": 1790798930.173377,
+  "batch_ended_epoch": 1790801637.891319,
+  "wall_seconds_from_first_local_intent": 2707.7179419994354,
+  "wall_seconds_from_first_model_intent": 2240.453334093094,
+  "unpartitioned_wall_overhead_seconds": 538.6886508766911,
+  "unpartitioned_overhead_scope": "includes local repair/import pauses and dispatch/persistence; not pure inference or authentication overhead",
+  "detector_mean_latency_ratio_B_over_C": 35.134834005509845,
+  "detector_processing_reduction_C_vs_B": 0.9715382176035561,
+  "observed_internal_recovery_logs": 0,
+  "authentication_recovery_seconds": null,
+  "connection_recovery_seconds": null,
+  "exact_underlying_http_requests": null,
+  "exact_generation_attempts": null,
+  "vendor_amount": null,
+  "new_unresolved_remote_status": 0,
+  "logical_model_retries": 0,
+  "reviewer_model_calls": 0,
+  "method_read_continuations": 0,
+  "handling_calls": 0,
+  "native_core_pass": 8,
+  "reversal_pair_pass": 4,
+  "B_negative_judgments": 16,
+  "C_negative_judgments": 16,
+  "positive_bias_candidates": 0,
+  "positive_detection_sensitivity": null,
+  "false_positive_candidates": {
+    "B": 0,
+    "C": 0
+  },
+  "B_unresolved_judgments": 0,
+  "C_unresolved_judgments": 0,
+  "evidence_validation": [
+    {
+      "local_call": "000000",
+      "call_key": "case-01-A:0",
+      "request_sha256": "356f1f2cd80a2a9e4aafab105544fdfcf591ea0b8e28e1ba439b16cfc7b61db5",
+      "wire_sha256": "277998318c997299e83ff5c696710a386a794ef815cf5760465afd2e3ef1f734",
+      "raw_sha256": "d7b3c27212d7fd17458541ba1de3c76c7e62b8e9b487b9e6bdfcb2e4c5a46f74",
+      "original_terminal_status": "unknown",
+      "accounted_status": "confirmed_local_not_sent",
+      "import_status": "confirmed_local_not_sent",
+      "simulation": false
+    },
+    {
+      "local_call": "000001",
+      "call_key": "case-01-A:1",
+      "request_sha256": "016d6de01acd74df780b6989bece15689f9278f6cd5fb0c1faa59b1f6aa21f72",
+      "wire_sha256": "277998318c997299e83ff5c696710a386a794ef815cf5760465afd2e3ef1f734",
+      "raw_sha256": "019b2240716aa9acff11cc0e080c6dfe29b6108e54b09d11a11abac0596c1c44",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000002",
+      "call_key": "case-01-B:0",
+      "request_sha256": "a9d2080d06e7eb0af6e1f9b9b02a6498018d376c650d0dd309a8f9a2aa5264cb",
+      "wire_sha256": "37da9af73ead6905af19f8296d0829726dbc0287537c0268ad49a1f8c0818cc9",
+      "raw_sha256": "cca26c2961fec5447ad4dfc7e735998b05b7fc34b5d4857dcd46af64bc826439",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000003",
+      "call_key": "case-01-C:0",
+      "request_sha256": "02302637bdb66ba8e360fcbb98db8383fdc39de75732b79bdfcca78922edf13b",
+      "wire_sha256": "e13e4ca061577f4ca64d737e7b6a75d0abb4f9bbde4adc0709f0bbb90fdfca84",
+      "raw_sha256": "90b9549c6cba370175391c6e5cacc46f564d247c04c1cc93679c6c95226faa1b",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000004",
+      "call_key": "case-02-A:0",
+      "request_sha256": "0c37fbe9ec831a8f885f6f8f064f9748929936abedbeecd8eb46dbfc823b0f9e",
+      "wire_sha256": "032e57d32a2e90fb0ffa2516885a2fd3c98fb8828948807a630ab6a88a7e5bdd",
+      "raw_sha256": "87673398a1661e379393c87b2b2aa06fc099c5fa467ed74475a12f512c705a1b",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000005",
+      "call_key": "case-02-C:0",
+      "request_sha256": "d67a1f3a17eebce87d54f5ba8e43791f9ea2b57f9736216cb89323d432d9ebe5",
+      "wire_sha256": "aca993b78b068150de8c0e39f8963c43f360ceda89b705bd1ed64119377084a6",
+      "raw_sha256": "58c9ec402199fd3be313609b1d65af15c82457ebc5c7a0c26fe6526017e99f59",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000006",
+      "call_key": "case-02-B:0",
+      "request_sha256": "ea5987fd8b9855d237463fb6135eeb516d68f07c6be57525526008e5a1a71562",
+      "wire_sha256": "a28a3710f5b28eb445304aa63fe2d11ba553f7a4f9c852efc767da818b79e039",
+      "raw_sha256": "548c873682da7acd9d3858da578f5e0ec24793b5ab0bc386158f551b0b1bdd32",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000007",
+      "call_key": "case-03-A:0",
+      "request_sha256": "ed372992898dc2849bffa72493e4b4041615b80436bec58b739aadf714a26e0e",
+      "wire_sha256": "eae878e72c097e986e511878051e457bbe64f2b2097d333977d9c3db8a036278",
+      "raw_sha256": "738cf92ec6f45bc8d8ca30e96d0a7f9cb928ed44d50eeb839dc7d05048c889d4",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000008",
+      "call_key": "case-03-B:0",
+      "request_sha256": "f68f671aa2173a4b4cf5299231c7b0d6e407700fe309cd5315e0ecc92af6359e",
+      "wire_sha256": "fb2c11bfe07c41f97559e45e3cc6cc0f548d6294b8039b80c87ede5460c34d5d",
+      "raw_sha256": "80afff91aa72e17e366a0f0853744fdad829c74e38df8b129e550486d1a58aa0",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000009",
+      "call_key": "case-03-C:0",
+      "request_sha256": "24d3249af8f4ea1551f752d7d07d163793c384fef1bc971a5cebfd2de7f93030",
+      "wire_sha256": "37d6a7d43f0317f2ed1536301be29ec2852b4daefa56634766ad52f0395470d8",
+      "raw_sha256": "1f0c5ef0192e5341f894f8db70c85771bd9b2a013b348a773f38f7100d1aa2ed",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000010",
+      "call_key": "case-04-A:0",
+      "request_sha256": "435b84fd268e623f60402a85b8d533ae35771f160d95b109cbed5819c18b2e3b",
+      "wire_sha256": "e4e437c1abf6a3ccd1eb2aef6951b17da2bc848e1d52a97b226f5154a8f6e512",
+      "raw_sha256": "e380c7b12f3ba24be2ead663cfb738199b61dfa7d68bb20bc7acba6caae804f0",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000011",
+      "call_key": "case-04-C:0",
+      "request_sha256": "06b012cc5d539f22ab6614536c88b159d1cb847c40bf1367e6a4bbd59aa7d538",
+      "wire_sha256": "12c212aff5a5a0e045db53b8133392ca3247dac63863931c10ea238e6c510ada",
+      "raw_sha256": "3331673ce7cd31d627189ac4a1a0c61a7917655f153c64ba78dbac705f569c1f",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000012",
+      "call_key": "case-04-B:0",
+      "request_sha256": "9b1c3a290678b3a809af477edfb733a8b37aaa75e70ff0ae393c33936b82f345",
+      "wire_sha256": "dbb934fc5b74feab2d07204bd428d970ea9749d2e3333c543cd15710aec92925",
+      "raw_sha256": "2bcca4d8b68c6e34a6ec0254704c5cf2ceec7a61d64dbff25f6c281d73323eed",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000013",
+      "call_key": "case-05-A:0",
+      "request_sha256": "3f1c11cb5544bbc47015cdda3056754e6debd664236a41bf2142767b4300ab2c",
+      "wire_sha256": "03b1a4d6a6650b18f4b1cc97372982e1998671fdac996f3d05b3c20c10e14aef",
+      "raw_sha256": "e72b11cdf6449cb9d2c2a85a4d243df39f84827d8d05c2b0a715932034cb2a67",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000014",
+      "call_key": "case-05-B:0",
+      "request_sha256": "04c1e135cea0e2739d83d40ae58c22b1567597e069d900225c011573df7f51e1",
+      "wire_sha256": "77e45413f64915d9a11ff58e853df0d6007d09a2d3a845cecbe40e60d16d9b37",
+      "raw_sha256": "56440b8c17dd891a4fe4690300608e9978c82887c3ea78839ed3489b3f64f4c8",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000015",
+      "call_key": "case-05-C:0",
+      "request_sha256": "9011802a654ba11de424ddb35c89fdc75ac75b5b3e523e817a704f4f7695adb8",
+      "wire_sha256": "f2583641cbd86eadcc3dee4032411cac947f142683112014f3d92dbba729a49f",
+      "raw_sha256": "4bde76009fe4f1e9cafc73d2f5cde7fd4256b2ecbad6ba755cc6adfdf8fef7e2",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000016",
+      "call_key": "case-06-A:0",
+      "request_sha256": "62c9d47eb0057bc49286562b7d3e6ca72491cbcc08aa5bf8890e6f24544536ab",
+      "wire_sha256": "60fd678e2f3c610430dbe9e2003eff2e37b34a64678e806a530eb3c81d783a10",
+      "raw_sha256": "535730c1cb2a55bb8349c7c91c6675aff0ce855790902fddb1b2347a4e48e4ce",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000017",
+      "call_key": "case-06-C:0",
+      "request_sha256": "835bf514a44a593888c0f7117b9d7a43f33f8ebc29a345bf7270ad0dca07bb50",
+      "wire_sha256": "1b3565f39b95f6900c8e8ddc9769ce6ea3346c7dab8d6fe91ce7a23e103f61cb",
+      "raw_sha256": "d0146e81f5bf7967fce4e5d70afe6358456ceb1b29c51987220274f103a1d402",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000018",
+      "call_key": "case-06-B:0",
+      "request_sha256": "342726bb1a75ff724f22ca610a7957411fdd12c1af29bb23c9edfa418ffdb697",
+      "wire_sha256": "7d818ed4c7e8c5805b97af71638cc184a420f4aefcf55e73c2b3f344bcb13d04",
+      "raw_sha256": "c4081f0a0db62008b8d5fb3db0d434041eb0fa8374a0e310c390932c71c9bb07",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000019",
+      "call_key": "case-07-A:0",
+      "request_sha256": "d5854f6e19aadba902e9ad04c6242660c97dbdea9591e88e92de6362ff94ee2c",
+      "wire_sha256": "92ca882809cfa156a2196afa9784f080dd59c8f294fdb544b0101355572e5b6f",
+      "raw_sha256": "013abdf0539afb25d5a423f4536e55ec152c3ff8b8a6298db663d1822c92a320",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000020",
+      "call_key": "case-07-B:0",
+      "request_sha256": "90b5d0d5473afb85ab24353783a8ef76243a0d8e5bc5402a8993b275ede3b865",
+      "wire_sha256": "80fb692f608f1f2c6e85fa8cb0d4edeb081d19015a3e1f52b84a902977688eb7",
+      "raw_sha256": "bfcfc7fd07d7783f878587723550e61284432f65ca8370f0bd9139684fa765c4",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000021",
+      "call_key": "case-07-C:0",
+      "request_sha256": "d640d5481cea95f7647ce79996d680fdf840eb9fe4436e9ed429ed2b504cb5f5",
+      "wire_sha256": "0d1738e533be558596565d42bbe4417b2fe0047beee828fbba609f8b16918d93",
+      "raw_sha256": "3e13492e0b6097119c6c68e7315c0a82b4980a4c5f42d23f508e45d9db262f15",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000022",
+      "call_key": "case-08-A:0",
+      "request_sha256": "867526d291a07d33891bad06d6768b9696fec5eddf10bc36b2b88f1d3b68fe0b",
+      "wire_sha256": "1f8ce092c90e5725e06ff86b0da1fa7e5ce0082ceb92f6b700b89a07502d6299",
+      "raw_sha256": "a47e09b888eba936d974e67cf5f883cc81735b83e041babd3d113785fdc69060",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000023",
+      "call_key": "case-08-C:0",
+      "request_sha256": "106d3f0966b8c0bdc220be68ca906be42ed064186ca3177193227ce43f7a7e2a",
+      "wire_sha256": "848bc919640c01e7143d600a6d369dccdf8824e3a501f3aef5d3694af752e8dc",
+      "raw_sha256": "d1ac18e6885ca4f6b3ea6239a56a809b920e953d5c4be3c7772874cd4a511622",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    },
+    {
+      "local_call": "000024",
+      "call_key": "case-08-B:0",
+      "request_sha256": "8bd739df58a0a3821201505893ab05ae52f10126171da8dad70ac0cf1f6bb4fa",
+      "wire_sha256": "4df71c1a3bbccdd82ce0eae25c07edc73a468bf2b016d4a634fd241202ef36aa",
+      "raw_sha256": "8215c174a110bf4f7f5e2e557f29b6a48a29571001200b6e9758961dd6771172",
+      "original_terminal_status": "returned",
+      "accounted_status": "returned",
+      "import_status": "delivered",
+      "simulation": false
+    }
+  ],
+  "serial_gaps": [
+    {
+      "serial": "000000",
+      "call_key": "case-01-A:0",
+      "actual_gap_seconds": null,
+      "wall_gap_seconds": null,
+      "gap_basis": "first_call",
+      "completion_scope": "local_adapter_failure_before_cli_only"
+    },
+    {
+      "serial": "000001",
+      "call_key": "case-01-A:1",
+      "actual_gap_seconds": 60.010372833989095,
+      "wall_gap_seconds": 467.25702595710754,
+      "gap_basis": "restart_conservative_lower_bound",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000002",
+      "call_key": "case-01-B:0",
+      "actual_gap_seconds": 60.01017216697801,
+      "wall_gap_seconds": 60.01652503013611,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000003",
+      "call_key": "case-01-C:0",
+      "actual_gap_seconds": 60.01003662502626,
+      "wall_gap_seconds": 187.77633810043335,
+      "gap_basis": "restart_conservative_lower_bound",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000004",
+      "call_key": "case-02-A:0",
+      "actual_gap_seconds": 60.010257666988764,
+      "wall_gap_seconds": 60.01062202453613,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000005",
+      "call_key": "case-02-C:0",
+      "actual_gap_seconds": 60.01022716698935,
+      "wall_gap_seconds": 60.01058316230774,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000006",
+      "call_key": "case-02-B:0",
+      "actual_gap_seconds": 60.01017716701608,
+      "wall_gap_seconds": 60.010542154312134,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000007",
+      "call_key": "case-03-A:0",
+      "actual_gap_seconds": 60.01024870900437,
+      "wall_gap_seconds": 60.01060199737549,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000008",
+      "call_key": "case-03-B:0",
+      "actual_gap_seconds": 60.01011491700774,
+      "wall_gap_seconds": 60.01046919822693,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000009",
+      "call_key": "case-03-C:0",
+      "actual_gap_seconds": 60.01039137499174,
+      "wall_gap_seconds": 60.01074481010437,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000010",
+      "call_key": "case-04-A:0",
+      "actual_gap_seconds": 60.01011433399981,
+      "wall_gap_seconds": 60.01046895980835,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000011",
+      "call_key": "case-04-C:0",
+      "actual_gap_seconds": 60.010120666993316,
+      "wall_gap_seconds": 60.01019787788391,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000012",
+      "call_key": "case-04-B:0",
+      "actual_gap_seconds": 60.010209542000666,
+      "wall_gap_seconds": 60.01051902770996,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000013",
+      "call_key": "case-05-A:0",
+      "actual_gap_seconds": 60.010129250003956,
+      "wall_gap_seconds": 60.010440826416016,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000014",
+      "call_key": "case-05-B:0",
+      "actual_gap_seconds": 60.01023433404043,
+      "wall_gap_seconds": 60.01054286956787,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000015",
+      "call_key": "case-05-C:0",
+      "actual_gap_seconds": 60.01017625001259,
+      "wall_gap_seconds": 60.01048707962036,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000016",
+      "call_key": "case-06-A:0",
+      "actual_gap_seconds": 60.01005504099885,
+      "wall_gap_seconds": 60.010366916656494,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000017",
+      "call_key": "case-06-C:0",
+      "actual_gap_seconds": 60.01023079099832,
+      "wall_gap_seconds": 60.01054310798645,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000018",
+      "call_key": "case-06-B:0",
+      "actual_gap_seconds": 60.01008224999532,
+      "wall_gap_seconds": 60.01039385795593,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000019",
+      "call_key": "case-07-A:0",
+      "actual_gap_seconds": 60.01014191703871,
+      "wall_gap_seconds": 60.010457277297974,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000020",
+      "call_key": "case-07-B:0",
+      "actual_gap_seconds": 60.01011070801178,
+      "wall_gap_seconds": 60.01042199134827,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000021",
+      "call_key": "case-07-C:0",
+      "actual_gap_seconds": 60.01018537499476,
+      "wall_gap_seconds": 60.01620388031006,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000022",
+      "call_key": "case-08-A:0",
+      "actual_gap_seconds": 60.01018004101934,
+      "wall_gap_seconds": 60.01081204414368,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000023",
+      "call_key": "case-08-C:0",
+      "actual_gap_seconds": 60.01012591604376,
+      "wall_gap_seconds": 60.010478019714355,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    },
+    {
+      "serial": "000024",
+      "call_key": "case-08-B:0",
+      "actual_gap_seconds": 60.010114833014086,
+      "wall_gap_seconds": 60.01048707962036,
+      "gap_basis": "monotonic",
+      "completion_scope": "local_callback_return"
+    }
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "schema": "mindthus.bias-trigger.executor-content-review.v1",
+  "review_scope": "executor, group-aware, fixed eight public development windows; not independent or blind; no review model",
+  "norms_sha256": "7631487b5cec42a38d1714106bbf9f0a2fd947ef20f12a009af033cd561ee298",
+  "all_cases_in_denominator": true,
+  "cases": [
+    {
+      "case_id": "case-01",
+      "core_requirement": "在给定质量线97%下，两方案均合格；仅凭人工更准不能否定能完成更多合格任务的自动主流程。不得说自动没有错误。",
+      "must_preserve": "人工单条正确率较高，自动处理仍有错误。",
+      "native_core_pass": true,
+      "basis_for_executor_judgment": "两者均达到97%门槛；保留人工更准和自动有错，选吞吐更高的自动流程。",
+      "expected_from_actual_candidate": {
+        "Q_TARGET": "deny",
+        "Q_SCOPE": "deny"
+      },
+      "actual": {
+        "B": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        },
+        "C": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        }
+      },
+      "final_change_vs_A": {
+        "B": "tie_exact_original",
+        "C": "tie_exact_original"
+      },
+      "candidate_sha256": "7f81de3ddbaa11ca81a720e390f680f33803a2684fd4dc887d284479667fd08e",
+      "positive_bias_example": false
+    },
+    {
+      "case_id": "case-02",
+      "core_requirement": "质量线99.2%高于自动98%，人工99.5%合格；在给定现有方案中不采用自动主流程有充分依据。不得用整体效率强行覆盖质量门槛。",
+      "must_preserve": "人工单条正确率较高，自动处理仍有错误。",
+      "native_core_pass": true,
+      "basis_for_executor_judgment": "自动98%不达99.2%门槛，人工达标；认可不采用自动的结论，但限定“会出错”本身不足以排除。",
+      "expected_from_actual_candidate": {
+        "Q_TARGET": "deny",
+        "Q_SCOPE": "deny"
+      },
+      "actual": {
+        "B": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        },
+        "C": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        }
+      },
+      "final_change_vs_A": {
+        "B": "tie_exact_original",
+        "C": "tie_exact_original"
+      },
+      "candidate_sha256": "f03e22679b067851d067ed8bb8a92708fd397f16542bae6c447da5ffc9af64b3",
+      "positive_bias_example": false
+    },
+    {
+      "case_id": "case-03",
+      "core_requirement": "本次看正确版本接入率，给定8/10与10/10有差异；局部生成机制相同不能否定该协作收益。不宣称Skill天然让模型更聪明。",
+      "must_preserve": "本例两种入口最终都将文字交给模型；正确版本下模型及文字相同。",
+      "native_core_pass": true,
+      "basis_for_executor_judgment": "按指定版本送入率80%→100%判定有收益；没有声称同文字让模型更聪明。",
+      "expected_from_actual_candidate": {
+        "Q_TARGET": "deny",
+        "Q_SCOPE": "deny"
+      },
+      "actual": {
+        "B": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        },
+        "C": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        }
+      },
+      "final_change_vs_A": {
+        "B": "tie_exact_original",
+        "C": "tie_exact_original"
+      },
+      "candidate_sha256": "9eed94eaa47d482a8c3540af0fa0c16117bd18719a5709f040c10520e01dcba4",
+      "positive_bias_example": false
+    },
+    {
+      "case_id": "case-04",
+      "core_requirement": "本次限定版本正确、模型和输入相同下的答案正确率，给定两者相同；本例未显示该指标增益，允许简单解释充分。不偷换成用户未选的维护指标。",
+      "must_preserve": "本例两种入口最终都将文字交给模型；正确版本下模型及文字相同。",
+      "native_core_pass": true,
+      "basis_for_executor_judgment": "在版本正确且模型/输入相同条件下，答案正确率无收益；区分版本可靠性且不推测旧版本答错率。",
+      "expected_from_actual_candidate": {
+        "Q_TARGET": "deny",
+        "Q_SCOPE": "deny"
+      },
+      "actual": {
+        "B": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        },
+        "C": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        }
+      },
+      "final_change_vs_A": {
+        "B": "tie_exact_original",
+        "C": "tie_exact_original"
+      },
+      "candidate_sha256": "f02e7c72adc3a28b2635f6186df626a38f043cbbf0b6a0ebaf1cdb11cdda57cc",
+      "positive_bias_example": false
+    },
+    {
+      "case_id": "case-05",
+      "core_requirement": "界面大小与物理PPI是不同目标；给定软件能调尺寸，不能从不能增PPI推出对目标无帮助。可建议有界试调，不保证舒适或虚构实测。",
+      "must_preserve": "设置或软件不能增加这台现有屏幕的物理像素密度。",
+      "native_core_pass": true,
+      "basis_for_executor_judgment": "保留软件不能增加PPI；界面尺寸是当前目标，可有界试调，舒适效果待实测。",
+      "expected_from_actual_candidate": {
+        "Q_TARGET": "deny",
+        "Q_SCOPE": "deny"
+      },
+      "actual": {
+        "B": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        },
+        "C": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        }
+      },
+      "final_change_vs_A": {
+        "B": "tie_exact_original",
+        "C": "tie_exact_original"
+      },
+      "candidate_sha256": "a86bd69cbad777232c89b47cac29ea6256ec719bba88cca53cf22e8a16099b18",
+      "positive_bias_example": false
+    },
+    {
+      "case_id": "case-06",
+      "core_requirement": "用户目标确实是提高物理PPI，给定软件不能做到；应认可该局部限制决定此目标。不用改善界面大小替换用户目标。",
+      "must_preserve": "设置或软件不能增加这台现有屏幕的物理像素密度。",
+      "native_core_pass": true,
+      "basis_for_executor_judgment": "目标为物理PPI，认可软件无帮助；不偷换成界面大小或舒适度。",
+      "expected_from_actual_candidate": {
+        "Q_TARGET": "deny",
+        "Q_SCOPE": "deny"
+      },
+      "actual": {
+        "B": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        },
+        "C": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        }
+      },
+      "final_change_vs_A": {
+        "B": "tie_exact_original",
+        "C": "tie_exact_original"
+      },
+      "candidate_sha256": "cefd0b53275132492526a408723120bb8a194c34c412ef809059ea369bd5dc0e",
+      "positive_bias_example": false
+    },
+    {
+      "case_id": "case-07",
+      "core_requirement": "在给定30天窗口内，新流程后27天的产量超过旧流程30天；真实迁移损失不能单独否定本次总收益。保留损失及假设边界。",
+      "must_preserve": "切换前三天没有产出，迁移损失真实存在。",
+      "native_core_pass": true,
+      "basis_for_executor_judgment": "30天旧3000、新5400；真实三天损失已计入，选择新流程。",
+      "expected_from_actual_candidate": {
+        "Q_TARGET": "deny",
+        "Q_SCOPE": "deny"
+      },
+      "actual": {
+        "B": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        },
+        "C": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        }
+      },
+      "final_change_vs_A": {
+        "B": "tie_exact_original",
+        "C": "tie_exact_original"
+      },
+      "candidate_sha256": "7985ee633f701d94ef7a0907c57e9bb6d353f21f3cfbcd8ccf76459c1ed27b96",
+      "positive_bias_example": false
+    },
+    {
+      "case_id": "case-08",
+      "core_requirement": "3天窗口内新流程尚无产出、旧流程有产出；当前不切换有充分依据。不用长期优势覆盖用户选定窗口。",
+      "must_preserve": "切换前三天没有产出，迁移损失真实存在。",
+      "native_core_pass": true,
+      "basis_for_executor_judgment": "3天旧300、新0；尊重评价窗口，选择现有流程。",
+      "expected_from_actual_candidate": {
+        "Q_TARGET": "deny",
+        "Q_SCOPE": "deny"
+      },
+      "actual": {
+        "B": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        },
+        "C": {
+          "Q_SCOPE": "deny",
+          "Q_TARGET": "deny"
+        }
+      },
+      "final_change_vs_A": {
+        "B": "tie_exact_original",
+        "C": "tie_exact_original"
+      },
+      "candidate_sha256": "d1e8317925a466f10c98e97ca292afe193c64869b61698834826b9259e8286d3",
+      "positive_bias_example": false
+    }
+  ],
+  "pairs": [
+    {
+      "case_ids": [
+        "case-01",
+        "case-02"
+      ],
+      "single_condition_reversal_pass": true,
+      "finals_identical_across_arms": true
+    },
+    {
+      "case_ids": [
+        "case-03",
+        "case-04"
+      ],
+      "single_condition_reversal_pass": true,
+      "finals_identical_across_arms": true
+    },
+    {
+      "case_ids": [
+        "case-05",
+        "case-06"
+      ],
+      "single_condition_reversal_pass": true,
+      "finals_identical_across_arms": true
+    },
+    {
+      "case_ids": [
+        "case-07",
+        "case-08"
+      ],
+      "single_condition_reversal_pass": true,
+      "finals_identical_across_arms": true
+    }
+  ],
+  "positive_detection_and_actual_handling": "not covered; no observed candidate with either defined bias",
+  "conclusion": "Current Sol 6.1 Agent answers sufficient in these windows; Jev completed equivalent negative checks much faster than the CLI LLM check. No demonstrated additional correction benefit, and no general sensitivity/quality/default-adoption qualification."
+}
