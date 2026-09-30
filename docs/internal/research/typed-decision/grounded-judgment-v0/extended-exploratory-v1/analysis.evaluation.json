@@ -1,0 +1,3515 @@
+{
+  "reviewed_commit": "712f813c3176d6e1404461effa5715cc443c32c3",
+  "analysis_date": "2026-10-01",
+  "reviewer_scope": "executor, group-aware, same execution agent; not independent/blind or a separately invoked reviewer model",
+  "model_requests_in_this_analysis": 0,
+  "cases": 8,
+  "products": [
+    {
+      "path": "display-goal-1-A",
+      "product_ref": "answers/display-goal-1-A.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂保留购屏目标并支持优先比较27寸5K规格/价格，不承诺具体机型必定满足预算。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "f4309b522e3d1e7687586fc58f75b2b76715d9174c890e023ea9df59937b2f6a",
+        "start": 0,
+        "end": 13,
+        "exact_text": "该建议与本次目标直接一致。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f4309b522e3d1e7687586fc58f75b2b76715d9174c890e023ea9df59937b2f6a",
+          "start": 0,
+          "end": 13,
+          "exact_text": "该建议与本次目标直接一致。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f4309b522e3d1e7687586fc58f75b2b76715d9174c890e023ea9df59937b2f6a",
+          "start": 0,
+          "end": 67,
+          "exact_text": "该建议与本次目标直接一致。按给定条件，同为27寸时，5K比4K具有更高的物理像素密度，因此优先比较27寸5K机型是合理的候选筛选方向。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f4309b522e3d1e7687586fc58f75b2b76715d9174c890e023ea9df59937b2f6a",
+          "start": 13,
+          "end": 67,
+          "exact_text": "按给定条件，同为27寸时，5K比4K具有更高的物理像素密度，因此优先比较27寸5K机型是合理的候选筛选方向。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f4309b522e3d1e7687586fc58f75b2b76715d9174c890e023ea9df59937b2f6a",
+          "start": 13,
+          "end": 138,
+          "exact_text": "按给定条件，同为27寸时，5K比4K具有更高的物理像素密度，因此优先比较27寸5K机型是合理的候选筛选方向。\n\n下一步：以现有27寸4K为基准，整理27寸5K候选的原生分辨率、实际尺寸、PPI和价格，再结合预算及现有设备的连接、输出支持筛选具体机型。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f4309b522e3d1e7687586fc58f75b2b76715d9174c890e023ea9df59937b2f6a",
+          "start": 69,
+          "end": 138,
+          "exact_text": "下一步：以现有27寸4K为基准，整理27寸5K候选的原生分辨率、实际尺寸、PPI和价格，再结合预算及现有设备的连接、输出支持筛选具体机型。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w005"
+        ],
+        "context": [
+          "w000",
+          "w001",
+          "w002"
+        ],
+        "goal": [
+          "w003"
+        ],
+        "premise": [
+          "w004"
+        ],
+        "request": [
+          "w006"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "display-goal-1-B",
+      "product_ref": "answers/display-goal-1-B.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂保留购屏目标并支持优先比较27寸5K规格/价格，不承诺具体机型必定满足预算。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "c66b7dfa30f3d924e0515fd0b5b9e59982211f9594dcbddd8154ac75a6223a3c",
+        "start": 0,
+        "end": 12,
+        "exact_text": "这个建议与本次目标一致。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "c66b7dfa30f3d924e0515fd0b5b9e59982211f9594dcbddd8154ac75a6223a3c",
+          "start": 0,
+          "end": 12,
+          "exact_text": "这个建议与本次目标一致。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "c66b7dfa30f3d924e0515fd0b5b9e59982211f9594dcbddd8154ac75a6223a3c",
+          "start": 0,
+          "end": 69,
+          "exact_text": "这个建议与本次目标一致。在给定条件下，同为27寸的5K面板比4K面板具有更高物理像素密度，因此优先比较27寸5K机型的规格和价格是合理的。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "c66b7dfa30f3d924e0515fd0b5b9e59982211f9594dcbddd8154ac75a6223a3c",
+          "start": 12,
+          "end": 69,
+          "exact_text": "在给定条件下，同为27寸的5K面板比4K面板具有更高物理像素密度，因此优先比较27寸5K机型的规格和价格是合理的。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "c66b7dfa30f3d924e0515fd0b5b9e59982211f9594dcbddd8154ac75a6223a3c",
+          "start": 12,
+          "end": 118,
+          "exact_text": "在给定条件下，同为27寸的5K面板比4K面板具有更高物理像素密度，因此优先比较27寸5K机型的规格和价格是合理的。\n\n下一步列出候选机型，核对实际尺寸、原生分辨率和物理像素密度，再比较面板规格、价格及设备兼容性。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "c66b7dfa30f3d924e0515fd0b5b9e59982211f9594dcbddd8154ac75a6223a3c",
+          "start": 71,
+          "end": 118,
+          "exact_text": "下一步列出候选机型，核对实际尺寸、原生分辨率和物理像素密度，再比较面板规格、价格及设备兼容性。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "c66b7dfa30f3d924e0515fd0b5b9e59982211f9594dcbddd8154ac75a6223a3c",
+          "start": 71,
+          "end": 145,
+          "exact_text": "下一步列出候选机型，核对实际尺寸、原生分辨率和物理像素密度，再比较面板规格、价格及设备兼容性。题设支持这个比较方向，但尚不足以确定具体哪款值得购买。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "c66b7dfa30f3d924e0515fd0b5b9e59982211f9594dcbddd8154ac75a6223a3c",
+          "start": 118,
+          "end": 145,
+          "exact_text": "题设支持这个比较方向，但尚不足以确定具体哪款值得购买。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w005"
+        ],
+        "context": [
+          "w000",
+          "w001",
+          "w002"
+        ],
+        "goal": [
+          "w003"
+        ],
+        "premise": [
+          "w004"
+        ],
+        "request": [
+          "w006"
+        ]
+      },
+      "checks": 0,
+      "revisions": 0
+    },
+    {
+      "path": "display-goal-1-C",
+      "product_ref": "answers/display-goal-1-C.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂保留购屏目标并支持优先比较27寸5K规格/价格，不承诺具体机型必定满足预算。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "66208ff374b34552cd15cb28bc5b1e895e09cb2cbf1cbc37cf1b602dc1ee3226",
+        "start": 0,
+        "end": 58,
+        "exact_text": "在题设条件下，这个建议与本次目标一致：同为27寸，5K面板的物理像素密度高于4K，因此优先比较27寸5K机型有依据。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "66208ff374b34552cd15cb28bc5b1e895e09cb2cbf1cbc37cf1b602dc1ee3226",
+          "start": 0,
+          "end": 58,
+          "exact_text": "在题设条件下，这个建议与本次目标一致：同为27寸，5K面板的物理像素密度高于4K，因此优先比较27寸5K机型有依据。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "66208ff374b34552cd15cb28bc5b1e895e09cb2cbf1cbc37cf1b602dc1ee3226",
+          "start": 0,
+          "end": 81,
+          "exact_text": "在题设条件下，这个建议与本次目标一致：同为27寸，5K面板的物理像素密度高于4K，因此优先比较27寸5K机型有依据。它支持确定比较方向，尚不足以确定最终购买哪款。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "66208ff374b34552cd15cb28bc5b1e895e09cb2cbf1cbc37cf1b602dc1ee3226",
+          "start": 58,
+          "end": 81,
+          "exact_text": "它支持确定比较方向，尚不足以确定最终购买哪款。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "66208ff374b34552cd15cb28bc5b1e895e09cb2cbf1cbc37cf1b602dc1ee3226",
+          "start": 58,
+          "end": 133,
+          "exact_text": "它支持确定比较方向，尚不足以确定最终购买哪款。\n\n下一步列出候选机型，核对实际尺寸、原生分辨率与物理像素密度，再比较价格、预算匹配度和电脑输出兼容性。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "66208ff374b34552cd15cb28bc5b1e895e09cb2cbf1cbc37cf1b602dc1ee3226",
+          "start": 83,
+          "end": 133,
+          "exact_text": "下一步列出候选机型，核对实际尺寸、原生分辨率与物理像素密度，再比较价格、预算匹配度和电脑输出兼容性。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "66208ff374b34552cd15cb28bc5b1e895e09cb2cbf1cbc37cf1b602dc1ee3226",
+          "start": 83,
+          "end": 147,
+          "exact_text": "下一步列出候选机型，核对实际尺寸、原生分辨率与物理像素密度，再比较价格、预算匹配度和电脑输出兼容性。具体产品参数与价格仍需核实；"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "66208ff374b34552cd15cb28bc5b1e895e09cb2cbf1cbc37cf1b602dc1ee3226",
+          "start": 133,
+          "end": 147,
+          "exact_text": "具体产品参数与价格仍需核实；"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "66208ff374b34552cd15cb28bc5b1e895e09cb2cbf1cbc37cf1b602dc1ee3226",
+          "start": 133,
+          "end": 159,
+          "exact_text": "具体产品参数与价格仍需核实；当前判断仅基于给定条件。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "66208ff374b34552cd15cb28bc5b1e895e09cb2cbf1cbc37cf1b602dc1ee3226",
+          "start": 147,
+          "end": 159,
+          "exact_text": "当前判断仅基于给定条件。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w005"
+        ],
+        "context": [
+          "w000",
+          "w001",
+          "w002"
+        ],
+        "goal": [
+          "w003"
+        ],
+        "premise": [
+          "w004"
+        ],
+        "request": [
+          "w006"
+        ]
+      },
+      "checks": 0,
+      "revisions": 0
+    },
+    {
+      "path": "display-goal-2-A",
+      "product_ref": "answers/display-goal-2-A.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂先回应现有屏的设置与阅读体验，保留5K像素密度事实，未承诺缩放增加物理PPI或换屏必能解决。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+        "start": 0,
+        "end": 21,
+        "exact_text": "本次应先尝试调整现有27寸4K的显示设置；"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 0,
+          "end": 21,
+          "exact_text": "本次应先尝试调整现有27寸4K的显示设置；"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 0,
+          "end": 57,
+          "exact_text": "本次应先尝试调整现有27寸4K的显示设置；优先比较5K机型，把“改善当前屏幕的阅读体验”提前转成了“选购新屏幕”。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 21,
+          "end": 57,
+          "exact_text": "优先比较5K机型，把“改善当前屏幕的阅读体验”提前转成了“选购新屏幕”。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 21,
+          "end": 97,
+          "exact_text": "优先比较5K机型，把“改善当前屏幕的阅读体验”提前转成了“选购新屏幕”。\n\n同尺寸5K的物理像素密度更高，但这不能证明现有4K通过设置无法满足你的目标。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 59,
+          "end": 97,
+          "exact_text": "同尺寸5K的物理像素密度更高，但这不能证明现有4K通过设置无法满足你的目标。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 59,
+          "end": 123,
+          "exact_text": "同尺寸5K的物理像素密度更高，但这不能证明现有4K通过设置无法满足你的目标。它是后续换屏比较的依据，不足以决定当前步骤的优先级。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 97,
+          "end": 123,
+          "exact_text": "它是后续换屏比较的依据，不足以决定当前步骤的优先级。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 97,
+          "end": 181,
+          "exact_text": "它是后续换屏比较的依据，不足以决定当前步骤的优先级。\n\n下一步：在系统显示设置中试几个缩放档位，用常读的文档或网页，在日常观看距离下比较界面大小、文字清晰度和可用空间。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 125,
+          "end": 181,
+          "exact_text": "下一步：在系统显示设置中试几个缩放档位，用常读的文档或网页，在日常观看距离下比较界面大小、文字清晰度和可用空间。"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 125,
+          "end": 194,
+          "exact_text": "下一步：在系统显示设置中试几个缩放档位，用常读的文档或网页，在日常观看距离下比较界面大小、文字清晰度和可用空间。若已满足需求，就继续使用；"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 181,
+          "end": 194,
+          "exact_text": "若已满足需求，就继续使用；"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 181,
+          "end": 232,
+          "exact_text": "若已满足需求，就继续使用；若仍有无法接受的问题，再针对这些问题比较5K机型的实际显示体验、规格和价格。"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 194,
+          "end": 232,
+          "exact_text": "若仍有无法接受的问题，再针对这些问题比较5K机型的实际显示体验、规格和价格。"
+        },
+        "w013": {
+          "window_id": "w013",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 194,
+          "end": 250,
+          "exact_text": "若仍有无法接受的问题，再针对这些问题比较5K机型的实际显示体验、规格和价格。缩放调整不会增加面板的物理像素密度。"
+        },
+        "w014": {
+          "window_id": "w014",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b7a0fa33e7235bca1a8818f6ae9b8f5081427c80cdad7bbc947cd98dace1ea84",
+          "start": 232,
+          "end": 250,
+          "exact_text": "缩放调整不会增加面板的物理像素密度。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w005"
+        ],
+        "context": [
+          "w000",
+          "w001",
+          "w002"
+        ],
+        "goal": [
+          "w003"
+        ],
+        "premise": [
+          "w004"
+        ],
+        "request": [
+          "w006"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "display-goal-2-B",
+      "product_ref": "answers/display-goal-2-B.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂先回应现有屏的设置与阅读体验，保留5K像素密度事实，未承诺缩放增加物理PPI或换屏必能解决。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+        "start": 0,
+        "end": 40,
+        "exact_text": "比较27寸5K机型与阅读体验可能有关，但现有信息不足以确定它应当成为优先下一步。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 0,
+          "end": 40,
+          "exact_text": "比较27寸5K机型与阅读体验可能有关，但现有信息不足以确定它应当成为优先下一步。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 0,
+          "end": 65,
+          "exact_text": "比较27寸5K机型与阅读体验可能有关，但现有信息不足以确定它应当成为优先下一步。本次目标是改善现有屏幕上的界面大小与文字阅读体验。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 40,
+          "end": 65,
+          "exact_text": "本次目标是改善现有屏幕上的界面大小与文字阅读体验。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 40,
+          "end": 97,
+          "exact_text": "本次目标是改善现有屏幕上的界面大小与文字阅读体验。\n\n给定条件：同为27寸时，5K面板的物理像素密度高于4K面板。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 67,
+          "end": 97,
+          "exact_text": "给定条件：同为27寸时，5K面板的物理像素密度高于4K面板。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 67,
+          "end": 147,
+          "exact_text": "给定条件：同为27寸时，5K面板的物理像素密度高于4K面板。这一条件尚未说明当前不适是否由像素密度造成，也未建立像素密度更高与优先比较5K规格、价格之间的关系。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 97,
+          "end": 147,
+          "exact_text": "这一条件尚未说明当前不适是否由像素密度造成，也未建立像素密度更高与优先比较5K规格、价格之间的关系。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 97,
+          "end": 179,
+          "exact_text": "这一条件尚未说明当前不适是否由像素密度造成，也未建立像素密度更高与优先比较5K规格、价格之间的关系。\n\n下一步先明确具体不适：界面偏小、字号偏小，还是文字观感不佳；"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 149,
+          "end": 179,
+          "exact_text": "下一步先明确具体不适：界面偏小、字号偏小，还是文字观感不佳；"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 149,
+          "end": 219,
+          "exact_text": "下一步先明确具体不适：界面偏小、字号偏小，还是文字观感不佳；记录现有屏幕的缩放比例和应用字号，逐项调整，并用相同内容、相同阅读距离比较效果。"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 179,
+          "end": 219,
+          "exact_text": "记录现有屏幕的缩放比例和应用字号，逐项调整，并用相同内容、相同阅读距离比较效果。"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 179,
+          "end": 265,
+          "exact_text": "记录现有屏幕的缩放比例和应用字号，逐项调整，并用相同内容、相同阅读距离比较效果。若调整后仍有未满足的需求，再针对这些需求评估5K方案是否能带来改善，进而比较机型规格和价格。"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1d2106d891fd0013c76ed54a4a575084c9ef6f4414c17de3c85ff0c6b8c35528",
+          "start": 219,
+          "end": 265,
+          "exact_text": "若调整后仍有未满足的需求，再针对这些需求评估5K方案是否能带来改善，进而比较机型规格和价格。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w005"
+        ],
+        "context": [
+          "w000",
+          "w001",
+          "w002"
+        ],
+        "goal": [
+          "w003"
+        ],
+        "premise": [
+          "w004"
+        ],
+        "request": [
+          "w006"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "display-goal-2-C",
+      "product_ref": "answers/display-goal-2-C.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂先回应现有屏的设置与阅读体验，保留5K像素密度事实，未承诺缩放增加物理PPI或换屏必能解决。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+        "start": 0,
+        "end": 23,
+        "exact_text": "按题目给定条件，27寸5K的物理像素密度更高。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 0,
+          "end": 23,
+          "exact_text": "按题目给定条件，27寸5K的物理像素密度更高。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 0,
+          "end": 67,
+          "exact_text": "按题目给定条件，27寸5K的物理像素密度更高。这支持把5K作为换屏候选，但单凭这一点，还不足以推出“下一步应优先比较5K规格和价格”。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 23,
+          "end": 67,
+          "exact_text": "这支持把5K作为换屏候选，但单凭这一点，还不足以推出“下一步应优先比较5K规格和价格”。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 23,
+          "end": 97,
+          "exact_text": "这支持把5K作为换屏候选，但单凭这一点，还不足以推出“下一步应优先比较5K规格和价格”。该建议与阅读体验有关，优先级仍需结合现有屏幕的实际表现判断。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 67,
+          "end": 97,
+          "exact_text": "该建议与阅读体验有关，优先级仍需结合现有屏幕的实际表现判断。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 67,
+          "end": 149,
+          "exact_text": "该建议与阅读体验有关，优先级仍需结合现有屏幕的实际表现判断。\n\n下一步先在现有4K屏幕上试几档系统缩放，用常用应用和同一段文字比较界面大小、阅读舒适度与可用工作区。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 99,
+          "end": 149,
+          "exact_text": "下一步先在现有4K屏幕上试几档系统缩放，用常用应用和同一段文字比较界面大小、阅读舒适度与可用工作区。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 99,
+          "end": 162,
+          "exact_text": "下一步先在现有4K屏幕上试几档系统缩放，用常用应用和同一段文字比较界面大小、阅读舒适度与可用工作区。如果达到要求，就继续使用；"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 149,
+          "end": 162,
+          "exact_text": "如果达到要求，就继续使用；"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 149,
+          "end": 199,
+          "exact_text": "如果达到要求，就继续使用；如果仍不满意，明确剩余问题，再带着这些要求比较5K机型的效果、规格和价格。"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 162,
+          "end": 199,
+          "exact_text": "如果仍不满意，明确剩余问题，再带着这些要求比较5K机型的效果、规格和价格。"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 162,
+          "end": 219,
+          "exact_text": "如果仍不满意，明确剩余问题，再带着这些要求比较5K机型的效果、规格和价格。\n\n调整设置不会增加面板的物理像素密度；"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 201,
+          "end": 219,
+          "exact_text": "调整设置不会增加面板的物理像素密度；"
+        },
+        "w013": {
+          "window_id": "w013",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 201,
+          "end": 247,
+          "exact_text": "调整设置不会增加面板的物理像素密度；题目也未提供实测，不能据此保证换成5K就能解决阅读问题。"
+        },
+        "w014": {
+          "window_id": "w014",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "30beb8989bea27f09b12e383b600704510d7dd821f6f1c9127c95a03151ab125",
+          "start": 219,
+          "end": 247,
+          "exact_text": "题目也未提供实测，不能据此保证换成5K就能解决阅读问题。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w005"
+        ],
+        "context": [
+          "w000",
+          "w001",
+          "w002"
+        ],
+        "goal": [
+          "w003"
+        ],
+        "premise": [
+          "w004"
+        ],
+        "request": [
+          "w006"
+        ]
+      },
+      "checks": 0,
+      "revisions": 0
+    },
+    {
+      "path": "mechanism-object-1-A",
+      "product_ref": "answers/mechanism-object-1-A.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂接受生成环节的局部解释，将验签归入前置准入，未因外围程序存在而否定充分的局部说明。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+        "start": 0,
+        "end": 56,
+        "exact_text": "在限定的“模型生成摘要”环节，模块化提示与上下文注入是充分的流程层面解释：模型依据按需载入的指令和原文生成摘要。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 0,
+          "end": 56,
+          "exact_text": "在限定的“模型生成摘要”环节，模块化提示与上下文注入是充分的流程层面解释：模型依据按需载入的指令和原文生成摘要。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 0,
+          "end": 93,
+          "exact_text": "在限定的“模型生成摘要”环节，模块化提示与上下文注入是充分的流程层面解释：模型依据按需载入的指令和原文生成摘要。\n\n它覆盖指令的模块化加载、原文进入上下文，以及这些输入如何引导摘要生成。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 58,
+          "end": 93,
+          "exact_text": "它覆盖指令的模块化加载、原文进入上下文，以及这些输入如何引导摘要生成。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 58,
+          "end": 125,
+          "exact_text": "它覆盖指令的模块化加载、原文进入上下文，以及这些输入如何引导摘要生成。verify.sh 控制是否允许进入生成环节，属于前置准入检查；"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 93,
+          "end": 125,
+          "exact_text": "verify.sh 控制是否允许进入生成环节，属于前置准入检查；"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 93,
+          "end": 159,
+          "exact_text": "verify.sh 控制是否允许进入生成环节，属于前置准入检查；它的存在不否定对生成环节的上述解释，也不能据此认定脚本主导摘要内容。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 125,
+          "end": 159,
+          "exact_text": "它的存在不否定对生成环节的上述解释，也不能据此认定脚本主导摘要内容。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 125,
+          "end": 180,
+          "exact_text": "它的存在不否定对生成环节的上述解释，也不能据此认定脚本主导摘要内容。\n\n这里的“充分”限于输入组织与生成路径。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 161,
+          "end": 180,
+          "exact_text": "这里的“充分”限于输入组织与生成路径。"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 161,
+          "end": 210,
+          "exact_text": "这里的“充分”限于输入组织与生成路径。它不解释模型内部的推断算法，也不证明摘要忠实、稳定或可重复；"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 180,
+          "end": 210,
+          "exact_text": "它不解释模型内部的推断算法，也不证明摘要忠实、稳定或可重复；"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 180,
+          "end": 221,
+          "exact_text": "它不解释模型内部的推断算法，也不证明摘要忠实、稳定或可重复；这些结论需要另行核验。"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 210,
+          "end": 221,
+          "exact_text": "这些结论需要另行核验。"
+        },
+        "w013": {
+          "window_id": "w013",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 210,
+          "end": 245,
+          "exact_text": "这些结论需要另行核验。若讨论整个服务，则还须解释签名检查及其阻断机制。"
+        },
+        "w014": {
+          "window_id": "w014",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "fcce0e41e0d1ca5263e0a7ff57353892bf138ca36b246c50c3c2a3dc0a052f7c",
+          "start": 221,
+          "end": 245,
+          "exact_text": "若讨论整个服务，则还须解释签名检查及其阻断机制。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w005"
+        ],
+        "context": [
+          "w000"
+        ],
+        "object": [
+          "w001"
+        ],
+        "premise": [
+          "w002",
+          "w003",
+          "w004"
+        ],
+        "request": [
+          "w006"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "mechanism-object-1-B",
+      "product_ref": "answers/mechanism-object-1-B.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂接受生成环节的局部解释，将验签归入前置准入，未因外围程序存在而否定充分的局部说明。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "1866fb50dcbbda6507d44bd8fad7a37c1682a0a4dc3587b8e80910f27b72e175",
+        "start": 0,
+        "end": 73,
+        "exact_text": "在题设描述的机制层级、且对象仅限于通过校验后的摘要生成环节时，这项解释充分：模块化提示说明按需提供指令，上下文注入说明把原文交给模型作为摘要依据。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1866fb50dcbbda6507d44bd8fad7a37c1682a0a4dc3587b8e80910f27b72e175",
+          "start": 0,
+          "end": 73,
+          "exact_text": "在题设描述的机制层级、且对象仅限于通过校验后的摘要生成环节时，这项解释充分：模块化提示说明按需提供指令，上下文注入说明把原文交给模型作为摘要依据。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1866fb50dcbbda6507d44bd8fad7a37c1682a0a4dc3587b8e80910f27b72e175",
+          "start": 0,
+          "end": 108,
+          "exact_text": "在题设描述的机制层级、且对象仅限于通过校验后的摘要生成环节时，这项解释充分：模块化提示说明按需提供指令，上下文注入说明把原文交给模型作为摘要依据。\n\nverify.sh 的签名校验决定是否进入生成环节，属于前置准入；"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1866fb50dcbbda6507d44bd8fad7a37c1682a0a4dc3587b8e80910f27b72e175",
+          "start": 75,
+          "end": 108,
+          "exact_text": "verify.sh 的签名校验决定是否进入生成环节，属于前置准入；"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1866fb50dcbbda6507d44bd8fad7a37c1682a0a4dc3587b8e80910f27b72e175",
+          "start": 75,
+          "end": 133,
+          "exact_text": "verify.sh 的签名校验决定是否进入生成环节，属于前置准入；它不否定上述局部解释，但也不在该解释的覆盖范围内。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1866fb50dcbbda6507d44bd8fad7a37c1682a0a4dc3587b8e80910f27b72e175",
+          "start": 108,
+          "end": 133,
+          "exact_text": "它不否定上述局部解释，但也不在该解释的覆盖范围内。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1866fb50dcbbda6507d44bd8fad7a37c1682a0a4dc3587b8e80910f27b72e175",
+          "start": 108,
+          "end": 161,
+          "exact_text": "它不否定上述局部解释，但也不在该解释的覆盖范围内。该解释同样不能证明摘要质量，或完整说明模型内部计算机制。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1866fb50dcbbda6507d44bd8fad7a37c1682a0a4dc3587b8e80910f27b72e175",
+          "start": 133,
+          "end": 161,
+          "exact_text": "该解释同样不能证明摘要质量，或完整说明模型内部计算机制。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1866fb50dcbbda6507d44bd8fad7a37c1682a0a4dc3587b8e80910f27b72e175",
+          "start": 133,
+          "end": 196,
+          "exact_text": "该解释同样不能证明摘要质量，或完整说明模型内部计算机制。\n\n以上判断以给定的人工构造情境为条件，不代表产品实测或外部事实核验。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "1866fb50dcbbda6507d44bd8fad7a37c1682a0a4dc3587b8e80910f27b72e175",
+          "start": 163,
+          "end": 196,
+          "exact_text": "以上判断以给定的人工构造情境为条件，不代表产品实测或外部事实核验。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w005"
+        ],
+        "context": [
+          "w000"
+        ],
+        "object": [
+          "w001"
+        ],
+        "premise": [
+          "w002",
+          "w003",
+          "w004"
+        ],
+        "request": [
+          "w006"
+        ]
+      },
+      "checks": 0,
+      "revisions": 0
+    },
+    {
+      "path": "mechanism-object-1-C",
+      "product_ref": "answers/mechanism-object-1-C.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂接受生成环节的局部解释，将验签归入前置准入，未因外围程序存在而否定充分的局部说明。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "acf81af7cd99b4380dce4f5c0e1d16694b06648b14c584f6e7a7fbe7b4628410",
+        "start": 0,
+        "end": 79,
+        "exact_text": "按这个构造情境，若“工作机制”指摘要生成环节的指令与输入组织，这项解释是充分的：模块化提示说明指令如何按需载入，上下文注入说明原文如何提供给模型用于生成摘要。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "acf81af7cd99b4380dce4f5c0e1d16694b06648b14c584f6e7a7fbe7b4628410",
+          "start": 0,
+          "end": 79,
+          "exact_text": "按这个构造情境，若“工作机制”指摘要生成环节的指令与输入组织，这项解释是充分的：模块化提示说明指令如何按需载入，上下文注入说明原文如何提供给模型用于生成摘要。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "acf81af7cd99b4380dce4f5c0e1d16694b06648b14c584f6e7a7fbe7b4628410",
+          "start": 0,
+          "end": 117,
+          "exact_text": "按这个构造情境，若“工作机制”指摘要生成环节的指令与输入组织，这项解释是充分的：模块化提示说明指令如何按需载入，上下文注入说明原文如何提供给模型用于生成摘要。\n\nverify.sh负责生成前的签名校验与准入控制，位于当前讨论范围之外。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "acf81af7cd99b4380dce4f5c0e1d16694b06648b14c584f6e7a7fbe7b4628410",
+          "start": 81,
+          "end": 117,
+          "exact_text": "verify.sh负责生成前的签名校验与准入控制，位于当前讨论范围之外。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "acf81af7cd99b4380dce4f5c0e1d16694b06648b14c584f6e7a7fbe7b4628410",
+          "start": 81,
+          "end": 153,
+          "exact_text": "verify.sh负责生成前的签名校验与准入控制，位于当前讨论范围之外。上述解释不覆盖模型内部的文本生成原理，也不能证明摘要质量或真实产品行为。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "acf81af7cd99b4380dce4f5c0e1d16694b06648b14c584f6e7a7fbe7b4628410",
+          "start": 117,
+          "end": 153,
+          "exact_text": "上述解释不覆盖模型内部的文本生成原理，也不能证明摘要质量或真实产品行为。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w005"
+        ],
+        "context": [
+          "w000"
+        ],
+        "object": [
+          "w001"
+        ],
+        "premise": [
+          "w002",
+          "w003",
+          "w004"
+        ],
+        "request": [
+          "w006"
+        ]
+      },
+      "checks": 0,
+      "revisions": 0
+    },
+    {
+      "path": "mechanism-object-2-A",
+      "product_ref": "answers/mechanism-object-2-A.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂判整服务解释不充分，补入验签与失败阻断，同时保留模型生成部分。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+        "start": 0,
+        "end": 66,
+        "exact_text": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 0,
+          "end": 66,
+          "exact_text": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 0,
+          "end": 97,
+          "exact_text": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。\n\n它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 68,
+          "end": 97,
+          "exact_text": "它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 68,
+          "end": 124,
+          "exact_text": "它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 97,
+          "end": 124,
+          "exact_text": "不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 97,
+          "end": 147,
+          "exact_text": "不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 124,
+          "end": 147,
+          "exact_text": "即使提示和原文可用，验签失败仍然不会生成摘要。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 124,
+          "end": 169,
+          "exact_text": "即使提示和原文可用，验签失败仍然不会生成摘要。\n\n完整解释应包括两段：先验签，非零则停止；"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 149,
+          "end": 169,
+          "exact_text": "完整解释应包括两段：先验签，非零则停止；"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 149,
+          "end": 188,
+          "exact_text": "完整解释应包括两段：先验签，非零则停止；通过后，将指令和原文交给模型生成摘要。"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 169,
+          "end": 188,
+          "exact_text": "通过后，将指令和原文交给模型生成摘要。"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 169,
+          "end": 233,
+          "exact_text": "通过后，将指令和原文交给模型生成摘要。只用提示与上下文解释整个服务，排查“为什么没有摘要”时就可能误改提示，漏查验签和分支控制。"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 188,
+          "end": 233,
+          "exact_text": "只用提示与上下文解释整个服务，排查“为什么没有摘要”时就可能误改提示，漏查验签和分支控制。"
+        },
+        "w013": {
+          "window_id": "w013",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 188,
+          "end": 258,
+          "exact_text": "只用提示与上下文解释整个服务，排查“为什么没有摘要”时就可能误改提示，漏查验签和分支控制。验签控制能否进入生成，模型及其输入则影响生成什么。"
+        },
+        "w014": {
+          "window_id": "w014",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "2e0131abd7d2f4b039191cea4e7ef68a2ed8823c0046586fa4dc78f93ae44ee9",
+          "start": 233,
+          "end": 258,
+          "exact_text": "验签控制能否进入生成，模型及其输入则影响生成什么。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w005"
+        ],
+        "context": [
+          "w000"
+        ],
+        "object": [
+          "w001"
+        ],
+        "premise": [
+          "w002",
+          "w003",
+          "w004"
+        ],
+        "request": [
+          "w006"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "mechanism-object-2-B",
+      "product_ref": "answers/mechanism-object-2-B.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂判整服务解释不充分，补入验签与失败阻断，同时保留模型生成部分。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "8dc24a15c68a4f5b3ae5deb4205b8d8d7f4135c6b7890a9a7551ebce7e85b50e",
+        "start": 0,
+        "end": 68,
+        "exact_text": "对整个摘要服务而言，这项解释不充分：模块化提示和上下文注入能说明校验通过后的输入组织与生成环节，签名校验及退出码则控制是否允许进入生成。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "8dc24a15c68a4f5b3ae5deb4205b8d8d7f4135c6b7890a9a7551ebce7e85b50e",
+          "start": 0,
+          "end": 68,
+          "exact_text": "对整个摘要服务而言，这项解释不充分：模块化提示和上下文注入能说明校验通过后的输入组织与生成环节，签名校验及退出码则控制是否允许进入生成。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "8dc24a15c68a4f5b3ae5deb4205b8d8d7f4135c6b7890a9a7551ebce7e85b50e",
+          "start": 0,
+          "end": 115,
+          "exact_text": "对整个摘要服务而言，这项解释不充分：模块化提示和上下文注入能说明校验通过后的输入组织与生成环节，签名校验及退出码则控制是否允许进入生成。\n\n在给定的人工构造情境中，可以保留这项描述：“通过后把按需载入的指令和原文交给模型生成摘要。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "8dc24a15c68a4f5b3ae5deb4205b8d8d7f4135c6b7890a9a7551ebce7e85b50e",
+          "start": 70,
+          "end": 115,
+          "exact_text": "在给定的人工构造情境中，可以保留这项描述：“通过后把按需载入的指令和原文交给模型生成摘要。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "8dc24a15c68a4f5b3ae5deb4205b8d8d7f4135c6b7890a9a7551ebce7e85b50e",
+          "start": 70,
+          "end": 180,
+          "exact_text": "在给定的人工构造情境中，可以保留这项描述：“通过后把按需载入的指令和原文交给模型生成摘要。”它覆盖指令按需载入、指令与原文交给模型这一段，但没有覆盖服务先运行verify.sh检查输入签名、非零退出码阻断生成的控制作用。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "8dc24a15c68a4f5b3ae5deb4205b8d8d7f4135c6b7890a9a7551ebce7e85b50e",
+          "start": 115,
+          "end": 180,
+          "exact_text": "”它覆盖指令按需载入、指令与原文交给模型这一段，但没有覆盖服务先运行verify.sh检查输入签名、非零退出码阻断生成的控制作用。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "8dc24a15c68a4f5b3ae5deb4205b8d8d7f4135c6b7890a9a7551ebce7e85b50e",
+          "start": 115,
+          "end": 211,
+          "exact_text": "”它覆盖指令按需载入、指令与原文交给模型这一段，但没有覆盖服务先运行verify.sh检查输入签名、非零退出码阻断生成的控制作用。\n\n完整解释应纳入“先校验，失败停止，通过后生成”的控制关系。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "8dc24a15c68a4f5b3ae5deb4205b8d8d7f4135c6b7890a9a7551ebce7e85b50e",
+          "start": 182,
+          "end": 211,
+          "exact_text": "完整解释应纳入“先校验，失败停止，通过后生成”的控制关系。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "8dc24a15c68a4f5b3ae5deb4205b8d8d7f4135c6b7890a9a7551ebce7e85b50e",
+          "start": 182,
+          "end": 274,
+          "exact_text": "完整解释应纳入“先校验，失败停止，通过后生成”的控制关系。现有材料没有建立模块化提示和上下文注入足以解释校验与阻断环节的关系证据，因此不能从这一段生成机制推出对整个服务的解释已经充分。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "8dc24a15c68a4f5b3ae5deb4205b8d8d7f4135c6b7890a9a7551ebce7e85b50e",
+          "start": 211,
+          "end": 274,
+          "exact_text": "现有材料没有建立模块化提示和上下文注入足以解释校验与阻断环节的关系证据，因此不能从这一段生成机制推出对整个服务的解释已经充分。"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "8dc24a15c68a4f5b3ae5deb4205b8d8d7f4135c6b7890a9a7551ebce7e85b50e",
+          "start": 211,
+          "end": 300,
+          "exact_text": "现有材料没有建立模块化提示和上下文注入足以解释校验与阻断环节的关系证据，因此不能从这一段生成机制推出对整个服务的解释已经充分。此判断以给定情境为条件，不代表产品事实已获实测验证。"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "8dc24a15c68a4f5b3ae5deb4205b8d8d7f4135c6b7890a9a7551ebce7e85b50e",
+          "start": 274,
+          "end": 300,
+          "exact_text": "此判断以给定情境为条件，不代表产品事实已获实测验证。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w005"
+        ],
+        "context": [
+          "w000"
+        ],
+        "object": [
+          "w001"
+        ],
+        "premise": [
+          "w002",
+          "w003",
+          "w004"
+        ],
+        "request": [
+          "w006"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "mechanism-object-2-C",
+      "product_ref": "answers/mechanism-object-2-C.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂判整服务解释不充分，补入验签与失败阻断，同时保留模型生成部分。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+        "start": 0,
+        "end": 69,
+        "exact_text": "在题设成立的条件下，这项解释不足以覆盖整个摘要服务：签名检查与退出规则控制是否进入生成，模块化提示和上下文注入能解释通过检查后的输入组织。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 0,
+          "end": 69,
+          "exact_text": "在题设成立的条件下，这项解释不足以覆盖整个摘要服务：签名检查与退出规则控制是否进入生成，模块化提示和上下文注入能解释通过检查后的输入组织。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 0,
+          "end": 96,
+          "exact_text": "在题设成立的条件下，这项解释不足以覆盖整个摘要服务：签名检查与退出规则控制是否进入生成，模块化提示和上下文注入能解释通过检查后的输入组织。\n\n它能覆盖按需载入指令、将指令与原文交给模型的环节。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 71,
+          "end": 96,
+          "exact_text": "它能覆盖按需载入指令、将指令与原文交给模型的环节。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 71,
+          "end": 123,
+          "exact_text": "它能覆盖按需载入指令、将指令与原文交给模型的环节。但题设规定 verify.sh 非零退出时不生成摘要；"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 96,
+          "end": 123,
+          "exact_text": "但题设规定 verify.sh 非零退出时不生成摘要；"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 96,
+          "end": 148,
+          "exact_text": "但题设规定 verify.sh 非零退出时不生成摘要；即使提示与原文相同，检查结果也会改变是否进入生成。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 123,
+          "end": 148,
+          "exact_text": "即使提示与原文相同，检查结果也会改变是否进入生成。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 123,
+          "end": 194,
+          "exact_text": "即使提示与原文相同，检查结果也会改变是否进入生成。因此，完整解释应包括：签名检查、检查失败时停止，以及检查通过后由模型依据指令和原文生成摘要。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 148,
+          "end": 194,
+          "exact_text": "因此，完整解释应包括：签名检查、检查失败时停止，以及检查通过后由模型依据指令和原文生成摘要。"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 148,
+          "end": 221,
+          "exact_text": "因此，完整解释应包括：签名检查、检查失败时停止，以及检查通过后由模型依据指令和原文生成摘要。排查未生成摘要的原因时，也需要检查签名校验的退出结果。"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 194,
+          "end": 221,
+          "exact_text": "排查未生成摘要的原因时，也需要检查签名校验的退出结果。"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 194,
+          "end": 275,
+          "exact_text": "排查未生成摘要的原因时，也需要检查签名校验的退出结果。\n\n这是对人工构造情境的条件判断，不代表实际产品行为已经核验，也不能据此确认签名检查的可靠性或摘要的准确性。"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "ba17ace4e79e918d23ff73077f45e4c6036f6e7eda3c1f2a45318a315fefb740",
+          "start": 223,
+          "end": 275,
+          "exact_text": "这是对人工构造情境的条件判断，不代表实际产品行为已经核验，也不能据此确认签名检查的可靠性或摘要的准确性。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w005"
+        ],
+        "context": [
+          "w000"
+        ],
+        "object": [
+          "w001"
+        ],
+        "premise": [
+          "w002",
+          "w003",
+          "w004"
+        ],
+        "request": [
+          "w006"
+        ]
+      },
+      "checks": 0,
+      "revisions": 0
+    },
+    {
+      "path": "record-source-1-A",
+      "product_ref": "answers/record-source-1-A.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "fail",
+      "norm_ambiguity_flag": true,
+      "manual_reason": "三臂保留案例内12→3的比较，但都拒绝完整直接核验主张，与事前direct侧充分支持规范不符。原始材料身份与已完成核验过程存在题文歧义；此处不是已证实的真实世界事实错误。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "fail",
+        "preserve_and_change": "unresolved",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+        "start": 0,
+        "end": 7,
+        "exact_text": "不能完整支持。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 0,
+          "end": 7,
+          "exact_text": "不能完整支持。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 0,
+          "end": 46,
+          "exact_text": "不能完整支持。当前可直接核对的是给定的合成案例记录：调整前误读12字、调整后3字，减少9字。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 7,
+          "end": 46,
+          "exact_text": "当前可直接核对的是给定的合成案例记录：调整前误读12字、调整后3字，减少9字。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 7,
+          "end": 67,
+          "exact_text": "当前可直接核对的是给定的合成案例记录：调整前误读12字、调整后3字，减少9字。但直接读到案例记录，不等于已核对原始记录；"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 46,
+          "end": 67,
+          "exact_text": "但直接读到案例记录，不等于已核对原始记录；"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 46,
+          "end": 110,
+          "exact_text": "但直接读到案例记录，不等于已核对原始记录；材料明确声明情境为人工构造、数字为合成，不能据此证明真实设备表现或实际调整的因果效果。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 67,
+          "end": 110,
+          "exact_text": "材料明确声明情境为人工构造、数字为合成，不能据此证明真实设备表现或实际调整的因果效果。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 67,
+          "end": 169,
+          "exact_text": "材料明确声明情境为人工构造、数字为合成，不能据此证明真实设备表现或实际调整的因果效果。\n\n可改为：“根据给定合成案例记录，在同一设备、同一任务、其余设置固定的设定下，调整后误读由12字降至3字，减少9字。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 112,
+          "end": 169,
+          "exact_text": "可改为：“根据给定合成案例记录，在同一设备、同一任务、其余设置固定的设定下，调整后误读由12字降至3字，减少9字。"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 112,
+          "end": 183,
+          "exact_text": "可改为：“根据给定合成案例记录，在同一设备、同一任务、其余设置固定的设定下，调整后误读由12字降至3字，减少9字。该比较仅在本构造情境内成立。"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 169,
+          "end": 183,
+          "exact_text": "该比较仅在本构造情境内成立。"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 169,
+          "end": 184,
+          "exact_text": "该比较仅在本构造情境内成立。”"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f40030f3b6abd230b9fadc76ad1541ffb565b1b120ed9b217dcbbb7d38571ea2",
+          "start": 183,
+          "end": 184,
+          "exact_text": "”"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w006"
+        ],
+        "context": [
+          "w000",
+          "w001",
+          "w002"
+        ],
+        "goal": [
+          "w003"
+        ],
+        "premise": [
+          "w004"
+        ],
+        "record": [
+          "w005"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "record-source-1-B",
+      "product_ref": "answers/record-source-1-B.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "fail",
+      "norm_ambiguity_flag": true,
+      "manual_reason": "三臂保留案例内12→3的比较，但都拒绝完整直接核验主张，与事前direct侧充分支持规范不符。原始材料身份与已完成核验过程存在题文歧义；此处不是已证实的真实世界事实错误。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "fail",
+        "preserve_and_change": "unresolved",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+        "start": 0,
+        "end": 17,
+        "exact_text": "当前材料不足以支持完整的核验结论。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 0,
+          "end": 17,
+          "exact_text": "当前材料不足以支持完整的核验结论。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 0,
+          "end": 54,
+          "exact_text": "当前材料不足以支持完整的核验结论。\n\n发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 19,
+          "end": 54,
+          "exact_text": "发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 19,
+          "end": 65,
+          "exact_text": "发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。案例记录支持这一陈述；"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 54,
+          "end": 65,
+          "exact_text": "案例记录支持这一陈述；"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 54,
+          "end": 107,
+          "exact_text": "案例记录支持这一陈述；在采纳同一设备、同一任务、其余设置固定这些条件时，可以推断合成情境中调整后误读更少。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 65,
+          "end": 107,
+          "exact_text": "在采纳同一设备、同一任务、其余设置固定这些条件时，可以推断合成情境中调整后误读更少。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 65,
+          "end": 160,
+          "exact_text": "在采纳同一设备、同一任务、其余设置固定这些条件时，可以推断合成情境中调整后误读更少。\n\n但材料未提供足以证明“已直接核对原始记录”的对应记录及核对过程，不能从上述陈述直接推出完整的核验结论。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 109,
+          "end": 160,
+          "exact_text": "但材料未提供足以证明“已直接核对原始记录”的对应记录及核对过程，不能从上述陈述直接推出完整的核验结论。"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 109,
+          "end": 190,
+          "exact_text": "但材料未提供足以证明“已直接核对原始记录”的对应记录及核对过程，不能从上述陈述直接推出完整的核验结论。所有数字均为合成案例记录，也不能据此确认真实设备的调整效果。"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 160,
+          "end": 190,
+          "exact_text": "所有数字均为合成案例记录，也不能据此确认真实设备的调整效果。"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 160,
+          "end": 206,
+          "exact_text": "所有数字均为合成案例记录，也不能据此确认真实设备的调整效果。完整结论仍缺证据，并非已被证伪。"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "aa24f0c3347f2e18762d2f1369bc84ae1e30bd745042e5fdb75a50b26e707907",
+          "start": 190,
+          "end": 206,
+          "exact_text": "完整结论仍缺证据，并非已被证伪。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w006"
+        ],
+        "context": [
+          "w000",
+          "w001",
+          "w002"
+        ],
+        "goal": [
+          "w003"
+        ],
+        "premise": [
+          "w004"
+        ],
+        "record": [
+          "w005"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "record-source-1-C",
+      "product_ref": "answers/record-source-1-C.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "fail",
+      "norm_ambiguity_flag": true,
+      "manual_reason": "三臂保留案例内12→3的比较，但都拒绝完整直接核验主张，与事前direct侧充分支持规范不符。原始材料身份与已完成核验过程存在题文歧义；此处不是已证实的真实世界事实错误。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "fail",
+        "preserve_and_change": "unresolved",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+        "start": 0,
+        "end": 17,
+        "exact_text": "当前材料不足以支持完整的核验结论。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 0,
+          "end": 17,
+          "exact_text": "当前材料不足以支持完整的核验结论。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 0,
+          "end": 63,
+          "exact_text": "当前材料不足以支持完整的核验结论。给定合成记录显示：同一设备、同一任务、其余设置固定时，调整后误读数从12字降至3字，少9字。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 17,
+          "end": 63,
+          "exact_text": "给定合成记录显示：同一设备、同一任务、其余设置固定时，调整后误读数从12字降至3字，少9字。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 17,
+          "end": 75,
+          "exact_text": "给定合成记录显示：同一设备、同一任务、其余设置固定时，调整后误读数从12字降至3字，少9字。这支持案例内的数值下降。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 63,
+          "end": 75,
+          "exact_text": "这支持案例内的数值下降。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 63,
+          "end": 129,
+          "exact_text": "这支持案例内的数值下降。\n\n但材料明确说明情境和数字均为人工合成，不能据此认定“已直接核对原始记录”，也不能确认真实设备的调整效果。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 77,
+          "end": 129,
+          "exact_text": "但材料明确说明情境和数字均为人工合成，不能据此认定“已直接核对原始记录”，也不能确认真实设备的调整效果。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 77,
+          "end": 154,
+          "exact_text": "但材料明确说明情境和数字均为人工合成，不能据此认定“已直接核对原始记录”，也不能确认真实设备的调整效果。这些核验主张仍未证实，并不意味着已经证实它们为假。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 129,
+          "end": 154,
+          "exact_text": "这些核验主张仍未证实，并不意味着已经证实它们为假。"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 129,
+          "end": 193,
+          "exact_text": "这些核验主张仍未证实，并不意味着已经证实它们为假。\n\n可改为：“按给定合成案例记录，在所述条件下，调整后误读数较调整前减少9字；"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 156,
+          "end": 193,
+          "exact_text": "可改为：“按给定合成案例记录，在所述条件下，调整后误读数较调整前减少9字；"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 156,
+          "end": 209,
+          "exact_text": "可改为：“按给定合成案例记录，在所述条件下，调整后误读数较调整前减少9字；原始记录及真实设备效果尚未核验。"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 193,
+          "end": 209,
+          "exact_text": "原始记录及真实设备效果尚未核验。"
+        },
+        "w013": {
+          "window_id": "w013",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 193,
+          "end": 210,
+          "exact_text": "原始记录及真实设备效果尚未核验。”"
+        },
+        "w014": {
+          "window_id": "w014",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "146546b0fc90e5b0ff1fa64e074997a915fce652e5c761748dfffd0ead85b15c",
+          "start": 209,
+          "end": 210,
+          "exact_text": "”"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w006"
+        ],
+        "context": [
+          "w000",
+          "w001",
+          "w002"
+        ],
+        "goal": [
+          "w003"
+        ],
+        "premise": [
+          "w004"
+        ],
+        "record": [
+          "w005"
+        ]
+      },
+      "checks": 0,
+      "revisions": 0
+    },
+    {
+      "path": "record-source-2-A",
+      "product_ref": "answers/record-source-2-A.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂不把转述升级为直接核验，保留案例内比较；未把缺证说成已证伪。部分表述依据合成性质而不是明确说reported，来源敏感性因此不能单靠这侧判通过。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+        "start": 0,
+        "end": 14,
+        "exact_text": "不能支持这条完整的核验结论。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 0,
+          "end": 14,
+          "exact_text": "不能支持这条完整的核验结论。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 0,
+          "end": 38,
+          "exact_text": "不能支持这条完整的核验结论。材料明确说明情境为人工构造、数字为合成案例记录；"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 14,
+          "end": 38,
+          "exact_text": "材料明确说明情境为人工构造、数字为合成案例记录；"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 14,
+          "end": 65,
+          "exact_text": "材料明确说明情境为人工构造、数字为合成案例记录；“案例记录”及发言者陈述不能证明已经直接核对原始记录。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 38,
+          "end": 65,
+          "exact_text": "“案例记录”及发言者陈述不能证明已经直接核对原始记录。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 38,
+          "end": 94,
+          "exact_text": "“案例记录”及发言者陈述不能证明已经直接核对原始记录。即使写明设备、任务及其余设置相同，也不改变材料的来源性质。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 65,
+          "end": 94,
+          "exact_text": "即使写明设备、任务及其余设置相同，也不改变材料的来源性质。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 65,
+          "end": 139,
+          "exact_text": "即使写明设备、任务及其余设置相同，也不改变材料的来源性质。\n\n可以支持的限定结论是：“按给定的合成案例记录，调整后误读数由12字降至3字，减少9字。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 96,
+          "end": 139,
+          "exact_text": "可以支持的限定结论是：“按给定的合成案例记录，调整后误读数由12字降至3字，减少9字。"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 96,
+          "end": 167,
+          "exact_text": "可以支持的限定结论是：“按给定的合成案例记录，调整后误读数由12字降至3字，减少9字。”这是情境内的数值比较，不能据此确认真实设备的调整效果。"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 139,
+          "end": 167,
+          "exact_text": "”这是情境内的数值比较，不能据此确认真实设备的调整效果。"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 139,
+          "end": 208,
+          "exact_text": "”这是情境内的数值比较，不能据此确认真实设备的调整效果。\n\n若要保留“已直接核对原始记录”的说法，需要提供可追溯的原始记录及实际核对依据。"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "5d94ade1e6a3db1dac1ae84d809041fc37375985ded1c0e6e0508473cd9cbcde",
+          "start": 169,
+          "end": 208,
+          "exact_text": "若要保留“已直接核对原始记录”的说法，需要提供可追溯的原始记录及实际核对依据。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w006"
+        ],
+        "context": [
+          "w000",
+          "w001",
+          "w002"
+        ],
+        "goal": [
+          "w003"
+        ],
+        "premise": [
+          "w004"
+        ],
+        "record": [
+          "w005"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "record-source-2-B",
+      "product_ref": "answers/record-source-2-B.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂不把转述升级为直接核验，保留案例内比较；未把缺证说成已证伪。部分表述依据合成性质而不是明确说reported，来源敏感性因此不能单靠这侧判通过。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+        "start": 0,
+        "end": 32,
+        "exact_text": "当前材料不能支持完整的核验结论，只能支持合成案例内的条件性比较。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 0,
+          "end": 32,
+          "exact_text": "当前材料不能支持完整的核验结论，只能支持合成案例内的条件性比较。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 0,
+          "end": 69,
+          "exact_text": "当前材料不能支持完整的核验结论，只能支持合成案例内的条件性比较。\n\n发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 34,
+          "end": 69,
+          "exact_text": "发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 34,
+          "end": 83,
+          "exact_text": "发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。\n\n案例记录与这一说法一致。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 71,
+          "end": 83,
+          "exact_text": "案例记录与这一说法一致。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 71,
+          "end": 117,
+          "exact_text": "案例记录与这一说法一致。若所述记录和条件成立，可以有限推断：在该案例中，调整后的误读数更少。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 83,
+          "end": 117,
+          "exact_text": "若所述记录和条件成立，可以有限推断：在该案例中，调整后的误读数更少。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 83,
+          "end": 201,
+          "exact_text": "若所述记录和条件成立，可以有限推断：在该案例中，调整后的误读数更少。但数字均为合成案例数据，材料缺少可追溯的原始记录及直接核对过程的证据，无法从案例转述推出“已直接核对原始记录，确认这一次调整减少了误读”，也不能证明真实设备的调整效果。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 117,
+          "end": 201,
+          "exact_text": "但数字均为合成案例数据，材料缺少可追溯的原始记录及直接核对过程的证据，无法从案例转述推出“已直接核对原始记录，确认这一次调整减少了误读”，也不能证明真实设备的调整效果。"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 117,
+          "end": 234,
+          "exact_text": "但数字均为合成案例数据，材料缺少可追溯的原始记录及直接核对过程的证据，无法从案例转述推出“已直接核对原始记录，确认这一次调整减少了误读”，也不能证明真实设备的调整效果。\n\n因此，应保留上述发言者陈述和条件性比较，撤去已完成核验的断言。"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 203,
+          "end": 234,
+          "exact_text": "因此，应保留上述发言者陈述和条件性比较，撤去已完成核验的断言。"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 203,
+          "end": 259,
+          "exact_text": "因此，应保留上述发言者陈述和条件性比较，撤去已完成核验的断言。这属于证据不足，不代表已证实该陈述或调整效果为假。"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "f1789f5f7b1ba7fc2dc90e3588f17b8d0ad3be7c0c1a9919e5bff55eb1c28387",
+          "start": 234,
+          "end": 259,
+          "exact_text": "这属于证据不足，不代表已证实该陈述或调整效果为假。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w006"
+        ],
+        "context": [
+          "w000",
+          "w001",
+          "w002"
+        ],
+        "goal": [
+          "w003"
+        ],
+        "premise": [
+          "w004"
+        ],
+        "record": [
+          "w005"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "record-source-2-C",
+      "product_ref": "answers/record-source-2-C.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂不把转述升级为直接核验，保留案例内比较；未把缺证说成已证伪。部分表述依据合成性质而不是明确说reported，来源敏感性因此不能单靠这侧判通过。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "934381a8c769f996ed9bb917bda97dde9456bef7f6ed1389a339d13faf349b82",
+        "start": 0,
+        "end": 17,
+        "exact_text": "当前材料不足以支持完整的核验结论。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "934381a8c769f996ed9bb917bda97dde9456bef7f6ed1389a339d13faf349b82",
+          "start": 0,
+          "end": 17,
+          "exact_text": "当前材料不足以支持完整的核验结论。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "934381a8c769f996ed9bb917bda97dde9456bef7f6ed1389a339d13faf349b82",
+          "start": 0,
+          "end": 70,
+          "exact_text": "当前材料不足以支持完整的核验结论。材料明确说明情境和数字均为人工合成，未提供直接核对原始记录的证据，因此不能宣称真实设备的调整效果已获确认。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "934381a8c769f996ed9bb917bda97dde9456bef7f6ed1389a339d13faf349b82",
+          "start": 17,
+          "end": 70,
+          "exact_text": "材料明确说明情境和数字均为人工合成，未提供直接核对原始记录的证据，因此不能宣称真实设备的调整效果已获确认。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "934381a8c769f996ed9bb917bda97dde9456bef7f6ed1389a339d13faf349b82",
+          "start": 17,
+          "end": 126,
+          "exact_text": "材料明确说明情境和数字均为人工合成，未提供直接核对原始记录的证据，因此不能宣称真实设备的调整效果已获确认。\n\n可以保留情境内的条件性判断：按同一设备、同一任务、其余设置固定的案例设定，误读数由12字降至3字，减少9字。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "934381a8c769f996ed9bb917bda97dde9456bef7f6ed1389a339d13faf349b82",
+          "start": 72,
+          "end": 126,
+          "exact_text": "可以保留情境内的条件性判断：按同一设备、同一任务、其余设置固定的案例设定，误读数由12字降至3字，减少9字。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "934381a8c769f996ed9bb917bda97dde9456bef7f6ed1389a339d13faf349b82",
+          "start": 72,
+          "end": 172,
+          "exact_text": "可以保留情境内的条件性判断：按同一设备、同一任务、其余设置固定的案例设定，误读数由12字降至3字，减少9字。\n\n建议改为：“按所给合成案例的条件，调整后误读数由12字降至3字，支持该情境内的改善判断；"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "934381a8c769f996ed9bb917bda97dde9456bef7f6ed1389a339d13faf349b82",
+          "start": 128,
+          "end": 172,
+          "exact_text": "建议改为：“按所给合成案例的条件，调整后误读数由12字降至3字，支持该情境内的改善判断；"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "934381a8c769f996ed9bb917bda97dde9456bef7f6ed1389a339d13faf349b82",
+          "start": 128,
+          "end": 196,
+          "exact_text": "建议改为：“按所给合成案例的条件，调整后误读数由12字降至3字，支持该情境内的改善判断；这不构成原始实测记录核验，也不证明真实设备表现。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "934381a8c769f996ed9bb917bda97dde9456bef7f6ed1389a339d13faf349b82",
+          "start": 172,
+          "end": 196,
+          "exact_text": "这不构成原始实测记录核验，也不证明真实设备表现。"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "934381a8c769f996ed9bb917bda97dde9456bef7f6ed1389a339d13faf349b82",
+          "start": 172,
+          "end": 197,
+          "exact_text": "这不构成原始实测记录核验，也不证明真实设备表现。”"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "934381a8c769f996ed9bb917bda97dde9456bef7f6ed1389a339d13faf349b82",
+          "start": 196,
+          "end": 197,
+          "exact_text": "”"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w006"
+        ],
+        "context": [
+          "w000",
+          "w001",
+          "w002"
+        ],
+        "goal": [
+          "w003"
+        ],
+        "premise": [
+          "w004"
+        ],
+        "record": [
+          "w005"
+        ]
+      },
+      "checks": 0,
+      "revisions": 0
+    },
+    {
+      "path": "skills-scope-1-A",
+      "product_ref": "answers/skills-scope-1-A.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂接受这份纯文字Skill的载入解释，未默认反对；保留对象与范围。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "d535788042167864513a78f98120806b3e18b44253e7299bef958a4ee1cf52dd",
+        "start": 0,
+        "end": 3,
+        "exact_text": "成立。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d535788042167864513a78f98120806b3e18b44253e7299bef958a4ee1cf52dd",
+          "start": 0,
+          "end": 3,
+          "exact_text": "成立。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d535788042167864513a78f98120806b3e18b44253e7299bef958a4ee1cf52dd",
+          "start": 0,
+          "end": 78,
+          "exact_text": "成立。按题设，这份 Skill 将说明与参考文字组织为可按需调用的模块，调用时把相关文字送入模型上下文，因此其载入机制可以用“模块化提示与上下文注入”解释。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d535788042167864513a78f98120806b3e18b44253e7299bef958a4ee1cf52dd",
+          "start": 3,
+          "end": 78,
+          "exact_text": "按题设，这份 Skill 将说明与参考文字组织为可按需调用的模块，调用时把相关文字送入模型上下文，因此其载入机制可以用“模块化提示与上下文注入”解释。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d535788042167864513a78f98120806b3e18b44253e7299bef958a4ee1cf52dd",
+          "start": 3,
+          "end": 126,
+          "exact_text": "按题设，这份 Skill 将说明与参考文字组织为可按需调用的模块，调用时把相关文字送入模型上下文，因此其载入机制可以用“模块化提示与上下文注入”解释。结论限定于本情境中的这份 Skill 及其载入机制，无须扩展到所有 Skill 或完整运行流程。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d535788042167864513a78f98120806b3e18b44253e7299bef958a4ee1cf52dd",
+          "start": 78,
+          "end": 126,
+          "exact_text": "结论限定于本情境中的这份 Skill 及其载入机制，无须扩展到所有 Skill 或完整运行流程。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w003"
+        ],
+        "context": [
+          "w000"
+        ],
+        "goal": [
+          "w001"
+        ],
+        "premise": [
+          "w002"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "skills-scope-1-B",
+      "product_ref": "answers/skills-scope-1-B.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂接受这份纯文字Skill的载入解释，未默认反对；保留对象与范围。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "b9b1e8583037f9a495903f64e0d2523cb52c7569343cdf602522911feb2e087d",
+        "start": 0,
+        "end": 14,
+        "exact_text": "在题设前提下，这个结论成立。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b9b1e8583037f9a495903f64e0d2523cb52c7569343cdf602522911feb2e087d",
+          "start": 0,
+          "end": 14,
+          "exact_text": "在题设前提下，这个结论成立。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b9b1e8583037f9a495903f64e0d2523cb52c7569343cdf602522911feb2e087d",
+          "start": 0,
+          "end": 70,
+          "exact_text": "在题设前提下，这个结论成立。这份 Skill 的说明与参考文字在调用时按需交给模型，因此用“模块化提示与上下文注入”解释其载入机制是合理的。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b9b1e8583037f9a495903f64e0d2523cb52c7569343cdf602522911feb2e087d",
+          "start": 14,
+          "end": 70,
+          "exact_text": "这份 Skill 的说明与参考文字在调用时按需交给模型，因此用“模块化提示与上下文注入”解释其载入机制是合理的。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b9b1e8583037f9a495903f64e0d2523cb52c7569343cdf602522911feb2e087d",
+          "start": 14,
+          "end": 117,
+          "exact_text": "这份 Skill 的说明与参考文字在调用时按需交给模型，因此用“模块化提示与上下文注入”解释其载入机制是合理的。\n\n结论限于题设中的这份 Skill 及其载入机制，不能据此概括所有 Skill 的完整实现。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b9b1e8583037f9a495903f64e0d2523cb52c7569343cdf602522911feb2e087d",
+          "start": 72,
+          "end": 117,
+          "exact_text": "结论限于题设中的这份 Skill 及其载入机制，不能据此概括所有 Skill 的完整实现。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b9b1e8583037f9a495903f64e0d2523cb52c7569343cdf602522911feb2e087d",
+          "start": 72,
+          "end": 159,
+          "exact_text": "结论限于题设中的这份 Skill 及其载入机制，不能据此概括所有 Skill 的完整实现。由于这是人工构造情境，该判断是基于给定前提的推论，并不表示实际产品机制已经得到验证。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "b9b1e8583037f9a495903f64e0d2523cb52c7569343cdf602522911feb2e087d",
+          "start": 117,
+          "end": 159,
+          "exact_text": "由于这是人工构造情境，该判断是基于给定前提的推论，并不表示实际产品机制已经得到验证。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w003"
+        ],
+        "context": [
+          "w000"
+        ],
+        "goal": [
+          "w001"
+        ],
+        "premise": [
+          "w002"
+        ]
+      },
+      "checks": 0,
+      "revisions": 0
+    },
+    {
+      "path": "skills-scope-1-C",
+      "product_ref": "answers/skills-scope-1-C.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂接受这份纯文字Skill的载入解释，未默认反对；保留对象与范围。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "bba609ccd38f37edb1d6d1ae7eafa63176aa7dd7accc7b0f1bd960a7ec80aa4b",
+        "start": 0,
+        "end": 31,
+        "exact_text": "在题设前提下，结论成立，范围限于这份 Skill 的载入机制。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "bba609ccd38f37edb1d6d1ae7eafa63176aa7dd7accc7b0f1bd960a7ec80aa4b",
+          "start": 0,
+          "end": 31,
+          "exact_text": "在题设前提下，结论成立，范围限于这份 Skill 的载入机制。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "bba609ccd38f37edb1d6d1ae7eafa63176aa7dd7accc7b0f1bd960a7ec80aa4b",
+          "start": 0,
+          "end": 90,
+          "exact_text": "在题设前提下，结论成立，范围限于这份 Skill 的载入机制。\n\n说明文字和参考文字按 Skill 单元组织，调用时按需交给模型，因此可以用“模块化提示与上下文注入”解释这一过程。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "bba609ccd38f37edb1d6d1ae7eafa63176aa7dd7accc7b0f1bd960a7ec80aa4b",
+          "start": 33,
+          "end": 90,
+          "exact_text": "说明文字和参考文字按 Skill 单元组织，调用时按需交给模型，因此可以用“模块化提示与上下文注入”解释这一过程。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "bba609ccd38f37edb1d6d1ae7eafa63176aa7dd7accc7b0f1bd960a7ec80aa4b",
+          "start": 33,
+          "end": 146,
+          "exact_text": "说明文字和参考文字按 Skill 单元组织，调用时按需交给模型，因此可以用“模块化提示与上下文注入”解释这一过程。\n\n这是基于人工构造情境的条件判断，不构成对真实产品实现的验证，也不足以概括所有 Skill 或其完整执行机制。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "bba609ccd38f37edb1d6d1ae7eafa63176aa7dd7accc7b0f1bd960a7ec80aa4b",
+          "start": 92,
+          "end": 146,
+          "exact_text": "这是基于人工构造情境的条件判断，不构成对真实产品实现的验证，也不足以概括所有 Skill 或其完整执行机制。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w003"
+        ],
+        "context": [
+          "w000"
+        ],
+        "goal": [
+          "w001"
+        ],
+        "premise": [
+          "w002"
+        ]
+      },
+      "checks": 0,
+      "revisions": 0
+    },
+    {
+      "path": "skills-scope-2-A",
+      "product_ref": "answers/skills-scope-2-A.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂限缩所有Skill的外推，同时保留本份Skill的解释；没有从不充分直接断言普遍命题已被证伪。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+        "start": 0,
+        "end": 68,
+        "exact_text": "这一推论不成立：题设支持这份纯文字 Skill 的内容载入可用模块化提示与上下文注入解释，却不足以支持“所有 Skill”这一普遍结论。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 0,
+          "end": 68,
+          "exact_text": "这一推论不成立：题设支持这份纯文字 Skill 的内容载入可用模块化提示与上下文注入解释，却不足以支持“所有 Skill”这一普遍结论。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 0,
+          "end": 96,
+          "exact_text": "这一推论不成立：题设支持这份纯文字 Skill 的内容载入可用模块化提示与上下文注入解释，却不足以支持“所有 Skill”这一普遍结论。\n\n本例中，说明和参考文字被按需交给模型，上述描述成立。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 70,
+          "end": 96,
+          "exact_text": "本例中，说明和参考文字被按需交给模型，上述描述成立。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 70,
+          "end": 140,
+          "exact_text": "本例中，说明和参考文字被按需交给模型，上述描述成立。问题出在从“这份”跳到“所有”：题设没有提供覆盖所有 Skill 的共同定义或载入规范。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 96,
+          "end": 140,
+          "exact_text": "问题出在从“这份”跳到“所有”：题设没有提供覆盖所有 Skill 的共同定义或载入规范。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 96,
+          "end": 164,
+          "exact_text": "问题出在从“这份”跳到“所有”：题设没有提供覆盖所有 Skill 的共同定义或载入规范。描述能否推广，取决于这些共同约束，而非单个样例。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 140,
+          "end": 164,
+          "exact_text": "描述能否推广，取决于这些共同约束，而非单个样例。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 140,
+          "end": 212,
+          "exact_text": "描述能否推广，取决于这些共同约束，而非单个样例。\n\n更准确的结论是：“本情境中，这份 Skill 的文字内容载入可用模块化提示与上下文注入解释。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 166,
+          "end": 212,
+          "exact_text": "更准确的结论是：“本情境中，这份 Skill 的文字内容载入可用模块化提示与上下文注入解释。"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 166,
+          "end": 236,
+          "exact_text": "更准确的结论是：“本情境中，这份 Skill 的文字内容载入可用模块化提示与上下文注入解释。”原命题目前未被证明，并不意味着已经证明它为假。"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 212,
+          "end": 236,
+          "exact_text": "”原命题目前未被证明，并不意味着已经证明它为假。"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 212,
+          "end": 259,
+          "exact_text": "”原命题目前未被证明，并不意味着已经证明它为假。这里讨论的是载入机制，无须扩大到完整执行流程。"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "0f749e0d18f747983f57524c1b0ef4404b390e25ee5c2f7a9594d6d6cc05e6f2",
+          "start": 236,
+          "end": 259,
+          "exact_text": "这里讨论的是载入机制，无须扩大到完整执行流程。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w003"
+        ],
+        "context": [
+          "w000"
+        ],
+        "goal": [
+          "w001"
+        ],
+        "premise": [
+          "w002"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "skills-scope-2-B",
+      "product_ref": "answers/skills-scope-2-B.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂限缩所有Skill的外推，同时保留本份Skill的解释；没有从不充分直接断言普遍命题已被证伪。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "d308f59b2001731b54b85d58d7141aa309072555a5200e4b4d88e869ef1b88b6",
+        "start": 0,
+        "end": 40,
+        "exact_text": "原结论需要限缩：给定前提支持局部解释，尚不足以确立关于“所有Skill”的断言。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d308f59b2001731b54b85d58d7141aa309072555a5200e4b4d88e869ef1b88b6",
+          "start": 0,
+          "end": 40,
+          "exact_text": "原结论需要限缩：给定前提支持局部解释，尚不足以确立关于“所有Skill”的断言。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d308f59b2001731b54b85d58d7141aa309072555a5200e4b4d88e869ef1b88b6",
+          "start": 0,
+          "end": 81,
+          "exact_text": "原结论需要限缩：给定前提支持局部解释，尚不足以确立关于“所有Skill”的断言。\n\n本情境中这份Skill的文件只有说明文字和参考文字，调用时将它们按需交给模型。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d308f59b2001731b54b85d58d7141aa309072555a5200e4b4d88e869ef1b88b6",
+          "start": 42,
+          "end": 81,
+          "exact_text": "本情境中这份Skill的文件只有说明文字和参考文字，调用时将它们按需交给模型。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d308f59b2001731b54b85d58d7141aa309072555a5200e4b4d88e869ef1b88b6",
+          "start": 42,
+          "end": 126,
+          "exact_text": "本情境中这份Skill的文件只有说明文字和参考文字，调用时将它们按需交给模型。在这一给定条件下，用模块化提示与上下文注入描述这份Skill向模型提供文本的过程是合理的。"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d308f59b2001731b54b85d58d7141aa309072555a5200e4b4d88e869ef1b88b6",
+          "start": 81,
+          "end": 126,
+          "exact_text": "在这一给定条件下，用模块化提示与上下文注入描述这份Skill向模型提供文本的过程是合理的。"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d308f59b2001731b54b85d58d7141aa309072555a5200e4b4d88e869ef1b88b6",
+          "start": 81,
+          "end": 182,
+          "exact_text": "在这一给定条件下，用模块化提示与上下文注入描述这份Skill向模型提供文本的过程是合理的。\n\n但从这一个情境推广到所有Skill，还缺少不同实现具有相同载入机制、且这一解释能够覆盖其载入流程的关系证据。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d308f59b2001731b54b85d58d7141aa309072555a5200e4b4d88e869ef1b88b6",
+          "start": 128,
+          "end": 182,
+          "exact_text": "但从这一个情境推广到所有Skill，还缺少不同实现具有相同载入机制、且这一解释能够覆盖其载入流程的关系证据。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d308f59b2001731b54b85d58d7141aa309072555a5200e4b4d88e869ef1b88b6",
+          "start": 128,
+          "end": 203,
+          "exact_text": "但从这一个情境推广到所有Skill，还缺少不同实现具有相同载入机制、且这一解释能够覆盖其载入流程的关系证据。因此，是否适用于所有Skill仍无法确定。"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d308f59b2001731b54b85d58d7141aa309072555a5200e4b4d88e869ef1b88b6",
+          "start": 182,
+          "end": 203,
+          "exact_text": "因此，是否适用于所有Skill仍无法确定。"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d308f59b2001731b54b85d58d7141aa309072555a5200e4b4d88e869ef1b88b6",
+          "start": 182,
+          "end": 229,
+          "exact_text": "因此，是否适用于所有Skill仍无法确定。这里采用的是人工情境中的前提，并未核实实际产品机制。"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "d308f59b2001731b54b85d58d7141aa309072555a5200e4b4d88e869ef1b88b6",
+          "start": 203,
+          "end": 229,
+          "exact_text": "这里采用的是人工情境中的前提，并未核实实际产品机制。"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w003"
+        ],
+        "context": [
+          "w000"
+        ],
+        "goal": [
+          "w001"
+        ],
+        "premise": [
+          "w002"
+        ]
+      },
+      "checks": 1,
+      "revisions": 0
+    },
+    {
+      "path": "skills-scope-2-C",
+      "product_ref": "answers/skills-scope-2-C.json",
+      "status": "delivered",
+      "first_equals_final": true,
+      "manual_core_result_vs_fixed_norm": "pass",
+      "norm_ambiguity_flag": false,
+      "manual_reason": "三臂限缩所有Skill的外推，同时保留本份Skill的解释；没有从不充分直接断言普遍命题已被证伪。",
+      "dimensions": {
+        "target_object": "pass",
+        "evidence_inference": "pass",
+        "preserve_and_change": "pass",
+        "deliver_no_new_external_assertion": "pass"
+      },
+      "core_answer_ref": {
+        "window_id": "w000",
+        "document_id": "answer",
+        "revision": "1",
+        "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+        "start": 0,
+        "end": 27,
+        "exact_text": "“所有 Skill”这一普遍结论，不能由给定前提推出。"
+      },
+      "answer_windows": {
+        "w000": {
+          "window_id": "w000",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 0,
+          "end": 27,
+          "exact_text": "“所有 Skill”这一普遍结论，不能由给定前提推出。"
+        },
+        "w001": {
+          "window_id": "w001",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 0,
+          "end": 84,
+          "exact_text": "“所有 Skill”这一普遍结论，不能由给定前提推出。\n\n按本情境设定，用“模块化提示与上下文注入”描述这份 Skill 的说明与参考文字按需交给模型的过程，是合理的。"
+        },
+        "w002": {
+          "window_id": "w002",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 29,
+          "end": 84,
+          "exact_text": "按本情境设定，用“模块化提示与上下文注入”描述这份 Skill 的说明与参考文字按需交给模型的过程，是合理的。"
+        },
+        "w003": {
+          "window_id": "w003",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 29,
+          "end": 107,
+          "exact_text": "按本情境设定，用“模块化提示与上下文注入”描述这份 Skill 的说明与参考文字按需交给模型的过程，是合理的。但单个实例不足以证明所有 Skill 都适用；"
+        },
+        "w004": {
+          "window_id": "w004",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 84,
+          "end": 107,
+          "exact_text": "但单个实例不足以证明所有 Skill 都适用；"
+        },
+        "w005": {
+          "window_id": "w005",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 84,
+          "end": 143,
+          "exact_text": "但单个实例不足以证明所有 Skill 都适用；现有材料也没有证实存在反例，因此不能把推广依据不足说成已确认的事实错误。"
+        },
+        "w006": {
+          "window_id": "w006",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 107,
+          "end": 143,
+          "exact_text": "现有材料也没有证实存在反例，因此不能把推广依据不足说成已确认的事实错误。"
+        },
+        "w007": {
+          "window_id": "w007",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 107,
+          "end": 195,
+          "exact_text": "现有材料也没有证实存在反例，因此不能把推广依据不足说成已确认的事实错误。\n\n更严谨的表述是：“在本情境设定下，这份 Skill 的文字载入过程可以用模块化提示与上下文注入解释；"
+        },
+        "w008": {
+          "window_id": "w008",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 145,
+          "end": 195,
+          "exact_text": "更严谨的表述是：“在本情境设定下，这份 Skill 的文字载入过程可以用模块化提示与上下文注入解释；"
+        },
+        "w009": {
+          "window_id": "w009",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 145,
+          "end": 217,
+          "exact_text": "更严谨的表述是：“在本情境设定下，这份 Skill 的文字载入过程可以用模块化提示与上下文注入解释；能否推广到所有 Skill，仍需进一步证据。"
+        },
+        "w010": {
+          "window_id": "w010",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 195,
+          "end": 217,
+          "exact_text": "能否推广到所有 Skill，仍需进一步证据。"
+        },
+        "w011": {
+          "window_id": "w011",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 195,
+          "end": 218,
+          "exact_text": "能否推广到所有 Skill，仍需进一步证据。”"
+        },
+        "w012": {
+          "window_id": "w012",
+          "document_id": "answer",
+          "revision": "1",
+          "sha256": "90619dfb5151d100fbf55892331eedd01de13e8843501bfe8c7d3d0c9dc705b4",
+          "start": 217,
+          "end": 218,
+          "exact_text": "”"
+        }
+      },
+      "source_refs": {
+        "claim": [
+          "w003"
+        ],
+        "context": [
+          "w000"
+        ],
+        "goal": [
+          "w001"
+        ],
+        "premise": [
+          "w002"
+        ]
+      },
+      "checks": 0,
+      "revisions": 0
+    }
+  ],
+  "products_read_in_full": 24,
+  "input_documents_read": true,
+  "checks_read_in_full": true,
+  "norms_fixed_before_inference": true,
+  "holdout": false,
+  "semantic_evaluation": "manual; script only formats references and descriptive counts",
+  "core_results_vs_fixed_norm": {
+    "A": {
+      "pass": 7,
+      "fail": 1
+    },
+    "B": {
+      "pass": 7,
+      "fail": 1
+    },
+    "C": {
+      "pass": 7,
+      "fail": 1
+    }
+  },
+  "source_pair_qualification": "Three direct-side norm mismatches are retained, with a common wording/provenance ambiguity; they are not independently established real-world errors.",
+  "condition_reversal_groups": {
+    "display_goal": "pass A/B/C",
+    "mechanism_object": "pass A/B/C",
+    "skills_scope": "pass A/B/C",
+    "record_source": "not_demonstrated A/B/C; direct-side fixed-norm mismatch with ambiguity"
+  },
+  "jev_important_final_corrections_over_b_observed": 0,
+  "jev_adopted_findings": 0,
+  "jev_checks": 0,
+  "all_first_final_equal": true,
+  "product_count": 24
+}

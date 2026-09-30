@@ -16,23 +16,25 @@ Old frozen requests, review evidence and answers retain `gpt-6-sol`; no prior ba
 Archived one-off drivers remain historical assets, not new-batch entry points.
 This configuration change makes no new quality or price claim and starts no model request.
 
-## Current eight-case completion — 24/24 delivered; independent review pending
+## Current eight-case batch — delivery and executor analysis COMPLETE
 
-The Owner's final named 000077 attempt returned a complete answer. The two already
-authorized A/B compensations then returned answers and normal checks. All 24 paths
-now delivered; the prior 21 states are unchanged. No new unknown/refusal/recovery
-stop. [Complete answers, comparison, calls and evidence](grounded-judgment-v0/extended-exploratory-v1/RESULT.md).
-83 logical calls (59 host / 24 Jev), within original 176/144/32 caps; no expanded
-budget or reviewer model. Old 000047/000049/000077 remain risk-accepted remote
-unknown, all debits and format failures retained. No automatic retry/general unlock.
-Last execution source: `7ad0bbd433eb1e4d28a379b0caffe4191527068a`.
-Current DNS/TCP/TLS check succeeded without an HTTP/authentication/model probe;
-the historical connection cause remains unestablished. Settings/channel unchanged.
-C atoms/findings are unchanged: zero adopted findings/checks, unresolved coverage
-and provider contract errors retained. Complete delivery is not content PASS or
-Jev increment. Independent new-batch content review remains pending; no new batch.
-Old stop checkpoints, old experiment conclusions, GJ/R2 CLOSED, main/default Skill,
-default NOT QUALIFIED and ROI-Beta boundary unchanged.
+Fixed products: `712f813c3176d6e1404461effa5715cc443c32c3`.
+[Full 24-product executor analysis](grounded-judgment-v0/extended-exploratory-v1/ANALYSIS.md)
+completed on 2026-10-01: group-aware, not independent/blind or a new reviewer model.
+Three reversal pairs work across A/B/C; source identity pair fails to demonstrate the
+preregistered difference, with shared original-record/verification wording ambiguity.
+No C important final correction over A/B observed. C selects claim as premise 8/8,
+five adopted; zero findings/checks; unresolved coverage and contract errors retained.
+B yields diagnostic records but no important final-answer increment over A in this batch.
+Recommendation: end this batch; current grounded v0 has no clear routine-adoption benefit.
+This is not universal Jev or ROI-Beta failure; old routing-efficiency observations remain.
+
+24/24 actual answers delivered; previous 21 unchanged; no revision or new inference
+in this analysis. [Original products/calls/costs](grounded-judgment-v0/extended-exploratory-v1/RESULT.md).
+83 logical (59 host / 24 Jev) within 176/144/32. Old 000047/000049/000077 unknowns,
+format failures and debits preserved; no automatic retry/general unlock.
+Independent new-batch content review remains separate/pending; no default qualification.
+Old checkpoints/conclusions, GJ/R2 CLOSED, main/default Skill and ROI-Beta boundary unchanged.
 
 ## Original eight-case authorization — historical scope
 

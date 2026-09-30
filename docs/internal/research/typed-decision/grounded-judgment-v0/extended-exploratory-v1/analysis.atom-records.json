@@ -1,0 +1,4405 @@
+{
+  "reviewed_commit": "712f813c3176d6e1404461effa5715cc443c32c3",
+  "full_denominator_by_arm": {
+    "B": 104,
+    "C": 104
+  },
+  "records": [
+    {
+      "path": "display-goal-1-B",
+      "record_ref": "answers/display-goal-1-B.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "C",
+          "raw_result_ref": "03ebe6690658449b496758e363674b8b2cdefe633c2d133a57b6419dc3d6f693",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "E": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "E",
+          "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+          "refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "ER": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ER",
+          "raw_result_ref": "1816306a243c457c7a8616481d7ce71e27c5740fd63e83d1429ab3687b9a348e",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ES",
+          "raw_result_ref": "e51e126fc6becfbf4c7f53def41cfec8e8cdcc60179614311498a676ee660bba",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "given"
+        },
+        "G": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "G",
+          "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_R",
+          "raw_result_ref": "526a54e4ee386a2450eedeecfc25b150f6dbf1d0bc0ec2004b2ac2e495000f24",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w003",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_T",
+          "raw_result_ref": "2040279e13229dc90bce003599ae7661f75623625986eaddce56693a83c6aded",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "O": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "O",
+          "raw_result_ref": "3332808a249dfccc54289e81fde60137a2966a15f55956c51a7e1cd1922d56ad",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "P": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "P",
+          "raw_result_ref": "114eb5fb81747616b000d04aa0231187c4eb21b268304ad40e3a6f883cad3a57",
+          "refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "R": {
+          "basis_refs": [
+            "w003",
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "R",
+          "raw_result_ref": "9dbd0b332f159bb4e8cd7eccd16d36d9190041d194295ea28f8d50242fa89562",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "sufficient"
+        },
+        "S": {
+          "basis_refs": [
+            "w003",
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "S",
+          "raw_result_ref": "37734eff6a0f8fe65b05b4e43b7384f8ac28030b776280b20c106b6412fde775",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "T": {
+          "basis_refs": [
+            "w003",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "T",
+          "raw_result_ref": "98f9b004b4572df29423152deb83df438bb721c8a017b7ae9ce8ed0525e4890f",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "TB": {
+          "basis_refs": [
+            "w003",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "TB",
+          "raw_result_ref": "42f1d1a9c067a8cc6ea56228497c6f4980f90e0c8bd77c878ead5ac83bba468c",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [],
+        "goal": "retain",
+        "limitations": {},
+        "premise_status": "conditional_on_given",
+        "relation": "retain"
+      },
+      "check": null,
+      "selected_premise_source_document": "premise",
+      "selected_premise_exact_text": "给定条件：同为27寸时，5K面板的物理像素密度高于4K面板。",
+      "raw_p_equals_c": false
+    },
+    {
+      "path": "display-goal-1-C",
+      "record_ref": "answers/display-goal-1-C.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.9400000000000001,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.93,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.0,
+              "w004": 0.06,
+              "w005": 0.9400000000000001,
+              "w006": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "C",
+          "raw_result_ref": "fb3e291042d631419511dc792e8509a2dc8b0e6e703ebe9010c53d3d288866c1",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "E": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": 0.58,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.52,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.01,
+              "w002": 0.01,
+              "w003": 0.22,
+              "w004": 0.58,
+              "w005": 0.14,
+              "w006": 0.03
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "E",
+          "raw_result_ref": "1c6f409bb94fbc8784a364a2ccc6bd926a6d3dca437545caef98ae1408e54c19",
+          "refs": [
+            "w004"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "w004"
+        },
+        "ER": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ER",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "ES": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ES",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "G": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": 1.0,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 1.0,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 1.0,
+              "w004": 0.0,
+              "w005": 0.0,
+              "w006": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "G",
+          "raw_result_ref": "79aa03583737a086c19975dea5b2e3fabebf7e594a3014df8733811ee3ea322e",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "I_R": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "I_R",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "I_T": {
+          "basis_refs": [
+            "w003",
+            "w005",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.0,
+            "probabilities": {
+              "0": 0.35,
+              "1": 0.09,
+              "2": 0.56
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "I_T",
+          "raw_result_ref": "49b775670c3572bee8bdb9b23438ab0bd72852232a6c453ff595184c2dbab0c9",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 1.21
+        },
+        "O": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.88,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.86,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.0,
+              "w004": 0.0,
+              "w005": 0.88,
+              "w006": 0.12
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "O",
+          "raw_result_ref": "807943e789bbcfa78462d5e16cc5dd96e081ff660c51da9ec0b9e52add1cb63f",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "P": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.73,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.69,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.05,
+              "w004": 0.21,
+              "w005": 0.73,
+              "w006": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "P",
+          "raw_result_ref": "93ad4bfd788c0ab187ecebdddc4a38b1dc0dbf71f033fd79be0b016b254c6be7",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "w005"
+        },
+        "R": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "R",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "S": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "S",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "T": {
+          "basis_refs": [
+            "w003",
+            "w005",
+            "w005"
+          ],
+          "probability": 0.58,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": null,
+          "question_id": "T",
+          "raw_result_ref": "9f56075808b79136c9a6f287c44863f7479b54860dc76b61269269144ab88346",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": 0.58
+        },
+        "TB": {
+          "basis_refs": [
+            "w003",
+            "w005",
+            "w005"
+          ],
+          "probability": 0.85,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.8,
+            "probabilities": {
+              "different_G_C": 0.03,
+              "insufficient": 0.1,
+              "match": 0.85,
+              "unlocated": 0.02
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "TB",
+          "raw_result_ref": "4e7a8a492885e8e04d0970a72bd444fca875948dc18667a60c6f78bd2fd241ca",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [],
+        "goal": "unresolved",
+        "limitations": {
+          "E": "low_confidence",
+          "ER": "dependency_missing",
+          "ES": "dependency_missing",
+          "I_R": "dependency_missing",
+          "P": "low_confidence",
+          "R": "dependency_missing",
+          "S": "dependency_missing",
+          "T": "low_confidence"
+        },
+        "premise_status": "premise_unverified",
+        "relation": "unresolved"
+      },
+      "check": null,
+      "selected_premise_source_document": "claim",
+      "selected_premise_exact_text": "因此，接下来优先比较27寸5K机型的面板规格和价格。",
+      "raw_p_equals_c": true
+    },
+    {
+      "path": "display-goal-2-B",
+      "record_ref": "answers/display-goal-2-B.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "C",
+          "raw_result_ref": "03ebe6690658449b496758e363674b8b2cdefe633c2d133a57b6419dc3d6f693",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "E": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "E",
+          "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+          "refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "ER": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ER",
+          "raw_result_ref": "1816306a243c457c7a8616481d7ce71e27c5740fd63e83d1429ab3687b9a348e",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ES",
+          "raw_result_ref": "e51e126fc6becfbf4c7f53def41cfec8e8cdcc60179614311498a676ee660bba",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "given"
+        },
+        "G": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "G",
+          "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_R",
+          "raw_result_ref": "526a54e4ee386a2450eedeecfc25b150f6dbf1d0bc0ec2004b2ac2e495000f24",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w003",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_T",
+          "raw_result_ref": "2040279e13229dc90bce003599ae7661f75623625986eaddce56693a83c6aded",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "O": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "O",
+          "raw_result_ref": "03ebe6690658449b496758e363674b8b2cdefe633c2d133a57b6419dc3d6f693",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "P": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "P",
+          "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+          "refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "R": {
+          "basis_refs": [
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "R",
+          "raw_result_ref": "d26dc53c083d55d12b5507f3621d9237e330986d30458acedc35194d6ec0e602",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "overreach"
+        },
+        "S": {
+          "basis_refs": [
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "S",
+          "raw_result_ref": "9ea1790cc62c706d03a0b9d7f24a2f11d70e35d5caca8b13c79c2cfd56cf619b",
+          "refs": [],
+          "semantic_state": "deny",
+          "unresolved_reason": null,
+          "value": "deny"
+        },
+        "T": {
+          "basis_refs": [
+            "w003",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "T",
+          "raw_result_ref": "711e7a602696d973908c94f472f666eb4be88d13b498ccd24154175639489909",
+          "refs": [],
+          "semantic_state": "deny",
+          "unresolved_reason": null,
+          "value": "deny"
+        },
+        "TB": {
+          "basis_refs": [
+            "w003",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "TB",
+          "raw_result_ref": "813ab7de689453047ea13f841c211dd598743be763611184c944e23d1abf7cf7",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "different_G_C"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [
+          {
+            "action": "reanchor",
+            "claim_ref": "w005",
+            "evidence_origin": "given",
+            "evidence_ref": "w004",
+            "evidence_relation": "supports",
+            "finding_id": "target",
+            "goal_ref": "w003",
+            "keep_exact_text": "给定条件：同为27寸时，5K面板的物理像素密度高于4K面板。",
+            "limit_target_exact_text": "因此，接下来优先比较27寸5K机型的面板规格和价格。",
+            "object_ref": "w005",
+            "premise_ref": "w004",
+            "relation": "overreach",
+            "requirement": "按所引G/O重新回答；不自动反转C真假。",
+            "source_question_ids": [
+              "G",
+              "O",
+              "C",
+              "T",
+              "TB"
+            ],
+            "uncertainty": "conditional_on_given"
+          },
+          {
+            "action": "limit",
+            "claim_ref": "w005",
+            "evidence_origin": "given",
+            "evidence_ref": "w004",
+            "evidence_relation": "supports",
+            "finding_id": "inference",
+            "goal_ref": "w003",
+            "keep_exact_text": "给定条件：同为27寸时，5K面板的物理像素密度高于4K面板。",
+            "limit_target_exact_text": "因此，接下来优先比较27寸5K机型的面板规格和价格。",
+            "object_ref": "w005",
+            "premise_ref": "w004",
+            "relation": "overreach",
+            "requirement": "保留P在给定范围成立的部分；不得仅凭P断言完整C，说明缺少的关系证据。",
+            "source_question_ids": [
+              "P",
+              "C",
+              "R",
+              "S"
+            ],
+            "uncertainty": "conditional_on_given"
+          }
+        ],
+        "goal": "reanchor",
+        "limitations": {},
+        "premise_status": "conditional_on_given",
+        "relation": "limit"
+      },
+      "check": {
+        "LOC.inference": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "LOC.inference",
+          "raw_result_ref": "03ebe6690658449b496758e363674b8b2cdefe633c2d133a57b6419dc3d6f693",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "LOC.target": {
+          "basis_refs": [
+            "w009"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "LOC.target",
+          "raw_result_ref": "4b60bcd97c8cccecc3956ce12ffb073da6e5cea21050d9089a0e186c20267320",
+          "refs": [
+            "w009"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w009"
+        },
+        "OK.inference": {
+          "basis_refs": [
+            "w000",
+            "w005",
+            "w012"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "OK.inference",
+          "raw_result_ref": "0e0800cbc943e1e0b23429a6f556e5c422985cb1aeff3ca0c457c9c1ae26abf4",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "OK.target": {
+          "basis_refs": [
+            "w001",
+            "w004",
+            "w009",
+            "w012"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "OK.target",
+          "raw_result_ref": "1ca58f46ba83ff8f6cb172d1e21a7b44b589e20d439eff09a901e5821ad47bd4",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        }
+      },
+      "selected_premise_source_document": "premise",
+      "selected_premise_exact_text": "给定条件：同为27寸时，5K面板的物理像素密度高于4K面板。",
+      "raw_p_equals_c": false
+    },
+    {
+      "path": "display-goal-2-C",
+      "record_ref": "answers/display-goal-2-C.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.97,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.97,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.0,
+              "w004": 0.03,
+              "w005": 0.97,
+              "w006": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "C",
+          "raw_result_ref": "10fb1ea6a439b09413f9204903eb65c7ed804318ca483e7518bbf209a8fcb74b",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "E": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": 0.42,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.35,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.01,
+              "w002": 0.02,
+              "w003": 0.37,
+              "w004": 0.42,
+              "w005": 0.13,
+              "w006": 0.04
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "E",
+          "raw_result_ref": "41375476dfec1042c68a108b29a23c1a5d9dbbfa4dea120e2c011c639ca3259c",
+          "refs": [
+            "w004"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "w004"
+        },
+        "ER": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ER",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "ES": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ES",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "G": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": 1.0,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 1.0,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 1.0,
+              "w004": 0.0,
+              "w005": 0.0,
+              "w006": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "G",
+          "raw_result_ref": "79aa03583737a086c19975dea5b2e3fabebf7e594a3014df8733811ee3ea322e",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "I_R": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "I_R",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "I_T": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": "provider_distribution",
+          "question_id": "I_T",
+          "raw_result_ref": "974a863debc36087a2424bf2687dfe38ac7162816716a7b572c5b9c86a9b4a7d",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "provider_error",
+          "value": null
+        },
+        "O": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.93,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.92,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.0,
+              "w004": 0.0,
+              "w005": 0.93,
+              "w006": 0.07
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "O",
+          "raw_result_ref": "e2d856ec1fe5b229ce2ca241872404e2be93f701286f37cff1444e59f3d868af",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "P": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.7,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.66,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.01,
+              "w003": 0.09,
+              "w004": 0.19,
+              "w005": 0.7,
+              "w006": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "P",
+          "raw_result_ref": "08d78bf2a4fa2983a0bf029c58bec7e56a63bb0be74eaaa658128c711a638dcc",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "w005"
+        },
+        "R": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "R",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "S": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "S",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "T": {
+          "basis_refs": [
+            "w003",
+            "w005",
+            "w005"
+          ],
+          "probability": 0.34,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": null,
+          "question_id": "T",
+          "raw_result_ref": "4584762b1c028ad8024a29f944df958d73254ad9f02b98c8c81a0e6b53c0d2d5",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": 0.34
+        },
+        "TB": {
+          "basis_refs": [
+            "w003",
+            "w005",
+            "w005"
+          ],
+          "probability": 0.51,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.35,
+            "probabilities": {
+              "different_G_C": 0.12,
+              "insufficient": 0.32,
+              "match": 0.51,
+              "unlocated": 0.05
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "TB",
+          "raw_result_ref": "f94ff3d83277f43cc4938a138077324d60052f3c99d882dfab0f8d07a1db8907",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "match"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [],
+        "goal": "unresolved",
+        "limitations": {
+          "E": "low_confidence",
+          "ER": "dependency_missing",
+          "ES": "dependency_missing",
+          "I_R": "dependency_missing",
+          "I_T": "provider_error",
+          "P": "low_confidence",
+          "R": "dependency_missing",
+          "S": "dependency_missing",
+          "T": "low_confidence",
+          "TB": "low_confidence"
+        },
+        "premise_status": "premise_unverified",
+        "relation": "unresolved"
+      },
+      "check": null,
+      "selected_premise_source_document": "claim",
+      "selected_premise_exact_text": "因此，接下来优先比较27寸5K机型的面板规格和价格。",
+      "raw_p_equals_c": true
+    },
+    {
+      "path": "mechanism-object-1-B",
+      "record_ref": "answers/mechanism-object-1-B.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "C",
+          "raw_result_ref": "03ebe6690658449b496758e363674b8b2cdefe633c2d133a57b6419dc3d6f693",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "E": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "E",
+          "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+          "refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "ER": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ER",
+          "raw_result_ref": "1816306a243c457c7a8616481d7ce71e27c5740fd63e83d1429ab3687b9a348e",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w000",
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ES",
+          "raw_result_ref": "6378c049ed3c3c36f4e7dc413ff235ceba19b3a7c0e25c72f4134b59a0cd4d1d",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "given"
+        },
+        "G": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "G",
+          "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w001",
+            "w004",
+            "w005",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_R",
+          "raw_result_ref": "ee4416ec747f6d8748a9038d645d669afede72dd2044825e336a43c7ea1d4850",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w001",
+            "w005",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_T",
+          "raw_result_ref": "cb6817002c86dce40d9faf1dba74a4b50ce07146e4e0818cb97ccb394244d560",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "O": {
+          "basis_refs": [
+            "w001"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "O",
+          "raw_result_ref": "433ceabdbb5ae2df1e0e6ced351125451341dcffe23cb8ce701169381dde35b4",
+          "refs": [
+            "w001"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w001"
+        },
+        "P": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "P",
+          "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+          "refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "R": {
+          "basis_refs": [
+            "w001",
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "R",
+          "raw_result_ref": "e28ed964069f9cd2663bf5b19aaca9b4a52218816477d413e511e34f917e76bd",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "sufficient"
+        },
+        "S": {
+          "basis_refs": [
+            "w001",
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "S",
+          "raw_result_ref": "72db0935a6c5cc80dca86cd28fdde04b274693c2cac58fc78ff9a569810a5b62",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "T": {
+          "basis_refs": [
+            "w001",
+            "w005",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "T",
+          "raw_result_ref": "49d1b3619c4f5ce4aaaa44d8b70a306dfcad81c4798b8c4acb817413047cfe6c",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "TB": {
+          "basis_refs": [
+            "w001",
+            "w005",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "TB",
+          "raw_result_ref": "c511bec531887a7841486c8d6752e5f1c01b833cf97546d23662b5f0c8755056",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [],
+        "goal": "retain",
+        "limitations": {},
+        "premise_status": "conditional_on_given",
+        "relation": "retain"
+      },
+      "check": null,
+      "selected_premise_source_document": "premise",
+      "selected_premise_exact_text": "通过后把按需载入的指令和原文交给模型生成摘要。",
+      "raw_p_equals_c": false
+    },
+    {
+      "path": "mechanism-object-1-C",
+      "record_ref": "answers/mechanism-object-1-C.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.98,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.01,
+              "w004": 0.0,
+              "w005": 0.98,
+              "w006": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "C",
+          "raw_result_ref": "651c9d2d9d5df44f17f4bb6794bd32d12c37dd31a365f4749c27b327b5fb9435",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "E": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.34,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.26,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.01,
+              "w001": 0.15,
+              "w002": 0.01,
+              "w003": 0.14,
+              "w004": 0.07,
+              "w005": 0.34,
+              "w006": 0.27
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "E",
+          "raw_result_ref": "08607ee842a115f87a9864d78dff7684f44abd20770421de29388c71b7bb81a9",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "w005"
+        },
+        "ER": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ER",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "ES": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ES",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "G": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": 0.98,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.97,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.02,
+              "w002": 0.0,
+              "w003": 0.0,
+              "w004": 0.0,
+              "w005": 0.0,
+              "w006": 0.98
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "G",
+          "raw_result_ref": "ad9e8f90a057b7c0dc643e72dcb05673732550e759a6b08027efd15bc3cedab7",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "I_R": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": "provider_distribution",
+          "question_id": "I_R",
+          "raw_result_ref": "974a863debc36087a2424bf2687dfe38ac7162816716a7b572c5b9c86a9b4a7d",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "provider_error",
+          "value": null
+        },
+        "I_T": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "I_T",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "O": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.79,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.75,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.0,
+              "w004": 0.0,
+              "w005": 0.79,
+              "w006": 0.21
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "O",
+          "raw_result_ref": "470633b7345c8143c1d6ea24aaeffe49b72b879860bd1ad581899dfe6c481079",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "w005"
+        },
+        "P": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.81,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.78,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.14,
+              "w002": 0.0,
+              "w003": 0.02,
+              "w004": 0.02,
+              "w005": 0.81,
+              "w006": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "P",
+          "raw_result_ref": "f0ef0a71cf0269dccde0755ad6e5dd9f76d483635f0d2569bc7c4da68518169d",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "R": {
+          "basis_refs": [
+            "w005",
+            "w005"
+          ],
+          "probability": 0.48,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.35,
+            "probabilities": {
+              "contradicts": 0.01,
+              "insufficient": 0.23,
+              "overreach": 0.19,
+              "sufficient": 0.48,
+              "unrelated": 0.09
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "R",
+          "raw_result_ref": "15f63886a7eae87a75b4fc49209301137dd6c3cb2c5814e946d2345ad0cc51fc",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "sufficient"
+        },
+        "S": {
+          "basis_refs": [
+            "w005",
+            "w005"
+          ],
+          "probability": 0.41,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": null,
+          "question_id": "S",
+          "raw_result_ref": "5bbadc9e103c6d3ea0ec0e343cead31fb9c2141e98b075cdc3bb3d59236821a5",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": 0.41
+        },
+        "T": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "T",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "TB": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "TB",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [],
+        "goal": "unresolved",
+        "limitations": {
+          "E": "low_confidence",
+          "ER": "dependency_missing",
+          "ES": "dependency_missing",
+          "I_R": "provider_error",
+          "I_T": "dependency_missing",
+          "O": "low_confidence",
+          "R": "low_confidence",
+          "S": "low_confidence",
+          "T": "dependency_missing",
+          "TB": "dependency_missing"
+        },
+        "premise_status": "premise_unverified",
+        "relation": "unresolved"
+      },
+      "check": null,
+      "selected_premise_source_document": "claim",
+      "selected_premise_exact_text": "对于当前讨论的对象，用模块化提示和上下文注入解释工作机制已经充分。",
+      "raw_p_equals_c": true
+    },
+    {
+      "path": "mechanism-object-2-B",
+      "record_ref": "answers/mechanism-object-2-B.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "C",
+          "raw_result_ref": "03ebe6690658449b496758e363674b8b2cdefe633c2d133a57b6419dc3d6f693",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "E": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "E",
+          "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "ER": {
+          "basis_refs": [
+            "w003",
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ER",
+          "raw_result_ref": "5722843b21e1578b6c2857ebc93f30a2a15555b650e2d13ef3ea08b1b620418a",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w000",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ES",
+          "raw_result_ref": "270e09a708f9c93c05159457d5310cebe2bff8136d874e611740bb9bccfaaf4f",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "given"
+        },
+        "G": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "G",
+          "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w001",
+            "w003",
+            "w005",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_R",
+          "raw_result_ref": "286e75bf84261af42ab35de117bc5ddda508c88ce7abf4a26c96a43478878439",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w006",
+            "w001",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_T",
+          "raw_result_ref": "634b34f0a133829328edbcdc0a0943e84b42f82e36acfece30751462b19a79ed",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "G与C明确匹配，未建立目标替换发现，该影响题不适用。",
+          "value": null
+        },
+        "O": {
+          "basis_refs": [
+            "w001"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "O",
+          "raw_result_ref": "433ceabdbb5ae2df1e0e6ced351125451341dcffe23cb8ce701169381dde35b4",
+          "refs": [
+            "w001"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w001"
+        },
+        "P": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "P",
+          "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+          "refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "R": {
+          "basis_refs": [
+            "w001",
+            "w002",
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "R",
+          "raw_result_ref": "b29bb4170ea9d7846ea595fd277c2b21b3b1fec74251df90adfd40a887b0399e",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "overreach"
+        },
+        "S": {
+          "basis_refs": [
+            "w001",
+            "w002",
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "S",
+          "raw_result_ref": "5f6288838914fc5fd427ce6409a60382f6f792883bc12d943f3c38b9bce7fa00",
+          "refs": [],
+          "semantic_state": "deny",
+          "unresolved_reason": null,
+          "value": "deny"
+        },
+        "T": {
+          "basis_refs": [
+            "w006",
+            "w001",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "T",
+          "raw_result_ref": "9ab2b36cbbb00315e486ed06ed0d0b384ede4191353b6f5729952b0f400dbf84",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "TB": {
+          "basis_refs": [
+            "w006",
+            "w001",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "TB",
+          "raw_result_ref": "f535a73f0d6dab7802d23804561d693f125bf54b6c1aa98eeb4aaeb3ed1f8e6a",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [
+          {
+            "action": "limit",
+            "claim_ref": "w005",
+            "evidence_origin": "given",
+            "evidence_ref": "w003",
+            "evidence_relation": "supports",
+            "finding_id": "inference",
+            "goal_ref": "w006",
+            "keep_exact_text": "通过后把按需载入的指令和原文交给模型生成摘要。",
+            "limit_target_exact_text": "对于当前讨论的对象，用模块化提示和上下文注入解释工作机制已经充分。",
+            "object_ref": "w001",
+            "premise_ref": "w004",
+            "relation": "overreach",
+            "requirement": "保留P在给定范围成立的部分；不得仅凭P断言完整C，说明缺少的关系证据。",
+            "source_question_ids": [
+              "P",
+              "C",
+              "R",
+              "S"
+            ],
+            "uncertainty": "conditional_on_given"
+          }
+        ],
+        "goal": "retain",
+        "limitations": {
+          "I_T": "G与C明确匹配，未建立目标替换发现，该影响题不适用。"
+        },
+        "premise_status": "conditional_on_given",
+        "relation": "limit"
+      },
+      "check": {
+        "LOC.inference": {
+          "basis_refs": [
+            "w008"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "LOC.inference",
+          "raw_result_ref": "8faa7561356c4c9cc630c874622bdc72372446376b55248f555916dc63889576",
+          "refs": [
+            "w008"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w008"
+        },
+        "OK.inference": {
+          "basis_refs": [
+            "w003",
+            "w008",
+            "w010"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "OK.inference",
+          "raw_result_ref": "fb1fabe0d669565208d1c32b35a16dba62b276bdb5537c440bc1eb12d5ebba92",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        }
+      },
+      "selected_premise_source_document": "premise",
+      "selected_premise_exact_text": "通过后把按需载入的指令和原文交给模型生成摘要。",
+      "raw_p_equals_c": false
+    },
+    {
+      "path": "mechanism-object-2-C",
+      "record_ref": "answers/mechanism-object-2-C.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.98,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.01,
+              "w004": 0.0,
+              "w005": 0.98,
+              "w006": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "C",
+          "raw_result_ref": "651c9d2d9d5df44f17f4bb6794bd32d12c37dd31a365f4749c27b327b5fb9435",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "E": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": 0.33,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.24,
+            "probabilities": {
+              "ambiguous": 0.01,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.05,
+              "w002": 0.01,
+              "w003": 0.33,
+              "w004": 0.08,
+              "w005": 0.21,
+              "w006": 0.3
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "E",
+          "raw_result_ref": "7642f1a36e513ef221106926d42036d62da5ba95144c0701995f540f065f80d2",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "w003"
+        },
+        "ER": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ER",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "ES": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ES",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "G": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": 0.98,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.01,
+              "w002": 0.0,
+              "w003": 0.0,
+              "w004": 0.0,
+              "w005": 0.01,
+              "w006": 0.98
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "G",
+          "raw_result_ref": "51f065ce1a8e01b8b703b94eae673cb6aca2fb377009ccacd7af166671db54ed",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w005",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.18,
+            "probabilities": {
+              "0": 0.22,
+              "1": 0.46,
+              "2": 0.32
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "I_R",
+          "raw_result_ref": "60ccb456de9522ac18c6b366b4f5ea18b5a4428de7f5ca78f8b3ff2549cf9e55",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 1.1
+        },
+        "I_T": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": "provider_distribution",
+          "question_id": "I_T",
+          "raw_result_ref": "974a863debc36087a2424bf2687dfe38ac7162816716a7b572c5b9c86a9b4a7d",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "provider_error",
+          "value": null
+        },
+        "O": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.81,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.78,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.0,
+              "w004": 0.0,
+              "w005": 0.81,
+              "w006": 0.19
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "O",
+          "raw_result_ref": "5d62d618622f01608304553f618af44fedf1d3c4d4e98e3b4c12bf2bfdcdd807",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "P": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.9,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.89,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.04,
+              "w002": 0.0,
+              "w003": 0.03,
+              "w004": 0.02,
+              "w005": 0.9,
+              "w006": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "P",
+          "raw_result_ref": "55b860978cdcb03f29444f8f1e2fe8a31e7a45e2be35716c966f5195604959cd",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "R": {
+          "basis_refs": [
+            "w005",
+            "w005"
+          ],
+          "probability": 0.63,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.53,
+            "probabilities": {
+              "contradicts": 0.01,
+              "insufficient": 0.12,
+              "overreach": 0.2,
+              "sufficient": 0.63,
+              "unrelated": 0.04
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "R",
+          "raw_result_ref": "78a3246c5e207626c7c2f7ab1500559527998e0cf0504e35ee7fc511fe6ca3d8",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "sufficient"
+        },
+        "S": {
+          "basis_refs": [
+            "w005",
+            "w005"
+          ],
+          "probability": 0.34,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": null,
+          "question_id": "S",
+          "raw_result_ref": "4584762b1c028ad8024a29f944df958d73254ad9f02b98c8c81a0e6b53c0d2d5",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": 0.34
+        },
+        "T": {
+          "basis_refs": [
+            "w006",
+            "w005",
+            "w005"
+          ],
+          "probability": 0.43,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": null,
+          "question_id": "T",
+          "raw_result_ref": "9cffa44b62781c74c239b4d1f9849a1c5fe594221915621c06af4e3254feea64",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": 0.43
+        },
+        "TB": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": "provider_distribution",
+          "question_id": "TB",
+          "raw_result_ref": "c3954e8e3b653ac025b76a38f58ed2ae99a61966ea130e9554a142371b2e6be8",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "provider_error",
+          "value": null
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [],
+        "goal": "unresolved",
+        "limitations": {
+          "E": "low_confidence",
+          "ER": "dependency_missing",
+          "ES": "dependency_missing",
+          "I_T": "provider_error",
+          "R": "low_confidence",
+          "S": "low_confidence",
+          "T": "low_confidence",
+          "TB": "provider_error"
+        },
+        "premise_status": "premise_unverified",
+        "relation": "unresolved"
+      },
+      "check": null,
+      "selected_premise_source_document": "claim",
+      "selected_premise_exact_text": "对于当前讨论的对象，用模块化提示和上下文注入解释工作机制已经充分。",
+      "raw_p_equals_c": true
+    },
+    {
+      "path": "record-source-1-B",
+      "record_ref": "answers/record-source-1-B.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "C",
+          "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "E": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "E",
+          "raw_result_ref": "03ebe6690658449b496758e363674b8b2cdefe633c2d133a57b6419dc3d6f693",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "ER": {
+          "basis_refs": [
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ER",
+          "raw_result_ref": "81d47e0ddc4b1532f49412ce0091a0280181a17440d3996c5843b87f78366f5f",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ES",
+          "raw_result_ref": "6256bdfb9ff168a7778a3000bbb388b6126161c1acdcba9bf3aa387fa04d9117",
+          "refs": [],
+          "semantic_state": "invalid",
+          "unresolved_reason": "contract_error",
+          "value": null
+        },
+        "G": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "G",
+          "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w001",
+            "w003",
+            "w004",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_R",
+          "raw_result_ref": "f3735b7ec6ce21811d7efbf9fdf49b1994fd7b21bf49575eea1c2a1d0613f6bb",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w003",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_T",
+          "raw_result_ref": "48675848ce83b904c3c20b1b953450f1975af7bb513369d27ebb9622b8364d0c",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "未建立C替换G目标的发现，该条件性影响不适用。",
+          "value": null
+        },
+        "O": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "O",
+          "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "P": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "P",
+          "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+          "refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "R": {
+          "basis_refs": [
+            "w001",
+            "w004",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "R",
+          "raw_result_ref": "dec438a198b44af77a7343f8328452231f08d583aabbf454f50187bbc7aec1bc",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "overreach"
+        },
+        "S": {
+          "basis_refs": [
+            "w001",
+            "w004",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "S",
+          "raw_result_ref": "a97226b9b8ebad9b19bd26d00dc702328bfa6c69192bda4cdfa3e02e66e9951f",
+          "refs": [],
+          "semantic_state": "deny",
+          "unresolved_reason": null,
+          "value": "deny"
+        },
+        "T": {
+          "basis_refs": [
+            "w003",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "T",
+          "raw_result_ref": "a5522af77f58f8e6391eaa34b1fc0a4bdc4563524f6cbd37cf953c66d3830f8d",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "TB": {
+          "basis_refs": [
+            "w003",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "TB",
+          "raw_result_ref": "28d41119b06235843c617c821a8708eb740438148fc1918317e962c300fbb1df",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [
+          {
+            "action": "limit",
+            "claim_ref": "w006",
+            "evidence_origin": null,
+            "evidence_ref": "w005",
+            "evidence_relation": "supports",
+            "finding_id": "inference",
+            "goal_ref": "w003",
+            "keep_exact_text": "发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。",
+            "limit_target_exact_text": "因此，本情境已直接核对原始记录，确认这一次调整减少了误读。",
+            "object_ref": "w006",
+            "premise_ref": "w004",
+            "relation": "overreach",
+            "requirement": "保留P在给定范围成立的部分；不得仅凭P断言完整C，说明缺少的关系证据。",
+            "source_question_ids": [
+              "P",
+              "C",
+              "R",
+              "S"
+            ],
+            "uncertainty": "premise_unverified"
+          }
+        ],
+        "goal": "retain",
+        "limitations": {
+          "ES": "contract_error",
+          "I_T": "未建立C替换G目标的发现，该条件性影响不适用。"
+        },
+        "premise_status": "premise_unverified",
+        "relation": "limit"
+      },
+      "check": {
+        "LOC.inference": {
+          "basis_refs": [
+            "w008"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "LOC.inference",
+          "raw_result_ref": "8faa7561356c4c9cc630c874622bdc72372446376b55248f555916dc63889576",
+          "refs": [
+            "w008"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w008"
+        },
+        "OK.inference": {
+          "basis_refs": [
+            "w003",
+            "w007",
+            "w011"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "OK.inference",
+          "raw_result_ref": "0744b40d6ee971111e7f092a152db314308ec6d4d70fd5a914d3191375690cf7",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "check_conflict",
+          "value": "support"
+        }
+      },
+      "selected_premise_source_document": "premise",
+      "selected_premise_exact_text": "发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。",
+      "raw_p_equals_c": false
+    },
+    {
+      "path": "record-source-1-C",
+      "record_ref": "answers/record-source-1-C.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": 1.0,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.0,
+              "w004": 0.0,
+              "w005": 0.0,
+              "w006": 1.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "C",
+          "raw_result_ref": "28dbb3a3d7cac0fd3dd0d2d54c707a96cff4de17b5f72e008ddd39c6fbdff2fc",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "E": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.84,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.81,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.01,
+              "w003": 0.0,
+              "w004": 0.03,
+              "w005": 0.84,
+              "w006": 0.12
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "E",
+          "raw_result_ref": "33a80dc497826a1e8a77ed0a28def67059ce83c68fd9b6e90935b51e776a12c1",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "ER": {
+          "basis_refs": [
+            "w005",
+            "w006"
+          ],
+          "probability": 0.76,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.67,
+            "probabilities": {
+              "insufficient": 0.06,
+              "refutes": 0.01,
+              "supports": 0.76,
+              "unrelated": 0.17
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "ER",
+          "raw_result_ref": "8d3ea88d4380582eb73661583ee777827540263b59bce5610d512c38eb54765e",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w005",
+            "w006"
+          ],
+          "probability": 1.0,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "claim": 0.0,
+              "direct": 1.0,
+              "given": 0.0,
+              "missing": 0.0,
+              "reported": 0.0,
+              "unlocated": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "ES",
+          "raw_result_ref": "5f56e53fb47d1795ac0ae542c9874b0a99d1edee6ea98997d15ed59d640d5a98",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "direct"
+        },
+        "G": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": 0.99,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.99,
+              "w004": 0.0,
+              "w005": 0.0,
+              "w006": 0.01
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "G",
+          "raw_result_ref": "0c2ee18643bff0c8a6ca64e6f46e1c2c41d652e52abd907936f6549c695c370d",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w006",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.15,
+            "probabilities": {
+              "0": 0.17,
+              "1": 0.43,
+              "2": 0.4
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "I_R",
+          "raw_result_ref": "60a3f9fb676f04d5750e7ff107eda079bfcbb814fe0bdc6adde970e0a5b86834",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 1.23
+        },
+        "I_T": {
+          "basis_refs": [
+            "w003",
+            "w006",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.05,
+            "probabilities": {
+              "0": 0.25,
+              "1": 0.13,
+              "2": 0.62
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "I_T",
+          "raw_result_ref": "b24781000c1c46338d685fe7d5b7c13a7bcdda9539b13d4cda4675379a82bd51",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 1.37
+        },
+        "O": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": 0.8,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.77,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.2,
+              "w004": 0.0,
+              "w005": 0.0,
+              "w006": 0.8
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "O",
+          "raw_result_ref": "24636fb52a5125616f344a68316a1ca460f92413134595ae1cd482fa12200b76",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "P": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": 0.85,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.82,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.0,
+              "w004": 0.02,
+              "w005": 0.12,
+              "w006": 0.85
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "P",
+          "raw_result_ref": "c462619a5562d2fb0dcd725f138cb72574a1f80c2c3f6e08816b39663075117b",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "R": {
+          "basis_refs": [
+            "w006",
+            "w006"
+          ],
+          "probability": 0.47,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.34,
+            "probabilities": {
+              "contradicts": 0.01,
+              "insufficient": 0.05,
+              "overreach": 0.46,
+              "sufficient": 0.47,
+              "unrelated": 0.01
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "R",
+          "raw_result_ref": "6a8670fb47823f32b7ebac8d9defcd1cc0ac68f3e751f7823c8580687e76b5a8",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "sufficient"
+        },
+        "S": {
+          "basis_refs": [
+            "w006",
+            "w006"
+          ],
+          "probability": 0.31,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": null,
+          "question_id": "S",
+          "raw_result_ref": "b770a3647bef48c21c93419489962a2ca52c8d53503baac94b991f0342d0ab0a",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": 0.31
+        },
+        "T": {
+          "basis_refs": [
+            "w003",
+            "w006",
+            "w006"
+          ],
+          "probability": 0.38,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": null,
+          "question_id": "T",
+          "raw_result_ref": "ae32dd0b17270216966f8ee47eafacb6331d24220e0d187e8749eb78203f8b25",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": 0.38
+        },
+        "TB": {
+          "basis_refs": [
+            "w003",
+            "w006",
+            "w006"
+          ],
+          "probability": 0.47,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.29,
+            "probabilities": {
+              "different_G_C": 0.07,
+              "insufficient": 0.47,
+              "match": 0.28,
+              "unlocated": 0.18
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "TB",
+          "raw_result_ref": "3daa894af5b777a786e4d94e40fad3691a8c68bcf5a665ad439d213251177771",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "insufficient"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [],
+        "goal": "unresolved",
+        "limitations": {
+          "ER": "low_confidence",
+          "R": "low_confidence",
+          "S": "low_confidence",
+          "T": "low_confidence",
+          "TB": "low_confidence"
+        },
+        "premise_status": "premise_unverified",
+        "relation": "unresolved"
+      },
+      "check": null,
+      "selected_premise_source_document": "claim",
+      "selected_premise_exact_text": "因此，本情境已直接核对原始记录，确认这一次调整减少了误读。",
+      "raw_p_equals_c": true
+    },
+    {
+      "path": "record-source-2-B",
+      "record_ref": "answers/record-source-2-B.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "C",
+          "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "E": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "E",
+          "raw_result_ref": "03ebe6690658449b496758e363674b8b2cdefe633c2d133a57b6419dc3d6f693",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w005"
+        },
+        "ER": {
+          "basis_refs": [
+            "w004",
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ER",
+          "raw_result_ref": "81d47e0ddc4b1532f49412ce0091a0280181a17440d3996c5843b87f78366f5f",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ES",
+          "raw_result_ref": "8f8775442547b7a125d7b7cb0a3bcf9b56401bd8e665b122e9fe94bc638dad9c",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "reported"
+        },
+        "G": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "G",
+          "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w003",
+            "w004",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_R",
+          "raw_result_ref": "c08302efdec65db854a22d42e0a0d24fad6b4accd8a8a65e3df76b61cb54bd56",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w003",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_T",
+          "raw_result_ref": "b7a4627ac4570a0a09ef899eeb91921d83a9a2343f9683aaeb8733d92b8c9a26",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "O": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "O",
+          "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "P": {
+          "basis_refs": [
+            "w004"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "P",
+          "raw_result_ref": "e72a42c19f6dc2bfe8b41f8da751be89b104fcb3437e36e39059b73bd4ce4822",
+          "refs": [
+            "w004"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w004"
+        },
+        "R": {
+          "basis_refs": [
+            "w004",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "R",
+          "raw_result_ref": "b1e80050f5116f60388aa408afcbc9b7976dda9b840dd3c67cd8f37c21d10fba",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "overreach"
+        },
+        "S": {
+          "basis_refs": [
+            "w004",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "S",
+          "raw_result_ref": "1a735ca0302d33254dc90828070f4ae959e075e46ab83281d0086d0819af62ee",
+          "refs": [],
+          "semantic_state": "deny",
+          "unresolved_reason": null,
+          "value": "deny"
+        },
+        "T": {
+          "basis_refs": [
+            "w003",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "T",
+          "raw_result_ref": "a5522af77f58f8e6391eaa34b1fc0a4bdc4563524f6cbd37cf953c66d3830f8d",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "TB": {
+          "basis_refs": [
+            "w003",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "TB",
+          "raw_result_ref": "28d41119b06235843c617c821a8708eb740438148fc1918317e962c300fbb1df",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [
+          {
+            "action": "limit",
+            "claim_ref": "w006",
+            "evidence_origin": "reported",
+            "evidence_ref": "w005",
+            "evidence_relation": "supports",
+            "finding_id": "inference",
+            "goal_ref": "w003",
+            "keep_exact_text": "发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。",
+            "limit_target_exact_text": "因此，本情境已直接核对原始记录，确认这一次调整减少了误读。",
+            "object_ref": "w006",
+            "premise_ref": "w004",
+            "relation": "overreach",
+            "requirement": "保留P在给定范围成立的部分；不得仅凭P断言完整C，说明缺少的关系证据。",
+            "source_question_ids": [
+              "P",
+              "C",
+              "R",
+              "S"
+            ],
+            "uncertainty": "premise_unverified"
+          }
+        ],
+        "goal": "retain",
+        "limitations": {},
+        "premise_status": "premise_unverified",
+        "relation": "limit"
+      },
+      "check": {
+        "LOC.inference": {
+          "basis_refs": [
+            "w008"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "LOC.inference",
+          "raw_result_ref": "8faa7561356c4c9cc630c874622bdc72372446376b55248f555916dc63889576",
+          "refs": [
+            "w008"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w008"
+        },
+        "OK.inference": {
+          "basis_refs": [
+            "w002",
+            "w007",
+            "w011"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "OK.inference",
+          "raw_result_ref": "98cfb8fa0a57e53ec1f537f37833362c902fa654e94e515abd76a5e88582169e",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "check_conflict",
+          "value": "support"
+        }
+      },
+      "selected_premise_source_document": "premise",
+      "selected_premise_exact_text": "发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。",
+      "raw_p_equals_c": false
+    },
+    {
+      "path": "record-source-2-C",
+      "record_ref": "answers/record-source-2-C.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": 1.0,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.0,
+              "w004": 0.0,
+              "w005": 0.0,
+              "w006": 1.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "C",
+          "raw_result_ref": "28dbb3a3d7cac0fd3dd0d2d54c707a96cff4de17b5f72e008ddd39c6fbdff2fc",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "E": {
+          "basis_refs": [
+            "w005"
+          ],
+          "probability": 0.77,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.73,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.02,
+              "w003": 0.0,
+              "w004": 0.04,
+              "w005": 0.77,
+              "w006": 0.17
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "E",
+          "raw_result_ref": "42a4fa953f646bd04f2853b19b5bec188bd4f52c8c64b8503318194ff533928f",
+          "refs": [
+            "w005"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "w005"
+        },
+        "ER": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ER",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "ES": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ES",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "G": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": 0.99,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.98,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.99,
+              "w004": 0.0,
+              "w005": 0.0,
+              "w006": 0.01
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "G",
+          "raw_result_ref": "0c2ee18643bff0c8a6ca64e6f46e1c2c41d652e52abd907936f6549c695c370d",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w006",
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.0,
+            "probabilities": {
+              "0": 0.21,
+              "1": 0.38,
+              "2": 0.41
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "I_R",
+          "raw_result_ref": "765d0e203514db2af56d6c83df03d6f978175340c6d65945902083ef0fd07275",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 1.2
+        },
+        "I_T": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "I_T",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "O": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": 0.79,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.75,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.21,
+              "w004": 0.0,
+              "w005": 0.0,
+              "w006": 0.79
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "O",
+          "raw_result_ref": "5704237167681719fe2d013190a6acf6f6b38a032ed8bd3e55c4d50301cb7aae",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "w006"
+        },
+        "P": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": 0.85,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.82,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.0,
+              "w004": 0.01,
+              "w005": 0.13,
+              "w006": 0.85
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "P",
+          "raw_result_ref": "5fcaad17b7b17a0eb6fbf10fd4895f6bfbb87eef79e33df97b8f2e7d2972c882",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "R": {
+          "basis_refs": [
+            "w006",
+            "w006"
+          ],
+          "probability": 0.83,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.79,
+            "probabilities": {
+              "contradicts": 0.01,
+              "insufficient": 0.04,
+              "overreach": 0.12,
+              "sufficient": 0.83,
+              "unrelated": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "R",
+          "raw_result_ref": "720a933c4e42c1555b6373d2f00817f64524bd05b5a86c14dc971f55679dec61",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "sufficient"
+        },
+        "S": {
+          "basis_refs": [
+            "w006",
+            "w006"
+          ],
+          "probability": 0.56,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": null,
+          "question_id": "S",
+          "raw_result_ref": "7a8b119fb24f4d33a621d58842fe47ae62b8cfe66d8874238e2ed4e4238a7f8f",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": 0.56
+        },
+        "T": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "T",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "TB": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "TB",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [],
+        "goal": "unresolved",
+        "limitations": {
+          "E": "low_confidence",
+          "ER": "dependency_missing",
+          "ES": "dependency_missing",
+          "I_T": "dependency_missing",
+          "O": "low_confidence",
+          "S": "low_confidence",
+          "T": "dependency_missing",
+          "TB": "dependency_missing"
+        },
+        "premise_status": "premise_unverified",
+        "relation": "unresolved"
+      },
+      "check": null,
+      "selected_premise_source_document": "claim",
+      "selected_premise_exact_text": "因此，本情境已直接核对原始记录，确认这一次调整减少了误读。",
+      "raw_p_equals_c": true
+    },
+    {
+      "path": "skills-scope-1-B",
+      "record_ref": "answers/skills-scope-1-B.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "C",
+          "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "E": {
+          "basis_refs": [
+            "w002"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "E",
+          "raw_result_ref": "9a1217acbce8d07c70fb47e702c6cf92941b48bf219a33ec4dfee0b19f25e1b1",
+          "refs": [
+            "w002"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w002"
+        },
+        "ER": {
+          "basis_refs": [
+            "w002"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ER",
+          "raw_result_ref": "16e630a3bb018bbecd496488faf5b2298a3c18a44f74e826fac3a81f5780957d",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w000",
+            "w002"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ES",
+          "raw_result_ref": "c658ae5632d29ff5316e30548937b2b01ea47b6b829f4c3a5c985eb9a3e315b2",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "given"
+        },
+        "G": {
+          "basis_refs": [
+            "w001"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "G",
+          "raw_result_ref": "433ceabdbb5ae2df1e0e6ced351125451341dcffe23cb8ce701169381dde35b4",
+          "refs": [
+            "w001"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w001"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w001",
+            "w002",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_R",
+          "raw_result_ref": "dd524858e17be519b18d5cfc37189695fddd0381a95f8a046d7d9e0be2c05f56",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w001",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_T",
+          "raw_result_ref": "f1e3a294f1d4df08fecf5c6a9d27d84872897abd92c8029e14b79b2dd42caa1f",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "O": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "O",
+          "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "P": {
+          "basis_refs": [
+            "w002"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "P",
+          "raw_result_ref": "9a1217acbce8d07c70fb47e702c6cf92941b48bf219a33ec4dfee0b19f25e1b1",
+          "refs": [
+            "w002"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w002"
+        },
+        "R": {
+          "basis_refs": [
+            "w002",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "R",
+          "raw_result_ref": "7c6ee10e82f5857ab1c2310036d544fc6592c73ab7a4b54f802cfc94aef3bf87",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "sufficient"
+        },
+        "S": {
+          "basis_refs": [
+            "w002",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "S",
+          "raw_result_ref": "934b685bf65efba170913c8a4570fea63d6310f9254175ca9a936327e48dd104",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "T": {
+          "basis_refs": [
+            "w001",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "T",
+          "raw_result_ref": "a45e19d56839a579ab95370ef4a80e2805c4e03df752e8a41d9de51cf32ce7bb",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "TB": {
+          "basis_refs": [
+            "w001",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "TB",
+          "raw_result_ref": "4c04b5a55c852118856365b0dc93ee3a6a6a74e0a4394d0d8143eea5731d0824",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [],
+        "goal": "retain",
+        "limitations": {},
+        "premise_status": "conditional_on_given",
+        "relation": "retain"
+      },
+      "check": null,
+      "selected_premise_source_document": "premise",
+      "selected_premise_exact_text": "本情境中这份Skill的文件只有说明文字和参考文字，调用时将它们按需交给模型。",
+      "raw_p_equals_c": false
+    },
+    {
+      "path": "skills-scope-1-C",
+      "record_ref": "answers/skills-scope-1-C.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": 0.99,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.99
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "C",
+          "raw_result_ref": "a4f08135b64a6c4d16047731d7ad0357dd9698e6980629293f08e80bbdd1d384",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "E": {
+          "basis_refs": [
+            "w002"
+          ],
+          "probability": 0.69,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.63,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.02,
+              "w000": 0.0,
+              "w001": 0.01,
+              "w002": 0.69,
+              "w003": 0.28
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "E",
+          "raw_result_ref": "40540c504584996d37e5ef3f7026549f781b93ecd6829654d9d934eeab3ab468",
+          "refs": [
+            "w002"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "w002"
+        },
+        "ER": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ER",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "ES": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ES",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "G": {
+          "basis_refs": [
+            "w001"
+          ],
+          "probability": 1.0,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 1.0,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 1.0,
+              "w002": 0.0,
+              "w003": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "G",
+          "raw_result_ref": "a3f57ca7e79270d36b491473c2e9d515e4aeaed720342dafd644e2a1fa4482d0",
+          "refs": [
+            "w001"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w001"
+        },
+        "I_R": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "I_R",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "I_T": {
+          "basis_refs": [
+            "w001",
+            "w003",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.29,
+            "probabilities": {
+              "0": 0.18,
+              "1": 0.11,
+              "2": 0.71
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "I_T",
+          "raw_result_ref": "2fa1987b25bda7a41c85f5ea8f44f9f242dd0d4219a8676389e5ec808d5aae3a",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 1.53
+        },
+        "O": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": 0.89,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.85,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.11,
+              "w002": 0.0,
+              "w003": 0.89
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "O",
+          "raw_result_ref": "bc52702a2f263d3ef3c01d350f318118fcdad3144107f1469eefed21224b6b34",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "P": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": 0.71,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.65,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.02,
+              "w000": 0.0,
+              "w001": 0.01,
+              "w002": 0.26,
+              "w003": 0.71
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "P",
+          "raw_result_ref": "f832431db9d166085e6e9dd9db7df4d63a7af8b1f8b720671d369a5d048b7fb7",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "w003"
+        },
+        "R": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "R",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "S": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "S",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "T": {
+          "basis_refs": [
+            "w001",
+            "w003",
+            "w003"
+          ],
+          "probability": 0.34,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": null,
+          "question_id": "T",
+          "raw_result_ref": "4584762b1c028ad8024a29f944df958d73254ad9f02b98c8c81a0e6b53c0d2d5",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": 0.34
+        },
+        "TB": {
+          "basis_refs": [
+            "w001",
+            "w003",
+            "w003"
+          ],
+          "probability": 0.61,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.48,
+            "probabilities": {
+              "different_G_C": 0.12,
+              "insufficient": 0.61,
+              "match": 0.14,
+              "unlocated": 0.13
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "TB",
+          "raw_result_ref": "5d77a6a4d0b449a56c45977d7ff39f78cfbc23dd3120fe548595f843efeaff07",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "insufficient"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [],
+        "goal": "unresolved",
+        "limitations": {
+          "E": "low_confidence",
+          "ER": "dependency_missing",
+          "ES": "dependency_missing",
+          "I_R": "dependency_missing",
+          "P": "low_confidence",
+          "R": "dependency_missing",
+          "S": "dependency_missing",
+          "T": "low_confidence",
+          "TB": "low_confidence"
+        },
+        "premise_status": "premise_unverified",
+        "relation": "unresolved"
+      },
+      "check": null,
+      "selected_premise_source_document": "claim",
+      "selected_premise_exact_text": "因此，这份Skill的载入机制可以用模块化提示与上下文注入解释。",
+      "raw_p_equals_c": true
+    },
+    {
+      "path": "skills-scope-2-B",
+      "record_ref": "answers/skills-scope-2-B.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "C",
+          "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "E": {
+          "basis_refs": [
+            "w002"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "E",
+          "raw_result_ref": "9a1217acbce8d07c70fb47e702c6cf92941b48bf219a33ec4dfee0b19f25e1b1",
+          "refs": [
+            "w002"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w002"
+        },
+        "ER": {
+          "basis_refs": [
+            "w002"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ER",
+          "raw_result_ref": "16e630a3bb018bbecd496488faf5b2298a3c18a44f74e826fac3a81f5780957d",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "supports"
+        },
+        "ES": {
+          "basis_refs": [
+            "w000",
+            "w002"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "ES",
+          "raw_result_ref": "c658ae5632d29ff5316e30548937b2b01ea47b6b829f4c3a5c985eb9a3e315b2",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "given"
+        },
+        "G": {
+          "basis_refs": [
+            "w001"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "G",
+          "raw_result_ref": "433ceabdbb5ae2df1e0e6ced351125451341dcffe23cb8ce701169381dde35b4",
+          "refs": [
+            "w001"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w001"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w001",
+            "w002",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_R",
+          "raw_result_ref": "dd524858e17be519b18d5cfc37189695fddd0381a95f8a046d7d9e0be2c05f56",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "I_T": {
+          "basis_refs": [
+            "w001",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "I_T",
+          "raw_result_ref": "f1e3a294f1d4df08fecf5c6a9d27d84872897abd92c8029e14b79b2dd42caa1f",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 2
+        },
+        "O": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "O",
+          "raw_result_ref": "49d10a43688aab70edfd8be267c0176044d7f46440a5ae9d445d9560a0013d54",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "P": {
+          "basis_refs": [
+            "w002"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "P",
+          "raw_result_ref": "9a1217acbce8d07c70fb47e702c6cf92941b48bf219a33ec4dfee0b19f25e1b1",
+          "refs": [
+            "w002"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w002"
+        },
+        "R": {
+          "basis_refs": [
+            "w002",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "R",
+          "raw_result_ref": "ca26ec0054ebed8ff8f2dfa8e112e87b2b551ca58b5ce9b9d5779a305e961654",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "overreach"
+        },
+        "S": {
+          "basis_refs": [
+            "w002",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "S",
+          "raw_result_ref": "949d67350d4a7438f25a1dd52748b652073ee04302b338f88b6cf8f9e8c2fc06",
+          "refs": [],
+          "semantic_state": "deny",
+          "unresolved_reason": null,
+          "value": "deny"
+        },
+        "T": {
+          "basis_refs": [
+            "w001",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "T",
+          "raw_result_ref": "a45e19d56839a579ab95370ef4a80e2805c4e03df752e8a41d9de51cf32ce7bb",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        },
+        "TB": {
+          "basis_refs": [
+            "w001",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "TB",
+          "raw_result_ref": "4c04b5a55c852118856365b0dc93ee3a6a6a74e0a4394d0d8143eea5731d0824",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "match"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [
+          {
+            "action": "limit",
+            "claim_ref": "w003",
+            "evidence_origin": "given",
+            "evidence_ref": "w002",
+            "evidence_relation": "supports",
+            "finding_id": "inference",
+            "goal_ref": "w001",
+            "keep_exact_text": "本情境中这份Skill的文件只有说明文字和参考文字，调用时将它们按需交给模型。",
+            "limit_target_exact_text": "因此，所有Skill的载入机制可以用模块化提示与上下文注入解释。",
+            "object_ref": "w003",
+            "premise_ref": "w002",
+            "relation": "overreach",
+            "requirement": "保留P在给定范围成立的部分；不得仅凭P断言完整C，说明缺少的关系证据。",
+            "source_question_ids": [
+              "P",
+              "C",
+              "R",
+              "S"
+            ],
+            "uncertainty": "conditional_on_given"
+          }
+        ],
+        "goal": "retain",
+        "limitations": {},
+        "premise_status": "conditional_on_given",
+        "relation": "limit"
+      },
+      "check": {
+        "LOC.inference": {
+          "basis_refs": [
+            "w006"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "LOC.inference",
+          "raw_result_ref": "9453f42a3925c1ad8b7d5e3228c71a1e3c3ef63efd1833320169f19ff2c51417",
+          "refs": [
+            "w006"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w006"
+        },
+        "OK.inference": {
+          "basis_refs": [
+            "w003",
+            "w007",
+            "w010"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "OK.inference",
+          "raw_result_ref": "f6909ba9e8efbcc3358adad0a236987cfcff0b4bbda8e9aa39d79ecfd1b7c31e",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "check_conflict",
+          "value": "support"
+        }
+      },
+      "selected_premise_source_document": "premise",
+      "selected_premise_exact_text": "本情境中这份Skill的文件只有说明文字和参考文字，调用时将它们按需交给模型。",
+      "raw_p_equals_c": false
+    },
+    {
+      "path": "skills-scope-2-C",
+      "record_ref": "answers/skills-scope-2-C.json",
+      "atoms": {
+        "C": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": 0.99,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.0,
+              "w003": 0.99
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "C",
+          "raw_result_ref": "a4f08135b64a6c4d16047731d7ad0357dd9698e6980629293f08e80bbdd1d384",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "E": {
+          "basis_refs": [
+            "w002"
+          ],
+          "probability": 0.6,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.52,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.03,
+              "w000": 0.0,
+              "w001": 0.01,
+              "w002": 0.6,
+              "w003": 0.36
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "E",
+          "raw_result_ref": "25ec57d053a769de21b0be9cc0682279d60d5d23cf1460797aa4c1164a0110f1",
+          "refs": [
+            "w002"
+          ],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "w002"
+        },
+        "ER": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ER",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "ES": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": null,
+          "question_id": "ES",
+          "raw_result_ref": null,
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "dependency_missing",
+          "value": null
+        },
+        "G": {
+          "basis_refs": [
+            "w001"
+          ],
+          "probability": 1.0,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.99,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 1.0,
+              "w002": 0.0,
+              "w003": 0.0
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "G",
+          "raw_result_ref": "8d189296c1c95a2417c12a781a2a7899f05e49d26fc854c3796db41822d53922",
+          "refs": [
+            "w001"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w001"
+        },
+        "I_R": {
+          "basis_refs": [
+            "w003",
+            "w003"
+          ],
+          "probability": null,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.09,
+            "probabilities": {
+              "0": 0.14,
+              "1": 0.33,
+              "2": 0.53
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "I_R",
+          "raw_result_ref": "797a70fbe8436a02abb999b719bed7ee10206c43318cfcb5316d51dccf72ded8",
+          "refs": [],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": 1.39
+        },
+        "I_T": {
+          "basis_refs": [],
+          "probability": null,
+          "provenance": "provider_distribution",
+          "question_id": "I_T",
+          "raw_result_ref": "974a863debc36087a2424bf2687dfe38ac7162816716a7b572c5b9c86a9b4a7d",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "provider_error",
+          "value": null
+        },
+        "O": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": 0.9,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.88,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.0,
+              "w000": 0.0,
+              "w001": 0.1,
+              "w002": 0.0,
+              "w003": 0.9
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "O",
+          "raw_result_ref": "b4a738f96bfabf6b331a2effd049733fc9463ae0edc2c776e87ceeb9ee14543c",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "P": {
+          "basis_refs": [
+            "w003"
+          ],
+          "probability": 0.84,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.79,
+            "probabilities": {
+              "ambiguous": 0.0,
+              "none": 0.01,
+              "w000": 0.0,
+              "w001": 0.0,
+              "w002": 0.15,
+              "w003": 0.84
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "P",
+          "raw_result_ref": "d67fada102b26af3971efaefcb0166372233253525eb8aef181e7d3f2e69034a",
+          "refs": [
+            "w003"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w003"
+        },
+        "R": {
+          "basis_refs": [
+            "w003",
+            "w003"
+          ],
+          "probability": 0.42,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.27,
+            "probabilities": {
+              "contradicts": 0.01,
+              "insufficient": 0.2,
+              "overreach": 0.35,
+              "sufficient": 0.42,
+              "unrelated": 0.02
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "R",
+          "raw_result_ref": "24ccdf25b6dae7842516378e61b37143c119e4b28d6ad6f2ed0b3004557b42f5",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "sufficient"
+        },
+        "S": {
+          "basis_refs": [
+            "w003",
+            "w003"
+          ],
+          "probability": 0.26,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": null,
+          "question_id": "S",
+          "raw_result_ref": "b97bccfd17666b9e7c2cbb4e7bfb5f0d42af613d60549d531615fd53c8e5d25d",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": 0.26
+        },
+        "T": {
+          "basis_refs": [
+            "w001",
+            "w003",
+            "w003"
+          ],
+          "probability": 0.3,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": null,
+          "question_id": "T",
+          "raw_result_ref": "8ec4819f42cf4202018bbab2a4f59b54195679c665d043bd16bd1ceaf1271442",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": 0.3
+        },
+        "TB": {
+          "basis_refs": [
+            "w001",
+            "w003",
+            "w003"
+          ],
+          "probability": 0.52,
+          "provenance": "provider_distribution",
+          "provider_uncertainty": {
+            "confidence": 0.36,
+            "probabilities": {
+              "different_G_C": 0.16,
+              "insufficient": 0.52,
+              "match": 0.17,
+              "unlocated": 0.15
+            },
+            "source": "provider_distribution"
+          },
+          "question_id": "TB",
+          "raw_result_ref": "0e42b6fcf6781780db3c08c019c593310578ce76993256781628629fcfec3039",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "low_confidence",
+          "value": "insufficient"
+        }
+      },
+      "composition": {
+        "evidence_conflict": false,
+        "external_fact_verified": false,
+        "findings": [],
+        "goal": "unresolved",
+        "limitations": {
+          "E": "low_confidence",
+          "ER": "dependency_missing",
+          "ES": "dependency_missing",
+          "I_T": "provider_error",
+          "R": "low_confidence",
+          "S": "low_confidence",
+          "T": "low_confidence",
+          "TB": "low_confidence"
+        },
+        "premise_status": "premise_unverified",
+        "relation": "unresolved"
+      },
+      "check": null,
+      "selected_premise_source_document": "claim",
+      "selected_premise_exact_text": "因此，所有Skill的载入机制可以用模块化提示与上下文注入解释。",
+      "raw_p_equals_c": true
+    }
+  ]
+}
