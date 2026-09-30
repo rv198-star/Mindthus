@@ -221,6 +221,8 @@ class Dispatcher:
                 require(all(digest((REPO/p).read_text())==h for p,h in (successor['source_sha256'] if successor else self.config['source_sha256']).items()),'source_changed')
             run=self.root/'runs'/run_name;s=rt.state(run)
             if s['stopped'] or s['phase']=='done':return s
+            if successor and successor.get('kind')=='named_unknown_000047_continuation':
+                require(run_name in successor['allowed_paths'],'named_47_remaining_paths_only')
             # No automatic replay after crash between intent/raw/terminal/import writes.
             for previous in sorted((self.root/'calls').iterdir()):
                 require((previous/'import.json').exists(),'unimported_dispatch_requires_reconciliation')
@@ -237,7 +239,7 @@ class Dispatcher:
             directory.mkdir();key=run_name+':'+str(req['sequence'])
             binding={'call_key':key,'request_sha256':req['request_sha256'],'wire_sha256':digest(outbound),
               'batch_sha256':digest(self.config),'simulation':self.config['simulation']}
-            if successor and successor.get('kind')=='read_contract_sending_clarification':
+            if successor:
                 binding['technical_successor_sha256']=digest(successor)
             if successor and key==successor['retry_call_key']:
                 old=rt.read(self.root/'calls/000007/request.json')

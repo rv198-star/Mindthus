@@ -37,6 +37,9 @@ def verified(root):
 
 class NamedSerial(SerialRequests):
     def _accepted_unknown(self,directory,intent):
+        if (self.root.parent/'risk-accepted-000047.json').exists():
+            from .resume_000047 import accepted
+            return accepted(self.root.parent,directory,intent)
         root=self.root.parent;x=verified(root)
         require(directory==self.root/'000007' and intent['label']=='skills-validator-B:1','named_slot_only')
         end=read_record(directory/'accepted-unknown.json')
@@ -48,6 +51,9 @@ class NamedSerial(SerialRequests):
 
 def guard(root):
     root=Path(root);stops=list(root.glob('STOP*.json'))
+    if (root/'risk-accepted-000047.json').exists():
+        from .resume_000047 import verified as verify_47
+        return verify_47(root)
     if (root/'read-contract-successor.json').exists():
         from .read_contract_successor import verified as verify_read_contract
         return verify_read_contract(root)
