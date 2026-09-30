@@ -148,7 +148,11 @@ def request(root):
             payload={'source':s['source'],'findings':s['composition'], 'loaded_materials':s['loaded'],
                      'readable_paths':sorted(s['materials']),
                      'instruction':'回答原始当前请求；保留正确内容和证据边界。可先请求必要材料。不要展示路由标签。',
-                     'output_contract':{'kind':'answer|read','text':'string','read_paths':'list[str]','objection':'string'}}
+                     'output_contract':{
+                         'kind':'draft: answer|read; revision: answer only',
+                         'text':'read: exactly empty string, no explanation; answer: nonempty complete answer',
+                         'read_paths':'read: nonempty unique readable paths not already loaded; answer: empty list',
+                         'objection':'string; any read explanation belongs here, never in text'}}
             if s['arm']=='A':
                 payload.pop('findings');payload['instruction']='正常使用给定原入口，必要时读取材料，然后回答原始请求。'
             if phase=='revision':payload.update(first_draft=s['draft'],check=s['check'],instruction='只做这一次定点修订，允许保留已有正确答案；不得编造事实。')

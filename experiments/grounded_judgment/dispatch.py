@@ -237,6 +237,8 @@ class Dispatcher:
             directory.mkdir();key=run_name+':'+str(req['sequence'])
             binding={'call_key':key,'request_sha256':req['request_sha256'],'wire_sha256':digest(outbound),
               'batch_sha256':digest(self.config),'simulation':self.config['simulation']}
+            if successor and successor.get('kind')=='read_contract_sending_clarification':
+                binding['technical_successor_sha256']=digest(successor)
             if successor and key==successor['retry_call_key']:
                 old=rt.read(self.root/'calls/000007/request.json')
                 require(req['payload']==old['payload'] and req['phase']=='draft','technical_retry_input_changed')

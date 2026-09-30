@@ -5,7 +5,7 @@ from pathlib import Path
 
 from experiments.grounded_judgment import runtime as rt
 from experiments.grounded_judgment.dispatch import Dispatcher, OfficialAdapters
-from experiments.grounded_judgment.resume_000007 import load_official_credential
+from experiments.grounded_judgment.resume_000007 import load_official_credential, guard
 from experiments.typed_decision.contracts import digest
 from experiments.typed_decision.relationship_runtime import _locked
 
@@ -63,8 +63,9 @@ def main():
                 summary=checkpoint()
                 print(json.dumps({'returned':name,'phase':s['phase'],'stopped':s['stopped'],
                                   'batch_calls':summary['logical_calls'],'at_epoch':time.time()}),flush=True)
-                if list(BATCH.glob('STOP*.json')):
-                    print(json.dumps({'batch_stop':True,'path':name,'reason':s['stopped']}),flush=True)
+                try:guard(BATCH)
+                except ValueError as exc:
+                    print(json.dumps({'batch_stop':True,'path':name,'reason':str(exc)}),flush=True)
                     return
             checkpoint()
             print(json.dumps({'path_end':name,'phase':s['phase'],'stopped':s['stopped']}),flush=True)

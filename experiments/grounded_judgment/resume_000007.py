@@ -48,6 +48,9 @@ class NamedSerial(SerialRequests):
 
 def guard(root):
     root=Path(root);stops=list(root.glob('STOP*.json'))
+    if (root/'read-contract-successor.json').exists():
+        from .read_contract_successor import verified as verify_read_contract
+        return verify_read_contract(root)
     if (root/NAME).exists():
         x=verified(root)
         require(all(p.name=='STOP.json' and digest(rt.read(p))==x['preserved']['STOP.json'] for p in stops),'new_stop_not_exempt')
