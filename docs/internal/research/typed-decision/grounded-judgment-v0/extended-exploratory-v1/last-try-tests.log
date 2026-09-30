@@ -1,0 +1,11 @@
+Actual execution: python -m unittest tests.test_grounded_complete_missing -v
+
+test_format_compensation_allows_only_sending_contract_clarification ... ok
+test_last_attempt_keeps_exact_input_and_only_the_named_request ... ok
+test_last_grant_rejects_other_stop_and_false_completion ... ok
+test_new_unknown_and_changed_delivered_answer_block_continuation ... ok
+test_unknown_draft_requires_exact_old_input_and_identity ... ok
+
+Ran 5 tests in 0.006s
+OK
+No model/transport calls in these tests.

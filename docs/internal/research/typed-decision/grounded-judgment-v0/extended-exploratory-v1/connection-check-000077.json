@@ -1,0 +1,29 @@
+{
+  "kind": "uncredentialed_connection_check",
+  "checked_at_epoch": 1790783837.0526001,
+  "host": "chatgpt.com",
+  "http_requests_sent": 0,
+  "settings_changed": false,
+  "proxy_environment_present": {
+    "HTTP_PROXY": false,
+    "HTTPS_PROXY": false,
+    "ALL_PROXY": false,
+    "http_proxy": false,
+    "https_proxy": false,
+    "all_proxy": false,
+    "NO_PROXY": true
+  },
+  "cli_version": "codex-cli 0.159.2",
+  "dns": {
+    "ok": true,
+    "address_count": 2,
+    "elapsed_seconds": 0.5485885829548351
+  },
+  "tcp_connected": true,
+  "tls": {
+    "ok": true,
+    "version": "TLSv1.3",
+    "certificate_checked": true
+  },
+  "total_seconds": 1.1411304579814896
+}
