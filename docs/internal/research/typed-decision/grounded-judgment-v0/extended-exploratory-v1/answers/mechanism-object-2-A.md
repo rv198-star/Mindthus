@@ -1,62 +1,28 @@
 # mechanism-object-2-A
 
-状态：历史格式失败；补试已准备、未发送（批次受000077阻断）
+状态：delivered
 
 ## 首稿
 
-无
+对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。
+
+它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。
+
+完整解释应包括两段：先验签，非零则停止；通过后，将指令和原文交给模型生成摘要。只用提示与上下文解释整个服务，排查“为什么没有摘要”时就可能误改提示，漏查验签和分支控制。验签控制能否进入生成，模型及其输入则影响生成什么。
 
 ## 检查
 
 ```json
-null
+{
+  "basis_text": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。\n\n它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。",
+  "needs_revision": false
+}
 ```
 
 ## 最终稿
 
-无
+对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。
 
-## 原始返回与失败（不是答案）
+它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。
 
-```json
-{
-  "local_failures": [
-    {
-      "message": "read_only_before_first_draft",
-      "type": "ContractError"
-    }
-  ],
-  "returns": [
-    {
-      "local_call": "000028",
-      "phase": "draft",
-      "transport_status": "returned",
-      "import_error": null,
-      "response": {
-        "kind": "read",
-        "objection": "",
-        "read_paths": [
-          "docs/methodologies/primitives/entry-triage.md",
-          "docs/methodologies/primitives/frame-fitness-check.md",
-          "docs/methodologies/primitives/whole-elephant-protocol.md"
-        ],
-        "text": ""
-      }
-    },
-    {
-      "local_call": "000029",
-      "phase": "draft",
-      "transport_status": "returned",
-      "import_error": null,
-      "response": {
-        "kind": "read",
-        "objection": "",
-        "read_paths": [
-          "skills/using-mindthus/resources/fidelity-contract.md"
-        ],
-        "text": "将按 using-mindthus 入口判断整个摘要服务的解释是否充分；需读取其运行合同，确认整体对象审计与无法运行校验时的输出要求。"
-      }
-    }
-  ]
-}
-```
+完整解释应包括两段：先验签，非零则停止；通过后，将指令和原文交给模型生成摘要。只用提示与上下文解释整个服务，排查“为什么没有摘要”时就可能误改提示，漏查验签和分支控制。验签控制能否进入生成，模型及其输入则影响生成什么。

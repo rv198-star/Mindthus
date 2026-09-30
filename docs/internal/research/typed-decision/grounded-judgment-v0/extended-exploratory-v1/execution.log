@@ -235,3 +235,18 @@
 {"dispatch": "display-goal-2-C", "phase": "draft", "prior_calls": 5, "at_epoch": 1790782320.8269498}
 {"returned": "display-goal-2-C", "phase": "draft", "stopped": "unknown", "batch_calls": 78, "at_epoch": 1790782385.415037}
 {"batch_stop": true, "path": "display-goal-2-C", "reason": "missing_new_stop"}
+{"order": ["display-goal-2-C", "mechanism-object-2-A", "record-source-1-B"], "started_epoch": 1790784205.447436, "automatic_driver_retries": false, "last_named_attempt": "000077"}
+{"dispatch": "display-goal-2-C", "phase": "draft", "prior_calls": 6, "at_epoch": 1790784205.541884}
+{"returned": "display-goal-2-C", "phase": "done", "stopped": null, "batch_calls": 79, "at_epoch": 1790784375.801515}
+{"path_end": "display-goal-2-C", "phase": "done"}
+{"dispatch": "mechanism-object-2-A", "phase": "draft", "prior_calls": 2, "at_epoch": 1790784377.780156}
+{"returned": "mechanism-object-2-A", "phase": "check", "stopped": null, "batch_calls": 80, "at_epoch": 1790784572.8623009}
+{"dispatch": "mechanism-object-2-A", "phase": "check", "prior_calls": 3, "at_epoch": 1790784574.9980469}
+{"returned": "mechanism-object-2-A", "phase": "done", "stopped": null, "batch_calls": 81, "at_epoch": 1790784692.924184}
+{"path_end": "mechanism-object-2-A", "phase": "done"}
+{"dispatch": "record-source-1-B", "phase": "draft", "prior_calls": 2, "at_epoch": 1790784694.932576}
+{"returned": "record-source-1-B", "phase": "check", "stopped": null, "batch_calls": 82, "at_epoch": 1790784835.637038}
+{"dispatch": "record-source-1-B", "phase": "check", "prior_calls": 3, "at_epoch": 1790784838.587776}
+{"returned": "record-source-1-B", "phase": "done", "stopped": null, "batch_calls": 83, "at_epoch": 1790784964.940932}
+{"path_end": "record-source-1-B", "phase": "done"}
+{"completed_batch": true, "counts": {"logical_calls": 83, "host_calls": 59, "jev_calls": 24}}

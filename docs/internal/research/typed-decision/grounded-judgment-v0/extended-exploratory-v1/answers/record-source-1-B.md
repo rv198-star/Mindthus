@@ -1,158 +1,56 @@
 # record-source-1-B
 
-状态：历史远端未知；已接受000047风险，补试已准备、未发送（批次受000077阻断）
+状态：delivered
 
 ## 首稿
 
-无
+当前材料不足以支持完整的核验结论。
+
+发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。案例记录支持这一陈述；在采纳同一设备、同一任务、其余设置固定这些条件时，可以推断合成情境中调整后误读更少。
+
+但材料未提供足以证明“已直接核对原始记录”的对应记录及核对过程，不能从上述陈述直接推出完整的核验结论。所有数字均为合成案例记录，也不能据此确认真实设备的调整效果。完整结论仍缺证据，并非已被证伪。
 
 ## 检查
 
 ```json
-null
+{
+  "LOC.inference": {
+    "basis_refs": [
+      "w008"
+    ],
+    "probability": null,
+    "provenance": "agent_categorical",
+    "question_id": "LOC.inference",
+    "raw_result_ref": "8faa7561356c4c9cc630c874622bdc72372446376b55248f555916dc63889576",
+    "refs": [
+      "w008"
+    ],
+    "semantic_state": "support",
+    "unresolved_reason": null,
+    "value": "w008"
+  },
+  "OK.inference": {
+    "basis_refs": [
+      "w003",
+      "w007",
+      "w011"
+    ],
+    "probability": null,
+    "provenance": "agent_categorical",
+    "question_id": "OK.inference",
+    "raw_result_ref": "0744b40d6ee971111e7f092a152db314308ec6d4d70fd5a914d3191375690cf7",
+    "refs": [],
+    "semantic_state": "unresolved",
+    "unresolved_reason": "check_conflict",
+    "value": "support"
+  }
+}
 ```
 
 ## 最终稿
 
-无
+当前材料不足以支持完整的核验结论。
 
-## 原始返回与失败（不是答案）
+发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。案例记录支持这一陈述；在采纳同一设备、同一任务、其余设置固定这些条件时，可以推断合成情境中调整后误读更少。
 
-```json
-{
-  "local_failures": [],
-  "returns": [
-    {
-      "local_call": "000046",
-      "phase": "atoms",
-      "transport_status": "returned",
-      "import_error": null,
-      "response": {
-        "C": {
-          "basis_refs": [
-            "w006"
-          ],
-          "semantic_state": "support",
-          "unresolved_reason": null,
-          "value": "w006"
-        },
-        "E": {
-          "basis_refs": [
-            "w005"
-          ],
-          "semantic_state": "support",
-          "unresolved_reason": null,
-          "value": "w005"
-        },
-        "ER": {
-          "basis_refs": [
-            "w004",
-            "w005"
-          ],
-          "semantic_state": "support",
-          "unresolved_reason": null,
-          "value": "supports"
-        },
-        "ES": {
-          "basis_refs": [
-            "w001",
-            "w005"
-          ],
-          "semantic_state": "support",
-          "unresolved_reason": null,
-          "value": "given"
-        },
-        "G": {
-          "basis_refs": [
-            "w003"
-          ],
-          "semantic_state": "support",
-          "unresolved_reason": null,
-          "value": "w003"
-        },
-        "I_R": {
-          "basis_refs": [
-            "w001",
-            "w003",
-            "w004",
-            "w006"
-          ],
-          "semantic_state": "support",
-          "unresolved_reason": null,
-          "value": 2
-        },
-        "I_T": {
-          "basis_refs": [
-            "w003",
-            "w006"
-          ],
-          "semantic_state": "unresolved",
-          "unresolved_reason": "未建立C替换G目标的发现，该条件性影响不适用。",
-          "value": null
-        },
-        "O": {
-          "basis_refs": [
-            "w006"
-          ],
-          "semantic_state": "support",
-          "unresolved_reason": null,
-          "value": "w006"
-        },
-        "P": {
-          "basis_refs": [
-            "w004"
-          ],
-          "semantic_state": "support",
-          "unresolved_reason": null,
-          "value": "w004"
-        },
-        "R": {
-          "basis_refs": [
-            "w001",
-            "w004",
-            "w006"
-          ],
-          "semantic_state": "support",
-          "unresolved_reason": null,
-          "value": "overreach"
-        },
-        "S": {
-          "basis_refs": [
-            "w001",
-            "w004",
-            "w006"
-          ],
-          "semantic_state": "deny",
-          "unresolved_reason": null,
-          "value": "deny"
-        },
-        "T": {
-          "basis_refs": [
-            "w003",
-            "w006"
-          ],
-          "semantic_state": "support",
-          "unresolved_reason": null,
-          "value": "support"
-        },
-        "TB": {
-          "basis_refs": [
-            "w003",
-            "w006"
-          ],
-          "semantic_state": "support",
-          "unresolved_reason": null,
-          "value": "match"
-        }
-      }
-    },
-    {
-      "local_call": "000047",
-      "phase": "draft",
-      "transport_status": "unknown",
-      "import_error": null,
-      "response": null
-    }
-  ]
-}
-```
+但材料未提供足以证明“已直接核对原始记录”的对应记录及核对过程，不能从上述陈述直接推出完整的核验结论。所有数字均为合成案例记录，也不能据此确认真实设备的调整效果。完整结论仍缺证据，并非已被证伪。

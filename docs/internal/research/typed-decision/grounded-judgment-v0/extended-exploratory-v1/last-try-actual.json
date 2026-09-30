@@ -1,0 +1,74 @@
+{
+  "calls": [
+    {
+      "local_call": "000078",
+      "call_key": "display-goal-2-C:6",
+      "phase": "draft",
+      "status": "returned",
+      "compensates_local_call": "000077",
+      "session_seconds": 96.28041374997701,
+      "active_wait_seconds": 60.007643999997526,
+      "loading_seconds": 0.001617667032405734,
+      "actual_gap_seconds": 60.008308208023664,
+      "gap_basis": "monotonic_wait_after_risk_acceptance_not_remote_completion"
+    },
+    {
+      "local_call": "000079",
+      "call_key": "mechanism-object-2-A:2",
+      "phase": "draft",
+      "status": "returned",
+      "compensates_local_call": "000029",
+      "session_seconds": 137.15930366696557,
+      "active_wait_seconds": 43.34291262499755,
+      "loading_seconds": 0.0020672499667853117,
+      "actual_gap_seconds": 60.00530966697261,
+      "gap_basis": "monotonic"
+    },
+    {
+      "local_call": "000080",
+      "call_key": "mechanism-object-2-A:3",
+      "phase": "check",
+      "status": "returned",
+      "compensates_local_call": null,
+      "session_seconds": 59.99969645898091,
+      "active_wait_seconds": 43.00468374998309,
+      "loading_seconds": 0.0013922079815529287,
+      "actual_gap_seconds": 60.0054830419831,
+      "gap_basis": "monotonic"
+    },
+    {
+      "local_call": "000081",
+      "call_key": "record-source-1-B:2",
+      "phase": "draft",
+      "status": "returned",
+      "compensates_local_call": "000047",
+      "session_seconds": 82.15564916701987,
+      "active_wait_seconds": 43.48268549999921,
+      "loading_seconds": 0.0015426249592565,
+      "actual_gap_seconds": 60.00263350002933,
+      "gap_basis": "monotonic"
+    },
+    {
+      "local_call": "000082",
+      "call_key": "record-source-1-B:3",
+      "phase": "check",
+      "status": "returned",
+      "compensates_local_call": null,
+      "session_seconds": 69.87705670803552,
+      "active_wait_seconds": 33.39197425002931,
+      "loading_seconds": 0.0017557910177856684,
+      "actual_gap_seconds": 60.00564808299532,
+      "gap_basis": "monotonic"
+    }
+  ],
+  "prior_calls_retained": 78,
+  "old_remote_unknown": [
+    "000047",
+    "000049",
+    "000077"
+  ],
+  "settings_changed": false,
+  "http_probe_count": 0,
+  "logical_model_probe_count": 0,
+  "last_window_seconds": 759.4934959411621
+}

@@ -1,16 +1,19 @@
 {
   "path": "mechanism-object-2-A",
-  "status": "awaiting_compensation",
-  "phase": "draft",
-  "calls": 2,
-  "host_calls": 2,
+  "status": "delivered",
+  "phase": "done",
+  "calls": 4,
+  "host_calls": 4,
   "jev_calls": 0,
   "reads": 1,
-  "checks": 0,
+  "checks": 1,
   "revisions": 0,
-  "draft": null,
-  "check": null,
-  "final": null,
+  "draft": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。\n\n它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。\n\n完整解释应包括两段：先验签，非零则停止；通过后，将指令和原文交给模型生成摘要。只用提示与上下文解释整个服务，排查“为什么没有摘要”时就可能误改提示，漏查验签和分支控制。验签控制能否进入生成，模型及其输入则影响生成什么。",
+  "check": {
+    "basis_text": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。\n\n它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。",
+    "needs_revision": false
+  },
+  "final": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。\n\n它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。\n\n完整解释应包括两段：先验签，非零则停止；通过后，将指令和原文交给模型生成摘要。只用提示与上下文解释整个服务，排查“为什么没有摘要”时就可能误改提示，漏查验签和分支控制。验签控制能否进入生成，模型及其输入则影响生成什么。",
   "atoms": {},
   "composition": null,
   "measurements": [
@@ -89,10 +92,86 @@
         "output_tokens": 512,
         "reasoning_output_tokens": 435
       }
+    },
+    {
+      "active_wait_seconds": 43.34291262499755,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0020672499667853117,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "4af4942d5dd83408225d165ad4a87a5b21c2c42a819f79516d870af12f059b38",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 137.15930366696557,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000079/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 32397,
+        "output_tokens": 2286,
+        "reasoning_output_tokens": 2070
+      }
+    },
+    {
+      "active_wait_seconds": 43.00468374998309,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0013922079815529287,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "3a97a5c09080d5188b410bc5a25b44cdbef07f274cae243a6a282748fd8a3e91",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "check",
+      "role": "host",
+      "session_seconds": 59.99969645898091,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000080/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 20848,
+        "output_tokens": 577,
+        "reasoning_output_tokens": 448
+      }
     }
   ],
-  "session_seconds": 86.83033245895058,
-  "active_wait_seconds": 117.69077308400301,
+  "session_seconds": 283.98933258489706,
+  "active_wait_seconds": 204.03836945898365,
   "local_failures": [
     {
       "message": "read_only_before_first_draft",
@@ -109,7 +188,9 @@
   },
   "call_ids": [
     "000028",
-    "000029"
+    "000029",
+    "000079",
+    "000080"
   ],
   "raw_returns": [
     {
@@ -141,11 +222,32 @@
         ],
         "text": "将按 using-mindthus 入口判断整个摘要服务的解释是否充分；需读取其运行合同，确认整体对象审计与无法运行校验时的输出要求。"
       }
+    },
+    {
+      "local_call": "000079",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "answer",
+        "objection": "",
+        "read_paths": [],
+        "text": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。\n\n它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。\n\n完整解释应包括两段：先验签，非零则停止；通过后，将指令和原文交给模型生成摘要。只用提示与上下文解释整个服务，排查“为什么没有摘要”时就可能误改提示，漏查验签和分支控制。验签控制能否进入生成，模型及其输入则影响生成什么。"
+      }
+    },
+    {
+      "local_call": "000080",
+      "phase": "check",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "basis_text": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。\n\n它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。",
+        "needs_revision": false
+      }
     }
   ],
   "source_groups": [
-    "initial"
-  ],
-  "previous_undelivered_status": "format_failure",
-  "compensation_request_prepared_not_sent": true
+    "initial",
+    "last_named_000077_compensation"
+  ]
 }

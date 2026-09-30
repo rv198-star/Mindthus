@@ -21,7 +21,7 @@ def main():
     with open(HERE/'calls.jsonl','w') as f:
         for record in calls:f.write(json.dumps(record,ensure_ascii=False,separators=(',',':'))+'\n')
     source_names={None:'initial'}
-    for name,label in (('read-contract-successor.json','read_contract_successor'),('risk-accepted-000047.json','named_000047_successor'),('retry-000049.json','named_000049_compensation_successor'),('complete-missing-three.json','missing_three_compensation_successor')):
+    for name,label in (('read-contract-successor.json','read_contract_successor'),('risk-accepted-000047.json','named_000047_successor'),('retry-000049.json','named_000049_compensation_successor'),('complete-missing-three.json','missing_three_compensation_successor'),('last-try-000077.json','last_named_000077_compensation')):
         if (BATCH/name).exists():source_names[digest(rt.read(BATCH/name))]=label
     def source_group(c):return source_names.get(c['binding'].get('technical_successor_sha256'),'unrecognized_successor')
     index=[]
@@ -78,7 +78,8 @@ def main():
             'sha256':digest(rt.read(BATCH/'read-contract-successor.json')),'retry':False}
     if (BATCH/'risk-accepted-000047.json').exists():
         summary['named_risk_disposition']={'source_commit':rt.read(BATCH/'risk-accepted-000047.json')['source_commit'],
-            'sha256':digest(rt.read(BATCH/'risk-accepted-000047.json')),'old_remote_status':'unknown','replayed':False,
+            'sha256':digest(rt.read(BATCH/'risk-accepted-000047.json')),'old_remote_status':'unknown',
+            'replayed':any(c['binding'].get('compensates_request_sha256')==rt.read(BATCH/'risk-accepted-000047.json')['request_sha256'] for c in calls),
             'accepted_call':'000047','budgets_reset':False}
     if (BATCH/'retry-000049.json').exists():
         grant=rt.read(BATCH/'retry-000049.json')
@@ -87,6 +88,12 @@ def main():
             'compensation_calls':[c['local_call'] for c in calls if c['binding'].get('compensates_request_sha256')==grant['request_sha256']],
             'path_limits':grant['path_limits'],'total_limits':grant['limits'],'budgets_reset':False}
     summary['local_format_failure_paths']=sum(r['status']=='format_failure' for r in summary['paths'])
+    if (BATCH/'last-try-000077.json').exists():
+        grant=rt.read(BATCH/'last-try-000077.json')
+        summary['last_named_compensation']={'source_commit':grant['source_commit'],'sha256':digest(grant),
+            'old_call':'000077','old_remote_status':'unknown','retry_call_key':grant['last_retry_call_key'],
+            'compensation_calls':[c['local_call'] for c in calls if c['binding'].get('compensates_request_sha256')==grant['retries'][grant['last_retry_call_key']]['request_sha256']],
+            'retry_limit':1,'budgets_reset':False,'wait_proves_remote_completion':False}
     summary['delivered_paths']=sum(r['status']=='delivered' for r in summary['paths'])
     summary['arm_totals']={a:{'logical_calls':sum(r['calls'] for r in summary['paths'] if r['path'].endswith('-'+a)),
           'host_calls':sum(r['host_calls'] for r in summary['paths'] if r['path'].endswith('-'+a)),

@@ -1,16 +1,47 @@
 {
   "path": "record-source-1-B",
-  "status": "awaiting_compensation",
-  "phase": "draft",
-  "calls": 2,
-  "host_calls": 2,
+  "status": "delivered",
+  "phase": "done",
+  "calls": 4,
+  "host_calls": 4,
   "jev_calls": 0,
   "reads": 0,
-  "checks": 0,
+  "checks": 1,
   "revisions": 0,
-  "draft": null,
-  "check": null,
-  "final": null,
+  "draft": "当前材料不足以支持完整的核验结论。\n\n发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。案例记录支持这一陈述；在采纳同一设备、同一任务、其余设置固定这些条件时，可以推断合成情境中调整后误读更少。\n\n但材料未提供足以证明“已直接核对原始记录”的对应记录及核对过程，不能从上述陈述直接推出完整的核验结论。所有数字均为合成案例记录，也不能据此确认真实设备的调整效果。完整结论仍缺证据，并非已被证伪。",
+  "check": {
+    "LOC.inference": {
+      "basis_refs": [
+        "w008"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "LOC.inference",
+      "raw_result_ref": "8faa7561356c4c9cc630c874622bdc72372446376b55248f555916dc63889576",
+      "refs": [
+        "w008"
+      ],
+      "semantic_state": "support",
+      "unresolved_reason": null,
+      "value": "w008"
+    },
+    "OK.inference": {
+      "basis_refs": [
+        "w003",
+        "w007",
+        "w011"
+      ],
+      "probability": null,
+      "provenance": "agent_categorical",
+      "question_id": "OK.inference",
+      "raw_result_ref": "0744b40d6ee971111e7f092a152db314308ec6d4d70fd5a914d3191375690cf7",
+      "refs": [],
+      "semantic_state": "unresolved",
+      "unresolved_reason": "check_conflict",
+      "value": "support"
+    }
+  },
+  "final": "当前材料不足以支持完整的核验结论。\n\n发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。案例记录支持这一陈述；在采纳同一设备、同一任务、其余设置固定这些条件时，可以推断合成情境中调整后误读更少。\n\n但材料未提供足以证明“已直接核对原始记录”的对应记录及核对过程，不能从上述陈述直接推出完整的核验结论。所有数字均为合成案例记录，也不能据此确认真实设备的调整效果。完整结论仍缺证据，并非已被证伪。",
   "atoms": {
     "C": {
       "basis_refs": [
@@ -289,10 +320,86 @@
       "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000047/terminal.json",
       "underlying_requests": null,
       "usage": null
+    },
+    {
+      "active_wait_seconds": 43.48268549999921,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0015426249592565,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "f57d866d28d636a8b083744bf4a47d230cfc2aa45e88b67e6f9df14dd0e92311",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "draft",
+      "role": "host",
+      "session_seconds": 82.15564916701987,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000081/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 25862,
+        "output_tokens": 1219,
+        "reasoning_output_tokens": 1034
+      }
+    },
+    {
+      "active_wait_seconds": 33.39197425002931,
+      "cli_starts": 1,
+      "cost": null,
+      "loading_seconds": 0.0017557910177856684,
+      "logical_calls": 1,
+      "observed_recoveries": {
+        "actual_underlying_request_count": null,
+        "auth_or_401_log_count": 0,
+        "authentication_recovery_seconds": null,
+        "cli_starts": 1,
+        "connection_recovery_seconds": null,
+        "fallback_or_prewarm_log_count": 0,
+        "generation_attempt_count": null,
+        "no_recovery_observed_is_not_zero_http_proof": true,
+        "observation": "no_recovery_observed",
+        "outer_driver_retries": 0,
+        "reconnect_notice_count": 0,
+        "request_sha256": "dc4e7e0e35f57bff4c0f24a3ed6570597abae304cbcd0224c4c18e0423954963",
+        "sampling_retry_log_count": 0,
+        "schema": "mindthus.invocation-transport-observation.v2",
+        "stop_subsequent_dispatch": false,
+        "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+      },
+      "phase": "check",
+      "role": "host",
+      "session_seconds": 69.87705670803552,
+      "simulation": false,
+      "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000082/terminal.json",
+      "underlying_requests": null,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 25619,
+        "output_tokens": 867,
+        "reasoning_output_tokens": 794
+      }
     }
   ],
-  "session_seconds": 490.7299844159279,
-  "active_wait_seconds": 114.33949600002961,
+  "session_seconds": 642.7626902909833,
+  "active_wait_seconds": 191.21415575005813,
   "local_failures": [],
   "skipped_phases": [],
   "atom_states": {
@@ -304,7 +411,9 @@
   },
   "call_ids": [
     "000046",
-    "000047"
+    "000047",
+    "000081",
+    "000082"
   ],
   "raw_returns": [
     {
@@ -437,11 +546,48 @@
       "transport_status": "unknown",
       "import_error": null,
       "response": null
+    },
+    {
+      "local_call": "000081",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "answer",
+        "objection": "",
+        "read_paths": [],
+        "text": "当前材料不足以支持完整的核验结论。\n\n发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。案例记录支持这一陈述；在采纳同一设备、同一任务、其余设置固定这些条件时，可以推断合成情境中调整后误读更少。\n\n但材料未提供足以证明“已直接核对原始记录”的对应记录及核对过程，不能从上述陈述直接推出完整的核验结论。所有数字均为合成案例记录，也不能据此确认真实设备的调整效果。完整结论仍缺证据，并非已被证伪。"
+      }
+    },
+    {
+      "local_call": "000082",
+      "phase": "check",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "LOC.inference": {
+          "basis_refs": [
+            "w008"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w008"
+        },
+        "OK.inference": {
+          "basis_refs": [
+            "w003",
+            "w007",
+            "w011"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "support"
+        }
+      }
     }
   ],
   "source_groups": [
-    "read_contract_successor"
-  ],
-  "previous_undelivered_status": "unknown",
-  "compensation_request_prepared_not_sent": true
+    "read_contract_successor",
+    "last_named_000077_compensation"
+  ]
 }

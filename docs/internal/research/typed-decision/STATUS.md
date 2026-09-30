@@ -16,24 +16,23 @@ Old frozen requests, review evidence and answers retain `gpt-6-sol`; no prior ba
 Archived one-off drivers remain historical assets, not new-batch entry points.
 This configuration change makes no new quality or price claim and starts no model request.
 
-## Current three-answer completion — new connection failure stops dispatch
+## Current eight-case completion — 24/24 delivered; independent review pending
 
-Owner requested completing the three missing answers. A bounded successor protects the
-21 delivered states and reuses prior atoms; no core/threshold/model/budget change.
-Actual new calls: 000076 returned a valid read; 000077 then emitted
-“Connection failed: error sending request” after 6.683 seconds, no reply or reliable
-send-stage/structured failure code. It is a new remote unknown. No automatic retry,
-completion or accepted-risk disposition for 000077. New A/B compensations were prepared
-but not sent. [Current evidence and remaining scope](grounded-judgment-v0/extended-exploratory-v1/RESULT.md).
-78 calls (54 host / 24 Jev), original 176/144/32 caps sufficient. Existing 21 answers
-unchanged; all three missing answers remain. Old 000047/000049 accepted unknowns,
-format failures and all debits retained. Auxiliary MCP startup HTTP 403/connect logs
-are not generation endpoint evidence or a confirmed model safety refusal.
-24-answer delivery is not complete; new-batch independent content review pending.
-The [76-call report](grounded-judgment-v0/extended-exploratory-v1/RESULT-000076.md)
-retains the prior scope. Old conclusions, GJ/R2 CLOSED, main/default Skill,
-default NOT QUALIFIED and ROI-Beta boundary unchanged. No more dispatch without
-appropriate new-unknown disposition; no invented platform-recovery-file requirement.
+The Owner's final named 000077 attempt returned a complete answer. The two already
+authorized A/B compensations then returned answers and normal checks. All 24 paths
+now delivered; the prior 21 states are unchanged. No new unknown/refusal/recovery
+stop. [Complete answers, comparison, calls and evidence](grounded-judgment-v0/extended-exploratory-v1/RESULT.md).
+83 logical calls (59 host / 24 Jev), within original 176/144/32 caps; no expanded
+budget or reviewer model. Old 000047/000049/000077 remain risk-accepted remote
+unknown, all debits and format failures retained. No automatic retry/general unlock.
+Last execution source: `7ad0bbd433eb1e4d28a379b0caffe4191527068a`.
+Current DNS/TCP/TLS check succeeded without an HTTP/authentication/model probe;
+the historical connection cause remains unestablished. Settings/channel unchanged.
+C atoms/findings are unchanged: zero adopted findings/checks, unresolved coverage
+and provider contract errors retained. Complete delivery is not content PASS or
+Jev increment. Independent new-batch content review remains pending; no new batch.
+Old stop checkpoints, old experiment conclusions, GJ/R2 CLOSED, main/default Skill,
+default NOT QUALIFIED and ROI-Beta boundary unchanged.
 
 ## Original eight-case authorization — historical scope
 

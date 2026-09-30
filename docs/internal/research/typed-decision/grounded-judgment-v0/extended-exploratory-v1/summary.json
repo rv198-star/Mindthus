@@ -2001,17 +2001,17 @@
     },
     {
       "path": "display-goal-2-C",
-      "status": "unknown",
-      "phase": "draft",
-      "calls": 6,
-      "host_calls": 3,
+      "status": "delivered",
+      "phase": "done",
+      "calls": 7,
+      "host_calls": 4,
       "jev_calls": 3,
       "reads": 1,
       "checks": 0,
       "revisions": 0,
-      "draft": null,
+      "draft": "按题目给定条件，27寸5K的物理像素密度更高。这支持把5K作为换屏候选，但单凭这一点，还不足以推出“下一步应优先比较5K规格和价格”。该建议与阅读体验有关，优先级仍需结合现有屏幕的实际表现判断。\n\n下一步先在现有4K屏幕上试几档系统缩放，用常用应用和同一段文字比较界面大小、阅读舒适度与可用工作区。如果达到要求，就继续使用；如果仍不满意，明确剩余问题，再带着这些要求比较5K机型的效果、规格和价格。\n\n调整设置不会增加面板的物理像素密度；题目也未提供实测，不能据此保证换成5K就能解决阅读问题。",
       "check": null,
-      "final": null,
+      "final": "按题目给定条件，27寸5K的物理像素密度更高。这支持把5K作为换屏候选，但单凭这一点，还不足以推出“下一步应优先比较5K规格和价格”。该建议与阅读体验有关，优先级仍需结合现有屏幕的实际表现判断。\n\n下一步先在现有4K屏幕上试几档系统缩放，用常用应用和同一段文字比较界面大小、阅读舒适度与可用工作区。如果达到要求，就继续使用；如果仍不满意，明确剩余问题，再带着这些要求比较5K机型的效果、规格和价格。\n\n调整设置不会增加面板的物理像素密度；题目也未提供实测，不能据此保证换成5K就能解决阅读问题。",
       "atoms": {
         "C": {
           "basis_refs": [
@@ -2453,10 +2453,48 @@
           "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000077/terminal.json",
           "underlying_requests": null,
           "usage": null
+        },
+        {
+          "active_wait_seconds": 60.007643999997526,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.001617667032405734,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "02aaff4584cd665214b55377153656169857d6e11e727a69bf5fb8b4930c88c4",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+          },
+          "phase": "draft",
+          "role": "host",
+          "session_seconds": 96.28041374997701,
+          "simulation": false,
+          "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000078/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 28058,
+            "output_tokens": 1248,
+            "reasoning_output_tokens": 1034
+          }
         }
       ],
-      "session_seconds": 161.51316154305823,
-      "active_wait_seconds": 343.8416023749742,
+      "session_seconds": 257.79357529303525,
+      "active_wait_seconds": 403.8492463749717,
       "local_failures": [
         {
           "message": "read_only_before_first_draft",
@@ -2477,7 +2515,8 @@
         "000010",
         "000011",
         "000076",
-        "000077"
+        "000077",
+        "000078"
       ],
       "raw_returns": [
         {
@@ -2668,11 +2707,24 @@
           "transport_status": "unknown",
           "import_error": null,
           "response": null
+        },
+        {
+          "local_call": "000078",
+          "phase": "draft",
+          "transport_status": "returned",
+          "import_error": null,
+          "response": {
+            "kind": "answer",
+            "objection": "",
+            "read_paths": [],
+            "text": "按题目给定条件，27寸5K的物理像素密度更高。这支持把5K作为换屏候选，但单凭这一点，还不足以推出“下一步应优先比较5K规格和价格”。该建议与阅读体验有关，优先级仍需结合现有屏幕的实际表现判断。\n\n下一步先在现有4K屏幕上试几档系统缩放，用常用应用和同一段文字比较界面大小、阅读舒适度与可用工作区。如果达到要求，就继续使用；如果仍不满意，明确剩余问题，再带着这些要求比较5K机型的效果、规格和价格。\n\n调整设置不会增加面板的物理像素密度；题目也未提供实测，不能据此保证换成5K就能解决阅读问题。"
+          }
         }
       ],
       "source_groups": [
         "initial",
-        "missing_three_compensation_successor"
+        "missing_three_compensation_successor",
+        "last_named_000077_compensation"
       ]
     },
     {
@@ -3950,17 +4002,20 @@
     },
     {
       "path": "mechanism-object-2-A",
-      "status": "awaiting_compensation",
-      "phase": "draft",
-      "calls": 2,
-      "host_calls": 2,
+      "status": "delivered",
+      "phase": "done",
+      "calls": 4,
+      "host_calls": 4,
       "jev_calls": 0,
       "reads": 1,
-      "checks": 0,
+      "checks": 1,
       "revisions": 0,
-      "draft": null,
-      "check": null,
-      "final": null,
+      "draft": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。\n\n它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。\n\n完整解释应包括两段：先验签，非零则停止；通过后，将指令和原文交给模型生成摘要。只用提示与上下文解释整个服务，排查“为什么没有摘要”时就可能误改提示，漏查验签和分支控制。验签控制能否进入生成，模型及其输入则影响生成什么。",
+      "check": {
+        "basis_text": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。\n\n它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。",
+        "needs_revision": false
+      },
+      "final": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。\n\n它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。\n\n完整解释应包括两段：先验签，非零则停止；通过后，将指令和原文交给模型生成摘要。只用提示与上下文解释整个服务，排查“为什么没有摘要”时就可能误改提示，漏查验签和分支控制。验签控制能否进入生成，模型及其输入则影响生成什么。",
       "atoms": {},
       "composition": null,
       "measurements": [
@@ -4039,10 +4094,86 @@
             "output_tokens": 512,
             "reasoning_output_tokens": 435
           }
+        },
+        {
+          "active_wait_seconds": 43.34291262499755,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0020672499667853117,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "4af4942d5dd83408225d165ad4a87a5b21c2c42a819f79516d870af12f059b38",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+          },
+          "phase": "draft",
+          "role": "host",
+          "session_seconds": 137.15930366696557,
+          "simulation": false,
+          "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000079/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 32397,
+            "output_tokens": 2286,
+            "reasoning_output_tokens": 2070
+          }
+        },
+        {
+          "active_wait_seconds": 43.00468374998309,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0013922079815529287,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "3a97a5c09080d5188b410bc5a25b44cdbef07f274cae243a6a282748fd8a3e91",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+          },
+          "phase": "check",
+          "role": "host",
+          "session_seconds": 59.99969645898091,
+          "simulation": false,
+          "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000080/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 20848,
+            "output_tokens": 577,
+            "reasoning_output_tokens": 448
+          }
         }
       ],
-      "session_seconds": 86.83033245895058,
-      "active_wait_seconds": 117.69077308400301,
+      "session_seconds": 283.98933258489706,
+      "active_wait_seconds": 204.03836945898365,
       "local_failures": [
         {
           "message": "read_only_before_first_draft",
@@ -4059,7 +4190,9 @@
       },
       "call_ids": [
         "000028",
-        "000029"
+        "000029",
+        "000079",
+        "000080"
       ],
       "raw_returns": [
         {
@@ -4091,13 +4224,34 @@
             ],
             "text": "将按 using-mindthus 入口判断整个摘要服务的解释是否充分；需读取其运行合同，确认整体对象审计与无法运行校验时的输出要求。"
           }
+        },
+        {
+          "local_call": "000079",
+          "phase": "draft",
+          "transport_status": "returned",
+          "import_error": null,
+          "response": {
+            "kind": "answer",
+            "objection": "",
+            "read_paths": [],
+            "text": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。\n\n它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。\n\n完整解释应包括两段：先验签，非零则停止；通过后，将指令和原文交给模型生成摘要。只用提示与上下文解释整个服务，排查“为什么没有摘要”时就可能误改提示，漏查验签和分支控制。验签控制能否进入生成，模型及其输入则影响生成什么。"
+          }
+        },
+        {
+          "local_call": "000080",
+          "phase": "check",
+          "transport_status": "returned",
+          "import_error": null,
+          "response": {
+            "basis_text": "对整个摘要服务，这项解释不充分：验签流程及退出码分支控制是否允许生成，模块化提示和上下文注入只能覆盖验签通过后的输入组织与指令引导。\n\n它能解释按需载入指令、将指令与原文交给模型生成摘要这一段；不能覆盖签名检查，以及退出码非零时阻止生成的控制机制。即使提示和原文可用，验签失败仍然不会生成摘要。",
+            "needs_revision": false
+          }
         }
       ],
       "source_groups": [
-        "initial"
-      ],
-      "previous_undelivered_status": "format_failure",
-      "compensation_request_prepared_not_sent": true
+        "initial",
+        "last_named_000077_compensation"
+      ]
     },
     {
       "path": "mechanism-object-2-B",
@@ -5599,17 +5753,48 @@
     },
     {
       "path": "record-source-1-B",
-      "status": "awaiting_compensation",
-      "phase": "draft",
-      "calls": 2,
-      "host_calls": 2,
+      "status": "delivered",
+      "phase": "done",
+      "calls": 4,
+      "host_calls": 4,
       "jev_calls": 0,
       "reads": 0,
-      "checks": 0,
+      "checks": 1,
       "revisions": 0,
-      "draft": null,
-      "check": null,
-      "final": null,
+      "draft": "当前材料不足以支持完整的核验结论。\n\n发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。案例记录支持这一陈述；在采纳同一设备、同一任务、其余设置固定这些条件时，可以推断合成情境中调整后误读更少。\n\n但材料未提供足以证明“已直接核对原始记录”的对应记录及核对过程，不能从上述陈述直接推出完整的核验结论。所有数字均为合成案例记录，也不能据此确认真实设备的调整效果。完整结论仍缺证据，并非已被证伪。",
+      "check": {
+        "LOC.inference": {
+          "basis_refs": [
+            "w008"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "LOC.inference",
+          "raw_result_ref": "8faa7561356c4c9cc630c874622bdc72372446376b55248f555916dc63889576",
+          "refs": [
+            "w008"
+          ],
+          "semantic_state": "support",
+          "unresolved_reason": null,
+          "value": "w008"
+        },
+        "OK.inference": {
+          "basis_refs": [
+            "w003",
+            "w007",
+            "w011"
+          ],
+          "probability": null,
+          "provenance": "agent_categorical",
+          "question_id": "OK.inference",
+          "raw_result_ref": "0744b40d6ee971111e7f092a152db314308ec6d4d70fd5a914d3191375690cf7",
+          "refs": [],
+          "semantic_state": "unresolved",
+          "unresolved_reason": "check_conflict",
+          "value": "support"
+        }
+      },
+      "final": "当前材料不足以支持完整的核验结论。\n\n发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。案例记录支持这一陈述；在采纳同一设备、同一任务、其余设置固定这些条件时，可以推断合成情境中调整后误读更少。\n\n但材料未提供足以证明“已直接核对原始记录”的对应记录及核对过程，不能从上述陈述直接推出完整的核验结论。所有数字均为合成案例记录，也不能据此确认真实设备的调整效果。完整结论仍缺证据，并非已被证伪。",
       "atoms": {
         "C": {
           "basis_refs": [
@@ -5888,10 +6073,86 @@
           "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000047/terminal.json",
           "underlying_requests": null,
           "usage": null
+        },
+        {
+          "active_wait_seconds": 43.48268549999921,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0015426249592565,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "f57d866d28d636a8b083744bf4a47d230cfc2aa45e88b67e6f9df14dd0e92311",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+          },
+          "phase": "draft",
+          "role": "host",
+          "session_seconds": 82.15564916701987,
+          "simulation": false,
+          "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000081/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 25862,
+            "output_tokens": 1219,
+            "reasoning_output_tokens": 1034
+          }
+        },
+        {
+          "active_wait_seconds": 33.39197425002931,
+          "cli_starts": 1,
+          "cost": null,
+          "loading_seconds": 0.0017557910177856684,
+          "logical_calls": 1,
+          "observed_recoveries": {
+            "actual_underlying_request_count": null,
+            "auth_or_401_log_count": 0,
+            "authentication_recovery_seconds": null,
+            "cli_starts": 1,
+            "connection_recovery_seconds": null,
+            "fallback_or_prewarm_log_count": 0,
+            "generation_attempt_count": null,
+            "no_recovery_observed_is_not_zero_http_proof": true,
+            "observation": "no_recovery_observed",
+            "outer_driver_retries": 0,
+            "reconnect_notice_count": 0,
+            "request_sha256": "dc4e7e0e35f57bff4c0f24a3ed6570597abae304cbcd0224c4c18e0423954963",
+            "sampling_retry_log_count": 0,
+            "schema": "mindthus.invocation-transport-observation.v2",
+            "stop_subsequent_dispatch": false,
+            "transport_successor_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff"
+          },
+          "phase": "check",
+          "role": "host",
+          "session_seconds": 69.87705670803552,
+          "simulation": false,
+          "transport_evidence": "/Users/william/.codex/tmp/gj-extended-v1-run/calls/000082/terminal.json",
+          "underlying_requests": null,
+          "usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 25619,
+            "output_tokens": 867,
+            "reasoning_output_tokens": 794
+          }
         }
       ],
-      "session_seconds": 490.7299844159279,
-      "active_wait_seconds": 114.33949600002961,
+      "session_seconds": 642.7626902909833,
+      "active_wait_seconds": 191.21415575005813,
       "local_failures": [],
       "skipped_phases": [],
       "atom_states": {
@@ -5903,7 +6164,9 @@
       },
       "call_ids": [
         "000046",
-        "000047"
+        "000047",
+        "000081",
+        "000082"
       ],
       "raw_returns": [
         {
@@ -6036,13 +6299,50 @@
           "transport_status": "unknown",
           "import_error": null,
           "response": null
+        },
+        {
+          "local_call": "000081",
+          "phase": "draft",
+          "transport_status": "returned",
+          "import_error": null,
+          "response": {
+            "kind": "answer",
+            "objection": "",
+            "read_paths": [],
+            "text": "当前材料不足以支持完整的核验结论。\n\n发言者称同一台屏幕在相同读字任务中，调整前误读12字，调整后误读3字。案例记录支持这一陈述；在采纳同一设备、同一任务、其余设置固定这些条件时，可以推断合成情境中调整后误读更少。\n\n但材料未提供足以证明“已直接核对原始记录”的对应记录及核对过程，不能从上述陈述直接推出完整的核验结论。所有数字均为合成案例记录，也不能据此确认真实设备的调整效果。完整结论仍缺证据，并非已被证伪。"
+          }
+        },
+        {
+          "local_call": "000082",
+          "phase": "check",
+          "transport_status": "returned",
+          "import_error": null,
+          "response": {
+            "LOC.inference": {
+              "basis_refs": [
+                "w008"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": "w008"
+            },
+            "OK.inference": {
+              "basis_refs": [
+                "w003",
+                "w007",
+                "w011"
+              ],
+              "semantic_state": "support",
+              "unresolved_reason": null,
+              "value": "support"
+            }
+          }
         }
       ],
       "source_groups": [
-        "read_contract_successor"
-      ],
-      "previous_undelivered_status": "unknown",
-      "compensation_request_prepared_not_sent": true
+        "read_contract_successor",
+        "last_named_000077_compensation"
+      ]
     },
     {
       "path": "record-source-1-C",
@@ -10595,15 +10895,15 @@
     }
   ],
   "batch_sha256": "d91af49c938602c289608fa61e3a0eb4b1fa4e0ddc44b6c7adef3cc26a2ec8ff",
-  "logical_calls": 78,
-  "host_calls": 54,
+  "logical_calls": 83,
+  "host_calls": 59,
   "jev_calls": 24,
   "simulation": false,
   "holdout": false,
   "cost": null,
   "exact_http_requests": null,
-  "session_seconds": 5200.247538540978,
-  "active_wait_seconds": 4417.539182297187,
+  "session_seconds": 5645.719658291957,
+  "active_wait_seconds": 4640.769082422194,
   "transport_source_groups": {
     "initial": {
       "logical_calls": 34,
@@ -10629,6 +10929,11 @@
       "logical_calls": 2,
       "session_seconds": 99.07894091703929,
       "active_wait_seconds": 106.85863508400507
+    },
+    "last_named_000077_compensation": {
+      "logical_calls": 5,
+      "session_seconds": 445.4721197509789,
+      "active_wait_seconds": 223.22990012500668
     }
   },
   "technical_successor": {
@@ -10640,9 +10945,13 @@
     "source_commit": "02687f24f289f9ed9ae9d65d1138dd39bc921d91",
     "sha256": "53247d88526de49ce7f6bd8ee66e9fa804d9fbb32f4b30dbe1c0fc762a29f625",
     "old_remote_status": "unknown",
-    "replayed": false,
+    "replayed": true,
     "accepted_call": "000047",
-    "budgets_reset": false
+    "budgets_reset": false,
+    "compensation_calls": [
+      "000081"
+    ],
+    "scope": "only the explicitly authorized technical compensation; old remote remains unknown"
   },
   "named_sse_compensation": {
     "source_commit": "b0a7467acc3d38ba2ede62786c01dd5a73cf354a",
@@ -10664,45 +10973,59 @@
     "budgets_reset": false
   },
   "local_format_failure_paths": 0,
-  "delivered_paths": 21,
+  "last_named_compensation": {
+    "source_commit": "7ad0bbd433eb1e4d28a379b0caffe4191527068a",
+    "sha256": "b8a4a5d2e1f6c3cd6aae7a8caac1dfd80f1dc6f550f8a9c3eefc06df7b7518ea",
+    "old_call": "000077",
+    "old_remote_status": "unknown",
+    "retry_call_key": "display-goal-2-C:6",
+    "compensation_calls": [
+      "000078"
+    ],
+    "retry_limit": 1,
+    "budgets_reset": false,
+    "wait_proves_remote_completion": false,
+    "actual_wire_identical_to_000077": true
+  },
+  "delivered_paths": 24,
   "arm_totals": {
     "A": {
-      "logical_calls": 21,
-      "host_calls": 21,
+      "logical_calls": 23,
+      "host_calls": 23,
       "jev_calls": 0,
-      "session_seconds": 1372.404178457975,
-      "active_wait_seconds": 1148.300732293108
+      "session_seconds": 1569.5631785839214,
+      "active_wait_seconds": 1234.6483286680887
     },
     "B": {
-      "logical_calls": 22,
-      "host_calls": 22,
+      "logical_calls": 24,
+      "host_calls": 24,
       "jev_calls": 0,
-      "session_seconds": 2955.4465157060185,
-      "active_wait_seconds": 1261.7493440482067
+      "session_seconds": 3107.479221581074,
+      "active_wait_seconds": 1338.6240037982352
     },
     "C": {
-      "logical_calls": 35,
-      "host_calls": 11,
+      "logical_calls": 36,
+      "host_calls": 12,
       "jev_calls": 24,
-      "session_seconds": 872.3968443769845,
-      "active_wait_seconds": 2007.4891059558722
+      "session_seconds": 968.6772581269615,
+      "active_wait_seconds": 2067.4967499558697
     }
   },
-  "first_send_to_last_terminal_seconds": 21521.619265794754,
-  "returned_calls": 75,
+  "first_send_to_last_terminal_seconds": 24101.168120861053,
+  "returned_calls": 80,
   "unknown_calls": 3,
   "failed_calls": 0,
   "safety_refusal_calls": 0,
   "raw_usage_by_provider": {
     "host": {
-      "calls_with_usage": 51,
+      "calls_with_usage": 56,
       "calls_missing_usage": 3,
       "known_numeric_fields_sum": {
-        "output_tokens": 62312,
-        "input_tokens": 1338006,
-        "reasoning_output_tokens": 53491,
-        "cache_write_input_tokens": 0,
-        "cached_input_tokens": 113280
+        "cached_input_tokens": 113280,
+        "output_tokens": 68509,
+        "reasoning_output_tokens": 58871,
+        "input_tokens": 1470790,
+        "cache_write_input_tokens": 0
       },
       "raw_usage_in_calls_jsonl": true,
       "not_cross_provider_cost": true
@@ -10711,18 +11034,18 @@
       "calls_with_usage": 24,
       "calls_missing_usage": 0,
       "known_numeric_fields_sum": {
-        "output_tokens": 4953,
-        "input_tokens": 115046
+        "input_tokens": 115046,
+        "output_tokens": 4953
       },
       "raw_usage_in_calls_jsonl": true,
       "not_cross_provider_cost": true
     }
   },
   "host_transport_observations": {
-    "cli_starts": 54,
+    "cli_starts": 59,
     "outer_driver_retries": 0,
     "outer_driver_retry_scope": "automatic_loop_only",
-    "authorized_technical_compensations": 2,
+    "authorized_technical_compensations": 5,
     "exact_underlying_requests": null,
     "generation_attempt_count": null,
     "observed_log_counts": {
@@ -10762,26 +11085,40 @@
     {
       "started_epoch": 1790782151.4657228,
       "last_returned_epoch": 1790782385.415037
+    },
+    {
+      "started_epoch": 1790784205.447436,
+      "last_returned_epoch": 1790784964.940932
     }
   ],
-  "local_execution_window_seconds": 9876.64028930664,
-  "wall_outside_local_execution_windows_seconds": 11644.978976488113,
+  "local_execution_window_seconds": 10636.133785247803,
+  "wall_outside_local_execution_windows_seconds": 13465.03433561325,
   "reference_scope": "Raw records are immutable; no hash recomputation claimed as independent audit.",
-  "execution_complete": false,
+  "execution_complete": true,
   "independent_content_review_complete": false,
-  "missing_three_continuation": {
-    "source_commit": "28bd103380a6354820342cf1a8ea2be7c9d356f6",
-    "sha256": "47d689ae87de0aa63441791bd2defad59c22ec9d22bcb7806b149a6bc6bde461",
-    "prior_calls": 76,
-    "new_calls": 2,
-    "blocking_call": "000077",
-    "protected_delivered_count": 21,
-    "prior_21_states_unchanged": true,
-    "remaining_unsent_compensations": [
-      "mechanism-object-2-A:2",
-      "record-source-1-B:2"
-    ],
-    "new_unknown_automatically_retried": false,
-    "observed_auxiliary_mcp_initialize_retries_000077": 2
-  }
+  "final_completion_attempt_ended": true,
+  "completion_attempt_abandoned": false,
+  "prior_21_delivered_states_unchanged": true,
+  "old_remote_unknown_calls": [
+    "000047",
+    "000049",
+    "000077"
+  ],
+  "no_additional_retry_authorized": true,
+  "total_limits": {
+    "host": 144,
+    "jev": 32,
+    "logical": 176
+  },
+  "unused_caps": {
+    "logical": 93,
+    "host": 85,
+    "jev": 8
+  },
+  "original_format_failure_calls": [
+    "000011",
+    "000029"
+  ],
+  "auxiliary_mcp_initialization_retry_logs_000077": 2,
+  "generation_requests_in_connection_check": 0
 }

@@ -38,3 +38,7 @@ and the five scoped interface tests in `last-try-tests.log`.
 
 Execution and final outcome will be appended through the existing evidence exporter.
 This is a bounded continuation, not a quality or capability conclusion.
+
+Final outcome: 000078 returned the first complete answer. The two existing A/B
+compensations and normal checks also returned; 24/24 delivered, no further retry.
+See RESULT.md and last-try-actual.json. Old 000077 remains remote-unknown.
