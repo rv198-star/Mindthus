@@ -21,7 +21,7 @@ def main():
     with open(HERE/'calls.jsonl','w') as f:
         for record in calls:f.write(json.dumps(record,ensure_ascii=False,separators=(',',':'))+'\n')
     source_names={None:'initial'}
-    for name,label in (('read-contract-successor.json','read_contract_successor'),('risk-accepted-000047.json','named_000047_successor'),('retry-000049.json','named_000049_compensation_successor')):
+    for name,label in (('read-contract-successor.json','read_contract_successor'),('risk-accepted-000047.json','named_000047_successor'),('retry-000049.json','named_000049_compensation_successor'),('complete-missing-three.json','missing_three_compensation_successor')):
         if (BATCH/name).exists():source_names[digest(rt.read(BATCH/name))]=label
     def source_group(c):return source_names.get(c['binding'].get('technical_successor_sha256'),'unrecognized_successor')
     index=[]

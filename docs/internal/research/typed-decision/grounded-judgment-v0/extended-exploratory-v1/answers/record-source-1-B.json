@@ -1,6 +1,6 @@
 {
   "path": "record-source-1-B",
-  "status": "unknown",
+  "status": "awaiting_compensation",
   "phase": "draft",
   "calls": 2,
   "host_calls": 2,
@@ -441,5 +441,7 @@
   ],
   "source_groups": [
     "read_contract_successor"
-  ]
+  ],
+  "previous_undelivered_status": "unknown",
+  "compensation_request_prepared_not_sent": true
 }

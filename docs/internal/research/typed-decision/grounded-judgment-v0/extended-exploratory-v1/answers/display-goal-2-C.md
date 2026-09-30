@@ -1,6 +1,6 @@
 # display-goal-2-C
 
-状态：format_failure
+状态：unknown
 
 ## 首稿
 
@@ -193,6 +193,28 @@ null
         ],
         "text": "先核对目标与建议之间的判断边界，再给出下一步。"
       }
+    },
+    {
+      "local_call": "000076",
+      "phase": "draft",
+      "transport_status": "returned",
+      "import_error": null,
+      "response": {
+        "kind": "read",
+        "objection": "需读取目标与行动的校准规则，判断给定的像素密度前提是否足以支持优先比较换屏机型，同时保留原目标与证据边界。",
+        "read_paths": [
+          "docs/methodologies/primitives/entry-triage.md",
+          "docs/methodologies/primitives/decision-context-calibration.md"
+        ],
+        "text": ""
+      }
+    },
+    {
+      "local_call": "000077",
+      "phase": "draft",
+      "transport_status": "unknown",
+      "import_error": null,
+      "response": null
     }
   ]
 }

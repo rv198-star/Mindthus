@@ -1,6 +1,6 @@
 # mechanism-object-2-A
 
-状态：format_failure
+状态：历史格式失败；补试已准备、未发送（批次受000077阻断）
 
 ## 首稿
 

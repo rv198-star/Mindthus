@@ -225,3 +225,13 @@
 {"returned": "skills-scope-2-A", "phase": "done", "stopped": null, "batch_calls": 76, "at_epoch": 1790780537.6956742}
 {"path_end": "skills-scope-2-A", "phase": "done", "stopped": null}
 {"completed_batch": true, "counts": {"logical_calls": 76, "host_calls": 52, "jev_calls": 24}}
+{"credential": {"entry": "/Users/william/.config/jev-jarvis/env", "loaded": true, "provider": "TypeSafe official", "model": "jev-1.13.0"}}
+{"order": ["display-goal-1-A", "display-goal-1-B", "display-goal-1-C", "display-goal-2-C", "display-goal-2-B", "display-goal-2-A", "mechanism-object-1-B", "mechanism-object-1-C", "mechanism-object-1-A", "mechanism-object-2-A", "mechanism-object-2-C", "mechanism-object-2-B", "record-source-1-C", "record-source-1-A", "record-source-1-B", "record-source-2-B", "record-source-2-A", "record-source-2-C", "skills-scope-1-A", "skills-scope-1-B", "skills-scope-1-C", "skills-scope-2-C", "skills-scope-2-B", "skills-scope-2-A"], "no_retries": true, "started_epoch": 1790782151.4657228}
+{"path_end": "display-goal-1-A", "phase": "done", "stopped": null}
+{"path_end": "display-goal-1-B", "phase": "done", "stopped": null}
+{"path_end": "display-goal-1-C", "phase": "done", "stopped": null}
+{"dispatch": "display-goal-2-C", "phase": "draft", "prior_calls": 4, "at_epoch": 1790782155.48469}
+{"returned": "display-goal-2-C", "phase": "draft", "stopped": null, "batch_calls": 77, "at_epoch": 1790782318.665152}
+{"dispatch": "display-goal-2-C", "phase": "draft", "prior_calls": 5, "at_epoch": 1790782320.8269498}
+{"returned": "display-goal-2-C", "phase": "draft", "stopped": "unknown", "batch_calls": 78, "at_epoch": 1790782385.415037}
+{"batch_stop": true, "path": "display-goal-2-C", "reason": "missing_new_stop"}
