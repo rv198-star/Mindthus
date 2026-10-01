@@ -28,6 +28,7 @@ DEFAULT_HOST={**HOST,'endpoint':'https://cpa.rn-us.061718.xyz/v1/chat/completion
 
 
 class CPAAdapters(r.OfficialAdapters):
+    limits={'logical':64,'host':56,'jev':8}
     def __init__(self,host=None):
         self.host={**(DEFAULT_HOST if host is None else host)}
         self.endpoint=self.host['endpoint']
@@ -36,7 +37,7 @@ class CPAAdapters(r.OfficialAdapters):
         r.require({**self.host,'endpoint':ENDPOINT,'reasoning_effort':'max'}==HOST,'cpa_host_profile_changed')
     def check_configuration(self,config):
         r.require(config['host_configuration']==self.host,'cpa_configuration_changed')
-        r.require(config['limits']=={'logical':64,'host':56,'jev':8},'cpa_limits_changed')
+        r.require(config['limits']==self.limits,'cpa_limits_changed')
 
     def outbound(self,req,config):
         if req['role']=='jev':return r.outbound(req,config)
@@ -63,7 +64,7 @@ class CPAAdapters(r.OfficialAdapters):
 
     def classify(self,req,raw):
         if req['role']=='jev' or raw.get('kind')=='not_sent':return r.classify(req,raw)
-        expected=self.outbound(req,{'host_configuration':self.host,'limits':{'logical':64,'host':56,'jev':8}})
+        expected=self.outbound(req,{'host_configuration':self.host,'limits':self.limits})
         if raw.get('kind')=='transport_error':
             d=raw.get('diagnostic') or {};code=raw.get('code')
             if d.get('request_sha256')!=r.digest(expected['body']):return 'unknown',None,None,code

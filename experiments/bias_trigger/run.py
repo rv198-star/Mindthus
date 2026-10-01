@@ -173,7 +173,10 @@ class Driver:
         require(state['calls'][arm]<(4 if arm=='A' else 2),'path_budget_exhausted')
         external=self.config.get('external_budget_debits',{'logical':0,'host':0,'jev':0})
         require(all(type(v) is int and v>=0 for v in external.values()) and external['logical']==external['host']+external['jev'],'external_budget_debits')
-        require(len(prior)+external['logical']<64 and sum(rt.read(p/'request.json')['role']==role for p in prior)+external[role]<(8 if role=='jev' else 56),'total_budget_exhausted')
+        limits=self.config['limits']
+        require(set(limits)=={'logical','host','jev'} and all(type(v) is int and v>0 for v in limits.values())
+                and limits['logical']==limits['host']+limits['jev'],'invalid_budget_limits')
+        require(len(prior)+external['logical']<limits['logical'] and sum(rt.read(p/'request.json')['role']==role for p in prior)+external[role]<limits[role],'total_budget_exhausted')
         start=self.monotonic();wire=getattr(self.adapter,'outbound',outbound)(req,self.config)
         resolve=getattr(self.adapter,'classify',classify)
         directory=self.root/'calls'/f'{len(prior):06d}';directory.mkdir()

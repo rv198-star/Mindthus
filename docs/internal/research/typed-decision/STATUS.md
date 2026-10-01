@@ -6,7 +6,20 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — future DeepSeek preference medium; completed max batch preserved
+## Current checkpoint — one Owner-authorized medium A/B/C rerun
+
+2026-10-01: Owner authorizes one rerun after the ordinary-effort change. The
+[registration](bias-trigger-v1/primitive-ablation-medium-v1/EXECUTION.md) preserves
+all eight inputs/norms, the fixed general primitive packet and existing two checks.
+New A/B host replies use medium; official Jev checks exact new A, at most one
+same-host handling. No old result overwrites, question tuning or extra reviewer.
+
+Maximum new phase 32 calls (24 host / 8 Jev), inherited 35 (27 host / 8 Jev);
+cumulative cap 67 (51 host / 16 Jev), explicit forward allocation without reset.
+Same parent lock, serial ledger and 60-second cooldown; new unknown/refusal stops.
+17 targeted offline wiring regressions pass. Real products and value remain pending.
+
+## Historical checkpoint — future DeepSeek preference medium; completed max batch preserved
 
 2026-10-01: Owner requests ordinary effort instead of max. New CPA/CleanAdapters
 defaults use `deepseek-v4.1-flash`, `reasoning_effort=medium`, thinking enabled and
