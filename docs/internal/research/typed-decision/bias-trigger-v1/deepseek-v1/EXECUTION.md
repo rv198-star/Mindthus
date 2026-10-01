@@ -24,3 +24,32 @@ CPA首答的实际环境为chat API，没有CLI的系统上下文；与上一批
 ## 当前终态
 
 第一条case-01/A真实HTTP 403，错误http_403；无回答，Jev0。已保存STOP并停止后续派发，没有技术重试。是服务访问拒绝，未证明模型内容安全拒绝或判断能力失败。见RESULT.md。
+
+## Owner提供的新地址：向前生效的技术后继
+
+2026-10-01：Owner在要求先试通API后提供https://cpa.rn-us.061718.xyz/v1。
+同一正常客户端GET /models返回200，目录含deepseek-v4.1-flash；最小生成实际返回
+{"ok":true}，回包型号一致。请求仍为max、thinking enabled；服务未回显实际max等级。
+未变更账号、认证、TLS检查、代理或客户端特征，未通过伪装解决旧1010。
+
+第一次最小生成遇到TLS连接失败。绑定诊断确认HTTPS连接建立时失败、生成HTTP
+write尚未执行；原unknown outcome不改写，追加有限对账后仅一次同正文连通补试。
+补试取得完整stop返回。原始意向、诊断、对账和成功回包均单独保存。
+
+继承原运行根与账本。旧000000访问拒绝、STOP、原batch、原state.after及已耗额度
+不删除。new-endpoint-successor.json只绑定该指定旧访问记录及新地址成功证据；
+并非通用忽略unknown。任何新unknown或拒绝写STOP-after-new-endpoint.json并停止。
+旧403不追认远端生成已结束，也不推定必有后台工作。
+
+累计预算预扣3次宿主尝试：旧业务403一次、发送前TLS失败一次、连通成功一次。
+两次连通尝试进入external_budget_debits；case-01/A既有已用1/4保留。
+下一请求为新编号case-01-A:1；全局64/56/8和原单路径上限均不重置。
+
+登记源码提交后运行python -m experiments.bias_trigger.deepseek_continue --register。
+沿用单执行者锁和60秒冷却；首次新的业务调用也在连通补试明确结束60秒以后。
+八份A首答先完成，若均无重要偏差则停止、不派发B/C。
+如有真实偏差，固定首答及独立规范摘要写stage-A-review.json后，
+python -m experiments.bias_trigger.deepseek_continue --compare比较全部固定八窗。
+规范、评语与预期答案不进入业务提示。不更换材料制造错误。
+
+16项受影响发送/额度回归通过，见TESTS-endpoint-budget.log；不重复旧GJ/R2审计。

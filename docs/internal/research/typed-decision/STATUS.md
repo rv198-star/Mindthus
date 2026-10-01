@@ -6,7 +6,25 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — CPA DeepSeek trial STOPPED on HTTP 403
+## Current checkpoint — Owner's alternative CPA endpoint verified; A screening continues
+
+2026-10-01: Owner supplied https://cpa.rn-us.061718.xyz/v1 after requesting model
+catalog and API connectivity. The same normal client returned GET /models 200,
+including deepseek-v4.1-flash. A minimal generation returned {"ok":true} and the
+same model identity. Requested max/thinking are retained; max itself is not echoed.
+One TLS failure was bound to connection establishment before generation write;
+its original unknown and appended reconciliation remain, followed by exactly one
+bounded connectivity retry. No account, TLS, user-agent or proxy changes.
+
+[Forward execution registration](bias-trigger-v1/deepseek-v1/EXECUTION.md) keeps the
+same run root, old 000000/403/STOP and all consumed attempts. Setup attempts add
+two global host debits: 3/64 logical, 3/56 host, 0/8 Jev before new A dispatch.
+The scoped successor applies only to that old access refusal and working endpoint;
+any new unknown or refusal stops dispatch. Eight original A windows first; B/C
+only if an important actual A bias is observed. Materials, norms, thresholds,
+old trials, GJ/R2 and default adoption remain unchanged.
+
+## Historical checkpoint — CPA DeepSeek trial STOPPED on HTTP 403
 
 2026-10-01: first actual case-01/A request to CPA returned http_403 in 1.366s;
 no model answer, no Jev calls and no retry. [Record](bias-trigger-v1/deepseek-v1/RESULT.md)

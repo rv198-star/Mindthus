@@ -2,6 +2,8 @@
 import copy
 import json
 import unittest
+import tempfile
+from pathlib import Path
 from . import run as r, deepseek as d
 from .test_run import state
 
@@ -43,6 +45,28 @@ class CPAWire(unittest.TestCase):
         self.assertEqual(self.adapter.classify(self.req,raw)[0],'unknown')
         raw=self.reply();raw['raw']['choices'][0]['finish_reason']='content_filter'
         self.assertEqual(self.adapter.classify(self.req,raw)[0],'safety_refusal')
+    def test_user_authorized_endpoint_preserves_host_settings(self):
+        host={**d.HOST,'endpoint':'https://cpa.rn-us.061718.xyz/v1/chat/completions'}
+        adapter=d.CPAAdapters(host);req=r.request(self.item,self.s,'A','draft',True,host)
+        wire=adapter.outbound(req,{'host_configuration':host,'limits':{'logical':64,'host':56,'jev':8}})
+        self.assertEqual(wire['endpoint'],host['endpoint'])
+        self.assertEqual(wire['body']['reasoning_effort'],'max')
+        with self.assertRaises(ValueError):d.CPAAdapters({**host,'endpoint':'https://unapproved.example/v1/chat/completions'})
+    def test_external_probe_debits_preserve_global_cap(self):
+        class Simulated(d.CPAAdapters):
+            simulation=True
+            invoked=False
+            def invoke(self,*args):self.invoked=True;raise AssertionError('transport must not start')
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);(root/'calls/000000').mkdir(parents=True)
+            r.rt.write(root/'calls/000000/request.json',{'role':'host'})
+            r.rt.write(root/'calls/000000/import.json',{})
+            config={'simulation':True,'host_configuration':d.HOST,'limits':{'logical':64,'host':56,'jev':8},
+                    'source_sha256':{},'cases_sha256':r.digest(r.rt.read(r.DOC/'cases.business.json')),
+                    'external_budget_debits':{'logical':55,'host':55,'jev':0}}
+            r.rt.write(root/'batch.json',config);adapter=Simulated();driver=r.Driver(root,adapter)
+            with self.assertRaisesRegex(ValueError,'total_budget_exhausted'):driver.step(self.item,self.s,'A','draft')
+            self.assertFalse(adapter.invoked)
 
 
 if __name__=='__main__':unittest.main()

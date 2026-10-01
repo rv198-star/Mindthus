@@ -157,7 +157,8 @@ class Driver:
         self.clock=clock;self.monotonic=monotonic
         self.serial=SerialRequests(self.root/'serial',clock=clock,monotonic=monotonic,sleep=sleep)
     def step(self,item,state,arm,phase):
-        require(not (self.root/'STOP.json').exists(),'batch_stopped_no_resubmit')
+        stop_path=getattr(self,'stop_path',self.root/'STOP.json')
+        require(not stop_path.exists(),'batch_stopped_no_resubmit')
         require(digest(rt.read(self.root/'batch.json'))==digest(self.parent_config),'batch_changed')
         for path,sha in self.config['source_sha256'].items():require(digest((REPO/path).read_text())==sha,'source_changed')
         if hasattr(self.adapter,'check_configuration'):
@@ -170,7 +171,9 @@ class Driver:
         require(all((p/'import.json').is_file() for p in prior),'unimported_call_no_resubmit')
         req=request(item,state,arm,phase,self.config['simulation'],self.config['host_configuration']);role=req['role']
         require(state['calls'][arm]<(4 if arm=='A' else 2),'path_budget_exhausted')
-        require(len(prior)<64 and sum(rt.read(p/'request.json')['role']==role for p in prior)<(8 if role=='jev' else 56),'total_budget_exhausted')
+        external=self.config.get('external_budget_debits',{'logical':0,'host':0,'jev':0})
+        require(all(type(v) is int and v>=0 for v in external.values()) and external['logical']==external['host']+external['jev'],'external_budget_debits')
+        require(len(prior)+external['logical']<64 and sum(rt.read(p/'request.json')['role']==role for p in prior)+external[role]<(8 if role=='jev' else 56),'total_budget_exhausted')
         start=self.monotonic();wire=getattr(self.adapter,'outbound',outbound)(req,self.config)
         resolve=getattr(self.adapter,'classify',classify)
         directory=self.root/'calls'/f'{len(prior):06d}';directory.mkdir()
@@ -217,7 +220,7 @@ class Driver:
         persist(self.root/'states'/(item['case_id']+'.json'),state)
         rt.write(directory/'import.json',{'binding':binding,'state_sha256':digest(state),'status':state['arms'][arm]['status'],'outer_retries':0})
         if status in ('unknown','safety_refusal') or (terminal['transport_observation'] or {}).get('stop_subsequent_dispatch'):
-            rt.write(self.root/'STOP.json',{'call_key':binding['call_key'],'reason':status,'terminal_sha256':digest(terminal)})
+            rt.write(stop_path,{'call_key':binding['call_key'],'reason':status,'terminal_sha256':digest(terminal)})
         return terminal
 
 def prepare():

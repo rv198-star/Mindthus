@@ -1,0 +1,35 @@
+{
+  "status": "confirmed_pre_send_connection_failure",
+  "original_outcome_sha256": "202c11b5a72c4c793d43b6aaf65b79a27be67216c624560ff6a57655ff46281a",
+  "request_sha256": "9b7bb256c61e822c2c3a2e2e18c3ac4ef5337a58b775e1fd86a322e7c299e718",
+  "evidence": {
+    "ended_at": "2026-10-01T04:54:37.419326+00:00",
+    "errno": 8,
+    "exception_type": "URLError",
+    "generation_send_status": "pre_send",
+    "http_response_received": false,
+    "http_status": null,
+    "local_elapsed_seconds": 3.2746614160000718,
+    "observed_stage": "connection_establishment_failed",
+    "pre_send_basis": "HTTPSConnection.connect raised before generation HTTP write",
+    "provider_acceptance": "unknown",
+    "reason_type": "SSLError",
+    "remote_terminal": "unknown",
+    "request_sha256": "9b7bb256c61e822c2c3a2e2e18c3ac4ef5337a58b775e1fd86a322e7c299e718",
+    "response_identifiers_sha256": {},
+    "schema": "mindthus.transport-diagnostic.v1",
+    "ssl_error_code": 8,
+    "ssl_verify_code": null,
+    "stage_events": [
+      "connection_establishment",
+      "connection_establishment_failed"
+    ],
+    "started_at": "2026-10-01T04:54:34.144657+00:00"
+  },
+  "remote_completion_event": false,
+  "old_outcome_unchanged": true,
+  "scope": "single minimal API connectivity check, not old business retry; latest Owner asked to establish API connectivity before evaluation",
+  "technical_connectivity_retry_limit": 1,
+  "budget_reset": false,
+  "logical_host_debits_after_this_attempt": 2
+}
