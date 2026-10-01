@@ -1,0 +1,63 @@
+{
+  "thread_id": "01a0f6e3-957b-7f32-adbb-b32f943159e4",
+  "archive_path": "/Users/william/.codex/sessions/2026/10/01/rollout-2026-10-01T17-55-05-01a0f6e3-957b-7f32-adbb-b32f943159e4.jsonl",
+  "archive_sha256": "317afdf711cb5d84c2d0cf9d890fee0be4904fbeb85d9741c68fbdd1e2fbc18d",
+  "model": "gpt-5.6-sol",
+  "effort": "medium",
+  "model_provider": "mindthus_official_http",
+  "cli_version": "0.159.2",
+  "base_instructions": {
+    "chars": 17730,
+    "sha256": "a91357a1cd2727a0be06d461248d6e3a7274746e38108f548a3adf2cc2430415",
+    "mindthus_present": false
+  },
+  "context_messages": [
+    {
+      "role": "developer",
+      "chars": 23522,
+      "sha256": "3e43e87d6cf8614260199f0d9ed9b0ff6c10200ff867d7210359e6af1ef027e1",
+      "mindthus_mentions": 16,
+      "Truth_Orientation_present": false,
+      "Frame_Fitness_present": false,
+      "Input_Framing_Audit_present": false
+    },
+    {
+      "role": "developer",
+      "chars": 2264,
+      "sha256": "af60719c7b64906bd05733aec72a96726712fe25d382a7bc9e05a6733cfd67dc",
+      "mindthus_mentions": 0,
+      "Truth_Orientation_present": false,
+      "Frame_Fitness_present": false,
+      "Input_Framing_Audit_present": false
+    },
+    {
+      "role": "developer",
+      "chars": 271,
+      "sha256": "6ded806e3cdbb35599ecaf8742574bc5274908472b1729090010c404c2151e8e",
+      "mindthus_mentions": 0,
+      "Truth_Orientation_present": false,
+      "Frame_Fitness_present": false,
+      "Input_Framing_Audit_present": false
+    },
+    {
+      "role": "user",
+      "chars": 606,
+      "sha256": "0ac6c4ef6bf87c300ab698719b96a61e555b28d37b6e2791246f29d338add88f",
+      "mindthus_mentions": 0,
+      "Truth_Orientation_present": false,
+      "Frame_Fitness_present": false,
+      "Input_Framing_Audit_present": false
+    },
+    {
+      "role": "user",
+      "chars": 498,
+      "sha256": "b2cab53c281a68c79b0cf4fd64671ac113702b4ebd529c6689981d02f611b514",
+      "mindthus_mentions": 0,
+      "Truth_Orientation_present": false,
+      "Frame_Fitness_present": false,
+      "Input_Framing_Audit_present": false
+    }
+  ],
+  "tool_events_observed": 0,
+  "limitation": "CLI base instructions and installed skill catalog present (Mindthus descriptions included); no explicit method body or framing-audit protocol loaded. Cannot attribute answer to an instruction-free model or directly compare input costs with CPA."
+}

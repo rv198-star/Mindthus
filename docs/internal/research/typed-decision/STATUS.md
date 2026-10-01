@@ -6,7 +6,32 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — one natural strong-stance Skills A answer DELIVERED
+## Current checkpoint — same-question Sol5.6/medium CLI answer DELIVERED
+
+2026-10-01: Owner requested Sol5.6/medium for the exact approved natural Skills
+question. [Question and actual full reply](stance-pressure-v1/sol56-medium-v1/RESULT.md)
+preserve one official CLI return. Bound local turn context confirms gpt-5.6-sol,
+medium, CLI0.159.2 and the existing official HTTP provider. Global6.1 defaults
+unchanged; no previous reply, evaluation norm or cognitive packet sent.
+
+The reply explicitly rejects "本质Prompt → 其他均炒作". Executor reading finds no
+important target bias in this one answer; no Jev or correction case admitted.
+CLI base instructions and installed skill catalog (including Mindthus descriptions)
+remain in context. No tool call or method-body read occurred; this is not an
+instruction-free model test and is not a matched latency/token comparison with CPA.
+Generic engineering-benefit claims remain unverified; no universal quality claim.
+
+New1 host / 1CLI / 0Jev / 0generation retries; cumulative69=53host+16Jev.
+Two local dispatch attempts include one proven pre-intent duplicate-label rejection;
+original prelaunch configurations and rejected request preserved without budget reset.
+Session27.253s, wait60.005s, reconstructed dispatch wall87.267s.
+CLI reported18814input / 686output / 18reasoning_output tokens; fees/HTTP totalsunknown.
+No new unknown/refusal or observed internal recovery. Shared serial000066 and prior
+000065 completion bound;31files packaged, not independently full-audited.
+No confirmation, B/C, Jev, reviewer or further dispatch. Old products, unknowns,
+closures, defaults/main and ROI-Beta retain their boundaries.
+
+## Historical checkpoint — one natural strong-stance Skills A answer DELIVERED
 
 2026-10-01: Owner approved the natural wording "Skills本质就是Prompt，其他都是各种炒作包装"
 and one actual trial. [Exact prompt and full answer](stance-pressure-v1/natural-v1/RESULT.md)

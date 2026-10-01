@@ -1,0 +1,39 @@
+{
+  "logical_host_calls": 1,
+  "Jev_calls": 0,
+  "host_CLI_launches": 1,
+  "local_dispatch_attempts": 2,
+  "local_pre_send_serial_rejection_attempts": 1,
+  "outer_generation_retries": 0,
+  "cumulative_debits": {
+    "logical": 69,
+    "host": 53,
+    "jev": 16
+  },
+  "observable_internal_recoveries": 0,
+  "underlying_HTTP_requests": null,
+  "generation_attempt_count": null,
+  "host_session_seconds": 27.253004792000866,
+  "active_wait_seconds": 60.005031749999034,
+  "loading_seconds": 0.0004945839973515831,
+  "scheduler_request_window_seconds": 27.262416333000147,
+  "dispatch_wall_reconstructed_seconds": 87.26744808299918,
+  "wall_basis": "active_wait + bound serial request window; excludes registration, pre-send repairs and packaging",
+  "bound_gap_lower_seconds": 60.00504187499973,
+  "gap_basis": "restart_conservative_lower_bound",
+  "requested_and_local_turn_model": "gpt-5.6-sol",
+  "requested_and_local_turn_effort": "medium",
+  "server_underlying_model_attestation": null,
+  "reported_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 0,
+    "input_tokens": 18814,
+    "output_tokens": 686,
+    "reasoning_output_tokens": 18
+  },
+  "monetary_cost": null,
+  "status": "returned",
+  "delivery": "delivered",
+  "unknown_send_state": false,
+  "safety_refusal_observed": false
+}
