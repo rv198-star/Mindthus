@@ -6,7 +6,22 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — two scoped Jev detections authorized; no host correction this stage
+## Current checkpoint — scoped Jev detection pre-send TLS failure; no judgment or correction decision
+
+2026-10-02: [Actual detection result and bound evidence](stance-pressure-v1/stance-correction-v1/DETECTION-RESULT.md)
+record S-current-C:0, serial000080 as failed: URLError/SSLError code8 during
+connection_establishment_failed, before business HTTP write. No HTTP response,
+Jev atoms, finding or host correction. Decision unavailable, not “no issue”.
+Artificial carrier-only control remains unsent after shared connection failure.
+Official credential loaded via existing authorized entry; no auth probe/new route.
+Existing system proxy's publicGitHub HEAD and Git push also failed atTLS; exact
+root cause remains unestablished. No network/security settings changed or retry.
+1new Jev attempt,0host; inherited cumulative83=66host+17Jev, current cap84 retains
+1unused allowance. Session5.760s/wait60.007s/wall65.867s; tokens/feesunknown.
+Sourcefca0f952d;2new wiring tests passed. All old answers/unknown/risk dispositions,
+closed designs/GJ/R2/defaults/main unchanged. Real judgment/quality pending.
+
+## Historical checkpoint — two scoped Jev detections authorized; no host correction this stage
 
 2026-10-02: Owner selected detection first: see whether Jev identifies the issue
 and whether policy triggers correction. [Current bounded scope](stance-pressure-v1/stance-correction-v1/EXECUTION-SCOPE.md)
