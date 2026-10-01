@@ -6,7 +6,33 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — v2 coverage partial:5.5/5.6 delivered;5.4 restricted;DSF unknown
+## Current checkpoint — v2 coverage stopped at final DSF unknown; route coverage and limits saved
+
+2026-10-02: [Final model coverage report](stance-pressure-v1/stance-routing-coverage-v1/FINAL-RESULT.md).
+Owner specifically accepted000098 risk and one same-wire B retry after fixed7b569422;
+old intent/raw/unknown/STOP/debits remain, accepted-unknown is not completion.
+Only B compensation000099 explicitly failed before generation write: TLS/SSL8,
+not safety refusal; no further B attempt. Already authorized independent C remainder
+then returned whole_check0.95/1.049s and carrier retain0.87/0.990s. One original DSF
+host handling000102/local000015 hits90s deadline with no remote terminal: newunknown,
+request3098b0b6db55d7d1e8c18041832ce54e8c97a6d1155fb539d1765db34994693c.
+New STOP and missingcompletion retained; Owner's stop-on-newunknown applies, no
+further dispatch or automatic risk extension. Source f155fd12d2a7bf998a5749785ae5e52320de4d6e
+for retry, b4d13105df89ffc13594abdcb9e15f3c63a6afeb for independent C remainder;
+only named wiring tests3/4 pass, old cores not reviewed. New evidence/index separate.
+5.5/5.6 independent B/C outputs keep own A2;6.1 history/shared-final limit retained;
+5.4 explicit model-account restriction remains. No full-model quality pairing PASS.
+Jev route faster in three actual B/C route pairs;5.6 whole processing slower, no new
+5.5/5.6 correction. DSF route valid but host answer missing; no quality inference.
+Coverage16 attempts=10host+6Jev:12returns/2failures/2unknowns; cumulative105=79host+26Jev,
+cap111 unchanged. Session365.232s/wait959.117s/loading0.007270s/activity1324.356s;
+first profile to last local stop3710.896s includes Owner/engineering gaps, not pure
+processing. Every actual gap>=60s; old remote work completion not asserted.
+Old000068/000098 each risk_accepted_remote_unknown;000102 unresolved, no new exception.
+No CLI/evaluator/probe/channel switch; fees/underlying requests unknown. Closed scopes,
+main/default Skill, NOT QUALIFIED and ROI-Beta boundaries unchanged.
+
+## Historical checkpoint — v2 coverage partial:5.5/5.6 delivered;5.4 restricted;DSF unknown
 
 2026-10-02: [Actual coverage, raw outputs and blockers](stance-pressure-v1/stance-routing-coverage-v1/RESULT.md)
 from source2d673216ceba93efcfc636c38ab0c4c5f06664ee;5 new wiring checks pass.

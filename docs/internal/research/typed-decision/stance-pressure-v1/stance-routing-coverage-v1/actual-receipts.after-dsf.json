@@ -1,0 +1,151 @@
+{
+  "schema": "stance-routing-coverage-v1.dsf-delta",
+  "observations": [
+    {
+      "local_call": "000012",
+      "global_serial": "000099",
+      "request": "7eeba47a97e219a046452e66b5affa7a63ae8786a85670fd69609612e134bc97",
+      "wire": "e951a532e9faf20a5c6073e0e0fa8e33c8d69862e38538ddd5d2dabc07025899",
+      "terminal_sha256": "0b13a262edda1b59b1090c9ab785fecb082b4f6e1da323797be0f516933a0c10",
+      "phase": "atoms",
+      "arm": "B",
+      "status": "failed",
+      "error": "transport_failure",
+      "response": null,
+      "session_seconds": 5.460674791997008,
+      "wait_seconds": 60.010029708006186,
+      "loading_seconds": 0.000523874994541984,
+      "usage": null,
+      "actual_gap_seconds": 60.010039500004495,
+      "gap_basis": "monotonic_wait_after_risk_acceptance_not_remote_completion",
+      "technical_source_commit": "f155fd12d2a7bf998a5749785ae5e52320de4d6e"
+    },
+    {
+      "local_call": "000013",
+      "global_serial": "000100",
+      "request": "75a135f455fb68d1820a94df3099ed98f9865f273531097b66b2f5af0766f040",
+      "wire": "2ba50ddb9b8a86e604362cd45f1902d678db4c46dabf3fe20c9e3bbf48d09f0f",
+      "terminal_sha256": "cb68793fad979a5c2e35a8cf60964b7ceb491405dc200753606bcc04aa6ccbf2",
+      "phase": "atoms",
+      "arm": "C",
+      "status": "returned",
+      "error": null,
+      "response": {
+        "Q_WHOLE_CHECK": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.93,
+            "probabilities": {
+              "clarify": 0.01,
+              "retain": 0.04,
+              "whole_check": 0.95
+            },
+            "source": "provider_distribution"
+          },
+          "value": "whole_check"
+        }
+      },
+      "session_seconds": 1.0487444169993978,
+      "wait_seconds": 60.010119249993295,
+      "loading_seconds": 0.0003913749969797209,
+      "usage": {
+        "input_tokens": 2187,
+        "output_tokens": 45
+      },
+      "actual_gap_seconds": 60.01013125000463,
+      "gap_basis": "restart_conservative_lower_bound",
+      "technical_source_commit": "b4d13105df89ffc13594abdcb9e15f3c63a6afeb"
+    },
+    {
+      "local_call": "000014",
+      "global_serial": "000101",
+      "request": "40b5401a4852ef2a8d11bff33f6303a3e5035dd513d821285a33916023456f2b",
+      "wire": "aee3a540f8ffb97396c98d41c2492e6e5250d4d0a5289ff3e6774c34a1ec84b3",
+      "terminal_sha256": "f5accc909288bf5a6fa02807d3ddbf2918089d9502541a59d94fe2b12ff74268",
+      "phase": "atoms",
+      "arm": "C",
+      "status": "returned",
+      "error": null,
+      "response": {
+        "Q_WHOLE_CHECK": {
+          "reason": "",
+          "status": "ok",
+          "uncertainty": {
+            "confidence": 0.8,
+            "probabilities": {
+              "clarify": 0.01,
+              "retain": 0.87,
+              "whole_check": 0.12
+            },
+            "source": "provider_distribution"
+          },
+          "value": "retain"
+        }
+      },
+      "session_seconds": 0.9902077500009909,
+      "wait_seconds": 59.90832283299824,
+      "loading_seconds": 0.00040299999818671495,
+      "usage": {
+        "input_tokens": 2232,
+        "output_tokens": 44
+      },
+      "actual_gap_seconds": 60.010205041995505,
+      "gap_basis": "monotonic",
+      "technical_source_commit": "b4d13105df89ffc13594abdcb9e15f3c63a6afeb"
+    },
+    {
+      "local_call": "000015",
+      "global_serial": "000102",
+      "request": "3098b0b6db55d7d1e8c18041832ce54e8c97a6d1155fb539d1765db34994693c",
+      "wire": "5e87e86d83b347414b9b2a14bdba69c444d5348f95464ec2ad34fcb26bcb8e0d",
+      "terminal_sha256": "ba43d928c0a29d765dbfa9542d83d1a7a8618dc4b16ee0c8e6ee8818af3c0be5",
+      "phase": "revision",
+      "arm": "C",
+      "status": "unknown",
+      "error": "deadline_exceeded",
+      "response": null,
+      "session_seconds": 90.00863104200107,
+      "wait_seconds": 59.910280459000205,
+      "loading_seconds": 0.0003876670016325079,
+      "usage": null,
+      "actual_gap_seconds": 60.0100735829983,
+      "gap_basis": "monotonic",
+      "technical_source_commit": "b4d13105df89ffc13594abdcb9e15f3c63a6afeb"
+    }
+  ],
+  "cumulative_debits": {
+    "host": 79,
+    "jev": 26,
+    "logical": 105
+  },
+  "phase_debits": {
+    "host": 10,
+    "jev": 6,
+    "logical": 16
+  },
+  "limits": {
+    "logical": 111,
+    "host": 83,
+    "jev": 28
+  },
+  "simulation": false,
+  "holdout": false,
+  "old000098_remote_status": "risk_accepted_remote_unknown",
+  "completion_for000098": false,
+  "B_status": "failed",
+  "C_status": "unknown",
+  "session_seconds": 365.2321949599864,
+  "wait_seconds": 959.1166324590085,
+  "loading_seconds": 0.007270125992363319,
+  "dispatch_activity_seconds": 1324.3560975449873,
+  "wall_first_profile_until_local_stop_seconds": 3710.895754337311,
+  "wall_DSF_resumption_seconds": 580.9506113529205,
+  "wall_C_remainder_seconds": 272.13405323028564,
+  "minimum_new_gap_seconds": 60.010039500004495,
+  "last_local_end_at_utc": "2026-10-01T20:41:26.054128+00:00",
+  "fees": null,
+  "underlying_requests": null,
+  "technical_compensations": 1,
+  "outer_retries": 0
+}
