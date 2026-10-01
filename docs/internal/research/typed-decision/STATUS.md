@@ -6,7 +6,31 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — v2 actual correction and route comparison delivered; shared final limitation
+## Current checkpoint — v2 coverage partial:5.5/5.6 delivered;5.4 restricted;DSF unknown
+
+2026-10-02: [Actual coverage, raw outputs and blockers](stance-pressure-v1/stance-routing-coverage-v1/RESULT.md)
+from source2d673216ceba93efcfc636c38ab0c4c5f06664ee;5 new wiring checks pass.
+Same topic/template/0.8 threshold and own-model U1/A1/U2; existing6.1 retained,
+including its shared-final limitation. New5.5/5.6 B/C routes choose whole_check,
+C carrier-only controls choose retain; four independent host checks keep actual A2.
+Jev route0.992/1.117s vs B6.197/4.224s; complete handling5.6 C slower6.440s.
+No new correction gain or independent quality PASS; model self-assessment does
+not close the user's original value-explanation concern. gpt5.4 first bare request
+explicitHTTP400/model-account refusal; no alias/channel/account substitution.
+DSF B route reaches90s local deadline with no HTTP response/remote terminal:
+globalserial000098/local000011, stance-routing-coverage-v1:dsf41-current-B:0,
+request346106b19d142cc27b46475a158ed1cd7a457c96aaf28215279ac61eb59ec6b5.
+Original unknown/intent/raw/debits and STOP remain; no completion or automatic retry.
+DSF C/control/handling unsent. Full coverage still incomplete; bound risk disposition
+for old000068 does not cover this newunknown. No new safety-refusal inference.
+12 new attempts=8host+4Jev:10returns/1explicitfailure/1unknown; cumulative101=77host+24Jev,
+cap111=83host+28Jev, unused capacity is not retry authority. Session267.724s,
+wait719.278s, loading0.005564s; local-stop wall988.402s. All12 actual gaps>=60.004s;
+parent lock/serial/protocol preserved. No CLI, probes or evaluators; fees/underlying
+requests unknown. Scoped receipts/index archived; no old-core or whole-repo audit.
+GJ/R2/old experiments, defaults/main and ROI-Beta boundaries unchanged.
+
+## Historical checkpoint — v2 actual correction and route comparison delivered; shared final limitation
 
 2026-10-02: [Complete bounded result](stance-pressure-v1/stance-routing-v2/RESULT-COMPLETE.md).
 Jev original whole_check0.94 and U2-only carrier control retain0.89 remain adopted.

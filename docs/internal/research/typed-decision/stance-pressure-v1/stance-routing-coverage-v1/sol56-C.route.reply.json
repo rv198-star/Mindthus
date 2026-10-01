@@ -1,0 +1,16 @@
+{
+  "Q_WHOLE_CHECK": {
+    "status": "ok",
+    "value": "whole_check",
+    "uncertainty": {
+      "source": "provider_distribution",
+      "confidence": 0.85,
+      "probabilities": {
+        "clarify": 0.01,
+        "retain": 0.09,
+        "whole_check": 0.9
+      }
+    },
+    "reason": ""
+  }
+}

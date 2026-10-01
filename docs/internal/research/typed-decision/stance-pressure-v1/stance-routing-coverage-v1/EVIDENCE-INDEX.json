@@ -1,0 +1,1065 @@
+{
+  "schema": "stance-routing-coverage-v1.evidence-index",
+  "execution_source_commit": "2d673216ceba93efcfc636c38ab0c4c5f06664ee",
+  "scope": "Only current coverage saved artifacts; byte SHA256; excludes index itself. Execution-side preservation, not independent audit.",
+  "simulation": false,
+  "entries": [
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/PLAN.md",
+      "bytes": 4615,
+      "sha256": "716183c90170fa84d40014fabf7dc033ba360804d9417a419ae1e27badd0ec3b"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/RESULT.md",
+      "bytes": 12369,
+      "sha256": "8b03c06da5ec1793832fc8ac70c1f64cf2583f6031a0d247bbd38c971d9de8b1"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/actual-receipts.json",
+      "bytes": 37142,
+      "sha256": "8f7316e01125ef534f42076bd0fd136c37397f6133fd973377feb6bb320037ae"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/admission.json",
+      "bytes": 5470,
+      "sha256": "34e1ef0f0d8d41b6b65314c3ea23d50c59a5aedde08b5a0242176fff21db5533"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/cases.business.json",
+      "bytes": 2488,
+      "sha256": "a7173197e28bb19ab8e97b8fdcd8bba78f32c26ecd84907a692c0c88677340a9"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/dsf41-A.final.reply.txt",
+      "bytes": 2852,
+      "sha256": "2671e02b5bd351e05c14ad561ad53173447e0981c6e2ff65dfaa7e034941f237"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/dsf41-A.turn-1.reply.txt",
+      "bytes": 2322,
+      "sha256": "bdf98f7bb03745e84c6fb754f91fd1076af745fc2836b320b8af32936a986af7"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/dsf41-carrier.packet.json",
+      "bytes": 7415,
+      "sha256": "61e2b94d10e576563b7a8e925d262997df3102415637b00e16ea0675a9275198"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/dsf41-current.packet.json",
+      "bytes": 7294,
+      "sha256": "ee5dcaca0a5d446a641b4f0e2a7191ed3ea7055918427dc675be7b42a8ee6bab"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/STOP.json",
+      "bytes": 164,
+      "sha256": "244ec9f4ef64fbafa55fd45312be2d383393c1c8fd73f4ab4cbd72bc2862ef96"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/batch.json",
+      "bytes": 5470,
+      "sha256": "34e1ef0f0d8d41b6b65314c3ea23d50c59a5aedde08b5a0242176fff21db5533"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000000/binding.json",
+      "bytes": 347,
+      "sha256": "e45c99e43b8079db4d9b1404981758c9e6bdf7acbb2b6e9fd8176bcbfe0036c0"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000000/import.json",
+      "bytes": 477,
+      "sha256": "eded426271f56b04eafe5c0302010100670f4888e29117c027e96afa1487acf5"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000000/intent.json",
+      "bytes": 385,
+      "sha256": "83b7c44e7aa554beda35a04cf9328c68885c7b62fae6e2a09f26cfdb1c58a154"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000000/raw.json",
+      "bytes": 1553,
+      "sha256": "fba714bfd788489749764cbc71ae5683d340bf656952d28b2391f74d48eec229"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000000/request.json",
+      "bytes": 785,
+      "sha256": "16753e8efd0214ef9fc0d99d1d20cd9ef475c19f4111dc142286cafa712a8ec5"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000000/state.after.json",
+      "bytes": 920,
+      "sha256": "32af1436a4ffcebf235933e36c51f4be1e21519cf29de19c5a4d97d92809a6a0"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000000/terminal.json",
+      "bytes": 725,
+      "sha256": "9d33da9c1dad69a2d123f81a631605efba0534cb32aef46053f40f179b8ef0c1"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000000/wire.json",
+      "bytes": 536,
+      "sha256": "00359858988e43c43ddeda0a5b86550fea54eb2f07bc4fae1feb9d25a2c536a3"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000001/binding.json",
+      "bytes": 412,
+      "sha256": "8b14d59d0ee8e9b83df9a2d9b8c6d1a13140cbc40f08e6257042ec77a939a509"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000001/import.json",
+      "bytes": 553,
+      "sha256": "1f5ccb860d09bbc349147f0b5410d88fe0ff18c8bfe60557ca73e8be7e99681f"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000001/intent.json",
+      "bytes": 449,
+      "sha256": "5396d38aad9ff835d69f36e8c3e55be6ccac841948f54898e1fd46f2b345da20"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000001/raw.json",
+      "bytes": 1216,
+      "sha256": "73d1dce116632e94acd795108cd3332466c8288e43bf66fcac523525aa779674"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000001/request.json",
+      "bytes": 10559,
+      "sha256": "ac25eb55be42f28847a4ec0750adba8b83d7fe439c2b63d13881b3e794948fdb"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000001/state.after.json",
+      "bytes": 7283,
+      "sha256": "495121af17bf3b91ed72cd49c1ead411c5d7656776cdbdf62eafd9193d54e81f"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000001/terminal.json",
+      "bytes": 1014,
+      "sha256": "2bd1819ec19048cb3e1901742396ad5f0daf8213ba458d8105b7b2d609bab950"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000001/wire.json",
+      "bytes": 12129,
+      "sha256": "423057c6b8eccd2eb82511d15f50de3e5a7561350fee392d303d3261b595e174"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000002/binding.json",
+      "bytes": 412,
+      "sha256": "a93b864fcb9766d18c04d2114015a5b81d2f209e9c3dbbddb0d8925ec36596a3"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000002/import.json",
+      "bytes": 553,
+      "sha256": "abe20be0a396b4455bdef7430a21262b7bcef14620081e947891f5f570b49af3"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000002/intent.json",
+      "bytes": 449,
+      "sha256": "e1f4e7593e752ba32cbe9d3c1110475d28ad1c509c793381b972877ff8367c57"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000002/raw.json",
+      "bytes": 822,
+      "sha256": "deccc38781fd28d8c5a2c44e64c7724f5bde0d1c2002195b792539d40bcf3e87"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000002/request.json",
+      "bytes": 9944,
+      "sha256": "62107b12c69b7299026447e5fa2fa48026a1ebd2f01d4c1833350b2bde176ba5"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000002/state.after.json",
+      "bytes": 8716,
+      "sha256": "65c34abb0e1e6c57d711a509cec38eda32fd38b32c4855193af7527243d01ce9"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000002/terminal.json",
+      "bytes": 1019,
+      "sha256": "26d0552d40352342b4eb1db4b3d8011ccc0a5ea7f4ba636392289da34f1989ba"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000002/wire.json",
+      "bytes": 9625,
+      "sha256": "f179eaf96c91e1c30020361d626b9fd5582ed031601df5219ee0e3336cc70ecb"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000003/binding.json",
+      "bytes": 412,
+      "sha256": "ede85e04096f63a26767bf6ff7eec4c10837905642c41e566205f5ae477f1e32"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000003/import.json",
+      "bytes": 552,
+      "sha256": "441b8a0d4eac516c6b6e0d5446323c421f76e4aa01575bfd8bb68022d58cf555"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000003/intent.json",
+      "bytes": 447,
+      "sha256": "a522914e217f4b244a6c2f138fd098cba7cceeec9f43dd5d7680243e74a8f7ec"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000003/raw.json",
+      "bytes": 816,
+      "sha256": "a3ffd64798aa6da2527de2257d4d543b3ca2d1ae7eeca797232c790e752a6940"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000003/request.json",
+      "bytes": 10067,
+      "sha256": "021ed91ebbfe55523c0eb5685b4cbbc7938bd33e11c924cc30b409847a4a582a"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000003/state.after.json",
+      "bytes": 12851,
+      "sha256": "406ccf5657d8e90a3c71bc5e3707cee0cf27c9190da003200dc0fd0f2ba4fdbc"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000003/terminal.json",
+      "bytes": 1013,
+      "sha256": "167db1a4bdbc4988b0757504782da295a8476599707be86410a9740feed0b72f"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000003/wire.json",
+      "bytes": 9748,
+      "sha256": "4509afa2a09b9741a7d0e15bc3a1bceebbe7698489f2b4f506693f14fcdb200f"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000004/binding.json",
+      "bytes": 412,
+      "sha256": "8fa71ed990968be487be39f9ebd3bd5fc533df21212850469471880d67edc442"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000004/import.json",
+      "bytes": 545,
+      "sha256": "1159338cffe0b3be1c3c69e5ece1895bd72856541912ff0bc076fb4b546dd2e4"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000004/intent.json",
+      "bytes": 449,
+      "sha256": "46c73aa423090a7eb348c35054d4f7c022cd25a452e270e239474eedd65a337c"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000004/raw.json",
+      "bytes": 8306,
+      "sha256": "af05c33b4624bd8680d36ecb992167026419388fabdf4b75bcf30ce44769c4f5"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000004/request.json",
+      "bytes": 15171,
+      "sha256": "bb430651933316eb321a26acf6505492bf04de9582d29cbfd0496f8696300234"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000004/state.after.json",
+      "bytes": 28496,
+      "sha256": "fe3a56e1bd3989661842c62cb8fb765643c3df696ef16948bf0854df96442f85"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000004/terminal.json",
+      "bytes": 7651,
+      "sha256": "00c5890bb6c6b22b1dc715a778cf07a6cffafef539ea3bcbda75fd25091923c5"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000004/wire.json",
+      "bytes": 16361,
+      "sha256": "6fd7acd078df2bb0820218f1e921ff8abeac49dabf1d9eb9598627f96f3f6602"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000005/binding.json",
+      "bytes": 412,
+      "sha256": "6dafda769750e35a5f14b6ec81a5572f97fc70fcf1b216a0c0c354a580b468d9"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000005/import.json",
+      "bytes": 545,
+      "sha256": "f93cfe65bfe34c70a399d6004c06e4c32e16a9bd859d649e0af73fa8f7d679a5"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000005/intent.json",
+      "bytes": 449,
+      "sha256": "b2c115b1c4463e6a8cb788df43b55476adc4fc299e82c63b28d0aac0c44aee22"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000005/raw.json",
+      "bytes": 8156,
+      "sha256": "0e0d2e234ee2058bd0ae5f5ef12ef84585987c3ff36638195c8b6daf55281874"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000005/request.json",
+      "bytes": 15171,
+      "sha256": "b9576dfbc340c7240ea3c693c2bcebc723459f789cf47d315630a78ee8a71c9b"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000005/state.after.json",
+      "bytes": 47921,
+      "sha256": "72ac0fed09eed07c089a768e7b9bff604b1f516e9bcce06763628fd299fd59ca"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000005/terminal.json",
+      "bytes": 7497,
+      "sha256": "a4811d2800cb060eae0f125c3a06840f18fb283d1fd74115162afec9739701d2"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000005/wire.json",
+      "bytes": 16361,
+      "sha256": "6fd7acd078df2bb0820218f1e921ff8abeac49dabf1d9eb9598627f96f3f6602"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000006/binding.json",
+      "bytes": 412,
+      "sha256": "2acc3caae15551f4a48e6075ab00b3a34a2054a64b9229f1ea6b9c73ff838ec8"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000006/import.json",
+      "bytes": 553,
+      "sha256": "926486f9d85479d71608ea11de18a919b90dad68c659cad97b9e84a67606e6a5"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000006/intent.json",
+      "bytes": 449,
+      "sha256": "7cf67ad816e2b5b498d044e90c99bb0ea8ed2dafaec86087e5738d798d458ec4"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000006/raw.json",
+      "bytes": 821,
+      "sha256": "13e51b4537884279df9a33a84b1c594b1d9b4aec56017b8add84eab746d4846c"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000006/request.json",
+      "bytes": 6532,
+      "sha256": "9680a2b9a896c2bd40e7b13ea1e1ba0fe4790d3c7859fcdc2d795921eea7fe4c"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000006/state.after.json",
+      "bytes": 5376,
+      "sha256": "ea67e4343855b49bcde5529fc928c8eab085bd52752f481c7980c731c56ba152"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000006/terminal.json",
+      "bytes": 1018,
+      "sha256": "3e37873aeee51fc545ee0f09d3a11ee76861dd3e5670b2c4920ce81891ba045f"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000006/wire.json",
+      "bytes": 6213,
+      "sha256": "594efbe9c86801850a97a14f603c25417b0494ee8d4dc626f55032570c8433fe"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000007/binding.json",
+      "bytes": 412,
+      "sha256": "58ffbb75036ae6088545b15e4ea32209aa92f562db49fdc05c5ab8d53bef1a1a"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000007/import.json",
+      "bytes": 553,
+      "sha256": "3bbb0b3621684258362ad9f7891ca46e650a5a3817656c14873e2df024e72a67"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000007/intent.json",
+      "bytes": 449,
+      "sha256": "740b639145309db119c8c365ed015ae88d21a785e353c1a7cfac3e2b3f338edb"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000007/raw.json",
+      "bytes": 1125,
+      "sha256": "d832d70243f814c4e2f296bfa63ef2d10fd8abca6fa67ac4cd0ccf99c2154426"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000007/request.json",
+      "bytes": 7151,
+      "sha256": "dc5c55a3b1a2d6da6c8335b913b717dc65c4e4efe7b57eed2ee0ed4878f470b7"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000007/state.after.json",
+      "bytes": 6809,
+      "sha256": "68f99c6c2bbfb505647161e76c9053b8d33dc8c3967806b178015501ce54624e"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000007/terminal.json",
+      "bytes": 1015,
+      "sha256": "6d63dd48632d34379dfa84aa48aa6c642c30a9b0a74490a41e0e88a40e62e4a0"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000007/wire.json",
+      "bytes": 8580,
+      "sha256": "a146c32dd6a26411c9b5e63c004b414fe0c9a309cd710e13df5c4f49f3f238fc"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000008/binding.json",
+      "bytes": 412,
+      "sha256": "f467025475deefc4912761c88489ccc4541196c9ea2c3ab8413e1d8209dbe10d"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000008/import.json",
+      "bytes": 552,
+      "sha256": "a394e3a1d975bcfa7c261ebe51d04328862c907f6993a28ea8b9b9e427be8f52"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000008/intent.json",
+      "bytes": 449,
+      "sha256": "e6374100edb7f5c8caee0627befca590560269c6f26bcbd9af005ec2a12ae046"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000008/raw.json",
+      "bytes": 816,
+      "sha256": "baf8b75868dd8c8f299c60274ad6f92f988e9b8aa1834cd10c17663fe9fee2fc"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000008/request.json",
+      "bytes": 6655,
+      "sha256": "28c1c48a91f6c0c839d1418a354f91b425fe4439106025bf192cd080c7a795a3"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000008/state.after.json",
+      "bytes": 9038,
+      "sha256": "4ebee2f44f3d174bbb731a6a7e2d6af9e106aacf986e6faaf579cd3b6e3d7b31"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000008/terminal.json",
+      "bytes": 1012,
+      "sha256": "d258babaa73823b27097cbbe8d6d3e91e485f68a50f030f0d1a6d8f30ae42fae"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000008/wire.json",
+      "bytes": 6336,
+      "sha256": "122437c0286067d1d9c0eee640e87d40e3778cb9fdb57dc61fbdf2263069a66c"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000009/binding.json",
+      "bytes": 412,
+      "sha256": "99b9fcfa69667d03dfb081dad7d3e90d7db307646f3e1319033bad910fe17fd6"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000009/import.json",
+      "bytes": 545,
+      "sha256": "8db8205447bfd293aef0bd4c8ea9322506aba5f266d42fc56e4cc21bffcbc45c"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000009/intent.json",
+      "bytes": 450,
+      "sha256": "145b798dd8a949edf5e73b4a5a86ce6a3f6cf3107d0cdfc415eeb6a2ab8f8a73"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000009/raw.json",
+      "bytes": 5804,
+      "sha256": "3248666af571f618d931480bd00be3c9e94a6d520ce37b50d1c7d636f4aebf6b"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000009/request.json",
+      "bytes": 9857,
+      "sha256": "0f64f4985fb6bf18babd4166af43682ae1876905c06cf490c3d7e4102410dd7d"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000009/state.after.json",
+      "bytes": 19953,
+      "sha256": "dd5faa72cb82f314311406d347eb9c39c39697d0c6d7a61bef19c4c44762b53e"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000009/terminal.json",
+      "bytes": 5231,
+      "sha256": "0bee3db8ad873f4ef0be20cbbc38da971dbd6a6e3b39e6454059c1c4f643c753"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000009/wire.json",
+      "bytes": 10804,
+      "sha256": "4c12b0b9868a7935bf4e516d4079dea9d521d08c2bd2b7d6812c0f7b5a9795fe"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000010/binding.json",
+      "bytes": 412,
+      "sha256": "83c96c0e711cb0bea5db6321d25a7e767fbbd32736ab2874c44a94a4370bb42e"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000010/import.json",
+      "bytes": 545,
+      "sha256": "c9ef973aeadbd4631d79e41d585c014bfeb7f57412804ad7b6c1dc89cc24f94f"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000010/intent.json",
+      "bytes": 449,
+      "sha256": "d0c500d0d16028d0800d3fbffdd5e0e887703da7a16fa55720531b170ae3da81"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000010/raw.json",
+      "bytes": 5713,
+      "sha256": "0720a5d79cd9b331853490045d125ad28996fdfcd0e090f8a604a64fcf49fb9b"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000010/request.json",
+      "bytes": 9857,
+      "sha256": "6f4f752a5c5fa37be883e189533b6d4ce00a27793e09502f34605be4d4a0fac9"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000010/state.after.json",
+      "bytes": 33087,
+      "sha256": "59245b894e14417891b227d09630fca0af1c0b5f9c37fe4cecdaeef9964e5bd1"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000010/terminal.json",
+      "bytes": 5246,
+      "sha256": "4ea9100cc229ef380857b552a89797aded423625613098e97243e8cd23d2bd05"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000010/wire.json",
+      "bytes": 10804,
+      "sha256": "4c12b0b9868a7935bf4e516d4079dea9d521d08c2bd2b7d6812c0f7b5a9795fe"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000011/binding.json",
+      "bytes": 412,
+      "sha256": "c359a04eb8703ce9cc473a5ea5778bad484d68044c9a207efb3f468815c164f7"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000011/import.json",
+      "bytes": 543,
+      "sha256": "e612b8e28cf581da8929351d05ee5b122c12b57607f23936231cb0a4d31ffc6c"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000011/intent.json",
+      "bytes": 449,
+      "sha256": "38b43ea9aa65d163cf1b57359fb0a487d726795af8d0a9f127d297a49a540baf"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000011/raw.json",
+      "bytes": 1154,
+      "sha256": "3de63695999ece1a51d4ca5d91e3555107deb812d31f392336f87d9941bf2912"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000011/request.json",
+      "bytes": 6507,
+      "sha256": "119c1c8c562ff646d4b1b736aaf95b6d8882b5a56e467f425b05456eed1d5837"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000011/state.after.json",
+      "bytes": 4009,
+      "sha256": "a61f2f4a81e50ef2d0c5f82d8e2f432777a19969cd8868327d86d5d5deb1d9a6"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000011/terminal.json",
+      "bytes": 799,
+      "sha256": "6595e41796dee315b8e22a8d9f9570625bad39054a18eaef929e90ccaca89d26"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/calls/000011/wire.json",
+      "bytes": 7896,
+      "sha256": "dbc49f12f57d79078d4739d5efcca0a5a5be9b997c62a6be210aaeddb0bd5701"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/dsf41-carrier.packet.json",
+      "bytes": 7415,
+      "sha256": "61e2b94d10e576563b7a8e925d262997df3102415637b00e16ea0675a9275198"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/dsf41-current.packet.json",
+      "bytes": 7294,
+      "sha256": "ee5dcaca0a5d446a641b4f0e2a7191ed3ea7055918427dc675be7b42a8ee6bab"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/dsf41.started.json",
+      "bytes": 226,
+      "sha256": "c109f4cb635e3016bb14e322a40d516a9b7ba9dbbce7b06ffb66c970993660b7"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/effective-config-dsf41.json",
+      "bytes": 5546,
+      "sha256": "c798af1e27949f36d9631086c59a361fbd673a30ac84ad7edebec441c753a169"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/effective-config-gpt54.json",
+      "bytes": 5497,
+      "sha256": "f9f0dbe44f15378060192abe7aec499306d6fae33cf3c16ed12ea0d3bdf4f244"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/effective-config-gpt55.json",
+      "bytes": 5497,
+      "sha256": "fdb6ab196a6d88afb1c2e50be02bd19c587bf07efb9de7a5e3e9cbb27e909d35"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/effective-config-sol56.json",
+      "bytes": 5501,
+      "sha256": "341f26c5b3aa037ee309d1041d6875c760f783f3eac1ebfdcd905673bca48bc4"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/gpt54.started.json",
+      "bytes": 224,
+      "sha256": "5bbcfbe08c8abde85c98d87e7e53520dcb8720819f3ebbc0ee2e945bf125a2f7"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/gpt55-carrier.packet.json",
+      "bytes": 14225,
+      "sha256": "9a27b45677b14c21947466770103da97fa02302c83f21a1c1ec6583be9717e4f"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/gpt55-current.packet.json",
+      "bytes": 14104,
+      "sha256": "5894eb230eea44de635acd1598c4349daf3788b5c6499b4bad7b61ca1fa2abe0"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/gpt55.complete.json",
+      "bytes": 142,
+      "sha256": "b02b83071294159bfb7e0941c5adaa81f269b67f43e5cbd961eb1f1d70aaf104"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/gpt55.started.json",
+      "bytes": 223,
+      "sha256": "64871590ba1163b5a9fcb2842927148c352238544927a7b0a147319df296543b"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/materials.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/sol56-carrier.packet.json",
+      "bytes": 8893,
+      "sha256": "752c8f5f9519dde63e635d24e84d26d5052a165e5a263a079a3787360ef73666"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/sol56-current.packet.json",
+      "bytes": 8772,
+      "sha256": "9cef43d3c818c32e33e31346ba86cbf031d16e74708da25f1fca87bc65a32eff"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/sol56.complete.json",
+      "bytes": 142,
+      "sha256": "372084862942a5d10cc1ee02c45f2b33ddb2e5e69d0121bffe533ee48feb731c"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/sol56.started.json",
+      "bytes": 223,
+      "sha256": "774ee0044b7890cfdb226f6d8cd5d158fb0da952697896644a2aa21756177e9a"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/states/dsf41-carrier.json",
+      "bytes": 3149,
+      "sha256": "1bf28e2be9f89637bb8afba51140242e6ed0139bd6ead5c783a0779984361267"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/states/dsf41-current.json",
+      "bytes": 4009,
+      "sha256": "a61f2f4a81e50ef2d0c5f82d8e2f432777a19969cd8868327d86d5d5deb1d9a6"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/states/gpt54-bare.json",
+      "bytes": 920,
+      "sha256": "32af1436a4ffcebf235933e36c51f4be1e21519cf29de19c5a4d97d92809a6a0"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/states/gpt55-carrier.json",
+      "bytes": 12851,
+      "sha256": "406ccf5657d8e90a3c71bc5e3707cee0cf27c9190da003200dc0fd0f2ba4fdbc"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/states/gpt55-current.json",
+      "bytes": 47921,
+      "sha256": "72ac0fed09eed07c089a768e7b9bff604b1f516e9bcce06763628fd299fd59ca"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/states/sol56-carrier.json",
+      "bytes": 9038,
+      "sha256": "4ebee2f44f3d174bbb731a6a7e2d6af9e106aacf986e6faaf579cd3b6e3d7b31"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/runtime/states/sol56-current.json",
+      "bytes": 33087,
+      "sha256": "59245b894e14417891b227d09630fca0af1c0b5f9c37fe4cecdaeef9964e5bd1"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000087/completion.json",
+      "bytes": 313,
+      "sha256": "95a2cc361eed45a890c24442a85e20ff99e156d8aac29fc14da0b818404c5056"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000087/intent.json",
+      "bytes": 515,
+      "sha256": "16fec7d8debdd782f3c549a1531eb079fa811a3ed914dfa85c9748ff162a9c8c"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000088/completion.json",
+      "bytes": 312,
+      "sha256": "2b477ee4e937fbf20e61f50196d3fbf7146a2ad7275bbcec2349e04209606572"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000088/intent.json",
+      "bytes": 521,
+      "sha256": "b0f34686dae95caa82cbe2636f69929afda1ebde9052ae7f00e418610128b803"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000089/completion.json",
+      "bytes": 311,
+      "sha256": "090649775c443cbc6b82e43c51af2f10dfea942faace23087840799a3dc98aa2"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000089/intent.json",
+      "bytes": 497,
+      "sha256": "8d53ba74abf495857fce876faf53fcae7fb1a4e599b2ae422e1ab7af0aa5f08e"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000090/completion.json",
+      "bytes": 312,
+      "sha256": "b1879928c44680cd8065623a0a143f0e4f9e8c983e69ffcc7d89ffa930ccfd65"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000090/intent.json",
+      "bytes": 496,
+      "sha256": "a9f2f16d865738c54488dd25cfef021899ca2c72707d9f185474e0d3834d8680"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000091/completion.json",
+      "bytes": 311,
+      "sha256": "3bf90f94684afb778b66ad3d87b897770bc8fe5cf1368456b87cdde9e0565dd7"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000091/intent.json",
+      "bytes": 496,
+      "sha256": "f596593cf53268cc2fe802ff5969a6069b97f446c1e7ff128e5bff70514f47d3"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000092/completion.json",
+      "bytes": 311,
+      "sha256": "b76cc07e6b9cfde9a4f1449c5106d1edee0772ce7373a256e9cc92e99e1257b8"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000092/intent.json",
+      "bytes": 498,
+      "sha256": "21ff4575a7e6731d565a022274dad650085cbb542e72c1d5cae6af1931c8adbe"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000093/completion.json",
+      "bytes": 312,
+      "sha256": "2f00a2675ac3efc0b969c3b0fc19cd9595d875fd512c7a5baa8e996153bd9352"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000093/intent.json",
+      "bytes": 520,
+      "sha256": "9cfbeff5499a55ac8122dcb9cae5df26ad4a23910c64f982590a01cb810a0e4e"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000094/completion.json",
+      "bytes": 311,
+      "sha256": "f74a6996771048f4d42a3c945169eaf741d9696bab0d6febbc4fe545cbeb9caf"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000094/intent.json",
+      "bytes": 496,
+      "sha256": "707a0ad5d4b6cdc5e14b9161be0dc9ff596817eb51df532124d818cfb15696b6"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000095/completion.json",
+      "bytes": 312,
+      "sha256": "c9e57a3c38ef605bfec67ecdcc55e40bf9da9f63935c626c06db795709f40ea0"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000095/intent.json",
+      "bytes": 496,
+      "sha256": "c7ed19cfd269f9c28de896246a99788065124f01df2435cd82154039ed0c3842"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000096/completion.json",
+      "bytes": 310,
+      "sha256": "fe8f850cf903e4d0ff252ba6e53770110d517d61c3dc9998c61d8431a35e1988"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000096/intent.json",
+      "bytes": 497,
+      "sha256": "71af8ccd8fbdf3753dde5db26227320ee0ad5d6afa3398eaa4bd0531ff61e68d"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000097/completion.json",
+      "bytes": 312,
+      "sha256": "af177422810e532f5551970c23af1b0659bfe5962fc199fe3f1f13b4ca995928"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000097/intent.json",
+      "bytes": 495,
+      "sha256": "8b740ba73e5c284ba12e106a8d339ac002f0e4d94b8cbfb99be9f975bb2325c0"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/000098/intent.json",
+      "bytes": 520,
+      "sha256": "047da64f3df4ff8d5c9a7d610784db641556c7d77a1c52e031677e5c86585221"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000087/completion.json",
+      "bytes": 216,
+      "sha256": "c423128b61cfbf1e41e8b6ba5ea9144b2acf829eb3f0da9deb20de41d39d7fe3"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000087/intent.json",
+      "bytes": 212,
+      "sha256": "23c747ffecd5a1351b9e8e18fecc5428301a27180d8e641be59623edaefe57c0"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000088/completion.json",
+      "bytes": 216,
+      "sha256": "6004bb415f67d73f5f8d8985674af726b9a6d5e868a6809977fbd0eec4dacc83"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000088/intent.json",
+      "bytes": 212,
+      "sha256": "85133f4a9995e329a56ae06af3390d5ff9179f65431d407e92f43f680bd52886"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000089/completion.json",
+      "bytes": 216,
+      "sha256": "f68a52ccfba33e09a3c87767218491bcaf98e792c81a0b87279e5b7384dc5fb1"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000089/intent.json",
+      "bytes": 212,
+      "sha256": "a56f809eb669e616af159cad434967dc70c3cf4fe89610c3364235fbda6fd813"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000090/completion.json",
+      "bytes": 216,
+      "sha256": "84687e5779961866261494b15a2249cd83c3af9db738954fb80002522ee591e1"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000090/intent.json",
+      "bytes": 212,
+      "sha256": "18d3d3307dc09f214c66a012606102f1b24f9eed9108f1c06a3397ac21e1cc93"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000091/completion.json",
+      "bytes": 216,
+      "sha256": "94b561ba4d215f416884ccf117fafe77c1eba6fe80050a21c2311a9dbf40dd50"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000091/intent.json",
+      "bytes": 212,
+      "sha256": "c011e08cea49688040b8b07bae06b99106167e8c3c605f8a24c80e455e580634"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000092/completion.json",
+      "bytes": 216,
+      "sha256": "a13b944f9ffd7b55eaf3e4dd5db79cf5ffb406556e5c17bffb5616e7410df75d"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000092/intent.json",
+      "bytes": 212,
+      "sha256": "eacfb27ec4f8f7205957d879644ac77859a1e72a6b38a6aff355978107990f72"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000093/completion.json",
+      "bytes": 216,
+      "sha256": "64318c372d1d33cca2ba514ff001be97b2027ad77cfc44558526bb2c04941fb3"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000093/intent.json",
+      "bytes": 212,
+      "sha256": "a5f5e9cd79d4336ed27be4525b0c8d8aeade5ff88b1c8a924e1f215558d9d268"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000094/completion.json",
+      "bytes": 216,
+      "sha256": "614e2c9fe282b433b88bae24138db01e90a2a83393a0fb8ff8b0dcadf457252a"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000094/intent.json",
+      "bytes": 212,
+      "sha256": "42db6c60bb0ddfceba527bf8250c85c3ca5dc815b27d6a62453e47654d3e7425"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000095/completion.json",
+      "bytes": 216,
+      "sha256": "19c8a4f7498ec62a4f09eea996cc1a481cb34d2c55c903bb0b5f94dfb22fd084"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000095/intent.json",
+      "bytes": 212,
+      "sha256": "b45fb9905c3ae3312fa3df373b22ddbd579b8f43df862ec21b16227522d26d95"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000096/completion.json",
+      "bytes": 216,
+      "sha256": "16f40547508360cd2eacb6cf787d0cfdd65b8471b64955813e342a375856ca10"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000096/intent.json",
+      "bytes": 212,
+      "sha256": "e9afd0728a11ef6633677dd48b7d89b12cc645dfde557157167b8e9d37e23f51"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000097/completion.json",
+      "bytes": 216,
+      "sha256": "6e8cac6f18756a6751a3848a1d3ecb6ea4fa4e45e41416edd22e1a32822e8295"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000097/intent.json",
+      "bytes": 212,
+      "sha256": "57cd40eacc2c97ea274437ed79c0c5f74dd59f10a3b898dfd85e6c0f5cd4e969"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/evidence/serial/bindings/000098/intent.json",
+      "bytes": 212,
+      "sha256": "da911350f5c5998e787d8a62bf4a9224734cdcb1f9d786448706dc197efd45cb"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-A.final.reply.txt",
+      "bytes": 5397,
+      "sha256": "35962e853a5a02236ba72f9b71e9cafbeb977e396843cb707e59df4c0de882da"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-A.turn-1.reply.txt",
+      "bytes": 6242,
+      "sha256": "46dcbbe7d8fc2e384aafda2642bf362e1cc189f613db9d5eba7411609c2346de"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-B.final.reply.txt",
+      "bytes": 5397,
+      "sha256": "35962e853a5a02236ba72f9b71e9cafbeb977e396843cb707e59df4c0de882da"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-B.handling.reply.json",
+      "bytes": 6544,
+      "sha256": "3ac875c39335c01d73303da8ed9ae3f075e3c027746b451b3ba2adb9e24f5bbc"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-B.outcome.json",
+      "bytes": 12468,
+      "sha256": "ad90095a8bb30b707d71be8ffdeb853c60d588ac9cb85a3358fab21a23d18f74"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-B.route.reply.json",
+      "bytes": 170,
+      "sha256": "164eee290e74e9b349b2665c8c76b1fdb97dfc327acd3a9e4a1567de54d08cf8"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-C.final.reply.txt",
+      "bytes": 5397,
+      "sha256": "35962e853a5a02236ba72f9b71e9cafbeb977e396843cb707e59df4c0de882da"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-C.handling.reply.json",
+      "bytes": 6343,
+      "sha256": "aee23fb89d3fd53a92797b7632a773dc1f88ae6f3d22514e8c6cdc7b162c4057"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-C.outcome.json",
+      "bytes": 12264,
+      "sha256": "fca5771f0bf7fc8c8b8ae20f439dfc4af1504dba398be9fa254566b0d103bce0"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-C.route.reply.json",
+      "bytes": 299,
+      "sha256": "6898489f277ce1e500ccb3dee2597650efaea646b110de6788ab34ceef16126c"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-carrier.packet.json",
+      "bytes": 14225,
+      "sha256": "9a27b45677b14c21947466770103da97fa02302c83f21a1c1ec6583be9717e4f"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-carrier.route.reply.json",
+      "bytes": 293,
+      "sha256": "2ad4c15da273b59ceb52f209d7e53973524cdb0788adf96301ebe919a8a96232"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/gpt55-current.packet.json",
+      "bytes": 14104,
+      "sha256": "5894eb230eea44de635acd1598c4349daf3788b5c6499b4bad7b61ca1fa2abe0"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/live.log",
+      "bytes": 6700,
+      "sha256": "220a90a6677a8f207d3de6e245be8dbf72c1ad7f0b6d9e0edbd9657176fd51d8"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/norms.evaluation-only.json",
+      "bytes": 1265,
+      "sha256": "94b773216f791d73fae89d24fcd083d593ff2533663c1855a542758ca97743e4"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-A.final.reply.txt",
+      "bytes": 3598,
+      "sha256": "7b274d521bc11e337c715dca72ad4e42995464e2b40e5026dc8df078a073f240"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-A.turn-1.reply.txt",
+      "bytes": 2971,
+      "sha256": "f2b92f54591a40f8fe878ddf699cdb5a3df910a3aa295b7cce53b05df9728a6f"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-B.final.reply.txt",
+      "bytes": 3598,
+      "sha256": "7b274d521bc11e337c715dca72ad4e42995464e2b40e5026dc8df078a073f240"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-B.handling.reply.json",
+      "bytes": 4154,
+      "sha256": "22611e970ffb31b342832f7e8bab41bd80bd8005fec27b1b8b3eff1c14f90f64"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-B.outcome.json",
+      "bytes": 8227,
+      "sha256": "29d8c1d25df778603bbb7d8058b2a8a996202e9f60c4cb54f18e0cc491a5a854"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-B.route.reply.json",
+      "bytes": 170,
+      "sha256": "164eee290e74e9b349b2665c8c76b1fdb97dfc327acd3a9e4a1567de54d08cf8"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-C.final.reply.txt",
+      "bytes": 3598,
+      "sha256": "7b274d521bc11e337c715dca72ad4e42995464e2b40e5026dc8df078a073f240"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-C.handling.reply.json",
+      "bytes": 4179,
+      "sha256": "78b8d65f0c53716b22a4b6d06e0a83228f617c79973361a72562223d56e493e9"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-C.outcome.json",
+      "bytes": 8248,
+      "sha256": "9033fd09c8799a4ea59f46c23db5f33f6eb234cb4a72a581ecf35e90adc42ec0"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-C.route.reply.json",
+      "bytes": 298,
+      "sha256": "10940409d2ac52e8ab29614b4de62f1bae43af28411ce7bb650691821bf31575"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-carrier.packet.json",
+      "bytes": 8893,
+      "sha256": "752c8f5f9519dde63e635d24e84d26d5052a165e5a263a079a3787360ef73666"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-carrier.route.reply.json",
+      "bytes": 293,
+      "sha256": "2ad4c15da273b59ceb52f209d7e53973524cdb0788adf96301ebe919a8a96232"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/sol56-current.packet.json",
+      "bytes": 8772,
+      "sha256": "9cef43d3c818c32e33e31346ba86cbf031d16e74708da25f1fca87bc65a32eff"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/summary.json",
+      "bytes": 144825,
+      "sha256": "8685c8858841e6f15f30b8744389471e4280044c3b34fd26c84322f76e6fc578"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/test-wiring.initial.log",
+      "bytes": 936,
+      "sha256": "44fcd015eec5586ca071ce47d3ea0c36560b3c389a3a3384c1155cf447bab14b"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/test-wiring.log",
+      "bytes": 1152,
+      "sha256": "20f652f1cbcf8294f743f41f7f131cfb89457a9771b865ae745ada358012d718"
+    },
+    {
+      "path": "docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-coverage-v1/verify-actual-evidence.log",
+      "bytes": 724,
+      "sha256": "a1a39561023e82653617c15ad7f9eb056959076a49b8c67fee6a889b5fb8583d"
+    }
+  ],
+  "entry_count": 209,
+  "runtime_evidence_count": 168,
+  "unknown_remote_call": {
+    "global_serial": "000098",
+    "local_call": "000011",
+    "call_key": "stance-routing-coverage-v1:dsf41-current-B:0",
+    "request_sha256": "346106b19d142cc27b46475a158ed1cd7a457c96aaf28215279ac61eb59ec6b5",
+    "disposition": null,
+    "completion_present": false
+  },
+  "fees": null,
+  "underlying_requests": null
+}
