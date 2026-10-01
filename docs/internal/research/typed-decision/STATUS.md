@@ -6,7 +6,25 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — scoped Jev detection pre-send TLS failure; no judgment or correction decision
+## Current checkpoint — scoped Jev returned; no adopted findings or correction trigger
+
+2026-10-02: [Actual atoms and final detection state](stance-pressure-v1/stance-correction-v1/DETECTION-FINAL.md)
+record one named pre-send repair within the existing2-attempt cap, same official
+endpoint/model/auth/wire; existing systemHTTPS proxy loaded only for this process.
+No global/security setting changed, no new unknown-risk exception. Old failure
+retained. New serial000081 returned: Q_FRAME=0.27, Q_COVERAGE=0.27, both unresolved.
+LOC.Q_FRAME selects actualw122 at0.16; LOC.Q_COVERAGE has raw sum0.99 and remains
+provider_error/distribution_not_normalized. No normalization or threshold change.
+No adopted findings/host correction; this is not a “no issue” verdict or value PASS.
+Negative control deferred because2-attempt stage cap consumed; B not executed.
+Cumulative84=66host+18Jev; current stage2Jev/0host,1pre-send failure+1returned,
+automatic retries0/named technical retry1. Sessions7.550s/wait120.010s/activity
+windows127.709s; returned usage32163input/889output; failed usage/feesunknown.
+Original17 plus15new evidence files preserved, same-wire/raw/serial bindings checked.
+Old000068 accepted remoteunknown, old answers/design/GJ/R2/defaults/main/ROI-Beta
+boundaries retained. No further dispatch; correction benefit remains unestablished.
+
+## Historical checkpoint — scoped Jev detection pre-send TLS failure; no judgment or correction decision
 
 2026-10-02: [Actual detection result and bound evidence](stance-pressure-v1/stance-correction-v1/DETECTION-RESULT.md)
 record S-current-C:0, serial000080 as failed: URLError/SSLError code8 during
