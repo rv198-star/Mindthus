@@ -6,7 +6,22 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — scoped Jev returned; no adopted findings or correction trigger
+## Current checkpoint — topic-route redesign against ten principles; design only
+
+2026-10-02: Owner requested reconsideration against the ten design principles.
+[One-question topic route v2](stance-pressure-v1/stance-routing-v2/DESIGN.md)
+replaces this use's candidate-defect/locator gates with a proposed direct Choice:
+normal answer, bounded Whole Elephant check, or scoped clarification. S0 contains
+complete U1/A1/U2 once; candidate A2 is considered only by the later responsible
+host. The workflow preserves local truths and can retain an already sufficient
+answer. This is a design proposal, not new wiring, validation or live authority.
+Visible design mismatches support reconsideration but do not establish a unique
+cause of the old0.27 judgments. New meaning inherits no behavior qualification.
+No code/credentials/model calls/budget change; cumulative84=66host+18Jev remains.
+Old actual results, negative-control UNRUN, failures/risk dispositions, closed
+GJ/R2, defaults/main and ROI-Beta boundaries remain. Benefit still unestablished.
+
+## Historical checkpoint — scoped Jev returned; no adopted findings or correction trigger
 
 2026-10-02: [Actual atoms and final detection state](stance-pressure-v1/stance-correction-v1/DETECTION-FINAL.md)
 record one named pre-send repair within the existing2-attempt cap, same official
