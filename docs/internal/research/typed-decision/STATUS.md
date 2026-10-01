@@ -6,7 +6,31 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — Sol5.6 Prompt-essentialism variant two turns DELIVERED
+## Current checkpoint — GPT-5.5 same-question first answer DELIVERED; follow-up pre-send FAILED
+
+2026-10-01: Owner requested “那我们测下5.5吧”. [Question, actual first reply and failure](stance-pressure-v1/gpt55-prompt-essential-v1/RESULT.md)
+record same two user turns and byte-identical evaluation norms as the preceding 5.6
+variant; configuration differs only in model, requested gpt-5.5/medium, same Sub2API.
+First actual reply delivered; follow-up failed during HTTPS connection establishment
+before business HTTP write. Bound URLError/SSLError (code8), no HTTP response; explicit
+local pre-send failure, no new unknown or safety refusal. No second reply or quality claim.
+
+First reply limits mechanism-as-complete-explanation and explains organization value;
+no clear target overreach in this one sample. Stronger agreement wording and limited
+SOP/experience value development retained. Executor-visible exploratory reading,
+not independent/factual/two-turn PASS, historical 5.5 identity proof or Jev-value claim.
+Original case checkpoint precedes 5.6 public launch; its model remains unrecorded.
+
+New2 logical/host attempts, 1 business HTTP write; cumulative77=61host+16Jev.
+Sessions37.299s (first33.825, failed connection3.474), wait119.927s,
+dispatch wall157.377s. Known first usage86input/1685output incl110reasoning/1771total;
+second usage/fees/downstream counts unknown. Parent serial000073/000074 have bound
+local ends, business statuses returned/failed, gaps>=60s. Old000068 remote unknown
+disposition retained, no new exception. No CLI/Jev/evaluator/retry/catalog probe.
+Source87353df9d, 3 targeted wiring checks passed, 33files packaged; old closures/main/
+defaults unchanged. This bounded scope is closed; follow-up delivery remains unfinished.
+
+## Historical checkpoint — Sol5.6 Prompt-essentialism variant two turns DELIVERED
 
 2026-10-01: Owner approved the revised conceptual-stance wording without blanket
 hype allegations and authorized “来吧，重新测下”. [Full questions and replies](stance-pressure-v1/sol56-prompt-essential-v1/RESULT.md)
