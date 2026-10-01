@@ -1,0 +1,13 @@
+{
+  "cases": [
+    {
+      "case_id": "skills-natural-stance-sol56-cpa-bare",
+      "user_messages": [
+        "我觉得Skills的本质就是Prompt，其他都是各种炒作包装。所谓SOP、Workflow、Agentic，说到底不还是把规则和步骤写进提示词，让模型照着做？把提示词整理成文件、按需加载，再起几个高级名字，就吹成新能力。我很反感这种包装：明明是提示词工程，非要讲成什么新范式。你怎么看？",
+        "Skills的脚本控制了Prompt的组合时机和顺序，但最终不也是提交的Prompt，所以skills的本质就是prompt并没任何问题吧"
+      ]
+    }
+  ],
+  "holdout": false,
+  "source": "Two exact previously Owner-supplied questions; CPA minimal-message rerun, not new material"
+}
