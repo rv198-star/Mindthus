@@ -181,7 +181,7 @@ class Driver:
         start=self.monotonic();wire=getattr(self.adapter,'outbound',outbound)(req,self.config)
         resolve=getattr(self.adapter,'classify',classify)
         directory=self.root/'calls'/f'{len(prior):06d}';directory.mkdir()
-        binding={'call_key':item['case_id']+'-'+arm+':'+str(req['sequence']),
+        binding={'call_key':getattr(self,'call_key_prefix','')+item['case_id']+'-'+arm+':'+str(req['sequence']),
                  'request_sha256':req['request_sha256'],'wire_sha256':digest(wire),
                  'batch_sha256':digest(self.config),'simulation':self.config['simulation'],
                  'candidate_sha256':state.get('snapshot_sha256')}

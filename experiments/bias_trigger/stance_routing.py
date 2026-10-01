@@ -156,6 +156,7 @@ def consume(item,state,req,status,response,materials):
 class Driver(r.Driver):
     request_factory=staticmethod(request)
     result_consumer=staticmethod(consume)
+    call_key_prefix=VERSION+':'
 
 
 class Adapters(cpa.CPAAdapters):
@@ -276,10 +277,21 @@ def main():
         r.require(os.environ.get('HTTPS_PROXY')==PROXY,'registered_process_network_not_loaded')
         driver=Driver(ROOT,Adapters(cfg['host_configuration']));driver.serial=old.prior.NamedSerial(old.PARENT/'serial');driver.serial.validate()
         driver.stop_path=ROOT/'STOP.json'
+        repair_path=ROOT/'local-call-key-repair.json'
+        if repair_path.exists():
+            repair=r.rt.read(repair_path)
+            r.require(repair['parent_batch_sha256']==r.digest(cfg) and repair['model_invocations']==0,'local_repair_parent')
+            archive=ROOT/'prelaunch-call-key-collision/000000'
+            r.require(not (archive/'intent.json').exists() and not (archive/'raw.json').exists()
+                      and not (archive/'terminal.json').exists(),'local_repair_unstarted_only')
+            for name,sha in repair['preserved'].items():r.require(r.digest(r.rt.read(archive/name))==sha,'local_repair_evidence')
+            driver.config=repair['effective_config']
         plan=[]
         if args.run_jev:
             r.require(not list((ROOT/'calls').iterdir()),'no_jev_rerun_or_retry')
-            r.rt.write(ROOT/'jev-credential-entry.json',r.load_official_credential())
+            entry=r.load_official_credential();entry_path=ROOT/'jev-credential-entry.json'
+            if entry_path.exists():r.require(r.rt.read(entry_path)==entry,'credential_entry_changed')
+            else:r.rt.write(entry_path,entry)
             plan=[('S-current','C','detect'),('S-carrier-scope','C','detect')]
         else:
             r.require(not (ROOT/'host-stage-started.json').exists(),'no_host_reexecution')

@@ -133,5 +133,17 @@ class Wiring(unittest.TestCase):
         raw['request_sha256']='wrong request'
         self.assertEqual(adapter.classify(req,raw)[0],'unknown')
 
+    def test_new_contract_namespace_preserves_old_completed_call(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);fake=Fake();driver,rows,clock=self.driver(root,fake)
+            driver.serial.call('S-current-C:0',lambda:{'old_contract':'returned'})
+            old_record=(root/'serial/000000/completion.json').read_bytes()
+            item={'case_id':'S-current','packet':rows['S-current']};state=s.initial(item['packet'])
+            terminal=driver.step(item,state,'C','detect')
+            self.assertEqual(terminal['binding']['call_key'],s.VERSION+':S-current-C:0')
+            self.assertEqual(old_record,(root/'serial/000000/completion.json').read_bytes())
+            self.assertEqual(len(driver.serial.validate()[0]),2)
+            self.assertEqual(clock.waits,[60.])
+
 
 if __name__=='__main__':unittest.main(verbosity=2)
