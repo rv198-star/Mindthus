@@ -27,8 +27,8 @@ def verified():
 class NamedSerial(r.SerialRequests):
     def _accepted_unknown(self,directory,intent):
         x=verified();r.require(directory==self.root/'000068' and intent['label']=='skills-natural-stance-sol56-cpa-bare-A:0','named_000068_only')
-        end=r.rt.read(directory/'accepted-unknown.json')
-        r.require(r.rt.read(self.anchors/'000068/accepted-unknown.json')=={'sha256':r.digest(end)}
+        end=r.read_record(directory/'accepted-unknown.json')
+        r.require(r.read_record(self.anchors/'000068/accepted-unknown.json')=={'sha256':r.digest(end)}
                   and end['intent_sha256']==r.digest(intent) and end['successor_sha256']==r.digest(x)
                   and end['status']=='risk_accepted_remote_unknown','named_disposition_binding')
         return end
@@ -104,11 +104,17 @@ def prepare():
        'wait_proves_remote_completion':False,'new_unknown_exception':False,'preserved':{name:r.digest(r.rt.read(old.ROOT/name)) for name in paths},
        'inherited_debits':INHERITED,'new_phase_max':2}
     r.rt.write(ROOT/NAME,x);r.rt.write(DOC/NAME,x)
-    serial=d.ROOT/'serial';intent=r.rt.read(serial/'000068/intent.json')
+    serial=d.ROOT/'serial';intent=r.read_record(serial/'000068/intent.json')
     end={'status':'risk_accepted_remote_unknown','intent_sha256':r.digest(intent),'successor_sha256':r.digest(x),
          'local_disposition_at_epoch':x['local_disposition_at_epoch'],'old_request_sha256':OLD_REQUEST,'remote_status':'unknown','is_completion':False}
-    r.rt.write(serial/'000068/accepted-unknown.json',end);r.rt.write(serial/'bindings/000068/accepted-unknown.json',{'sha256':r.digest(end)})
-    NamedSerial(serial).validate()
+    from experiments.typed_decision.relationship_runtime import save
+    save(serial/'000068/accepted-unknown.json',end);save(serial/'bindings/000068/accepted-unknown.json',{'sha256':r.digest(end)})
+    finish_preparation()
+
+
+def finish_preparation():
+    r.require(ROOT.exists() and not (ROOT/'batch.json').exists() and not list((ROOT/'calls').iterdir()),'local_preparation_only')
+    x=verified();NamedSerial(d.ROOT/'serial').validate()
     catalog=r.rt.read(DOC/'MODEL-CATALOG.json');r.require(catalog['http_status']==200 and HOST['model'] in [v['id'] for v in catalog['raw']['data']],'model_not_listed')
     prior=r.rt.read(old.ROOT/'batch.json');source=set(prior['source_sha256'])|{str(Path(__file__).resolve().relative_to(r.REPO))}
     cfg={**prior,'schema':'mindthus.sub2api-two-additional.v1','host_configuration':HOST,'allowed_response_models':list(RESPONSE_MODELS),'catalog_sha256':r.digest(catalog),'authorization_ref':x['authority'],
