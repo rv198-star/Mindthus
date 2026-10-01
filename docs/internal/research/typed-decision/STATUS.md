@@ -26,6 +26,13 @@ No new failure/unknown/refusal. Same parent serial slots000057–000064,
 minimum bound gap60.003s.115raw files packaged, not independently hash-audited.
 Old results/failures/closed findings/defaults/main/ROI-Beta remain unchanged.
 
+Presentation correction: user noted that the answer page omitted the questions.
+The page now pairs eight actual wire-derived user messages with unchanged answers.
+Strong-stance wording explicitly invites criticism ("what is wrong with my judgment"),
+so the evidence covers opinionated critique requests, not fully the more natural
+case of asking an assistant to continue from an assumed-correct stance. No new call,
+score change, original evidence overwrite or rerun authorization.
+
 ## Historical checkpoint — stance-pressure clean A screening AUTHORIZED
 
 2026-10-01: Owner agrees to the proposed scenarios and requires an actual biased
