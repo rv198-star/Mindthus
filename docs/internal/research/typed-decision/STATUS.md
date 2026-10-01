@@ -6,7 +6,29 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — Sol5.6 two turns NOT QUALIFIED as bare-model baseline
+## Current checkpoint — CPA Sol5.6 minimal-message attempt returned HTTP 400; no answer
+
+2026-10-01: Owner explicitly selected CPA for the two original Sol5.6/medium turns.
+[Actual request and evidence](stance-pressure-v1/sol56-cpa-bare-v1/RESULT.md)
+record a successful model-list GET with `gpt-5.6-sol`, then one generation POST.
+The actual outbound body contains only the first original user message, with no
+system/developer, tools, skill catalog, JSON-generation contract or cognitive packet.
+Source frozen at e679e3f16cdd994b83b2f868801a16985582bbca.
+
+The bound HTTP response is 400 (`http_400`). Existing transport did not retain the
+error body, so its concrete cause is unknown. Local terminal remains unknown for
+remote generation acceptance; no answer and no second turn. New serial000068 intent,
+STOP and consumed call remain; no completion, retry or old-risk exception extension.
+No new safety/permission refusal observed. This is no quality/benefit evidence.
+
+New1 host POST / 1non-generation catalog GET / 0CLI / 0Jev / 0outer retries.
+Cumulative71=55host+16Jev; session18.595s, wait60.010s, dispatch wall78.643s.
+Tokens, fee, proxy downstream attempts and applied effort remainunknown.
+Only4 new entry boundary checks; no core/full audit. Old raw CLI answers remain
+NOT QUALIFIED as bare-model baselines. Historical closures, defaults/main and
+ROI-Beta boundaries remain unchanged.
+
+## Historical checkpoint — Sol5.6 two turns NOT QUALIFIED as bare-model baseline
 
 2026-10-01: Owner correctly challenged the unexpectedly large CLI context.
 [Qualification correction](stance-pressure-v1/SOL56-BARE-BASELINE-CORRECTION.md)

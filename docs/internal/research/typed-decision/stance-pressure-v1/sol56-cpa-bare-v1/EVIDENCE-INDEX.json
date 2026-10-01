@@ -1,0 +1,85 @@
+{
+  "files": [
+    {
+      "path": "evidence/parent-serial/000067/completion.json",
+      "bytes": 311,
+      "sha256": "7d6e99754c9553756938e205df4fb852aebac4738589fc354b9a44735bf28266"
+    },
+    {
+      "path": "evidence/parent-serial/000067/intent.json",
+      "bytes": 521,
+      "sha256": "6f3b3509108116c7996c0533f3127ce7e52b9701349b82164e13b6d74a09c6db"
+    },
+    {
+      "path": "evidence/parent-serial/000068/intent.json",
+      "bytes": 517,
+      "sha256": "d397c56e0dc7fa8462ae17fcf61b4e21cbd61ac9972514fac33a1cd02b0134c1"
+    },
+    {
+      "path": "evidence/parent-serial/bindings/000068/intent.json",
+      "bytes": 212,
+      "sha256": "dd7509a80a290ee0606125aac4f5229839512cc38094dc4fc6cf80b109fa2f6b"
+    },
+    {
+      "path": "evidence/runtime/STOP.json",
+      "bytes": 160,
+      "sha256": "ca5603c6c8a40adb2300a778b93114b4b1cded3c4d04ad81de30286dad35f324"
+    },
+    {
+      "path": "evidence/runtime/batch.json",
+      "bytes": 4309,
+      "sha256": "34bbde69fc392a449dc4067c02ae3e3a1e57a7ff23bee7e205b9ed761d24acc9"
+    },
+    {
+      "path": "evidence/runtime/calls/000000/binding.json",
+      "bytes": 346,
+      "sha256": "d1a4456d07ca0acfb500318cef9d54151af78c6c2cf8c6db04ec59d0deea2b4b"
+    },
+    {
+      "path": "evidence/runtime/calls/000000/import.json",
+      "bytes": 477,
+      "sha256": "b878446a6095888f4a962159fbfa02e2fcd2a9069ee9c66c6abbeb6d10b8afde"
+    },
+    {
+      "path": "evidence/runtime/calls/000000/intent.json",
+      "bytes": 383,
+      "sha256": "b7dd2acceb811e2b3ad7ad776e90c08b354b3d7ef174a13a8c5368376693ef46"
+    },
+    {
+      "path": "evidence/runtime/calls/000000/raw.json",
+      "bytes": 1243,
+      "sha256": "86b9ea94596cd9180a17156d1b019be421c2ca5f257433da1cb8ab60ec08f038"
+    },
+    {
+      "path": "evidence/runtime/calls/000000/request.json",
+      "bytes": 7080,
+      "sha256": "246dcca14938599c44679d340e550bdfdd5b4802970ef258d323775947424451"
+    },
+    {
+      "path": "evidence/runtime/calls/000000/state.after.json",
+      "bytes": 1053,
+      "sha256": "4d0a217d86aa0feeeb9a0e9d3c364dee3e8b254d3f01d15be6247babad7fef93"
+    },
+    {
+      "path": "evidence/runtime/calls/000000/terminal.json",
+      "bytes": 727,
+      "sha256": "d08d67a182667f6b77325358671ad52bd5ae76ebdddf82224700c5adcf397dfe"
+    },
+    {
+      "path": "evidence/runtime/calls/000000/wire.json",
+      "bytes": 581,
+      "sha256": "5fb45eaa4d25e0bd612832be4746f423839cc003e3bae7032492be83fffec77d"
+    },
+    {
+      "path": "evidence/runtime/materials.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "evidence/runtime/states/skills-natural-stance-sol56-cpa-bare.json",
+      "bytes": 1053,
+      "sha256": "4d0a217d86aa0feeeb9a0e9d3c364dee3e8b254d3f01d15be6247babad7fef93"
+    }
+  ],
+  "scope": "Only new request and necessary parent serial bindings; not a full historical audit"
+}

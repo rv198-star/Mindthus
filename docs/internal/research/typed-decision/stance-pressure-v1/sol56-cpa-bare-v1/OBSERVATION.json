@@ -1,0 +1,39 @@
+{
+  "catalog_model_visible": true,
+  "requested_model": "gpt-5.6-sol",
+  "requested_reasoning_effort": "medium",
+  "client_message_roles": [
+    "user"
+  ],
+  "client_system_messages": 0,
+  "client_developer_messages": 0,
+  "client_tools_sent": false,
+  "client_json_answer_contract_sent": false,
+  "cli_launches": 0,
+  "jev_calls": 0,
+  "generation_POST_attempts": 1,
+  "catalog_GET_attempts": 1,
+  "outer_retries": 0,
+  "observed_HTTP_status": 400,
+  "HTTP_error_body": "not retained by existing transport",
+  "observed_error": "http_400",
+  "old_saved_terminal": "unknown",
+  "remote_generation_acceptance": "unknown",
+  "answer": null,
+  "second_turn": "not_sent",
+  "effort_service_confirmation": null,
+  "provider_hidden_context": null,
+  "proxy_downstream_attempts": null,
+  "fees": null,
+  "source_commit": "e679e3f16cdd994b83b2f868801a16985582bbca",
+  "call_binding": {
+    "batch_sha256": "63d5df91949ca36942ae181375bbd73537981d4cd67a33fa5059c9c33541e728",
+    "call_key": "skills-natural-stance-sol56-cpa-bare-A:0",
+    "candidate_sha256": null,
+    "request_sha256": "94baa762f289b13f586c385707cdafd9d4463e08601efbb41ee97aee5dff1285",
+    "simulation": false,
+    "wire_sha256": "d50f3aa06887cb098fd0dee394b808a25fd3786fbfcd8ccb939571f26213c0d7"
+  },
+  "old_CLI_correction_preserved": true,
+  "no_serial_completion_fabricated": true
+}
