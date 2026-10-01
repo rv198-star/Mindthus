@@ -235,7 +235,7 @@ def prepare():
          'authorization_ref':'Owner: 试试新方案吧 (2026-10-02); one bounded group, at most5 new logical calls:2 Jev/3 host, no retries',
          'design_baseline':'996c7bdeab156e1a40915147d13ab32b00af3117','source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=r.REPO,text=True).strip(),
          'external_budget_debits':INHERITED,'limits':LIMITS,'phase_limits':{'logical':5,'host':3,'jev':2},
-         'host_configuration':parent['host_configuration'],'host_timeout':180,'jev_timeout':60,
+         'host_configuration':parent['host_configuration'],'host_timeout':90,'jev_timeout':60,
          'source_sha256':{p:r.digest((r.REPO/p).read_text()) for p in paths},
          'cases_source_path':str((DOC/'snapshots.json').relative_to(r.REPO)),'cases_sha256':r.digest(rows),
          'norms_sha256':r.digest(r.rt.read(DOC/'norms.evaluation-only.json')),

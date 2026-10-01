@@ -171,7 +171,7 @@ class Driver:
         prior=sorted((self.root/'calls').iterdir())
         require(all((p/'import.json').is_file() for p in prior),'unimported_call_no_resubmit')
         req=getattr(self,'request_factory',request)(item,state,arm,phase,self.config['simulation'],self.config['host_configuration']);role=req['role']
-        require(state['calls'][arm]<(4 if arm=='A' else 2),'path_budget_exhausted')
+        require(state['calls'][arm]<getattr(self,'path_limits',{'A':4,'B':2,'C':2})[arm],'path_budget_exhausted')
         external=self.config.get('external_budget_debits',{'logical':0,'host':0,'jev':0})
         require(all(type(v) is int and v>=0 for v in external.values()) and external['logical']==external['host']+external['jev'],'external_budget_debits')
         limits=self.config['limits']
