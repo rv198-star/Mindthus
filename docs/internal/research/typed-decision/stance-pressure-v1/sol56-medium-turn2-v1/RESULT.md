@@ -1,5 +1,7 @@
 # Sol5.6 / medium：同一线程第二回合
 
+> **裸测资格更正（2026-10-01）：本轮不符合裸模型基线。** CLI自动注入系统指令及包含Mindthus简介的技能目录；未读取方法正文不足以排除背景影响。原始返回保持，内容观测只适用于此CLI环境，不能证明无Mindthus背景的Sol已足够或Jev没有纠偏增量。见[更正与来源](../SOL56-BARE-BASELINE-CORRECTION.md)。
+
 已返回、已交付。Owner指定原文，一次真实native resume；源码`a291aad597f658238f9307a7e010b4b226da2807`。
 线程`01a0f6e3-957b-7f32-adbb-b32f943159e4`、模型gpt-5.6-sol、medium、原官方HTTP配置及read-only工作目录保持。
 无Jev、B/C、评阅、第三问或重试；评价为执行者知晓分组的阅读，不是独立审计。

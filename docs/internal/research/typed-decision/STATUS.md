@@ -6,7 +6,24 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — Sol5.6/medium native second turn DELIVERED
+## Current checkpoint — Sol5.6 two turns NOT QUALIFIED as bare-model baseline
+
+2026-10-01: Owner correctly challenged the unexpectedly large CLI context.
+[Qualification correction](stance-pressure-v1/SOL56-BARE-BASELINE-CORRECTION.md)
+records an executor entry-selection error: only business messages were cleaned,
+while the CLI injected base instructions and installed skills metadata, including
+Mindthus descriptions. No method-body read is not proof of no cognitive background.
+
+Both actual replies and completed terminals remain delivered and unchanged. They
+are observations under this CLI environment; exclude them from instruction-free
+Sol sufficiency or Jev incremental-value claims. No causal attribution to Mindthus,
+model updates or online opinion changes has been established. Direct DeepSeek
+minimal-message evidence retains its separate scope and cannot replace this Sol
+baseline. No new model call, credential read, rerun or global setting change.
+Cumulative70=54host+16Jev unchanged. Old closures, products/defaults/main and
+ROI-Beta boundaries remain intact.
+
+## Historical checkpoint — Sol5.6/medium native second turn DELIVERED
 
 2026-10-01: Owner supplied the exact follow-up about script-controlled Prompt
 timing/order. [Both actual questions and replies](stance-pressure-v1/sol56-medium-turn2-v1/RESULT.md)

@@ -1,0 +1,54 @@
+{
+  "schema": "mindthus.bare-baseline-correction.v1",
+  "scope": [
+    "sol56-medium-v1",
+    "sol56-medium-turn2-v1"
+  ],
+  "qualification": "NOT_A_BARE_MODEL_BASELINE",
+  "reason": "Existing CLI injected base instructions and installed skills catalog, including Mindthus descriptions; executor controlled only explicit business prompt.",
+  "raw_terminal_and_answers_preserved": true,
+  "observed_answers_still_valid_for_this_CLI_environment": true,
+  "causal_inferences_not_supported": [
+    "instruction-free Sol5.6 sufficiency",
+    "Mindthus cognitive primitives caused the result",
+    "recent model/knowledge updates caused the result"
+  ],
+  "source_thread": "01a0f6e3-957b-7f32-adbb-b32f943159e4",
+  "source_archive_sha256": "023a485311cd4e0a7de137b8bbaeb4cabb3aeafa1009c411241384cb9a88ace6",
+  "base_instruction_chars": 17730,
+  "injected_developer_message_observations": [
+    {
+      "chars": 23522,
+      "sha256": "3e43e87d6cf8614260199f0d9ed9b0ff6c10200ff867d7210359e6af1ef027e1",
+      "skills_catalog": true,
+      "Mindthus_catalog_present": true
+    },
+    {
+      "chars": 2264,
+      "sha256": "af60719c7b64906bd05733aec72a96726712fe25d382a7bc9e05a6733cfd67dc",
+      "skills_catalog": false,
+      "Mindthus_catalog_present": false
+    },
+    {
+      "chars": 271,
+      "sha256": "6ded806e3cdbb35599ecaf8742574bc5274908472b1729090010c404c2151e8e",
+      "skills_catalog": false,
+      "Mindthus_catalog_present": false
+    },
+    {
+      "chars": 21135,
+      "sha256": "75d100bf7df83ea93088c29da2ff25ec96b32262f7ccfdd08998bde80c94a6e5",
+      "skills_catalog": true,
+      "Mindthus_catalog_present": true
+    }
+  ],
+  "input_tokens": {
+    "first_turn": 18814,
+    "second_turn_increment": 25368
+  },
+  "new_model_calls": 0,
+  "prior_result_commits": [
+    "456440d3e38f57cc8574aa5662441a7011cd9bc5",
+    "20fcfbec1195c75db7005484e3946f62d25188e6"
+  ]
+}
