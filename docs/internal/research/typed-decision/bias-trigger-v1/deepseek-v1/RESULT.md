@@ -1,5 +1,7 @@
 # DeepSeek试跑：首条HTTP 403，派发停止
 
+> 以下为原地址历史记录，全部保留。Owner提供新地址后的实际八份首答与最终状态见[新地址结果](RESULT-SUCCESSOR.md)；不是改写旧403或旧远端状态。
+
 2026-10-01。代码与事前登记：`d33c733f09b524680bf2d3d93dcf5af83cd27bc9`；CPA宿主请求deepseek-v4.1-flash、reasoning_effort=max、thinking enabled。原八窗材料没有改动。
 
 **未取得DeepSeek首答，不能判断它有没有偏差，也不能比较Jev纠偏收益。**

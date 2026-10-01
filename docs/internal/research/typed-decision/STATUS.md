@@ -6,7 +6,27 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — Owner's alternative CPA endpoint verified; A screening continues
+## Current checkpoint — alternative CPA endpoint works; eight DeepSeek A answers COMPLETE
+
+2026-10-01: [Final successor results](bias-trigger-v1/deepseek-v1/RESULT-SUCCESSOR.md)
+save all eight first actual DeepSeek answers. Executor group-aware reading finds core
+conditions met and all four reversals correct; extra metric/goal discussion and strong
+UI wording are retained as limits. No important actual A bias under the fixed definitions,
+so conditional B/C was not dispatched: Jev additional correction and detection speed
+remain unmeasured in this trial. Not an independent content PASS or general Jev failure.
+
+Source identity `7f02f97a1addb548bac686dab34735fb0a940ba9`; same fixed eight inputs/norms.
+11 host debits include old 403, two connectivity attempts and eight new A calls; Jev 0.
+New business processing 139.129s, active wait 479.803s, wall including first cooldown
+619.203s. Raw token/credit retained; currency/fees and exact underlying counts unknown.
+All new business calls have bound complete returns; no new unknowns/refusals. Original
+000000/403/STOP and its unknown low-level status remain. First setup TLS unknown also
+remains with appended bound pre-send reconciliation and one bounded retry.
+This trial stops rather than using remaining budget to manufacture errors. No second
+batch, material/threshold tuning, review model, old-trial rewrite, default Skill/main,
+GJ/R2 or ROI-Beta change.
+
+## Historical checkpoint — Owner's alternative CPA endpoint verified; A screening continues
 
 2026-10-01: Owner supplied https://cpa.rn-us.061718.xyz/v1 after requesting model
 catalog and API connectivity. The same normal client returned GET /models 200,
