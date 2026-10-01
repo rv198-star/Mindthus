@@ -14,6 +14,10 @@ separates endpoint access refusal from model content judgment or Codex approval 
 Raw send/acceptance/remote-generation fields remain unknown; no fabricated remote
 completion. STOP and original request/diagnostics are preserved. CPA service access
 needs resolution before further dispatch; no channel/form/account workaround.
+Owner then authorized a single model-catalog/API check. GET /v1/models also returned
+403; its captured body hash matches error code 1010, identifying the Cloudflare
+client-access layer. No model list or added generation call; model name remains
+unverified. [Catalog receipt](bias-trigger-v1/deepseek-v1/model-catalog-check.json).
 DeepSeek ability and Jev correction are untested, not failed. Sol results and older
 unknowns stay unchanged. Debits 1/64 logical, host 1/56, Jev 0/8.
 

@@ -27,3 +27,15 @@ case-01/A访问拒绝，同例B/C缺少首答。其余七例未发送，B/C比�
 [原始请求/诊断/串行证据](raw-evidence.tar.gz) · [证据索引](evidence-index.json) · [路径状态](summary.json) · [分项计量](metrics.json)。凭据只在已结束进程内存中使用，未写入证据、源码或仓库。
 
 继续需要CPA服务侧确认该凭据、模型及当前调用来源的访问许可并解决403；不通过改变请求形式规避，不要求未经核实存在的恢复文件。本批尚未完成，之前Sol/Jev批次和旧失败/unknown、GJ/R2及默认采用结论保持。
+
+## Owner授权后的模型清单核对
+
+2026-10-01 12:38（Asia/Shanghai）：Owner要求“拉下模型清单，先试通API再跑验证”。仅发一次带既有凭据的GET https://cpa.72live.com/v1/models；没有生成负载、重试、代理、TLS设置或客户端伪装变更。
+
+清单请求再次HTTP403，耗时4.366秒，server=cloudflare，content-type=text/plain。模型目录没有返回，deepseek-v4.1-flash是否列入目录尚未确认。该GET不携带model字段，当前清单失败不能归因于型号拼写。
+
+本次记录的错误正文SHA256与短文本“error code: 1010\n”逐字哈希相符；这是对已捕获正文摘要的有限离线匹配，没有新增网络请求、补造任意正文或改写原记录。见[原模型清单记录](model-catalog-check.json)和[有限匹配证据](catalog-error-body-match.json)。
+
+[Cloudflare官方1010说明](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/)将该错误解释为站点按客户端特征拒绝访问，需要站点维护方处理。现有证据不能确认具体规则名称或CPA模型/凭据权限；不通过伪装客户端绕过。
+
+目前先由CPA提供允许正常API客户端使用的正式接入要求或处理1010，再做最小生成核对。没有新增模型/鉴权生成调用；本批模型尝试仍1，Jev0，费用unknown。第一次业务403与当前目录403都保留，不清除STOP或旧额度。

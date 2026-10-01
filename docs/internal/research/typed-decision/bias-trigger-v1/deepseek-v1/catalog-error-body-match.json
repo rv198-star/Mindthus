@@ -1,0 +1,11 @@
+{
+  "captured_body_sha256": "2938e9f1284180959e33ab1718d0793a72ff6e4cdb8108c34dcd14e69446de5c",
+  "derivation": "bounded comparison with eight standard short Cloudflare error strings and newline variants; not a reconstructed arbitrary response",
+  "matches": [
+    {
+      "cloudflare_code": 1010,
+      "literal": "error code: 1010\n",
+      "proof": "exact SHA256 match to already-captured error-body bytes, no new network request"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "endpoint": "https://cpa.72live.com/v1/models",
+  "method": "GET",
+  "generation_request": false,
+  "automatic_retries": 0,
+  "status": "http_rejected",
+  "http_status": 403,
+  "diagnostic": {
+    "schema": "mindthus.transport-diagnostic.v1",
+    "request_sha256": "0373302cf720cf4b10c196cd170a2e78093b8d8dc7ffb589964b1931954376e7",
+    "started_at": "2026-10-01T04:38:09.151039+00:00",
+    "ended_at": "2026-10-01T04:38:13.519197+00:00",
+    "local_elapsed_seconds": 4.366827125000043,
+    "exception_type": "HTTPError",
+    "reason_type": "str",
+    "errno": null,
+    "ssl_error_code": null,
+    "ssl_verify_code": null,
+    "observed_stage": "response_headers_received",
+    "stage_events": [
+      "connection_establishment",
+      "connection_established",
+      "request_write",
+      "local_write_returned",
+      "response_headers_wait",
+      "response_headers_received"
+    ],
+    "http_response_received": true,
+    "http_status": 403,
+    "response_identifiers_sha256": {
+      "cf-ray": {
+        "sha256": "047f151688a7b5599250d0f2bf0a5789bff4b8c6a38d6d7212e5c412ad7d4511"
+      }
+    },
+    "generation_send_status": "unknown",
+    "pre_send_basis": null,
+    "provider_acceptance": "unknown",
+    "remote_terminal": "unknown"
+  },
+  "content_type": "text/plain; charset=UTF-8",
+  "server": "cloudflare",
+  "error_body_sha256": "2938e9f1284180959e33ab1718d0793a72ff6e4cdb8108c34dcd14e69446de5c",
+  "error_page_title": null,
+  "challenge_indicators": [],
+  "elapsed_seconds": 4.366309166999997,
+  "recorded_epoch": 1790829493.5194979
+}
