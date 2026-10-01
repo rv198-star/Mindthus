@@ -170,7 +170,7 @@ class Driver:
         self.serial.validate()
         prior=sorted((self.root/'calls').iterdir())
         require(all((p/'import.json').is_file() for p in prior),'unimported_call_no_resubmit')
-        req=request(item,state,arm,phase,self.config['simulation'],self.config['host_configuration']);role=req['role']
+        req=getattr(self,'request_factory',request)(item,state,arm,phase,self.config['simulation'],self.config['host_configuration']);role=req['role']
         require(state['calls'][arm]<(4 if arm=='A' else 2),'path_budget_exhausted')
         external=self.config.get('external_budget_debits',{'logical':0,'host':0,'jev':0})
         require(all(type(v) is int and v>=0 for v in external.values()) and external['logical']==external['host']+external['jev'],'external_budget_debits')
@@ -218,7 +218,7 @@ class Driver:
         require(self.config['simulation'] is terminal['binding']['simulation'],'simulated_evidence_mode')
         status,response,usage,error=resolve(req,saved['transport'])
         require((status,response,error)==(terminal['status'],terminal['response'],terminal['error']),'terminal_content')
-        consume(item,state,req,status,response,rt.read(self.root/'materials.json'))
+        getattr(self,'result_consumer',consume)(item,state,req,status,response,rt.read(self.root/'materials.json'))
         state['measurements'].append({'local_call':directory.name,'arm':arm,'phase':req['phase'],'role':role,**terminal})
         rt.write(directory/'state.after.json',state)
         persist(self.root/'states'/(item['case_id']+'.json'),state)

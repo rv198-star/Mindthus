@@ -1,0 +1,16 @@
+test_exact_native_wires_consumption_gap_and_no_extra_call (experiments.bias_trigger.test_stance_detection.Wiring.test_exact_native_wires_consumption_gap_and_no_extra_call) ... FAIL
+test_unknown_preserved_without_completion_or_replay (experiments.bias_trigger.test_stance_detection.Wiring.test_unknown_preserved_without_completion_or_replay) ... ok
+
+======================================================================
+FAIL: test_exact_native_wires_consumption_gap_and_no_extra_call (experiments.bias_trigger.test_stance_detection.Wiring.test_exact_native_wires_consumption_gap_and_no_extra_call)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/bias_trigger/test_stance_detection.py", line 46, in test_exact_native_wires_consumption_gap_and_no_extra_call
+    self.assertEqual(r.jev_payload(req),r.jev_payload(d.packets.request(p,'C')))
+AssertionError: {'mod[25 chars]': {'candidate': '是的，**如果脚本只负责控制 Prompt 的加载、组合[42953 chars]'}}}} != {'mod[25 chars]': {'source': {'documents': [{'id': 'U1', 'rev[42953 chars]'}}}}
+Diff is 118690 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.031s
+
+FAILED (failures=1)

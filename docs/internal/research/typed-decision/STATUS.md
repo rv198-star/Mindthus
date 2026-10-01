@@ -6,7 +6,19 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — Jev scoped correction packet prepared; proposed5-call live scope pending
+## Current checkpoint — two scoped Jev detections authorized; no host correction this stage
+
+2026-10-02: Owner selected detection first: see whether Jev identifies the issue
+and whether policy triggers correction. [Current bounded scope](stance-pressure-v1/stance-correction-v1/EXECUTION-SCOPE.md)
+allows at most2 officialJev /0host, actual6.1 snapshot then artificial carrier-only
+control. Previous5-call B/C+revision scope remains a proposal, not fully activated.
+New wiring reuses Driver transport/terminal/serial via two default-preserving hooks;
+2scoped simulation tests pass. No threshold/question/old-design changes.
+Inherited82debits; current cap84=66host+18Jev. Host correction not executed or
+authorized by a detection alone; results pending actual requests. Existing000068
+named risk disposition retained, no extension to any new unknown.
+
+## Historical checkpoint — Jev scoped correction packet prepared; proposed5-call live scope pending
 
 2026-10-01: Owner asked to adjust Jev toward actual correction. [Concrete detector and consumption](stance-pressure-v1/stance-correction-v1/DESIGN.md)
 now distinguish local-carrier-as-whole definition from value-explanation coverage.
