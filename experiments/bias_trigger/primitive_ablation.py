@@ -34,7 +34,7 @@ def initial(loaded=None):
 
 
 class CleanAdapters(d.CPAAdapters):
-    def __init__(self):super().__init__(HOST)
+    def __init__(self,host=None):super().__init__(host)
     def outbound(self,req,config):
         wire=super().outbound(req,config)
         if req['role']!='host' or req['phase']!='draft':return wire
@@ -86,7 +86,7 @@ def prepare():
 
 class Driver(r.Driver):
     def __init__(self):
-        super().__init__(ROOT,CleanAdapters())
+        super().__init__(ROOT,CleanAdapters(r.rt.read(ROOT/'batch.json')['host_configuration']))
         self.serial=r.SerialRequests(d.ROOT/'serial')
         self.stop_path=ROOT/'STOP.json'
     def step(self,item,state,arm,phase):

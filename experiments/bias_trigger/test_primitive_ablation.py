@@ -9,25 +9,43 @@ from . import run as r, primitive_ablation as a
 
 
 class CleanWire(unittest.TestCase):
+    def test_forward_medium_matches_all_host_groups_without_changing_jev(self):
+        host=copy.deepcopy(a.d.DEFAULT_HOST);adapter=a.CleanAdapters()
+        config={'host_configuration':host,'limits':{'logical':64,'host':56,'jev':8}}
+        item={'case_id':'fixed','input':'原始用户业务文本。'}
+        clean=a.initial();prompt=a.initial({k:v['text'] for k,v in a.packet().items()})
+        q=r.request(item,clean,'A','draft',True,host)
+        direct=adapter.outbound(q,config)
+        b=adapter.outbound(r.request(item,prompt,'A','draft',True,host),config)
+        body=copy.deepcopy(b['body']);body['messages'][0]=direct['body']['messages'][0]
+        self.assertEqual(body,direct['body']);self.assertEqual(body['reasoning_effort'],'medium')
+        r.consume(item,clean,q,'returned',{'kind':'answer','text':'首答','read_paths':[],'objection':''},{})
+        c=adapter.outbound(r.request(item,clean,'C','detect',True,host),config)
+        self.assertEqual(c['body']['model'],'jev-1.13.0')
+        self.assertNotIn('reasoning_effort',c['body'])
+        clean['arms']['C']['atoms']={'Q_TARGET':{'semantic_state':'support'}}
+        handling=adapter.outbound(r.request(item,clean,'C','handling',True,host),config)
+        self.assertEqual(handling['body']['reasoning_effort'],'medium')
+
     def request(self,primitive=False):
         s=a.initial({k:v['text'] for k,v in a.packet().items()} if primitive else None)
         return r.request({'case_id':'fixed','input':'原始用户业务文本。'},s,'A','draft',True,a.HOST)
     def test_direct_is_exact_original_without_catalog_or_index(self):
-        req=self.request();wire=a.CleanAdapters().outbound(req,{'host_configuration':a.HOST,'limits':{'logical':64,'host':56,'jev':8}})
+        req=self.request();wire=a.CleanAdapters(a.HOST).outbound(req,{'host_configuration':a.HOST,'limits':{'logical':64,'host':56,'jev':8}})
         self.assertEqual(wire['body']['messages'][1],{'role':'user','content':'原始用户业务文本。'})
         self.assertNotIn('readable_paths',json.dumps(wire['body']))
         self.assertNotIn('skills/',json.dumps(wire['body']))
         self.assertEqual(wire['body']['reasoning_effort'],'max')
     def test_only_prompt_packet_differs(self):
         config={'host_configuration':a.HOST,'limits':{'logical':64,'host':56,'jev':8}}
-        adapter=a.CleanAdapters();direct=adapter.outbound(self.request(),config);prompt=adapter.outbound(self.request(True),config)
+        adapter=a.CleanAdapters(a.HOST);direct=adapter.outbound(self.request(),config);prompt=adapter.outbound(self.request(True),config)
         common=copy.deepcopy(prompt['body']);common['messages'][0]=direct['body']['messages'][0]
         self.assertEqual(common,direct['body'])
         self.assertNotIn('momo',prompt['body']['messages'][0]['content'])
         self.assertNotIn('27-inch',prompt['body']['messages'][0]['content'])
         self.assertNotIn('norms',json.dumps(prompt['body']))
     def test_changed_packet_rejected_and_actual_contract_accepts(self):
-        req=self.request(True);config={'host_configuration':a.HOST,'limits':{'logical':64,'host':56,'jev':8}};adapter=a.CleanAdapters()
+        req=self.request(True);config={'host_configuration':a.HOST,'limits':{'logical':64,'host':56,'jev':8}};adapter=a.CleanAdapters(a.HOST)
         wire=adapter.outbound(req,config)
         raw={'kind':'cpa_http_json','endpoint':a.HOST['endpoint'],'request_sha256':r.digest(wire['body']),
              'raw':{'model':a.HOST['model'],'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'kind':'answer','text':'首份回答','read_paths':[],'objection':''})}}]}}
@@ -39,7 +57,7 @@ class CleanWire(unittest.TestCase):
         q=r.request(item,s,'A','draft',True,a.HOST)
         r.consume(item,s,q,'returned',{'kind':'answer','text':'实际直出首答。','read_paths':[],'objection':''},{})
         c=r.request(item,s,'C','detect',True,a.HOST)
-        wire=a.CleanAdapters().outbound(c,{'host_configuration':a.HOST,'limits':{'logical':64,'host':56,'jev':8}})
+        wire=a.CleanAdapters(a.HOST).outbound(c,{'host_configuration':a.HOST,'limits':{'logical':64,'host':56,'jev':8}})
         self.assertEqual(c['payload']['candidate'],'实际直出首答。')
         self.assertEqual(len(c['payload']['questions']),2)
         self.assertEqual(wire['body']['model'],'jev-1.13.0')
@@ -64,7 +82,7 @@ class CleanWire(unittest.TestCase):
             now=[100.];sleeps=[]
             def sleep(x):sleeps.append(x);now[0]+=x
             driver=a.Driver.__new__(a.Driver)
-            r.Driver.__init__(driver,root,Simulated(),clock=lambda:now[0],monotonic=lambda:now[0],sleep=sleep)
+            r.Driver.__init__(driver,root,Simulated(a.HOST),clock=lambda:now[0],monotonic=lambda:now[0],sleep=sleep)
             driver.serial=r.SerialRequests(parent/'serial',clock=lambda:now[0],monotonic=lambda:now[0],sleep=sleep)
             driver.stop_path=root/'STOP.json';driver.serial.call('prior-batch-ended',lambda:None)
             clean=a.initial();prim=a.initial({k:v['text'] for k,v in a.packet().items()})

@@ -10,7 +10,7 @@ from .test_run import state
 
 class CPAWire(unittest.TestCase):
     def setUp(self):
-        self.adapter=d.CPAAdapters();self.s=state();self.item={'case_id':'case-01','input':'固定业务文本'}
+        self.adapter=d.CPAAdapters(d.HOST);self.s=state();self.item={'case_id':'case-01','input':'固定业务文本'}
         self.req=r.request(self.item,self.s,'A','draft',True,d.HOST)
         self.wire=self.adapter.outbound(self.req,{'host_configuration':d.HOST,'limits':{'logical':64,'host':56,'jev':8}})
     def reply(self,answer=None):
@@ -21,6 +21,20 @@ class CPAWire(unittest.TestCase):
         b=self.wire['body'];self.assertEqual(b['reasoning_effort'],'max');self.assertEqual(b['thinking'],{'type':'enabled'})
         self.assertFalse(b['stream']);self.assertEqual(b['model'],'deepseek-v4.1-flash')
         self.assertNotIn('norms',json.dumps(b));self.assertEqual(self.req,json.loads(json.dumps(self.req)))
+    def test_forward_medium_is_sent_and_receipt_binds_same_profile(self):
+        adapter=d.CPAAdapters();host=copy.deepcopy(d.DEFAULT_HOST)
+        req=r.request(self.item,state(),'A','draft',True,host)
+        wire=adapter.outbound(req,{'host_configuration':host,'limits':{'logical':64,'host':56,'jev':8}})
+        self.assertEqual(wire['body']['reasoning_effort'],'medium')
+        self.assertEqual(wire['body']['thinking'],{'type':'enabled'})
+        old_body=copy.deepcopy(self.wire['body']);old_body['reasoning_effort']='medium'
+        self.assertEqual(wire['body'],old_body)
+        raw=self.reply();raw['endpoint']=host['endpoint'];raw['request_sha256']=r.digest(wire['body'])
+        self.assertEqual(adapter.classify(req,raw)[0],'returned')
+        raw['request_sha256']=r.digest(self.wire['body'])
+        self.assertEqual(adapter.classify(req,raw)[0],'unknown')
+        self.assertEqual(host,d.DEFAULT_HOST);self.assertEqual(d.HOST['reasoning_effort'],'max')
+        with self.assertRaises(ValueError):d.CPAAdapters({**host,'reasoning_effort':'none'})
     def test_complete_response_and_duplicate_local_contract(self):
         raw=self.reply();self.assertEqual(self.adapter.classify(self.req,raw)[0],'returned')
         bad=self.reply({'kind':'read','text':'','read_paths':['method','method'],'objection':''})
@@ -64,7 +78,7 @@ class CPAWire(unittest.TestCase):
             config={'simulation':True,'host_configuration':d.HOST,'limits':{'logical':64,'host':56,'jev':8},
                     'source_sha256':{},'cases_sha256':r.digest(r.rt.read(r.DOC/'cases.business.json')),
                     'external_budget_debits':{'logical':55,'host':55,'jev':0}}
-            r.rt.write(root/'batch.json',config);adapter=Simulated();driver=r.Driver(root,adapter)
+            r.rt.write(root/'batch.json',config);adapter=Simulated(d.HOST);driver=r.Driver(root,adapter)
             with self.assertRaisesRegex(ValueError,'total_budget_exhausted'):driver.step(self.item,self.s,'A','draft')
             self.assertFalse(adapter.invoked)
 

@@ -6,7 +6,23 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — clean A / primitive B / Jev C COMPLETE; full responses need separate judgment
+## Current checkpoint — future DeepSeek preference medium; completed max batch preserved
+
+2026-10-01: Owner requests ordinary effort instead of max. New CPA/CleanAdapters
+defaults use `deepseek-v4.1-flash`, `reasoning_effort=medium`, thinking enabled and
+the same authorized working endpoint. Sending consumes the registered configuration
+rather than a hard-coded max. Existing runners load their frozen batch configuration;
+historical max profiles, answers, debits and findings are unchanged.
+
+[DeepSeek's official contract](https://api-docs.deepseek.com/api/create-chat-completion/)
+maps medium to high, its default effort; medium is not a distinct native tier. CPA's
+mapping is unverified. This is a forward configuration preference, not an authorized
+new batch, new budget, API acceptance claim or evidence for ordinary-effort quality.
+No model/credential/probe/CLI calls in this update. Jev configuration is unchanged.
+Targeted offline CPA/clean-wire regressions: 14 passed, including medium dispatch,
+same A/B/C host effort, unchanged Jev and rejection of a max/medium receipt mismatch.
+
+## Historical checkpoint — clean A / primitive B / Jev C COMPLETE; full responses need separate judgment
 
 2026-10-01: [24-path results](bias-trigger-v1/primitive-ablation-v1/RESULT.md) and
 [preselected case-06 full comparison](bias-trigger-v1/primitive-ablation-v1/CASE-06.md)
