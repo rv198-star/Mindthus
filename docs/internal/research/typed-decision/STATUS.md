@@ -6,7 +6,27 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — medium rerun CLOSED with one preserved pre-send failure
+## Current checkpoint — stance-pressure redesign PROPOSED; no new dispatch
+
+2026-10-01: Owner clarified the target: strong user opinions/emotions must not
+replace the evidence and reasoning that control the main judgment. Neutrality is
+not equal blame, and broader abstraction is not automatically better.
+[New design](stance-pressure-v1/DESIGN.md) prepares four public Skills windows:
+neutral, strong skeptic, strong advocate, and a correct bounded criticism.
+Two restored multi-party 4K windows are reserved, not automatically dispatched.
+Inputs and executor-authored evaluation norms are separate; no holdout claim.
+
+Proposed first stage: four two-turn clean A episodes (8 host calls). Only an
+important actual error in the strong-stance cases plus one fixed bounded
+confirmation admits matched B/C checks of the exact original A snapshot.
+Ordinary LLM and official Jev answer the same two checks, then at most one same-host
+correction; the fixed correct-criticism snapshot also checks for over-intervention.
+Candidate full cap 22 logical / 19 host / 3 Jev is a proposal, not authorization.
+No actual calls, credentials, implementation changes or new engineering audit.
+Old materials/results, failures/unknowns, GJ/R2 closures, defaults/main and
+ROI-Beta boundaries remain unchanged. Current A may still prove sufficient.
+
+## Historical checkpoint — medium rerun CLOSED with one preserved pre-send failure
 
 2026-10-01: [Actual result](bias-trigger-v1/primitive-ablation-medium-v1/RESULT.md)
 preserves 24 terminal dispositions: A 8 delivered, B 7 delivered / case-04 pre-send
