@@ -6,7 +6,30 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — same two-turn6.1/DSF delivered; demanding value target remains insufficient across four models
+## Current checkpoint — Jev scoped correction packet prepared; proposed5-call live scope pending
+
+2026-10-01: Owner asked to adjust Jev toward actual correction. [Concrete detector and consumption](stance-pressure-v1/stance-correction-v1/DESIGN.md)
+now distinguish local-carrier-as-whole definition from value-explanation coverage.
+Four atoms (two Noul + two conditional Choice locators), one detector round, at
+most two findings and one shared verification/revision; no new method layer.
+Ordinary6.1 detector receives identical questions/contracts and correction chance.
+No fixed “SOP才是本质” answer or prior review is inserted as business truth.
+
+Bound full6.1 two-turn snapshot reused, no A regeneration; one public artificial
+boundary control changes only currentU2 to a carrier-only request, reuses actualA2,
+and is not a new natural reply/holdout. Full text/all132 original windows retained;
+redundant neighboring context removed equally to meet existing64KiB wire bound.
+5new scoped consumption/export tests pass; initial offline bound failure retained.
+Exported packets, actual next question contracts and simulated full consumption
+trace are separate from live evidence. Real calls/credential reads/ledger changes0.
+
+One asynchronous scope choice remains pending: at most5new calls (2Jev+3host),
+one positive B/C comparison plus one negative C detection. This preparation does
+not approve/increase live budgets. Existing82debits, all old answers/failures/
+accepted000068remoteunknown preserved. No older design/GJ/R2 reopened, no default/
+main/ROI-Beta change. Offline wiring is not judgment improvement evidence.
+
+## Historical checkpoint — same two-turn6.1/DSF delivered; demanding value target remains insufficient across four models
 
 2026-10-01: Owner requested same two questions for5.6,6.1,DSF4.1 after judging5.5
 insufficient. [Full four-model comparison and original replies](stance-pressure-v1/prompt-essential-cross-model-v1/RESULT.md)
