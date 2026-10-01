@@ -1,0 +1,88 @@
+{
+  "source_commit": "b3bc71de8042b577bbbe4a54897adb418607b898",
+  "endpoint": "https://sub2api.72live.com/v1/chat/completions",
+  "requested_model": "gpt-5.6-sol",
+  "requested_effort": "medium",
+  "two_turns_delivered": true,
+  "first_answer_used_once": true,
+  "exact_actual_first_reply_in_second_request": true,
+  "client_system_messages": 0,
+  "client_developer_messages": 0,
+  "tools": false,
+  "JSON_generation_contract": false,
+  "Mindthus_materials": false,
+  "new_logical_calls": 2,
+  "new_client_POSTs": 2,
+  "new_catalog_GETs": 1,
+  "CLI_launches": 0,
+  "Jev_calls": 0,
+  "parameter_repairs_used": 0,
+  "observed_internal_recoveries": 0,
+  "proxy_downstream_requests": null,
+  "applied_effort_confirmation": null,
+  "provider_hidden_context": null,
+  "fees": null,
+  "old_HTTP400_unknown_retained": true,
+  "old_named_risk_disposition": "risk_accepted_remote_unknown",
+  "new_unknowns": 0,
+  "new_refusals": 0,
+  "session_seconds": 60.66762941699926,
+  "active_wait_seconds": 119.93650887400145,
+  "wall_seconds": 180.7255936249967,
+  "usage_raw_per_turn": [
+    {
+      "completion_tokens": 1033,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 94,
+      "total_tokens": 1127
+    },
+    {
+      "completion_tokens": 1097,
+      "completion_tokens_details": {
+        "reasoning_tokens": 372
+      },
+      "prompt_tokens": 1034,
+      "total_tokens": 2131
+    }
+  ],
+  "turns": [
+    {
+      "turn": 1,
+      "reported_model": "gpt-5.6-sol",
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 1033,
+        "completion_tokens_details": {
+          "reasoning_tokens": 130
+        },
+        "prompt_tokens": 94,
+        "total_tokens": 1127
+      },
+      "session_seconds": 31.476384166999196,
+      "active_wait_seconds": 60.00516308299848,
+      "loading_seconds": 0.0004723329984699376,
+      "wire_body_sha256": "8929916b63bc32bca1aac7b6687ea4a57b25b143db5dda61f330c7ec63ff3518",
+      "terminal_sha256": "7caffd02eabb458871e2e6a805babcef3b6071a0019de772d67b17c3d789aaab"
+    },
+    {
+      "turn": 2,
+      "reported_model": "gpt-5.6-sol",
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 1097,
+        "completion_tokens_details": {
+          "reasoning_tokens": 372
+        },
+        "prompt_tokens": 1034,
+        "total_tokens": 2131
+      },
+      "session_seconds": 29.191245250000065,
+      "active_wait_seconds": 59.93134579100297,
+      "loading_seconds": 0.0005329169980541337,
+      "wire_body_sha256": "1b8434039e70ae0f0dc1278139e86cbd22f9ca6918e849471e46214ab0c3005d",
+      "terminal_sha256": "daa9d34595d00ac8f25dc900e19ef7bcf1bd2d86e76f83df6e1d6140a2d5193f"
+    }
+  ]
+}

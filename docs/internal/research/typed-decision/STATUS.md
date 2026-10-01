@@ -6,7 +6,34 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — CPA Sol5.6 minimal-message attempt returned HTTP 400; no answer
+## Current checkpoint — Sub2API Sol5.6 minimal-message two turns DELIVERED
+
+2026-10-01: Owner authorized up to two more attempts, then explicitly selected
+https://sub2api.72live.com/v1 and supplied its credential. [Full original replies](stance-pressure-v1/sol56-cpa-bare-v1/sub2api-two-v1/RESULT.md)
+record both returned/delivered turns, gpt-5.6-sol reported by service, medium requested.
+First outbound has only user; second has original user/actual new assistant/user.
+No system/developer, tools, skill catalog, JSON-generation contract or cognitive packet.
+Old CLI bare-baseline disqualification remains; provider-hidden context/applied effort
+and backend weight identity are not independently established.
+
+Both answers limit the blanket-hype inference; no whole-answer factual PASS or Jev
+incremental-value claim. SOP/material abstraction receives less emphasis than runtime
+engineering; original output and prior norms retained for scoped content review.
+No Jev, evaluator, correction or further batch automatically admitted.
+
+New2 host POST / 1non-generation new catalog GET / 0CLI / 0Jev / no new failure.
+Cumulative73=57host+16Jev; sessions60.668s, activewait119.937s, dispatchwall180.726s.
+Reported3258tokens total, including502reasoning already inside2130completion;
+input94/1034. Fees/proxy downstream attempts/applied effortunknown.
+Serial000069/000070 both bound completed, actual gaps>=60.005s.
+
+Old CPA000068 unknown/HTTP400/STOP/debits stay intact with the specifically authorized
+risk_accepted_remote_unknown disposition; no fabricated completion or future-unknown
+exception. Five new boundary checks and one zero-call local record-format repair;
+source frozen b3bc71de8042b577bbbe4a54897adb418607b898. 41packaged evidence files,
+not independent historical full audit. All old closures/defaults/main/ROI-Beta unchanged.
+
+## Historical checkpoint — CPA Sol5.6 minimal-message attempt returned HTTP 400; no answer
 
 2026-10-01: Owner explicitly selected CPA for the two original Sol5.6/medium turns.
 [Actual request and evidence](stance-pressure-v1/sol56-cpa-bare-v1/RESULT.md)
