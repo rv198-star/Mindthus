@@ -1,0 +1,20 @@
+Captured tool output before adding the exact configuration-digest binding.
+Command: python -m unittest experiments.bias_trigger.test_stance_routing_host_repair experiments.bias_trigger.test_stance_routing -v
+
+test_compensation_preserves_wire_and_single_budget_slot (experiments.bias_trigger.test_stance_routing_host_repair.BoundRepair.test_compensation_preserves_wire_and_single_budget_slot) ... ok
+test_equal_wire_reuses_real_bound_answer_without_b_call_or_fake_terminal (experiments.bias_trigger.test_stance_routing_host_repair.BoundRepair.test_equal_wire_reuses_real_bound_answer_without_b_call_or_fake_terminal) ... ok
+test_fixed_invalid_deadline_never_launches_worker_and_preserves_old_records (experiments.bias_trigger.test_stance_routing_host_repair.BoundRepair.test_fixed_invalid_deadline_never_launches_worker_and_preserves_old_records) ... ok
+test_simulated_shared_handler_cannot_enter_real_state (experiments.bias_trigger.test_stance_routing_host_repair.BoundRepair.test_simulated_shared_handler_cannot_enter_real_state) ... ok
+test_unbound_error_or_actual_transport_timeout_cannot_reconcile (experiments.bias_trigger.test_stance_routing_host_repair.BoundRepair.test_unbound_error_or_actual_transport_timeout_cannot_reconcile) ... ok
+test_exact_preservation_and_citation_contract (experiments.bias_trigger.test_stance_routing.Wiring.test_exact_preservation_and_citation_contract) ... ok
+test_exported_contract_legal_b_reply_and_s0_only (experiments.bias_trigger.test_stance_routing.Wiring.test_exported_contract_legal_b_reply_and_s0_only) ... ok
+test_full_five_call_mock_trace_and_global_cooldown (experiments.bias_trigger.test_stance_routing.Wiring.test_full_five_call_mock_trace_and_global_cooldown) ... ok
+test_new_contract_namespace_preserves_old_completed_call (experiments.bias_trigger.test_stance_routing.Wiring.test_new_contract_namespace_preserves_old_completed_call) ... ok
+test_other_request_receipt_cannot_import (experiments.bias_trigger.test_stance_routing.Wiring.test_other_request_receipt_cannot_import) ... ok
+test_unadopted_raw_choice_is_not_whole_check (experiments.bias_trigger.test_stance_routing.Wiring.test_unadopted_raw_choice_is_not_whole_check) ... ok
+test_unknown_stops_and_cannot_replay (experiments.bias_trigger.test_stance_routing.Wiring.test_unknown_stops_and_cannot_replay) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.063s
+
+OK

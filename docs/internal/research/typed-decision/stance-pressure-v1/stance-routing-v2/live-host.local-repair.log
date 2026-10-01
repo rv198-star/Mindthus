@@ -1,0 +1,5 @@
+{"dispatch": "S-current", "arm": "C", "phase": "handling"}
+{"status": "returned", "path_status": "delivered", "error": null, "session_seconds": 48.192537750001065, "wait_seconds": 60.005264040999464}
+{"dispatch": "S-current", "arm": "B", "phase": "detect"}
+{"status": "returned", "path_status": "handling_required", "error": null, "session_seconds": 4.715121624998574, "wait_seconds": 59.901153625003644}
+{"equal_body_common_handling_reused": true, "B_status": "delivered_shared_handler", "new_model_calls": 2}

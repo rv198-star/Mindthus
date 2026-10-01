@@ -6,7 +6,27 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — v2 Jev topic/control returned; host stage awaiting credential entry
+## Current checkpoint — v2 actual correction and route comparison delivered; shared final limitation
+
+2026-10-02: [Complete bounded result](stance-pressure-v1/stance-routing-v2/RESULT-COMPLETE.md).
+Jev original whole_check0.94 and U2-only carrier control retain0.89 remain adopted.
+One actual6.1-medium host handling revises A2: input-carrier truth does not exhaust
+Skills' object explanation; local truth and legitimate Prompt-module scope remain.
+B sameS0/topic also chooses whole_check (4.715s vs Jev1.094s), so no unique Jev
+quality gain. Exact identical host wire permits explicitly shared C handling;
+B final is not a second independent generation or independent quality PASS.
+One invalid180s deadline rejected locally before network worker; oldunknown/raw/
+STOP preserved with bound confirmed_local_not_sent reconciliation. Supported90s
+successor code a240a2d7a3e31ad71fc0f3d60f4cced12597cf78;5 new +7 affected tests pass.
+All5 attempts count:2Jev/3host-side incl1unsent;4 actual logical API returns.
+Cumulative89=69host+20Jev, cap exhausted; no new remoteunknown/refusal. Prior000068
+accepted remoteunknown unchanged. Sessions55.048s/waits299.841s/activity354.891s;
+registered wall2989.720s includes handoff/repair. Fees/underlying counts unknown.
+Local positive routing/correction/performance observation only; independent review,
+general benefit and default qualification not established. Trial ended, no more
+dispatch. A and closed scopes/defaults/main/ROI-Beta boundaries unchanged.
+
+## Historical checkpoint — v2 Jev topic/control returned; host stage awaiting credential entry
 
 2026-10-02: [Actual v2 route results and raw products](stance-pressure-v1/stance-routing-v2/RESULT.md)
 record officialJev whole_check0.94 for the original U1/A1/U2, retain0.89 for the

@@ -1,0 +1,31 @@
+{
+  "phase_debits": {
+    "host": 3,
+    "jev": 2,
+    "logical": 5
+  },
+  "cumulative_debits": {
+    "host": 69,
+    "jev": 20,
+    "logical": 89
+  },
+  "session_seconds": 55.048320625006454,
+  "wait_seconds": 299.8407360419951,
+  "loading_seconds": 0.0019273350117146038,
+  "activity_window_sum_seconds": 354.8909840020133,
+  "registered_to_last_terminal_wall_seconds": 2989.7202031612396,
+  "serial_actual_gaps_seconds": [
+    60.00508929199714,
+    60.00517966600455,
+    60.00512170800357,
+    60.00532295900484,
+    60.005306957995344
+  ],
+  "repair_code_commit": "a240a2d7a3e31ad71fc0f3d60f4cced12597cf78"
+}
+{"local_call": 0, "key": "stance-routing-v2:S-current-C:0", "status": "returned", "session_seconds": 1.0944870000021183, "wait_seconds": 60.00507891699817, "usage": {"input_tokens": 2257, "output_tokens": 45}, "native_usage": {"input_tokens": 2257, "output_tokens": 45}}
+{"local_call": 1, "key": "stance-routing-v2:S-carrier-scope-C:0", "status": "returned", "session_seconds": 1.04480791700189, "wait_seconds": 59.92413833399769, "usage": {"input_tokens": 2293, "output_tokens": 44}, "native_usage": {"input_tokens": 2293, "output_tokens": 44}}
+{"local_call": 2, "key": "stance-routing-v2:S-current-C:1", "status": "unknown", "session_seconds": 0.0013663330028066412, "wait_seconds": 60.005101124996145, "usage": null, "native_usage": null}
+{"local_call": 3, "key": "stance-routing-v2:S-current-C:2", "status": "returned", "session_seconds": 48.192537750001065, "wait_seconds": 60.005264040999464, "usage": {"completion_tokens": 954, "completion_tokens_details": {"reasoning_tokens": 77}, "prompt_tokens": 1851, "total_tokens": 2805}, "native_usage": {"completion_tokens": 954, "completion_tokens_details": {"reasoning_tokens": 77}, "prompt_tokens": 1851, "total_tokens": 2805}}
+{"local_call": 4, "key": "stance-routing-v2:S-current-B:0", "status": "returned", "session_seconds": 4.715121624998574, "wait_seconds": 59.901153625003644, "usage": {"completion_tokens": 40, "prompt_tokens": 1750, "total_tokens": 1790}, "native_usage": {"completion_tokens": 40, "prompt_tokens": 1750, "total_tokens": 1790}}
+Parent serial87 records validated; five raw/terminal bindings and immutable original failure copies checked; final source is C and B reuse is explicit.
