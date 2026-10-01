@@ -51,6 +51,45 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
         raise ProviderError('redirect_rejected')
 
 
+def _http_error_receipt(exc, headers):
+    """Bounded JSON error fields only; no raw body, headers or arbitrary repr."""
+    result = {'body_status': 'unavailable'}
+    try:
+        raw = exc.read(8193)
+        if len(raw) > 8192:
+            return {'body_status': 'over_limit'}
+        value = json.loads(raw)
+        error = value.get('error') if isinstance(value, dict) else None
+        if not isinstance(error, dict):
+            return {'body_status': 'not_json_error_object'}
+        result = {'body_status': 'json_error_object'}
+        secrets = []
+        for key, value in headers.items():
+            if key.lower() in ('authorization', 'cookie', 'x-api-key', 'api-key') and isinstance(value, str):
+                secrets.append(value)
+                if key.lower() == 'authorization':
+                    secrets.append(value.split(' ', 1)[-1])
+                if key.lower() == 'cookie':
+                    secrets.extend(x.split('=', 1)[-1].strip() for x in value.split(';'))
+        for field in ('type', 'code', 'param', 'message'):
+            text = error.get(field)
+            if not isinstance(text, str):
+                continue
+            for secret in sorted(set(secrets), key=len, reverse=True):
+                if secret:
+                    text = text.replace(secret, '[REDACTED]')
+            text = re.sub(r'sk-[A-Za-z0-9_-]+', '[REDACTED]', text)
+            if re.search(r'authorization|cookie|bearer|api[_ -]?key|password|secret|access[_ -]?token', text, re.I):
+                text = '[SUPPRESSED_SENSITIVE_FIELD]'
+            text = ''.join(c for c in text if c.isprintable() or c in '\n\t')
+            if field != 'message' and not re.fullmatch(r'[A-Za-z0-9_.\[\]-]{1,128}', text):
+                continue
+            result[field] = text[:1024 if field == 'message' else 128]
+        return result
+    except (OSError, ValueError, UnicodeDecodeError):
+        return result
+
+
 def post_json(url: str, headers: dict, body: dict, timeout: float) -> dict:
     """One bounded attempt; no hidden retries or credential-bearing redirects."""
 
@@ -76,7 +115,9 @@ def post_json(url: str, headers: dict, body: dict, timeout: float) -> dict:
             return result
     except urllib.error.HTTPError as exc:
         observation.response(exc.code, exc.headers)
-        raise ProviderError(f'http_{exc.code}', diagnostic=observation.failure(exc)) from None
+        diagnostic = observation.failure(exc)
+        diagnostic['http_error_response'] = _http_error_receipt(exc, headers)
+        raise ProviderError(f'http_{exc.code}', diagnostic=diagnostic) from None
     except (urllib.error.URLError, TimeoutError, socket.timeout, ssl.SSLError) as exc:
         raise ProviderError('transport_failure', diagnostic=observation.failure(exc)) from None
     except (ValueError, UnicodeDecodeError) as exc:
