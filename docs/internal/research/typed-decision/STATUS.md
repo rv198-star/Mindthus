@@ -6,7 +6,18 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — CPA DeepSeek baseline screening AUTHORIZED
+## Current checkpoint — CPA DeepSeek trial STOPPED on HTTP 403
+
+2026-10-01: first actual case-01/A request to CPA returned http_403 in 1.366s;
+no model answer, no Jev calls and no retry. [Record](bias-trigger-v1/deepseek-v1/RESULT.md)
+separates endpoint access refusal from model content judgment or Codex approval rejection.
+Raw send/acceptance/remote-generation fields remain unknown; no fabricated remote
+completion. STOP and original request/diagnostics are preserved. CPA service access
+needs resolution before further dispatch; no channel/form/account workaround.
+DeepSeek ability and Jev correction are untested, not failed. Sol results and older
+unknowns stay unchanged. Debits 1/64 logical, host 1/56, Jev 0/8.
+
+## Historical checkpoint — CPA DeepSeek baseline screening AUTHORIZED
 
 2026-10-01: Owner selected CPA deepseek-v4.1-flash for the same eight fixed bias windows.
 [Execution registration](bias-trigger-v1/deepseek-v1/EXECUTION.md) freezes max reasoning,

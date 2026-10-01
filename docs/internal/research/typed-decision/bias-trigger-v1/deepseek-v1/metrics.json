@@ -1,0 +1,23 @@
+{
+  "logical_host_attempts": 1,
+  "jev_calls": 0,
+  "actual_host_cli_starts": 0,
+  "model_answer_returns": 0,
+  "session_seconds": 1.365624875004869,
+  "active_wait_seconds": 0.0,
+  "loading_seconds": 0.0005792079609818757,
+  "wall_seconds_from_request_intent": 1.3664319515228271,
+  "usage": null,
+  "cost": null,
+  "generation_send_status": "unknown",
+  "provider_acceptance": "unknown",
+  "remote_terminal": "unknown",
+  "outer_retries": 0,
+  "remaining_budget": {
+    "logical": 63,
+    "host": 55,
+    "jev": 8
+  },
+  "raw_terminal_category": "safety_refusal",
+  "observed_failure_layer": "CPA HTTPS endpoint returned HTTP 403; not model content judgment or Codex tool approval rejection"
+}

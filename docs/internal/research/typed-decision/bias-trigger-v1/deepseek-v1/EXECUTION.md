@@ -20,3 +20,7 @@ A首答、B检查和B/C纠偏均使用同一CPA DeepSeek配置，C判断仍使�
 CPA首答的实际环境为chat API，没有CLI的系统上下文；与上一批Sol不能作为纯模型能力/时间因果对照。本批B/C在同一DeepSeek候选、同一材料下比较，模型响应报出的身份与底层实际权重不可观察性分开。
 
 执行入口：python -m experiments.bias_trigger.deepseek --prepare；已有首答错误且登记stage-A-review后，python -m experiments.bias_trigger.deepseek --compare。未知发送没有重发入口。
+
+## 当前终态
+
+第一条case-01/A真实HTTP 403，错误http_403；无回答，Jev0。已保存STOP并停止后续派发，没有技术重试。是服务访问拒绝，未证明模型内容安全拒绝或判断能力失败。见RESULT.md。
