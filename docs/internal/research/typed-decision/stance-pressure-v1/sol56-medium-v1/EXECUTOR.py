@@ -66,7 +66,8 @@ def main():
         r.require(cfg['external_budget_debits']==INHERITED and not list((ROOT/'calls').iterdir()),'one_attempt_no_resubmit')
         r.require(r.digest(r.rt.read(PARENT/'summary.json'))==cfg['parent_summary_sha256'],'parent_summary_changed')
         driver=r.Driver(ROOT,Adapters());driver.serial=r.SerialRequests(d.ROOT/'serial');driver.stop_path=ROOT/'STOP.json'
-        driver.serial.validate();item=r.rt.read(DOC/'cases.business.json')['cases'][0]
+        driver.serial.validate();question=r.rt.read(DOC/'cases.business.json')['cases'][0]
+        item={**question,'case_id':question['case_id']+'-sol56-medium'}
         state=r.rt.read(ROOT/'states/skills-natural-stance.json')
         print(json.dumps({'dispatch':item['case_id'],'host':HOST,'max_calls':1,'Jev_calls':0}),flush=True)
         terminal=driver.step(item,state,'A','draft')
