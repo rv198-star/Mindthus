@@ -6,7 +6,29 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — Owner-authorized clean A / primitive B / Jev C continuation
+## Current checkpoint — clean A / primitive B / Jev C COMPLETE; full responses need separate judgment
+
+2026-10-01: [24-path results](bias-trigger-v1/primitive-ablation-v1/RESULT.md) and
+[preselected case-06 full comparison](bias-trigger-v1/primitive-ablation-v1/CASE-06.md)
+preserve 16 first actual host replies and eight Jev-retained A finals.
+Source `1e401f71574a4b57e0a3be2be1af2c247c2a75e2`; all new calls returned, no retry,
+unknown/refusal or handling. Eight C checks return valid negative judgments under
+the unchanged two-question contract; they do not certify every sentence correct.
+
+Executor reading: core conclusions and four reversals hold, but case-04 B expands
+the user's already limited claim into an all-value rejection and criticizes it.
+Case-06 both hosts reintroduce a conditional alternative goal and a minor PPI error;
+C retains A. Full-response fidelity/evidence/action limits are distinct from core-pass.
+No demonstrated primitive-packet correction of important A errors, general Jev failure,
+independent quality PASS or automatic adoption. Old scoring/results remain unchanged.
+
+New phase 24 calls = 16 host + 8 Jev; cumulative 35 = 27 host + 8 Jev, no budget reset.
+Processing 341.328s, active waiting 1438.759s, wall including first cooldown 1781.753s.
+Raw usage retained; fees and exact underlying counts unknown. C check-only timing
+is not total C answer cost: shared A must be counted. No extra batch/default/main/
+ROI-Beta change; existing GJ/R2 closures and original failure/unknown evidence stay.
+
+## Historical checkpoint — Owner-authorized clean A / primitive B / Jev C continuation
 
 2026-10-01: Owner questions the executor's scoring and explicitly requests completing
 the comparison and seeing one scenario's three raw outputs. [Registration](bias-trigger-v1/primitive-ablation-v1/EXECUTION.md)
