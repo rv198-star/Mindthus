@@ -1,0 +1,58 @@
+{
+  "logical_host_calls": 1,
+  "Jev_calls": 0,
+  "host_CLI_launches": 0,
+  "outer_retries": 0,
+  "cumulative_debits": {
+    "logical": 68,
+    "host": 52,
+    "jev": 16
+  },
+  "observable_internal_recoveries": 0,
+  "underlying_HTTP_requests": null,
+  "host_session_seconds": 16.097183208999922,
+  "active_wait_seconds": 60.00523087500187,
+  "loading_seconds": 0.0008744580009079073,
+  "scheduler_request_window_seconds": 16.10540816700086,
+  "dispatch_wall_reconstructed_seconds": 76.11063904200273,
+  "wall_basis": "active_wait + bound serial request window; excludes preparation, credential entry and later evidence packaging",
+  "request_gap_basis": "restart_conservative_lower_bound",
+  "bound_gap_lower_seconds": 60.005273291000776,
+  "reported_usage": {
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cached_tokens": 0,
+    "completion_thinking_tokens": 1061,
+    "completion_tokens": 1498,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": 0,
+      "audio_tokens": 0,
+      "cached_tokens": 0,
+      "reasoning_tokens": 1061,
+      "rejected_prediction_tokens": 0
+    },
+    "credit": 0.18,
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 222,
+    "prompt_cache_write_tokens": 0,
+    "prompt_tokens": 222,
+    "prompt_tokens_details": {
+      "accepted_prediction_tokens": 0,
+      "audio_tokens": 0,
+      "cached_tokens": 0,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": 0
+    },
+    "total_tokens": 1720
+  },
+  "monetary_cost": null,
+  "usage_note": "reported credit=0.18, unit and currency unspecified; reasoning_tokens is part of completion_tokens, not additive",
+  "requested_model": "deepseek-v4.1-flash",
+  "reported_model": "deepseek-v4.1-flash",
+  "requested_reasoning_effort": "medium",
+  "effective_reasoning_tier_attested": false,
+  "terminal": "returned",
+  "delivery": "delivered",
+  "unknown_send_state": false,
+  "safety_refusal_observed": false
+}

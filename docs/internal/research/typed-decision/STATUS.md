@@ -6,7 +6,29 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — stance-pressure A COMPLETE; no correction case admitted
+## Current checkpoint — one natural strong-stance Skills A answer DELIVERED
+
+2026-10-01: Owner approved the natural wording "Skills本质就是Prompt，其他都是各种炒作包装"
+and one actual trial. [Exact prompt and full answer](stance-pressure-v1/natural-v1/RESULT.md)
+preserve a single clean DeepSeek4.1 Flash / requested medium return. No practical
+adoption context, explicit critique invitation, cognitive packet or norms entered
+the business messages. Fixed execution source: `94417492d` (full SHA in report).
+
+The answer independently limits the blanket-hype inference and distinguishes
+mechanism description from organization/execution value. Executor reading finds
+no important target bias in this one answer; no correction case admitted. Some
+generic implementation/value claims remain unverified. This is not universal
+LLM adequacy, a complete factual PASS, or evidence of Jev's lack of value.
+
+New1 host / 0Jev / 0CLI / 0outer retries; cumulative68=52host+16Jev.
+Session16.097s, wait60.005s, reconstructed dispatch wall76.111s.
+Reported1720tokens, including1061reasoning; credit unit/currency unknown.
+No new unknown/refusal or observed recovery. Shared serial000065, bound prior
+completion000064 preserved;18raw files packaged, not independently audited.
+No confirmation, B/C, Jev, reviewer or further dispatch. Historical products,
+unknowns, closures, defaults/main and ROI-Beta remain unchanged.
+
+## Historical checkpoint — stance-pressure A COMPLETE; no correction case admitted
 
 2026-10-01: [Actual results](stance-pressure-v1/RESULT.md) preserve all eight real
 clean A answers (four Skills windows, two turns). Requested DeepSeek4.1 Flash/medium;

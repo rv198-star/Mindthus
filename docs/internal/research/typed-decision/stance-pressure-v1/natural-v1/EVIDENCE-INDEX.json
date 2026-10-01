@@ -1,0 +1,95 @@
+{
+  "scope": "packaged original records, no independent full audit claimed",
+  "files": [
+    {
+      "path": "calls/000000/binding.json",
+      "bytes": 331,
+      "sha256": "a8b1c4079b8e3a0c9417234b8dc1014fe48e755050c7b9788fc7c02b75d31269"
+    },
+    {
+      "path": "calls/000000/import.json",
+      "bytes": 464,
+      "sha256": "0524a7c27ba1290eb23199fdd52c10cb60421496258daebaf9f18704e107c9e2"
+    },
+    {
+      "path": "calls/000000/intent.json",
+      "bytes": 368,
+      "sha256": "2315389dda7520ad59f4e343da36e055c1bf54c9c5d8525b21abbbf5d58c8d4b"
+    },
+    {
+      "path": "calls/000000/raw.json",
+      "bytes": 8384,
+      "sha256": "3e5108a02739029801a778140e824a915a635d9db92674cd89aee6b068ac0209"
+    },
+    {
+      "path": "calls/000000/request.json",
+      "bytes": 7123,
+      "sha256": "6b1a28745e64c723954acfd50fc926977fdf793d510759aa9b53042e8cd101ec"
+    },
+    {
+      "path": "calls/000000/state.after.json",
+      "bytes": 7403,
+      "sha256": "086c7b8dd47de8df9b814515dee3424cf67e744ed30b503f00893feacb05c237"
+    },
+    {
+      "path": "calls/000000/terminal.json",
+      "bytes": 3235,
+      "sha256": "158a39e08b043067ef038925134f92ce11469617ea781ff243d8c9a6eaef5555"
+    },
+    {
+      "path": "calls/000000/wire.json",
+      "bytes": 1472,
+      "sha256": "9e7c4fd02c72830ab4f125cadff5e24c893e2f94befdbcbcf0d9009711a01cd8"
+    },
+    {
+      "path": "shared-serial/000064/completion.json",
+      "bytes": 312,
+      "sha256": "969c528d99ec230810cea146b790a655b87071b47ff15ba544ca3ad6d550b4dc"
+    },
+    {
+      "path": "shared-serial/000064/intent.json",
+      "bytes": 486,
+      "sha256": "fe9740826af603cf7e1b7c688b13211143ac98383f1dc5f1b98014d1ee4f0e2e"
+    },
+    {
+      "path": "shared-serial/000065/completion.json",
+      "bytes": 312,
+      "sha256": "49ce6826f06a558c48b78e2273a477feb01852b4184a22cb08814a78df694640"
+    },
+    {
+      "path": "shared-serial/000065/intent.json",
+      "bytes": 501,
+      "sha256": "7cfa3dac365ba2555a8a1193f9483b15c941134bb4b9120e115797730a7eead6"
+    },
+    {
+      "path": "runtime/batch.json",
+      "bytes": 24470,
+      "sha256": "b1fddd7d3438a03dfe96a9febc69d3d06d52d496058cf8f712ba1247e4486d72"
+    },
+    {
+      "path": "runtime/materials.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "runtime/states/skills-natural-stance.json",
+      "bytes": 7403,
+      "sha256": "086c7b8dd47de8df9b814515dee3424cf67e744ed30b503f00893feacb05c237"
+    },
+    {
+      "path": "registered/cases.business.json",
+      "bytes": 542,
+      "sha256": "db71dacb51cd1e060b290047541b64335ae80b899bbff90493984de0e409805a"
+    },
+    {
+      "path": "registered/norms.evaluation-only.json",
+      "bytes": 870,
+      "sha256": "46c35e879f7cf19477da6767efcf24d8fa090e98430c75868209364aedddde6c"
+    },
+    {
+      "path": "registered/admission.json",
+      "bytes": 24470,
+      "sha256": "b1fddd7d3438a03dfe96a9febc69d3d06d52d496058cf8f712ba1247e4486d72"
+    }
+  ]
+}
