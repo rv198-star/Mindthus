@@ -154,14 +154,69 @@ def run():
         print('DSF remaining coverage delivered.',flush=True)
 
 
+def remaining_c_state():
+    verified();p=c.ROOT/'calls/000012';t=r.rt.read(p/'terminal.json');raw=r.rt.read(p/'raw.json')
+    r.require(len(list((c.ROOT/'calls').iterdir()))==13 and t['status']=='failed'
+              and t['binding']['call_key']==c.VERSION+':dsf41-current-B:1'
+              and r.digest(t)=='0b13a262edda1b59b1090c9ab785fecb082b4f6e1da323797be0f516933a0c10'
+              and raw['binding']==t['binding'] and r.digest(raw['transport'])==t['raw_sha256'],'only_finished_compensation')
+    diag=raw['transport'].get('diagnostic') or {}
+    r.require(diag.get('generation_send_status')=='pre_send'
+              and diag.get('observed_stage')=='connection_establishment_failed'
+              and not (c.ROOT/'STOP.after-000098.json').exists(),'no_unknown_or_refusal_continuation')
+    state=r.rt.read(c.ROOT/'states/dsf41-current.json')
+    r.require(state['calls']=={'A':0,'B':2,'C':0} and state['arms']['B']['status']=='failed'
+              and state['arms']['C']['status']=='pending','no_B_replay_and_C_unsent')
+    return t
+
+
+def complete_remaining_c():
+    """Finish only the independently authorized C path after the spent B retry."""
+    with r._locked(s.old.PARENT/'.execution.lock'):
+        b=remaining_c_state()
+        r.require(not (c.ROOT/'dsf-C-remainder.started.json').exists(),'no_C_remainder_replay')
+        r.require(os.environ.get('HTTPS_PROXY')==s.PROXY and bool(os.environ.get('MINDTHUS_HOST_API_KEY')),'same_registered_process_transport')
+        cfg=r.rt.read(c.ROOT/'effective-config-dsf41-after-000098.json')
+        cfg={**cfg,'parent_after_000098_config_sha256':r.digest(cfg),
+             'technical_source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=r.REPO,text=True).strip(),
+             'source_sha256':{**cfg['source_sha256'],str(Path(__file__).relative_to(r.REPO)):r.digest(Path(__file__).read_text())},
+             'remaining_scope':'Only unsent C route/control and optional once handling; B retry exhausted; no further compensation.'}
+        r.rt.write(c.ROOT/'effective-config-dsf41-C-remainder.json',cfg)
+        r.rt.write(c.DOC/'effective-config-dsf41-C-remainder.json',cfg)
+        credential=r.load_official_credential();driver=Driver(c.ROOT,c.Adapters(c.PROFILES['dsf41']));driver.config=cfg
+        driver.serial=NamedSerial(s.old.PARENT/'serial');driver.serial.validate();driver.stop_path=c.ROOT/'STOP.after-000098.json'
+        r.rt.write(c.ROOT/'dsf-C-remainder.started.json',{'started_at_epoch':time.time(),'credential':credential,
+                    'finished_B_terminal_sha256':r.digest(b),'no_additional_B_retry':True})
+        def step(cid,phase):
+            verified();p=r.rt.read(c.ROOT/(cid+'.packet.json'));state=r.rt.read(c.ROOT/'states'/(cid+'.json'))
+            print(json.dumps({'dispatch':cid,'arm':'C','phase':phase}),flush=True)
+            t=driver.step({'case_id':cid,'packet':p,'control':cid.endswith('carrier')},state,'C',phase);checkpoint()
+            print(json.dumps({'status':t['status'],'error':t['error'],'path_status':state['arms']['C']['status'],
+                       'route':state['arms']['C'].get('result'),'session_seconds':t['session_seconds'],'wait_seconds':t['active_wait_seconds']}),flush=True)
+            return t['status']=='returned' and not driver.stop_path.exists() and state['arms']['C']['status']!='format_failure'
+        if not step('dsf41-current','detect'):return
+        if not step('dsf41-carrier','detect'):return
+        state=r.rt.read(c.ROOT/'states/dsf41-current.json')
+        if state['arms']['C']['status']=='handling_required' and not step('dsf41-current','handling'):return
+        state=r.rt.read(c.ROOT/'states/dsf41-current.json')
+        for arm in 'BC':
+            r.rt.write(c.DOC/('dsf41-'+arm+'.outcome.json'),state['arms'][arm])
+            if state['arms'][arm].get('final') is not None:(c.DOC/('dsf41-'+arm+'.final.reply.txt')).write_text(state['arms'][arm]['final'])
+        r.rt.write(c.ROOT/'dsf41.complete.json',{'ended_at_epoch':time.time(),'B_status':state['arms']['B']['status'],
+                    'C_status':state['arms']['C']['status'],'technical_compensations':1,'old_unknown_kept':True})
+        print('DSF C remainder finished; B explicit failure retained.',flush=True)
+
+
 def main():
     p=argparse.ArgumentParser();g=p.add_mutually_exclusive_group(required=True)
-    g.add_argument('--prepare',action='store_true');g.add_argument('--run',action='store_true');a=p.parse_args()
+    g.add_argument('--prepare',action='store_true');g.add_argument('--run',action='store_true')
+    g.add_argument('--complete-C-after-B-failure',action='store_true');a=p.parse_args()
     if a.prepare:
         with r._locked(s.old.PARENT/'.execution.lock'):prepare()
         print('Only000098 risk disposition registered; no generation sent.');return
     if not os.environ.get('MINDTHUS_HOST_API_KEY'):os.environ['MINDTHUS_HOST_API_KEY']=getpass.getpass('Registered CPA credential (hidden): ')
-    run()
+    if a.complete_C_after_B_failure:complete_remaining_c()
+    else:run()
 
 
 if __name__=='__main__':main()

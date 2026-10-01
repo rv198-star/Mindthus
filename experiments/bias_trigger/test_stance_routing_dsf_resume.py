@@ -1,5 +1,6 @@
 """Only the new named000098 wiring; no real transport, core review or probes."""
 import copy
+import contextlib
 from pathlib import Path
 import tempfile
 import unittest
@@ -57,6 +58,27 @@ class NamedResume(unittest.TestCase):
             with patch.object(s.old.prior.NamedSerial,'_accepted_unknown',side_effect=r.RecoveryRequired('other unknown remains blocked')):
                 with self.assertRaises(r.RecoveryRequired):serial._accepted_unknown(serial.root/'000099',{'label':'other request'})
             self.assertFalse((directory/'completion.json').exists())
+
+    def test_independent_C_remainder_rejects_unknown_refusal_and_B_replay(self):
+        terminal={'status':'failed','binding':{'call_key':c.VERSION+':dsf41-current-B:1'},'raw_sha256':'SIMULATED raw'}
+        raw={'binding':terminal['binding'],'transport':{'diagnostic':{'generation_send_status':'pre_send','observed_stage':'connection_establishment_failed'}}}
+        state={'calls':{'A':0,'B':2,'C':0},'arms':{'B':{'status':'failed'},'C':{'status':'pending'}}}
+        with tempfile.TemporaryDirectory() as tmp,contextlib.ExitStack() as stack:
+            root=Path(tmp);(root/'calls').mkdir()
+            for i in range(13):(root/'calls'/str(i)).mkdir()
+            stack.enter_context(patch.object(c,'ROOT',root));stack.enter_context(patch.object(m,'verified',return_value={}))
+            def read(path):
+                return raw if path.name=='raw.json' else terminal if path.name=='terminal.json' else state
+            stack.enter_context(patch.object(r.rt,'read',side_effect=read))
+            def digest(value):
+                return '0b13a262edda1b59b1090c9ab785fecb082b4f6e1da323797be0f516933a0c10' if value is terminal else 'SIMULATED raw'
+            stack.enter_context(patch.object(r,'digest',side_effect=digest))
+            self.assertEqual(m.remaining_c_state(),terminal)
+            for status in ('unknown','safety_refusal'):
+                terminal['status']=status
+                with self.assertRaises(ValueError):m.remaining_c_state()
+            terminal['status']='failed';state['calls']['C']=1
+            with self.assertRaises(ValueError):m.remaining_c_state()
 
 
 if __name__=='__main__':unittest.main(verbosity=2)

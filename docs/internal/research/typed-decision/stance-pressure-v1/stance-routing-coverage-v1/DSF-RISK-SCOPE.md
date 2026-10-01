@@ -28,3 +28,14 @@ C保持两槽。只在此指定入口允许第三B槽，不推广其他路径。
 入口：`python -m experiments.bias_trigger.stance_routing_dsf_resume --prepare`；
 随后同一已授权凭据仅载入进程，`--run`最多执行一次。
 该入口只允许当前指定处置，没有通用ignore-unknown或强制解锁开关。
+
+## 补试后独立C续接
+
+唯一B补试serial000099明确失败：生成前TLS连接建立失败，ssl_error_code=8。
+原始阶段证据支持pre_send；旧000098仍unknown，不因此追溯改判。
+B补试已耗尽，不再补发；这不是安全/权限拒绝或新的unknown。
+继续已经获准而未发送的C原题/载体控制及至多一次核对，不增加任何B调用。
+`--complete-C-after-B-failure`只绑定此次具体B失败终态摘要和C完全未发送状态，
+遇unknown/refusal或另一终态不能继续；不是通用绕过STOP或重试开关。
+同一服务、账号、传输、原始业务材料及预算保持；不靠换形式修复TLS或规避拒绝。
+仅更新必要技术后继源码身份，旧配置/风险处置/失败不覆盖。
