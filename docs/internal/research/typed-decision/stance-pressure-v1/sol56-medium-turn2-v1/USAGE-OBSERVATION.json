@@ -1,0 +1,27 @@
+{
+  "evidence_scope": "selected exact token_count fields from bound new-turn archive suffix, not full event",
+  "thread_id": "01a0f6e3-957b-7f32-adbb-b32f943159e4",
+  "timestamp": "2026-10-01T10:34:29.032Z",
+  "info": {
+    "total_token_usage": {
+      "input_tokens": 44182,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1165,
+      "reasoning_output_tokens": 36,
+      "total_tokens": 45347
+    },
+    "last_token_usage": {
+      "input_tokens": 25368,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 479,
+      "reasoning_output_tokens": 18,
+      "total_tokens": 25847
+    },
+    "model_context_window": 258400
+  },
+  "cli_stdout_usage_scope": "cumulative_session_total",
+  "new_turn_usage_scope": "last_token_usage",
+  "warning": "Do not add cumulative CLI totals to the earlier turn or derive dollars from these fields."
+}

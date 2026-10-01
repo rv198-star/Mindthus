@@ -6,7 +6,32 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — same-question Sol5.6/medium CLI answer DELIVERED
+## Current checkpoint — Sol5.6/medium native second turn DELIVERED
+
+2026-10-01: Owner supplied the exact follow-up about script-controlled Prompt
+timing/order. [Both actual questions and replies](stance-pressure-v1/sol56-medium-turn2-v1/RESULT.md)
+preserve one real continuation of the same completed CLI thread. Original reply
+matched the session before resume; its archive prefix remains unchanged afterward.
+gpt-5.6-sol/medium, official HTTP profile, original cwd/read-only retained.
+
+The second reply conditionally agrees at the model-interface level and explicitly
+rejects reducing the entire engineering object to that interface. It retains the
+limit on "all upper-level packaging has no real increment". Executor reading finds
+no important target bias in these two turns; no Jev/correction case admitted.
+CLI base/skill-catalog background remains; no instruction-free or universal claim.
+Potential implementation benefits and the proposed "cognitive core" definition
+remain unverified. No blanket factual PASS or Jev-value conclusion.
+
+New1 host / 1CLI / 0Jev / 0generation retries; cumulative70=54host+16Jev.
+Session37.072s, wait60.010s, reconstructed dispatch wall97.091s.
+Bound last_token_usage25368input / 479output / 18reasoning_output. Raw CLI usage
+44182input / 1165output / 36reasoning_output is the session cumulative total;
+do not add it again to first-turn usage. Fees/exact HTTP counts remainunknown.
+No new unknown/refusal/recovery/tool call. Shared serial000067, prior000066 bound.
+31files packaged; no independent full audit. No third turn, B/C, Jev or evaluator.
+Old products, unknowns, closures, defaults/main and ROI-Beta unchanged.
+
+## Historical checkpoint — same-question Sol5.6/medium CLI answer DELIVERED
 
 2026-10-01: Owner requested Sol5.6/medium for the exact approved natural Skills
 question. [Question and actual full reply](stance-pressure-v1/sol56-medium-v1/RESULT.md)

@@ -1,0 +1,39 @@
+{
+  "phase_logical_host_calls": 1,
+  "Jev_calls": 0,
+  "host_CLI_starts": 1,
+  "outer_generation_retries": 0,
+  "cumulative_debits": {
+    "logical": 70,
+    "host": 54,
+    "jev": 16
+  },
+  "observed_internal_recovery_log_count": 0,
+  "underlying_HTTP_requests": null,
+  "generation_attempt_count": null,
+  "host_session_seconds": 37.0717263339975,
+  "active_wait_seconds": 60.01004425000065,
+  "loading_seconds": 0.0006248340032470878,
+  "dispatch_wall_reconstructed_seconds": 97.09113245900153,
+  "wall_basis": "cooldown + bound serial request window; excludes preparation, Owner inter-turn delay and packaging",
+  "raw_cli_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 0,
+    "input_tokens": 44182,
+    "output_tokens": 1165,
+    "reasoning_output_tokens": 36
+  },
+  "raw_cli_usage_scope": "session_cumulative",
+  "bound_archive_last_token_usage": {
+    "input_tokens": 25368,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 479,
+    "reasoning_output_tokens": 18,
+    "total_tokens": 25847
+  },
+  "monetary_cost": null,
+  "status": "returned",
+  "delivery": "delivered",
+  "unknown_send_state": false
+}

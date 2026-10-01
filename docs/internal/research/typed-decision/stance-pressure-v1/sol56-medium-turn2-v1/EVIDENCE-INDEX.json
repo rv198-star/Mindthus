@@ -1,0 +1,160 @@
+{
+  "scope": "packaged original call/serial records and selected context/usage observations; no independent full audit",
+  "files": [
+    {
+      "path": "calls/000000/binding.json",
+      "bytes": 350,
+      "sha256": "6e5555eafaa22939357e02eaf7ce875c4eb7717039e185bb06cc844d51af623f"
+    },
+    {
+      "path": "calls/000000/cli-command.json",
+      "bytes": 1858,
+      "sha256": "b6245fdff44f8b8cfb0ec64cece804dcfa8376cc66c7f7ab6ecf2e8cb830a366"
+    },
+    {
+      "path": "calls/000000/import.json",
+      "bytes": 483,
+      "sha256": "f31cb5f9cc91f90a7c38bdff01a2c280d2ca622ecdbbb5cd6e2105fcde1c6d9e"
+    },
+    {
+      "path": "calls/000000/intent.json",
+      "bytes": 387,
+      "sha256": "7efe1d8fc160da1e7105984c116f8f29cff7674eff21e5f506b4e1f5eb64529d"
+    },
+    {
+      "path": "calls/000000/raw.json",
+      "bytes": 7317,
+      "sha256": "c7e15cb5ff6b4e0d074cc26553757fabb601a344fb3b6763360e68aab775de8f"
+    },
+    {
+      "path": "calls/000000/reply.json",
+      "bytes": 1902,
+      "sha256": "409da214e9422bb0854ba64ca09ff902a6a11c2799156debab32127264a01c97"
+    },
+    {
+      "path": "calls/000000/request.json",
+      "bytes": 1565,
+      "sha256": "d5ac3108913dc36a7b77027a1616218080a703f32d340016a8c4b902614c1cd9"
+    },
+    {
+      "path": "calls/000000/schema.api.json",
+      "bytes": 268,
+      "sha256": "d93518c768e0a24a88fd4d9bdff5d426ecf7aedeba22a569ee0f84d392b3426d"
+    },
+    {
+      "path": "calls/000000/state.after.json",
+      "bytes": 7034,
+      "sha256": "74b577c85037913e2cbd2601b9cecad1a443b9772b453bbd47b3d470feb59b2a"
+    },
+    {
+      "path": "calls/000000/terminal.json",
+      "bytes": 3396,
+      "sha256": "91b54db77c56346a6d902657bbfafad7953d23dd67592b37e56d5567f8cec8ae"
+    },
+    {
+      "path": "calls/000000/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "be3a781eab924fbacd1339f3540bb532e1ce374eed74559d05ab1f854bc4925f"
+    },
+    {
+      "path": "calls/000000/wire.json",
+      "bytes": 1978,
+      "sha256": "a3885bed40ea0667199838a9b9b3eb1479fa916e2daccf7868d56750bd05bd3d"
+    },
+    {
+      "path": "shared-serial/000066/completion.json",
+      "bytes": 313,
+      "sha256": "979b6f84a6ad3a6f2447f75ba1ddd9ae0e586c4a764e52919887f85d1fbdb5b3"
+    },
+    {
+      "path": "shared-serial/000066/intent.json",
+      "bytes": 516,
+      "sha256": "8ed23a5074caeaa40d57de85033ad038fca4bfbdb09616e467bacb85c47ab54e"
+    },
+    {
+      "path": "shared-serial/000067/completion.json",
+      "bytes": 311,
+      "sha256": "7d6e99754c9553756938e205df4fb852aebac4738589fc354b9a44735bf28266"
+    },
+    {
+      "path": "shared-serial/000067/intent.json",
+      "bytes": 521,
+      "sha256": "6f3b3509108116c7996c0533f3127ce7e52b9701349b82164e13b6d74a09c6db"
+    },
+    {
+      "path": "runtime/batch.json",
+      "bytes": 26492,
+      "sha256": "7703926e0a031043f9326f2a85235c3cf8e8aab0c88c2281bb80f87ab296759a"
+    },
+    {
+      "path": "runtime/materials.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "runtime/states/skills-natural-stance-sol56-medium-turn2.json",
+      "bytes": 7034,
+      "sha256": "74b577c85037913e2cbd2601b9cecad1a443b9772b453bbd47b3d470feb59b2a"
+    },
+    {
+      "path": "registered/cases.business.json",
+      "bytes": 328,
+      "sha256": "66f3ae733078534ae50b1603b70e6b5cc7e2211e4788ca2519781c2f9476655b"
+    },
+    {
+      "path": "registered/norms.evaluation-only.json",
+      "bytes": 923,
+      "sha256": "04d3f60362f63a15a21bd67e19ba5597d16d6dbda42b65f500ca8408ae4fdd77"
+    },
+    {
+      "path": "registered/admission.json",
+      "bytes": 26492,
+      "sha256": "7703926e0a031043f9326f2a85235c3cf8e8aab0c88c2281bb80f87ab296759a"
+    },
+    {
+      "path": "registered/CONTINUATION.json",
+      "bytes": 971,
+      "sha256": "a1d14783388bfbf3a02e6fd936135666abfa885aa88bc483c07a8ce74cff4e89"
+    },
+    {
+      "path": "registered/USAGE-OBSERVATION.json",
+      "bytes": 919,
+      "sha256": "74d53bac78a1c2655f1bbdce5fca4e07b3c6155664311fba924ae5c30f690e75"
+    },
+    {
+      "path": "parent-first-turn/request.json",
+      "bytes": 6236,
+      "sha256": "050a075372bf581351409b3b43595b60e4bd24cfd8a3c29fbeaf352220b1a9ab"
+    },
+    {
+      "path": "parent-first-turn/wire.json",
+      "bytes": 1907,
+      "sha256": "b924bca7a1de441cd1fbd5ce3bd128f0c5a61099d6a34730cdd62484c1439bcb"
+    },
+    {
+      "path": "parent-first-turn/raw.json",
+      "bytes": 9855,
+      "sha256": "f744d3b5eade56a8df5b736a15a8b69cd368ab03697ce30346a7868c9c29ba64"
+    },
+    {
+      "path": "parent-first-turn/terminal.json",
+      "bytes": 4139,
+      "sha256": "d85d904806e401e970d7c553dd162d604ae53106a0119eeb0294e299771aeb79"
+    },
+    {
+      "path": "parent-first-turn/import.json",
+      "bytes": 477,
+      "sha256": "f0c19bee9093a838baf2aed094ddcebd1b5f792904d9c3087429467643fff34b"
+    },
+    {
+      "path": "parent-first-turn/reply.json",
+      "bytes": 2649,
+      "sha256": "ecfdd4e10501eb6f641313b38776d134f08ee0b47dc5070814652cd700de2c94"
+    },
+    {
+      "path": "parent-first-turn/cases.business.json",
+      "bytes": 542,
+      "sha256": "db71dacb51cd1e060b290047541b64335ae80b899bbff90493984de0e409805a"
+    }
+  ]
+}
