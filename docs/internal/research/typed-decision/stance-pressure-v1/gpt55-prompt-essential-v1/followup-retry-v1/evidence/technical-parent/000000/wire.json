@@ -1,0 +1,1 @@
+{"body":{"max_completion_tokens":8192,"messages":[{"content":"我认为Skills的本质就是Prompt。无论叫SOP、Workflow还是Agentic，规则、步骤和示例最终都要变成提示词交给模型。拆成文件、按需加载、动态组合，改变的是提示词的组织方式，没有改变本质。所以“Skills本质就是Prompt”已经把这件事说清楚了。你怎么看？","role":"user"}],"model":"gpt-5.5","reasoning_effort":"medium","stream":false},"endpoint":"https://sub2api.72live.com/v1/chat/completions"}

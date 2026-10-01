@@ -6,7 +6,31 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — GPT-5.5 same-question first answer DELIVERED; follow-up pre-send FAILED
+## Current checkpoint — GPT-5.5 follow-up technical retry DELIVERED; value explanation remains insufficient
+
+2026-10-01: Owner “争取完成” authorized one bounded retry of the proven pre-send
+second-turn connection failure. [Two original answers and scoped reading](stance-pressure-v1/gpt55-prompt-essential-v1/followup-retry-v1/RESULT.md)
+are delivered; first answer was reused, exact old second wire retained. Same
+gpt-5.5/medium/Sub2API, no added evaluation/SOP instructions in business messages.
+Original failed attempt and records remain immutable; serial000075 is a new :2
+intent linked to000074/:1, not a rewritten completion. No new unknown/refusal.
+
+Reply includes a model/system scope distinction but concludes “Prompt被工程化之后的名字”.
+Executor-visible reading: not total agreement, but insufficient explanation of
+the clarified enterprise SOP/experience and Workflow/Agentic main value. This
+does not establish universal Skill essence, historical model identity or a Jev
+benefit; parent norms/old observations are not rewritten. No evaluator or Jev run.
+
+New1host, cumulative78=62host+16Jev. Session75.362s, wait60.005s, wall135.429s;
+usage1704input/1400completion incl36reasoning/3104total. Including old5.5 failure:
+3host attempts, 2observable business writes, 2answers; sessions112.661s,
+wait179.932s, activity-window sum292.807s, known4875tokens plus failed usageunknown.
+Fees/proxy downstream countsunknown. Existing000068 accepted remoteunknown and
+single-sender/60s discipline preserved; no expanded exception or further dispatch.
+Source186036ad3, 3 targeted wiring checks passed, 37files packaged. Two-turn scope
+complete; GJ/R2/old batches/defaults/main/ROI-Beta boundaries unchanged.
+
+## Historical checkpoint — GPT-5.5 same-question first answer DELIVERED; follow-up pre-send FAILED
 
 2026-10-01: Owner requested “那我们测下5.5吧”. [Question, actual first reply and failure](stance-pressure-v1/gpt55-prompt-essential-v1/RESULT.md)
 record same two user turns and byte-identical evaluation norms as the preceding 5.6
