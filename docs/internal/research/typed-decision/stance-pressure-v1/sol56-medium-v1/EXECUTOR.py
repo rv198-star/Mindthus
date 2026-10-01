@@ -32,6 +32,8 @@ def prepare():
     serial=r.SerialRequests(d.ROOT/'serial');serial.validate()
     r.require(len(list(serial.root.glob('[0-9]*')))==66,'parent_serial_count_changed')
     config=r.rt.read(oldroot/'batch.json')
+    profile=r.rt.read(r.CANDIDATE)
+    r.require(r.digest(profile['candidate_overrides'])==profile['overrides_sha256'],'official_profile_changed')
     paths=set(config['source_sha256'])|{str(Path(__file__).resolve().relative_to(r.REPO)),
           'experiments/jev_direct/pilot.py',
           'docs/internal/research/typed-decision/route-control-v0.2/single-cycle-repair-v1/run.py'}
@@ -43,6 +45,7 @@ def prepare():
            'cases_sha256':r.digest(r.rt.read(DOC/'cases.business.json')),
            'norms_sha256':r.digest(r.rt.read(DOC/'norms.evaluation-only.json')),
            'host_configuration':HOST,'host_timeout':360,
+           'overrides':profile['candidate_overrides'],'overrides_sha256':profile['overrides_sha256'],
            'host_binary_sha256':hashlib.sha256(Path(BINARY).read_bytes()).hexdigest(),
            'admission':{'mode':'exploratory_same_question_sol56','binary':BINARY,'execution_authorized':True},
            'limits':LIMITS,'external_budget_debits':INHERITED,'phase_limits':{'logical':1,'host':1,'jev':0},
