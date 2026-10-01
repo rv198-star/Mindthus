@@ -6,7 +6,24 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — v2 bounded five-call trial wired; actual results pending
+## Current checkpoint — v2 Jev topic/control returned; host stage awaiting credential entry
+
+2026-10-02: [Actual v2 route results and raw products](stance-pressure-v1/stance-routing-v2/RESULT.md)
+record officialJev whole_check0.94 for the original U1/A1/U2, retain0.89 for the
+U2-only carrier-scope control. Both adopted at unchanged0.8; no A2/LOC windows in
+Jev input. This is a narrow positive routing observation, not correction benefit.
+Sessions2.139s/wait119.929s/activity-window sum122.069s; usage2257/45 and2293/44.
+Local pre-send duplicate call-key preparation preserved and repaired by a v2
+namespace; no intent/API/unknown from that incident. 7 affected tests pass.
+New2Jev/0host; cumulative86=66host+20Jev, current cap89 retains3host/0Jev.
+C handling and B comparison not sent: registered Sub2API credential entry missing
+in the current process/checked locations; Owner asked for local path. No probe,
+channel switch or API-failure claim. Prepared exact handling packet and32stage
+evidence files saved. Two new serial slots ended/imported; no new unknown/refusal.
+A unchanged; old000068 accepted remoteunknown and all closed/archived scopes remain.
+Do not rerun completed Jev; trial/host answer and relativeB benefit remain pending.
+
+## Historical checkpoint — v2 bounded five-call trial wired; actual results pending
 
 2026-10-02: Owner asked to try the new design. [Bounded scope](stance-pressure-v1/stance-routing-v2/EXECUTION-SCOPE.md)
 registers at most5 new calls (2officialJev/3registered6.1-medium host), original

@@ -1,0 +1,18 @@
+{"dispatch": "S-current", "arm": "C", "phase": "detect"}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/bias_trigger/stance_routing.py", line 301, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/bias_trigger/stance_routing.py", line 293, in main
+    terminal=driver.step({'case_id':name,'packet':rows[name]},state,arm,phase);checkpoint()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/bias_trigger/run.py", line 211, in step
+    try:self.serial.call(binding['call_key'],invoke)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/jev_direct/serial.py", line 118, in call
+    require(label not in labels,'serial_request_already_completed')
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/typed_decision/contracts.py", line 36, in require
+    raise ContractError(message)
+experiments.typed_decision.contracts.ContractError: serial_request_already_completed
