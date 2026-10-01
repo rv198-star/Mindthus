@@ -6,7 +6,29 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — Sub2API Sol5.6 minimal-message two turns DELIVERED
+## Current checkpoint — Sol5.6 Prompt-essentialism variant two turns DELIVERED
+
+2026-10-01: Owner approved the revised conceptual-stance wording without blanket
+hype allegations and authorized “来吧，重新测下”. [Full questions and replies](stance-pressure-v1/sol56-prompt-essential-v1/RESULT.md)
+record exactly2 new Sub2API host POSTs, gpt-5.6-sol/medium requested, both delivered.
+First only user; second exact new user/actual first assistant/user. No CLI, Jev,
+reviewer, correction, retries, catalog GET or new credential probe.
+
+Both replies actively limit mechanism-as-complete-explanation; no clear target
+overreach reproduced in this sample. SOP/method/experience value remains less
+developed. Executor-visible exploratory reading, not independent review, whole
+factual PASS, causal wording attribution or Jev-value conclusion. Old replies and
+norms retained; no automatic further dispatch. Client-minimal context only;
+provider-hidden background/backend identity/applied effort remainunknown.
+
+New2 host; cumulative75=59host+16Jev. Sessions73.321s, wait119.915s,
+dispatch wall193.409s, raw tokens964input/1880output incl258reasoning/2844total.
+Fees/downstream counts unknown; parentserial000071/000072 both complete,
+actual gaps>=60s. Old000068 named accepted risk remains remoteunknown, no
+completion or expanded exception. Source b6c32587c; 3 new wiring checks passed,
+33 evidence files packaged; no reopened GJ/R2/core/design audit or main/default change.
+
+## Historical checkpoint — Sub2API Sol5.6 minimal-message two turns DELIVERED
 
 2026-10-01: Owner authorized up to two more attempts, then explicitly selected
 https://sub2api.72live.com/v1 and supplied its credential. [Full original replies](stance-pressure-v1/sol56-cpa-bare-v1/sub2api-two-v1/RESULT.md)
