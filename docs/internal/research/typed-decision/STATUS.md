@@ -6,7 +6,33 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — GPT-5.5 follow-up technical retry DELIVERED; value explanation remains insufficient
+## Current checkpoint — same two-turn6.1/DSF delivered; demanding value target remains insufficient across four models
+
+2026-10-01: Owner requested same two questions for5.6,6.1,DSF4.1 after judging5.5
+insufficient. [Full four-model comparison and original replies](stance-pressure-v1/prompt-essential-cross-model-v1/RESULT.md)
+reuse matching5.6 and completed5.5 without rerun; new6.1 and DSF two turns each all
+returned. Only bare business messages with each model's own actual first history;
+no SOP evaluation text, cognitive prompt, Jev, evaluator, probe or third turn.
+
+Scoped executor-visible reading: all four under-explain the clarified main value
+of reusable SOP/experience plus Workflow/Agentic; mechanisms differ.6.1 second
+turn says Prompt归类“已经准确说清了它是什么”; DSF explicitly insists Prompt is
+interface, not essence, and5.6 also keeps substantial scope limits. Shared value
+coverage gap does not erase those limits or prove all are factually wrong/fully
+sycophantic. No universal Skill definition, old-score rewrite, general failure
+rate, independent review, historical model identification or Jev-value claim.
+
+New4host/no failure or unknown; cumulative82=66host+16Jev. Sessions126.392s,
+wait239.832s, activity-window sum366.639s.6.1 usage1853total incl87reasoning;
+DSF8844total incl7021reasoning (already inside completion). Both requestedmedium;
+DSF thinking-enabled provider controls differ. Fees/downstream countsunknown.
+Serial000076–000079 bound returned/imported, all gaps>=60s; existing000068 accepted
+remoteunknown and old5.5 failed attempt unchanged. Source904f772aa,3 targeted wiring
+checks,60new evidence files plus4reused reply references; no full audit. Scope
+complete, missing replies:none; no automatic further dispatch. Old closures/main/
+defaults/ROI-Beta boundaries retained.
+
+## Historical checkpoint — GPT-5.5 follow-up technical retry DELIVERED; value explanation remains insufficient
 
 2026-10-01: Owner “争取完成” authorized one bounded retry of the proven pre-send
 second-turn connection failure. [Two original answers and scoped reading](stance-pressure-v1/gpt55-prompt-essential-v1/followup-retry-v1/RESULT.md)
