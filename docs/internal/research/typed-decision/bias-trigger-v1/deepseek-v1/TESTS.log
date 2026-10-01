@@ -1,0 +1,19 @@
+test_b_legal_actual_schema_response_maps_before_handling (experiments.bias_trigger.test_run.Wiring.test_b_legal_actual_schema_response_maps_before_handling) ... ok
+test_baseline_has_no_detection_or_norms (experiments.bias_trigger.test_run.Wiring.test_baseline_has_no_detection_or_norms) ... ok
+test_c_ambiguous_is_incomplete_not_trigger (experiments.bias_trigger.test_run.Wiring.test_c_ambiguous_is_incomplete_not_trigger) ... ok
+test_candidate_change_is_blocked (experiments.bias_trigger.test_run.Wiring.test_candidate_change_is_blocked) ... ok
+test_handling_refs_and_rejected_detection_keep_answer (experiments.bias_trigger.test_run.Wiring.test_handling_refs_and_rejected_detection_keep_answer) ... ok
+test_mutable_checkpoints_and_adapter_timeouts (experiments.bias_trigger.test_run.Wiring.test_mutable_checkpoints_and_adapter_timeouts) ... ok
+test_read_then_same_candidate_for_both_detectors (experiments.bias_trigger.test_run.Wiring.test_read_then_same_candidate_for_both_detectors) ... ok
+test_serial_simulated_clock_and_unknown_never_resend (experiments.bias_trigger.test_run.Wiring.test_serial_simulated_clock_and_unknown_never_resend) ... ok
+test_unknown_terminal_and_local_exit_are_not_completion (experiments.bias_trigger.test_run.Wiring.test_unknown_terminal_and_local_exit_are_not_completion) ... ok
+test_b_c_use_same_host_and_candidates (experiments.bias_trigger.test_deepseek.CPAWire.test_b_c_use_same_host_and_candidates) ... ok
+test_complete_response_and_duplicate_local_contract (experiments.bias_trigger.test_deepseek.CPAWire.test_complete_response_and_duplicate_local_contract) ... ok
+test_explicit_max_and_no_norm_or_other_answer (experiments.bias_trigger.test_deepseek.CPAWire.test_explicit_max_and_no_norm_or_other_answer) ... ok
+test_missing_terminal_and_refusal (experiments.bias_trigger.test_deepseek.CPAWire.test_missing_terminal_and_refusal) ... ok
+test_timeout_and_unbound_http_cannot_clear_unknown (experiments.bias_trigger.test_deepseek.CPAWire.test_timeout_and_unbound_http_cannot_clear_unknown) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.014s
+
+OK

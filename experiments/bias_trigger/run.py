@@ -53,7 +53,7 @@ def snapshot(item,state):
     return {'source':index([document('task',item['input'],0),document('candidate',state['candidate'],1,'assistant')]),
             'candidate':state['candidate'],'loaded_materials':state['loaded']}
 
-def request(item,state,arm,phase,simulation=False):
+def request(item,state,arm,phase,simulation=False,host_config=None):
     seq=state['calls'][arm]
     if arm=='A':
         payload={'source':index([document('task',item['input'],0)]),'loaded_materials':state['loaded'],
@@ -81,7 +81,7 @@ def request(item,state,arm,phase,simulation=False):
                            supported_checks={k:CHECKS[k] for k,a in state['arms'][arm]['atoms'].items() if a['semantic_state']=='support'})
     body={'sequence':seq,'arm':arm,'phase':phase,'role':role,'simulation':simulation,
           'baseline':'bias-trigger-v1','payload':payload,
-          'requested_configuration':{'model':'jev-1.13.0','provider':'official'} if role=='jev' else host_configuration()}
+          'requested_configuration':{'model':'jev-1.13.0','provider':'official'} if role=='jev' else (host_config or host_configuration())}
     return json.loads(canonical({**body,'request_sha256':digest(body)}))
 
 def outbound(req,config):
@@ -160,15 +160,19 @@ class Driver:
         require(not (self.root/'STOP.json').exists(),'batch_stopped_no_resubmit')
         require(digest(rt.read(self.root/'batch.json'))==digest(self.parent_config),'batch_changed')
         for path,sha in self.config['source_sha256'].items():require(digest((REPO/path).read_text())==sha,'source_changed')
-        require(hashlib.sha256(Path(self.config['admission']['binary']).read_bytes()).hexdigest()==self.config['host_binary_sha256'],'binary_changed')
+        if hasattr(self.adapter,'check_configuration'):
+            self.adapter.check_configuration(self.config)
+        else:
+            require(hashlib.sha256(Path(self.config['admission']['binary']).read_bytes()).hexdigest()==self.config['host_binary_sha256'],'binary_changed')
         require(digest(rt.read(DOC/'cases.business.json'))==self.config['cases_sha256'],'input_changed')
         self.serial.validate()
         prior=sorted((self.root/'calls').iterdir())
         require(all((p/'import.json').is_file() for p in prior),'unimported_call_no_resubmit')
-        req=request(item,state,arm,phase,self.config['simulation']);role=req['role']
+        req=request(item,state,arm,phase,self.config['simulation'],self.config['host_configuration']);role=req['role']
         require(state['calls'][arm]<(4 if arm=='A' else 2),'path_budget_exhausted')
         require(len(prior)<64 and sum(rt.read(p/'request.json')['role']==role for p in prior)<(8 if role=='jev' else 56),'total_budget_exhausted')
-        start=self.monotonic();wire=outbound(req,self.config)
+        start=self.monotonic();wire=getattr(self.adapter,'outbound',outbound)(req,self.config)
+        resolve=getattr(self.adapter,'classify',classify)
         directory=self.root/'calls'/f'{len(prior):06d}';directory.mkdir()
         binding={'call_key':item['case_id']+'-'+arm+':'+str(req['sequence']),
                  'request_sha256':req['request_sha256'],'wire_sha256':digest(wire),
@@ -185,7 +189,7 @@ class Driver:
             except Exception as exc:raw={'kind':'transport_error','code':type(exc).__name__,'diagnostic':None}
             no_secrets(raw);elapsed=self.monotonic()-began
             rt.write(directory/'raw.json',{'binding':binding,'transport':raw})
-            status,response,usage,error=classify(req,raw)
+            status,response,usage,error=resolve(req,raw)
             observation=None
             if raw.get('kind')=='cli':
                 proc=subprocess.CompletedProcess([],raw['returncode'],raw.get('stdout',''),raw.get('stderr',''))
@@ -205,7 +209,7 @@ class Driver:
         require(saved['binding']==terminal['binding']==binding and digest(saved['transport'])==terminal['raw_sha256'],'terminal_binding')
         require(rt.read(directory/'request.json')==req and digest(rt.read(directory/'wire.json'))==binding['wire_sha256'],'request_binding')
         require(self.config['simulation'] is terminal['binding']['simulation'],'simulated_evidence_mode')
-        status,response,usage,error=classify(req,saved['transport'])
+        status,response,usage,error=resolve(req,saved['transport'])
         require((status,response,error)==(terminal['status'],terminal['response'],terminal['error']),'terminal_content')
         consume(item,state,req,status,response,rt.read(self.root/'materials.json'))
         state['measurements'].append({'local_call':directory.name,'arm':arm,'phase':req['phase'],'role':role,**terminal})
@@ -245,16 +249,16 @@ def prepare():
            'calls':{'A':0,'B':0,'C':0},'arms':{a:{'status':'unrun','final':None} for a in ('A','B','C')},'measurements':[]}
         rt.write(BATCH/'states'/(item['case_id']+'.json'),s)
 
-def checkpoint():
+def checkpoint(batch=BATCH,doc=DOC):
     rows=[]
-    for p in sorted((BATCH/'states').glob('*.json')):
+    for p in sorted((batch/'states').glob('*.json')):
         s=rt.read(p);rows.append({'case_id':p.stem,**s})
     calls=[m for r in rows for m in r['measurements']]
     result={'cases':rows,'logical_calls':len(calls),'host_calls':sum(m['role']=='host' for m in calls),'jev_calls':sum(m['role']=='jev' for m in calls),
             'session_seconds':sum(m['session_seconds'] for m in calls),'active_wait_seconds':sum(m['active_wait_seconds'] for m in calls),
-            'holdout':False,'cost':None,'exact_http_requests':None,'batch_sha256':digest(rt.read(BATCH/'batch.json')),'simulation':False}
-    persist(DOC/'summary.json',result)
-    answers=DOC/'answers';answers.mkdir(exist_ok=True)
+            'holdout':False,'cost':None,'exact_http_requests':None,'batch_sha256':digest(rt.read(batch/'batch.json')),'simulation':False}
+    persist(doc/'summary.json',result)
+    answers=doc/'answers';answers.mkdir(exist_ok=True)
     for row in rows:
         for arm,data in row['arms'].items():
             persist(answers/(row['case_id']+'-'+arm+'.json'),{'case_id':row['case_id'],'arm':arm,'candidate_sha256':row['snapshot_sha256'],

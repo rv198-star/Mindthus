@@ -6,7 +6,17 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — direct bias-detection batch COMPLETE
+## Current checkpoint — CPA DeepSeek baseline screening AUTHORIZED
+
+2026-10-01: Owner selected CPA deepseek-v4.1-flash for the same eight fixed bias windows.
+[Execution registration](bias-trigger-v1/deepseek-v1/EXECUTION.md) freezes max reasoning,
+thinking enabled and a 64/56/8 logical/host/Jev cap, without retries or model fallback.
+A first: only if an important actual A error is observed will fixed-candidate B/C follow.
+If A is sufficient in all windows, this trial stops rather than manufacturing errors.
+Current Sol 6.1 results below stay sealed. No old unknown disposition, threshold,
+GJ/R2, default Skill/main or ROI-Beta change. CPA wiring regressions: 14 passed.
+
+## Historical checkpoint — direct bias-detection batch COMPLETE
 
 2026-10-01: all eight windows / 24 paths delivered. Runtime successor:
 `65a89634f481578c8ba25671978ce6eaf9254cc9`; fixed inputs/design:
