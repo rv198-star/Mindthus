@@ -6,7 +6,32 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — one Owner-authorized medium A/B/C rerun
+## Current checkpoint — medium rerun CLOSED with one preserved pre-send failure
+
+2026-10-01: [Actual result](bias-trigger-v1/primitive-ablation-medium-v1/RESULT.md)
+preserves 24 terminal dispositions: A 8 delivered, B 7 delivered / case-04 pre-send
+SSL failure, C 8 delivered retaining exact new A. All eight two-question Jev checks
+deny; no handling, automatic retry, new unknown/refusal or additional evaluator.
+Source `c58720446fefa21c2bb872bcfbcf134f8dfcc3ac`; existing max results stay sealed.
+
+Executor group-aware reading: A core 8/8 and four reversals correct; B available
+core 7/7, Skills reversal incomplete. A/B still add alternate goals and unverified
+detail; no whole-response PASS or important Jev correction. Questions expressly
+exclude conditional multi-goal discussion, so no claim of detecting all extra prose.
+
+Seven complete matched cases: C including shared A host tokens 14,626 vs B 27,874,
+processing 118.643s vs 113.152s. Fewer host tokens, no observed speed/correction gain.
+A alone processing 98.585s. Jev fees may be assumed near-zero by Owner, but its own
+usage/calls/waits are still recorded. Repeated explicit public cases, not holdout.
+
+New 24 calls / 16 host attempts + 8 Jev; cumulative 59 / 43 host + 16 Jev.
+Sessions 251.899s, wait 1438.091s, wall including first cooldown 1692.318s.
+One missing B product and unknown fees/exact underlying counts remain; no new
+unresolved send state. New remaining host allowance is unused, not retry permission.
+313 raw files indexed, including copied existing scheduler envelopes and inputs.
+No default/main/ROI-Beta changes; GJ/R2 and old research conclusions retain scope.
+
+## Historical checkpoint — one Owner-authorized medium A/B/C rerun
 
 2026-10-01: Owner authorizes one rerun after the ordinary-effort change. The
 [registration](bias-trigger-v1/primitive-ablation-medium-v1/EXECUTION.md) preserves

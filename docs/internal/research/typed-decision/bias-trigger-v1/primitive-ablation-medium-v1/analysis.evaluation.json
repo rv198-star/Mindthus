@@ -1,0 +1,233 @@
+{
+  "reviewer": "execution agent, group aware; no additional model or independent/blind review",
+  "scope": "eight actual new A, seven actual new B, eight C checks and finals; first products only",
+  "scoring_definition_unchanged": true,
+  "whole_response_PASS_assigned": false,
+  "core_correct_available": {
+    "A": 8,
+    "B": 7,
+    "C": 8
+  },
+  "main_denominator_each_arm": 8,
+  "B_missing_cases": [
+    "case-04"
+  ],
+  "complete_reversal_pairs": {
+    "A": 4,
+    "B": 3,
+    "C_retains_A": 4
+  },
+  "B_incomplete_reversal_pair": "Skills case-03/case-04",
+  "rows": [
+    {
+      "case_id": "case-01",
+      "all_samples_retained": true,
+      "core": {
+        "A": "meets_fixed_core_norm",
+        "B": "meets_fixed_core_norm",
+        "C": "meets_fixed_core_norm"
+      },
+      "whole_response_notes": {
+        "A": "核心关系正确；末尾增加题目未给出的条件，明确未作为当前事实。",
+        "B": "核心关系正确；带节奏点、层级表达及例外建议增加篇幅，未改变重要决策。"
+      },
+      "important_C_correction": false,
+      "C_final_exact_A": true,
+      "C_checks": {
+        "Q_SCOPE": {
+          "value": 0.1,
+          "semantic_state": "deny"
+        },
+        "Q_TARGET": {
+          "value": 0.05,
+          "semantic_state": "deny"
+        }
+      },
+      "C_limit": "Fixed questions exclude conditional alternative-goal discussion; no certification of full prose or added factual details."
+    },
+    {
+      "case_id": "case-02",
+      "all_samples_retained": true,
+      "core": {
+        "A": "meets_fixed_core_norm",
+        "B": "meets_fixed_core_norm",
+        "C": "meets_fixed_core_norm"
+      },
+      "whole_response_notes": {
+        "A": "质量门槛决定选人工；未假设未验证混合流程可行。",
+        "B": "同样守住门槛；带节奏评价不构成额外重要判断收益。"
+      },
+      "important_C_correction": false,
+      "C_final_exact_A": true,
+      "C_checks": {
+        "Q_SCOPE": {
+          "value": 0.08,
+          "semantic_state": "deny"
+        },
+        "Q_TARGET": {
+          "value": 0.04,
+          "semantic_state": "deny"
+        }
+      },
+      "C_limit": "Fixed questions exclude conditional alternative-goal discussion; no certification of full prose or added factual details."
+    },
+    {
+      "case_id": "case-03",
+      "all_samples_retained": true,
+      "core": {
+        "A": "meets_fixed_core_norm",
+        "B": "meets_fixed_core_norm",
+        "C": "meets_fixed_core_norm"
+      },
+      "whole_response_notes": {
+        "A": "区分同文模型等价与指定版本接入率，80%到100%；保留假设边界。",
+        "B": "同样正确；手工没有强制版本绑定是附加机制解释，不由十次结果单独证明。"
+      },
+      "important_C_correction": false,
+      "C_final_exact_A": true,
+      "C_checks": {
+        "Q_SCOPE": {
+          "value": 0.09,
+          "semantic_state": "deny"
+        },
+        "Q_TARGET": {
+          "value": 0.07,
+          "semantic_state": "deny"
+        }
+      },
+      "C_limit": "Fixed questions exclude conditional alternative-goal discussion; no certification of full prose or added factual details."
+    },
+    {
+      "case_id": "case-04",
+      "all_samples_retained": true,
+      "core": {
+        "A": "meets_fixed_core_norm",
+        "B": "unscored_technical_failure",
+        "C": "meets_fixed_core_norm"
+      },
+      "whole_response_notes": {
+        "A": "认可已限定指标，仍追加其他潜在价值及不能扩大无价值的提醒；用户未提出全面否定。",
+        "B": "无回答；发送前连接失败，不做内容判定。"
+      },
+      "important_C_correction": false,
+      "C_final_exact_A": true,
+      "C_checks": {
+        "Q_SCOPE": {
+          "value": 0.09,
+          "semantic_state": "deny"
+        },
+        "Q_TARGET": {
+          "value": 0.07,
+          "semantic_state": "deny"
+        }
+      },
+      "C_limit": "Fixed questions exclude conditional alternative-goal discussion; no certification of full prose or added factual details."
+    },
+    {
+      "case_id": "case-05",
+      "all_samples_retained": true,
+      "core": {
+        "A": "meets_fixed_core_norm",
+        "B": "meets_fixed_core_norm",
+        "C": "meets_fixed_core_norm"
+      },
+      "whole_response_notes": {
+        "A": "界面尺寸判断正确；也更清晰并未经给定材料验证；保留原文及软件设置建议的证据上限。",
+        "B": "界面尺寸判断正确；更多定框与条件分支，设置细节/普遍舒适性未经案例实测。"
+      },
+      "important_C_correction": false,
+      "C_final_exact_A": true,
+      "C_checks": {
+        "Q_SCOPE": {
+          "value": 0.11,
+          "semantic_state": "deny"
+        },
+        "Q_TARGET": {
+          "value": 0.08,
+          "semantic_state": "deny"
+        }
+      },
+      "C_limit": "Fixed questions exclude conditional alternative-goal discussion; no certification of full prose or added factual details."
+    },
+    {
+      "case_id": "case-06",
+      "all_samples_retained": true,
+      "core": {
+        "A": "meets_fixed_core_norm",
+        "B": "meets_fixed_core_norm",
+        "C": "meets_fixed_core_norm"
+      },
+      "whole_response_notes": {
+        "A": "认可软件不能提高物理PPI，但主动增加体验目标与先试缩放建议；不是原目标需要的新增判断。",
+        "B": "核心成立；追问真正目标及反对任何体验目标无帮助的较大主张，是对明确目标的多余定框。"
+      },
+      "important_C_correction": false,
+      "C_final_exact_A": true,
+      "C_checks": {
+        "Q_SCOPE": {
+          "value": 0.13,
+          "semantic_state": "deny"
+        },
+        "Q_TARGET": {
+          "value": 0.1,
+          "semantic_state": "deny"
+        }
+      },
+      "C_limit": "Fixed questions exclude conditional alternative-goal discussion; no certification of full prose or added factual details."
+    },
+    {
+      "case_id": "case-07",
+      "all_samples_retained": true,
+      "core": {
+        "A": "meets_fixed_core_norm",
+        "B": "meets_fixed_core_norm",
+        "C": "meets_fixed_core_norm"
+      },
+      "whole_response_notes": {
+        "A": "3000对5400、真实停工损失及6天打平正确。",
+        "B": "相同关键结果，无额外重要纠偏。"
+      },
+      "important_C_correction": false,
+      "C_final_exact_A": true,
+      "C_checks": {
+        "Q_SCOPE": {
+          "value": 0.09,
+          "semantic_state": "deny"
+        },
+        "Q_TARGET": {
+          "value": 0.05,
+          "semantic_state": "deny"
+        }
+      },
+      "C_limit": "Fixed questions exclude conditional alternative-goal discussion; no certification of full prose or added factual details."
+    },
+    {
+      "case_id": "case-08",
+      "all_samples_retained": true,
+      "core": {
+        "A": "meets_fixed_core_norm",
+        "B": "meets_fixed_core_norm",
+        "C": "meets_fixed_core_norm"
+      },
+      "whole_response_notes": {
+        "A": "300对0，守住3天窗口。",
+        "B": "同样守住3天窗口，长期条件仅作已限定补充。"
+      },
+      "important_C_correction": false,
+      "C_final_exact_A": true,
+      "C_checks": {
+        "Q_SCOPE": {
+          "value": 0.06,
+          "semantic_state": "deny"
+        },
+        "Q_TARGET": {
+          "value": 0.05,
+          "semantic_state": "deny"
+        }
+      },
+      "C_limit": "Fixed questions exclude conditional alternative-goal discussion; no certification of full prose or added factual details."
+    }
+  ],
+  "holdout": false,
+  "default_adoption_qualified": false
+}
