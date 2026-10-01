@@ -6,7 +6,24 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — alternative CPA endpoint works; eight DeepSeek A answers COMPLETE
+## Current checkpoint — Owner-authorized clean A / primitive B / Jev C continuation
+
+2026-10-01: Owner questions the executor's scoring and explicitly requests completing
+the comparison and seeing one scenario's three raw outputs. [Registration](bias-trigger-v1/primitive-ablation-v1/EXECUTION.md)
+keeps eight inputs/norms, adds clean direct A and independent fixed-primitives B,
+then runs the existing two Jev checks on exact new A even if executor thinks it is sufficient.
+No directory/AGENTS/context index in A; B only adds general fixed primitives without
+the display-case answer. Case-06 is selected for display before calls.
+
+Existing 11 host debits remain; new phase maximum 32 (24 host / 8 Jev), cumulative
+maximum 43 within original 64/56/8. Same CPA max/thinking and official Jev, common
+sender lock and original serial/60s protocol. New unknown/refusal stops, no retries.
+Five targeted new-wire/simulated end-to-end tests pass; real products separate.
+Original A answers, scoring, STOP/403/unknown, GJ/R2 and defaults stay unchanged.
+Core conclusion, evidence ceiling and next-action alignment will be reported separately,
+with disputed original sentences, not a blanket core-pass label.
+
+## Historical checkpoint — alternative CPA endpoint works; eight DeepSeek A answers COMPLETE
 
 2026-10-01: [Final successor results](bias-trigger-v1/deepseek-v1/RESULT-SUCCESSOR.md)
 save all eight first actual DeepSeek answers. Executor group-aware reading finds core
