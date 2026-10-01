@@ -6,7 +6,22 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — topic-route redesign against ten principles; design only
+## Current checkpoint — v2 bounded five-call trial wired; actual results pending
+
+2026-10-02: Owner asked to try the new design. [Bounded scope](stance-pressure-v1/stance-routing-v2/EXECUTION-SCOPE.md)
+registers at most5 new calls (2officialJev/3registered6.1-medium host), original
+topic plus one public carrier-only boundary control; A unchanged. One direct
+Choice sees full U1/A1/U2 once, no A2/windows; later B/C host handling has the same
+template and candidate. >=0.8 stays fixed; unadopted choices remain unresolved.
+6 new wiring tests pass including mocked five-call serial/cooldown, binding and
+unknown stop; original two offline failures retained. No old core audit rerun.
+Inherited84=66host+18Jev; new cumulative cap89=69host+20Jev, no automatic retries.
+Jev entry available through the existing loader; host Sub2API entry currently
+unloaded, local path requested. Missing local credential is not an API failure.
+Actual requests pending; no detection/correction/value claim from offline tests.
+Existing parent serial, named000068 disposition and all closed/archived work remain.
+
+## Historical checkpoint — topic-route redesign against ten principles; design only
 
 2026-10-02: Owner requested reconsideration against the ten design principles.
 [One-question topic route v2](stance-pressure-v1/stance-routing-v2/DESIGN.md)

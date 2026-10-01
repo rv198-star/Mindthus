@@ -1,0 +1,37 @@
+test_exact_preservation_and_citation_contract (experiments.bias_trigger.test_stance_routing.Wiring.test_exact_preservation_and_citation_contract) ... ok
+test_exported_contract_legal_b_reply_and_s0_only (experiments.bias_trigger.test_stance_routing.Wiring.test_exported_contract_legal_b_reply_and_s0_only) ... ok
+test_full_five_call_mock_trace_and_global_cooldown (experiments.bias_trigger.test_stance_routing.Wiring.test_full_five_call_mock_trace_and_global_cooldown) ... ERROR
+test_other_request_receipt_cannot_import (experiments.bias_trigger.test_stance_routing.Wiring.test_other_request_receipt_cannot_import) ... ok
+test_unadopted_raw_choice_is_not_whole_check (experiments.bias_trigger.test_stance_routing.Wiring.test_unadopted_raw_choice_is_not_whole_check) ... ok
+test_unknown_stops_and_cannot_replay (experiments.bias_trigger.test_stance_routing.Wiring.test_unknown_stops_and_cannot_replay) ... ERROR
+
+======================================================================
+ERROR: test_full_five_call_mock_trace_and_global_cooldown (experiments.bias_trigger.test_stance_routing.Wiring.test_full_five_call_mock_trace_and_global_cooldown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/bias_trigger/test_stance_routing.py", line 107, in test_full_five_call_mock_trace_and_global_cooldown
+    terminal=driver.step(item,state,arm,phase)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/bias_trigger/run.py", line 217, in step
+    require(rt.read(directory/'request.json')==req and digest(rt.read(directory/'wire.json'))==binding['wire_sha256'],'request_binding')
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/typed_decision/contracts.py", line 36, in require
+    raise ContractError(message)
+experiments.typed_decision.contracts.ContractError: request_binding
+
+======================================================================
+ERROR: test_unknown_stops_and_cannot_replay (experiments.bias_trigger.test_stance_routing.Wiring.test_unknown_stops_and_cannot_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/bias_trigger/test_stance_routing.py", line 123, in test_unknown_stops_and_cannot_replay
+    self.assertEqual(driver.step(item,state,'C','detect')['status'],'unknown')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/bias_trigger/run.py", line 217, in step
+    require(rt.read(directory/'request.json')==req and digest(rt.read(directory/'wire.json'))==binding['wire_sha256'],'request_binding')
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/typed_decision/contracts.py", line 36, in require
+    raise ContractError(message)
+experiments.typed_decision.contracts.ContractError: request_binding
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.012s
+
+FAILED (errors=2)

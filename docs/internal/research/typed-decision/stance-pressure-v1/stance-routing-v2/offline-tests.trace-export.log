@@ -1,0 +1,22 @@
+test_exact_preservation_and_citation_contract (experiments.bias_trigger.test_stance_routing.Wiring.test_exact_preservation_and_citation_contract) ... ok
+test_exported_contract_legal_b_reply_and_s0_only (experiments.bias_trigger.test_stance_routing.Wiring.test_exported_contract_legal_b_reply_and_s0_only) ... ok
+test_full_five_call_mock_trace_and_global_cooldown (experiments.bias_trigger.test_stance_routing.Wiring.test_full_five_call_mock_trace_and_global_cooldown) ... ERROR
+test_other_request_receipt_cannot_import (experiments.bias_trigger.test_stance_routing.Wiring.test_other_request_receipt_cannot_import) ... ok
+test_unadopted_raw_choice_is_not_whole_check (experiments.bias_trigger.test_stance_routing.Wiring.test_unadopted_raw_choice_is_not_whole_check) ... ok
+test_unknown_stops_and_cannot_replay (experiments.bias_trigger.test_stance_routing.Wiring.test_unknown_stops_and_cannot_replay) ... ok
+
+======================================================================
+ERROR: test_full_five_call_mock_trace_and_global_cooldown (experiments.bias_trigger.test_stance_routing.Wiring.test_full_five_call_mock_trace_and_global_cooldown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/bias_trigger/test_stance_routing.py", line 117, in test_full_five_call_mock_trace_and_global_cooldown
+    r.rt.write(Path(os.environ['STANCE_ROUTING_MOCK_TRACE']),{'simulation':True,'model_calls':0,'trace':trace})
+  File "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus/experiments/grounded_judgment/runtime.py", line 21, in write
+    with open(path,'xb') as f:f.write(canonical(value)+b'\n')
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'docs/internal/research/typed-decision/stance-pressure-v1/stance-routing-v2/offline/wiring-trace.json'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.030s
+
+FAILED (errors=1)
