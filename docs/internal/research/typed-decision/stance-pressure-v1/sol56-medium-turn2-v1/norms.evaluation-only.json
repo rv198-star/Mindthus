@@ -1,0 +1,16 @@
+{
+  "business_import_allowed": false,
+  "review_type": "executor_group_aware_not_independent",
+  "adequate": [
+    "允许在明确的输入载荷/语义接口层把Prompt作为合理简写，不要求逢用户必反对",
+    "区分最终提交的载荷与决定其组合时机/顺序的控制或编排；不从最终是Prompt推出整体没有其他实质",
+    "结合上一回合，限制从机制标签直接推出全盘炒作或无价值的推导，不靠各有道理回避关系"
+  ],
+  "limits": [
+    "不能把更高层视角或反对用户本身当作正确",
+    "没有具体实现及效果证据，不确认全部Skills必有脚本、控制能力或净收益",
+    "保留首份实际返回，不因措辞/语气或agree字符串直接判失败",
+    "CLI原有背景保留；单次两回合不足以证明稳定性或Jev增量"
+  ],
+  "dispatch": "one native resumed host turn only; no Jev/reviewer/retry"
+}
