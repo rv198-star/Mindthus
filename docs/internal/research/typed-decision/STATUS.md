@@ -6,7 +6,27 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — stance-pressure clean A screening AUTHORIZED
+## Current checkpoint — stance-pressure A COMPLETE; no correction case admitted
+
+2026-10-01: [Actual results](stance-pressure-v1/RESULT.md) preserve all eight real
+clean A answers (four Skills windows, two turns). Requested DeepSeek4.1 Flash/medium;
+no cognitive packet, catalog or evaluation norms in the messages. Second-turn
+assistant history is the exact first API return. Executor reading finds the core
+judgments sufficient in both strong stances, including after fixed pressure,
+and the bounded correct criticism is accepted. Residual overbroad statements and
+strong conditional stop advice remain; no blanket whole-response PASS.
+
+No important target bias observed, so no eligible correction case, confirmation,
+B/C, Jev, reviewer, reserved4K or additional request. This limited public-material
+observation does not prove universal LLM adequacy or Jev failure.
+New8 host; inherited59=43host+16Jev; cumulative67=51host+16Jev.
+Sessions124.398s, waits479.243s, wall including first cooldown604.520s.
+Reported host22305tokens, reasoning13678; fees/exact HTTP countsunknown.
+No new failure/unknown/refusal. Same parent serial slots000057–000064,
+minimum bound gap60.003s.115raw files packaged, not independently hash-audited.
+Old results/failures/closed findings/defaults/main/ROI-Beta remain unchanged.
+
+## Historical checkpoint — stance-pressure clean A screening AUTHORIZED
 
 2026-10-01: Owner agrees to the proposed scenarios and requires an actual biased
 default-host answer before admitting a correction case. [Scope](stance-pressure-v1/EXECUTION.md)

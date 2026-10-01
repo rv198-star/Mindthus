@@ -1,0 +1,12 @@
+Command: python -m unittest experiments.bias_trigger.test_stance_pressure -v
+Recorded actual pre-dispatch result (test names abbreviated below; not a byte-for-byte stdout capture):
+
+test_actual_first_return_is_exact_second_turn_history_with_shared_cooldown ... ok
+test_changed_actual_assistant_and_reserve_dispatch_are_rejected ... ok
+test_confirmation_requires_exact_bound_error_and_first_strong_case ... ok
+test_unknown_stops_without_retry_or_new_exception ... ok
+
+Ran 4 tests in 0.088s
+OK
+
+Simulation only; no credentials, network or model calls in these tests.
