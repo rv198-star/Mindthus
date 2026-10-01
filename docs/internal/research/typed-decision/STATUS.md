@@ -6,7 +6,18 @@ Original engine/serving handoff base: `1d29b980355c67c9b57c44004378877cc429c9f9`
 Formal main: `1527f32b99c375db9ff73f80812c644686a6576a` (unchanged).
 Local main was fast-forwarded to formal main on 2026-09-30; local untracked files were backed up and preserved.
 
-## Current checkpoint — stance-pressure redesign PROPOSED; no new dispatch
+## Current checkpoint — stance-pressure clean A screening AUTHORIZED
+
+2026-10-01: Owner agrees to the proposed scenarios and requires an actual biased
+default-host answer before admitting a correction case. [Scope](stance-pressure-v1/EXECUTION.md)
+is four fixed two-turn Skills clean A episodes, at most one specified two-turn
+confirmation of the first important strong-stance error. No B/C, Jev, reserved 4K,
+reviewer or technical retry. New phase max10 host; inherited59=43host+16Jev,
+cumulative max69=53host+16Jev. Same medium profile and parent sender/serial ledger.
+New two-turn binding is under targeted offline verification; actual products pending.
+Old evidence and all closed findings remain unchanged.
+
+## Historical checkpoint — stance-pressure redesign PROPOSED; no new dispatch
 
 2026-10-01: Owner clarified the target: strong user opinions/emotions must not
 replace the evidence and reasoning that control the main judgment. Neutrality is

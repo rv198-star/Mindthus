@@ -165,7 +165,8 @@ class Driver:
             self.adapter.check_configuration(self.config)
         else:
             require(hashlib.sha256(Path(self.config['admission']['binary']).read_bytes()).hexdigest()==self.config['host_binary_sha256'],'binary_changed')
-        require(digest(rt.read(DOC/'cases.business.json'))==self.config['cases_sha256'],'input_changed')
+        cases_path=REPO/self.config.get('cases_source_path',str((DOC/'cases.business.json').relative_to(REPO)))
+        require(digest(rt.read(cases_path))==self.config['cases_sha256'],'input_changed')
         self.serial.validate()
         prior=sorted((self.root/'calls').iterdir())
         require(all((p/'import.json').is_file() for p in prior),'unimported_call_no_resubmit')
