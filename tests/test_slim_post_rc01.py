@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 from test_slim_batch import Clock, Fake, answer
-from _slim_fixture import resources
+from _slim_fixture import resources, install_transport_root
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / 'docs/internal/optimization/sol61-slim-v0'
@@ -17,6 +17,7 @@ class PostRC01Tests(unittest.TestCase):
     def setUp(self):
         self.adapter_root, self.binary = resources()
         self.enterContext(patch.object(r.m, "BINARY", self.binary))
+        self.transport_root = install_transport_root(self, r.m)
 
     def fixture(self, td):
         root = Path(td).resolve(); previous = root / 'previous'; batch = root / 'new'

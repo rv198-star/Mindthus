@@ -12,7 +12,7 @@ import shutil
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location('slim_batch', ROOT/'docs/internal/optimization/sol61-slim-v0/run_batch.py')
 m = importlib.util.module_from_spec(SPEC); SPEC.loader.exec_module(m)
-from _slim_fixture import resources
+from _slim_fixture import resources, install_transport_root
 
 
 class Clock:
@@ -44,6 +44,7 @@ class SlimBatchTests(unittest.TestCase):
     def setUp(self):
         self.adapter_root, binary = resources()
         self.enterContext(patch.object(m, "BINARY", binary))
+        self.transport_root = install_transport_root(self, m)
 
     def batch(self, root):
         config = m.prepare(root, self.adapter_root, m.git(ROOT,'rev-parse','HEAD').decode().strip(), simulation=True)
@@ -108,6 +109,7 @@ class SlimBatchTests(unittest.TestCase):
             root=project/'.tplan'/'batch';self.batch(root);fake=Fake([answer(),answer()]);clock=Clock()
             m.drive(root,adapter=fake,clock=clock.now,monotonic=clock.now,sleep=clock.sleep)
             for directory in fake.directories:
+                self.assertTrue(directory.is_relative_to(self.transport_root))
                 self.assertFalse(directory.is_relative_to(project))
                 self.assertTrue(all(not (p/'AGENTS.md').exists() for p in (directory,*directory.parents)))
             self.assertNotIn('SENTINEL_REPO_INSTRUCTION',''.join(fake.prompts))

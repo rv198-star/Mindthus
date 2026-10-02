@@ -4,6 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 import subprocess
 import tempfile
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 PIN = 'ed5171bf7b34746027acd730864d9c98ef1dd8d2'
@@ -20,3 +21,13 @@ def resources():
     binary.write_text('#!/bin/sh\nif [ "$1" = "--version" ]; then echo "codex-cli OFFLINE-FIXTURE"; else exit 99; fi\n')
     binary.chmod(0o755)
     return str(adapter), str(binary)
+
+
+def install_transport_root(test_case, module):
+    """Map only the macOS scratch location; keep the actual isolation checks."""
+    root = Path(test_case.enterContext(tempfile.TemporaryDirectory(prefix='slim-transport-'))).resolve()
+    original = module.Path
+    def portable_path(*parts):
+        return root if parts == ('/private/tmp',) else original(*parts)
+    test_case.enterContext(patch.object(module, 'Path', portable_path))
+    return root
