@@ -2,9 +2,12 @@
 
 ## Unreleased
 
+- RC01 GitHub Release 按用户澄清撤下，仅保留原标签与固定源码；Stable、ROI Beta 及其同步发布约定不变。
+- 后续候选：入口按剩余判断缺口选方法，已有依据足够就结束选路；WAE 合并重复的适用范围说明，保留控制权、证据、授权及按需升级规则。仅做离线检查，未将旧44条结果追认为新候选实测。
+
 ## v1.11.0-rc.1 — RC01
 
-发布日期：2026-10-03。预发布 tag：`v1.11.0-rc.1`。
+快照日期：2026-10-03。tag：`v1.11.0-rc.1`；同日误建的 GitHub Release 已撤下，标签未移动。
 
 [RC01 发布说明](docs/releases/v1.11.0-rc.1.md)
 
@@ -12,7 +15,7 @@
 - 精简入口重复要求和无条件伴随镜头；已有充分判断及产物可保留，缺口出现时才加载资源。保留结构、引用、证据、权限与unknown处理约束。
 - 优化目标是保留质量、降低不必要的token，而非要求每份答案更聪明。Sol 6.1的15组同CLI配对输入token少8.1%，未观察到新增关键质量回归；Astra抽检因一例额外读取而输入更多，保留该不利结果。
 - 44条真实路径已交付，执行端知晓分组核对42可用、P01两臂部分可用；4条无Mindthus对照亦可用，不将正确答案全部归因于方法。累计98次包括历史污染、未知与指定补试，不作无故障首发声明。
-- RC01提供plugins/skills两份归档及校验和，保持预发布、不替换Latest Stable；本次不追加ROI Beta RC。Stable正式发行同步ROI Beta的既有规则不变，TPlan runtime generation仍为1.5.4。
+- RC01曾生成plugins/skills两份归档及校验和；Release撤下后只保留本地构建证据，不再作为可下载安装版。Latest Stable保持不变；本次不追加ROI Beta RC。Stable正式发行同步ROI Beta的既有规则不变，TPlan runtime generation仍为1.5.4。
 
 ## v1.10.1
 

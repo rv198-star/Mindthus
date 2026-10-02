@@ -1,0 +1,29 @@
+{
+  "verified_at_utc": "2026-10-02T17:13:36.435319+00:00",
+  "action": "Deleted GitHub Release with gh release delete v1.11.0-rc.1 --repo rv198-star/Mindthus --yes; no cleanup-tag",
+  "release_absent": true,
+  "tag_unchanged": true,
+  "source_commit": "e7dbb473e955932f09c80dfb48b90ac1f4f8db43",
+  "latest_stable": "v1.10.1",
+  "evidence": [
+    {
+      "endpoint": "repos/rv198-star/Mindthus/releases/tags/v1.11.0-rc.1",
+      "exit_code": 1,
+      "stdout": "{\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/releases/releases#get-a-release-by-tag-name\",\"status\":\"404\"}",
+      "stderr": "gh: Not Found (HTTP 404)\n"
+    },
+    {
+      "endpoint": "repos/rv198-star/Mindthus/git/ref/tags/v1.11.0-rc.1",
+      "exit_code": 0,
+      "stdout": "{\"ref\":\"refs/tags/v1.11.0-rc.1\",\"node_id\":\"REF_kwDOSN11Q7ZyZWZzL3RhZ3MvdjEuMTEuMC1yYy4x\",\"url\":\"https://api.github.com/repos/rv198-star/Mindthus/git/refs/tags/v1.11.0-rc.1\",\"object\":{\"sha\":\"247d35c67dfa38bad06e3bd20ae231cddb8a5821\",\"type\":\"tag\",\"url\":\"https://api.github.com/repos/rv198-star/Mindthus/git/tags/247d35c67dfa38bad06e3bd20ae231cddb8a5821\"}}",
+      "stderr": ""
+    },
+    {
+      "endpoint": "repos/rv198-star/Mindthus/git/tags/247d35c67dfa38bad06e3bd20ae231cddb8a5821",
+      "exit_code": 0,
+      "stdout": "{\"node_id\":\"TA_kwDOSN11Q9oAKDI0N2QzNWM2N2RmYTM4YmFkMDZlM2JkMjBhZTIzMWNkZGI4YTU4MjE\",\"sha\":\"247d35c67dfa38bad06e3bd20ae231cddb8a5821\",\"url\":\"https://api.github.com/repos/rv198-star/Mindthus/git/tags/247d35c67dfa38bad06e3bd20ae231cddb8a5821\",\"tagger\":{\"name\":\"rv192\",\"email\":\"qiuyu.chen@hotmail.com\",\"date\":\"2026-10-02T16:48:13Z\"},\"object\":{\"sha\":\"e7dbb473e955932f09c80dfb48b90ac1f4f8db43\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/rv198-star/Mindthus/git/commits/e7dbb473e955932f09c80dfb48b90ac1f4f8db43\"},\"tag\":\"v1.11.0-rc.1\",\"message\":\"RC01: freeze tested Mindthus slim candidate before further trade-offs; prerelease, no main merge\\n\",\"verification\":{\"verified\":false,\"reason\":\"unsigned\",\"signature\":null,\"payload\":null,\"verified_at\":null}}",
+      "stderr": ""
+    }
+  ],
+  "historical_build_evidence_preserved": true
+}

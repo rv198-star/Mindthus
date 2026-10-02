@@ -41,10 +41,10 @@ Whole Elephant / Partial Truth Capture：区分所判断对象、真正控制结
 | 已成形、有界产物仍缺具体使用价值 | TVG |
 | 需要持久 Mission 状态、恢复或人类权力边界 | TPlan |
 
-owner 已明确就直达；仲裁只在竞争镜头会改变行动时发生。
+按剩余判断缺口选方法，不按话题词选；已有依据足以回答就结束选路。
+明确指定的方法仍按要求使用；握手只补缺口，不串固定流水线。
 SELA owns direction pressure；MPG owns path-carrying action。
-握手补当前缺口，不串固定流水线。引用方法进行审计只规定审计对象，
-不自动让该方法成为当前 owner（Method Reference Boundary）。
+引用方法审计不自动让该方法成为当前 owner（Method Reference Boundary）。
 
 ### Execution Impact / 执行影响
 
