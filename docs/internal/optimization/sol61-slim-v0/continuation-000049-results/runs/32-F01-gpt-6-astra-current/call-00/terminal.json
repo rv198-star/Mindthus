@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "5e8f0eef38e04aa2d2cb771cc0f07112e3fc81512415901b386ff3d3a0228389",
+    "wire_sha256": "31798421f68f010b9986f78620593a726ff853c2e5acb7ef49f3ba0742a06c0f",
+    "batch_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "path": {
+      "case": "F01",
+      "arm": "current",
+      "model": "gpt-6-astra"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 86,
+    "retry_of": null
+  },
+  "raw_sha256": "fe9900c4e33ba76cce4e45928f1adf18c617b7bb65524b24b7957ef88e1c61ed",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "按你明确的定义——“本质”指完整的任务能力及主要价值——**“Skills 本质就是 Prompt”这个观点不成立。你把模型接收指令的方式，当成了整个任务系统的能力来源。**\n\nPrompt 可以承载目标、方法、判断标准，甚至是某个 Skill 最有价值的部分。但这不能推出：执行这些要求所需的全部能力，也都是 Prompt。\n\n关键在于，你对脚本的描述缩小了它的作用。脚本不只是安排什么时候、按什么顺序把 Prompt 交给模型；它也可以直接计算、读取和修改文件、调用外部服务、保存任务状态、检查结果，并根据检查结果阻止后续操作。这些动作会改变任务结果，不等于向模型多说一句话。\n\n例如，一个处理报表的 Skill 可以要求模型理解分析目标，再由程序读取完整数据、计算指标、生成文件，并验证总数是否一致。“请准确计算并检查”是 Prompt；实际完成计算和检查，是执行机制。**表达一个要求，不等于实现这个要求。** 即使检查结果最后又作为上下文交给模型，产生检查结果的能力也不会因此变成 Prompt。\n\n可以用一个直接的反事实检验：保留全部提示词，拿走执行程序、工具访问和状态管理，这个 Skill 还能否完成同样的任务，并提供同等可靠的结果？如果不能，被拿走的部分就是完整能力的组成，而不是提示词的包装。\n\n所以主次应该这样定：**Skill 的核心是可复用的任务方法及其实现；Prompt 是其中的指令与判断载体，完整能力由方法、执行和验证共同决定。** 对于只有说明文本的 Skill，说它主要是一套可复用 Prompt，完全准确；但不能拿这个子类定义整个类别。反过来，也不是带了脚本就更有价值，仍要看哪一部分实际决定结果。\n\n你在争论中更站得住的说法是：“不少 Skills 的主要价值确实来自提示词里编码的方法，而不是目录或脚本形式。”但“最终不也还是 Prompt 吗”跨过了关键的一步：**模型通过什么接收信息，与任务靠什么完成，是两个不同的问题。**"
+  },
+  "usage": {
+    "input_tokens": 18616,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 724,
+    "reasoning_output_tokens": 192
+  },
+  "error": null,
+  "session_seconds": 51.07642324999324,
+  "ended_at_epoch": 1790957049.0515468,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "5e8f0eef38e04aa2d2cb771cc0f07112e3fc81512415901b386ff3d3a0228389",
+    "transport_successor_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

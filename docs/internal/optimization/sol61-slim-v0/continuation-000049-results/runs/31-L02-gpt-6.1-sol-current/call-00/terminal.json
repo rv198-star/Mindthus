@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "7d23f927a8aab39835d0b5be90584405af7e27b2422a3a11c401b96d65df88c6",
+    "wire_sha256": "65df10cf41d971bcccbc582622f34490aa07a34a78131b6e1d18b1743c657960",
+    "batch_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "path": {
+      "case": "L02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 85,
+    "retry_of": "7d23f927a8aab39835d0b5be90584405af7e27b2422a3a11c401b96d65df88c6"
+  },
+  "raw_sha256": "fb8fc4f239a385f99a4b246e2a960f8b52774c886746ca99716d264871f8f31e",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "不继续重发。30秒超时只说明本地等待结束，不能证明远端失败或未执行；现有 intent 也不能证明请求已发送。用户只授权一次发送，当前证据不足以安全重试。\n\n最小可恢复处理：\n- 保留原 intent，标记“结果未知、禁止自动重发”，记录本地超时及一次发送授权。\n- 将发送事实、远端请求标识和远端终态记为未知，不补造成功或失败状态。\n- 后续仅依据可获得的原请求关联证据核对结果；无法关联则保持待核实。再次发送须取得用户新的明确授权。\n\n本次仅生成摘要，不发送 API。"
+  },
+  "usage": {
+    "input_tokens": 18672,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 269,
+    "reasoning_output_tokens": 81
+  },
+  "error": null,
+  "session_seconds": 25.492763540998567,
+  "ended_at_epoch": 1790956937.962643,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "7d23f927a8aab39835d0b5be90584405af7e27b2422a3a11c401b96d65df88c6",
+    "transport_successor_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

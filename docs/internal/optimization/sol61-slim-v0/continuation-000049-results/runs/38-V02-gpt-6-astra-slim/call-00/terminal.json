@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "05e0180fa3a2bb6b11870773a07edaec06d8e4dabddf30b3655bbb59a9fa2c48",
+    "wire_sha256": "3dcc6c385e9d20218f51e4ccedec8bce134ec007be439c0d9259068e104726f4",
+    "batch_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "path": {
+      "case": "V02",
+      "arm": "slim",
+      "model": "gpt-6-astra"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 93,
+    "retry_of": null
+  },
+  "raw_sha256": "e470213cf0e0eb75352a3ae93a2c7ab60e00d1901942a4074b1b6ca328416e9b",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "已经足够用于同事明天接着只读排查，不必扩写。\n\n这段说明交代了已观察到的现象、根因尚未确定、检查范围与一小时时限、禁止改生产配置，以及未定位时的交回和后续投入边界。也没有把“关闭缓存后错误消失”直接当作根因结论。\n\n唯一需要确认的是同事是否知道从哪里找到相关日志；若不知道，补一个日志位置或查询入口即可。其余可原样交接。"
+  },
+  "usage": {
+    "input_tokens": 18181,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 146,
+    "reasoning_output_tokens": 0
+  },
+  "error": null,
+  "session_seconds": 24.57394883300003,
+  "ended_at_epoch": 1790957656.405814,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "05e0180fa3a2bb6b11870773a07edaec06d8e4dabddf30b3655bbb59a9fa2c48",
+    "transport_successor_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}
