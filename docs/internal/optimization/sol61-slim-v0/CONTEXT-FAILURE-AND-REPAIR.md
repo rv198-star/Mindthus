@@ -84,3 +84,8 @@ python3 docs/internal/optimization/sol61-slim-v0/run_batch.py run NEW_BATCH_DIR
 仍是Codex共同系统环境，无Mindthus臂不冒称完全无系统提示的API。
 T0场景/规范不修改；旧22份答案封存为偏差产物，不挑选后替换成最优答案。
 #220、Epic #213和draft PR #223保持未完成/未默认采用。
+
+后续接线审计更新：四项返修及自复审见 `repair-review-r1/REVIEW.md`。
+上面的31a145命令保留为本报告写成时的历史示例。下一真实后继应固定包含
+Profile返修的新候选SHA，并使用已批准的授权记录；pending提案现在连prepare也会拒绝。
+同一父账本只能绑定一个后继根；修复没有增加真实调用预算。

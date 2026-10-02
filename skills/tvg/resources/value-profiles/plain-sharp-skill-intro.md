@@ -24,7 +24,7 @@ value_profile:
       - long sentences that hide multiple functions inside one line in the name of high density
       - examples that expand background instead of showing one ordinary action or choice
       - examples that are clever but do not clarify when to use the skill
-      - deleting sentences merely because they are not core, instead of first trying to give them a useful argumentative job
+      - deleting useful reasons, evidence or boundaries merely because they are not the core sentence
       - overselling the skill as a conclusion machine, truth machine, or universal fixer
       - making every introduction sound like generic better thinking
       - making every sentence equally explanatory so the opening line loses force
@@ -32,7 +32,7 @@ value_profile:
       - one-sentence essence before method detail
       - first-sentence aphorism before full explanation, as long as accuracy is preserved
       - short sentence carrying one key judgment before long compressed sentence
-      - sentence-function assignment before deletion or compression
+      - reader understanding and action value before sentence-function labels
       - top-20-percent information density before stylistic polish
       - plain user-facing language before internal terms
       - one-action everyday example before abstract taxonomy
@@ -109,7 +109,7 @@ value_profile:
       - turning examples into mini case studies
       - adding caveats that bury the core sentence
       - making high-pressure output by lengthening sentences
-      - deleting non-core sentences before checking whether they can serve the core argument
+      - removing necessary context or boundaries in pursuit of brevity
       - making every skill introduction follow exactly the same rhythm
     split_rules:
       - split into essence, example, and boundary when one paragraph becomes dense
@@ -124,7 +124,7 @@ value_profile:
       - every sentence must either clarify essence, trigger use, explain by example, or prevent misuse
       - treat high information density as a practical bar: remove or rewrite any sentence that a reader could skip without losing understanding, distinction, or action guidance
       - high pressure means harsher selection and cleaner sentence function, not longer sentences
-      - brevity is achieved by functionalizing sentences first and deleting only when no useful function remains
+      - remove clear redundancy directly; sentence-function labels are optional when a passage's contribution is unclear
 ```
 
 ## Scope
@@ -154,10 +154,10 @@ for what each skill actually does. It must not invent new skill capabilities.
 1. Can a first-time reader repeat the skill's job without knowing the acronym?
 2. Does the first sentence name the hidden failure mode the skill prevents?
 3. Does high density come from short, sharp choices rather than long compressed sentences?
-4. Does each sentence carry only one primary argumentative function?
+4. Does any sentence overload the reader with unrelated claims? Split it only when that improves readability.
 5. Does the example show one concrete action or choice instead of expanding background?
 6. Does the intro preserve the skill's boundary and avoid claiming domain truth?
-7. Can every sentence be tagged with a useful function? If not, was it rewritten into a function before deletion was considered?
+7. For a passage whose contribution is unclear, would optional sentence-function tagging help decide what to keep, repair or delete? Skip tagging when the decision is already clear.
 8. Would removing any sentence leave the reader with the same understanding and action guidance? If yes, rewrite or remove it.
 
 ## Source Notes

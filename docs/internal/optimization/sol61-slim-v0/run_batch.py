@@ -94,6 +94,11 @@ def prepare(batch, adapter_root, candidate, *, simulation=False, admission=None,
     batch = Path(batch).resolve()
     if batch.exists():
         raise ValueError('fresh_batch_required')
+    if not simulation:
+        if not isinstance(admission, dict) or not parent_batch:
+            raise ValueError('explicit_successor_admission_and_parent_required')
+        if admission.get('execution_authorized') is not True:
+            raise ValueError('successor_not_authorized_no_prepare')
     a = adapters(adapter_root)
     freeze = read(HERE / 'freeze.json')
     for name, sha in freeze['source_files'].items():
@@ -121,8 +126,6 @@ def prepare(batch, adapter_root, candidate, *, simulation=False, admission=None,
         source_sha256={arm:digest(value) for arm,value in sources.items()},
         plan=plan(cases), evidence_scope='controlled read exchange; not passive activation qualification')
     if not simulation:
-        if not isinstance(admission,dict) or not parent_batch:
-            raise ValueError('explicit_successor_admission_and_parent_required')
         parent=parent_receipt(parent_batch)
         if admission.get('parent_receipt_sha256')!=digest(parent):
             raise ValueError('successor_parent_binding')
@@ -137,7 +140,57 @@ def prepare(batch, adapter_root, candidate, *, simulation=False, admission=None,
     write(batch / 'inputs.json', {c['id']:render(c) for c in cases})
     for arm, value in sources.items():
         write(batch / 'sources' / (arm+'.json'), value)
+    if not simulation:
+        bind_successor(batch, config, a['_locked'])
     return config
+
+
+def successor_record(batch, config):
+    return dict(schema='mindthus.slim-successor-binding.v1',
+        parent_receipt_sha256=digest(config['parent_receipt']),
+        successor_root=str(Path(batch).resolve()), batch_sha256=digest(config))
+
+
+def driver_lock_path(batch, config):
+    if config['simulation']:
+        return Path(batch) / '.driver.lock'
+    return Path(config['parent_receipt']['root']) / '.slim-successor.lock'
+
+
+def bind_successor(batch, config, locked):
+    # Append one owner at the preserved parent. Failed/duplicate preparations
+    # cannot acquire another allowance; no record is deleted to permit a retry.
+    parent = Path(config['parent_receipt']['root'])
+    with locked(driver_lock_path(batch, config)):
+        if parent_receipt(parent) != config['parent_receipt']:
+            raise ValueError('successor_parent_changed')
+        claim = parent / 'slim-successor-binding.json'
+        expected = successor_record(batch, config)
+        if claim.exists():
+            if read(claim) != expected:
+                raise ValueError('parent_successor_already_bound')
+        else:
+            write(claim, expected)
+
+
+def validate_successor(batch, config):
+    parent = Path(config['parent_receipt']['root'])
+    if parent_receipt(parent) != config['parent_receipt']:
+        raise ValueError('successor_parent_changed')
+    claim = parent / 'slim-successor-binding.json'
+    if not claim.exists() or read(claim) != successor_record(batch, config):
+        raise ValueError('successor_root_or_configuration_not_bound')
+
+
+def dispatch_stopped(batch):
+    return any((Path(batch) / name).exists() for name in ('STOP.json', 'transport-stop-v2.json'))
+
+
+def record_stop(batch, reason, binding):
+    # Preserve the first stop cause; the terminal and observation retain any
+    # additional causes (e.g. unknown plus unclassified internal recovery).
+    if not (Path(batch) / 'STOP.json').exists():
+        write(Path(batch) / 'STOP.json', dict(reason=reason, binding=binding))
 
 
 def request(path, business, source, loaded, sequence):
@@ -176,8 +229,6 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
         admission=config.get('successor_admission') or {}
         if admission.get('execution_authorized') is not True:
             raise ValueError('successor_not_authorized_no_dispatch')
-        if parent_receipt(config['parent_receipt']['root'])!=config['parent_receipt']:
-            raise ValueError('successor_parent_changed')
         if config['total_calls_max']+config['parent_receipt']['logical_calls']>admission['cumulative_call_limit']:
             raise ValueError('successor_budget_reset')
     if hashlib.sha256(Path(BINARY).read_bytes()).hexdigest() != config['binary_sha256']:
@@ -192,8 +243,10 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
     if any(digest(v) != config['source_sha256'][k] for k,v in sources.items()):
         raise ValueError('sources_changed')
     serial = a['SerialRequests'](batch / 'scheduling' / 'serial',clock=clock,monotonic=monotonic,sleep=sleep)
-    with a['_locked'](batch / '.driver.lock'):
-        if (batch / 'STOP.json').exists():
+    with a['_locked'](driver_lock_path(batch, config)):
+        if not config['simulation']:
+            validate_successor(batch, config)
+        if dispatch_stopped(batch):
             raise ValueError('batch_stopped_no_resend')
         serial.validate()
         if not config['simulation'] and not list(serial.root.glob('[0-9]*')):
@@ -251,7 +304,7 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
                     context = inspect_bound_context(raw, transport_dir/'workspace') if not config['simulation'] else dict(simulation=True)
                     write(directory/'context-observation.json',context)
                     if context.get('project_AGENTS_message_count',0) or context.get('cwd_matches') is False:
-                        write(batch/'STOP.json',dict(reason='actual_context_not_isolated',binding=binding))
+                        record_stop(batch, 'actual_context_not_isolated', binding)
                     observation = None
                     if raw.get('kind') == 'cli':
                         proc = subprocess.CompletedProcess([],raw['returncode'],raw['stdout'],raw['stderr'])
@@ -274,11 +327,13 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
                 measurement = dict(active_wait_seconds=wait, dispatch_wall_seconds=time.monotonic()-started,
                     session_seconds=terminal['session_seconds'], cli_starts=1, outer_retries=0)
                 write(directory / 'measurement.json', measurement)
+                if (terminal['observation'] or {}).get('stop_subsequent_dispatch'):
+                    record_stop(batch, 'unclassified_internal_recovery', binding)
                 response = terminal['response']
                 if terminal['status'] != 'returned':
                     write(run / 'result.json', dict(status=terminal['status'], error=terminal['error'], answer=None))
                     if terminal['status'] in ('unknown','safety_refusal'):
-                        write(batch / 'STOP.json', dict(reason=terminal['status'], binding=binding))
+                        record_stop(batch, terminal['status'], binding)
                         return
                     write(directory / 'accepted.json', dict(kind='failed'))
                     break
@@ -288,9 +343,11 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
                     write(directory / 'accepted.json', dict(kind='invalid_read_contract'))
                     write(run / 'result.json', dict(status='format_failure', answer=None, error='invalid_read_contract'))
                     break
+                if response['kind']=='answer' and not response['text'].strip():
+                    write(directory / 'accepted.json', dict(kind='empty_answer'))
+                    write(run / 'result.json', dict(status='format_failure', answer=None, error='empty_answer'))
+                    break
                 write(directory / 'accepted.json', response)
-                if (terminal['observation'] or {}).get('stop_subsequent_dispatch'):
-                    write(batch / 'STOP.json', dict(reason='unclassified_internal_recovery', binding=binding))
                 if response['kind']=='answer':
                     write(run / 'result.json', dict(status='delivered', answer=response['text'], objection=response['objection']))
                     (run / 'answer.txt').write_text(response['text'])
@@ -300,8 +357,8 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
                 print('READ',run.name,response['read_paths'],flush=True)
                 if seq+1==config['path_calls_max']:
                     write(run / 'result.json', dict(status='read_budget_exhausted', answer=None))
-                if (batch / 'STOP.json').exists(): return
-            if (batch / 'STOP.json').exists(): return
+                if dispatch_stopped(batch): return
+            if dispatch_stopped(batch): return
 
 
 def external_transport_directory(batch, req, config):

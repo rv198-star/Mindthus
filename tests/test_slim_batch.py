@@ -3,7 +3,11 @@ import importlib.util
 import json
 import tempfile
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from threading import Barrier
+from unittest.mock import patch
+import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location('slim_batch', ROOT/'docs/internal/optimization/sol61-slim-v0/run_batch.py')
@@ -130,6 +134,103 @@ class SlimBatchTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)/'batch';self.batch(root)
             with self.assertRaisesRegex(ValueError,'simulated_parent_not_real'):m.parent_receipt(root)
+
+    def test_internal_recovery_stops_every_response_branch_and_restart(self):
+        read_reply=dict(kind='read',text='need method',read_paths=['skills/wae/SKILL.md'],objection='')
+        bad_read={**read_reply,'read_paths':['skills/using-mindthus/SKILL.md']}
+        cases=[('bad_json',answer(),'failed'),('bad_read',bad_read,'returned'),
+               ('answer',answer(),'returned'),('read',read_reply,'returned'),
+               ('unknown',None,'unknown'),('safety_refusal',answer(),'safety_refusal')]
+        for mode,reply,terminal_status in cases:
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as tmp:
+                class Recovering(Fake):
+                    def invoke(self,*args):
+                        raw=super().invoke(*args)
+                        raw['stderr']='retrying sampling request'
+                        if mode=='bad_json':raw['reply_text']='{'
+                        if mode=='safety_refusal':
+                            raw['events'][-1]={'type':'turn.failed','error':{'code':'permission_denied'}}
+                        return raw
+                root=Path(tmp)/'batch';self.batch(root);fake=Recovering([reply,answer()]);clock=Clock()
+                m.drive(root,adapter=fake,clock=clock.now,monotonic=clock.now,sleep=clock.sleep)
+                self.assertEqual(len(fake.prompts),1)
+                self.assertTrue((root/'transport-stop-v2.json').exists())
+                terminal=next(root.glob('runs/*/call-*/terminal.json'))
+                self.assertEqual(m.read(terminal)['status'],terminal_status)
+                self.assertEqual(len(list(root.glob('scheduling/serial/[0-9]*/completion.json'))),0 if mode=='unknown' else 1)
+                if mode=='answer':self.assertEqual(next(root.glob('runs/*/answer.txt')).read_text(),'SIMULATION ONLY')
+                with self.assertRaisesRegex(ValueError,'batch_stopped_no_resend'):m.drive(root,adapter=fake)
+                self.assertEqual(len(fake.prompts),1)
+
+    def test_existing_transport_stop_alone_prevents_dispatch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/'batch';self.batch(root);m.write(root/'transport-stop-v2.json',{'simulation':True})
+            fake=Fake([answer()])
+            with self.assertRaisesRegex(ValueError,'batch_stopped_no_resend'):m.drive(root,adapter=fake)
+            self.assertEqual(fake.prompts,[])
+
+    def test_empty_answers_preserve_terminal_without_delivery_or_retry(self):
+        for text in ('',' \n\t'):
+            with self.subTest(text=text), tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp)/'batch';self.batch(root);fake=Fake([answer(text),answer()]);clock=Clock()
+                m.drive(root,adapter=fake,clock=clock.now,monotonic=clock.now,sleep=clock.sleep)
+                first=sorted(root.glob('runs/*/result.json'))[0]
+                self.assertEqual(m.read(first),dict(status='format_failure',answer=None,error='empty_answer'))
+                self.assertFalse((first.parent/'answer.txt').exists())
+                self.assertEqual(m.read(first.parent/'call-00/terminal.json')['status'],'returned')
+                self.assertEqual(m.read(first.parent/'call-00/raw.json')['transport']['reply_text'],json.dumps(answer(text)))
+                self.assertEqual(len(fake.prompts),2)  # Next independent path, never a retry.
+                m.drive(root,adapter=fake,clock=clock.now,monotonic=clock.now,sleep=clock.sleep)
+                self.assertEqual(len(fake.prompts),2)
+
+    def test_pending_prepare_cannot_claim_a_successor(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/'child';parent=Path(tmp)/'parent';parent.mkdir()
+            with self.assertRaisesRegex(ValueError,'successor_not_authorized_no_prepare'):
+                m.prepare(root,ADAPTER,'HEAD',admission={'execution_authorized':False},parent_batch=parent)
+            self.assertFalse(root.exists())
+            self.assertEqual(list(parent.iterdir()),[])
+
+    def test_successor_claim_is_exclusive_even_for_concurrent_preparations(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            parent=Path(tmp)/'parent';parent.mkdir();roots=[Path(tmp)/'one',Path(tmp)/'two']
+            receipt={'root':str(parent),'logical_calls':34,'fixture':'offline only'}
+            config={'simulation':False,'parent_receipt':receipt}
+            locked=m.adapters(ADAPTER)['_locked'];barrier=Barrier(2)
+            def claim(root):
+                barrier.wait()
+                try:m.bind_successor(root,config,locked);return 'bound'
+                except (ValueError,RuntimeError) as error:return str(error)
+            with patch.object(m,'parent_receipt',return_value=receipt), ThreadPoolExecutor(max_workers=2) as pool:
+                results=list(pool.map(claim,roots))
+                self.assertEqual(results.count('bound'),1)
+                winner=roots[results.index('bound')];loser=next(r for r in roots if r!=winner)
+                m.validate_successor(winner,config)
+                with self.assertRaisesRegex(ValueError,'parent_successor_already_bound'):m.bind_successor(loser,config,locked)
+                with self.assertRaisesRegex(ValueError,'successor_root_or_configuration_not_bound'):m.validate_successor(loser,config)
+                self.assertEqual(m.driver_lock_path(winner,config),m.driver_lock_path(loser,config))
+
+    def test_bound_successor_resumes_without_resend_and_rejects_copied_root(self):
+        # The real-mode guards are exercised with a synthetic parent and Fake only.
+        # No real parent registration, authentication or model transport is touched.
+        with tempfile.TemporaryDirectory() as tmp:
+            parent=Path(tmp)/'parent';parent.mkdir();root=Path(tmp)/'child';c=self.batch(root)
+            receipt={'root':str(parent),'logical_calls':34,'fixture':'offline only'}
+            c.update(simulation=False,parent_receipt=receipt,
+                     successor_admission={'execution_authorized':True,'cumulative_call_limit':98})
+            (root/'batch.json').write_text(json.dumps(c));(root/'batch-binding.json').write_text(json.dumps(dict(sha256=m.digest(c))))
+            fake=Fake([answer(),answer()]);fake.simulation=False;clock=Clock()
+            with patch.object(m,'parent_receipt',return_value=receipt), patch.object(m,'inspect_bound_context',return_value={'simulation':True}):
+                m.bind_successor(root,c,m.adapters(ADAPTER)['_locked'])
+                m.drive(root,adapter=fake,clock=clock.now,monotonic=clock.now,sleep=clock.sleep)
+                self.assertEqual(clock.t,120)  # Parent cooling plus cross-arm cooling.
+                self.assertEqual(len(fake.prompts),2)
+                m.drive(root,adapter=fake,clock=clock.now,monotonic=clock.now,sleep=clock.sleep)
+                self.assertEqual(len(fake.prompts),2)
+                copied=Path(tmp)/'copy';shutil.copytree(root,copied)
+                with self.assertRaisesRegex(ValueError,'successor_root_or_configuration_not_bound'):
+                    m.drive(copied,adapter=fake,clock=clock.now,monotonic=clock.now,sleep=clock.sleep)
+                self.assertEqual(len(fake.prompts),2)
 
 
 if __name__ == '__main__': unittest.main()

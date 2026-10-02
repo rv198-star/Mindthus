@@ -1,0 +1,116 @@
+test_bound_successor_resumes_without_resend_and_rejects_copied_root (test_slim_batch.SlimBatchTests.test_bound_successor_resumes_without_resend_and_rejects_copied_root) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+DELIVERED 00-D01-gpt-6.1-sol-current calls 1
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+ok
+test_empty_answers_preserve_terminal_without_delivery_or_retry (test_slim_batch.SlimBatchTests.test_empty_answers_preserve_terminal_without_delivery_or_retry) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+ok
+test_existing_transport_stop_alone_prevents_dispatch (test_slim_batch.SlimBatchTests.test_existing_transport_stop_alone_prevents_dispatch) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+ok
+test_internal_recovery_stops_every_response_branch_and_restart (test_slim_batch.SlimBatchTests.test_internal_recovery_stops_every_response_branch_and_restart) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+DELIVERED 00-D01-gpt-6.1-sol-current calls 1
+WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+READ 00-D01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+ok
+test_legacy_in_repository_batch_cannot_resume (test_slim_batch.SlimBatchTests.test_legacy_in_repository_batch_cannot_resume) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+ok
+test_old_34_calls_are_debited_not_restored (test_slim_batch.SlimBatchTests.test_old_34_calls_are_debited_not_restored) ... ok
+test_pending_prepare_cannot_claim_a_successor (test_slim_batch.SlimBatchTests.test_pending_prepare_cannot_claim_a_successor) ... ok
+test_pending_successor_authority_does_not_send_or_reset_budget (test_slim_batch.SlimBatchTests.test_pending_successor_authority_does_not_send_or_reset_budget) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+ok
+test_plan_and_input_separation (test_slim_batch.SlimBatchTests.test_plan_and_input_separation) ... ok
+test_read_raw_terminal_import_and_cross_arm_cooldown (test_slim_batch.SlimBatchTests.test_read_raw_terminal_import_and_cross_arm_cooldown) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+READ 00-D01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+DELIVERED 00-D01-gpt-6.1-sol-current calls 2
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+ok
+test_repository_ancestor_cannot_enter_transport_workspace (test_slim_batch.SlimBatchTests.test_repository_ancestor_cannot_enter_transport_workspace) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+DELIVERED 00-D01-gpt-6.1-sol-current calls 1
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+ok
+test_simulated_parent_cannot_supply_real_successor_receipt (test_slim_batch.SlimBatchTests.test_simulated_parent_cannot_supply_real_successor_receipt) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+ok
+test_simulation_cannot_dispatch_through_official_adapter (test_slim_batch.SlimBatchTests.test_simulation_cannot_dispatch_through_official_adapter) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+ok
+test_successor_claim_is_exclusive_even_for_concurrent_preparations (test_slim_batch.SlimBatchTests.test_successor_claim_is_exclusive_even_for_concurrent_preparations) ... ok
+test_three_reads_stop_at_path_limit (test_slim_batch.SlimBatchTests.test_three_reads_stop_at_path_limit) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+READ 00-D01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 00-D01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 00-D01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+ok
+test_unknown_stops_without_completion_or_second_call (test_slim_batch.SlimBatchTests.test_unknown_stops_without_completion_or_second_call) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+ok
+test_ab_pressure_tests_cover_issue_10_state_and_profile_scenarios (test_tvg_contract.TvgContractTests.test_ab_pressure_tests_cover_issue_10_state_and_profile_scenarios) ... ok
+test_ab_pressure_tests_document_expected_before_after_failures (test_tvg_contract.TvgContractTests.test_ab_pressure_tests_document_expected_before_after_failures) ... ok
+test_ab_run_record_captures_mechanical_and_live_results (test_tvg_contract.TvgContractTests.test_ab_run_record_captures_mechanical_and_live_results) ... ok
+test_balanced_profile_preserves_proportional_routing (test_tvg_contract.TvgContractTests.test_balanced_profile_preserves_proportional_routing) ... ok
+test_cinematic_profile_scripts_report_findings_without_semantic_verdict (test_tvg_contract.TvgContractTests.test_cinematic_profile_scripts_report_findings_without_semantic_verdict) ... ok
+test_cinematic_prompt_skeleton_activates_colossal_rules_only_with_adapter (test_tvg_contract.TvgContractTests.test_cinematic_prompt_skeleton_activates_colossal_rules_only_with_adapter) ... ok
+test_cinematic_visual_direction_profile_is_general_and_four_layered (test_tvg_contract.TvgContractTests.test_cinematic_visual_direction_profile_is_general_and_four_layered) ... ok
+test_cinematic_visual_direction_resources_separate_core_and_colossal_adapter (test_tvg_contract.TvgContractTests.test_cinematic_visual_direction_resources_separate_core_and_colossal_adapter) ... ok
+test_coverage_rich_preserves_review_and_handoff_structure (test_tvg_contract.TvgContractTests.test_coverage_rich_preserves_review_and_handoff_structure) ... ok
+test_default_gate_resolution_is_required_before_value_gain_loop (test_tvg_contract.TvgContractTests.test_default_gate_resolution_is_required_before_value_gain_loop) ... ok
+test_default_practical_value_profile_resource_exists (test_tvg_contract.TvgContractTests.test_default_practical_value_profile_resource_exists) ... ok
+test_exit_audit_template_records_grounded_insight_and_profile_prompts (test_tvg_contract.TvgContractTests.test_exit_audit_template_records_grounded_insight_and_profile_prompts) ... ok
+test_exit_audit_template_records_veto_and_independence (test_tvg_contract.TvgContractTests.test_exit_audit_template_records_veto_and_independence) ... ok
+test_expected_value_is_agent_input_and_gate_is_internal_stop_condition (test_tvg_contract.TvgContractTests.test_expected_value_is_agent_input_and_gate_is_internal_stop_condition) ... ok
+test_gate_calibration_uses_storyboard_and_rpd_price_examples (test_tvg_contract.TvgContractTests.test_gate_calibration_uses_storyboard_and_rpd_price_examples) ... ok
+test_generated_profile_outputs_are_ignored_not_contract_fixtures (test_tvg_contract.TvgContractTests.test_generated_profile_outputs_are_ignored_not_contract_fixtures) ... ok
+test_generic_atlas_contract_preserves_profile_and_human_ownership (test_tvg_contract.TvgContractTests.test_generic_atlas_contract_preserves_profile_and_human_ownership) ... ok
+test_generic_atlas_labeler_adds_round_ids_and_visible_lineage (test_tvg_contract.TvgContractTests.test_generic_atlas_labeler_adds_round_ids_and_visible_lineage) ... ok
+test_generic_atlas_selection_board_crops_only_supplied_ids (test_tvg_contract.TvgContractTests.test_generic_atlas_selection_board_crops_only_supplied_ids) ... ok
+test_generic_atlas_selection_rejects_labels_from_wrong_same_size_image (test_tvg_contract.TvgContractTests.test_generic_atlas_selection_rejects_labels_from_wrong_same_size_image) ... ok
+test_generic_atlas_selection_rejects_reordered_or_out_of_bounds_regions (test_tvg_contract.TvgContractTests.test_generic_atlas_selection_rejects_reordered_or_out_of_bounds_regions) ... ok
+test_generic_atlas_trace_accepts_blocked_run_and_deterministic_compose (test_tvg_contract.TvgContractTests.test_generic_atlas_trace_accepts_blocked_run_and_deterministic_compose) ... ok
+test_generic_atlas_trace_accepts_bounded_direct_delivery_and_legacy_shortlist (test_tvg_contract.TvgContractTests.test_generic_atlas_trace_accepts_bounded_direct_delivery_and_legacy_shortlist) ... ok
+test_generic_atlas_trace_checks_completed_output_bytes (test_tvg_contract.TvgContractTests.test_generic_atlas_trace_checks_completed_output_bytes) ... ok
+test_generic_atlas_trace_example_profile_and_adapter_hashes_match_packaged_sources (test_tvg_contract.TvgContractTests.test_generic_atlas_trace_example_profile_and_adapter_hashes_match_packaged_sources) ... ok
+test_generic_atlas_trace_example_validates (test_tvg_contract.TvgContractTests.test_generic_atlas_trace_example_validates) ... ok
+test_generic_atlas_trace_rejects_control_boundary_failures (test_tvg_contract.TvgContractTests.test_generic_atlas_trace_rejects_control_boundary_failures) ... ok
+test_insight_dense_preserves_calibrated_claim_tension (test_tvg_contract.TvgContractTests.test_insight_dense_preserves_calibrated_claim_tension) ... ok
+test_issue_10_ab_human_review_packet_exists (test_tvg_contract.TvgContractTests.test_issue_10_ab_human_review_packet_exists) ... ok
+test_issue_10_ab_packet_contains_ai_review_profile_matrix (test_tvg_contract.TvgContractTests.test_issue_10_ab_packet_contains_ai_review_profile_matrix) ... ok
+test_issue_10_ab_packet_includes_strong_baseline_coverage_rich_check (test_tvg_contract.TvgContractTests.test_issue_10_ab_packet_includes_strong_baseline_coverage_rich_check) ... ok
+test_issue_10_external_opencode_version_ab_packet_exists (test_tvg_contract.TvgContractTests.test_issue_10_external_opencode_version_ab_packet_exists) ... ok
+test_king_hu_profile_rejects_shaw_cleanwater_bay_pollution (test_tvg_contract.TvgContractTests.test_king_hu_profile_rejects_shaw_cleanwater_bay_pollution) ... ok
+test_king_hu_profile_uses_layered_construction_without_fixed_shot_recipe (test_tvg_contract.TvgContractTests.test_king_hu_profile_uses_layered_construction_without_fixed_shot_recipe) ... ok
+test_king_hu_wuxia_profile_resource_exists_and_is_scoped (test_tvg_contract.TvgContractTests.test_king_hu_wuxia_profile_resource_exists_and_is_scoped) ... ok
+test_legacy_colossal_examples_keep_profile_power_and_runtime_rescue_separate (test_tvg_contract.TvgContractTests.test_legacy_colossal_examples_keep_profile_power_and_runtime_rescue_separate) ... ok
+test_methodology_defines_grounded_novelty_and_stretch_boundaries (test_tvg_contract.TvgContractTests.test_methodology_defines_grounded_novelty_and_stretch_boundaries) ... ok
+test_methodology_defines_primary_loop_dimensions_and_state_routing (test_tvg_contract.TvgContractTests.test_methodology_defines_primary_loop_dimensions_and_state_routing) ... ok
+test_methodology_keeps_claim_and_handoff_as_late_stage_warnings (test_tvg_contract.TvgContractTests.test_methodology_keeps_claim_and_handoff_as_late_stage_warnings) ... ok
+test_methodology_keeps_veto_constraints_outside_value_axes (test_tvg_contract.TvgContractTests.test_methodology_keeps_veto_constraints_outside_value_axes) ... ok
+test_methodology_preserves_thickness_before_density_optimization (test_tvg_contract.TvgContractTests.test_methodology_preserves_thickness_before_density_optimization) ... ok
+test_output_profile_is_delivery_bias_not_workflow_fork (test_tvg_contract.TvgContractTests.test_output_profile_is_delivery_bias_not_workflow_fork) ... ok
+test_profile_construction_guide_separates_profile_power_from_runtime_rescue (test_tvg_contract.TvgContractTests.test_profile_construction_guide_separates_profile_power_from_runtime_rescue) ... ok
+test_public_tvg_doc_adds_profile_layering_and_case_index (test_tvg_contract.TvgContractTests.test_public_tvg_doc_adds_profile_layering_and_case_index) ... ok
+test_public_tvg_doc_mentions_grounded_insight_density_and_profiles (test_tvg_contract.TvgContractTests.test_public_tvg_doc_mentions_grounded_insight_density_and_profiles) ... ok
+test_runtime_observability_and_pressure_are_agentic_references (test_tvg_contract.TvgContractTests.test_runtime_observability_and_pressure_are_agentic_references) ... ok
+test_scripts_still_cannot_score_or_route_issue_10_value_gain (test_tvg_contract.TvgContractTests.test_scripts_still_cannot_score_or_route_issue_10_value_gain) ... ok
+test_shaw_brothers_profile_resource_exists_and_rejects_sample_contamination (test_tvg_contract.TvgContractTests.test_shaw_brothers_profile_resource_exists_and_rejects_sample_contamination) ... ok
+test_shaw_layered_profile_does_not_embed_case_specific_story_objects (test_tvg_contract.TvgContractTests.test_shaw_layered_profile_does_not_embed_case_specific_story_objects) ... ok
+test_skill_exposes_value_directed_grounded_insight_loop (test_tvg_contract.TvgContractTests.test_skill_exposes_value_directed_grounded_insight_loop) ... ok
+test_skill_names_veto_constraints_and_auditor_separation (test_tvg_contract.TvgContractTests.test_skill_names_veto_constraints_and_auditor_separation) ... ok
+test_trace_default_profile_can_omit_optional_profile_layers (test_tvg_contract.TvgContractTests.test_trace_default_profile_can_omit_optional_profile_layers) ... ok
+test_trace_init_accepts_debug_log_and_high_pressure_then_validates (test_tvg_contract.TvgContractTests.test_trace_init_accepts_debug_log_and_high_pressure_then_validates) ... ok
+test_trace_init_accepts_value_profile_metadata_and_validates (test_tvg_contract.TvgContractTests.test_trace_init_accepts_value_profile_metadata_and_validates) ... ok
+test_trace_init_accepts_veto_constraints_and_validates (test_tvg_contract.TvgContractTests.test_trace_init_accepts_veto_constraints_and_validates) ... ok
+test_trace_init_debug_log_scoring_and_pressure_defaults_validate (test_tvg_contract.TvgContractTests.test_trace_init_debug_log_scoring_and_pressure_defaults_validate) ... ok
+test_trace_validation_rejects_invalid_audit_role_and_veto_result (test_tvg_contract.TvgContractTests.test_trace_validation_rejects_invalid_audit_role_and_veto_result) ... ok
+test_trace_validation_rejects_invalid_runtime_observability_shapes (test_tvg_contract.TvgContractTests.test_trace_validation_rejects_invalid_runtime_observability_shapes) ... ok
+test_trace_validation_rejects_invalid_value_profile_shape (test_tvg_contract.TvgContractTests.test_trace_validation_rejects_invalid_value_profile_shape) ... ok
+test_tvg_profile_case_pages_exist_and_cover_three_example_lanes (test_tvg_contract.TvgContractTests.test_tvg_profile_case_pages_exist_and_cover_three_example_lanes) ... ok
+test_value_profile_is_first_class_optional_input_with_default_resolution (test_tvg_contract.TvgContractTests.test_value_profile_is_first_class_optional_input_with_default_resolution) ... ok
+test_value_profile_schema_and_scripts_preserve_agentic_boundary (test_tvg_contract.TvgContractTests.test_value_profile_schema_and_scripts_preserve_agentic_boundary) ... ok
+
+----------------------------------------------------------------------
+Ran 78 tests in 9.322s
+
+OK

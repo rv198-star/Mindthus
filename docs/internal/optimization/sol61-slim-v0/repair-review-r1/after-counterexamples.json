@@ -1,0 +1,43 @@
+{
+  "malformed_reply_after_recovery": {
+    "fake_invocations": 1,
+    "results": [
+      {
+        "status": "failed",
+        "error": "invalid_reply_json_after_terminal",
+        "answer": null
+      }
+    ],
+    "transport_stop": true,
+    "driver_stop": true
+  },
+  "invalid_read_after_recovery": {
+    "fake_invocations": 1,
+    "results": [
+      {
+        "status": "format_failure",
+        "answer": null,
+        "error": "invalid_read_contract"
+      }
+    ],
+    "transport_stop": true,
+    "driver_stop": true
+  },
+  "empty_answer": {
+    "fake_invocations": 2,
+    "results": [
+      {
+        "status": "format_failure",
+        "answer": null,
+        "error": "empty_answer"
+      },
+      {
+        "status": "delivered",
+        "answer": "SIMULATION ONLY",
+        "objection": "simulation"
+      }
+    ],
+    "transport_stop": false,
+    "driver_stop": false
+  }
+}
