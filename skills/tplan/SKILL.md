@@ -19,8 +19,8 @@ Its cycle is shorter than ordinary OKR management: checkpoint, evidence, blocker
 feedback, or decision hook can update the active path while the Mission stays stable.
 Treat it as a dynamic workflow runtime.
 
-Scripts must not decide semantic truth. They validate shape, legality, references, and
-authority. Semantic judgment routes to `3l5s`, `sra`, `sela`, `edsp`, `wae`, or `tvg`.
+Scripts must not decide semantic truth: validate shape, legality, references and
+authority. Route semantic judgment to `3l5s`, `sra`, `sela`, `edsp`, `wae`, or `tvg`.
 
 ## Mainline / 主路径
 
@@ -42,34 +42,33 @@ Run as a thin Mission state machine by default. `runtime level may reduce record
 
 Lite Startup Default is checkpoint-first startup. Delayed Step Materialization creates
 Steps only for recovery, acceptance, rollback, evidence reference, or decomposition.
-Sparse Evidence keeps routine notes in logs and records only acceptance, blocker,
-feedback, decision, state change, or key findings as evidence. Checkpoint Command lets
-`scripts/checkpoint.py` bundle a log, optional evidence, and survey without bypassing
-gates. Mission Pulse lets `scripts/mission_pulse.py` build a read-only Snapshot/Pulse/Gate
-route before continuation, freeze, handoff, stop, cleanup, or risk review.
-Role-Separated Review Policy separates doing, direction-checking, acceptance, and
-learning; it is responsibility separation, not a new runtime role model.
+Sparse Evidence keeps routine notes in logs; only acceptance, blockers, feedback,
+decisions, state changes and key findings become evidence. Checkpoint Command (`scripts/checkpoint.py`)
+bundles log, optional evidence and survey without bypassing gates. Mission Pulse
+(`scripts/mission_pulse.py`) builds a read-only Snapshot/Pulse/Gate before continuation,
+freeze, handoff, stop, cleanup or risk review. Role-Separated Review Policy separates
+doing, direction-checking, acceptance and learning: responsibility separation, not a new role model.
 
 ### Runtime Loop
 
-Use `3l5s` for success-critical Task proposal. Mutate structure through scripts, not
-hand edits. Separate logs from evidence. Survey state, build a packet with
-`scripts/make_decision_packet.py`, run the routed Mindthus hook, then apply only
-validated decisions. Stop in Chinese when continuation is unsafe.
+For a known, bounded Task, reuse its objective and acceptance. Use `3l5s` only for
+unclear or oversized proposals. Mutate structure through scripts, not hand edits;
+separate logs from evidence. Consequential structure/authority changes, new blockers,
+unknown recovery or same-path continuation triggers require survey,
+`scripts/make_decision_packet.py` and a routed hook. Apply only validated decisions;
+stop in Chinese when continuation is unsafe.
 
-Lite Quickstart Recipe: Prefer these recipes over script-help exploration when inputs
-are known: start with `python3 skills/tplan/scripts/init_lite.py --dir ...`, checkpoint
-with `scripts/checkpoint.py`, then escalate through evidence, packet, hook, and
-`scripts/apply_decision.py` only when needed.
+Lite Quickstart Recipe: Prefer these recipes over script-help exploration:
+`python3 skills/tplan/scripts/init_lite.py --dir ...`, then `scripts/checkpoint.py`.
+Use evidence, packet, hook and `scripts/apply_decision.py` when the triggers above apply.
 
 ### Shared Risk Context
 
-Use Shared Risk Context when a local blocker, degraded condition, invalid evidence
-risk, abnormal cost, or recovery signal may affect another unit's risk-adjusted value.
-execution units do not read each other's task logs. Publish scoped signals to
-Mission-level `shared_context.risk_signals`. `scripts/record_risk_context.py` writes
-`risk_context_update`; recovery writes `risk_context_recovery`. High-impact decisions
-with active shared risk must expose `risk_assessment`.
+execution units do not read each other's task logs. For blockers, degradation, evidence risk,
+abnormal cost or recovery affecting another unit's risk-adjusted value, publish
+`shared_context.risk_signals` via `scripts/record_risk_context.py`:
+`risk_context_update` or `risk_context_recovery`. High-impact decisions with active
+shared risk must expose `risk_assessment`.
 
 ### Mission Shared Context Memory
 
@@ -77,14 +76,16 @@ Run Mission identity preflight with `preflight_mission.py` at
 `.tplan/shared_contexts/tplan_mission_shared_context-<mission_id>.md`. `source_contexts`
 are background only and never inherit acceptance authority.
 
-Re-entry: a residual Mission is only a candidate. Require `--disposition` and
-`--rationale`; record its receipt before mutation. Active-Mission continuation is separate.
+Re-entry: a residual Mission is a candidate; require `--disposition`, `--rationale` and
+a receipt before mutation. Active-Mission continuation is separate.
 
 ### User-Facing Output Adapter
 
 Internal IDs are for runtime stability. User-facing output should lead with meaning;
-ordinary updates should not lead with raw IDs. Use `scripts/render_user_update.py` for
-compact Chinese status updates. For completion or cost review, use the Standard tree.
+ordinary updates should not lead with raw IDs. Use `scripts/render_user_update.py`
+for Chinese updates: result, blocker and next action.
+Retain Standard handoff artifacts below; expand the tree for cost or dependency review,
+without routinely pasting it into the business reply.
 
 Terminal handoff: run `render_execution_cost_tree.py "$MISSION_DIR"
 --completion-handoff`; include both emitted links, or state the rendering failure. Full

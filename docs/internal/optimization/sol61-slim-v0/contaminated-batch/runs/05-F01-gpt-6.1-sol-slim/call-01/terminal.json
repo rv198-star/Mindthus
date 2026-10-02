@@ -1,0 +1,56 @@
+{
+  "binding": {
+    "request_sha256": "e1693efae13ec5b775193de3f6c1333031de4dce29b4aac03fbf89ba9d7e116b",
+    "wire_sha256": "c790a1103ab652817d9daed479ebc343a222e56659551514ae070e9f9015c90e",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "path": {
+      "case": "F01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 1,
+    "simulation": false
+  },
+  "raw_sha256": "858f60fd3a25c6cd5dde4ad19fed6c95eeedca80924728e1305218261cccce73",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "docs/methodologies/primitives/whole-elephant-protocol.md",
+      "docs/methodologies/primitives/frame-fitness-check.md",
+      "docs/methodologies/primitives/expression-pressure-and-gates.md"
+    ],
+    "text": "需要读取“局部机制能否定义完整能力”的判断规则、输入定框规则及交付前自省规则。当前关键是：Prompt 作为模型输入，是否足以解释 Skill 的完整任务能力和主要价值；已有 EDSP 材料足够，无需追加其他 Skill。"
+  },
+  "usage": {
+    "input_tokens": 25573,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 196,
+    "reasoning_output_tokens": 65
+  },
+  "error": null,
+  "session_seconds": 16.78250516699336,
+  "ended_at_epoch": 1790938090.4079502,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "e1693efae13ec5b775193de3f6c1333031de4dce29b4aac03fbf89ba9d7e116b",
+    "transport_successor_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

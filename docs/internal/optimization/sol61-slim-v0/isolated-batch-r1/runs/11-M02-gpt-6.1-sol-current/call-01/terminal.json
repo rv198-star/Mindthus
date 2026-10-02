@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "5d34f003a64bd23bb470e83718d22f64138a4f59be58ea8eca5a932f27fcc81c",
+    "wire_sha256": "c5b937c4a4dd6659fdb4abc701b7bfbfcb2b7824ad6ab0e102d9eca4fbde7173",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "M02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 1,
+    "simulation": false
+  },
+  "raw_sha256": "7dfcbe2b394a5c1e9a75b01586da81d18426e0ba50dc45f9823c059ea1710685",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/sela/SKILL.md"
+    ],
+    "text": "读取 SELA 技能，完成已读 MPG 要求的效率方向校准，再依据9小时维护窗口、6小时迁移和额外1小时回滚，判断当前切换动作与最迟回滚时点。"
+  },
+  "usage": {
+    "input_tokens": 20531,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 150,
+    "reasoning_output_tokens": 66
+  },
+  "error": null,
+  "session_seconds": 16.98264862500946,
+  "ended_at_epoch": 1790946252.440508,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "5d34f003a64bd23bb470e83718d22f64138a4f59be58ea8eca5a932f27fcc81c",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "request_sha256": "e142e8ed41338a4c24bd19e0bce8df7b73ef09014d979342a8d3ab388d8f3b96",
+    "wire_sha256": "727defa8c757733cbb338f1b8ef74080e185958c16759f24bd8c6995545eefe1",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "V02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "4a834bdbc9719136287ab65fe00d6a488863d698f2f585f51de20781c82cdd5d",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "已经足够用于同事明天接着只读排查，不必扩写。已交代复现情况、关闭缓存后的观察、根因未知、检查范围、一小时时限、权限边界，以及无法定位时的交回方式。\n\n唯一需要确认的是同事能否找到对应日志。若知道入口，原文可直接用；若不知道，只补日志位置和两次复现的时间即可。"
+  },
+  "usage": {
+    "input_tokens": 18717,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 181,
+    "reasoning_output_tokens": 61
+  },
+  "error": null,
+  "session_seconds": 22.945104458995047,
+  "ended_at_epoch": 1790948443.057527,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "e142e8ed41338a4c24bd19e0bce8df7b73ef09014d979342a8d3ab388d8f3b96",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

@@ -46,7 +46,7 @@ Core relationship:
 
 ### SELA ↔ MPG Twin-Lens Handshake
 
-MPG direct-load companion check: when the input presents a system-efficiency/trend-based mainline, run a lightweight SELA support check before path strategy. When this applies, you must read `mindthus:sela` before the final answer. Do not treat this as an internal memory-only check.
+MPG direct-load companion check: only reopen a system-efficiency/trend-based mainline when its direction evidence is insufficient or disputed. Read `mindthus:sela` for that remaining gap; otherwise retain the supported direction as a premise with its evidence ceiling and judge carrier/path directly. Do not repeat an already settled direction check.
 
 Direct-load output obligation: do not wait for using-mindthus to carry this handoff.
 When MPG is loaded directly, the first visible sentence must be a plain-language thesis

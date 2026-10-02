@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "2243cdfa5a45c7bbccdd7de44c53120da67c5794125d4a16200a9894414d383a",
+    "wire_sha256": "dfd2bfddbf8e1ca88d4a96423633131684300d23fe672cb9778916bd256ce860",
+    "batch_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "path": {
+      "case": "F01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 105,
+    "batch_call_ordinal": 7
+  },
+  "raw_sha256": "34507bcacced6e60b5c9606fa33e296ecb968ba7f876d251534a9989daf2df87",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "按你给定的“本质”——完整的任务能力及主要价值——你的观点不成立。你把“模型通过什么接收指令”当成了“整个任务能力由什么构成”。这是把接口当成了整体。\n\n你抓住的局部事实是：Skill 中给模型看的任务说明、规则和示例，确实属于 Prompt。若一个 Skill 只有这些内容，称它为“组织好、可复用、按需加载的 Prompt”，基本准确。但这不能推出 Skills 的完整能力都可以归结为 Prompt。\n\n关键在于，你对脚本的定义过窄：脚本不必只是安排什么时候、按什么顺序发送 Prompt。它还可以实际解析文件、执行计算、转换格式、保存任务状态、检查结果或调用外部工具。这些操作直接参与任务完成，并不只是向模型描述该怎么做。\n\n用一个反事实就能看清：保持给模型的 Prompt 不变，移除实际执行计算、生成文件和保存状态的程序，任务能力会不会下降？如果会，这些程序就是能力的组成部分。“程序的结果最后又作为 Prompt 交给模型”，不能抹掉程序已经完成的工作。把计算结果写进消息，不等于计算本身由消息完成。\n\n但反驳你，也不需要宣称“脚本才是核心”。Skills 的主要价值在于封装可复用的任务方法：何时适用、如何推进、调用哪些资源、怎样验收、失败后如何恢复。Prompt 可以承载其中大量方法；程序则可以落实确定性操作。具体 Skill 的主要价值可能来自方法说明，也可能来自执行资源，要看它实际解决了什么问题。\n\n本会话中的入口材料就明确区分了两种作用：“脚本只验证 shape/reference，不证明语义正确。”这说明规则指导判断，脚本负责特定检查；二者职责不同，不能因为都服务于模型，就统称为 Prompt。\n\n所以，主次判断很明确：**“Skill 的指令层本质上是 Prompt”可以成立；“Skills 的完整任务能力及主要价值本质上就是 Prompt”不成立。** 前者描述一种实现方式，后者错误地把实现方式当成了完整能力的解释。\n\n你在争论中更站得住的表述是：“纯指令型 Skill 可以视为工程化的 Prompt；完整的 Skill 则是可复用任务方法的封装，其能力还取决于执行资源和运行环境。”"
+  },
+  "usage": {
+    "input_tokens": 18230,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 798,
+    "reasoning_output_tokens": 212
+  },
+  "error": null,
+  "session_seconds": 39.41292058399995,
+  "ended_at_epoch": 1790963146.37072,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "2243cdfa5a45c7bbccdd7de44c53120da67c5794125d4a16200a9894414d383a",
+    "transport_successor_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

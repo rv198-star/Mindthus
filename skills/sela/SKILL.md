@@ -52,8 +52,7 @@ only if a real long-term efficiency/local-advantage direction pressure remains.
 
 ### Multi-Role Check
 
-For non-trivial SELA judgments, use `single-agent multi-role` pressure before turning
-the principle into action:
+When direction remains disputed, use these `single-agent multi-role` perspectives to expose the unresolved point; no mandatory role transcript or extra model call:
 
 - `System Advocate`: argues the system-efficiency case, scale curve, feedback loop,
   cost curve, and long-term mainline.
@@ -85,7 +84,7 @@ Timing Check is not a substitute for MPG. If the question already contains a car
 
 ### SELA ↔ MPG Twin-Lens Handshake
 
-SELA direct-load companion check: if carrier, exposure, path volatility, or continue/exit commitment is present, run an MPG companion check after direction calibration. When this applies, you must read `mindthus:mpg` before the final answer. Do not treat this as an internal memory-only check.
+SELA direct-load companion check: carrier, exposure, path volatility or commitment belongs to MPG. Transfer action ownership; read `mindthus:mpg` when that path judgment is not already sufficiently specified. A real handoff preserves unresolved constraints; it does not repeat an already settled direction check.
 
 SELA calibrates direction; MPG owns path-carrying action. When the companion check
 applies, the first visible sentence must be a plain-language thesis that separates

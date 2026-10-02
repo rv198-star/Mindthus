@@ -6,6 +6,8 @@ This document defines a standalone, project-portable methodology for value-orien
 
 It increases a module's practical thinking value without letting the work drift into shallow completion, random brainstorming, overfitting, or endless refinement.
 
+This is conditional expanded guidance. The sufficient single-pass mainline in SKILL.md is the default; detailed round tables and audit prompts are not all mandatory for every artifact. Pressure describes available effort, never a required minimum round count.
+
 Depth is the means only when the module is under-thick. Practical value gain is the target. Positive-value exit is the stopping rule.
 
 TVG is not a generic improvement pass and not a thickness-expansion method. Its leverage comes from dynamically deciding whether the current bounded module needs depth formation, grounded insight generation, value refinement, compact strengthening, warning calibration, or honest exit.
@@ -188,7 +190,7 @@ value axes checked, Gate checks, veto checks, next-round positive-value hypothes
 decision, and rationale. It exists so a user or reviewer can see why the loop continued,
 froze, blocked, or returned for remediation.
 
-`value_gain_scoring_reference` is enabled by default as an always-on reference. It uses
+For explicitly initialized structured traces, `value_gain_scoring_reference` is enabled by default for compatibility. Ordinary sufficient edits need no trace or scoring pass. When used, it uses
 0-5 ordinal anchors for `Thinking Thickness`, `Grounded Insight Yield`, and
 `Value Density`. The scores are not measurements: scores help compare rounds, not
 compute decisions. A score jump may suggest useful progress; a small jump may suggest

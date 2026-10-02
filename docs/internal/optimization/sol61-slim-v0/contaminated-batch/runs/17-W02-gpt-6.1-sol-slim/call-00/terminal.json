@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "8abf66843deab677a36d4f3b59e688e45d9253027b362b89a1fda6b1a6cc0b19",
+    "wire_sha256": "a56a6d85182c8fb5bb9e9b1b22dcf82c8ffbd52b2fe2a351cd5e27ba5c4028ae",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "path": {
+      "case": "W02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "0bedf791f8f745d4f8c9acfe8c97a7100a71ee611e47c957053c9f3d3a46c630",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "text": "我会使用 WAE 判断控制边界：固定税率计算和格式校验可以由流程控制，但跨地区例外的适用条件尚未达成一致，需要区分流程可执行的规则、Agent 可辅助的判断，以及必须由授权责任人裁定的部分。读取该 Skill 以明确这些边界和停止条件。"
+  },
+  "usage": {
+    "input_tokens": 21932,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 142,
+    "reasoning_output_tokens": 32
+  },
+  "error": null,
+  "session_seconds": 14.644399458004045,
+  "ended_at_epoch": 1790939773.0566459,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "8abf66843deab677a36d4f3b59e688e45d9253027b362b89a1fda6b1a6cc0b19",
+    "transport_successor_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

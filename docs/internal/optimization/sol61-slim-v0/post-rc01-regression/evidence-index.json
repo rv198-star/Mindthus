@@ -1,0 +1,5253 @@
+{
+  "scope": "This batch directory only; mechanical file inventory, not independent content/engineering review",
+  "excludes": [
+    "evidence-index.json"
+  ],
+  "files": [
+    {
+      "path": "EVIDENCE.md",
+      "bytes": 2153,
+      "sha256": "b00876865d91e0178984471481efec634323ac8dfd52f95c8278b27e77fa9c24"
+    },
+    {
+      "path": "PAIRS.md",
+      "bytes": 1507,
+      "sha256": "de398de134a61c5c016fa824d455f0f26002aaffdfd99aa2077c0d95b22a8416"
+    },
+    {
+      "path": "PATHS.md",
+      "bytes": 4743,
+      "sha256": "bbaa03318022034b210eeb62a32b2390ca160a6eb125192d083f1f62f745aad3"
+    },
+    {
+      "path": "PLAN.md",
+      "bytes": 3126,
+      "sha256": "5c0521d736cb320eb633013017b841b8e40de9ab780d989c2462cb7715ab0a51"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 8031,
+      "sha256": "dcda6c4ddf218f48eb8e7c05cbdbfb549969949c355d0a72d249b5fb8180379b"
+    },
+    {
+      "path": "admission.json",
+      "bytes": 1342,
+      "sha256": "27afeadd704e41dbc321a46ec56c78834379f8d1caa2c1c3f2a1b79e530476d1"
+    },
+    {
+      "path": "assessment.json",
+      "bytes": 23449,
+      "sha256": "b7acdd3bd2ab2970d28a541387a356bf7e6a3d773c8cff3c7cd80d64def88fd4"
+    },
+    {
+      "path": "batch-binding.json",
+      "bytes": 83,
+      "sha256": "d3767f1af8724f2bdeedd4de4f07a683fde1cc11fdde6d9134b679a14453f0b9"
+    },
+    {
+      "path": "batch.json",
+      "bytes": 10659,
+      "sha256": "f53fbd83244667bac628de943182f6f889dee5849221fa6606a0ff8d29dd2f83"
+    },
+    {
+      "path": "collect_metrics.py",
+      "bytes": 3918,
+      "sha256": "79fb74a5e2a98d0e10e0b9590db92e92ec2069409dab3efd08dba09a858b420a"
+    },
+    {
+      "path": "delivery-binding-check.json",
+      "bytes": 274,
+      "sha256": "58d4b904d5a49f41ebca6531d4147687910751d8bfa1a88c0ac933bf4b14a4c2"
+    },
+    {
+      "path": "driver.log",
+      "bytes": 2789,
+      "sha256": "121ecfb4b0bff01898ba695826a0bf045d457f76e6ee7acb6b920967ca6f1b75"
+    },
+    {
+      "path": "execution-cost-tree.md",
+      "bytes": 1052,
+      "sha256": "1e103831292ddca829f9f6631737d8481f6c3a5bfeec28ba961bd3cb4eec38fa"
+    },
+    {
+      "path": "execution-cost-tree.svg",
+      "bytes": 5304,
+      "sha256": "c2479e86e2dca4f004d207890cd8d36d2f545f62e3f358d1d7d8058ceae18164"
+    },
+    {
+      "path": "final-checkpoint.json",
+      "bytes": 3557,
+      "sha256": "52c3fd32d18d6191b3cf08ad487a93a40fe528a8ac33c45aac4c37334cca1c5c"
+    },
+    {
+      "path": "groups.json",
+      "bytes": 1867,
+      "sha256": "fde2287cf6643add722ebec146ca693581a89fcd3c9dde1c48fe0479b65ec9c1"
+    },
+    {
+      "path": "inputs.json",
+      "bytes": 4435,
+      "sha256": "244ca4c6c23a528392f56dc000140c05a0952a45a5953477d160300fb5ffca8f"
+    },
+    {
+      "path": "midpoint-checkpoint.json",
+      "bytes": 3181,
+      "sha256": "70934e72a16d460019ec22ae8a2f150a6d5e60256b10705c31e1ac84c68222ac"
+    },
+    {
+      "path": "pairs.json",
+      "bytes": 3511,
+      "sha256": "950da662743612a8ea1ee393f846345ecca839f58cc8a9c145e680351a846d8e"
+    },
+    {
+      "path": "parent-cooldown.json",
+      "bytes": 141,
+      "sha256": "30ea0b454ec6cc73e982662a56d396d3fedb25e8988b1b7a5096d42eca26f545"
+    },
+    {
+      "path": "path-status-40.json",
+      "bytes": 26068,
+      "sha256": "465ead9e6bb4f77c5fec79110363a8b4278b053546d5070813825a2eec6f0ad3"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/answer.txt",
+      "bytes": 17,
+      "sha256": "5d047cd475a063aa6471701521b04441ae8d8297ac4c15046c0fb3f6247b2724"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 95,
+      "sha256": "262e3fbfd1c7b7f1397c5c8beda9aca87b21a5f21e4eb4d12cf7235919d31739"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "2711c5bb2a3aa50c2457a8daeee35cafb5fed918b2e1b5966fe6d16dd85c5844"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 447,
+      "sha256": "b0886ed4525c09289a0836a52841357f4894b54a1fefe0256f37cbf42de3e5df"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 162,
+      "sha256": "eecdd606780ab61aa6ff0473588b0fffdd8288447b721168fa00ffd66c0fef5e"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 2664,
+      "sha256": "09212c4b6bc69da1fd4a7fbbd52bb2d563d1d3313f073287a92ad07b0b6fa265"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 77,
+      "sha256": "a060c12f99fcc6c7751c47caf93c0a431464faca1105d60755ae8cf8cb306f6d"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "4187ac804928c275d78b72732970132ececec866760beb19d84c3c43dbed9998"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 1811,
+      "sha256": "d08d8175efd9f6e22f7d724a4aaef327e2fbe13da822e0f04a8ab0344cf025ac"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "68cf3ebd1a6a12e8e0815acfd8cbea6152a3e469f2ef497c63249e5593c85122"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9553,
+      "sha256": "9a314150cc691408d0ee2e3da89ea4dfe7b57006464998b1c487626f5ca9d002"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 993,
+      "sha256": "4cdd52cf76e29d6f14c9c8fc15ae9aaa8318fceb950df7b9765e62dd51e36c3b"
+    },
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/result.json",
+      "bytes": 82,
+      "sha256": "7e44b5e0bec72db17ecb041829ec01eec5ce05a5e4203767b66c89ceabdce46d"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 17,
+      "sha256": "5d047cd475a063aa6471701521b04441ae8d8297ac4c15046c0fb3f6247b2724"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 95,
+      "sha256": "262e3fbfd1c7b7f1397c5c8beda9aca87b21a5f21e4eb4d12cf7235919d31739"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "e5b7a35a82b209083e5d509d367f5188fbe97c4d02b3ef8618b37bfc85141281"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 445,
+      "sha256": "016e7bbebe7abaab2778a28c4198745906ad2bf8fd43e803dee9bf25af62a996"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "7bcc7b6c7ff9d77e57d7faa86aae14674759102365a78d09a0cf83a2bc5ef625"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 2662,
+      "sha256": "c71342862d48624b11f8d0843191357a7b0bb5f69c13be17b30eb1932fdb6483"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 77,
+      "sha256": "a060c12f99fcc6c7751c47caf93c0a431464faca1105d60755ae8cf8cb306f6d"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "9beb1716aed876a2439154452de19dccdeb97696e621c81f9a56a2be71076274"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 1808,
+      "sha256": "0a5cf93c44c5ee3bb916f29119bf85ab7735ce6d082a13ea51fab6ff3a77953b"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "14fccb084ea426f6185166550d8e349aff49e8b157e6579550bc26b50626a5a2"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9566,
+      "sha256": "6ccf9f3583b1a3624524fa064054d50c0e136e2c39162835042a3a0fbc50e7c5"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 991,
+      "sha256": "ad28b3451f111079fd6500504154e86cc6fd47a66a569febaa697c07363eefdf"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/result.json",
+      "bytes": 82,
+      "sha256": "7e44b5e0bec72db17ecb041829ec01eec5ce05a5e4203767b66c89ceabdce46d"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 344,
+      "sha256": "c178b6f932a45136807143b95afc2bd2ecafc2ab12584d6e7487a406e22b2669"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 542,
+      "sha256": "226dceb80ad25a7f93bd97b3d3c6d9545a7a5c58bb5bc8ae1b8606bb5f1e859f"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "0453f8627fbad61418160d0bb3a262f6bb7542e6300f0e9f1989506eb440b5ea"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 445,
+      "sha256": "baea03bf4886d84b3c3cf9e3ecfee6c090457391e55c4b3ba3737b98173d53c4"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 174,
+      "sha256": "9f1c926d549dd8205d54379fddf0b7fd940d7270be5019d411be9cfd39c7ae6c"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 4005,
+      "sha256": "11a7dc42aae2e587f25f09bc754a5e41e42db2095a47c01f206be62ad7c7e871"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 524,
+      "sha256": "7de1a617368ea67a121a77d4056a934b454e51d4a6c8761a3147e478109b70e3"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "7f9522fca4ca6a7f3d2dbf1c1fe9acdace3b3824499ebfdaf47b844ec8b06a56"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 2257,
+      "sha256": "63bdb10f2f03e54b5081954600fa032e7c5e55d3a4f38648af0ffdd5907861fd"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "49a1c1da5bca86815735be0d21e5ce196b3c0ef553789467957069cb7e87372f"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9639,
+      "sha256": "4a291dba9c8437a7646651fb787ce5a4ce9f5a39d7bbd06ecde3e50234f28b30"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 991,
+      "sha256": "b38d9c5324cc83fb527bfc7d7e8234e456b7da458def95033b6c43de165f53ff"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/result.json",
+      "bytes": 529,
+      "sha256": "9105e2852eec76509371a32bf139956177e654b71b294b3cea2786facde6f3b5"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/answer.txt",
+      "bytes": 270,
+      "sha256": "e70d60f0d5e81aac38eb9e698c074f0b49dce5f57d1e9ee587d916c191d8d561"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 478,
+      "sha256": "48de348ae2b747c0a3e3114e37d98472c9e1e86ac66eff1e33bd62f07006ff13"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "681f962ffdafe4e21b597255848dbc253a3e1c9523c6e26abcd0d23d08bdc809"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 448,
+      "sha256": "d3258f8b8bbf65548dd2ac9d744d5d2c3473e352c25319c0d060a9b78ea2ef01"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "86a5a89d4e5462c3f1f1e4539482f6cb731b6c6601c12abe0c3ea5fa676b4da2"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 3798,
+      "sha256": "27652b48b80ff78a1defe3fdb95d4683038133958504d0e2e693027b74d564df"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 460,
+      "sha256": "ef51173f68cb8c0d6202e1a6375a13629b2dbd0d151a54e9187df3aea66cc424"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "a373ac2c479195869cf493fdeff18c3ef4c39952fafc07666d7de94a3d5d7fa8"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 2191,
+      "sha256": "a6ad6f31bf0c7f0a73e2dfd8036b03d9689d24e4b0ca52dcb2277d6f1055c1fe"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "ed2e6e8e5626825e4c0dcb3a7866b7aad086808ca9ab1c7dde6730b6a3e62097"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9626,
+      "sha256": "4d6cd1d5a1518356e10fdc38ce0bb36db2c3588059ee016410d872881265d67d"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 994,
+      "sha256": "b11361aa12a1577b6d7e030f558d990860bbb6a670e24e4b3203590533aec3fc"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/result.json",
+      "bytes": 465,
+      "sha256": "88c7fe532ed714c46b470e48f64f755500e7d32b6765de68bfaf7dcb70f3881a"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/answer.txt",
+      "bytes": 2418,
+      "sha256": "d034006fe1abe1f5713ea41f63d7e5f5a8ab822b4849d1c3b2ebd6dd5093ffb7"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 264,
+      "sha256": "ffcf2ef82ba4940ecbd7a21147b0912396bd19dc70be1cf5db6627af47514c79"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "31de001c69fb2e9111cb9dc081eac765e9c01d846788a5e21ba29e4fc64c21df"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 448,
+      "sha256": "898267863d9e880cbfb225c34af19fad7389f89499293dada67069fe128c9b30"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "432eebc3575ef1abc0ec39f056538c6231ad93f2c6660ec5ad5f6d1e8b0de11b"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 3154,
+      "sha256": "274cf5ecbe8d34a7ed0075972f368505c56d49437b7b3582e6904cc8126f65f0"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 238,
+      "sha256": "fbefd00f16525ec3eeb520cd826b1fa156d207fc20d222d4c477e9bbfac3762b"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "f13ad0212da081f7c3629a37344bee479b1d02d9f44746433e15da490f36b656"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 1988,
+      "sha256": "0f03af41d9deb298cac5d067d5ba79cab03868f6d4d945324c789ec31a6bc794"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "8410d2f5429b67b39e25f5dbec4d55a8d87f8c3161b1cac91ba2471df196405d"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9774,
+      "sha256": "5e081fc60e3a5bda695a75d98e77acb8d87facf3f73773b938ec4d47c344fa3d"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 994,
+      "sha256": "696cb1bcd2642f03eef98ae58dda8091184e38b92aaf0f7979006c73652f8e89"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-01/accepted.json",
+      "bytes": 2506,
+      "sha256": "c8e22bb5502794c0aeb155a2da072d66fbd9ff4473bc2c4286afeb2c70084d9e"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "84e7e2749ff50d413f6f3fde940c025c8a644b0454245c2c317abfa014e2701e"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-01/intent.json",
+      "bytes": 448,
+      "sha256": "a3d4034bcc6e4381fac448c70071f7b8fe60be360b25b6537f913e6562528adf"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-01/measurement.json",
+      "bytes": 173,
+      "sha256": "a1da950560706b936a27f0a1fd8a0a1162ffa9c4aebd21d446daee7bdb9695a9"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-01/raw.json",
+      "bytes": 9946,
+      "sha256": "bed2b31221c405ab77ec306a7bed6f819fd25cc4b5c9a87a00ef019246b0b3be"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-01/reply.json",
+      "bytes": 2488,
+      "sha256": "57ae33995986cb61001abb8ebf89c7e5ebd05a78d7867516ae02441411f6f1e5"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-01/request.json",
+      "bytes": 228,
+      "sha256": "5739781bc17dde1a1a822041eb90b8d7a91d550df64693ce562bccd4bda4a763"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-01/terminal.json",
+      "bytes": 4220,
+      "sha256": "03a2d2465133721990e6998c68e3d722d81f192c0533666438dd7b42ed10578c"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "087cfa043ffa97f560495ffa1165ddff0f6ebdcb6935d50e331d7b8e329b2270"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-01/wire.json",
+      "bytes": 20182,
+      "sha256": "7872f58038150b550a96e3adee3714a25f5814ee5684828a4623882326c8fdda"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-01/workspace-binding.json",
+      "bytes": 994,
+      "sha256": "e0759e13944e33b4edc314b8c75a8f0e4feb46973696637d2771d1d86c2b5e1a"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/result.json",
+      "bytes": 2493,
+      "sha256": "fa64ecb1a9f93baf91c4fe3f067de541f0a39bd30833d21e443d19b520e3b92a"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 2390,
+      "sha256": "705d7e3c8916b52cf4b8292859c7dbaf2554ae8e1643597dec2ecf0d81f498de"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 2480,
+      "sha256": "21776c0eec84978be97e5b2cbe0345865499b2980a7bec9df38268138e7da714"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "efaadc2bcaf6824463c231b884da8baf25011d48c556c2ce22d1c1ebb5ead623"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 445,
+      "sha256": "21e056f15554523ea37a6254325768c4825d2bef6b4eec7a48424ea7fb7a048a"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 174,
+      "sha256": "2f70aee6449c38a0081d43a9130f1cd84b52f207cacd01d1e231b30480ac33c2"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 9883,
+      "sha256": "4a6cef9b78334d680f581ed98992c1acf0cc8413d36f0c574a11404e5a617202"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 2462,
+      "sha256": "6677c88aba0a25a05b0be8e31f48768c2436bf5a34d235ad924a6cd6ad9f8899"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "535d0d95b79677e2f5127413468230bcad2fb6c56fa201f137c78bc26dddeab6"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 4195,
+      "sha256": "0fa30927775257222284146e981e0ccf8e276386238e0878276b8347a3633c13"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "0ba5436faee00fa2fa194edea9f8ec80b9f76b3ab9174c22c11f32411c18bfdb"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9787,
+      "sha256": "fa9000885a63cc20266db1f1e00893ed8729a1153e841a78f1a0fc0dedd04356"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 991,
+      "sha256": "01e2d877f2001a71cbed9e56aea36fe2e2f9c10cf4540b83ef566c368017c442"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/result.json",
+      "bytes": 2467,
+      "sha256": "031a77f2065c9a40250c863b82020b3ba158440e3524b3aa3c6e0cbf2031d803"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 1566,
+      "sha256": "6adc5087c11ea85ad2d89e51683713ed0775097b1a55758721ef59d55bbac968"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 1652,
+      "sha256": "b25969bf4408227625f87a0870e38a52901437f752d5ae8256da763bc989aa4c"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "2ea3c9e1015b54368b52287c9bad1237ec5a59ab8a43c73051ff813bfd340826"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 445,
+      "sha256": "61542be25369e82c48e6c345c73e7cfddec866839d859664a2b45b54a8b70b05"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 176,
+      "sha256": "39dd03c98a7dce25acf2558e8f7aa0f9c6fe60fe3a88d4d30523558690efa60d"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 7377,
+      "sha256": "3ec2e96e70fba3bfe313ecd4f2df937677843b4a3733428616570ce4779dfded"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 1634,
+      "sha256": "42dce49f7534fa6fa085bbb763703be05967b9a43a5c775ab593142b04625a22"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "7cbafc9c89b5b7698f04b2b8e676b5652c14b18253d79fc288937ae541f08f83"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 3368,
+      "sha256": "403a469dd10bc8147a3016dd5939a2904ef6cc9396b96e12bf4e289a29132c7a"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "dd77b31406532449951725e2f20791ee95cc85ec808e00896887445d324c52e0"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9787,
+      "sha256": "29707e255e531a09eb3906bb76d08c846f1d187eeff09f341be329bb20ecf5b0"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 991,
+      "sha256": "7ef4c8dc5e5c488b3f97b6377545671963f50edf573b59e6c7d2db4d054ed831"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/result.json",
+      "bytes": 1639,
+      "sha256": "162e2971a298ea1611318cc2b929195cbcc8a94b44d51183c64e797954341e0e"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/answer.txt",
+      "bytes": 1692,
+      "sha256": "7c8c5fa5aacc065feab6a08ab2086c7617d7702f8a156739f96529ddebeb8b0b"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 1778,
+      "sha256": "b2c186870527a23db1d0ce5b49f23633edd18ace5719b960dddb8d0140b5dff8"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "6fb3a595bc907da8513d4ea1044bd690257cd1dca5cfa019c287db86931deccd"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 448,
+      "sha256": "0d82f21f11ffcbd8a13d1e6e0ce17ee8650f539f17cd8b3c2b069f611e1d6aa2"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "894609a069156fc82059a0016e26754e948174b9a7d3bb961593675c6140701e"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 7760,
+      "sha256": "41f42f363c55e1ecdcf0620e67b4af3a54d5c47be6e6cb3226239a5df39cdf42"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 1760,
+      "sha256": "b8c3184a3516775f1a77767cdc184294961f0d386ad10f523b18e075db07b10f"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "5925f365d81931120e6248c028612a7f8b4d631eabb6d6316c1a8d4cdfe51fa7"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 3498,
+      "sha256": "6abda06b7061bb37b48c16958d75ca444682cb783462b18e060ab800d016257f"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "16810f5ec1cfb61b097132e1c56b32e05d209532c69c50d261bc2aa71dc44b80"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9774,
+      "sha256": "3cd6a5583ae15bf20baf15dd4ea98d6927c8b165c194452c1329fb73e2d6d504"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 994,
+      "sha256": "ab5e642db8f312db13ebe2055393feab445c02c7dadcf729f8bec87a5604f770"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/result.json",
+      "bytes": 1765,
+      "sha256": "cfe50cde1a82c3650bf57910eccc9ec29ba52d4bb9c8b9ec105c0019b43c3271"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/answer.txt",
+      "bytes": 588,
+      "sha256": "1061833756c0174a8dbc2bd21db8f5488b0a02feb1f2307075be3d2cd5133c2c"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 255,
+      "sha256": "da9adbe16204e68d56ed36528c0ce41347de0b22288fedfd43eb8c30a888a492"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "b5b8c2d8c92730f73899ba39f264ee24700252ebce9449e77506dd0961991d32"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "999e97795dc74c3ea3fa50d255ff1f496dded5dcd3ae3974e28637c14ee5915a"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 174,
+      "sha256": "1e96bfa033aa5551d2bc3a68c22a7b496e9da6e5d2d133732c6d79366771304c"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 3118,
+      "sha256": "61a5d079caf19f6f1ff651a6edc63b6e35c08f4bfddcb20b1f02c7852f8e9c84"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 229,
+      "sha256": "310b50143f4f1ca24681fcdc16a316da3ff6a1e90c8a54fb7ec54ddcb495cbf6"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "ceb7aa07a6cdac1c80da679c6a3c63bc6e111deca0bb254f4dab95eaa687f741"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 1974,
+      "sha256": "1ed8fb1b6d2f39d6f13473fb5cefb0f6e8e23293cfcb43f611739a736d73ccc3"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "ec2a031bf7776c82ed627e86fcb00b8d78b48d3d2493e1b07c787170d3c4d636"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9807,
+      "sha256": "6095c8f2031e66aeafabb44d4894f7e10ad98a3159799e9beb54f1dec2536ac2"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "1249a5cc1ac5ea2236b22f535dafa18ab51e23e9f6d5512484cea54a32c9f0fd"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01/accepted.json",
+      "bytes": 668,
+      "sha256": "b0b5366dd09da96c1380e635a5334b4a82851ff72d297cd2f7fa477181a754be"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "7cbfa925b64d3c43acef6a2a0a4dc114dffd5cd71f4669b571b4e00f36df95b2"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01/intent.json",
+      "bytes": 449,
+      "sha256": "589ac05301b0f60d683cfa4be7a2edbd78894bcb621daee7e4f3181eed06478b"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01/measurement.json",
+      "bytes": 174,
+      "sha256": "28fb55ba4432929adec12d5e173848e96ce0865d090430ecd2825725a679d411"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01/raw.json",
+      "bytes": 4401,
+      "sha256": "295cce69b4f43d340501b073aa2a0df5289b36ade57f6ff9709da909c9abf355"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01/reply.json",
+      "bytes": 650,
+      "sha256": "2ead539d36a7956347ff8572ed6419c5dacd80bda3eabce70ac67882eb460f0d"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01/request.json",
+      "bytes": 228,
+      "sha256": "41df4b88bc4af7bc7ddb1c976133178119e416498fb5d5ec467ee197310b5676"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01/terminal.json",
+      "bytes": 2385,
+      "sha256": "abad5fd5c550cf2188bef129a62f661ed38adb19320ca7d9e8585d1cffc5c7af"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "1658f0125bf0c63e75fa11f54bae943a40a90a32f15e062edff1f38861fc5b8f"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01/wire.json",
+      "bytes": 18445,
+      "sha256": "6ee4fd89828f303013849c2ea2dd396184721c16e7cea5ab7b6247d43730ea4f"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "3e0748624ec2b539d154ecd2f9be4fc4ebcc3c066d02cb96fbe56e62a770068f"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/result.json",
+      "bytes": 655,
+      "sha256": "d38400173bab90cd7ec94a59580bbd3b2371a4d671d0d8804518352badb88526"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 556,
+      "sha256": "a7eeda30e3325ee9a09973059b0031cd9a8ea1cc3a76f3de3a0adadb3e614cfe"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 636,
+      "sha256": "aca8a8c9ccbcdb2799e88062ba9e43c6e27a41d93677066aca82f786893c4206"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "a03cf9e7025e7489dcea109582320d4e9120fc9e177236a4369a947a7851680e"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "2b554b5c392b69a9c17f43226f6eae03ffb976097428de91d1cbb734eaefe33f"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "4c26d18369526750b6d5311e53d876a2830833fa0b92fa3c98a3785aed35ee9a"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 4300,
+      "sha256": "3435de61025a2f60ab2566723497616d98d057ba81941774f5f49c57fb797d53"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 618,
+      "sha256": "d24753d5b52637eba60b44ac45d2570df64b6b0beda79b547840e9ffc6a8da48"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "961fbe38a31eb53237dc951ab7871d82f15646da57ae19173c779f4bddcda898"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 2353,
+      "sha256": "262317464cdcf396bf745eb3e235edbea52fa885af19ed7880f964f439b52fbc"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "b6060b1d0d6050f1e144046b7d2f8c5334cb12104278dded2cfb98cffb9514f2"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9820,
+      "sha256": "814055b51e9a72295f1db2cabaebaffac2258cf4b8be4bce04ee71190982d83f"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "a639a1e187235a1befe333e76a61d3bd346c7175c04ba25f7dce3ed03962d134"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/result.json",
+      "bytes": 623,
+      "sha256": "cd88639eab64a19d9db3b9be870d10e87bf33035f1050f3df13ac86ea835dab4"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 725,
+      "sha256": "2146087b35033f46838e3ad8faef035e7352448f3048b67a3758fc589a95bec7"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 246,
+      "sha256": "8cf94b0ae57855b29627bc990597f91d589384014726004037341d7d3b4647d6"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "85ec0e0f0246207d68ed761987aad77252e24cd44ad90b2fb524025ec6b8218e"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "5e4227785bfb4d53bd4ffa50e27940d338d8e7c6c30863f4e5c7567f191620e0"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 176,
+      "sha256": "8f6a6bce175ddbe75d7b3b57f2662ae3239951c1a38d2ddc29c476db89c13346"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 3086,
+      "sha256": "6de43093f3e1732fbe900f712245ce2ef8e10cb8fab35810ce0ea2122a1641ed"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 220,
+      "sha256": "df829064d1f8b81e608a994af18f7dc31abc6c86d34f0b1f2ed1e5d1bd4b2eed"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "53c9922fc7742661d8cd4cc8c5f1f4a289c326863831881618f6b83fdc9431be"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 1962,
+      "sha256": "55b5aa8cc00bf433de82dd52de682d1d1733477c0a42641837e4703c0bbc23ec"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "a72ca7e321acf3ea03d59ead1f05ddbba483023eb39c6ce09168a9273b4a8539"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9820,
+      "sha256": "74b9f52e232354e71b85297675296ddecb2b6c328c8a8efccab00020b254cb83"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "47c1160b5f48960502801834145da13304f7d478de150c18f0a41d01dc31eb19"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01/accepted.json",
+      "bytes": 807,
+      "sha256": "13550f5fc248034066d56b289ce50eefd4311b9f5c5a18720adcde5405972d77"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "d64f12882a0ae49cad0a6fcec5662012eb827a35719bcf193fe71cf84b602bbc"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01/intent.json",
+      "bytes": 446,
+      "sha256": "ee05c5944cd0c987a4300994e939cf1613f668e53ac70ebb5f011b80ba54a813"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01/measurement.json",
+      "bytes": 173,
+      "sha256": "ebb32161b2fd30902ff19608e817fcc6a62b325233fccfa8bc2acaa85a7dacde"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01/raw.json",
+      "bytes": 4823,
+      "sha256": "a86ba748cb83d90c45de80c39dcc746d95842f1e422c0456b9441c82b085a920"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01/reply.json",
+      "bytes": 789,
+      "sha256": "cf1916b4c4f87794fd4a26f8f876ff7c97eea5a27b95216cc258c95a21bac5b0"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01/request.json",
+      "bytes": 228,
+      "sha256": "aa7594c700b2f44c85ed1086fe5a8e868b7287d18ce0eecbd5dbcb0743d88cdd"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01/terminal.json",
+      "bytes": 2523,
+      "sha256": "c739f4032eb7fda84ec183ec6723393624d7ec959ca6081d10dfeace6793550c"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "8112a4e56dd31768f0d01342342e560c40aecf6c799747f5da9a51abf11433aa"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01/wire.json",
+      "bytes": 18458,
+      "sha256": "bf4a19179153280cb65fca25089895247e221387045c07ba11dcd19bf87d8837"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "8a1e5fe480efcffd0d6a41b266fb9b2b85da616fc28fbaa0ff6a6802fb18e1fd"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/result.json",
+      "bytes": 794,
+      "sha256": "53cc2f82576b7954d1160e6073aaebe521f53ae14a8ce3afbe643d5ad1324ee6"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/answer.txt",
+      "bytes": 759,
+      "sha256": "183f8407d1ca1a8b7ffbd3b678a92d10b0c07ae043f855c413285cdabb2eaacf"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 328,
+      "sha256": "a98c42d60ecb2fda4b01c962aa4c89afead0392403e2ce6cb25a06a48068cfc7"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "b4e27b99b65c29c7c602b1e6ecf4496631e9d468adec833bcaec3465926b19b1"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "442a89ee92bb7d36a115270d97ef9c3acd99232687dcc6b2767bb3b4bcb62708"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "26c8479c7b9b6040b4cd19de5b6c50cd1faf7c2f0a03df8d257347a77ee978e0"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 3337,
+      "sha256": "4c938396be4cf736a52aeca0ba7e82356138cc3459ea9835e286f8f935991f41"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 302,
+      "sha256": "4afe2afa66c58be104c54ac4b74f5839a60e6eccba983e2377cacabcadedea01"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "ff99a3102b4fb724d5d581f49ecd2255cd40569ef7a0ba9a4f0b2a1a641209aa"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 2047,
+      "sha256": "ee21218a0f401775a0bb8ec91a4661664e01b09669cf85e3f90cabaee35f26bb"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "9b17a041f544f1392fc44677346c6832f5c8f0b374a9a229cfb1fa38f25c49ac"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9807,
+      "sha256": "2f61fdf68282cb185899bddfa6e1c1cd070b6e670420458d216373cb536feba9"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "065653902c00dcc12aeb5d46e8214bf71df8f1f1d754e09e60d15ea0b1e9818d"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01/accepted.json",
+      "bytes": 844,
+      "sha256": "5020cb5ea8a27b6cdfab57a3267c42ddd300f6b5b77b7c4290e767a2fd411df1"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "55cf7b80219361e4ee3934d9255e2436c69a33fddcb558a34d1933915fdd2a9b"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01/intent.json",
+      "bytes": 449,
+      "sha256": "009fc462c0dfbf119f819bf429f1fc7f635e534fcce2677529dcf1aa2a046e9b"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01/measurement.json",
+      "bytes": 175,
+      "sha256": "85ba6efa7d841309b0d47b5d61e956e339b87b6eb33de2f13a14b7f04ddacea9"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01/raw.json",
+      "bytes": 4946,
+      "sha256": "b82d66519200c5a02b87f500063d45a5babf16fca1568aba9fc43aecc2b481a7"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01/reply.json",
+      "bytes": 826,
+      "sha256": "902d700ff1afd8f3571a3271d4ef4f5e01cb6943bc6b7d79c72c2bdf39c53eb0"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01/request.json",
+      "bytes": 228,
+      "sha256": "022d02913c7d42ec9c3beb9cc918d20ffd1bd846dad8077b25b365416daba3af"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01/terminal.json",
+      "bytes": 2561,
+      "sha256": "42f949617859e93104c9635c82dcae0f9dc350ce17bc05cd92c3034e841ef09e"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "63c3f1dce8141c53562d3224c88b74932e5ac38b83403576c55c9f09d4617981"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01/wire.json",
+      "bytes": 18445,
+      "sha256": "11b0fc3f641646f5e77f0fa0a20f9a2514da263ac6290d81fb57634d640f74b5"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "b7cfd8b95691311fa2fea462f93b926bd6797f45f81440c1e73111534a33c0a4"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/result.json",
+      "bytes": 831,
+      "sha256": "3584a59a38106e2e3d74bb65d0f6c93454b97cdb1b4d007a348b0d4af45f85b4"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/answer.txt",
+      "bytes": 1123,
+      "sha256": "78b2bef1f04bb28286f6d45526f8019ccae00019dfa2c32a5ccb1549853b0657"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 275,
+      "sha256": "b81c09cedcda25865fdc0d31bb027cf04fdb8cf234c1977aabee35c67fc9fd84"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "cb6615d1c874be41ee9d5a2f7aa26d0d2808e8681ac151cc435dbf21f3a33352"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "6b8adf8de0c197bdf1122170e3e9d7286801944e07405e73d90304cc9da1adc4"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "bc57406536600ec783c144b641becc911053aaf132d5c78ea9c6892141d723a9"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 3186,
+      "sha256": "1e866da99505564ab6a62bfd187f0c6a811472ae1db3f6760cdd6369033a4607"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 249,
+      "sha256": "34fd0beaba549ae20453ca192281a705bbbc17e18260ac54cc020ceb1467b7af"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "dfbb918fa8fbdff33e68160bb0cbe68157bedc1acce2582df8c4b6e8c5a5a4dd"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 1999,
+      "sha256": "6f70ef96c9406fab8f440a7a975b1e90163b3e00bec595fe6f33bd4f3e8c3da3"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "494645fae1179fac6f2f256c27994e643e0134e703f9be8d4e2b4939c7bde971"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9710,
+      "sha256": "9c5c838333b176113111859b4bb72ed0759d82f1308d095118c66b941b8366dc"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "9c50a9e118366a8fc69445b9980ec4576eafae1ce07c327de41c75890e1d07af"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01/accepted.json",
+      "bytes": 1208,
+      "sha256": "f483c1ebeca16f42fd02667c9d809dd8d31189955bee79913270a570d2c80651"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "4ab24bdb9b00a301842a66eec18da8fbf83e2cfbd96b453d56c8c20c9dcca936"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01/intent.json",
+      "bytes": 449,
+      "sha256": "c076a780027d2e430f9d45c33a9f8d7484c086259acf04d49d8c52c17b7fdf76"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01/measurement.json",
+      "bytes": 175,
+      "sha256": "ecb3a4abe6401e0b987af94e3439e50bd49946c5c4e2975259bf5d5af7462760"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01/raw.json",
+      "bytes": 6166,
+      "sha256": "c795577b07dae31f018721078408c493dbb157ec490b03f27f20c790e408d315"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01/reply.json",
+      "bytes": 1190,
+      "sha256": "5ceab8532f6633c70ae1b54e60230e1cfc0c334a89b174cf982a7daf193df7e4"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01/request.json",
+      "bytes": 228,
+      "sha256": "93bb5048109626488a2ad5d8fa093cc1c3b97d6adcbfd4a5f769a2e8e1a7381f"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01/terminal.json",
+      "bytes": 2928,
+      "sha256": "0ecbbf8968622fd7b9c24df62836220aa1d82d829f2b06a12903c191841d48c0"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "339e2b3d192e1b534f93ad22e50f74089f19985c980817d831183cea8d377170"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01/wire.json",
+      "bytes": 14598,
+      "sha256": "537875576b97f63a588a255f4071d5120f252f83989a74019a99f58a5a1f4184"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "9b08465071067bf5a596d094befb207d66b25cd235736399ac8ffa9d363c9f5c"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/result.json",
+      "bytes": 1195,
+      "sha256": "fe8b3da9e96de3d5507b754acdfbb75c101ba2f13be7a18945404ad75b644ffb"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 1402,
+      "sha256": "a1a989274ef345dae0574427c99aee9c177374c841753cd9d27ac584f6c976d1"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 238,
+      "sha256": "468a9bdaaeaca543bd723ce91d16ff440674a3728780ad703991c7430505e6bd"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "a7b2e56801b25f270dd20b0124bd3079f7fc0680a53b15ab35c3a12a43405972"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "32e3295c09aba7155a9520b6c20c2f2f52497ec2ca37e9a77ba413dcd7e38a18"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "d164a6d758cc5f5d43fec3a7848cae17ff3928c6a5883bd9e8921dd7bf5b7103"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 3072,
+      "sha256": "1cf531e59fe80704541f450562d4eebbb533cf4da0d7b697fd4d953e9ad83d8c"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 212,
+      "sha256": "1d3ee638c9153ef6a755c749ae07e21b0ba999d6f42426eb89143c565c47cba5"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "644bfbcfddfb4ee9e05f98f452e6929bedb1daed25f5f5ba69d56feb5003b413"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 1959,
+      "sha256": "486e9d6a92038e0d8fb915cfa933392561c70badaae639459c782f79604ea063"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "f090a197ae4af13db63ee24d4d806af7670910bf032825aff9eb2ef204fb114a"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9723,
+      "sha256": "6e38970499e4010096e7fae2fb0e3584a1b1511f90c8cf8dea8570f146bd11ea"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "551c164380446a80e2976ebfcc44ad5bb7ca8d198759f467bd111f95c3d66cbc"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01/accepted.json",
+      "bytes": 1491,
+      "sha256": "d713cc98ae0decf69cba53fa11236de780f6f6d0698b75196845085bf5ad032a"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "9c2c53770645ad5f1f5070d366aab0c3582af2c5c9a32c05a66cdbe9a9ebe58f"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01/intent.json",
+      "bytes": 446,
+      "sha256": "1cd1409f034174ba7d3294643fd211e7ebb78248dadf2324a88a7749ab9dd89b"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01/measurement.json",
+      "bytes": 175,
+      "sha256": "8c9ae1909052534d609d7d314cb493027acdaa6418ea0b1f9d8720f6715cd9f0"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01/raw.json",
+      "bytes": 6910,
+      "sha256": "f9545139086bae5dd508aed3ed3f456612de3216f6f108d42341d8b55098bb3f"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01/reply.json",
+      "bytes": 1473,
+      "sha256": "82ed2efcbe37b2f7b137e92b5a9bba575d5f314ce9bdc98a97f9e283970d92e0"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01/request.json",
+      "bytes": 228,
+      "sha256": "b2951e6bf93f4a58ec35d42f231b4bbeacc0df60b98615d6c543e13ee977041d"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01/terminal.json",
+      "bytes": 3208,
+      "sha256": "49c38cc8dc44a819a0dc257c8381a5f9239ebedbb7b272f5cba49241d3f69bcf"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "d88045bceb9fcb59bb8f1ae5fe89d2e068a07927b1fa36a2c7de10526ea9c263"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01/wire.json",
+      "bytes": 14611,
+      "sha256": "fd2d4da144268253d12988d49bf72a7ce9a971c9a46e82182b457b8c6e5f502b"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "76ca15653c2296123ccd47fb52675f9065a3b71efd431dc1c33d03c4c6b7c839"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/result.json",
+      "bytes": 1478,
+      "sha256": "b766d466b1b452bb06cd1dd88a6329109caf3d1dff418cd6b649b7422a460131"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 1648,
+      "sha256": "c9067a25385592bf027d5d94de20f66f7a28dbd0b7a942722f778f67757af4a5"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 331,
+      "sha256": "64d1e5d16164eb994af890dd7ed51cb3d173d56451edf70dce611c1ce284365b"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "f30dcf7731fb3d7dcf56cf1d7474ae7b0571c523b7c516ae35687fe76b2aa8cb"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "c6722e6a6457f46a34f6aa7f8cba653395dc1a4194c2051441e9aa9efbaaaa62"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "057f3c1db2b1d0d89419cffbc47fccce783657d2a9937b02cf4d82c218a68442"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 3351,
+      "sha256": "d1cff424c776034a6c8b58ef46b6597e7a3cfb3c14d4e0d2182f1b14ce23c5aa"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 305,
+      "sha256": "8445eaa711b6f190a8102504fe576cb9042bd77c6575455b26b4ebf09bf8b8ab"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "4da381a4802306648e49e1cfc60481395288abca39af9e4f8e2f2808cd7942b8"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 2052,
+      "sha256": "347126430f81132dd066e74b697ea6b1be9615ef7564228c0c1f6bb6aacca615"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "998f49f76505c8282596d9e19d640837bc381c86f58cb49a521303ca00270d6e"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9768,
+      "sha256": "d8a9142dc112eed39d058b02c774a4574caece1e28a99d862d4791b4641aa09d"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "31618f09abf64842dccd9267795573b297244482338864412b01f3eb871409f0"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01/accepted.json",
+      "bytes": 1736,
+      "sha256": "a55db3060ff41d42bd664ebf7f87c1a32134ae3b5bda5af922c415ed474008fb"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "1ad076b5b172147950b7b66f02a11df1c642f923400cf491861e3726045e9946"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01/intent.json",
+      "bytes": 446,
+      "sha256": "91167721cef9d1cbd7e43cd7777d98ce832513f0699c33fee34fc5768e3d2bd0"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01/measurement.json",
+      "bytes": 173,
+      "sha256": "3eb62f8aeddbab1c59ee85bd55c115251011ac16b8f0fc809b551801ff15705c"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01/raw.json",
+      "bytes": 7640,
+      "sha256": "d89de9ed0785b77d9528a57f3f4d134f96013e1c01206b5374298a1985b995d0"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01/reply.json",
+      "bytes": 1718,
+      "sha256": "692ce1489dbf69c457afdaee0513c02146ab464df49e86e32d1c43813a212455"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01/request.json",
+      "bytes": 228,
+      "sha256": "0797347d48ff5441cf654ac3a775e00d66f4372cf49cf3e5e0c48a5179cf2378"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01/terminal.json",
+      "bytes": 3452,
+      "sha256": "d4d8655471aa5020a2e7ee54721aa1e92aba70057976133c1b8f0a16a68f5ccc"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "731bf4eaba198c66d8eb6e221be2d13055e106ec99da4716bc8f7d49123b0533"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01/wire.json",
+      "bytes": 18933,
+      "sha256": "94ea4993a6505a02e25754294153da441b86732999054a7cacf04c6fab92fb5b"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "48a0b37dea22dd7a0a988f495e407d93b91ae8c93eb21746598ecff42e38ecbf"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/result.json",
+      "bytes": 1723,
+      "sha256": "705ea1e65633a893ad25cfd5857e38895f86d373249493ed71b9c1de07cb0cc6"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/answer.txt",
+      "bytes": 1610,
+      "sha256": "2253fb56020a524a4f9bde8c1e4454d1bebded5565e88a6db1dcb163a57febc3"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 289,
+      "sha256": "a28fc285c911ca62f94b96fa227c45b33a7b7324fdf1eb53591e37557baf51c3"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "28a758ebc2890aa94254c9747b6c3cbe16a2ce4cf1057fb92dfadd87df7eb2fc"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "c9a71df63a95a3d7ff814703a93274543b923e8cbb90cf049ca4f0b009a9308a"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "5673474253af3fc4c7b01f80999f85ec6c5d2855ff32329f00c19485e23918f7"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 3228,
+      "sha256": "12138147e030722a20288bcdb27e1adc4923f8ee2e0005da869b8074d1d81e7c"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 263,
+      "sha256": "a8376bde04017d310d88e3558e18fc436cb61c6726b430ba1c3451292fe55485"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "2432082d8b75a5a9ce5940704fc025752b04d3930dfe6b18dd6119ad6ba40882"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 2013,
+      "sha256": "a3c2399101ea7adf27b8b652333802ccf447f7ed1e0f6dadfe0a3a236b5a0a35"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "cd4a8002da78aea554fb6040d5b8f69102f7f81e9405f64869779ba298c9efb8"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9755,
+      "sha256": "8928eef0e7108156f2d3e5bc8141ffee9d1600c659942ac4ce3e13fafbd47ac4"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "0750df7c9e86631f838b46b45074a16b726a7ad405417057f0bb1e3cfe75179e"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01/accepted.json",
+      "bytes": 1699,
+      "sha256": "ac27aecb461b6ef1f9ea85db135c67f434fe2d75c5d7fc87a14ef74d79e0435e"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "c3895156ca8cb6fc027c131c79939e636624b50222384db08a911c4b5c5c2fc7"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01/intent.json",
+      "bytes": 449,
+      "sha256": "fc8aab72b7b02289fc489f0b8f645330188244bf68fd4cc3c6b4cfe5b2f9fdd2"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01/measurement.json",
+      "bytes": 174,
+      "sha256": "cb4c5f51d7a25a06272528081f32cc4124f09114aea460adc61261395aff800d"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01/raw.json",
+      "bytes": 7537,
+      "sha256": "d48a07c14f9d5ad208716a62060f8e4b49e41b6c3aaf281f7c3b20dc52fe916b"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01/reply.json",
+      "bytes": 1681,
+      "sha256": "1d7f49b39a555124bbf5fb6e385963149a8f2be9b8838e8c7e34cd9bfa0973d9"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01/request.json",
+      "bytes": 228,
+      "sha256": "3ff187f5034c8d8853a5a89963c1e7f777714474b782607cea0137426290ab6d"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01/terminal.json",
+      "bytes": 3419,
+      "sha256": "baa4ed201c19b72a246f4563ee45173b03f46e8749ed4fd6cfd5f77faf64e4c3"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "27d94779eaccdf462bda3784c2e97ffdc6de2142959ab3cc8625f02f2c8062e2"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01/wire.json",
+      "bytes": 20163,
+      "sha256": "d8be3c99b9a62102f0b1176e948cb852a08088efc3fe14b2ee876a7eb6402eb3"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "ec0e79524875955312dd385039c0edd79a02cde20e8f4213495c9e9ead209093"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/result.json",
+      "bytes": 1686,
+      "sha256": "00e6e72cfa5759a98889326bc8790025e34efe058b15503dd999675cc40173ff"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/answer.txt",
+      "bytes": 1640,
+      "sha256": "d0d7b1b9614aa759621a8610fe68a295a812ff95b08ced45b33ea8b7beffe7cb"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 254,
+      "sha256": "127e9d6c5dd0be0433f7cb84685352f8680bf4ed07261f6610ad3621b515e80b"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "bd77e57110f7d796c8928c0617c4458d6abedd9a1b991962d4d4c42c97978fa8"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "cc1fedcb1840f9d189a10a38a94a95ee9363aa892a3b4155d4f87a2336f6cde2"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "981f2d1d8a39cdb24d4cde02e04b77cfcaf9db1177e4c97e8f3a0f1e50ca0c85"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 3121,
+      "sha256": "34001efcede87b5a6906f99fcadffcfe82c85952df7bc49f9daa9f4e732d2228"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 228,
+      "sha256": "971065a9accd33f441f3f04e1dce9d61b1057216558266db40920acffb48b2ec"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "88078edfd0f48582147ef936b3e5bb88b11a71c9411376f97eb22678ab951a47"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 1976,
+      "sha256": "73c4b945856c1bfae25289df525ebf3889a652752d58dcfdad24d9e8bfce4843"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "36dd3e65b7390ed60f12efdf9de99f738b35df2001256743c683d3ddae2d8272"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9746,
+      "sha256": "efdaf2f5eb370fd8b1def2e05478cb9791612f05789d1fad1350bf49e0be8eb3"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "18176d52fbc5b38b1f1d289e196caf12a558d101222358778c37f72da972942b"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01/accepted.json",
+      "bytes": 1723,
+      "sha256": "aec99cf548315396e02bfdea255b3bd82077abb5a80f2d5208081785627568a6"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "ae1698156f8dc91045cf93507f93a66f351288f3798055f6451f7e1b9fc0c793"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01/intent.json",
+      "bytes": 449,
+      "sha256": "05e35ccd5e142069e11e558f542de149c9c005ca16cb94316cbd513a669ceee4"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01/measurement.json",
+      "bytes": 174,
+      "sha256": "c36551a6a5233342d2a81a4dff619cfdf81adde961b73f3cc533ac7ad70501d2"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01/raw.json",
+      "bytes": 7579,
+      "sha256": "f98918a6e87388553094c1004e475874eeec330b8322cef4b531277c336ef1b5"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01/reply.json",
+      "bytes": 1705,
+      "sha256": "f38fde86857d97b50d9d4ed87a0ae2e6efd4f1e546a2f71def36c56d1ee68a84"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01/request.json",
+      "bytes": 228,
+      "sha256": "a52a0a92064688af84940f0280e7eb090d96c5706d13a8afd4d200156cff9cd4"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01/terminal.json",
+      "bytes": 3443,
+      "sha256": "cd8fa2c07d3ed28618aa899e6ca15cadd3e0ac5d419dd146d9b542936606ee39"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "717a9c0a7cf1967d2d97ec54a9b0547d3819d72c492cf41b3fdfa1891760c6aa"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01/wire.json",
+      "bytes": 20154,
+      "sha256": "09e8be56bccead021205f08a917c9b5a5d25b6918e9c5ae1c702f043ed5d5a15"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "b9a568b87c844f074bd538d066396000de08ea903b7afd1353347770cc8b01ff"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/result.json",
+      "bytes": 1710,
+      "sha256": "ee05d5e30d6e88b7a94f3dbd5593d012544a2e24f33e2e64a38532bdb299a803"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 1645,
+      "sha256": "cbd648e10fb2dd8d57eb4596eed2d1bad98948989a2b215ec02e70f2dd8ca009"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 340,
+      "sha256": "b27d1bc11ffdc81ab9e5e40964a1bfd978a02ad66c86de606965f5eab790b8c2"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "5bbdb5a0474f169292ab50cd9cdb69c501564f7c378aaa67241ad73579a1aa52"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "ce8a47113dd5b36763db29e956f13e7d1a9646ba6b35d38e9ac92858f1d41be8"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "201f5e50a2612d8e24a2e58b0c3ca869a0fd6bfd68c81a3b6f0660e250483c75"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 3378,
+      "sha256": "01398d5e571a838f8ae62670460d245539727db8c38c8b031baf3f6c0da3ceb0"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 314,
+      "sha256": "01dfba48d5f793edcc0c4ef6da3e8a9a1204d86d41174a88f301b289219d098e"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "95f76be62f7c20d2bf5c86ad96f5e064962a12ef418d12dfdf5850adda5862d3"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 2062,
+      "sha256": "416b82d15a7f1ef4353b9fe4c769f201112f93aa8b45901a86b7cdefe10ea79e"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "517ffbbc1f84a12d7a621c72133014165f2b989a5a2a7a3e763ab8f1654b2fa5"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9759,
+      "sha256": "f71f902fd40cb315367a00bb7064ee15c2cdd87b6a170c07e7300cd23c12380c"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "a057bd4d98cde2cd89d544f00c2db4f7545c0ec425875d380a788c6d9a5b56e8"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01/accepted.json",
+      "bytes": 1732,
+      "sha256": "842d5dc6d7492f8bd395a43fd513b872c27279627971e8d6fce33427dd716525"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "fed86aeca5038d4c03b23b6750fbf836d7479058f78e99214765bfdd44b3fa36"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01/intent.json",
+      "bytes": 446,
+      "sha256": "647b427cb1dc69765118325ab7df095853bb22e9b56f06d1cd8f3f05339b498c"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01/measurement.json",
+      "bytes": 174,
+      "sha256": "4bd0fbd32dfb7ef7e01c9793e8a04c2f6cddfd22efb756edee0dc5292d669546"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01/raw.json",
+      "bytes": 7623,
+      "sha256": "c9c1d36dfbef61716420d0e845346cc816e24cf98c8753d7d48136b7d0362f3d"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01/reply.json",
+      "bytes": 1714,
+      "sha256": "bd665a0531d191983f8e92392ffc4ac6211a486dfdafc8294f439b58589c4cfc"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01/request.json",
+      "bytes": 228,
+      "sha256": "575fccd54b359724af97724025a843a59b46c14315c1cb8a5fcaf7c2fb475b9b"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01/terminal.json",
+      "bytes": 3449,
+      "sha256": "84b1e0ba7dd3ba3cb88a2fe5d91d207db362e169aad16235a8ac455023a4a132"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "82ab769e9e836ef1695c6a8829d3e7526bd54c45ce5df6bd2815338138089300"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01/wire.json",
+      "bytes": 18924,
+      "sha256": "bfc0480f5a014a0adebedcb77a541d6263493cd4a926656264d2214b0755c7d6"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "ea50d4aabba2b32117c6a5ec67dee8df6c2db4f428f4116e93c72d4f1b746ed0"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/result.json",
+      "bytes": 1719,
+      "sha256": "06403d3f0e653068331e173dd9cbbce803800bd4793e9e0e1bdc44ef4fab622e"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 427,
+      "sha256": "c52fa5d056e39b19848fd773e9835ee79d106f5d30a88e690e6b96caa8acb49c"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 612,
+      "sha256": "8b509f6cad9811551fb862ad32afa5927040b76d7e2b16ee202f5307b5e27417"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "fb009351fedeebd39c9732883c15d61d7186040b0bfb5e0edb95a8c3e4aeddfe"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "f23e9bcc2ca8cc091bd61e481dfabd14219d7b4b113dbadb0ea61b77cbb82dc5"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "ad8a6785d504701811784e414a340dc6b1d4f034df4080a0c67913676c5ee7b8"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 4348,
+      "sha256": "77a38dc5c728d99fb9f35d9cac1f63cbbf92702faf2e751d5ebb6c38bb6dc1db"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 594,
+      "sha256": "4d1ab1c9149109720a9658e9112c4c30de9ab0a41ea2b5c196f4aa0f84449863"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "32f6434ee86cefef0ec74c842ae35d59534bd869aadeee749862b1db0da6c911"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 2330,
+      "sha256": "df18eb7d9b664425e95ab22578a67e20e8fa6250bd9dd89acd4a67befb63b85c"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "51abe216c2084bc987b4a7f81a0f93ad4a686d3d2b636faf27072286e5f16d07"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9675,
+      "sha256": "ed082fb2a6db187a4a6b59642b4a0063dfa1eca25aaea2e9cac0362aa7ea6665"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "533af1edac3d920ab0b15a611cb25e3652a291b2fe3b300f070e2f2dbad6b325"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/result.json",
+      "bytes": 599,
+      "sha256": "36f54cd07ed3fd63e216f65fa390b85782e52409e5973e337d9679e3a8aec333"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/answer.txt",
+      "bytes": 436,
+      "sha256": "e5b0c8907524f22aa561815dbf996fd27857b8a6f182fe57f3771b66b89c0d7e"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 657,
+      "sha256": "ddabfa5f69198b75cf834a32701c7c338277c59e22d7a93299cf13d12cea7f6f"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "4c0c93c58ce9cfbd2e3a876e8264d9c4f65748a6cc37cd92fc3fafc14b87145b"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "6d23d54a8fc447b9e44f9a7c6d105ae00ea88066671611b78540aed0096c09dc"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 174,
+      "sha256": "db1250672a4798f76b022ba42862eddff21224523a0cfcf89552cacfd87b37bf"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 4486,
+      "sha256": "d02a90d48f82fe867fc63e8b84f3ebc90b98819fd32c7cd0fbd667749b9e8a4f"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 639,
+      "sha256": "20d0efc10e4b819cd5aa9d2f681463d47dbb370bc1bcc057b0a446f1487a9901"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "de057ac6626813a2ccd41d5149fabd86bd93d832f988e14c139e821adb0c797c"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 2377,
+      "sha256": "4dc0789f9eb192e81758a454f16933cf71abfd507c5ed79a2dfbf2e2e7e3bff2"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "d7683b39a9bc3850f1a82e513da75256563dacae56a9ca09a2f4b7916f67335c"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9662,
+      "sha256": "abf4227b6e0248001671b23ea9ffd086d330c645707701826f1dc0f266f7d98c"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "9a9d3492ec3297a8dd9efcafb3c57d0f4394f2fe2ea1439a7bb12018df6a2ccf"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/result.json",
+      "bytes": 644,
+      "sha256": "96427b81284aa87823338825dbe923dec1cbd56c998fe740d07ae23b1eba0165"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/answer.txt",
+      "bytes": 1424,
+      "sha256": "6526ec71282c2b8e1835f8832c78642ae926b95582b19b08f37c3f0090e9b4fc"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 278,
+      "sha256": "b9631d3e552cc6bcba00acd6c4fe3743e1cd4d48b9f03d3002c0ce3bffb0a8ed"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "88593fdf03583cdf61cca1034e25aa95d79c1a2fbb0fdf7b59029b88d2646e41"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "5712c792e287153cde348027cb37c6e6439a47b292d78b2a89d5a4218a8c468b"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 173,
+      "sha256": "260309d0861beb459b6def664c96cecc212d264b7fb6f54b562fd167c9172679"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 3195,
+      "sha256": "24cbce49d32b8c3e1083a82a4216fc327a618d05bc1ef8ab3b3d62fb0c907061"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 252,
+      "sha256": "081c67e40bcddc9ad7019d0a2633a23a697f5a00f58c9ff0508a618453c0faca"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "2d915b8bdea375744c88e185a2baff181dcccd8e37b9b5b242aaa6a1be5f91c0"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 2002,
+      "sha256": "d31718d685cc25e99e395d76dbdff0d512450e313ac7ce6887828fa57034ecde"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "0607e48567d70da1a6e5f9cb26f1defe188b4a56f2ac19bee24da95585d959dd"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9683,
+      "sha256": "f8e5c683537e8370a092e31adafddaffbec1fad86142746e28cf7fb6d0d41a5b"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "71c6eb081ecfd9c708e436e359536509bd69dfa9c40fa4aea4220f127d450171"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01/accepted.json",
+      "bytes": 1514,
+      "sha256": "23e120673078651485a46591b63fba0c68319244b5a07ae2da05570a8c059bf3"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "c9b4f1813d84c87ebe7ce863309457e1c9b4b7a24fb58a079caae03a5532f703"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01/intent.json",
+      "bytes": 449,
+      "sha256": "0cdfbe57e484172238634eec5d201e6cb74e023454d6a743cc445f7e6398d2fe"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01/measurement.json",
+      "bytes": 177,
+      "sha256": "61f6e11de9798d28840d8707ec68813f5ad0dee7ebda894819a491edac7d6fd1"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01/raw.json",
+      "bytes": 6987,
+      "sha256": "4bc856c4270852b0d71cddb89a4c9004aa907093bd51eaa176795e39a5f56c2a"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01/reply.json",
+      "bytes": 1496,
+      "sha256": "90bd2088f12543bb285dfcf01d884d76f35871bc65a09c41fa482ad10faef931"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01/request.json",
+      "bytes": 228,
+      "sha256": "3f0586f0b1df8893572b507adf99a9834f0e3babae6ffc525cd7c9e2e4790444"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01/terminal.json",
+      "bytes": 3234,
+      "sha256": "447d269567323afc8bf2c8c4b23b08d6e80ee6c7e7d47d1dc0a1a8f988b781d9"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "e3e5496459cc354ccdff565ca64c813c58c9f82608acd37a39215fd3fd686ec5"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01/wire.json",
+      "bytes": 12169,
+      "sha256": "4b98cbb6a6a77c8fd730471dc2386862dd946576677321f222d4985db094498c"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "5b328a1fb10ed5fe5505bffa056dd72833fff0cdddbe7ac96ee6db564ddd5fc5"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/result.json",
+      "bytes": 1501,
+      "sha256": "25ee5bdcf9003612671c49dee2eb69f6dcf16ba26c2f1b82d29e6c77a425c454"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 1349,
+      "sha256": "8e6705695e8720c72e3295bdcf1cf5363188b4c295d8aa5f2d01185fc04e5501"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 1439,
+      "sha256": "ed984e8baa57bb63e927e552d146d73d7a93710fccaedd1460996e88455a1088"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "be74300c78aafed25fd1e82831f3fdd5787c8d3a44755e150d10e7ef9ef30ca1"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "09780ad1f185c657bc6b2803f994b636b448f0767613ee3309e9d98addfb5375"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "32b94ac4c5ad9fbb70ed9396bfbd34e83c307b4103a952f5e08f0db76ae0f3b7"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 6753,
+      "sha256": "3c4a0152a04fd99099f30ad331c89ecd6bd2cf8e45dcdb931d2eff4fa0236732"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 1421,
+      "sha256": "088cfa62632876d27258309d33ddf9ef57f9f62469465f98eba93f88f0a46643"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "451e82c2bb4491f82af608c4eac85a8c3ac2330753291266054eef408289b458"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 3153,
+      "sha256": "007420c1ba75f7af3d64c3a29c58e85516049099c4dadc6768b3e20f4c48dcf3"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "6a3c6e3a4a20efba1e3cefecf622e354b5cc2501f1ef7c55b303d7fb48666acc"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9696,
+      "sha256": "e6db674881dd78edac111f3b8eec2601fd8b543d8730a6be6f93b7541f4c5c9d"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "9cfbb3047bd81db936174c2bf349458a24092ef927e3da0263b14015f7392009"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/result.json",
+      "bytes": 1426,
+      "sha256": "b2ae9aba7fad15e99252ca9085289937f6599c70e99028bceb4cd0ffeb85ac78"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 663,
+      "sha256": "bf67f8695b4cb5efd124fe469a274b8ad442fbfbc681ce25f940db172be36d0e"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 227,
+      "sha256": "e2de927a6f918ea9838287869c962ff99ecacb6700280ef443477b871f6ef0d9"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "14a4035b5fad9b01097330010875025658600d174cb07eb1b75a6b780444881c"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "4671f6656571cce435bbee9b807153b7de4a6310f5019c1908373c889aefb2fe"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 174,
+      "sha256": "d23bf9d2e83017407e867f9400c3139b0d57a861aedf723a524837274554b04b"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 3039,
+      "sha256": "bb5dc226eee252fa1f52bd151039e0e706241c9abc6dec1e3f55848b5794d2eb"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 201,
+      "sha256": "7aa82779c279216c896f2814c174c75fda28e509a50f25e3414600e981793030"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "4c65bad15764108d5bbf33dcb1f0e6ef09e8fd2f41a72f86468b19de6cdf1f6a"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 1947,
+      "sha256": "1eef1eb7ce1e5e663c68a5aab03bcab65dcd9f4c0ac202a2132bf3d25eb11068"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "5b60357eec595c665e24d942eba15d2df6f7d601ead72d191e6f4d7d14f137aa"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9742,
+      "sha256": "0d9a5de40161cf6d947948f836fa9a6198dbe1feb26699a46638b3c3a806dbab"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "a683d3515816cbedec8db68a7b4488dc7dd8194ddb4e757e8245f3fb89981887"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01/accepted.json",
+      "bytes": 747,
+      "sha256": "69dd54706f7973d2b94f984177be39902331910c0623567971ea1f9bea8b8e87"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "08afeb975b47025daf29655e6aeab382021b048a2d6fac01b6837650345c7886"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01/intent.json",
+      "bytes": 446,
+      "sha256": "8047c7501c40ffe30a889002d345bdabfc4cdccb337a4459ed174709025d4aec"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01/measurement.json",
+      "bytes": 173,
+      "sha256": "3cb7f0befe997a907f93e62bfbe87f539f9115824c51d22cc7ca84be8ce183b6"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01/raw.json",
+      "bytes": 4653,
+      "sha256": "a789f8c4981824ddca4081316cd643e3a3d069c8c886f666f1e3b788a4247d7b"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01/reply.json",
+      "bytes": 729,
+      "sha256": "f22bc0afe78a513972d889fc4bcb4fce28e0a27db7bd8012e86ea2a431b2ed4d"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01/request.json",
+      "bytes": 228,
+      "sha256": "25ddfb3fcbc7f03b27f29c505aa40b85d7b0781c1f64392c7056e4e3e0194889"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01/terminal.json",
+      "bytes": 2460,
+      "sha256": "fb1bd1319dc01f3a2f38a99aa80c52dae13ee4002f9583c3dc7bcf0a615461cd"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "083a1c73bc2e84e6ad5e0d3385700e64cc115037bced28095b0f4f08f2f0ddec"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01/wire.json",
+      "bytes": 20076,
+      "sha256": "6542022578ac22952a5b20336d05ddaf3182092498c2977f4a78786f4da5f9d7"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "e12fd5bce89433af9b7d5a2fc7f6a437b44b08d9c87bd706f736b55b93a204e1"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/result.json",
+      "bytes": 734,
+      "sha256": "06f8ac30f755ebdd7108b94972fd924a4cd02f8a99616b6a2b76282b0c704de8"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/answer.txt",
+      "bytes": 581,
+      "sha256": "9481260822435db0aa5b85af0e4ab6fd76f1bba7c01a237c0a92d7ba0a4d7e3b"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 235,
+      "sha256": "83dad499bee245cf19a8177a625d70f32d60bd6e0d24d90437bc457d747dbc70"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "213e3d015219690369da222e630b44e335fc943344d789a2baeb224a744b9f30"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "306d9654c5d87a98ed0af8886525d21e935ff117276903dcca7dfc00e22fb38f"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "885a64d0a4ec4f4c928ef1f69aae02babceb9d323f9c98939cef55889dfaa881"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 3066,
+      "sha256": "67f1f6150925a87c21f13a5839e2feb6629f358f6a11d843511796cafede9d9a"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 209,
+      "sha256": "1fb2afbb3ae79ce53a3ac4101deb9abc41c5e0a0847f5a5ea8da826f2a923cf2"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "44b689ef2bdfcb18ebaf165e739176f52d0e22dd09530c820f3424cb6d633f64"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 1960,
+      "sha256": "c2393ee97f9366229dc066e80617ddee35f1f5e030debb8deda04b7db2990c90"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "d7d406e5851020a747e8a7e122051d475813ef577d196f59f306ad1796bfb443"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9729,
+      "sha256": "cf82882b3b87a0558bc1c57bf4614aeecdeb3442c2ecb239369f77363446bd45"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "3219bf314ec7eddcd45ed8044f5b3ea70d19262f3a25cc6c69395d0569920210"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01/accepted.json",
+      "bytes": 665,
+      "sha256": "85886863b9b2e9f57d3ab65e29624397a1fd1d11883d6ca8ea8e5fb6943676f6"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "955929235fdb6ec1085bb85c07432baba0891de1a1a1cb2747ed1c4533d280de"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01/intent.json",
+      "bytes": 449,
+      "sha256": "859bae779d6df88b413738f230096ea4acf60c621cb98a3b90b67cc1e8fe3058"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01/measurement.json",
+      "bytes": 176,
+      "sha256": "e678c743970ff7805426e16930a1238f0fa578262848af7ad3739e81a4b135b4"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01/raw.json",
+      "bytes": 4410,
+      "sha256": "2e4b5f5cd0d2e786a8d835d12aeaf91a8320fb316402331fb51af918174f55c0"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01/reply.json",
+      "bytes": 647,
+      "sha256": "37c81ddd3b28b579e7ccb7c77158fd4b975cca617342d5a47514d5e05dfde62f"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01/request.json",
+      "bytes": 228,
+      "sha256": "a245aa0686c0046d68fa79db69cd1633ee933edfe79b788652b39e73a38db800"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01/terminal.json",
+      "bytes": 2385,
+      "sha256": "1d9e6bcc8b9e872c5f70d16bebc3a2c62bc35d3c2c7931f26d879d8141a006d6"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "20099fe99c1752b01a12a17fc1f996560471572cd488ff355b24d12770eacac4"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01/wire.json",
+      "bytes": 20063,
+      "sha256": "bd0b2653307425711b62d88d1ea3ed957a29233778c4ab2d2d381433009b6aae"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "ada0b9a21751403f1869ca2678a9344e5a3772258806c657622fa13f4a67062c"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/result.json",
+      "bytes": 652,
+      "sha256": "d1e5f61541ae1cb7042137945eb941b21be6b05b754feecc95315d0f92ad6c6a"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/answer.txt",
+      "bytes": 201,
+      "sha256": "3c7bf11d3941f1e0e7743cd531add8c5affac65833bcf3cb2afc1c266c39adfb"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 277,
+      "sha256": "b8b939508611281cd7bdc34eb0a8f6df0ad495530b49ab15d47368a41e182b3f"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "c7747206a62128c1832d1369cb79e9803e4111db2f965627ebc2742cea0870d7"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "747df6fa788d83d5c9b825d10fb6e1ffb8eb964607af82c040b1dbf8ac90ae4b"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "b28dde0726e44dd6243ee9035686cf639d38b7720646022742419b6a87b428f0"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 3206,
+      "sha256": "14f03cd68dfd86cc49e0ed09a23cbd6d206c73e77ab488660ff3d305077e393e"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 259,
+      "sha256": "94523d34919b03364dd8aa5d2299e212c2335b81b38bfabd26eb360761f8827a"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "655e7d7b34985c2d34503b80722398a5092cf71bfb2151d36028bc339b224ee3"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 1997,
+      "sha256": "4368ecbb375794dc597ed598c568b06d12449a9b04ca8b190bf56ca17dfb00c4"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "312f6f3d72619bc4a9914dd4bfdc4b16b6c5a2e9ebb6115901b277b2ae08d8dd"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9767,
+      "sha256": "45da0e3a45462d59b1a3293c05c406b5fe0cab1d7f8bdb5d6b5535b8c1f0181f"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "45b27a84a1c068fd20b7e152dfcff90c44a91fc19cd8ead5a73a52cc6a310e55"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/result.json",
+      "bytes": 264,
+      "sha256": "4a5c4ab53e48ffe9865dd1a4275b5aed7a16b88aedc1d63a766ead845b57ce0f"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 240,
+      "sha256": "db58a62aa0740b1bff89cfc6701c01376501f1559add539e3d2832fb500e394e"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 316,
+      "sha256": "e1383055e585e464eac0756f841573100e1dfe82a3b60baca0b8df782f234024"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "0728a412d31b7c50e96d367f96f2b1f29a65c75946e1a2d24e2df4f6a359afcd"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "f18078b34b447a9de784f2deeca61503fec4663e2b528a8b52415e730b560dc7"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "80cf71fe86fd704253bc2daaeb0f3d7512373baad2bcf90ae60a77102519ee60"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 3316,
+      "sha256": "1d098820603d4c3f2139892fbf91640b0537c923219de686fd5be9b5c04e2485"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 298,
+      "sha256": "e825ea56277405ffe1e32d15fb805a498f8e63e2ade8d5e762b94aa539f70004"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "9c1667c6dafd05054f286da8704710b233a4c93ac2ef96a3bf52b898f7a1c48b"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 2031,
+      "sha256": "1cfc13ec56a84eba8bc02ee97da5637a755b4192f81103795d87d0e40dc1334b"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "d166064677f88250a1ec20f4683465cdb4be969458b8ac1436bb67e6a228a0cc"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9780,
+      "sha256": "5892fc961a11c0324ab7262115854568fd5ee2c4a5bd5ae0576ea4db300904a9"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "d5899a0a5bdac0b584609a5127cbd31fb6c4bdb90d065e653355d32a50df3014"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/result.json",
+      "bytes": 303,
+      "sha256": "c73234af560167f7d94d063f9f9986904304249d17b82663e40b2624bb8a779d"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 445,
+      "sha256": "d263ecb121330af74f5b27c1b79812f5ee30c527e2fb425318ebddbfe73ecbe4"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 525,
+      "sha256": "557cff11359d82f240dbf9862a9a352a010e1953245b08ac94fa506f084124ba"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "2fb9afba26420f2f15861a32f53c43692c5084f443d425d1a68e498d4a914c10"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "7b28c9ca1bbc79fc3177a5ab5332f6d716c5836662076b816c808cc1a16642bf"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "61da3027f47864a86e374f242f4aace704257bd62676131942527462ccf4295c"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 4087,
+      "sha256": "77c844a703a2ad62a8aa39cff55c7500650f392f21c933c45fb4ea970d9e4ac7"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 507,
+      "sha256": "d71607d68440b30e6959867e45d51461ddad07910346128c82c9d7c55dd12967"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "ef1d6ae23839da0fd0f9e07a7b58892d84c40d773032223d1f77b5574a875a27"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 2242,
+      "sha256": "4f5a8b39b7def4bc9bb25249aec8ef38f66dec204172b398778a3f91b662fd1d"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "b866d69158661a2aad5c65a941d0ed8e188b088a53cf04f28e1b84edf8917362"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9858,
+      "sha256": "82109f4b5a697da92774bdb19632704244e22242258c6395467bab1e43c98471"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "cb54782932b84e4569eb7cea15105f2a86b8579064451589ced81f90b7c39fb7"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/result.json",
+      "bytes": 512,
+      "sha256": "6691e6c1f945743a1c56fe22a506f2453488307c3f0e7ab0583f06437df16856"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/answer.txt",
+      "bytes": 436,
+      "sha256": "eb4717e77e8e7b2b0f07e5ee8b6f58b447019b56066cd25d965c0ac2cda03a8b"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 513,
+      "sha256": "34fd693bd2eec48e60f648f3e61bc0fdc6b4e52bfd6a3aa4044a2f4db64518e3"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "96c20a184d90c1f7d8d970e3094b44c349bb4f89647827ff6ca9da2770be6bb6"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "a30222de8d375225fbdc599f85ab6006e359fd90193480ef023cb024e66bfd42"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "0e86a746659f973fc4db3aaa77aae6acb0a9bcd8685549c0c8304c0170322a84"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 3919,
+      "sha256": "f5d3a396e1bd8b4015a1156bf33b5fc8ca1ca4b66c149655aed66fabd57057f0"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 495,
+      "sha256": "7c44a7eee459b526b51ddaf458cb0f38f5f40abd6328c9c69a1d3ec9dba9f0fe"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "bad4d1beeb8b1246a47e818bc64f1ca870f10a64da3e6b6305b079575ecd9965"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 2234,
+      "sha256": "48dac3c50b90cea2057ffe439cab3cd295083e8b681032b9dd487bf79f310451"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "3fd81535fb207ec8b7d7f5905ab51906b288b207ceba311a4639e810330e72dd"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9845,
+      "sha256": "7a47e84c86de64639f9ff9300d165d0e79edfd33a0b813e63c390c3e4beb4484"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "bcccfcee57ff872ff981ea1fff0383c6ecf6de3fc562b7d0176cfe64890e895e"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/result.json",
+      "bytes": 500,
+      "sha256": "b7d84ea009fb79b9644d4600db85e547cd123e8a8aa534366822f4294364bf6d"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/answer.txt",
+      "bytes": 506,
+      "sha256": "ee8fe3f25756a0265c115d199b9f3b91c24a47ac231b22ab955b3836aa5124d1"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 654,
+      "sha256": "dfec30cbdef38dff68d9e38ceed22f1bc20d2f23511f74aa511eb7047421a90d"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "f61e6af479f2617f60e6738c1fe7e48706ad4b366a726b7c8c8a1fd9a84effc3"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "a3af1f3a01226ff9a3b170e16292f4232e06d9b886f85bb66cf30e2c89ad7250"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "c2eb22164d45842f482742a1b10f7bfa95d1731cb77efc62f16e948c357482d4"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 4369,
+      "sha256": "e78b78393e4dd799f2d1b1efee1545ef71a09fa49ea84c4093389def63dbfc8d"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 636,
+      "sha256": "daada84cc9936704b4127c9ac692504d1a4452b387b27b44f2719dd07ee2558d"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "0313546e9bfcee3cac26e56675fd0d566c1f8c1912187e614fd6802885306c59"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 2376,
+      "sha256": "c4f9762313f4cb79172103d2ebd2eb0be8504b7c512632215e36fae6981fba5b"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "2255ad10a1c203acb736fb43de194aa4c300e2f82a5a244b2a892f83c11f653b"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9734,
+      "sha256": "ddfa73279b565adb53f32df01f00411df3fb4a1f61a8454e48c97666a6a86610"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "c373d6151a41074287ebf809b4994a845f3cc07389a94f9c3bf3491d17153309"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/result.json",
+      "bytes": 641,
+      "sha256": "5bed8cb48d7ea05b06ad2937c31ceb58e8b177f7cde065bd0c1a1371088124a0"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 509,
+      "sha256": "4997d12bd6dc3d8a3436a76aa79ab3405c64a0f11a4315c3db14a38d87b1c844"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 593,
+      "sha256": "c3b6aa03f6522b44d20434296620acd003d6882105bace941cfa8fbdabd54a6f"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "4ac5f1a5696e7bedf546d6c3e6602d51fd030daf5368c68192ed1030000ec0fd"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "721509c71cb9e7dec955bf9884f0b6b9771adad09894871c709da5a48fa61593"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "f1a1817be3a4bf9d38d5041fc191d76d4ed3d821135e8ede1e0b4090978e5d35"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 4193,
+      "sha256": "e05ea74220801230d8d34442e67c6012db019c92a2e70f5da74e8ba7232b610e"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 575,
+      "sha256": "c6c0867524f60318978910b4a5dde63c1fb7fb2e8a47957228c282011b3d1f75"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "58b60266ffd816241d8acb161bba800e8315ad8f2ca8140b9aa27f3daf4db34e"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 2311,
+      "sha256": "f6bbbe2d0301a9f0de9b40e31695b8285cb6ac54eca586a85c9e4fcda9128ef9"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "fa095b29b0d270948c1896fa54f6aae8ce2f86a5685b122bb5ef45e6ad0af3ee"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9747,
+      "sha256": "e8daf784bb70166b3427973ddc2954a17d7af35149d0c4d777d069bed8162fed"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "dbf1e1826d32e1244ed8fe679ec8abd0b46da04d59ec779759ef8b546ddb4a20"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/result.json",
+      "bytes": 580,
+      "sha256": "a6bdb3e06d3220a40dc57cc49940cd3f71fdc0393a1f46620093102a5a3f4328"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/answer.txt",
+      "bytes": 676,
+      "sha256": "a176b10508af0a4f173be4b98bbc56a2e2d7556032b16fb58a313975c110a54d"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00/accepted.json",
+      "bytes": 759,
+      "sha256": "ed0a2429d843b6f04f64276b88206a71fa558b39e8d03520d85f78e552ac2df6"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "84df6661efeaf4c11a42ebdd5e8402cc510ff7613e4018485b8f38e2f034f458"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "7f8e874abfe15ea8a3f0618ebb1162dcd8785494b81a0355b99ab834213f1f9f"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "847cc9507eb4cd4f0d94b8f86484ae414859a187d019c33a0f362dd246246d49"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00/raw.json",
+      "bytes": 4686,
+      "sha256": "d0e815ebe69086b51017fae66618a72ffc9cee4b2207cbb81e9f1427a74972bc"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00/reply.json",
+      "bytes": 741,
+      "sha256": "e99ab5cfe1e456ef1998501e1085638c5f943f4d739fba09a2f0ea5bcfad6b79"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "046bf72066e81fa1c310d1269861ae29c0c3b3513861fe093eaf541d9029a3d3"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00/terminal.json",
+      "bytes": 2477,
+      "sha256": "a67832ebc425068a655c82d7fb72d16ff73469b26037f9ad0bb817ba789c4f73"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "a12251dee8c54c71b0a4242e4facabebe4403d9ce08f6b1a72dda5c5da56d616"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00/wire.json",
+      "bytes": 9737,
+      "sha256": "d327ba940a7ebd649a2941286f8eda0a1aa24896cea3641121519505ec36c4e1"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "09a2e32a83caca1993fb1d372c2187ce6c6d8aa360441ca3c08f107bf08d51bc"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/result.json",
+      "bytes": 746,
+      "sha256": "1c4e433fcc48f847ad28e5c22836f2fe4dd10c99b27dd2b99fa842bb6e655cff"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/answer.txt",
+      "bytes": 617,
+      "sha256": "77275351eb39aa05c13be346eadf8f6c4151c68fa9e1533b933e3cbe970dcaac"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00/accepted.json",
+      "bytes": 263,
+      "sha256": "70b6b298a2db7364589ab64675a34ffe19551f93b4cad1db80a829f66c069568"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "c9199944726ff73f290acf1bb8533d4b9b46634948b210a5431163f3f36c8216"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "e01e09bc50b09388ab598cfe3b4945696b4e422959a77ad19c665d5963b163f2"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00/measurement.json",
+      "bytes": 174,
+      "sha256": "d43a1af43a9b1dd3dc8d58692f3f3ff8d53fea6edcc543625c95fe436846d15d"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00/raw.json",
+      "bytes": 3150,
+      "sha256": "76d8992460c3a9bd1179a23708ceb112cc3b1647af411a2a00029620224ceb70"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00/reply.json",
+      "bytes": 237,
+      "sha256": "5ea228bf5b30ff3297168ae8b8bc19ae2c68efb347615bb739bf336bdaba11b2"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "456eca87f5d2822fe214e77f4959d39e3337b0876f6f394faf7db2eba6caf0e4"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00/terminal.json",
+      "bytes": 1987,
+      "sha256": "de9b6377ccfae579fd0ffb53b06599b0df984a3aab84d5799bd365f1cfd2166f"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "e6da32ee35a2284bc14757aa462d6df314cecf6b5a984d02e8ec1d090663d243"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00/wire.json",
+      "bytes": 9724,
+      "sha256": "9567aa1de9d789f1f5847bd69247d3a3837917a1bfd10f6bf38a56b5ac8c326f"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "97b95319be0f6b16938c51c1711ac4f072fdcb13c23c171b2b82aec476dc5b94"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-01/accepted.json",
+      "bytes": 697,
+      "sha256": "a27d1109aceeb3e97ae42ba22b5f988ef33435b71f3c3fa7a0eb3b07f3b347e3"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "69ecc52e3742d4fa0aec065a46488031b6df3ad9be3fe2325fcbd614eb4927fd"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-01/intent.json",
+      "bytes": 449,
+      "sha256": "32920264eaced8435a2ee77eca7e92fdc83a55aa55a2f805ada850407cc0cab9"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-01/measurement.json",
+      "bytes": 174,
+      "sha256": "5334a3635c4e5310679d5cb6729b21376bc509496dc4958d7540027c460731d8"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-01/raw.json",
+      "bytes": 4478,
+      "sha256": "ad8534f270bb2f2a00129448412e2554e41b0d29bd10e1cdd842cef5b4b66651"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-01/reply.json",
+      "bytes": 679,
+      "sha256": "91913407f96384231ea3eec982900cf3854538201f2e235e83a87aa0eeab3394"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-01/request.json",
+      "bytes": 228,
+      "sha256": "02d2aea843c46f3bcc24c1387e22d80a9aea4f02f51b1809f583456a501b9ae0"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-01/terminal.json",
+      "bytes": 2412,
+      "sha256": "1d9baeaea8e4dee6aff0f66e5723fa14b1bbef5800517dd9e11326429dd58b41"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "e15c94b702e7495b5da8e78339898cc7879b9de8b21fe0ab93e21d3703b730a3"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-01/wire.json",
+      "bytes": 18253,
+      "sha256": "78e5a56c2879fccbb362966a49ed8dd25c724600d6cdf3d0c5e2b4af869d4477"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-01/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "32f98a5f8f1a105a2bf4c59970bb57730cb3bf29a33c65a23339f9907f2808d9"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/result.json",
+      "bytes": 684,
+      "sha256": "c91477e4bd42d635a5060fb7e80053fdd79071d2ca869c71d164c40c8a4beac9"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/answer.txt",
+      "bytes": 2465,
+      "sha256": "3551333355841b7ef7997074ccb9d91e9e0ca33339878f2031175332622a9538"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-00/accepted.json",
+      "bytes": 281,
+      "sha256": "68b05b52600315adb0e0079fe0f8a3e97b829aa506beb8404b3bca7f16b038f3"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "c32e58c005e78bc6b779c737ed025debe77cf9759a7a3b685ff638114d684382"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "1d5bc2b209ebe8a039dae3388c069c8b4c7578fd1ea829659c259baa62b87e52"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-00/measurement.json",
+      "bytes": 176,
+      "sha256": "7230cb3d6c1bd1f25ac80f21e07484479d68abaeaef17ae08aace679ffabe184"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-00/raw.json",
+      "bytes": 3196,
+      "sha256": "da35593e68a036f30e3ff729be2d88de867bcd5d79b96955f9c17095bc80b99a"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-00/reply.json",
+      "bytes": 255,
+      "sha256": "9cf6f891e8cf347b5894458e297bf3f76203ef6462fbb486c1863f38db532baf"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "b370b491594fff4cc70fb46e845f35af49d4d7c9e7cbe1c0a531c56b45cbf4b0"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-00/terminal.json",
+      "bytes": 2001,
+      "sha256": "7a1fb7e7ee1ba105affffea2e860153f4fecd7bf4d60ae26c1e26c046e22c10e"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "daef1a902faddff84e07d1f63317eebeeb6f1ae7c38db4cda741709f52421c9f"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-00/wire.json",
+      "bytes": 9774,
+      "sha256": "03afb5cbd6ed3c1dc2156974cf7f2ebc42dba0600ada6070ee29ab8c960639ac"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "148cfeebb559e52e7f833ebfbdcb8184547e9ba83e4450a07b62ffbcf53d9ce7"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-01/accepted.json",
+      "bytes": 2556,
+      "sha256": "074bfa332e75f37e205d666fb7bd7538c89612be216da41f3180240f16e931f9"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "6b44e6277a3d8b4c7e758a70aea01514d25b000e8924f0ff94b3c68653316b3a"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-01/intent.json",
+      "bytes": 449,
+      "sha256": "e1772781d64954e85454840e305857334875d344282ede8b6216f398deda2ece"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-01/measurement.json",
+      "bytes": 174,
+      "sha256": "fac527d5fa6ec1e023123d5e9cf7ccce80db24673e54931393dd7495cacd5822"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-01/raw.json",
+      "bytes": 10110,
+      "sha256": "87c57bf9b00b26edfdf2b3c27b19f6c7e1a12e87536f13b5d34702d4928b151f"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-01/reply.json",
+      "bytes": 2538,
+      "sha256": "a1d56174b5d27aeb02404ff1081448fd20609337c1c586b47100a22bb72050aa"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-01/request.json",
+      "bytes": 228,
+      "sha256": "febdb02151526ac5bfd4dc67b5668366385c6c8245930314b58d1d7dd89a44c9"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-01/terminal.json",
+      "bytes": 4269,
+      "sha256": "33bae9ac93e3afef939454f8e01cb370dfce1e165b6101fe08b05ac5b6d362f4"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "a8382b14e870d687036d794359e54391f1e1d30c7651e12f1187d1273cd95be1"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-01/wire.json",
+      "bytes": 14662,
+      "sha256": "8bee4ce9d7b9681ddd66167d25e18e461b4e23c709c7b5a00f25c866bfd302b3"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/call-01/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "5e2ae0c1131e20181c2e7632d6ca5311f634f406d644b235c2a86e875938f237"
+    },
+    {
+      "path": "runs/32-F01-gpt-6-astra-current/result.json",
+      "bytes": 2543,
+      "sha256": "80e6f8356f0a04d74290d5ef085b0b99015bcb2f87f8b9fd2b62ae885f795f48"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/answer.txt",
+      "bytes": 2490,
+      "sha256": "2ff03501138476cbe51fba1ffbad519dc1df3158bb726178580dd44e8cae2c2b"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/call-00/accepted.json",
+      "bytes": 2580,
+      "sha256": "6330eef6c4b3e9bd3642ed122c005e72cd8b49b7feb8bac2275bbd2a1193509c"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "8e8d55d6115d273624ebf123cf7c8ddef6b507ce3103aceea8269048594c5eda"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "44ea21c0e3fcea5b62342d04253e9c23420e0ff7ff7c40549d7dfcf7e7d6524d"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "89e46880741c5c0db4e9ab64e7259ef71da7574b67b919146f47a37730b02d73"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/call-00/raw.json",
+      "bytes": 10182,
+      "sha256": "f058d9cb5c0c0924e89b3d1062dad4222bf25c67644513eae9a23c260956207e"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/call-00/reply.json",
+      "bytes": 2562,
+      "sha256": "ff431ff444d3ffc4974ef7d891b35981c0d5b10c4db35d79a6ebfc8c1b28bfcd"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "079f186f538c436f46b4bfca2377bb09ede6b68a4ead762543c781482fd0d53d"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/call-00/terminal.json",
+      "bytes": 4294,
+      "sha256": "b1e603fae6eef591fb17571d51e0175f0feb72971a777dd06dc4f7d75662e9e0"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "aa64985e1f69b7865b64ca3ed606f3ae5b1bf07749f55f85306fa47a87f45a65"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/call-00/wire.json",
+      "bytes": 9787,
+      "sha256": "66d043c21261fac58106c8bb0db7c88de5104f2ad7537ec04dfe9f3e25d8d75c"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "8b0ea752bc106d18887b8bda80fabbd505a49c5d12531c55fa11f56f0ee86c7e"
+    },
+    {
+      "path": "runs/33-F01-gpt-6-astra-slim/result.json",
+      "bytes": 2567,
+      "sha256": "f2510247d4a6886fc166721b9f08214746e43764e91403251932461857229df6"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/answer.txt",
+      "bytes": 1646,
+      "sha256": "4d1517878532aa7f18da1b48d1987d621ffad163d668ac9ff05c32bf82b4e6c7"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/call-00/accepted.json",
+      "bytes": 1732,
+      "sha256": "1c80948b8c571d3b7d8c5b32ebb0d40b5a6821bf44c2b8d921e9faae83ce8af7"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "270b627707bd3281d666db2e07083701bd791a03d2a3a08ca7636764c3300ee6"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "f244dd48fb9bd9aa853d0fffe2930174c747f2ccd23c28cc89a69e4b03026db5"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/call-00/measurement.json",
+      "bytes": 173,
+      "sha256": "d29d11d40c95d38622003282233036a6517e84aa16975dc30a57b28a128cb519"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/call-00/raw.json",
+      "bytes": 7616,
+      "sha256": "0ce92295e598b707d734235c2760153fe948cbb4d5e363e76890eca685c44d9a"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/call-00/reply.json",
+      "bytes": 1714,
+      "sha256": "4d91613c88d0956da44a0956f824edddb969f67fd44f04dce138b6d7a626e567"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "9b804f97933909d10e6e4f31b69702bdb486c519aa5e4d38c78d0726a88fb3ea"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/call-00/terminal.json",
+      "bytes": 3447,
+      "sha256": "b452738242a23514de85a5ab61ecb19e8a754ebf16188702a6c86a77bb6a6148"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "725dbad5336c0fb69502e4e453bb1bf3915ece7ee48da1cc93e977f90816f93e"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/call-00/wire.json",
+      "bytes": 9787,
+      "sha256": "7a34f23caa9c6a1e4140280d116b3e019c197c9ebdc87778c579257f7c28d3c1"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "933e23f731a7f5dcd25c8dc051e8448748b8770e7f7f77cdb76d9a80f2ac937d"
+    },
+    {
+      "path": "runs/34-F02-gpt-6-astra-slim/result.json",
+      "bytes": 1719,
+      "sha256": "f099b4c49331614959007df7b5b678508f1e188ad61c584082d29ad3ade4a4ab"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/answer.txt",
+      "bytes": 1459,
+      "sha256": "2fd94d419a1d3c1fd3fb539ed6a67085c950dbd7ef9139910a1d0e0aa3ca36e9"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/call-00/accepted.json",
+      "bytes": 1545,
+      "sha256": "ca2ea38eb91227fcc2b397e3ee3ab9fe34de57b0a394cd7dc11c8a0a5e663161"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "e74c0b0fa1f3a3bf7d7c85a05478be9a41957044decd53bd2843cd8d98b98417"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "70e2768334e097d3ced6e993d2063192b1d8f8013a08355f87421a319ed32fc5"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/call-00/measurement.json",
+      "bytes": 174,
+      "sha256": "f1effefd11baed9f90d1f9abf8e78565709bd66686d61961b6474b5c1729eae1"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/call-00/raw.json",
+      "bytes": 7052,
+      "sha256": "1ecc1723ccd21497eb6a7a178ad00cfd147e45eaefd81948191e20ca416febc8"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/call-00/reply.json",
+      "bytes": 1527,
+      "sha256": "8191046029263d53e196436993e7fa6759d860ebc0c251b3bc34b46acea560fd"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "bb1ce00fdbaa03568e819102c90fbb1e56291d2e53d6e63cf77380d27256005d"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/call-00/terminal.json",
+      "bytes": 3259,
+      "sha256": "6b16c68fd1250ab0e21c0e2195f87e1cd81bf98afe0706bcf5a6976c744d56c7"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "388826e65dc25b61fe0f2e643f326855f72a08853c500cab463a41f65d99c24b"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/call-00/wire.json",
+      "bytes": 9774,
+      "sha256": "17c2b1296cd122040451515e9e7f963d11a32bab08500c30fc34f8fd1a47f9e7"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "0918dacf7ca9ef33eb6fe8d969eb9a9c7d60565cf1c8924284ced9eacec4f9f7"
+    },
+    {
+      "path": "runs/35-F02-gpt-6-astra-current/result.json",
+      "bytes": 1532,
+      "sha256": "dd8b9c91c58b3279c14970609330ee8798911ab2cf9917d69c0aac21f545e16e"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/answer.txt",
+      "bytes": 1391,
+      "sha256": "69fff8a25bee927a41f9b48eb02ffa0c833acfcbbcd3c429041c51edfb9d6c02"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-00/accepted.json",
+      "bytes": 274,
+      "sha256": "60114e3968f403864cdc60f01a3eaad696f9ff6b2aed5c81a42043b0d1d3d99d"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "f2785f7121bc48e5d2e7c1d2bc3eb88e28c78e5204fee5bb844664390c5a6590"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "b2a6162310eb5ef7416d9e209ea5696d421edb4caf4e122bc1de68135cc14d54"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "0bcd4d40dfd8d03d9c283f640e6532ffe76c81b2d9201aa24f7ca6ceec20460c"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-00/raw.json",
+      "bytes": 3171,
+      "sha256": "bef2e6d0d43c8189514cfd855b3924b7cb42baa5baa07a7ab6c591882112c18a"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-00/reply.json",
+      "bytes": 248,
+      "sha256": "a60c41339782f8a696f58ff2270058009fffad0c83794abee55ada13bfcd9370"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "fcb2f57348512fd9e83591b22854c296dc0793f5b72dcc7a01b7035ff70dfa56"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-00/terminal.json",
+      "bytes": 1992,
+      "sha256": "6fc012f0cd356fb62dd52b0caf38fcc8e3f5fd6adc289b9aecfe4bdba8194b8a"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "8e084ad2f5f2ad7c1c908fab4f24d33733eb8a5e23265cae83ef3dcd392fc31e"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-00/wire.json",
+      "bytes": 9755,
+      "sha256": "9dc50b91dc50668593b24b884efdc923ab7ce8daa88b8d3db07764cc1227f1c0"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "6b63828108b965252fda69635174fd1ad77bcb69b3db82f22e5803af6a3bf85d"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-01/accepted.json",
+      "bytes": 1477,
+      "sha256": "dadc8fa221316a9ab6e654d3580a2c260afa81ac83c23fc362304940641239dc"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "a23cb616ecd7d8e145a8f9e58c8780cac549948e496b16eeab93fc0da2186344"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-01/intent.json",
+      "bytes": 449,
+      "sha256": "2077905f300a594ac23534b90c3a0c3f1a4cf2bd1d0f2fc60a218e8b3d618a2e"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-01/measurement.json",
+      "bytes": 175,
+      "sha256": "939fee179554a0a4c30505fc774d6fcba70e5ca232f0c6753610de70dddfedfa"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-01/raw.json",
+      "bytes": 6854,
+      "sha256": "6fd593cf5e807d9e4372defafa264534c34df1a1c56ca3980d650c80d1b28962"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-01/reply.json",
+      "bytes": 1459,
+      "sha256": "4654418afeb02e5c4040f8b9438f827d72e532d954fb6defb3889edc3f0a568e"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-01/request.json",
+      "bytes": 228,
+      "sha256": "c3644e2ebaefe22abe3d9b48f889082cda7a7630620ecf5eaaef69e743302225"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-01/terminal.json",
+      "bytes": 3195,
+      "sha256": "0534e2c5e804c8130b193cad35a321bd93f9ea95760fec879ab0d159baedb359"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "4db5092966e5c10cf08878bc96391b93616d11dd6ecc07fbb9a01d6d2aaf2690"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-01/wire.json",
+      "bytes": 20163,
+      "sha256": "7c4245dd6efb5f5f654fd7963c350a0d337a503e675a89b2257a794ac462b4dd"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/call-01/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "a97354435f31d0c64b3a1d219698c5e4d791c3c2317186a233863a9c5b01ec4d"
+    },
+    {
+      "path": "runs/36-W01-gpt-6-astra-current/result.json",
+      "bytes": 1464,
+      "sha256": "b16377375ec70168cfeba675810fa50ee8af1a4413d0d2c8fc88c1c692a9d9ea"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/answer.txt",
+      "bytes": 1409,
+      "sha256": "1e8fd4283d026e2fb07445bbbd15531d6b2a022960bb36d5705afe355554b79e"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-00/accepted.json",
+      "bytes": 271,
+      "sha256": "cfc3149f57ad4dd1921185d83457e381afbf21fc16d4665cc7d65076a2b26f9e"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "b9b3bc2f59e83395828ede3fa177215ed4de4ce3692b4b7973d8f5843554487a"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "944d15569ef3ca43b2e00734e3e24a1557da6866575cdfb980f23b77276dee03"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "4ef704cfc9373849a3456b4891bc14a68c75af64838991f0bb6588db37054729"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-00/raw.json",
+      "bytes": 3159,
+      "sha256": "7bbec68e2b8972508829af530d96d8c2e23c4490144c1a73e2b2a7467c441b1d"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-00/reply.json",
+      "bytes": 245,
+      "sha256": "83fe46f03beee0954180856faf8b12a71e1a9c518b49bd97d47c56a6de1ddc50"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "fa0bbb0f8c6eb229768f19ec51af2983bd8c4a91b92ae7dcc4c5a656e5b43139"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-00/terminal.json",
+      "bytes": 1986,
+      "sha256": "dd765474e36716f9dbcd806864e981e37a25db40edf2a5ec107a133aa0156c61"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "514427e720495c7126c4a78161d27ca8d893e1df8cc085f0d9ac53d5f210b134"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-00/wire.json",
+      "bytes": 9768,
+      "sha256": "c55a4d74b1e6dc510260c2bb2e5822e6bb752bce9a2471db60d92b9b309c4a5f"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "850c7f10565888c86b3f84f19617a503497d92a0bc73b5eb82aed64f599e0249"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-01/accepted.json",
+      "bytes": 1495,
+      "sha256": "a4b79a793a97d792813f14e69442190c7f0828e98032d3d0516b3800ec449d58"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "659bf01417164084b0e4385b74dfc3ed326831a614add2cb40cab401191b2f94"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-01/intent.json",
+      "bytes": 446,
+      "sha256": "916daec3e727c0de7630fbd2432262d40828b59ea2c8e6d093fe977c48afb00c"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-01/measurement.json",
+      "bytes": 175,
+      "sha256": "4fd8bb5f89d8bc6a6fb14c4bb765dbaf476f9a6acd45727a444f48f151c99068"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-01/raw.json",
+      "bytes": 6907,
+      "sha256": "419aa846f7c5be1dc0013625cdb03dcd13531a75ce12ca11e9cfed945fce34f3"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-01/reply.json",
+      "bytes": 1477,
+      "sha256": "4a0723074119138951d9ce577764426a2318281f67d57371549dc53a29279dcf"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-01/request.json",
+      "bytes": 228,
+      "sha256": "84f8746841f348b34d2fbd328c0e1cb26d606b259a6de657ea087e2c8cf51da5"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-01/terminal.json",
+      "bytes": 3212,
+      "sha256": "8dad836836a46006760225d7845849cb4b5db1948a7bfe09b59e7ed47c0e62cb"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "ed2398671fe7c6ea9c5b53ceaacd93ef53ee0e77fe4840e69fbef7ed6a2bedfc"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-01/wire.json",
+      "bytes": 18933,
+      "sha256": "dfba59e4a665a441863be6e7d6c1405b07ab518d5f1b73c618232f78ad90c02f"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/call-01/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "402b7f8085cd9a51f67849d0af94176908acc4cb70bc290c8a845d403c2a7a9f"
+    },
+    {
+      "path": "runs/37-W01-gpt-6-astra-slim/result.json",
+      "bytes": 1482,
+      "sha256": "bcf7eac37d1fab92041cb4632db81e5bb8ea68689fdf867506190e352487fab7"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/answer.txt",
+      "bytes": 1755,
+      "sha256": "24dd2770ff41ee36d51434e95cd99866a27ac915c8f802aac2878bcbfc9b2bc2"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-00/accepted.json",
+      "bytes": 315,
+      "sha256": "8d866ba6970068197aed084bcf2a27ea3eeb6c5093ddb37c6d0144e73aeacdcf"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "01f67e7268fb641c914c7dcdf3c3c1a41a04304c854547a49fb056b1f979c2e9"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-00/intent.json",
+      "bytes": 446,
+      "sha256": "ee386b0c95c7142fa0249a76ea50f92b3d3ce25a66c80638e4fd4b804561ae69"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "0b16c5bec3b8d27a2c15f55a8f8e6e6b084037ab4600f6a37ff3ca8b3f8600fa"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-00/raw.json",
+      "bytes": 3299,
+      "sha256": "5aa41f1141f2498c208a19d58aa8b3b3c8bebda36d90f73a5ce2fca84aef9159"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-00/reply.json",
+      "bytes": 289,
+      "sha256": "224a094ea2b637309c44162dcf2fa16ff2a3929a9089f15cd35b04ad34e0d874"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-00/request.json",
+      "bytes": 228,
+      "sha256": "f1354ad90ba515d2fa47a8576398d2e17b8643674198b3b8e0f021bea09c3a60"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-00/terminal.json",
+      "bytes": 2034,
+      "sha256": "e7bfce78d8b4a565635600a5646e61f0dec3ce08989b4c0c44e8e1aaa8d2b9fb"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "0094ef52c50cbcb70bba57b0f06e4402024bc507f45c9317fb7c2e204e8cfea1"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-00/wire.json",
+      "bytes": 9759,
+      "sha256": "aacc57ad60dc3276e17105c33e72d5069116f4946a35992964744cd20f316f3d"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-00/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "ce3cdc8036355b44ca9c654fa0a3fb0ce8d8f92a499754fb8b207974f5590677"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-01/accepted.json",
+      "bytes": 1842,
+      "sha256": "aac36b895a4a9728e1348f7bfb884686b16cd736ab8055f8fcbcbde2cce10a7d"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "2baff8321e0ffba7481762af4bbf6bd919b507ad600b018ff6a0e8afda214486"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-01/intent.json",
+      "bytes": 446,
+      "sha256": "b39e3a06f84914bf8892ed3ec072d5f61a366e11001426a4d1d1e5cb37e1d1ef"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-01/measurement.json",
+      "bytes": 173,
+      "sha256": "8dab88170350f85c13576fadea9396918c922296405e389386eb922b4a5d6920"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-01/raw.json",
+      "bytes": 7945,
+      "sha256": "92c5d75cfb3055cfe1eb03434c3603adb4341bba45215cc0cdfd341922545fd6"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-01/reply.json",
+      "bytes": 1824,
+      "sha256": "c2a4b9b191a4dbf47965a942a051426ffb1b805ab9c71ff6ce1b74ae40a43980"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-01/request.json",
+      "bytes": 228,
+      "sha256": "4dc4d735329188b111d52d68d840ac8db31a740bac7af04b2fdc531ed3a5c7a9"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-01/terminal.json",
+      "bytes": 3553,
+      "sha256": "b3bd47d0b18ed5a98ae52e2391a2a6716ffce8d7a9e6d38a71a895dc9df44ed8"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "bf80538e4cdf16822eea7e1fde839be8df81dbc3006f68c30d7db09bb2400ac4"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-01/wire.json",
+      "bytes": 18924,
+      "sha256": "89d84e9dbacc28bca9e9680128317bc5ce60ac67e8bb700d14cf7e3dd282f8e6"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/call-01/workspace-binding.json",
+      "bytes": 992,
+      "sha256": "c61e70b72a173338144fb28b67cdb48d7ba141dcc6f27ea17fb40f15a900e9b0"
+    },
+    {
+      "path": "runs/38-W02-gpt-6-astra-slim/result.json",
+      "bytes": 1829,
+      "sha256": "82347545df199bc4bc5005cae328da2f6c6f9cec8abada3278f8b8c4973f3696"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/answer.txt",
+      "bytes": 1434,
+      "sha256": "20afadecc79fa1df4ef5198fff1265ba2c511284f70b9bc4e1ccb87d2aed4093"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-00/accepted.json",
+      "bytes": 285,
+      "sha256": "49dfe770de9241ece71dda10e30d33ed14178ebf772946a71091d80c5bea9afd"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-00/context-observation.json",
+      "bytes": 652,
+      "sha256": "960ae1d752b1ef1bcec76b53f8a90c28cc3236dde3370a17e594f489279ebb59"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-00/intent.json",
+      "bytes": 449,
+      "sha256": "8b2d836788ab9d4a445871cd887206581107c5a8acc37cd26d1d332632ff3c9e"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-00/measurement.json",
+      "bytes": 175,
+      "sha256": "e08398e56aef78ec79c6086b4d1e3d4087b010f87f090d65d7fcfb93ffc80243"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-00/raw.json",
+      "bytes": 3204,
+      "sha256": "d80253a3d39515a9c0e14ec294c107324f96fe827c93def985090d5be6036a4a"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-00/reply.json",
+      "bytes": 259,
+      "sha256": "3ef2c1a13833991c6ba41fb2c3278328b0a70a3f3177f8b41e724a97b62f28f0"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-00/request.json",
+      "bytes": 228,
+      "sha256": "8fe9ac3b5d0ef539af1e144f8fd46700f69defb043e60105331704479b7b8d9b"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-00/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-00/terminal.json",
+      "bytes": 2004,
+      "sha256": "b266ff67a620d035f3d3a1ece29ab6b0196b23aeee2d4f41dcf43f02a0f3e09c"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-00/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "8d18858f0ab69d861a24fdbc7d212d88d96ca210841b388a545d99890af13698"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-00/wire.json",
+      "bytes": 9746,
+      "sha256": "c08a2daf2b462acfd681e9b401aecff8d4a77c9a04f810544a3dc84f70f7ca53"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-00/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "1294c1525a5afb7d0ccf0c97284146216bb54c69d6391230ba92288618dd9e3e"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-01/accepted.json",
+      "bytes": 1518,
+      "sha256": "79df0a7d4f8b5a4602a7767379708879b3c67cd1ec5bf3327cd9daafe9afdbd0"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-01/context-observation.json",
+      "bytes": 652,
+      "sha256": "6b508757cb7db804ce24717d510bc00b113a0a3ef7979e14b6ccf333a0564e48"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-01/intent.json",
+      "bytes": 449,
+      "sha256": "bb14e3b440ea4d083a2a8e483b4f01d7b81f79afb27b6e6579d287d9ada5424e"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-01/measurement.json",
+      "bytes": 172,
+      "sha256": "d267a745165a1f62c6c5d87a0b9d5c9ce8fd13184f3c4ee57c0e615d775f1f08"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-01/raw.json",
+      "bytes": 6969,
+      "sha256": "2af08d2f146da7eb962e1b568dec69b7192c21077e044574c215ed9861de59c7"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-01/reply.json",
+      "bytes": 1500,
+      "sha256": "ee1744f9be18e4c165a7db9d0a69b975cfd40fdc070a264332ba65dd1d2795b6"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-01/request.json",
+      "bytes": 228,
+      "sha256": "9cfad70ce892c41cbf58f60fabf86bf53057caf8cf1f00a0f1e4e908d891c7c9"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-01/schema.api.json",
+      "bytes": 275,
+      "sha256": "0f38aefa4e2a4e7ef846845c82916ef4107bea83d6d367f898ee42c04ae8cdd4"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-01/terminal.json",
+      "bytes": 3236,
+      "sha256": "3577a19a2b7b9cd0dccd6031c9563eac9c88d6fc9be2ddccb8e38e9ee3611dfa"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-01/transport-observation-v2.json",
+      "bytes": 787,
+      "sha256": "248f81f3d18667d07f1bcf7ab551fa1075cec26bbaad3d763580e0414109380c"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-01/wire.json",
+      "bytes": 20154,
+      "sha256": "c9b6bc27615a6cebcfd422f0dbafa2742ecf733d008867d47e20fb929e1b3c58"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/call-01/workspace-binding.json",
+      "bytes": 995,
+      "sha256": "9a3135cd4dee829eadda8e3bf34a8fc98f3e0896b7c4662ef4a0ba4050c68ed1"
+    },
+    {
+      "path": "runs/39-W02-gpt-6-astra-current/result.json",
+      "bytes": 1505,
+      "sha256": "b669e017b89bdf1da19926a413999c3e0ed40ac33497329d8b9ce7a337dab74f"
+    },
+    {
+      "path": "scheduling/serial/000000/completion.json",
+      "bytes": 311,
+      "sha256": "c6ef81a0d71d39b6285e3799c3922b9633eb508991a22ffe4458ed5062c535d2"
+    },
+    {
+      "path": "scheduling/serial/000000/intent.json",
+      "bytes": 340,
+      "sha256": "591cda99f68ff284caad4a51c6ac4ae740f33d8d808b588e9f6e32caac771990"
+    },
+    {
+      "path": "scheduling/serial/000001/completion.json",
+      "bytes": 313,
+      "sha256": "c63a5a71fb8267950f693e5260a5e5cf09808d13fd000373f16e39ab4cf42e90"
+    },
+    {
+      "path": "scheduling/serial/000001/intent.json",
+      "bytes": 455,
+      "sha256": "13e8925c6b009428a15be398119c91f42ae545da4a4c8a664b960df473f27925"
+    },
+    {
+      "path": "scheduling/serial/000002/completion.json",
+      "bytes": 312,
+      "sha256": "6cfe9a564a80146faf297a15200f2436b98c07fe73d5a7e7662adefb2645a386"
+    },
+    {
+      "path": "scheduling/serial/000002/intent.json",
+      "bytes": 456,
+      "sha256": "7356dbbf8e3d3d846ad9b2922893102368d7c80a69c0bcb209cf38b5cbfdcb7e"
+    },
+    {
+      "path": "scheduling/serial/000003/completion.json",
+      "bytes": 313,
+      "sha256": "3bd7435124f58818008d34b04ce40d5cf6311ccae64ed38b23c192d7b773ba0e"
+    },
+    {
+      "path": "scheduling/serial/000003/intent.json",
+      "bytes": 455,
+      "sha256": "552023731350860497741fc6f534eebe7e1df79aeba36274be7472ce1a56657a"
+    },
+    {
+      "path": "scheduling/serial/000004/completion.json",
+      "bytes": 311,
+      "sha256": "bb6a9fbb6c8282e728abf40d736b293011759bfaf8c6df53f526275ea32712bf"
+    },
+    {
+      "path": "scheduling/serial/000004/intent.json",
+      "bytes": 458,
+      "sha256": "518ef0b5a55feddad5d2013491008ed575947e60ec0d147ede28e188aedb474d"
+    },
+    {
+      "path": "scheduling/serial/000005/completion.json",
+      "bytes": 311,
+      "sha256": "98087574707a176961e090f0ad8bb68f32b8eaf0067845a6fd64b00e6f2b02fd"
+    },
+    {
+      "path": "scheduling/serial/000005/intent.json",
+      "bytes": 455,
+      "sha256": "b0ddbc6f177566cd8c9ec846ea7809b9d062b39b838646cb818b37f73db9550f"
+    },
+    {
+      "path": "scheduling/serial/000006/completion.json",
+      "bytes": 311,
+      "sha256": "9f2dfd5cc1bc2f89c05a05e309a54d8a2c737caa25dc02fd3d73515601215e3d"
+    },
+    {
+      "path": "scheduling/serial/000006/intent.json",
+      "bytes": 456,
+      "sha256": "d25119456a475d1ef36a4309993350937e0b7d6e12075e79c608dc57137426df"
+    },
+    {
+      "path": "scheduling/serial/000007/completion.json",
+      "bytes": 312,
+      "sha256": "8d837f6fadbdc775ad7db71286927f6f8affe7282435c50a3eef7668077fb484"
+    },
+    {
+      "path": "scheduling/serial/000007/intent.json",
+      "bytes": 457,
+      "sha256": "7254b79604a8aec364cff43f859a163a5300404a49831649fccbcf6376000af2"
+    },
+    {
+      "path": "scheduling/serial/000008/completion.json",
+      "bytes": 312,
+      "sha256": "5160c9fa846e0f2aafe62687c7161683a582a26cc7d184590dfabb91a81824e6"
+    },
+    {
+      "path": "scheduling/serial/000008/intent.json",
+      "bytes": 457,
+      "sha256": "dcd908cbbeaafaa905b76aef2df6d394858e2422c34b7f8681ac2b20977ac088"
+    },
+    {
+      "path": "scheduling/serial/000009/completion.json",
+      "bytes": 312,
+      "sha256": "249110baa3676115e3d9726a408a54d259191a331b73791eff338b0d539120d3"
+    },
+    {
+      "path": "scheduling/serial/000009/intent.json",
+      "bytes": 457,
+      "sha256": "1f5ee8c5818a63f629131502bc503090bc513a2bbd738c43afdb51353ec4532e"
+    },
+    {
+      "path": "scheduling/serial/000010/completion.json",
+      "bytes": 311,
+      "sha256": "f590aae6a1b1e7057f13a87ade46de2ed8ac82ce430259eb2773d8db67be2ff3"
+    },
+    {
+      "path": "scheduling/serial/000010/intent.json",
+      "bytes": 455,
+      "sha256": "4c34bc9a06c03c49b44fd59d7a6c34086a54235903a07ec3a1db128ed0f6e8d8"
+    },
+    {
+      "path": "scheduling/serial/000011/completion.json",
+      "bytes": 311,
+      "sha256": "b42a398ebdea319cae4dc00822c02d6d43d853ae9421a233470cd2d9290db9a7"
+    },
+    {
+      "path": "scheduling/serial/000011/intent.json",
+      "bytes": 457,
+      "sha256": "d5fb306e17a4077a7669b505c1a6959008be6ee8e898823b68a73e51fa4a2ab3"
+    },
+    {
+      "path": "scheduling/serial/000012/completion.json",
+      "bytes": 312,
+      "sha256": "31812c627666b2eeb3e6bf86c5fb6fd37dd5de7c8cd715b51757c895782b8181"
+    },
+    {
+      "path": "scheduling/serial/000012/intent.json",
+      "bytes": 459,
+      "sha256": "74cf8ba5bcbec66fb3007fa53f1d33c2188b8b9f23b5076eb1f8174df3cdf08a"
+    },
+    {
+      "path": "scheduling/serial/000013/completion.json",
+      "bytes": 311,
+      "sha256": "b071ccdfb5cfc80de709b75ed91b604e4074c97ed0ae0d26a1973e5a051dc5af"
+    },
+    {
+      "path": "scheduling/serial/000013/intent.json",
+      "bytes": 457,
+      "sha256": "c3c8483eecfda7641f21be62eb126d3f1557aad5b25e228bd490c7babdeca3af"
+    },
+    {
+      "path": "scheduling/serial/000014/completion.json",
+      "bytes": 312,
+      "sha256": "c44fb6a9ce8fb9c368c04851b1c6f48fc845c2edd6ccd3f2a5f9ce855732d760"
+    },
+    {
+      "path": "scheduling/serial/000014/intent.json",
+      "bytes": 458,
+      "sha256": "b404298c5c9d33f611eda5b2ac9ef8cf9f6a23e141c908c38bca591f64567576"
+    },
+    {
+      "path": "scheduling/serial/000015/completion.json",
+      "bytes": 312,
+      "sha256": "680b3ca2761fa3263e671545d6c9e18ece4d56ba3c730e784e4bfc52c28c98d2"
+    },
+    {
+      "path": "scheduling/serial/000015/intent.json",
+      "bytes": 457,
+      "sha256": "0b56cfdbc9ab02d548f33ab79791944e9e7daf4aac192b0628be87793b4871a8"
+    },
+    {
+      "path": "scheduling/serial/000016/completion.json",
+      "bytes": 311,
+      "sha256": "1bd5dc7e6c4bfaf56d9e60af3191403e0bf4b4177d1dde1f8030426a523f26c2"
+    },
+    {
+      "path": "scheduling/serial/000016/intent.json",
+      "bytes": 456,
+      "sha256": "71d0fa9fc18f1fe892399198d9b4208242cab958b49d3ba79ea5796865d3891c"
+    },
+    {
+      "path": "scheduling/serial/000017/completion.json",
+      "bytes": 311,
+      "sha256": "69ac76d6a6d24e511f37faa588579bde29b9a6ee9983a2792e433fbf61c0d63e"
+    },
+    {
+      "path": "scheduling/serial/000017/intent.json",
+      "bytes": 457,
+      "sha256": "46eba84f51ca15b516705d7a17baf7fad1d1ec9c18325cd2613f11fe07f48415"
+    },
+    {
+      "path": "scheduling/serial/000018/completion.json",
+      "bytes": 311,
+      "sha256": "6e082da35f2cb91efcc1f3f10aadb1f3a017284a9617812490c20053d857b61c"
+    },
+    {
+      "path": "scheduling/serial/000018/intent.json",
+      "bytes": 458,
+      "sha256": "9da513c3b5d17657f05f605a1c5fe58ed0d5fcb65a8a8609f4d13d1b20174438"
+    },
+    {
+      "path": "scheduling/serial/000019/completion.json",
+      "bytes": 311,
+      "sha256": "b584a7c1770fb5a22142ca2b4792a077c7577e72cff47bea58fa30915ae46780"
+    },
+    {
+      "path": "scheduling/serial/000019/intent.json",
+      "bytes": 456,
+      "sha256": "e0cb193203f451ec0ba8d04b1b3041574ed0f939ef40fe34c247bf3b4397f877"
+    },
+    {
+      "path": "scheduling/serial/000020/completion.json",
+      "bytes": 310,
+      "sha256": "a2e9d9d22f94e430d52e2cf5cd995d1edaf7ab79287e685aa3e2b08416d04103"
+    },
+    {
+      "path": "scheduling/serial/000020/intent.json",
+      "bytes": 457,
+      "sha256": "91addb2c018fad4aa561a058f72aba5c38b3026f277a1fa984e3f340bd438187"
+    },
+    {
+      "path": "scheduling/serial/000021/completion.json",
+      "bytes": 311,
+      "sha256": "74476bcfb557a21e66d7564dc443c313b366764f6cbe2488e819fe9bcb98a5f0"
+    },
+    {
+      "path": "scheduling/serial/000021/intent.json",
+      "bytes": 455,
+      "sha256": "52ab4fa93c7b65577b26680db666b73cf2464ea4c81edb083a9b7844d4b3adbb"
+    },
+    {
+      "path": "scheduling/serial/000022/completion.json",
+      "bytes": 312,
+      "sha256": "e18682c923862ed32a00737168fd249ac9fad378decbbaaa3b77ea607fee0614"
+    },
+    {
+      "path": "scheduling/serial/000022/intent.json",
+      "bytes": 457,
+      "sha256": "71971e74b7c05887681cff95baa9baa69399458f567206e37178c89fb7932276"
+    },
+    {
+      "path": "scheduling/serial/000023/completion.json",
+      "bytes": 311,
+      "sha256": "13e27673cdc9bf70eda1f53e5477fe74e20440a385a4287013bf6e92b6dfc4a7"
+    },
+    {
+      "path": "scheduling/serial/000023/intent.json",
+      "bytes": 457,
+      "sha256": "179095e9e8db77e519b8968573f18198e2feff96f75ab99644cc3186e88add21"
+    },
+    {
+      "path": "scheduling/serial/000024/completion.json",
+      "bytes": 311,
+      "sha256": "0b1f04b23169d96eb88f9dd20d1ac2736c0e3af8144de6dd833e4f930a2027ef"
+    },
+    {
+      "path": "scheduling/serial/000024/intent.json",
+      "bytes": 459,
+      "sha256": "404c7624c4f1d4f406f8c15f9c5f5c5242b7488713ad54597ad3079764695c1c"
+    },
+    {
+      "path": "scheduling/serial/000025/completion.json",
+      "bytes": 312,
+      "sha256": "3318b3f08421514e7077f8e4525f29ebd3843f434a9aaa9765211a6992b89a20"
+    },
+    {
+      "path": "scheduling/serial/000025/intent.json",
+      "bytes": 457,
+      "sha256": "f783b82b4adf4729c97d01a0110c0b902a9d9001d958fe6b8cedc36e9d2d1c77"
+    },
+    {
+      "path": "scheduling/serial/000026/completion.json",
+      "bytes": 311,
+      "sha256": "c6dd414862f90660fb81cce85c90c7264afae258249f220b5c80d9d50580f3dd"
+    },
+    {
+      "path": "scheduling/serial/000026/intent.json",
+      "bytes": 459,
+      "sha256": "99c086a9e990a0a53537c005e5c4df7b6f0c07aefc00f8f2d26f7d153e73cfcc"
+    },
+    {
+      "path": "scheduling/serial/000027/completion.json",
+      "bytes": 312,
+      "sha256": "93eb5109496690a2fd95a8119c6fa8a51fb5865efbd2a44becaaab6de1d32165"
+    },
+    {
+      "path": "scheduling/serial/000027/intent.json",
+      "bytes": 458,
+      "sha256": "85b90254883cdb83d13f6a376759caeb2ced3cb3d0f286efc5b088cf849989ed"
+    },
+    {
+      "path": "scheduling/serial/000028/completion.json",
+      "bytes": 312,
+      "sha256": "bdf16dfc4c0b96771cee9be275d6e8df0a506629db73b644bcc6aa07f3d7195b"
+    },
+    {
+      "path": "scheduling/serial/000028/intent.json",
+      "bytes": 456,
+      "sha256": "56c5182dd54395e96c4b8c5d0e84b6a00b491ed0002fcf6e30b55e057cd293ab"
+    },
+    {
+      "path": "scheduling/serial/000029/completion.json",
+      "bytes": 312,
+      "sha256": "50e3f7bf6e0c68a714e292f79e0c1ad895e3128e69a6b177d0bad19eb8c057d9"
+    },
+    {
+      "path": "scheduling/serial/000029/intent.json",
+      "bytes": 456,
+      "sha256": "3f4f4feb29a615f742fe98cae6e0d30d7e0b75096f38e623a4bb10eeedaacf19"
+    },
+    {
+      "path": "scheduling/serial/000030/completion.json",
+      "bytes": 312,
+      "sha256": "b430d163cab55cf25bf01d3461b20c2fa1212d30feda287aa7d09ce8505aafa3"
+    },
+    {
+      "path": "scheduling/serial/000030/intent.json",
+      "bytes": 454,
+      "sha256": "a1d8480681be9dfedbbe845cfa379bdd1377fddeb830639fbda43db9394d8f7f"
+    },
+    {
+      "path": "scheduling/serial/000031/completion.json",
+      "bytes": 311,
+      "sha256": "acf52f8c92f26f7ad5872d84c6f746f1b2233664db336cb4b51c5ef1eb5d00f6"
+    },
+    {
+      "path": "scheduling/serial/000031/intent.json",
+      "bytes": 457,
+      "sha256": "cc98823163b500f3b22016d295be9b9e2a6baa74e7bb72c60cd7b35f53883a2b"
+    },
+    {
+      "path": "scheduling/serial/000032/completion.json",
+      "bytes": 312,
+      "sha256": "26bbf23f823153ada31bc6de227e2b71493d36a83c9ea88c9739c3945f7d99a8"
+    },
+    {
+      "path": "scheduling/serial/000032/intent.json",
+      "bytes": 455,
+      "sha256": "69b740cf2ff8abe9dd3fa1827c4352f1d30fedd3c95c6e099c1d1e58810f766a"
+    },
+    {
+      "path": "scheduling/serial/000033/completion.json",
+      "bytes": 312,
+      "sha256": "6d91ea85473651826de9e0b9eb155da0516e6f5edfa30f758886f4e143efb958"
+    },
+    {
+      "path": "scheduling/serial/000033/intent.json",
+      "bytes": 458,
+      "sha256": "deb3a6ec20e5b0170372a8b07ade8ea17e3b349157ca1f194e6fc6203fd494c9"
+    },
+    {
+      "path": "scheduling/serial/000034/completion.json",
+      "bytes": 312,
+      "sha256": "509c32b1fc3a720bf35103642b6ecb45bc9d0d5cb956dfed02a599ea0f3903be"
+    },
+    {
+      "path": "scheduling/serial/000034/intent.json",
+      "bytes": 457,
+      "sha256": "d8a60909fdf93501bd4d3207f46720589591eb5ffebd008dc60ca08c32faa98e"
+    },
+    {
+      "path": "scheduling/serial/000035/completion.json",
+      "bytes": 312,
+      "sha256": "e8a06a7ac001a67eda86ef85974c557c52969db55c10e6751db65a51a7f8fded"
+    },
+    {
+      "path": "scheduling/serial/000035/intent.json",
+      "bytes": 456,
+      "sha256": "41734647b9b559c749750c3af74368098f814330052d8998ec189eeaa2da4313"
+    },
+    {
+      "path": "scheduling/serial/000036/completion.json",
+      "bytes": 313,
+      "sha256": "5f06ada6f853f193b5b48563f8b0a1da303b12271e66081b97ca142c48aa5953"
+    },
+    {
+      "path": "scheduling/serial/000036/intent.json",
+      "bytes": 457,
+      "sha256": "a6fd706c57dabd4a392b1d68f2b45e2fcbb1b330b2dea5f0b8190e449ed51dce"
+    },
+    {
+      "path": "scheduling/serial/000037/completion.json",
+      "bytes": 311,
+      "sha256": "2ca8195701bba55cf8f81f913ea6bd9b3d45c5e91a4533cf4eea5b00013ac327"
+    },
+    {
+      "path": "scheduling/serial/000037/intent.json",
+      "bytes": 458,
+      "sha256": "def10f26ddc1b8e20dab8875e48dc2365a08c9a32657979fc75f46b87ff4da78"
+    },
+    {
+      "path": "scheduling/serial/000038/completion.json",
+      "bytes": 312,
+      "sha256": "8d3625894d85fab073ccbc848a3160844c23fea6d44f3259b61eb10669a08c7d"
+    },
+    {
+      "path": "scheduling/serial/000038/intent.json",
+      "bytes": 458,
+      "sha256": "37c46e832352566b67b6e4d43f3acb204069784635d85f80439c422d83df53e3"
+    },
+    {
+      "path": "scheduling/serial/000039/completion.json",
+      "bytes": 312,
+      "sha256": "26bd6dac724f072d2e7b74a392298fe96acb51742150386ce0584b4d8a837cef"
+    },
+    {
+      "path": "scheduling/serial/000039/intent.json",
+      "bytes": 456,
+      "sha256": "47c2ee00b7da684b6e463ca8ddbb3b1354a8c4f1ecc36365f35d86216bd20437"
+    },
+    {
+      "path": "scheduling/serial/000040/completion.json",
+      "bytes": 313,
+      "sha256": "509c8d051c36f2f722f7533551a0d55095927834c5d2915f7d163b708f4f77ca"
+    },
+    {
+      "path": "scheduling/serial/000040/intent.json",
+      "bytes": 458,
+      "sha256": "cb8578ab051116605e3b05fb929969fa7c692ad0a20c1ca2b69a6c6cc509a48c"
+    },
+    {
+      "path": "scheduling/serial/000041/completion.json",
+      "bytes": 311,
+      "sha256": "17d120d6a1d53c478fd737995f0cc364af9ab8fd7ecabd23f6686761e7bfa8a2"
+    },
+    {
+      "path": "scheduling/serial/000041/intent.json",
+      "bytes": 457,
+      "sha256": "43fb1ccd9d4d1956bff8a43803613e4d11e76c20524dc3a7cbb002cea2cd9eaf"
+    },
+    {
+      "path": "scheduling/serial/000042/completion.json",
+      "bytes": 312,
+      "sha256": "3ede9b27064d43cb9152b76d4c5aafa931091aaa20bc396b1dc108f824d80354"
+    },
+    {
+      "path": "scheduling/serial/000042/intent.json",
+      "bytes": 457,
+      "sha256": "091a112158548a2eb2e5380b6ef54b771fb9010566a62ad3bf86e89fce93df6f"
+    },
+    {
+      "path": "scheduling/serial/000043/completion.json",
+      "bytes": 311,
+      "sha256": "7d756e11e03ce304780b089eb8e9c12a7547f0d859ccf6c5491e6b6a4d5a03be"
+    },
+    {
+      "path": "scheduling/serial/000043/intent.json",
+      "bytes": 457,
+      "sha256": "da9fc77c812167a0f8e4f9d2e43827a252f7e282f200cbb328b5e34f1dddbfc8"
+    },
+    {
+      "path": "scheduling/serial/000044/completion.json",
+      "bytes": 312,
+      "sha256": "e5a072b295a0948d6ab61c9f34b6e271c74724679d637f09c491ea5570d60e35"
+    },
+    {
+      "path": "scheduling/serial/000044/intent.json",
+      "bytes": 456,
+      "sha256": "cb16504c57468141aa87ae0b41821f6d79ba497b44f61477f7b36e629be986de"
+    },
+    {
+      "path": "scheduling/serial/000045/completion.json",
+      "bytes": 311,
+      "sha256": "ae1c1200ce01a5b2ec5405c4eb2e6bbb16878cbe392573315b4c600a31b1f108"
+    },
+    {
+      "path": "scheduling/serial/000045/intent.json",
+      "bytes": 458,
+      "sha256": "38d987c67c1aa56ebde1cf89922afdafaded336a0f79cd2d60cb99987226b34c"
+    },
+    {
+      "path": "scheduling/serial/000046/completion.json",
+      "bytes": 312,
+      "sha256": "51b64793d93c59016c6b389c7512bec18bfdf3dd838b49ebe11eb10dcf2844f6"
+    },
+    {
+      "path": "scheduling/serial/000046/intent.json",
+      "bytes": 459,
+      "sha256": "9c3a538f2dd8bf6af8efe368ef2ec5910c7f44b761737de2180f3b0142b31664"
+    },
+    {
+      "path": "scheduling/serial/000047/completion.json",
+      "bytes": 311,
+      "sha256": "2db28f6554f946113891d300ca13ce38604ed797997638afec32a5c2da80527d"
+    },
+    {
+      "path": "scheduling/serial/000047/intent.json",
+      "bytes": 458,
+      "sha256": "e4073f36be5010b9dfac90edaa8643be88092c95656f6285a3929e93af2c1580"
+    },
+    {
+      "path": "scheduling/serial/000048/completion.json",
+      "bytes": 312,
+      "sha256": "b3810a9f8a16bb554650dca3f855ac457d5b7414c2725652027d0b1152603d37"
+    },
+    {
+      "path": "scheduling/serial/000048/intent.json",
+      "bytes": 458,
+      "sha256": "f388daa46523704194b816403d5a000db6a05ea89ca63dc5e34ab0355ec3f6f7"
+    },
+    {
+      "path": "scheduling/serial/000049/completion.json",
+      "bytes": 313,
+      "sha256": "3ec698885774be1b8eb76c460a8317aa13b36f95bda37312b892f9a21da63ab3"
+    },
+    {
+      "path": "scheduling/serial/000049/intent.json",
+      "bytes": 456,
+      "sha256": "eb168a552f052b9484c46cf2b9c0912e0637dc0107f510db438c8949e0857878"
+    },
+    {
+      "path": "scheduling/serial/000050/completion.json",
+      "bytes": 312,
+      "sha256": "3818862fb60220e3d14358eb25fc6608fa733d3703b175e44c132b82cae86bc3"
+    },
+    {
+      "path": "scheduling/serial/000050/intent.json",
+      "bytes": 458,
+      "sha256": "4a86bed82286259f835edbb6a3477d68252d8b86bc9fe3ace193db7f5e8f426b"
+    },
+    {
+      "path": "scheduling/serial/000051/completion.json",
+      "bytes": 311,
+      "sha256": "a6cd5528084595d12b83cb8566322daff474578bee7ce311bd2e1620c7fc73ff"
+    },
+    {
+      "path": "scheduling/serial/000051/intent.json",
+      "bytes": 457,
+      "sha256": "4ac42bc8dae493cd3d76ac0060b957ddaa19a9d2833f15d4b650116b1a405fc9"
+    },
+    {
+      "path": "scheduling/serial/000052/completion.json",
+      "bytes": 311,
+      "sha256": "d0d09ce33d019a2ceec18f4d3c169cf712bf80277c9014684a11f914ae7f3106"
+    },
+    {
+      "path": "scheduling/serial/000052/intent.json",
+      "bytes": 456,
+      "sha256": "1801d27ad80f89da1e156243164b16d76896d1afdf6ada2e3c820bf6ec7bf8d2"
+    },
+    {
+      "path": "scheduling/serial/000053/completion.json",
+      "bytes": 310,
+      "sha256": "9b3a98fc2ddf7908e76608127d4855ac2b9a5c76e90fbd86afec2d904485e65e"
+    },
+    {
+      "path": "scheduling/serial/000053/intent.json",
+      "bytes": 456,
+      "sha256": "7c92e72b9f7aca016059234ed860c85a5164ab26603bb60824100b4c40070356"
+    },
+    {
+      "path": "scheduling/serial/000054/completion.json",
+      "bytes": 312,
+      "sha256": "6ec280ddcafd027ee8e5ebffc1226cb480220630abd84bdcc2463a39563fe709"
+    },
+    {
+      "path": "scheduling/serial/000054/intent.json",
+      "bytes": 457,
+      "sha256": "c6607c3193cdb141a4b6b3bd4e40da4c4e3d88ea3c6f6434068324b1c85fad93"
+    },
+    {
+      "path": "scheduling/serial/000055/completion.json",
+      "bytes": 311,
+      "sha256": "28912b443aeeeb89f9bda579830a64822803182605591d2f3f9d14ece1de3882"
+    },
+    {
+      "path": "scheduling/serial/000055/intent.json",
+      "bytes": 459,
+      "sha256": "d1485ddc300200989e7ce76ffddac87589c9c020d3bf8bf7016a7b9c8fef5a57"
+    },
+    {
+      "path": "scheduling/serial/000056/completion.json",
+      "bytes": 312,
+      "sha256": "845953f5cb47693bbe8b6e6bc3749a366b484acfc12b45a4eb419910928d0ee5"
+    },
+    {
+      "path": "scheduling/serial/000056/intent.json",
+      "bytes": 456,
+      "sha256": "146b0f16dc14f8a6b3a4100ef52fe53958bd07307667ff3cc4aaaf9c0b72452d"
+    },
+    {
+      "path": "scheduling/serial/000057/completion.json",
+      "bytes": 312,
+      "sha256": "e889113c0db1bae6dbc5d38b9464416c87180378704fc525189f8f513282cb8c"
+    },
+    {
+      "path": "scheduling/serial/000057/intent.json",
+      "bytes": 455,
+      "sha256": "f439f2a5c514c24f7d693bf2a8c4ab8641e03e77d4dfae484a6afe1732ae7e91"
+    },
+    {
+      "path": "scheduling/serial/000058/completion.json",
+      "bytes": 312,
+      "sha256": "64c729b0782f66224c7dac8cb032b351bb0474173165ed7f259213bfd4721409"
+    },
+    {
+      "path": "scheduling/serial/000058/intent.json",
+      "bytes": 458,
+      "sha256": "0ba2bef012648b0a200678e73297042c1c086d219b4f454583757eb4a8454172"
+    },
+    {
+      "path": "scheduling/serial/bindings/000000/completion.json",
+      "bytes": 216,
+      "sha256": "f684b4830d13131ad11c77194b7f313752bfdbf71c2a3853859ce84c291477ab"
+    },
+    {
+      "path": "scheduling/serial/bindings/000000/intent.json",
+      "bytes": 212,
+      "sha256": "92733a848614f1de8c7388342d7ce0321ea540f0bdc13f6ab3fe042ac154e1cd"
+    },
+    {
+      "path": "scheduling/serial/bindings/000001/completion.json",
+      "bytes": 216,
+      "sha256": "0c61e21b87bfbb3e4bf9b519270585f88beb86b56bdf842f730f05f71dd96d1c"
+    },
+    {
+      "path": "scheduling/serial/bindings/000001/intent.json",
+      "bytes": 212,
+      "sha256": "853a5208ec14c2e951912e31515341723687a1ca3fb4f7cc7e0f19aeb6012dd0"
+    },
+    {
+      "path": "scheduling/serial/bindings/000002/completion.json",
+      "bytes": 216,
+      "sha256": "c6c55241e5a25340426b188006d792f14cfd01899e55cf88d104b13ee8979f8f"
+    },
+    {
+      "path": "scheduling/serial/bindings/000002/intent.json",
+      "bytes": 212,
+      "sha256": "9f59d6d73f0d5fef61d761d494c6d9561274b8b1d90707b0ef20f78efb1dc27c"
+    },
+    {
+      "path": "scheduling/serial/bindings/000003/completion.json",
+      "bytes": 216,
+      "sha256": "d454da74c50b13024e20750f23fe4a7a9536f7868339d606e289c7934da70ae2"
+    },
+    {
+      "path": "scheduling/serial/bindings/000003/intent.json",
+      "bytes": 212,
+      "sha256": "0238eb3556823872b1a73c3c89833f26667ea2847aed21c431ce6c9543183ef5"
+    },
+    {
+      "path": "scheduling/serial/bindings/000004/completion.json",
+      "bytes": 216,
+      "sha256": "5161c4920fb77123f1ce2ecbc16049d666f86433478b4234eba1a9cfadd744d3"
+    },
+    {
+      "path": "scheduling/serial/bindings/000004/intent.json",
+      "bytes": 212,
+      "sha256": "3286088cf148eeaf28da2349ed2418befc72508fbbc1ea43de9f073baed54bc4"
+    },
+    {
+      "path": "scheduling/serial/bindings/000005/completion.json",
+      "bytes": 216,
+      "sha256": "ea51394991f92cd45ef9761b13dbaa5c0c9d955c172777897d7964505da121c1"
+    },
+    {
+      "path": "scheduling/serial/bindings/000005/intent.json",
+      "bytes": 212,
+      "sha256": "2d0f2f901fe06ee2a206daa981b647fda19f9d8900cd31aab834a9d5df24e727"
+    },
+    {
+      "path": "scheduling/serial/bindings/000006/completion.json",
+      "bytes": 216,
+      "sha256": "7a496e56ea2148743d5dd77e528dc0991a8797955c0c7eced72bdb7a52fb5178"
+    },
+    {
+      "path": "scheduling/serial/bindings/000006/intent.json",
+      "bytes": 212,
+      "sha256": "4154f99f5b95f94a7665ecad55b005d3869e7b282197b0d337ecb6721e64c934"
+    },
+    {
+      "path": "scheduling/serial/bindings/000007/completion.json",
+      "bytes": 216,
+      "sha256": "5d081619ec896a6fd9a4154f718f6880efa090d4dfe6745a6649b3ccb823d063"
+    },
+    {
+      "path": "scheduling/serial/bindings/000007/intent.json",
+      "bytes": 212,
+      "sha256": "1a95132d4eb019045871289ced499cc207c9fef63db8895bae55656bfc6badf4"
+    },
+    {
+      "path": "scheduling/serial/bindings/000008/completion.json",
+      "bytes": 216,
+      "sha256": "dd7a2ce5b98ce5c665b055a468d1af701331135b76664dee6eeb6a3e28058ffc"
+    },
+    {
+      "path": "scheduling/serial/bindings/000008/intent.json",
+      "bytes": 212,
+      "sha256": "0c7274b429ce1fe2266945ba596bf4061d86b8701ac38c594c8dffaf473d7abe"
+    },
+    {
+      "path": "scheduling/serial/bindings/000009/completion.json",
+      "bytes": 216,
+      "sha256": "7c72b03f1261da782b43b9071afeb54e4a7a4b06b9d758f2d7e5eda02dd887c9"
+    },
+    {
+      "path": "scheduling/serial/bindings/000009/intent.json",
+      "bytes": 212,
+      "sha256": "d90ee82692939d319be110d38516b9e6ca99ba0c615849c1e67a20297f018c44"
+    },
+    {
+      "path": "scheduling/serial/bindings/000010/completion.json",
+      "bytes": 216,
+      "sha256": "00388df652ef1f8fa7f2ba2d20ddb5f568d22a15f09e999c41de0c6b2ba5abf9"
+    },
+    {
+      "path": "scheduling/serial/bindings/000010/intent.json",
+      "bytes": 212,
+      "sha256": "3fa122669761518c054f01bf681e16c666aff8aeacfb54c32d2afc59ab8ecc0c"
+    },
+    {
+      "path": "scheduling/serial/bindings/000011/completion.json",
+      "bytes": 216,
+      "sha256": "8e37e4792a44094f08155842ad1c21ced5587337d10f3efbb9521bc93614749c"
+    },
+    {
+      "path": "scheduling/serial/bindings/000011/intent.json",
+      "bytes": 212,
+      "sha256": "b5098c6ccdb425feaf6fe307e8fb5ab75564ca95a84d363a1042d709d49def48"
+    },
+    {
+      "path": "scheduling/serial/bindings/000012/completion.json",
+      "bytes": 216,
+      "sha256": "729865ee89f06b2d0ba328bdcb721321043f42ddd7054a1cd9fc0f3e4e33294b"
+    },
+    {
+      "path": "scheduling/serial/bindings/000012/intent.json",
+      "bytes": 212,
+      "sha256": "6106b329cfa3b349610e281618f349a5109e963eda9232c53e1a8dcd72c20e10"
+    },
+    {
+      "path": "scheduling/serial/bindings/000013/completion.json",
+      "bytes": 216,
+      "sha256": "3f62dc23cf449c5d7b4963e2d8d79153664c12a239d54098c5aee487e36c1cc1"
+    },
+    {
+      "path": "scheduling/serial/bindings/000013/intent.json",
+      "bytes": 212,
+      "sha256": "a61b1457e1f6474c980b49d903d90f21b856f400126e0f6bff492a86a82a2459"
+    },
+    {
+      "path": "scheduling/serial/bindings/000014/completion.json",
+      "bytes": 216,
+      "sha256": "91bf1bcf20c567c0a0d0a90d0ca5ffabce684a6ba6b0cfb5ae863dd7fcc0ba50"
+    },
+    {
+      "path": "scheduling/serial/bindings/000014/intent.json",
+      "bytes": 212,
+      "sha256": "946732915b94fd8d5e083e46613c6e226062a49a3ebca75a2b67f0de35a6f4e4"
+    },
+    {
+      "path": "scheduling/serial/bindings/000015/completion.json",
+      "bytes": 216,
+      "sha256": "a62c4d7eabdbc30bb1fa53e3b696658bb993cf58f92eea96433047ddd9de6e6f"
+    },
+    {
+      "path": "scheduling/serial/bindings/000015/intent.json",
+      "bytes": 212,
+      "sha256": "e45e43d64109cb7482f493bd3e126081ac7b604eaebc98695fe8d6fb7088d1b6"
+    },
+    {
+      "path": "scheduling/serial/bindings/000016/completion.json",
+      "bytes": 216,
+      "sha256": "c792a9708cb7221bed6330c2544de0aff21b0acf11aa8ca076e92b09dfb07f7e"
+    },
+    {
+      "path": "scheduling/serial/bindings/000016/intent.json",
+      "bytes": 212,
+      "sha256": "4606410e77d45e43c375533a7121935f5521b50e0eebdec18b93cf6d13e4607a"
+    },
+    {
+      "path": "scheduling/serial/bindings/000017/completion.json",
+      "bytes": 216,
+      "sha256": "c3f43ef86031e6f6b70271c22e946340bd4e1d6571a618e7d33ee948954920ad"
+    },
+    {
+      "path": "scheduling/serial/bindings/000017/intent.json",
+      "bytes": 212,
+      "sha256": "a3e5d760a801dabae1113f2ce3c4e0d6899f003bf21cf622c6030133cfc51351"
+    },
+    {
+      "path": "scheduling/serial/bindings/000018/completion.json",
+      "bytes": 216,
+      "sha256": "5f43af5f77ba8f86ddcc8171599175eda6bc4551bed69c2ab87915d59e7e53f3"
+    },
+    {
+      "path": "scheduling/serial/bindings/000018/intent.json",
+      "bytes": 212,
+      "sha256": "ea2f7eb483dc3a8d0e462e4822da763fe8b69c30398b883393cc468121576179"
+    },
+    {
+      "path": "scheduling/serial/bindings/000019/completion.json",
+      "bytes": 216,
+      "sha256": "4264b272a38fa47910d2749158d7254ae138841731491fb158478267cfe43e9d"
+    },
+    {
+      "path": "scheduling/serial/bindings/000019/intent.json",
+      "bytes": 212,
+      "sha256": "2bc38840e51671f8ebe6fb298af18f97fa7ba5bfbc5fa77b5784354652f9aabe"
+    },
+    {
+      "path": "scheduling/serial/bindings/000020/completion.json",
+      "bytes": 216,
+      "sha256": "86c892ff29c394fdfec60e9ab7bffdb60621cae6961f8e97696b32feda6e3c8c"
+    },
+    {
+      "path": "scheduling/serial/bindings/000020/intent.json",
+      "bytes": 212,
+      "sha256": "34d1cb0e75478ee72b7c8cf7b160bd397b76fae6b922806080bc77dd7c865068"
+    },
+    {
+      "path": "scheduling/serial/bindings/000021/completion.json",
+      "bytes": 216,
+      "sha256": "615c69706f1318b21b7d7a11c63b713b0f8ae06060f70e4ea39833e38b461b6d"
+    },
+    {
+      "path": "scheduling/serial/bindings/000021/intent.json",
+      "bytes": 212,
+      "sha256": "e850e835078a7655f0a345701676ec0a98e6913f6bc3d1050a53eea32cc8bfdb"
+    },
+    {
+      "path": "scheduling/serial/bindings/000022/completion.json",
+      "bytes": 216,
+      "sha256": "d22d01f2a498436774603252bf1ee41ebfc441f0b5af24a0ea2b91ee134a2445"
+    },
+    {
+      "path": "scheduling/serial/bindings/000022/intent.json",
+      "bytes": 212,
+      "sha256": "50b399542d095e0a8e57cba3eb342d35c169fa9fdd1011e48da21f604d6b553b"
+    },
+    {
+      "path": "scheduling/serial/bindings/000023/completion.json",
+      "bytes": 216,
+      "sha256": "b8b94860592f29ded6371374dee79ccfc30fdb5d0dd7a60304feb6f8b11d6971"
+    },
+    {
+      "path": "scheduling/serial/bindings/000023/intent.json",
+      "bytes": 212,
+      "sha256": "0c717a655d18719df0a40918469e767e709e4355d227c1115980c4bb7da3b58e"
+    },
+    {
+      "path": "scheduling/serial/bindings/000024/completion.json",
+      "bytes": 216,
+      "sha256": "57dcb9e325c830d2ac8bf116bdd5eea77b52c61c5158076dcd0a2e1f845241a2"
+    },
+    {
+      "path": "scheduling/serial/bindings/000024/intent.json",
+      "bytes": 212,
+      "sha256": "7b31f42ce4e6dad4f9439de10ad25e29cfede3b2b6b43493c283b652d512e973"
+    },
+    {
+      "path": "scheduling/serial/bindings/000025/completion.json",
+      "bytes": 216,
+      "sha256": "7a87e049c63e20ad3a82697e139d2af74d7a1671bc27a0a612d54e00e68894c5"
+    },
+    {
+      "path": "scheduling/serial/bindings/000025/intent.json",
+      "bytes": 212,
+      "sha256": "3f3c7b1d8b8eb8472eaa94f667f2fe822069728766fddb98669a08c99c16118e"
+    },
+    {
+      "path": "scheduling/serial/bindings/000026/completion.json",
+      "bytes": 216,
+      "sha256": "02571e4e6a152bea11a4797900ea4cba51fd9461f933d3c071472d7a4422d32f"
+    },
+    {
+      "path": "scheduling/serial/bindings/000026/intent.json",
+      "bytes": 212,
+      "sha256": "2e4a0244b1a2724ca0fdef24e34ebff7cf1ff0cc629ce4b7c482969305ceb407"
+    },
+    {
+      "path": "scheduling/serial/bindings/000027/completion.json",
+      "bytes": 216,
+      "sha256": "919fe3a27289180aa7cc0a8ff73f8976b2471458d132991c4f519eccf401dbcb"
+    },
+    {
+      "path": "scheduling/serial/bindings/000027/intent.json",
+      "bytes": 212,
+      "sha256": "6f819e7f01dfc76675a0b160d73094f676522f1dd692d7d1380a83a91663750b"
+    },
+    {
+      "path": "scheduling/serial/bindings/000028/completion.json",
+      "bytes": 216,
+      "sha256": "8af10435658154878e5b76600b2896a18c439b9568d67c0720eadd7967d2c3b3"
+    },
+    {
+      "path": "scheduling/serial/bindings/000028/intent.json",
+      "bytes": 212,
+      "sha256": "e14157581cc7c0c987a3e6c32e323f6f6d0e59e850c7443814eaf6b76610e9dc"
+    },
+    {
+      "path": "scheduling/serial/bindings/000029/completion.json",
+      "bytes": 216,
+      "sha256": "e10dd31318db4dc6f7f4ee6cb8232051b7b1492c52dc8eb1386340df6649b6ff"
+    },
+    {
+      "path": "scheduling/serial/bindings/000029/intent.json",
+      "bytes": 212,
+      "sha256": "0c96229655b0ad4bb8597fa69d2f46328c4e6a7456e93882ef79ef52a89b8cdc"
+    },
+    {
+      "path": "scheduling/serial/bindings/000030/completion.json",
+      "bytes": 216,
+      "sha256": "b13b9f9fba419330c0916ed12e56cd071fdff932069767a23285d9d3578621d1"
+    },
+    {
+      "path": "scheduling/serial/bindings/000030/intent.json",
+      "bytes": 212,
+      "sha256": "997b16fbd009a1950eb3e0882afa7dcc53243551dd2ac7e76fcad1183192c402"
+    },
+    {
+      "path": "scheduling/serial/bindings/000031/completion.json",
+      "bytes": 216,
+      "sha256": "9a3375dcbf40dc9772afa7c6612a7470b07f13319e1ca2c2f4f80d0392f8ca8b"
+    },
+    {
+      "path": "scheduling/serial/bindings/000031/intent.json",
+      "bytes": 212,
+      "sha256": "f9a685d20b72f7e8d87def3d2c506e69db6c9c59e8bfac32f1a43e47b29251a3"
+    },
+    {
+      "path": "scheduling/serial/bindings/000032/completion.json",
+      "bytes": 216,
+      "sha256": "0607e8f28995420e5e7b972676caf175b6a9bb99e9ad552cba3035aa8766255e"
+    },
+    {
+      "path": "scheduling/serial/bindings/000032/intent.json",
+      "bytes": 212,
+      "sha256": "c1059075842bf6e10b727cff2dd1fa2d5feaa2388a7db1f7e5265c0594263a59"
+    },
+    {
+      "path": "scheduling/serial/bindings/000033/completion.json",
+      "bytes": 216,
+      "sha256": "00d50ca9d5237bdce29bdfd40e2ca738ef02f46be5e0f5108a0ebac19a733fbe"
+    },
+    {
+      "path": "scheduling/serial/bindings/000033/intent.json",
+      "bytes": 212,
+      "sha256": "2bceceacea5466d5a9e64d8fe2fab484fe696be7af2b0eb6709b8e2bd0431921"
+    },
+    {
+      "path": "scheduling/serial/bindings/000034/completion.json",
+      "bytes": 216,
+      "sha256": "86c7e2b3aebc671b98a111e24298a8ca425117661653ce95124531ca7783dc85"
+    },
+    {
+      "path": "scheduling/serial/bindings/000034/intent.json",
+      "bytes": 212,
+      "sha256": "4778a93310a90cb8ca205c7d06ef1161948524eac1676e19a2a3645716f10b3d"
+    },
+    {
+      "path": "scheduling/serial/bindings/000035/completion.json",
+      "bytes": 216,
+      "sha256": "d8ac2bd6ed90b2ff346398bf85ba1a15815dbfa91aadad5606b757a6893b04d5"
+    },
+    {
+      "path": "scheduling/serial/bindings/000035/intent.json",
+      "bytes": 212,
+      "sha256": "76d8d72eab603e3ced3a47fb0be100978de0c4eb3fc0296d42ce13f08eb1befd"
+    },
+    {
+      "path": "scheduling/serial/bindings/000036/completion.json",
+      "bytes": 216,
+      "sha256": "63259ffeff17f1dd714b174e272c2558bb21a8f2d4934d819ed1776550635eb0"
+    },
+    {
+      "path": "scheduling/serial/bindings/000036/intent.json",
+      "bytes": 212,
+      "sha256": "063b9fa051c89adf011ea109667557920f6ab718874ac3397373dd755c8df987"
+    },
+    {
+      "path": "scheduling/serial/bindings/000037/completion.json",
+      "bytes": 216,
+      "sha256": "026965c963e2f011760dbcfd06142530342f3266c5cc0af26b21a8f7d5b49e7e"
+    },
+    {
+      "path": "scheduling/serial/bindings/000037/intent.json",
+      "bytes": 212,
+      "sha256": "87c3d0f403d55b3047c7aac0480dba252d6e0a1f739d881ae9778a67e5eb8ab1"
+    },
+    {
+      "path": "scheduling/serial/bindings/000038/completion.json",
+      "bytes": 216,
+      "sha256": "a993c2642f4d567948a78e9332d405be8f1ded7bef7751a04f37796bf3fbd4c6"
+    },
+    {
+      "path": "scheduling/serial/bindings/000038/intent.json",
+      "bytes": 212,
+      "sha256": "8529ceb3a6a71a4c35bb1ecd28202f33b95a43aca8eefbec89a9890266fb6394"
+    },
+    {
+      "path": "scheduling/serial/bindings/000039/completion.json",
+      "bytes": 216,
+      "sha256": "2893057c268995d826adab1a2ce8a8e35978fdd03f43e5494311fb85c4915b15"
+    },
+    {
+      "path": "scheduling/serial/bindings/000039/intent.json",
+      "bytes": 212,
+      "sha256": "a181ffd49d89fc6fc0667cb3b22cc0701121b7fc9360a669a882e9f4c9ae0ec3"
+    },
+    {
+      "path": "scheduling/serial/bindings/000040/completion.json",
+      "bytes": 216,
+      "sha256": "423c5dc78265dbfeda2e37010fc49754203cb3980d3a525ea340abe547de8ab3"
+    },
+    {
+      "path": "scheduling/serial/bindings/000040/intent.json",
+      "bytes": 212,
+      "sha256": "a9152bc399fd0eb1abe1552bf6b0636972e9de13b81878523870c506c304f781"
+    },
+    {
+      "path": "scheduling/serial/bindings/000041/completion.json",
+      "bytes": 216,
+      "sha256": "42f68024bf03b77dd417b267907f9f23c660492876c2cda29ed1950dbe3c02a0"
+    },
+    {
+      "path": "scheduling/serial/bindings/000041/intent.json",
+      "bytes": 212,
+      "sha256": "dfbf950a8f3cd4644a3ac06c2abeb951dd2fc49c6dc014f66164fdb46adc31bd"
+    },
+    {
+      "path": "scheduling/serial/bindings/000042/completion.json",
+      "bytes": 216,
+      "sha256": "bfa160b351bed36775bba2643b33caa05bf6d3f0aaa1e57cf2d62cc59966b209"
+    },
+    {
+      "path": "scheduling/serial/bindings/000042/intent.json",
+      "bytes": 212,
+      "sha256": "0bac63da3f1263f794dc72042b3780d94db0df9018010a0a763dab159844f581"
+    },
+    {
+      "path": "scheduling/serial/bindings/000043/completion.json",
+      "bytes": 216,
+      "sha256": "7792e3802f1b69bda9ab0886491bac433c2c56c3a9b8569d69a96239daeb1353"
+    },
+    {
+      "path": "scheduling/serial/bindings/000043/intent.json",
+      "bytes": 212,
+      "sha256": "fc0aa7d6f2ad20cd9ce719cbd376b4712c10a91021762b3ebcfdfc733e9e3ffd"
+    },
+    {
+      "path": "scheduling/serial/bindings/000044/completion.json",
+      "bytes": 216,
+      "sha256": "86af9c615d4be4606f249fa40124fa70dfbeedd6c15d3a40555f327067227f6d"
+    },
+    {
+      "path": "scheduling/serial/bindings/000044/intent.json",
+      "bytes": 212,
+      "sha256": "5841600878b4e1e34f77f7ec16a0114f63dbb2da3cbd44778069e78cbdf2c76d"
+    },
+    {
+      "path": "scheduling/serial/bindings/000045/completion.json",
+      "bytes": 216,
+      "sha256": "3a69550e40560fd0d4a6d6538ee8155458a690ca5ac977cda41876fbfa915a69"
+    },
+    {
+      "path": "scheduling/serial/bindings/000045/intent.json",
+      "bytes": 212,
+      "sha256": "24e3c47ad9523396930f6c9b47de499534c64cfd25698335dda741b7b85ab15a"
+    },
+    {
+      "path": "scheduling/serial/bindings/000046/completion.json",
+      "bytes": 216,
+      "sha256": "0b23053c43af30f0da369b4714388079d011da13142917c6e5c33edd95333bb1"
+    },
+    {
+      "path": "scheduling/serial/bindings/000046/intent.json",
+      "bytes": 212,
+      "sha256": "bae05c1deba4f95e3aa418b31147bc882c3c2970f7ed0a62a61b5c021cc4fa3e"
+    },
+    {
+      "path": "scheduling/serial/bindings/000047/completion.json",
+      "bytes": 216,
+      "sha256": "cf139dc44cb18d75aef1dc1b67250032ae211ec89fbf4d51aadfeb3281cec9b9"
+    },
+    {
+      "path": "scheduling/serial/bindings/000047/intent.json",
+      "bytes": 212,
+      "sha256": "fc88b76001092af77bbbd5f7b6cef2486820eedebee1a9692daeb8e21c95dc31"
+    },
+    {
+      "path": "scheduling/serial/bindings/000048/completion.json",
+      "bytes": 216,
+      "sha256": "bd74aaa05fa5355fdc30b3b193ef365dbdd1973d16402b721672f825259c4843"
+    },
+    {
+      "path": "scheduling/serial/bindings/000048/intent.json",
+      "bytes": 212,
+      "sha256": "76105e85a457ec75bf6ef4eee6c0a24f3b9b55406fcc5a94b456efaad9a93dd0"
+    },
+    {
+      "path": "scheduling/serial/bindings/000049/completion.json",
+      "bytes": 216,
+      "sha256": "36bbce0611cbf474a0fd2bac51ac1345f68bfb394ac82aa792741cd09adfcb1b"
+    },
+    {
+      "path": "scheduling/serial/bindings/000049/intent.json",
+      "bytes": 212,
+      "sha256": "02f989b870a30b470ff28cc5d4a5964f787e127311f7e53b9e38068e7ea83f0f"
+    },
+    {
+      "path": "scheduling/serial/bindings/000050/completion.json",
+      "bytes": 216,
+      "sha256": "50a258b4679f7799fdfdc47a7e119b6540cfbb8389353e0d5a58b4ca57d7a959"
+    },
+    {
+      "path": "scheduling/serial/bindings/000050/intent.json",
+      "bytes": 212,
+      "sha256": "26c376e59111a1d8d919b803597aa13209c3cbd5260e9443a3a534ded97db91e"
+    },
+    {
+      "path": "scheduling/serial/bindings/000051/completion.json",
+      "bytes": 216,
+      "sha256": "f15dd36579038cdfca1b3afc522581f1750ca754e10ba9608bdbc840bf107c04"
+    },
+    {
+      "path": "scheduling/serial/bindings/000051/intent.json",
+      "bytes": 212,
+      "sha256": "4e1565033e15bb3391d232b2734a72dcd05011f81ce405107ce5e4eabf4199fb"
+    },
+    {
+      "path": "scheduling/serial/bindings/000052/completion.json",
+      "bytes": 216,
+      "sha256": "475600c11ccefca7f2726a4de0560f5976538516b0b7ce9533ccc2360b5ff76b"
+    },
+    {
+      "path": "scheduling/serial/bindings/000052/intent.json",
+      "bytes": 212,
+      "sha256": "47ce4e03cc1cbede3b9ecee764928bd6a02239d5248ff3589e2eae367d9b7035"
+    },
+    {
+      "path": "scheduling/serial/bindings/000053/completion.json",
+      "bytes": 216,
+      "sha256": "6da8d97a8598cccd9e9893306cdd6cf76451212352739f2a234c52f75863ec89"
+    },
+    {
+      "path": "scheduling/serial/bindings/000053/intent.json",
+      "bytes": 212,
+      "sha256": "60d955b9313791700532f7ef3f8a6918fabf23c5e8a448477d89f09eeebba095"
+    },
+    {
+      "path": "scheduling/serial/bindings/000054/completion.json",
+      "bytes": 216,
+      "sha256": "3c61d1107c164fcd5d183516aaed9ab9f685c2acf83b47deecbf8617640a87bf"
+    },
+    {
+      "path": "scheduling/serial/bindings/000054/intent.json",
+      "bytes": 212,
+      "sha256": "fea51f7c0c63e0804f73542766fd028ba9888704da1c9c33f2ac929072e3b91e"
+    },
+    {
+      "path": "scheduling/serial/bindings/000055/completion.json",
+      "bytes": 216,
+      "sha256": "e7fa271ba5ae1d9847ecb45e9a6f1eff7df4f112638fa87be7f01f1ba177bf90"
+    },
+    {
+      "path": "scheduling/serial/bindings/000055/intent.json",
+      "bytes": 212,
+      "sha256": "30800f05814d2c71bf984848cd79fe7a635341d0aeebbc91eb3b0f83fe58ea25"
+    },
+    {
+      "path": "scheduling/serial/bindings/000056/completion.json",
+      "bytes": 216,
+      "sha256": "c1702b852bfcb832ae0ccc9d8d9bc13521f82a2b85c9c3420f40534cd755f22c"
+    },
+    {
+      "path": "scheduling/serial/bindings/000056/intent.json",
+      "bytes": 212,
+      "sha256": "48c88cc85bec9e6688d20e6e1f70ff522ce432324cd385384fb0dbafc45c8374"
+    },
+    {
+      "path": "scheduling/serial/bindings/000057/completion.json",
+      "bytes": 216,
+      "sha256": "8447d93600dc0189af280eaa0149bff1a5b0ef3c16ab53d300142d12cd4055c0"
+    },
+    {
+      "path": "scheduling/serial/bindings/000057/intent.json",
+      "bytes": 212,
+      "sha256": "f1efe3297d92dc962b4e379b68cf6d1d120e80061c52ddf65ae5f79b299c83b2"
+    },
+    {
+      "path": "scheduling/serial/bindings/000058/completion.json",
+      "bytes": 216,
+      "sha256": "c849e14634a5d0d0a9ae2b12d02b2ba76fd91705d8c512a3ba126c42e889d44e"
+    },
+    {
+      "path": "scheduling/serial/bindings/000058/intent.json",
+      "bytes": 212,
+      "sha256": "b3b74aa0e27a53c473c3b75583d7d2bb4d1587c530f59caa6f29a94ff44f0b3d"
+    },
+    {
+      "path": "scoped-wiring-tests.txt",
+      "bytes": 12752,
+      "sha256": "aacab45485e0012dac8fa9d0d0c00da152c3e2f7c257dede07f5c66ebc54d86a"
+    },
+    {
+      "path": "sol-complete-checkpoint.json",
+      "bytes": 3244,
+      "sha256": "b7cc3d1bf1103fcfa647feb88c5e0778b2a9589ab1c300e3bcde00ab74af8083"
+    },
+    {
+      "path": "start-checkpoint.json",
+      "bytes": 3314,
+      "sha256": "c7a1fa320d9444579d10cfc0c4bf462c34cc2c6959af552c522b72722a9d7c3f"
+    },
+    {
+      "path": "totals.json",
+      "bytes": 770,
+      "sha256": "7427813f8ba40cbcbfb5dc6e8d4b2b60685086195e22c98d95c6b5fba11f656f"
+    }
+  ]
+}

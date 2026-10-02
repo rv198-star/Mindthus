@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "request_sha256": "dda9e50e8c6cd5108c49a9fc099ea5ad88de67a19fa26571964eee718026bc74",
+    "wire_sha256": "b6c6d3279172b30d0b8e9e96888a3bf7c07be36d7e0d7c381b71ea252de8eaf2",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "M01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 2,
+    "simulation": false
+  },
+  "raw_sha256": "fabd4c38628c28f8e54c16d37213cd175ad4d04c3b671a77c21e282b33625f94",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "新平台在已测批任务上的效率优势成立，但现在不能直接切换。\n\n迁移必须停机6小时，已超过获批的2小时窗口；若需回滚，还要额外1小时。结果验收相同、处理速度提高，都不能抵消维护窗口这一硬约束。\n\n现在应继续用旧平台处理业务，暂缓切换，并准备迁移与回滚方案。只有获批至少覆盖6小时迁移及1小时回滚的维护窗口，或验证新的迁移方案能将迁移与回滚总停机时间控制在2小时以内，才可安排切换。"
+  },
+  "usage": {
+    "input_tokens": 24421,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 262,
+    "reasoning_output_tokens": 96
+  },
+  "error": null,
+  "session_seconds": 22.695352750000893,
+  "ended_at_epoch": 1790945782.013688,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "dda9e50e8c6cd5108c49a9fc099ea5ad88de67a19fa26571964eee718026bc74",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "276d3fec4c8f1d6122017defee1be873e9d21524c91a07990002b9d78f5d6019",
+    "wire_sha256": "5b84468375b029c47fba6cb228d50f7b9f3a76cabf940419e2d493f8996eada7",
+    "batch_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "path": {
+      "case": "V02",
+      "arm": "bare",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 98,
+    "retry_of": null
+  },
+  "raw_sha256": "12839d4138293be9b881dee851224e9f1d79f01d46069d0cc1d3031a55ed756b",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "已经足够用于同事明天接着只读排查，不必扩写。复现情况、关闭缓存后的现象、根因未知、检查范围与时限、禁止事项，以及无法定位时的交回安排都清楚。\n\n原文也没有把“关闭缓存后错误消失”写成根因已确认，表述分寸合适。可以直接使用。"
+  },
+  "usage": {
+    "input_tokens": 16525,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 277,
+    "reasoning_output_tokens": 164
+  },
+  "error": null,
+  "session_seconds": 22.83899454199127,
+  "ended_at_epoch": 1790958088.865303,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "276d3fec4c8f1d6122017defee1be873e9d21524c91a07990002b9d78f5d6019",
+    "transport_successor_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "177dc68d8e790152aad297513ecfbf5a8949664633bd0da44cfa20e01247e2ab",
+    "wire_sha256": "154a53d355469dd85d44b2c410d30c3729b95f385afbf1901dcc95d10dddd2cc",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "M02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "38724e1c6caffff5acc1893763bda6f879518f6243319fb34aaf146a3d8e4f22",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/mpg/SKILL.md"
+    ],
+    "text": "读取 MPG，判断在9小时维护窗口内，6小时迁移、验收与1小时回滚如何约束本次切换及最晚回滚时点。"
+  },
+  "usage": {
+    "input_tokens": 18228,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 120,
+    "reasoning_output_tokens": 47
+  },
+  "error": null,
+  "session_seconds": 14.598568665998755,
+  "ended_at_epoch": 1790946019.758589,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "177dc68d8e790152aad297513ecfbf5a8949664633bd0da44cfa20e01247e2ab",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

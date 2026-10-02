@@ -1,0 +1,58 @@
+{
+  "binding": {
+    "request_sha256": "39678e6bd1ec3c1505ee680b45e015259d800527cb712121c709f873a6956487",
+    "wire_sha256": "2b739084b229904baffdcba8f47de050692a9b60e2e961a505ce87cca1e08ae0",
+    "batch_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "path": {
+      "case": "D01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 99,
+    "batch_call_ordinal": 1
+  },
+  "transport": {
+    "kind": "cli",
+    "events": [
+      {
+        "type": "thread.started",
+        "thread_id": "01a0fdb1-0638-7632-9d32-6ddb4bea4070"
+      },
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "item_0",
+          "type": "error",
+          "message": "Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /Users/william/.codex/config.toml."
+        }
+      },
+      {
+        "type": "turn.started"
+      },
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "item_1",
+          "type": "agent_message",
+          "text": "{\"kind\":\"answer\",\"objection\":\"\",\"read_paths\":[],\"text\":\"amber\\ncobalt\\njade\"}"
+        }
+      },
+      {
+        "type": "turn.completed",
+        "usage": {
+          "input_tokens": 18171,
+          "cached_input_tokens": 15232,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 31,
+          "reasoning_output_tokens": 0
+        }
+      }
+    ],
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"01a0fdb1-0638-7632-9d32-6ddb4bea4070\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /Users/william/.codex/config.toml.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"agent_message\",\"text\":\"{\\\"kind\\\":\\\"answer\\\",\\\"objection\\\":\\\"\\\",\\\"read_paths\\\":[],\\\"text\\\":\\\"amber\\\\ncobalt\\\\njade\\\"}\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":18171,\"cached_input_tokens\":15232,\"cache_write_input_tokens\":0,\"output_tokens\":31,\"reasoning_output_tokens\":0}}\n",
+    "stderr": "",
+    "returncode": 0,
+    "reply_text": "{\"kind\":\"answer\",\"objection\":\"\",\"read_paths\":[],\"text\":\"amber\\ncobalt\\njade\"}"
+  }
+}

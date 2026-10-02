@@ -4,7 +4,7 @@ This worksheet is not the default path. Use the Minimal WAE Check first.
 
 Do not fill every field. Fill only fields that can change the control decision.
 
-A complete worksheet where every Expanded Field was filled, with no field left blank or marked `not applicable`, is a regression signal, not a quality signal.
+Filled-field count is not a quality or regression signal. Preserve genuine unresolved points, allow justified not-applicable fields, and do not invent uncertainty to satisfy a template.
 
 ## Core Fields When Opened
 

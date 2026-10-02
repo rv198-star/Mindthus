@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "171806e3c2c0c9a89eb4d0f5a95249bba6055e52b57393e9682421f31b37468e",
+    "wire_sha256": "2b78c16753d0f3b3e3f322ad406af98a55da909b62ea4ed0aef0ff1c8543e081",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "E01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "51770f9e686e9f3c1e916355b1e72f4b348d44594e93a017d65b3ef439d1fe58",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/edsp/SKILL.md"
+    ],
+    "text": "我会使用 EDSP 检查“稳定与迭代速度必须全公司二选一”是否成立，并结合支付计算与需求探索的不同约束，给出明确判断。读取该技能是为了遵循其结构判断方法。"
+  },
+  "usage": {
+    "input_tokens": 18676,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 190,
+    "reasoning_output_tokens": 101
+  },
+  "error": null,
+  "session_seconds": 15.661900040999171,
+  "ended_at_epoch": 1790946415.678169,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "171806e3c2c0c9a89eb4d0f5a95249bba6055e52b57393e9682421f31b37468e",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

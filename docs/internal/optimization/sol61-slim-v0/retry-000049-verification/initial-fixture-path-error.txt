@@ -1,0 +1,50 @@
+test_exact_named_authority_remaining_budget_and_identity (test_slim_retry_000049.Retry000049Tests.test_exact_named_authority_remaining_budget_and_identity) ... ERROR
+test_fake_read_then_answer_and_remaining_paths_use_at_most14 (test_slim_retry_000049.Retry000049Tests.test_fake_read_then_answer_and_remaining_paths_use_at_most14) ... ERROR
+test_new_unknown_stops_without_second_retry (test_slim_retry_000049.Retry000049Tests.test_new_unknown_stops_without_second_retry) ... ERROR
+
+======================================================================
+ERROR: test_exact_named_authority_remaining_budget_and_identity (test_slim_retry_000049.Retry000049Tests.test_exact_named_authority_remaining_budget_and_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/Projects/Github/Mindthus/tests/test_slim_retry_000049.py", line 36, in test_exact_named_authority_remaining_budget_and_identity
+    child=r.prepare(parent,AUTH);c=r.m.read(child/'batch.json')
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/william/Projects/Github/Mindthus/docs/internal/optimization/sol61-slim-v0/retry_000049.py", line 96, in prepare
+    validate(batch,config)
+  File "/Users/william/Projects/Github/Mindthus/docs/internal/optimization/sol61-slim-v0/retry_000049.py", line 69, in validate
+    if batch!=parent/CHILD:raise ValueError('named_continuation_root_changed')
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: named_continuation_root_changed
+
+======================================================================
+ERROR: test_fake_read_then_answer_and_remaining_paths_use_at_most14 (test_slim_retry_000049.Retry000049Tests.test_fake_read_then_answer_and_remaining_paths_use_at_most14)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/Projects/Github/Mindthus/tests/test_slim_retry_000049.py", line 54, in test_fake_read_then_answer_and_remaining_paths_use_at_most14
+    child=r.prepare(parent,AUTH)
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/william/Projects/Github/Mindthus/docs/internal/optimization/sol61-slim-v0/retry_000049.py", line 96, in prepare
+    validate(batch,config)
+  File "/Users/william/Projects/Github/Mindthus/docs/internal/optimization/sol61-slim-v0/retry_000049.py", line 69, in validate
+    if batch!=parent/CHILD:raise ValueError('named_continuation_root_changed')
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: named_continuation_root_changed
+
+======================================================================
+ERROR: test_new_unknown_stops_without_second_retry (test_slim_retry_000049.Retry000049Tests.test_new_unknown_stops_without_second_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/Projects/Github/Mindthus/tests/test_slim_retry_000049.py", line 74, in test_new_unknown_stops_without_second_retry
+    child=r.prepare(parent,AUTH);fake=Fake([None,answer()]);fake.simulation=False;clock=Clock()
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/william/Projects/Github/Mindthus/docs/internal/optimization/sol61-slim-v0/retry_000049.py", line 96, in prepare
+    validate(batch,config)
+  File "/Users/william/Projects/Github/Mindthus/docs/internal/optimization/sol61-slim-v0/retry_000049.py", line 69, in validate
+    if batch!=parent/CHILD:raise ValueError('named_continuation_root_changed')
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: named_continuation_root_changed
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.882s
+
+FAILED (errors=3)

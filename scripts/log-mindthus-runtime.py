@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 
-VERSION = "1.10.1"
+VERSION = "1.11.0"
 PACKAGE_IDENTITY = "mindthus"
 MARKETPLACE_IDENTITY = "mindthus"
 RELATIVE_FILES = (
@@ -101,66 +101,12 @@ def relative_path_aliases(rel: str) -> list[str]:
             ]
         )
     return aliases
+# Identity/contract markers only. Wording recipes do not define installation health.
 REQUIRED_MARKERS = (
-    "Original Prompt Contract / 原始有效提示词合同",
-    "在回答前，先执行“输入审计”，不要顺着我的叙述直接推理",
     "Truth Orientation / 真相优先",
-    "pursue facts and truth over agreement",
-    "audit order: true_question -> implicit_premises -> local_validity_and_layer_shift -> reframed_question -> formal_answer",
-    "Entry Triage / 入口分诊",
-    "definition authority contest",
-    "green tests imply release readiness",
-    "negative and shadow controls",
-    "Root-cause evidence gate",
-    "same local repair count >= 3",
-    "Visible consequence probe",
-    "leading_point",
-    "Partial Truth Capture / 局部真相捕获",
-    "A locally true observation must not own the whole explanation",
-    "Whole Object Reconstruction / 整体对象还原",
-    "reconstruct the whole object before essence judgment",
-    "Whole Elephant Protocol / 全象流程",
-    "Compact Semantic Triad / 三根硬支柱",
-    "misdirection_if_local_wins",
-    "Contrastive Consequence Probe / 后果对比探针",
-    "better_direction_for_target",
-    "start by naming the complete object before summarizing local truths",
-    "local_success_points",
-    "coverage_weight",
-    "weighted_synthesis",
-    "whole_first_re_evaluation",
-    "strategy_choice",
-    "definition_owner",
-    "result_controller",
-    "decision_consequence",
+    "Input Framing Audit / 输入定框审计",
     "mindthus-whole-elephant-audit-v0.1",
-    "When Partial Truth Capture triggers, the formal answer is incomplete without",
-    "target job",
-    "main use cases",
-    "primary value carrier",
-    "local interface role",
-    "authority_weight",
-    "overreach_risk",
-    "corrected_thesis",
-    "grant authority only when the local frame carries the target result",
-    "would change the decision if removed",
-    "predicts outcomes or failures better than competing frames",
-    "blocked_by_missing_evidence when the whole-object carrier is unknown",
-    "definition consequence",
-    "optimization direction",
-    "Non-Mirror Correction / 非镜像纠错",
-    "Failure Channel / 失败通道",
-    "Anti-Sycophancy / 反谄媚",
-    "Core Thesis Extraction / 主判断收束",
-    "Essence Wording Guard / 本质措辞护栏",
-    "Auxiliary checks belong inside step 3",
-    "Explanatory Authority Check / 解释权校准",
-    "Dominant Carrier Check / 主导承载校准",
-    "System Subject Check / 系统主体校准",
-    "problem key over dialogue continuity",
-    "professional tone is not proof",
-    "common implementation is not essence",
-    "first task is not answering",
+    "shape_only_reminder_not_semantic_judgment",
 )
 
 

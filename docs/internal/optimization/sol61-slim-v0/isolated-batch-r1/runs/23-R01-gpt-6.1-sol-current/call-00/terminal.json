@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "74b975b0b2a6cb26a4b1ab4f58a0c5f64de4f8d6ca1b5e4f0938870bd050bf4a",
+    "wire_sha256": "f6b39228863e7ed144220726310f22e1349ab9181c73c67bd390fc782c57a712",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "R01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "3e4e2cf1a62e8e31a87e1bbf0b46a0c1239b3043c72bbe633f30803a3a5f67ff",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/sra/SKILL.md"
+    ],
+    "text": "读取 SRA 的资源分配规则，用于在今天的6小时内安排必须连贯完成的 A 修复与 B 复核，并确定 C 的暂缓安排。"
+  },
+  "usage": {
+    "input_tokens": 18699,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 152,
+    "reasoning_output_tokens": 79
+  },
+  "error": null,
+  "session_seconds": 15.918003625003621,
+  "ended_at_epoch": 1790948048.830406,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "74b975b0b2a6cb26a4b1ab4f58a0c5f64de4f8d6ca1b5e4f0938870bd050bf4a",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

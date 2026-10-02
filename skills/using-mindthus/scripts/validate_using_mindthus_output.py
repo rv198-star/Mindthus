@@ -110,7 +110,7 @@ def _validate_whole_elephant_audit(audit: object) -> list[Finding]:
             )
         ]
 
-    return [
+    shape = [
         finding(
             "block",
             "invalid-whole-elephant-audit",
@@ -118,6 +118,9 @@ def _validate_whole_elephant_audit(audit: object) -> list[Finding]:
         )
         for shape_finding in validate_whole_elephant_audit(audit)
     ]
+    hints = [finding("warn", "candidate-only-review-hint", f"whole_elephant_audit.{hint}")
+             for hint in _WHOLE_ELEPHANT_VALIDATOR.collect_semantic_hints(audit)]
+    return shape + hints
 
 
 def _validate_whole_elephant_contract(data: object) -> list[Finding]:
@@ -151,32 +154,32 @@ def _validate_whole_elephant_contract(data: object) -> list[Finding]:
         if looks_like_local_truth_concession_first(first_sentence):
             findings.append(
                 finding(
-                    "block",
-                    "weak-partial-truth-conclusion",
+                    "warn",
+                    "candidate-only-review-hint",
                     "plain_language_conclusion must start with the global thesis, not local-truth concession",
                 )
             )
         if looks_like_score_concession(conclusion):
             findings.append(
                 finding(
-                    "block",
-                    "weak-partial-truth-conclusion",
+                    "warn",
+                    "candidate-only-review-hint",
                     "plain_language_conclusion must not use score-as-concession framing",
                 )
             )
         if looks_like_soft_not_wrong_concession(conclusion):
             findings.append(
                 finding(
-                    "block",
-                    "weak-partial-truth-conclusion",
+                    "warn",
+                    "candidate-only-review-hint",
                     "plain_language_conclusion must not soften a rejected definition into a not-wrong concession",
                 )
             )
         if looks_like_generic_not_only_caveat(first_sentence):
             findings.append(
                 finding(
-                    "block",
-                    "weak-partial-truth-conclusion",
+                    "warn",
+                    "candidate-only-review-hint",
                     "plain_language_conclusion must not be a generic not-only caveat",
                 )
             )
@@ -259,7 +262,7 @@ def main() -> int:
     findings = validate_fidelity_output(data, SPEC)
     findings.extend(_validate_whole_elephant_contract(data))
     print_text_report(path, data, findings, SPEC)
-    return 1 if findings else 0
+    return 1 if any(item.severity == "block" for item in findings) else 0
 
 
 if __name__ == "__main__":

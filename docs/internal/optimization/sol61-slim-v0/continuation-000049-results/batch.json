@@ -1,0 +1,203 @@
+{
+  "schema": "mindthus.slim-batch.v0",
+  "simulation": false,
+  "authorization": "Owner reply 重试，可能是网络断开导致 to the scoped L02/current retry request in this task",
+  "baseline": "1527f32b99c375db9ff73f80812c644686a6576a",
+  "candidate": "7fcaad8028bcf37156b9aea30e07f72d90bbb20d",
+  "adapter_pin": "ed5171bf7b34746027acd730864d9c98ef1dd8d2",
+  "adapter_root": "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus",
+  "cli_version": "codex-cli 0.159.0-alpha.12.1",
+  "workspace_mode": "external_empty_directory_no_project_ancestors",
+  "binary_sha256": "1180e2d56ea06ec583092acd933345685da3441cb1769a436d76dbf320613e75",
+  "admission": {
+    "binary": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex"
+  },
+  "host_timeout": 300,
+  "active_processing_limit_seconds": 6086.157720293981,
+  "total_calls_max": 14,
+  "path_calls_max": 3,
+  "effort": "medium",
+  "transport_overrides": [
+    "model_provider=\"mindthus_official_http\"",
+    "model_providers.mindthus_official_http.name=\"OpenAI\"",
+    "model_providers.mindthus_official_http.requires_openai_auth=true",
+    "model_providers.mindthus_official_http.request_max_retries=0",
+    "model_providers.mindthus_official_http.stream_max_retries=0",
+    "model_providers.mindthus_official_http.supports_websockets=false",
+    "features.unbounded_connection_retries=false"
+  ],
+  "transport_overrides_sha256": "24db7d9dbd3cdd6f26e7660f6883ee9772eb78bc9f7a49eb984025f9ed6fc151",
+  "overrides": [
+    "model_provider=\"mindthus_official_http\"",
+    "model_providers.mindthus_official_http.name=\"OpenAI\"",
+    "model_providers.mindthus_official_http.requires_openai_auth=true",
+    "model_providers.mindthus_official_http.request_max_retries=0",
+    "model_providers.mindthus_official_http.stream_max_retries=0",
+    "model_providers.mindthus_official_http.supports_websockets=false",
+    "features.unbounded_connection_retries=false",
+    "features.skip_host_skill_discovery=true",
+    "features.plugins=false"
+  ],
+  "isolation": "same call-level skill/plugin isolation in every arm; safety/approval/hooks unchanged",
+  "protocol": {
+    "version": "mindthus.generation-scheduling.v2",
+    "authority": "Scheme owner adopted limited transport recovery exception in current user instruction",
+    "effective": "forward only, after technical successor registration; no retroactive qualification",
+    "max_generation_work_in_flight": 1,
+    "gap_after_confirmed_generation_work_end_seconds": 60,
+    "applies_to": [
+      "native",
+      "direct",
+      "Jev layer 1",
+      "Jev layer 2",
+      "host",
+      "host read continuation"
+    ],
+    "within_invocation_exceptions": [
+      "Bound evidence confirms a connection-establishment failure before generation payload send",
+      "Explicit official recoverable HTTP 401 establishes non-acceptance for generation; existing official authentication manager refreshes the same account and resubmits"
+    ],
+    "recovery_constraints": [
+      "serial",
+      "unchanged input and linked request identity",
+      "existing official bounded recovery",
+      "original invocation timeout",
+      "no outer recovery loop"
+    ],
+    "not_exempt": [
+      "generic request timed out",
+      "post-send stream interruption",
+      "uncertain acceptance",
+      "safety or permission refusal"
+    ],
+    "unclassified_observed_resubmission": "preserve return and limitation; stop subsequent dispatch pending request-bound evidence reconciliation",
+    "account_credentials_channel_switch_for_refusal": false,
+    "no_future_401_proof_required": true,
+    "counting": "Separate driver retries, CLI starts, observed internal recovery logs, connection/authentication/generation attempts. Unobservable counts and timing remain null; include recovery in measured invocation wall time.",
+    "history": "Keep all prior intents, failures, answers, freezes and debits. A1/native remains delivered with old request-level compliance limitation and 2/4 CLI attempts used. Its 119s invocation is not a matched performance baseline.",
+    "scope_this_turn": "A1/direct only, official Jev jev-1.13.0 first; at most two Jev calls, original host budgets; first full answer or explicit failure then return. No auth probes. No safety-setting changes."
+  },
+  "protocol_sha256": "f6ca147aad5a2abc7098033d30bd265974084df8afd6325d6e1158efd6d4aa01",
+  "inputs_sha256": "cd9dcc04738cc4fd76e24f2a950e3779da63532f21f5feef73950a41cfee162e",
+  "source_sha256": {
+    "current": "3ed3eace51860e3e563d6c314272cd2c30365071861eed4222a70104d80fe6f2",
+    "slim": "ac7f2027e0b4574d6c5e3daae7607093d4d6f0f6417c84eb0b9ba903298fe436"
+  },
+  "plan": [
+    {
+      "case": "L02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "F01",
+      "arm": "current",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "F01",
+      "arm": "slim",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "F02",
+      "arm": "slim",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "F02",
+      "arm": "current",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "V01",
+      "arm": "current",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "V01",
+      "arm": "slim",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "V02",
+      "arm": "slim",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "V02",
+      "arm": "current",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "F01",
+      "arm": "bare",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "F02",
+      "arm": "bare",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "V01",
+      "arm": "bare",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "V02",
+      "arm": "bare",
+      "model": "gpt-6.1-sol"
+    }
+  ],
+  "evidence_scope": "controlled read exchange; not passive activation qualification",
+  "successor_admission": {
+    "execution_authorized": true,
+    "authorization_ref": "Owner reply 批准 to the explicit cumulative 98-call proposal in this task, 2026-10-02",
+    "parent_receipt_sha256": "15cd46601ccc89d7bd795b6bf757cfcbd4a9e67af5a5d29bb528a6d71d959ef9",
+    "cumulative_call_limit": 98,
+    "prior_calls_charged": 34,
+    "successor_calls_max": 64,
+    "paths": 44,
+    "path_calls_max": 3,
+    "candidate": "7fcaad8028bcf37156b9aea30e07f72d90bbb20d",
+    "scope": "Same frozen 16 public cases: Sol 6.1 current/slim 32 paths, Astra current/slim 8, bare Sol 4; medium; same official HTTP profile; first results preserved",
+    "constraints": "No Jev, evaluator, score-seeking or technical retry; all old calls remain charged; new unknown or safety refusal stops dispatch; no merge or release authorization"
+  },
+  "parent_receipt": {
+    "root": "/Users/william/Projects/Github/Mindthus/.tplan/slim-eval-v0-20261002",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "logical_calls": 34,
+    "evidence_sha256": "28f4844d9f8ab9f472f37347f8413c223f2bd1b31a4e6746de5d827a1dddf83a",
+    "last_terminal_epoch": 1790940175.384185
+  },
+  "budget_status": "named_000049_retry_only_84_of_98_spent",
+  "retry_000049": {
+    "root": "/Users/william/Projects/Github/Mindthus/.tplan/slim-eval-v0-20261002-isolated-r1",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "logical_calls": 50,
+    "earlier_calls": 34,
+    "evidence_sha256": "061e41075ebe5ec83eeedbfbd9123558f894edf4349ec382f7c63265525a6aee",
+    "spent_session_seconds": 1113.8422797060193,
+    "request_sha256": "7d23f927a8aab39835d0b5be90584405af7e27b2422a3a11c401b96d65df88c6"
+  },
+  "retry_authorization": {
+    "execution_authorized": true,
+    "request_sha256": "7d23f927a8aab39835d0b5be90584405af7e27b2422a3a11c401b96d65df88c6",
+    "cumulative_call_limit": 98,
+    "technical_retries_max": 1,
+    "authorization_ref": "Owner reply 重试，可能是网络断开导致 to the scoped L02/current retry request in this task",
+    "prior_calls_charged": 84,
+    "remaining_calls_max": 14,
+    "scope": "Retry only isolated batch serial/000049 once, then continue the remaining original Astra 8 and bare Sol 4 paths while budget permits. L02 retains its already consumed call and 3/path limit.",
+    "risk": "Old request remains remote unknown. Owner accepts possible duplicate computation/billing and remote overlap for this named request only. Waiting does not prove completion.",
+    "new_unknown": "Stop; no automatic second retry",
+    "preserved": "All 31 delivered answers, frozen inputs, same product/source snapshots and official provider/model/effort configuration",
+    "identity": "Record currently installed CLI version and byte hash as technical successor; no CLI install or global configuration changes; exclude mixed-version L02 timing from matched speed claims"
+  },
+  "plan_start_index": 31,
+  "prior_path_calls": {
+    "31": 1
+  },
+  "transition_wait_basis": "60s_after_named_risk_acceptance_not_proof_of_remote_completion"
+}

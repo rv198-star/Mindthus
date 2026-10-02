@@ -65,27 +65,11 @@ class SelaContractTests(unittest.TestCase):
             self.assertIn(phrase, methodology)
 
     def test_sela_direct_load_runs_mpg_companion_check_for_path_commitments(self):
-        for path in (
-            SELA / "SKILL.md",
-            SELA / "resources" / "methodology.md",
-        ):
+        for path in (SELA / "SKILL.md", SELA / "resources/methodology.md"):
             text = path.read_text(encoding="utf-8")
-            for phrase in (
-                "SELA ↔ MPG Twin-Lens Handshake",
-                "SELA direct-load companion check",
-                "MPG companion check",
-                "must read `mindthus:mpg`",
-                "Do not treat this as an internal memory-only check",
-                "carrier, exposure, path volatility, or continue/exit commitment",
-                "SELA calibrates direction; MPG owns path-carrying action",
-                "first visible sentence must be a plain-language thesis",
-                "Default answer must not start",
-                "debug/audit support",
-                "ordinary language",
-                "SELA dominate + MPG not yet",
-                "carrier commitment",
-            ):
-                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+            for phrase in ("read `mindthus:mpg` when", "not already sufficiently specified", "SELA calibrates direction; MPG owns path-carrying action", "debug/audit support"):
+                self.assertIn(phrase, text)
+            self.assertNotIn("must read `mindthus:mpg`", text)
 
     def test_public_methodology_explains_handshake_without_runtime_commands(self):
         text = (REPO / "docs" / "methodologies" / "sela.md").read_text(

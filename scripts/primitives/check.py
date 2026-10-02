@@ -275,6 +275,7 @@ def activation_for(manifest: dict[str, Any], event_name: str, method: str) -> di
         "method": method,
         "active_primitives": active_primitives,
         "required_agent_checks": event["required_agent_checks"],
+        "reminder_scope": manifest.get("reminder_scope", "legacy explicit review aid"),
         "script_verdict": "shape_only",
         "agentic_judgment_required": True,
         "script_must_not_decide": [
@@ -311,7 +312,8 @@ def print_text_report(report: dict[str, Any]) -> None:
                 f"scope={scope}; exclusive_with={exclusive_with}"
             )
         print()
-    print("required_agent_checks:")
+    print("reminder_scope: " + report["reminder_scope"])
+    print("required_agent_checks (when applicable; explicit review aid):")
     for check in report["required_agent_checks"]:
         print(f"- {check}")
     print()

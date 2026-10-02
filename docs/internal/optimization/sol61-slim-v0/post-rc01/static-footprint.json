@@ -1,0 +1,33 @@
+{
+  "baseline_commit": "e7dbb473e955932f09c80dfb48b90ac1f4f8db43",
+  "metric": "UTF-8 bytes and Unicode characters; not model tokens or billed cost",
+  "files": [
+    {
+      "path": "skills/using-mindthus/SKILL.md",
+      "baseline_sha256": "d8361cfd09eea3b7744754922d774526d5886255dcdbf8542efd7728e832247d",
+      "candidate_sha256": "c15fb5d1027720b6a7b6dd12b909c2ec6dd708c1edf305bac68951fc6b78b844",
+      "baseline_bytes": 4625,
+      "candidate_bytes": 4652,
+      "byte_delta": 27,
+      "baseline_chars": 2761,
+      "candidate_chars": 2766,
+      "baseline_description_bytes": 369,
+      "candidate_description_bytes": 369
+    },
+    {
+      "path": "skills/wae/SKILL.md",
+      "baseline_sha256": "f5ec807d2bfe91847671eb61d5150b43c464cda378bd2dbb8b7e91db372c7496",
+      "candidate_sha256": "4d583f05a3df3577e61f4a25e56d9d986ab5eceaf6208af45dae1e4ecfbcdb2b",
+      "baseline_bytes": 10185,
+      "candidate_bytes": 8966,
+      "byte_delta": -1219,
+      "baseline_chars": 10073,
+      "candidate_chars": 8854,
+      "baseline_description_bytes": 227,
+      "candidate_description_bytes": 213
+    }
+  ],
+  "new_model_calls": 0,
+  "behavior_measured": false,
+  "wae_minimal_check_and_everything_after_byte_identical": true
+}

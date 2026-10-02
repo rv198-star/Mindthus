@@ -1,0 +1,55 @@
+{
+  "binding": {
+    "request_sha256": "5d7289777afc24003b41d9361325e82a1ab1b96a5b65902710501432f9c841cf",
+    "wire_sha256": "5989e927595d09d283cfd1088d0754333df1a544092bf094838bcf4e6b382f48",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "path": {
+      "case": "W01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "e7f7c5d367cb8ff0ffcc3442d810a0ea4ae83d3df260b99369ad4d10a95c674b",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/wae/SKILL.md",
+      "docs/methodologies/shared-primitives.md"
+    ],
+    "text": "这涉及固定流程、Agent 与证据之间的控制边界，我会使用 WAE 镜头。需读取其判断规则及交付前自检要求，重点区分：已签字的例外条件是否足以确定条款，以及个案事实的确认应由谁控制。"
+  },
+  "usage": {
+    "input_tokens": 21934,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 141,
+    "reasoning_output_tokens": 32
+  },
+  "error": null,
+  "session_seconds": 18.0374150419957,
+  "ended_at_epoch": 1790939286.80509,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "5d7289777afc24003b41d9361325e82a1ab1b96a5b65902710501432f9c841cf",
+    "transport_successor_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

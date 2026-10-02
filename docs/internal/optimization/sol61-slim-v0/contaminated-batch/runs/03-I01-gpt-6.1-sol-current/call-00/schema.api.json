@@ -1,0 +1,1 @@
+{"additionalProperties":false,"properties":{"kind":{"enum":["answer","read"],"type":"string"},"objection":{"type":"string"},"read_paths":{"items":{"type":"string"},"type":"array"},"text":{"type":"string"}},"required":["kind","text","read_paths","objection"],"type":"object"}

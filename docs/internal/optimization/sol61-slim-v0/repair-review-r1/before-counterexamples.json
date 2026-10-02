@@ -1,0 +1,63 @@
+{
+  "malformed_reply_after_recovery": {
+    "fake_invocations": 2,
+    "results": [
+      {
+        "status": "failed",
+        "error": "invalid_reply_json_after_terminal",
+        "answer": null
+      },
+      {
+        "status": "delivered",
+        "answer": "SIMULATION ONLY",
+        "objection": "simulation"
+      }
+    ],
+    "transport_stop": true,
+    "driver_stop": false
+  },
+  "invalid_read_after_recovery": {
+    "fake_invocations": 2,
+    "results": [
+      {
+        "status": "format_failure",
+        "answer": null,
+        "error": "invalid_read_contract"
+      },
+      {
+        "status": "delivered",
+        "answer": "SIMULATION ONLY",
+        "objection": "simulation"
+      }
+    ],
+    "transport_stop": true,
+    "driver_stop": false
+  },
+  "empty_answer": {
+    "fake_invocations": 2,
+    "results": [
+      {
+        "status": "delivered",
+        "answer": "",
+        "objection": "simulation"
+      },
+      {
+        "status": "delivered",
+        "answer": "SIMULATION ONLY",
+        "objection": "simulation"
+      }
+    ],
+    "transport_stop": false,
+    "driver_stop": false
+  },
+  "duplicate_successor_proposals": {
+    "allowances": [
+      64,
+      64
+    ],
+    "parent_count": 34,
+    "both_pending": true,
+    "independent_locks": true,
+    "executed_calls": 0
+  }
+}

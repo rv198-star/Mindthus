@@ -1,0 +1,58 @@
+{
+  "binding": {
+    "request_sha256": "47cc3c8b1127abf6a70457069bf9c987839b708808f27327c67b669d3bfe84f1",
+    "wire_sha256": "2ef0f8fc2ce88846ba5148e9e1502d1d87e0ec5009a98a5e6230afc89bd036ae",
+    "batch_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "path": {
+      "case": "V01",
+      "arm": "current",
+      "model": "gpt-6-astra"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 91,
+    "retry_of": null
+  },
+  "transport": {
+    "kind": "cli",
+    "events": [
+      {
+        "type": "thread.started",
+        "thread_id": "01a0fd62-4c40-78e0-925e-1c0901b19bfb"
+      },
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "item_0",
+          "type": "error",
+          "message": "Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /Users/william/.codex/config.toml."
+        }
+      },
+      {
+        "type": "turn.started"
+      },
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "item_1",
+          "type": "agent_message",
+          "text": "{\"kind\":\"answer\",\"objection\":\"\",\"read_paths\":[],\"text\":\"缓存失效已复现两次，原因尚未定位。小流量关闭缓存后错误消失，尚不能认定问题已解决。明天仅开展已批准的一小时只读排查，禁止修改生产配置；排查后交接发现与待验证项。\"}"
+        }
+      },
+      {
+        "type": "turn.completed",
+        "usage": {
+          "input_tokens": 18618,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 86,
+          "reasoning_output_tokens": 0
+        }
+      }
+    ],
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"01a0fd62-4c40-78e0-925e-1c0901b19bfb\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /Users/william/.codex/config.toml.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"agent_message\",\"text\":\"{\\\"kind\\\":\\\"answer\\\",\\\"objection\\\":\\\"\\\",\\\"read_paths\\\":[],\\\"text\\\":\\\"缓存失效已复现两次，原因尚未定位。小流量关闭缓存后错误消失，尚不能认定问题已解决。明天仅开展已批准的一小时只读排查，禁止修改生产配置；排查后交接发现与待验证项。\\\"}\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":18618,\"cached_input_tokens\":0,\"cache_write_input_tokens\":0,\"output_tokens\":86,\"reasoning_output_tokens\":0}}\n",
+    "stderr": "",
+    "returncode": 0,
+    "reply_text": "{\"kind\":\"answer\",\"objection\":\"\",\"read_paths\":[],\"text\":\"缓存失效已复现两次，原因尚未定位。小流量关闭缓存后错误消失，尚不能认定问题已解决。明天仅开展已批准的一小时只读排查，禁止修改生产配置；排查后交接发现与待验证项。\"}"
+  }
+}

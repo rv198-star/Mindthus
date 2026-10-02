@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "02b6c80ccca734480146ecd6732e94809d9b2b1d514bbb51b66ddb33dce5daaa",
+    "wire_sha256": "6eeedcb064a7f2514e3b9d24307e06bd6c32d824d246454113de542433519861",
+    "batch_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "path": {
+      "case": "L01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 141,
+    "batch_call_ordinal": 43
+  },
+  "raw_sha256": "89356344c03d6dff3c2de9743cade03706960c332f444510c6588959acf27045",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "最简任务记录（保存此段，明天接续）：\n\n- 目标：更新两处过期链接。\n- 进度：第一处已更新；第二处待更新。链接可打开尚未记录验证结果。\n- 恢复定位：补记两处所在文件／页面、链接位置及目标 URL。\n- 验收：两处更新后的链接均可打开。\n- 范围：无外部发布。\n\n明天的动作：根据定位更新第二处 → 打开两处链接验证 → 均通过后标记完成；打不开则记录具体问题，继续修正。"
+  },
+  "usage": {
+    "input_tokens": 18219,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 301,
+    "reasoning_output_tokens": 135
+  },
+  "error": null,
+  "session_seconds": 18.800683999987086,
+  "ended_at_epoch": 1790966201.870435,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "02b6c80ccca734480146ecd6732e94809d9b2b1d514bbb51b66ddb33dce5daaa",
+    "transport_successor_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

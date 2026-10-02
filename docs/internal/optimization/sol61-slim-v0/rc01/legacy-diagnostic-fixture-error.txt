@@ -1,0 +1,37 @@
+test_help_text_names_runtime_boundary (tests.test_log_mindthus_runtime.LogMindthusRuntimeTests.test_help_text_names_runtime_boundary) ... ok
+test_parse_args_derives_cache_root_from_explicit_codex_home (tests.test_log_mindthus_runtime.LogMindthusRuntimeTests.test_parse_args_derives_cache_root_from_explicit_codex_home) ... ok
+test_parse_args_discovers_local_marketplace_from_codex_config (tests.test_log_mindthus_runtime.LogMindthusRuntimeTests.test_parse_args_discovers_local_marketplace_from_codex_config) ... ok
+test_parse_args_preserves_explicit_roots (tests.test_log_mindthus_runtime.LogMindthusRuntimeTests.test_parse_args_preserves_explicit_roots) ... ok
+test_reports_matching_runtime_fingerprints_and_markers_as_json (tests.test_log_mindthus_runtime.LogMindthusRuntimeTests.test_reports_matching_runtime_fingerprints_and_markers_as_json) ... FAIL
+test_strict_mode_fails_on_missing_marker_or_hash_mismatch (tests.test_log_mindthus_runtime.LogMindthusRuntimeTests.test_strict_mode_fails_on_missing_marker_or_hash_mismatch) ... ERROR
+test_strict_mode_fails_when_tracked_file_is_missing (tests.test_log_mindthus_runtime.LogMindthusRuntimeTests.test_strict_mode_fails_when_tracked_file_is_missing) ... ok
+test_current_rc_preserves_stable_and_roi_beta_history (tests.test_release_boundary_contract.ReleaseBoundaryContractTests.test_current_rc_preserves_stable_and_roi_beta_history) ... ok
+test_release_defaults_publish_roi_beta_unless_explicitly_exempted (tests.test_release_boundary_contract.ReleaseBoundaryContractTests.test_release_defaults_publish_roi_beta_unless_explicitly_exempted) ... ok
+test_generated_plugin_runtime_diagnostic_accepts_healthy_local_install (tests.test_packaging_docs.PackagingDocsTests.test_generated_plugin_runtime_diagnostic_accepts_healthy_local_install) ... ok
+test_generated_portable_packs_runtime_diagnostic_accepts_namespaced_layouts (tests.test_packaging_docs.PackagingDocsTests.test_generated_portable_packs_runtime_diagnostic_accepts_namespaced_layouts) ... ok
+test_readme_names_current_skill_pack_and_tplan (tests.test_packaging_docs.PackagingDocsTests.test_readme_names_current_skill_pack_and_tplan) ... ok
+test_readme_keeps_release_details_out_of_new_user_intro (tests.test_packaging_docs.PackagingDocsTests.test_readme_keeps_release_details_out_of_new_user_intro) ... ok
+test_release_pack_builder_creates_claude_marketplace_root_layout (tests.test_packaging_docs.PackagingDocsTests.test_release_pack_builder_creates_claude_marketplace_root_layout) ... ok
+test_release_pack_builder_can_split_plugin_and_skills_packages (tests.test_packaging_docs.PackagingDocsTests.test_release_pack_builder_can_split_plugin_and_skills_packages) ... ok
+test_v1_0_1_public_docs_and_release_pack_include_usage_logger (tests.test_v1_0_1_usage_log.V101UsageLogTests.test_v1_0_1_public_docs_and_release_pack_include_usage_logger) ... ok
+
+======================================================================
+ERROR: test_strict_mode_fails_on_missing_marker_or_hash_mismatch (tests.test_log_mindthus_runtime.LogMindthusRuntimeTests.test_strict_mode_fails_on_missing_marker_or_hash_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/Projects/Github/Mindthus/tests/test_log_mindthus_runtime.py", line 492, in test_strict_mode_fails_on_missing_marker_or_hash_mismatch
+    payload["locations"]["cache"]["files"]["skills/using-mindthus/SKILL.md"]["markers"][
+KeyError: 'System Subject Check / 系统主体校准'
+
+======================================================================
+FAIL: test_reports_matching_runtime_fingerprints_and_markers_as_json (tests.test_log_mindthus_runtime.LogMindthusRuntimeTests.test_reports_matching_runtime_fingerprints_and_markers_as_json)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/william/Projects/Github/Mindthus/tests/test_log_mindthus_runtime.py", line 365, in test_reports_matching_runtime_fingerprints_and_markers_as_json
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 1 != 0 : 
+
+----------------------------------------------------------------------
+Ran 16 tests in 2.930s
+
+FAILED (failures=1, errors=1)

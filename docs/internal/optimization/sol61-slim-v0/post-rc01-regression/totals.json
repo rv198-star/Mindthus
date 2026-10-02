@@ -1,0 +1,30 @@
+{
+  "planned": 40,
+  "statuses": {
+    "delivered": 40
+  },
+  "logical_calls": 59,
+  "cli_starts": 59,
+  "new_cap": 120,
+  "remaining": 61,
+  "historical_calls": 98,
+  "cumulative_calls": 157,
+  "session_seconds": 1388.8737781278905,
+  "active_wait_seconds": 3468.555947540881,
+  "initial_cooldown_seconds": 60.00581962498836,
+  "outer_retries": 0,
+  "min_confirmed_gap_seconds": 60.000830834003864,
+  "activity_wall_seconds": 4869.819185256958,
+  "observed_recoveries": {
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0
+  },
+  "unexposed_underlying_requests": null,
+  "cost": null,
+  "context_archives": 59,
+  "cwd_matches": 59,
+  "project_AGENTS_messages": 0,
+  "stop": null
+}

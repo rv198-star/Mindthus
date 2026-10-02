@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "8abf66843deab677a36d4f3b59e688e45d9253027b362b89a1fda6b1a6cc0b19",
+    "wire_sha256": "a56a6d85182c8fb5bb9e9b1b22dcf82c8ffbd52b2fe2a351cd5e27ba5c4028ae",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "W02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "60bf918993349806c7475be62c225940c7ace64630af1b00d34472bd5bf04b7d",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "text": "我将使用 WAE 判断固定流程、Agent 判断与证据校验的控制边界，重点区分已签字税率表的确定性执行与尚未达成一致的跨地区条款适用条件。"
+  },
+  "usage": {
+    "input_tokens": 18230,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 98,
+    "reasoning_output_tokens": 13
+  },
+  "error": null,
+  "session_seconds": 13.220829874990159,
+  "ended_at_epoch": 1790947229.771172,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "8abf66843deab677a36d4f3b59e688e45d9253027b362b89a1fda6b1a6cc0b19",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "9cc08113ec8aa35156f72a1d684eb38b0cf05fe92633ef727bb0d4c240fd8ac8",
+    "wire_sha256": "0e0ff3cfef5fd5640252e8ed344d96bafb82e72cc676bc62b4abe64be8097ce0",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "P02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "edf436f2ab30b8a61a563ebea3e834de50455b628f3953032ee6820c27af34c2",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/3l5s/SKILL.md"
+    ],
+    "text": "读取 3L5S 的问题澄清与停止重复返工指引，用于确定原始退回记录缺失时的下一步，避免把未经核实的退回理由变成新增审批表。"
+  },
+  "usage": {
+    "input_tokens": 18204,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 134,
+    "reasoning_output_tokens": 48
+  },
+  "error": null,
+  "session_seconds": 19.769207208009902,
+  "ended_at_epoch": 1790947728.4690418,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "9cc08113ec8aa35156f72a1d684eb38b0cf05fe92633ef727bb0d4c240fd8ac8",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

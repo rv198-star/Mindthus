@@ -1,0 +1,138 @@
+{
+  "scope": "executor unblinded read-only against frozen oracles, no reviewer model",
+  "rows": {
+    "00-D01-gpt-6.1-sol-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "排序正确，严格三行，无额外读取。"
+    },
+    "01-D01-gpt-6.1-sol-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "排序正确，严格三行，无额外读取。"
+    },
+    "02-I01-gpt-6.1-sol-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "指出附件未提供，索取含数据/公式的原材料；没有编造错误。"
+    },
+    "03-I01-gpt-6.1-sol-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "缺附件时明确索取正文/数据，未编造错误。"
+    },
+    "04-F01-gpt-6.1-sol-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "区分完整能力与文本载体，以执行/状态/验证说明主要价值，保留纯文本Skill可能主要受益于Prompt；一次回答，无额外读取。"
+    },
+    "05-F01-gpt-6.1-sol-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "unknown",
+      "reason": "保留Prompt语义核心与纯文本例外，明确执行/状态/验证是完整能力；读取WAE+TPlan后2次交付，对比当前版未见关键纠错增量，额外读取价值未证明。"
+    },
+    "06-F02-gpt-6.1-sol-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "在明确文本接口范围内认可用户主张；只限定脚本外部作用，没有把整体价值强压回接口问题；一次交付。"
+    },
+    "07-F02-gpt-6.1-sol-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "接口限定内认可Prompt观点，同时修正脚本只是调度这一辅助论据；不否定用户有效范围。"
+    },
+    "08-M01-gpt-6.1-sol-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "observed",
+      "reason": "正确保留10倍方向并拒绝2小时窗口直接切换；需批准覆盖7小时或验证可压缩方案。已知方向仍为MPG要求补读SELA，累计3次调用，未见新增方向问题。"
+    },
+    "09-M01-gpt-6.1-sol-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "保留效率方向，明确2小时不足6+1小时，给出获批更大窗口或经验证缩短迁移方案的行动；只读MPG后2次交付，未重复SELA方向判断。"
+    },
+    "10-M02-gpt-6.1-sol-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "9小时窗口覆盖6小时迁移+1小时回滚，支持推进并明确第8小时最迟回滚决定；没有无依据阻断。"
+    },
+    "11-M02-gpt-6.1-sol-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "observed",
+      "reason": "正确支持9小时内切换，保留最迟第8小时回滚决定；已知方向仍追加SELA，累计3次。"
+    },
+    "12-E01-gpt-6.1-sol-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "拆开支付与探索对象，以正确性/验证需求分别确定优先级，并保留影响隔离；没有全公司口号式二选一。"
+    },
+    "13-E01-gpt-6.1-sol-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "明确拒绝全公司伪二选一；支付以正确性为门槛、探索以可撤回实验验证需求，保留隔离影响。两臂均2次，处理时间接近。"
+    },
+    "14-W01-gpt-6.1-sol-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "认可已签字例外可规则化，Agent提取资料而非自由改税率；冲突/缺失输入仅条件性转例外处理，未无依据阻断整题。"
+    },
+    "15-W01-gpt-6.1-sol-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "按已确认条件执行，字段事实需核验，未覆盖/冲突才转有权负责人；不因存在Agent无依据增加裁量。"
+    },
+    "16-W02-gpt-6.1-sol-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "已确定计算继续流程化，未定适用规则由有权负责人裁定；不以填字段隐藏语义裁决，2次交付。"
+    },
+    "17-W02-gpt-6.1-sol-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "已确定税率计算保留固定流程，适用条件未决交规则责任方裁定；证据/结构校验区分正确，2次交付。"
+    },
+    "18-P01-gpt-6.1-sol-slim": {
+      "task_result": "partially_usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "直接修已定位分隔常量，验证表头和下游解析，没有全系统重写；漏事前要求含引号/逗号字段样例，验证不完整，不追分补试。"
+    }
+  }
+}

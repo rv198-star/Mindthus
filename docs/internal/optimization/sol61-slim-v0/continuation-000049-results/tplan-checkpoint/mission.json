@@ -1,0 +1,91 @@
+{
+  "schema_version": "tplan.v0.1",
+  "runtime_provenance": {
+    "schema_version": "tplan.runtime_provenance.v0.1",
+    "origin": "native",
+    "fingerprint": {
+      "schema_version": "tplan.runtime_fingerprint.v0.1",
+      "package_version": "1.5.4",
+      "source_id": "mindthus-v1.5.4",
+      "skill_root": "/Users/william/.codex/plugins/cache/mindthus/mindthus/1.9.1/skills/tplan",
+      "script_root": "/Users/william/.codex/plugins/cache/mindthus/mindthus/1.9.1/skills/tplan/scripts",
+      "build_hash": "sha256:30ea46ce04209609f1ede2e6b2f8f495dc5da045385664bd978a33a14e366e6b",
+      "capability_versions": {
+        "codex_telemetry_adapter": "tplan.codex_telemetry_adapter.v0.2",
+        "codex_telemetry_dispatcher": "tplan.codex_telemetry_dispatcher.v0.1",
+        "execution_cost_tree": "tplan.execution_cost_tree.v0.9",
+        "execution_trace": "tplan.execution_trace.v0.1",
+        "mission": "tplan.v0.1",
+        "runtime_doctor": "tplan.runtime_doctor.v0.1",
+        "runtime_provenance": "tplan.runtime_provenance.v0.1"
+      },
+      "capabilities": [
+        "atomic_mission_mutation",
+        "codex_hook_activation_preflight",
+        "codex_hook_stable_dispatcher",
+        "codex_hook_telemetry",
+        "codex_otel_ingestion",
+        "execution_trace",
+        "runtime_doctor",
+        "runtime_provenance",
+        "standard_execution_timeline",
+        "terminal_completion_handoff"
+      ]
+    }
+  },
+  "mission": {
+    "id": "mindthus-sol61-slim-20261002",
+    "title": "Mindthus Sol 6.1 减负优化",
+    "objective": "减少Mindthus重复提示和流程开销，保留重要判断、证据与权限边界；Sol 6.1主验收，Astra限定抽检。",
+    "status": "active",
+    "human_in_loop": 0,
+    "risk_tolerance": 35,
+    "resource_sufficiency": 70,
+    "acceptance_evidence": [
+      {
+        "id": "AE-T0",
+        "description": "事前场景与规范、配对条件、预算和停止规则固定"
+      },
+      {
+        "id": "AE-IMPLEMENTATION",
+        "description": "214-219最小实现及针对性验证"
+      },
+      {
+        "id": "AE-EVALUATION",
+        "description": "220真实对照或明确未执行与原因"
+      },
+      {
+        "id": "AE-PACKAGE",
+        "description": "221共享核心及打包兼容"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T0",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "提前固定验收对比场景",
+      "status": "active",
+      "role": "success-critical",
+      "evidence_links": [],
+      "mission_contribution": "在任何产品改动与实模观察之前固定业务输入、独立判据和比较条件，防止优化后按结果移动验收。",
+      "acceptance_evidence": [
+        "AE-T0",
+        "AE-IMPLEMENTATION",
+        "AE-EVALUATION",
+        "AE-PACKAGE"
+      ]
+    }
+  ],
+  "active_task_id": "T0",
+  "shared_context": {
+    "project_root": "/Users/william/Projects/Github/Mindthus",
+    "context_file": ".tplan/shared_contexts/tplan_mission_shared_context-mindthus-sol61-slim-20261002.md",
+    "source_contexts": [],
+    "risk_signals": [],
+    "runtime_dir": ".tplan/missions/mindthus-sol61-slim-20261002",
+    "runtime_dir_name": "mindthus-sol61-slim-20261002"
+  }
+}

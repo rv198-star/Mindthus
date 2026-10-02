@@ -338,7 +338,7 @@
     },
     "whole_elephant_protocol": {
       "name": "Whole Elephant Protocol / 全象流程",
-      "short_rule": "局部真相可能冒充整体时，先锁定完整对象、结果主控和局部胜出后的优化偏移，再进入正式判断。",
+      "short_rule": "局部解释足以服务当前目标就保留；只有局部真相接管整体并误导行动时，限定范围、说明主控和行动后果。",
       "trigger": [
         "before-route",
         "before-answer"
@@ -407,7 +407,7 @@
     },
     "core_thesis_extraction": {
       "name": "Core Thesis Extraction / 主判断收束",
-      "short_rule": "正式回答首句必须承载主判断，不把最强句埋到后面。",
+      "short_rule": "尽早说清主判断与行动后果；不以固定句序决定内容是否有效。",
       "trigger": [
         "before-answer"
       ],
@@ -430,7 +430,7 @@
     },
     "first_sentence_stress_test": {
       "name": "First Sentence Stress Test / 首句主判断压力测试",
-      "short_rule": "如果读者还要追问第二句才抓到重点，首句失败。",
+      "short_rule": "读者难以抓到重点时检查表达；句序只作复核提示，不作语义否决。",
       "trigger": [
         "before-answer"
       ],
@@ -494,7 +494,7 @@
     },
     "essence_wording_guard": {
       "name": "Essence Wording Guard / 本质措辞护栏",
-      "short_rule": "不要把局部载体或接口重新说成本质。",
+      "short_rule": "按对象与目标限定局部接口的解释权；狭义接口定义充分时允许保留。",
       "trigger": [
         "before-answer"
       ],
@@ -611,5 +611,6 @@
       ],
       "owner": "tplan"
     }
-  }
+  },
+  "reminder_scope": "Conditional review aid: judge applicability from the mainline. Output shapes are explicit trace/replay contracts, not required business answer fields; heuristic wording is not a semantic veto."
 }

@@ -1,0 +1,31 @@
+{
+  "paths_planned": 44,
+  "paths_delivered": 31,
+  "logical_calls": 50,
+  "cli_starts": 50,
+  "prior_calls": 34,
+  "cumulative_cap": 98,
+  "session_seconds": 1113.8422797060193,
+  "active_wait_seconds": 2939.11707391408,
+  "parent_transition_wait_seconds": 60.005807708002976,
+  "activity_wall_seconds": 4054.6295878887177,
+  "activity_plus_parent_wait_seconds": 4114.635395596721,
+  "min_confirmed_generation_gap_seconds": 60.00071979200584,
+  "confirmed_serial_completions": 49,
+  "observed_recovery_keyword_matches": 2,
+  "actual_underlying_request_count": null,
+  "cost": null,
+  "usage_reporting": "known subtotals only; missing failed-call usage stays unknown, not zero",
+  "usage_missing_calls": 1,
+  "activity_wall_basis": "first generation-work intent to last local terminal observation, including unknown failure; no claim unknown remote work ended",
+  "context_archives": 50,
+  "context_cwd_matching": 50,
+  "project_AGENTS_messages": 0,
+  "usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 657792,
+    "input_tokens": 945008,
+    "output_tokens": 12775,
+    "reasoning_output_tokens": 3699
+  }
+}

@@ -1,0 +1,21 @@
+test_plan_and_input_separation (test_slim_batch.SlimBatchTests.test_plan_and_input_separation) ... ok
+test_read_raw_terminal_import_and_cross_arm_cooldown (test_slim_batch.SlimBatchTests.test_read_raw_terminal_import_and_cross_arm_cooldown) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+READ 00-D01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+DELIVERED 00-D01-gpt-6.1-sol-current calls 2
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+ok
+test_simulation_cannot_dispatch_through_official_adapter (test_slim_batch.SlimBatchTests.test_simulation_cannot_dispatch_through_official_adapter) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+ok
+test_three_reads_stop_at_path_limit (test_slim_batch.SlimBatchTests.test_three_reads_stop_at_path_limit) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+READ 00-D01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 00-D01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 00-D01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+ok
+test_unknown_stops_without_completion_or_second_call (test_slim_batch.SlimBatchTests.test_unknown_stops_without_completion_or_second_call) ... WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)
+ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.840s
+
+OK

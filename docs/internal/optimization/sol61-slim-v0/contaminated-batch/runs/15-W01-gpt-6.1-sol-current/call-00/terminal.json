@@ -1,0 +1,56 @@
+{
+  "binding": {
+    "request_sha256": "f29f55ceeade78af606334e79b2f6c6ac81810a36820cad1fbadd9cb391dd9c5",
+    "wire_sha256": "2cdfbc0346b3b488fa7c588d1ddf5e38e8f06879cb1a2fd23c65ecf1efefea95",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "path": {
+      "case": "W01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "bea45ab6dc36c5298a43ab71299218a43a18b4181b202c864d533ee7d2d38107",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/wae/SKILL.md",
+      "docs/methodologies/primitives/entry-triage.md",
+      "docs/methodologies/shared-primitives.md"
+    ],
+    "text": "将使用 WAE 判断流程、Agent 与证据各自的控制边界，并读取入口分诊及交付检查规则。重点核对：跨地区例外条件已逐条签字后，条款适用是否已能确定执行，以及哪些事实核验或规则冲突仍需另行处理。"
+  },
+  "usage": {
+    "input_tokens": 22393,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 177,
+    "reasoning_output_tokens": 51
+  },
+  "error": null,
+  "session_seconds": 17.052067208991502,
+  "ended_at_epoch": 1790939443.294493,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "f29f55ceeade78af606334e79b2f6c6ac81810a36820cad1fbadd9cb391dd9c5",
+    "transport_successor_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

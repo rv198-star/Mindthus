@@ -1,0 +1,9 @@
+{
+  "kind": "read",
+  "objection": "",
+  "read_paths": [
+    "skills/mpg/SKILL.md",
+    "docs/methodologies/shared-primitives.md"
+  ],
+  "text": "读取 MPG 的迁移时机、回滚与退出条件，以及交付前检查要求。效率优势已得到验证；当前需要判断的是如何在9小时维护窗口内完成迁移、验收并保留回滚余量。"
+}

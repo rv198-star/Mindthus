@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "03072ed5a6b35a5e57e0d31fc832979a371875ecfbd845362a1a0880cd94505c",
+    "wire_sha256": "a1fa942fa5da61b1f1ed2592559c29d62a3055626c0de7f8b246c4ed37bc70e7",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "E01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "9f3e68edc9319eaeff9bf8e3045323fdfcba38f60351ab857ad5ff86a669a628",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/edsp/SKILL.md"
+    ],
+    "text": "我会使用 EDSP 镜头检查“稳定与迭代速度必须全公司二选一”是否成立，并结合支付计算与需求探索两类工作的差异，给出明确判断及行动建议。"
+  },
+  "usage": {
+    "input_tokens": 18206,
+    "cached_input_tokens": 18048,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 108,
+    "reasoning_output_tokens": 26
+  },
+  "error": null,
+  "session_seconds": 18.05209795900737,
+  "ended_at_epoch": 1790946581.432514,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "03072ed5a6b35a5e57e0d31fc832979a371875ecfbd845362a1a0880cd94505c",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

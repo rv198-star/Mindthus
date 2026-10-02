@@ -1,0 +1,79 @@
+{
+  "prompt": "完成下面的用户请求。只使用本会话材料；不联网，不调用其他工具，不访问历史答案。返回合同：kind=answer 时 text 是给用户的完整自然语言答案，read_paths=[]；kind=read 时 read_paths 列出真正需要的仓库相对路径，text 简述读取目的。objection 记录执行限制，没有则为空。读取通过下一次受控会话返回；不自行执行脚本。\n\n用户请求：\n请改好这段交接说明，保持短。已知事实：缓存失效原因尚未定位；已复现两次；小流量关闭缓存后错误消失；只批准明天一小时只读排查，禁止改生产配置。原稿：“缓存问题已解决，接下来全面优化平台，保证不再复发。”",
+  "local_schema": {
+    "type": "object",
+    "properties": {
+      "kind": {
+        "type": "string",
+        "enum": [
+          "answer",
+          "read"
+        ]
+      },
+      "text": {
+        "type": "string"
+      },
+      "read_paths": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "objection": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "kind",
+      "text",
+      "read_paths",
+      "objection"
+    ],
+    "additionalProperties": false
+  },
+  "api_schema": {
+    "type": "object",
+    "properties": {
+      "kind": {
+        "type": "string",
+        "enum": [
+          "answer",
+          "read"
+        ]
+      },
+      "text": {
+        "type": "string"
+      },
+      "read_paths": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "objection": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "kind",
+      "text",
+      "read_paths",
+      "objection"
+    ],
+    "additionalProperties": false
+  },
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "overrides": [
+    "model_provider=\"mindthus_official_http\"",
+    "model_providers.mindthus_official_http.name=\"OpenAI\"",
+    "model_providers.mindthus_official_http.requires_openai_auth=true",
+    "model_providers.mindthus_official_http.request_max_retries=0",
+    "model_providers.mindthus_official_http.stream_max_retries=0",
+    "model_providers.mindthus_official_http.supports_websockets=false",
+    "features.unbounded_connection_retries=false",
+    "features.skip_host_skill_discovery=true",
+    "features.plugins=false"
+  ]
+}

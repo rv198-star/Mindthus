@@ -170,8 +170,8 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         compact = " ".join(contract.split())
 
-        self.assertIn("script_verdict` must be `shape_only` when the script ran", compact)
-        self.assertIn("or `not_run_fallback` when the host cannot run the script", compact)
+        self.assertIn("script_verdict=shape_only", compact)
+        self.assertIn("script_verdict=not_run_fallback", compact)
         self.assertNotIn('script_verdict == "shape_only"` before `formal_answer`', compact)
 
     def template_payload(self) -> dict:
@@ -327,7 +327,7 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("whole_elephant_audit.corrected_thesis must be a non-empty string", result.stdout)
 
-    def test_partial_truth_trigger_rejects_value_carrier_equal_to_local_interface(self) -> None:
+    def test_partial_truth_trigger_warns_without_semantic_verdict_value_carrier_equal_to_local_interface(self) -> None:
         payload = self.template_payload()
         payload["partial_truth_capture_triggered"] = True
         audit = whole_elephant_audit()
@@ -342,11 +342,13 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
 
         result = run_validator(payload)
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "whole_elephant_audit.whole_object_reconstruction.primary_value_carrier must differ from local_interface_role",
             result.stdout,
         )
+
 
     def test_partial_truth_trigger_requires_whole_object_reconstruction(self) -> None:
         payload = self.template_payload()
@@ -382,7 +384,7 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("whole_elephant_audit.formal_answer_plan is required", result.stdout)
 
-    def test_formal_answer_plan_rejects_score_concession_only_answers(self) -> None:
+    def test_formal_answer_plan_warns_without_semantic_verdict_score_concession_only_answers(self) -> None:
         payload = self.template_payload()
         payload["partial_truth_capture_triggered"] = True
         audit = whole_elephant_audit()
@@ -397,7 +399,8 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
 
         result = run_validator(payload)
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "whole_elephant_audit.formal_answer_plan.opening_core_thesis must not use score-as-concession framing",
             result.stdout,
@@ -406,6 +409,7 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
             "whole_elephant_audit.formal_answer_plan.local_truth_boundary must name the boundary of the local truth, not a both-sides concession",
             result.stdout,
         )
+
 
     def test_formal_answer_plan_requires_definition_disposition_and_optimization_misdirection(self) -> None:
         payload = self.template_payload()
@@ -450,7 +454,7 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
 
         self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
 
-    def test_formal_answer_plan_rejects_soft_not_wrong_concession_for_rejected_definition(self) -> None:
+    def test_formal_answer_plan_warns_without_semantic_verdict_soft_not_wrong_concession_for_rejected_definition(self) -> None:
         payload = self.template_payload()
         payload["partial_truth_capture_triggered"] = True
         audit = whole_elephant_audit()
@@ -465,13 +469,15 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
 
         result = run_validator(payload)
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "whole_elephant_audit.formal_answer_plan.opening_core_thesis must not soften a rejected definition into a not-wrong concession",
             result.stdout,
         )
 
-    def test_integrated_validator_rejects_scope_correction_definition_drift(self) -> None:
+
+    def test_integrated_validator_warns_without_semantic_verdict_scope_correction_definition_drift(self) -> None:
         payload = self.template_payload()
         payload["partial_truth_capture_triggered"] = True
         payload["whole_elephant_audit"] = skills_prompt_injection_drift_audit()
@@ -483,11 +489,13 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
 
         result = run_validator(payload)
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "opening_core_thesis must not over-accommodate local truth",
             result.stdout,
         )
+
 
     def test_partial_truth_trigger_rejects_placeholder_validation_command(self) -> None:
         payload = self.template_payload()
@@ -534,7 +542,7 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
         self.assertIn("No shape or evidence risks detected", result.stdout)
 
-    def test_partial_truth_trigger_rejects_plain_language_conclusion_that_starts_with_local_concession(self) -> None:
+    def test_partial_truth_trigger_warns_without_semantic_verdict_plain_language_conclusion_that_starts_with_local_concession(self) -> None:
         payload = self.template_payload()
         payload["partial_truth_capture_triggered"] = True
         payload["plain_language_conclusion"] = "这个说法有道理但不完整，SKILLS 还包括脚本和验证。"
@@ -547,13 +555,15 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
 
         result = run_validator(payload)
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "plain_language_conclusion must start with the global thesis, not local-truth concession",
             result.stdout,
         )
 
-    def test_partial_truth_trigger_rejects_plain_language_conclusion_that_later_softens_verdict(self) -> None:
+
+    def test_partial_truth_trigger_warns_without_semantic_verdict_plain_language_conclusion_that_later_softens_verdict(self) -> None:
         payload = self.template_payload()
         payload["partial_truth_capture_triggered"] = True
         payload["plain_language_conclusion"] = (
@@ -569,11 +579,13 @@ class UsingMindthusWholeElephantContractTests(unittest.TestCase):
 
         result = run_validator(payload)
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "plain_language_conclusion must not soften a rejected definition into a not-wrong concession",
             result.stdout,
         )
+
 
 
 if __name__ == "__main__":

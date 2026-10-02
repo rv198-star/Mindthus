@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "6cfa67f48160032b57643d238733fa683c8097cc0eed12842482fba03792c084",
+    "wire_sha256": "47e71bf9f1770b5aab9efa127a8e878380173e9a2c2b51ce7bb4f5fee43250d6",
+    "batch_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "path": {
+      "case": "V02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 138,
+    "batch_call_ordinal": 40
+  },
+  "raw_sha256": "f6e668e0075d39273e9af7a6a7563b43e625e10af39f4ae89347b8e94f802a2e",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "足够，可以直接用于明天的只读排查，不需要扩写。\n\n它交代了已观察到的现象、根因尚未确定、检查范围、一小时授权、禁止事项，以及未定位时的交回和后续投入边界；也没有把“关闭缓存后错误消失”说成已证实的根因。\n\n只有同事不知道去哪里找这两次复现的原始日志时，才需要补一个日志位置或检索标识；否则保留原文即可。"
+  },
+  "usage": {
+    "input_tokens": 18245,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 231,
+    "reasoning_output_tokens": 87
+  },
+  "error": null,
+  "session_seconds": 17.272514374984894,
+  "ended_at_epoch": 1790965963.696073,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "6cfa67f48160032b57643d238733fa683c8097cc0eed12842482fba03792c084",
+    "transport_successor_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

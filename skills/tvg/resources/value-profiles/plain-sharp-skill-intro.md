@@ -24,7 +24,7 @@ value_profile:
       - long sentences that hide multiple functions inside one line in the name of high density
       - examples that expand background instead of showing one ordinary action or choice
       - examples that are clever but do not clarify when to use the skill
-      - deleting sentences merely because they are not core, instead of first trying to give them a useful argumentative job
+      - deleting useful reasons, evidence or boundaries merely because they are not the core sentence
       - overselling the skill as a conclusion machine, truth machine, or universal fixer
       - making every introduction sound like generic better thinking
       - making every sentence equally explanatory so the opening line loses force
@@ -32,7 +32,7 @@ value_profile:
       - one-sentence essence before method detail
       - first-sentence aphorism before full explanation, as long as accuracy is preserved
       - short sentence carrying one key judgment before long compressed sentence
-      - sentence-function assignment before deletion or compression
+      - reader understanding and action value before sentence-function labels
       - top-20-percent information density before stylistic polish
       - plain user-facing language before internal terms
       - one-action everyday example before abstract taxonomy
@@ -70,13 +70,13 @@ value_profile:
       - familiar example
       - boundary sentence
     granularity_pressure:
-      - first sentence should hit like a classic line: rhythmic, contrastive, memorable, and accurate
-      - second sentence explains the first sentence in plain short language
-      - third sentence chooses either example or boundary according to need; do not force both into every intro
+      - an effective opening can be rhythmic and memorable when that serves the reader; accuracy and usefulness dominate
+      - explain a non-obvious opening in plain language when needed
+      - choose an example or boundary if it changes understanding; no fixed sentence position
       - explicit boundary appears only when misuse risk is high
       - keep each skill intro to one sharp essence plus one example-backed explanation unless the surface explicitly needs more
       - keep single sentences short by default; split a long sentence when it carries more than one argumentative function
-      - assign every sentence one primary function before deciding whether to rewrite, merge, or delete it
+      - use sentence-function tagging only to diagnose a concrete weak or redundant passage
       - keep examples to one concrete action, choice, or mistake; do not expand background
       - under high pressure, remove weak connectors and explanatory setup instead of packing more information into longer sentences
       - split method detail from example only when the example would otherwise obscure the essence
@@ -85,7 +85,7 @@ value_profile:
       - the first sentence is quotable without becoming vague or inaccurate
       - the second sentence explains rather than decorates
       - the third sentence uses either scenario/example or boundary, not both by default
-      - every sentence can be tagged as essence, reason, example, contrast, boundary, or use condition
+      - each retained sentence contributes to relevance, understanding or a needed boundary; tags are optional diagnostics
       - most sentences are short enough to be read in one breath
       - the example uses ordinary language and one concrete stake or action
       - the boundary prevents overuse
@@ -97,7 +97,7 @@ value_profile:
       - make the first sentence more rhythmic or contrastive before adding explanation
       - use one familiar scenario to reveal the hidden judgment surface
       - add a short boundary only when the skill is easy to overuse
-      - convert weak sentences into reason, example, contrast, boundary, or use-condition sentences before considering deletion
+      - repair or remove a weak sentence according to its contribution; deletion needs no preliminary tagging exercise
       - split overloaded sentences before trying to make them more elegant
       - sharpen verbs before adding nouns
       - prefer contrast pairs such as looks right vs carries through, signal vs problem, workflow vs judgment
@@ -109,22 +109,22 @@ value_profile:
       - turning examples into mini case studies
       - adding caveats that bury the core sentence
       - making high-pressure output by lengthening sentences
-      - deleting non-core sentences before checking whether they can serve the core argument
+      - removing necessary context or boundaries in pursuit of brevity
       - making every skill introduction follow exactly the same rhythm
     split_rules:
       - split into essence, example, and boundary when one paragraph becomes dense
       - split first-sentence aphorism from second-sentence explanation when accuracy needs support
-      - split any sentence that carries two or more primary functions
+      - split an overloaded sentence when it improves actual readability
     merge_rules:
       - merge repeated boundary caveats that all say the skill is not a truth machine
       - merge method detail back into the essence when it does not change user choice
     density_guidance:
       - ideal intro is 2 to 4 short sentences
-      - default intro shape is quotable first sentence, plain explanation, then either one scenario or one boundary
+      - one optional example shape is a clear opening, plain explanation, then a useful scenario or boundary; the result need not follow that recipe
       - every sentence must either clarify essence, trigger use, explain by example, or prevent misuse
-      - treat top 20 percent information density as a practical bar: remove or rewrite any sentence that a reader could skip without losing understanding, distinction, or action guidance
+      - treat high information density as a practical bar: remove or rewrite any sentence that a reader could skip without losing understanding, distinction, or action guidance
       - high pressure means harsher selection and cleaner sentence function, not longer sentences
-      - brevity is achieved by functionalizing sentences first and deleting only when no useful function remains
+      - remove clear redundancy directly; sentence-function labels are optional when a passage's contribution is unclear
 ```
 
 ## Scope
@@ -154,10 +154,10 @@ for what each skill actually does. It must not invent new skill capabilities.
 1. Can a first-time reader repeat the skill's job without knowing the acronym?
 2. Does the first sentence name the hidden failure mode the skill prevents?
 3. Does high density come from short, sharp choices rather than long compressed sentences?
-4. Does each sentence carry only one primary argumentative function?
+4. Does any sentence overload the reader with unrelated claims? Split it only when that improves readability.
 5. Does the example show one concrete action or choice instead of expanding background?
 6. Does the intro preserve the skill's boundary and avoid claiming domain truth?
-7. Can every sentence be tagged with a useful function? If not, was it rewritten into a function before deletion was considered?
+7. For a passage whose contribution is unclear, would optional sentence-function tagging help decide what to keep, repair or delete? Skip tagging when the decision is already clear.
 8. Would removing any sentence leave the reader with the same understanding and action guidance? If yes, rewrite or remove it.
 
 ## Source Notes

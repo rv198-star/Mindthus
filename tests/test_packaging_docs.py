@@ -55,7 +55,7 @@ class PackagingDocsTests(unittest.TestCase):
             root = Path(tmp)
             out = root / "release"
             codex_home = root / "home"
-            cache = codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / "1.10.1"
+            cache = codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / "1.11.0"
             result = subprocess.run(
                 [sys.executable, str(script), "--package", "plugins", "--out", str(out)],
                 text=True,
@@ -609,6 +609,12 @@ class PackagingDocsTests(unittest.TestCase):
                 "../fidelity-contract.md",
             )
             packaged = skill_dir / "resources" / "primitives" / filename
+            skills_root = next(parent for parent in skill_dir.parents if parent.name == "skills")
+            platform_root = skills_root.parent
+            if platform_root.name == ".opencode":
+                platform_root = platform_root.parent
+            shared_path = Path(os.path.relpath(platform_root / "docs/methodologies/shared-primitives.md", packaged.parent)).as_posix()
+            expected = expected.replace("../../../skills/using-mindthus/SKILL.md", "../../SKILL.md").replace("../shared-primitives.md", shared_path)
             self.assertTrue(packaged.is_file(), f"missing packaged primitive: {packaged}")
             packaged_text = packaged.read_text(encoding="utf-8")
             self.assertEqual(packaged_text, expected)
@@ -642,7 +648,7 @@ class PackagingDocsTests(unittest.TestCase):
         for phrase in (
             "mindthus:tplan",
             "mindthus:*",
-            "当前仓库版本：`v1.10.1`",
+            "当前仓库版本：`v1.11.0`",
             "GitHub Releases",
             "局部正确",
             "输入定框审计",
@@ -985,9 +991,9 @@ class PackagingDocsTests(unittest.TestCase):
     def test_using_mindthus_uses_progressive_disclosure_for_detail_contracts(self):
         path = REPO / "skills" / "using-mindthus" / "SKILL.md"
         text = path.read_text(encoding="utf-8")
-        self.assertIn("### Conditional Resources / Runtime Support", text)
-        self.assertIn("Do not preload every resource", text)
-        self.assertIn("Portable alias: `resources/primitives/`", text)
+        self.assertIn("## Runtime Support / 按需支撑", text)
+        self.assertIn("主路径已经充分时不用展开", text)
+        self.assertIn("发布包别名 `resources/primitives/`", text)
         for filename in USING_MINDTHUS_CONDITIONAL_PRIMITIVES:
             self.assertIn(f"docs/methodologies/primitives/{filename}", text)
         self.assertIn("resources/fidelity-contract.md", text)
@@ -1381,7 +1387,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.10.1")
+            self.assertEqual(plugin["version"], "1.11.0")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "sra" / "SKILL.md").exists())
@@ -1462,7 +1468,8 @@ class PackagingDocsTests(unittest.TestCase):
             codex_tvg_skill = (out / "codex" / "skills" / "mindthus" / "tvg" / "SKILL.md").read_text(
                 encoding="utf-8"
             )
-            self.assertIn("python3 skills/mindthus/tvg/scripts/trace/init.py", codex_tvg_skill)
+            self.assertIn("scripts/trace/init.py", codex_tvg_skill)
+            self.assertTrue((out / "codex/skills/mindthus/tvg/scripts/trace/init.py").is_file())
             self.assertNotIn("python3 skills/tvg/scripts/trace/init.py", codex_tvg_skill)
 
             codex_plugin_root = out / "codex-plugin" / "mindthus"
@@ -1480,7 +1487,7 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(codex_marketplace["plugins"][0]["policy"]["installation"], "AVAILABLE")
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
-            self.assertEqual(codex_plugin_manifest["version"], "1.10.1")
+            self.assertEqual(codex_plugin_manifest["version"], "1.11.0")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
             self.assertEqual(codex_plugin_manifest["interface"]["brandColor"], "#161614")
@@ -1588,7 +1595,8 @@ class PackagingDocsTests(unittest.TestCase):
             opencode_tvg_skill = (
                 out / "opencode" / ".opencode" / "skills" / "mindthus" / "tvg" / "SKILL.md"
             ).read_text(encoding="utf-8")
-            self.assertIn("python3 .opencode/skills/mindthus/tvg/scripts/trace/init.py", opencode_tvg_skill)
+            self.assertIn("scripts/trace/init.py", opencode_tvg_skill)
+            self.assertTrue((out / "opencode/.opencode/skills/mindthus/tvg/scripts/trace/init.py").is_file())
             self.assertNotIn("python3 skills/tvg/scripts/trace/init.py", opencode_tvg_skill)
             self.assertFalse((out / "opencode-plugin").exists())
 
@@ -1604,8 +1612,8 @@ class PackagingDocsTests(unittest.TestCase):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
             tmp_dir = Path(tmp)
-            plugins = tmp_dir / "mindthus-plugins-1.10.1"
-            skills = tmp_dir / "mindthus-skills-1.10.1"
+            plugins = tmp_dir / "mindthus-plugins-1.11.0"
+            skills = tmp_dir / "mindthus-skills-1.11.0"
 
             plugin_result = subprocess.run(
                 ["python3", str(script), "--package", "plugins", "--out", str(plugins)],

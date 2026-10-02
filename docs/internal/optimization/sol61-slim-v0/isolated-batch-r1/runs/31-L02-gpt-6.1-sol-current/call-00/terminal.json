@@ -1,0 +1,41 @@
+{
+  "binding": {
+    "request_sha256": "7d23f927a8aab39835d0b5be90584405af7e27b2422a3a11c401b96d65df88c6",
+    "wire_sha256": "65df10cf41d971bcccbc582622f34490aa07a34a78131b6e1d18b1743c657960",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "L02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "310dae9f60b60f012ba3792b8ddb4f7abc8149f329d1c9242783a51b7bd0f391",
+  "status": "unknown",
+  "response": null,
+  "usage": null,
+  "error": "unclassified_cli_failure",
+  "session_seconds": 30.22685854199517,
+  "ended_at_epoch": 1790948892.225183,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "7d23f927a8aab39835d0b5be90584405af7e27b2422a3a11c401b96d65df88c6",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 2,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "unclassified_recovery_requires_reconciliation",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": true
+  },
+  "underlying_requests": null,
+  "cost": null
+}

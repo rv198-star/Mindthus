@@ -1,0 +1,70 @@
+{
+  "gpt-6.1-sol/current": {
+    "logical_calls": 1,
+    "cli_starts": 1,
+    "session_seconds": 25.492763540998567,
+    "active_wait_seconds": 0.0,
+    "dispatch_wall_seconds": 25.498335917000077,
+    "recovery_logs": 0,
+    "planned": 1,
+    "delivered": 1,
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 0,
+      "input_tokens": 18672,
+      "output_tokens": 269,
+      "reasoning_output_tokens": 81
+    }
+  },
+  "gpt-6.1-sol/bare": {
+    "logical_calls": 4,
+    "cli_starts": 4,
+    "session_seconds": 113.08256795798661,
+    "active_wait_seconds": 239.28440262500953,
+    "dispatch_wall_seconds": 352.43077970702143,
+    "recovery_logs": 0,
+    "planned": 4,
+    "delivered": 4,
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 0,
+      "input_tokens": 66011,
+      "output_tokens": 1418,
+      "reasoning_output_tokens": 365
+    }
+  },
+  "gpt-6-astra/current": {
+    "logical_calls": 4,
+    "cli_starts": 4,
+    "session_seconds": 119.71810495799582,
+    "active_wait_seconds": 239.25643412498175,
+    "dispatch_wall_seconds": 359.026669917017,
+    "recovery_logs": 0,
+    "planned": 4,
+    "delivered": 4,
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 15104,
+      "input_tokens": 74489,
+      "output_tokens": 1306,
+      "reasoning_output_tokens": 223
+    }
+  },
+  "gpt-6-astra/slim": {
+    "logical_calls": 5,
+    "cli_starts": 5,
+    "session_seconds": 137.9443891649862,
+    "active_wait_seconds": 299.0954094169865,
+    "dispatch_wall_seconds": 437.08602075101226,
+    "recovery_logs": 0,
+    "planned": 4,
+    "delivered": 4,
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 0,
+      "input_tokens": 91774,
+      "output_tokens": 1517,
+      "reasoning_output_tokens": 162
+    }
+  }
+}

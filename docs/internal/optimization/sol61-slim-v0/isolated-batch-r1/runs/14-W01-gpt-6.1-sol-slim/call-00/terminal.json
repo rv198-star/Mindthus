@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "5d7289777afc24003b41d9361325e82a1ab1b96a5b65902710501432f9c841cf",
+    "wire_sha256": "5989e927595d09d283cfd1088d0754333df1a544092bf094838bcf4e6b382f48",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "W01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "2c4a5d8613af2fcbb0b1bb489556519fe0db06820f8073f9d2de5ab50ccdcf93",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "text": "需要读取 WAE 技能，判断已签字规则、固定流程与 Agent 填字段之间的控制边界，尤其是跨地区例外条件已确认后，条款选择是否仍需开放判断。"
+  },
+  "usage": {
+    "input_tokens": 18222,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 95,
+    "reasoning_output_tokens": 13
+  },
+  "error": null,
+  "session_seconds": 12.680451708001783,
+  "ended_at_epoch": 1790946739.541755,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "5d7289777afc24003b41d9361325e82a1ab1b96a5b65902710501432f9c841cf",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

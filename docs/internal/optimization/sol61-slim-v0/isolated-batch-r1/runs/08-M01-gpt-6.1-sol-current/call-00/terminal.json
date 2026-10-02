@@ -1,0 +1,56 @@
+{
+  "binding": {
+    "request_sha256": "89ca3543507c4352b629e596fd8a86a056f5e2d482187b5464c137d7de4a9861",
+    "wire_sha256": "9a6a7cb405c815a13354d9efb817d0181a4234a456d35910c37b640be2283806",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "M01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "a9afaa80424714a1f61dd7857847ccb150785bc6964266488bd0ad17e3c28377",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "仅通过受控读取获取材料；不联网、不调用工具、不执行脚本。",
+    "read_paths": [
+      "skills/mpg/SKILL.md",
+      "docs/methodologies/primitives/entry-triage.md",
+      "docs/methodologies/primitives/frame-fitness-check.md"
+    ],
+    "text": "读取迁移路径决策及入口定框规则，判断性能提升能否支持当前切换，重点核对停机、回滚与2小时获批维护窗口的硬约束。"
+  },
+  "usage": {
+    "input_tokens": 18698,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 260,
+    "reasoning_output_tokens": 139
+  },
+  "error": null,
+  "session_seconds": 27.604014083000948,
+  "ended_at_epoch": 1790945615.539846,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "89ca3543507c4352b629e596fd8a86a056f5e2d482187b5464c137d7de4a9861",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

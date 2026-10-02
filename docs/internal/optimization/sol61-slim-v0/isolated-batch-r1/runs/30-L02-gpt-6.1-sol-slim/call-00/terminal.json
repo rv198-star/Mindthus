@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "62138b14844175a556896a89e97c2c267f610aa76f74db7de2de0ea12a005357",
+    "wire_sha256": "49f46f257becb2bab621b3c6d4ba89d1a3ddb1846a58da7033d20b0bd11df368",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "L02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "f52df843fcbc5169c4afdc696b1fa720ae3a4a32ce5b36def78170a370b24736",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/tplan/SKILL.md"
+    ],
+    "text": "读取 TPlan 的恢复与权限边界规则，用于判断一次发送授权下，超时且仅留 intent 时能否重发，以及最小可恢复处理。"
+  },
+  "usage": {
+    "input_tokens": 18206,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 120,
+    "reasoning_output_tokens": 49
+  },
+  "error": null,
+  "session_seconds": 16.417658291989937,
+  "ended_at_epoch": 1790948707.726252,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "62138b14844175a556896a89e97c2c267f610aa76f74db7de2de0ea12a005357",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

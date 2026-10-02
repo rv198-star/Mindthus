@@ -1,0 +1,56 @@
+{
+  "binding": {
+    "request_sha256": "78cc63d937a714d5655d9c4dfe1adc215848544c402352b66219ad807c51a358",
+    "wire_sha256": "04ffec91777c5aa4d0bed03e4214a8be2f93f81ebe822ed14f15265fd5a31cbb",
+    "batch_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "path": {
+      "case": "W01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 119,
+    "batch_call_ordinal": 21
+  },
+  "raw_sha256": "a0b33084493839699d075e093b8c6e194691a0bf098e1d2900f2b576ac4a932f",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "text": "将使用 WAE 判断固定流程与 Agent 的控制边界，重点区分已签字规则的确定性执行、例外条件的事实匹配，以及规则仍未覆盖的解释权。读取该 Skill，以确认其边界判断要求。"
+  },
+  "usage": {
+    "input_tokens": 18222,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 129,
+    "reasoning_output_tokens": 40
+  },
+  "error": null,
+  "session_seconds": 22.497328124998603,
+  "ended_at_epoch": 1790964364.192402,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "78cc63d937a714d5655d9c4dfe1adc215848544c402352b66219ad807c51a358",
+    "transport_successor_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

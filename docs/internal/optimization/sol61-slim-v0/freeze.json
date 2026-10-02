@@ -1,0 +1,14 @@
+{
+  "schema_version": "mindthus.slim-T0-freeze.v0",
+  "baseline_sha": "1527f32b99c375db9ff73f80812c644686a6576a",
+  "before_product_changes": true,
+  "materials": "public development, not independent holdout",
+  "authorization": "Owner approved 64 total host calls, at most 3 per path; no Jev or model evaluator",
+  "source_files": {
+    "cases.json": "196e9244f7283fef2feec1023fb9b5dc660beb196f136126c63bd8578d36d367",
+    "oracles.json": "df19b558037eead379f3e01cd43df977849339c29a3d2fa8c9879d4d3e05399f",
+    "single-condition-diffs.json": "0c28ddbdc588fcdc6d6075c2793c54a5e49eb8298d332928c29442223af771fe",
+    "PROTOCOL.md": "585793dd79d18cff0e1bdde1caa9bbbc47bf568388dd27205d795e8d80762468"
+  },
+  "model_calls_at_freeze": 0
+}

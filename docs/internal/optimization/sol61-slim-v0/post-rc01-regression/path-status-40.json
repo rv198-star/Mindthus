@@ -1,0 +1,960 @@
+[
+  {
+    "index": 0,
+    "run": "00-D01-gpt-6.1-sol-current",
+    "case": "D01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 16.784100999997463,
+    "active_wait_seconds": 0.0,
+    "dispatch_wall_seconds": 16.788225833995966,
+    "usage": {
+      "input_tokens": 18171,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 31,
+      "reasoning_output_tokens": 0
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/00-D01-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 1,
+    "run": "01-D01-gpt-6.1-sol-slim",
+    "case": "D01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 13.047200041008182,
+    "active_wait_seconds": 59.85819495798205,
+    "dispatch_wall_seconds": 72.91492212499725,
+    "usage": {
+      "input_tokens": 18183,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 31,
+      "reasoning_output_tokens": 0
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/01-D01-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 2,
+    "run": "02-I01-gpt-6.1-sol-slim",
+    "case": "I01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 12.229893040988827,
+    "active_wait_seconds": 59.86089054198237,
+    "dispatch_wall_seconds": 72.0989590419922,
+    "usage": {
+      "input_tokens": 18208,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 136,
+      "reasoning_output_tokens": 0
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/02-I01-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 3,
+    "run": "03-I01-gpt-6.1-sol-current",
+    "case": "I01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 13.50161891701282,
+    "active_wait_seconds": 59.818224415997975,
+    "dispatch_wall_seconds": 73.32987274997868,
+    "usage": {
+      "input_tokens": 18194,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 118,
+      "reasoning_output_tokens": 0
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/03-I01-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 4,
+    "run": "04-F01-gpt-6.1-sol-current",
+    "case": "F01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 59.13136649999069,
+    "active_wait_seconds": 119.66656591699575,
+    "dispatch_wall_seconds": 178.83250720900833,
+    "usage": {
+      "input_tokens": 38503,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 949,
+      "reasoning_output_tokens": 285
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "answer_path": "runs/04-F01-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 5,
+    "run": "05-F01-gpt-6.1-sol-slim",
+    "case": "F01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 39.41292058399995,
+    "active_wait_seconds": 59.81787924998207,
+    "dispatch_wall_seconds": 99.24435233397526,
+    "usage": {
+      "input_tokens": 18230,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 798,
+      "reasoning_output_tokens": 212
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/05-F01-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 6,
+    "run": "06-F02-gpt-6.1-sol-slim",
+    "case": "F02",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 28.193945374980103,
+    "active_wait_seconds": 59.819558207993396,
+    "dispatch_wall_seconds": 88.02741179199074,
+    "usage": {
+      "input_tokens": 18240,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 471,
+      "reasoning_output_tokens": 82
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/06-F02-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 7,
+    "run": "07-F02-gpt-6.1-sol-current",
+    "case": "F02",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 35.974249624996446,
+    "active_wait_seconds": 59.71494141599396,
+    "dispatch_wall_seconds": 95.71912004199112,
+    "usage": {
+      "input_tokens": 18222,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 526,
+      "reasoning_output_tokens": 101
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/07-F02-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 8,
+    "run": "08-M01-gpt-6.1-sol-current",
+    "case": "M01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 46.20793445900199,
+    "active_wait_seconds": 119.64274937499431,
+    "dispatch_wall_seconds": 165.89255133303232,
+    "usage": {
+      "input_tokens": 38321,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 396,
+      "reasoning_output_tokens": 152
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/mpg/SKILL.md"
+    ],
+    "answer_path": "runs/08-M01-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 9,
+    "run": "09-M01-gpt-6.1-sol-slim",
+    "case": "M01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 24.938913917023456,
+    "active_wait_seconds": 59.815602666989435,
+    "dispatch_wall_seconds": 84.7662833329814,
+    "usage": {
+      "input_tokens": 18244,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 242,
+      "reasoning_output_tokens": 70
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/09-M01-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 10,
+    "run": "10-M02-gpt-6.1-sol-slim",
+    "case": "M02",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 57.70165541800088,
+    "active_wait_seconds": 119.61650750000263,
+    "dispatch_wall_seconds": 177.36760283299373,
+    "usage": {
+      "input_tokens": 38325,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 377,
+      "reasoning_output_tokens": 87
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/mpg/SKILL.md"
+    ],
+    "answer_path": "runs/10-M02-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 11,
+    "run": "11-M02-gpt-6.1-sol-current",
+    "case": "M02",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 51.06687912499183,
+    "active_wait_seconds": 119.64936791700893,
+    "dispatch_wall_seconds": 170.75003304201527,
+    "usage": {
+      "input_tokens": 38327,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 565,
+      "reasoning_output_tokens": 247
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/mpg/SKILL.md"
+    ],
+    "answer_path": "runs/11-M02-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 12,
+    "run": "12-E01-gpt-6.1-sol-current",
+    "case": "E01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 53.9459552920016,
+    "active_wait_seconds": 119.60935320798308,
+    "dispatch_wall_seconds": 173.5954864579835,
+    "usage": {
+      "input_tokens": 37409,
+      "cached_input_tokens": 30464,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 522,
+      "reasoning_output_tokens": 136
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/edsp/SKILL.md"
+    ],
+    "answer_path": "runs/12-E01-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 13,
+    "run": "13-E01-gpt-6.1-sol-slim",
+    "case": "E01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 57.07396624900866,
+    "active_wait_seconds": 119.63002708298154,
+    "dispatch_wall_seconds": 176.73862929199822,
+    "usage": {
+      "input_tokens": 37407,
+      "cached_input_tokens": 30464,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 578,
+      "reasoning_output_tokens": 139
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/edsp/SKILL.md"
+    ],
+    "answer_path": "runs/13-E01-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 14,
+    "run": "14-W01-gpt-6.1-sol-slim",
+    "case": "W01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 61.03447662500548,
+    "active_wait_seconds": 119.6530958339863,
+    "dispatch_wall_seconds": 180.72668737501954,
+    "usage": {
+      "input_tokens": 38233,
+      "cached_input_tokens": 30464,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 663,
+      "reasoning_output_tokens": 139
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "answer_path": "runs/14-W01-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 15,
+    "run": "15-W01-gpt-6.1-sol-current",
+    "case": "W01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 48.05373354200856,
+    "active_wait_seconds": 119.64552812598413,
+    "dispatch_wall_seconds": 167.73614541700226,
+    "usage": {
+      "input_tokens": 38501,
+      "cached_input_tokens": 30464,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 648,
+      "reasoning_output_tokens": 125
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "answer_path": "runs/15-W01-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 16,
+    "run": "16-W02-gpt-6.1-sol-current",
+    "case": "W02",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 51.92670291700051,
+    "active_wait_seconds": 119.65300920800655,
+    "dispatch_wall_seconds": 171.64215579198208,
+    "usage": {
+      "input_tokens": 38505,
+      "cached_input_tokens": 30464,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 611,
+      "reasoning_output_tokens": 96
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "answer_path": "runs/16-W02-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 17,
+    "run": "17-W02-gpt-6.1-sol-slim",
+    "case": "W02",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 65.76570266700583,
+    "active_wait_seconds": 119.66867479096982,
+    "dispatch_wall_seconds": 185.50668624902028,
+    "usage": {
+      "input_tokens": 38243,
+      "cached_input_tokens": 30464,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 625,
+      "reasoning_output_tokens": 81
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "answer_path": "runs/17-W02-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 18,
+    "run": "18-P01-gpt-6.1-sol-slim",
+    "case": "P01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 19.757920916978037,
+    "active_wait_seconds": 59.76250112502021,
+    "dispatch_wall_seconds": 79.54335212500882,
+    "usage": {
+      "input_tokens": 18219,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 224,
+      "reasoning_output_tokens": 49
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/18-P01-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 19,
+    "run": "19-P01-gpt-6.1-sol-current",
+    "case": "P01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 23.09169808300794,
+    "active_wait_seconds": 59.82904158299789,
+    "dispatch_wall_seconds": 82.94398820801871,
+    "usage": {
+      "input_tokens": 18213,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 264,
+      "reasoning_output_tokens": 73
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/19-P01-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 20,
+    "run": "20-P02-gpt-6.1-sol-current",
+    "case": "P02",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 59.59792254099739,
+    "active_wait_seconds": 119.60911175102228,
+    "dispatch_wall_seconds": 179.2769422090205,
+    "usage": {
+      "input_tokens": 37071,
+      "cached_input_tokens": 30464,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 620,
+      "reasoning_output_tokens": 158
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/3l5s/SKILL.md"
+    ],
+    "answer_path": "runs/20-P02-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 21,
+    "run": "21-P02-gpt-6.1-sol-slim",
+    "case": "P02",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 27.410304874996655,
+    "active_wait_seconds": 59.79245512501802,
+    "dispatch_wall_seconds": 87.24963837501127,
+    "usage": {
+      "input_tokens": 18206,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 498,
+      "reasoning_output_tokens": 133
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/21-P02-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 22,
+    "run": "22-R01-gpt-6.1-sol-slim",
+    "case": "R01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 32.57587999998941,
+    "active_wait_seconds": 119.60626004100777,
+    "dispatch_wall_seconds": 152.2467173759942,
+    "usage": {
+      "input_tokens": 38484,
+      "cached_input_tokens": 30464,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 377,
+      "reasoning_output_tokens": 92
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/sra/SKILL.md"
+    ],
+    "answer_path": "runs/22-R01-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 23,
+    "run": "23-R01-gpt-6.1-sol-current",
+    "case": "R01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 29.26355070900172,
+    "active_wait_seconds": 119.56286783399992,
+    "dispatch_wall_seconds": 148.9038811250066,
+    "usage": {
+      "input_tokens": 38472,
+      "cached_input_tokens": 30464,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 361,
+      "reasoning_output_tokens": 99
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/sra/SKILL.md"
+    ],
+    "answer_path": "runs/23-R01-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 24,
+    "run": "24-V01-gpt-6.1-sol-current",
+    "case": "V01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 15.900017791980645,
+    "active_wait_seconds": 59.77972083300119,
+    "dispatch_wall_seconds": 75.71864820900373,
+    "usage": {
+      "input_tokens": 18236,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 173,
+      "reasoning_output_tokens": 97
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/24-V01-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 25,
+    "run": "25-V01-gpt-6.1-sol-slim",
+    "case": "V01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 30.038546124997083,
+    "active_wait_seconds": 59.792711458023405,
+    "dispatch_wall_seconds": 89.8873857499857,
+    "usage": {
+      "input_tokens": 18226,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 85,
+      "reasoning_output_tokens": 0
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/25-V01-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 26,
+    "run": "26-V02-gpt-6.1-sol-slim",
+    "case": "V02",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 17.272514374984894,
+    "active_wait_seconds": 59.82369520800421,
+    "dispatch_wall_seconds": 77.12875137501396,
+    "usage": {
+      "input_tokens": 18245,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 231,
+      "reasoning_output_tokens": 87
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/26-V02-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 27,
+    "run": "27-V02-gpt-6.1-sol-current",
+    "case": "V02",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 14.787056958972244,
+    "active_wait_seconds": 59.82760129199596,
+    "dispatch_wall_seconds": 74.64648174998001,
+    "usage": {
+      "input_tokens": 18249,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 183,
+      "reasoning_output_tokens": 49
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/27-V02-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 28,
+    "run": "28-L01-gpt-6.1-sol-current",
+    "case": "L01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 24.549289125017822,
+    "active_wait_seconds": 59.82128483301494,
+    "dispatch_wall_seconds": 84.41288345798966,
+    "usage": {
+      "input_tokens": 18211,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 402,
+      "reasoning_output_tokens": 222
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/28-L01-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 29,
+    "run": "29-L01-gpt-6.1-sol-slim",
+    "case": "L01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 18.800683999987086,
+    "active_wait_seconds": 59.76645483399625,
+    "dispatch_wall_seconds": 78.60079458300606,
+    "usage": {
+      "input_tokens": 18219,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 301,
+      "reasoning_output_tokens": 135
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/29-L01-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 30,
+    "run": "30-L02-gpt-6.1-sol-slim",
+    "case": "L02",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 17.866966083995067,
+    "active_wait_seconds": 59.79047854201053,
+    "dispatch_wall_seconds": 77.69554575000075,
+    "usage": {
+      "input_tokens": 18212,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 321,
+      "reasoning_output_tokens": 120
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/30-L02-gpt-6.1-sol-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 31,
+    "run": "31-L02-gpt-6.1-sol-current",
+    "case": "L02",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 30.471953375992598,
+    "active_wait_seconds": 119.57972283399431,
+    "dispatch_wall_seconds": 150.15096854203148,
+    "usage": {
+      "input_tokens": 38235,
+      "cached_input_tokens": 15232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 381,
+      "reasoning_output_tokens": 133
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/tplan/SKILL.md"
+    ],
+    "answer_path": "runs/31-L02-gpt-6.1-sol-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 32,
+    "run": "32-F01-gpt-6-astra-current",
+    "case": "F01",
+    "arm": "current",
+    "model": "gpt-6-astra",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 47.775997165968874,
+    "active_wait_seconds": 119.68500545900315,
+    "dispatch_wall_seconds": 167.53694570896914,
+    "usage": {
+      "input_tokens": 37317,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 809,
+      "reasoning_output_tokens": 114
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/edsp/SKILL.md"
+    ],
+    "answer_path": "runs/32-F01-gpt-6-astra-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 33,
+    "run": "33-F01-gpt-6-astra-slim",
+    "case": "F01",
+    "arm": "slim",
+    "model": "gpt-6-astra",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 37.82844241699786,
+    "active_wait_seconds": 59.783242082979996,
+    "dispatch_wall_seconds": 97.67066237499239,
+    "usage": {
+      "input_tokens": 18172,
+      "cached_input_tokens": 15104,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 694,
+      "reasoning_output_tokens": 66
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/33-F01-gpt-6-astra-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 34,
+    "run": "34-F02-gpt-6-astra-slim",
+    "case": "F02",
+    "arm": "slim",
+    "model": "gpt-6-astra",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 27.62162275001174,
+    "active_wait_seconds": 59.7763282910164,
+    "dispatch_wall_seconds": 87.44733287501731,
+    "usage": {
+      "input_tokens": 18162,
+      "cached_input_tokens": 15104,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 413,
+      "reasoning_output_tokens": 0
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/34-F02-gpt-6-astra-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 35,
+    "run": "35-F02-gpt-6-astra-current",
+    "case": "F02",
+    "arm": "current",
+    "model": "gpt-6-astra",
+    "status": "delivered",
+    "calls": 1,
+    "session_seconds": 28.24048337500426,
+    "active_wait_seconds": 59.80128429099568,
+    "dispatch_wall_seconds": 88.07874654201441,
+    "usage": {
+      "input_tokens": 18172,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 407,
+      "reasoning_output_tokens": 33
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [],
+    "answer_path": "runs/35-F02-gpt-6-astra-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 36,
+    "run": "36-W01-gpt-6-astra-current",
+    "case": "W01",
+    "arm": "current",
+    "model": "gpt-6-astra",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 33.37278504099231,
+    "active_wait_seconds": 119.53345499999705,
+    "dispatch_wall_seconds": 153.0033972080273,
+    "usage": {
+      "input_tokens": 38379,
+      "cached_input_tokens": 15104,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 465,
+      "reasoning_output_tokens": 0
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "answer_path": "runs/36-W01-gpt-6-astra-current/answer.txt",
+    "error": null
+  },
+  {
+    "index": 37,
+    "run": "37-W01-gpt-6-astra-slim",
+    "case": "W01",
+    "arm": "slim",
+    "model": "gpt-6-astra",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 42.23303433301044,
+    "active_wait_seconds": 119.56764508297783,
+    "dispatch_wall_seconds": 161.90578320797067,
+    "usage": {
+      "input_tokens": 38115,
+      "cached_input_tokens": 15104,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 508,
+      "reasoning_output_tokens": 40
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "answer_path": "runs/37-W01-gpt-6-astra-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 38,
+    "run": "38-W02-gpt-6-astra-slim",
+    "case": "W02",
+    "arm": "slim",
+    "model": "gpt-6-astra",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 38.571560207987204,
+    "active_wait_seconds": 119.55180049999035,
+    "dispatch_wall_seconds": 158.221999707981,
+    "usage": {
+      "input_tokens": 38119,
+      "cached_input_tokens": 15104,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 603,
+      "reasoning_output_tokens": 48
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "answer_path": "runs/38-W02-gpt-6-astra-slim/answer.txt",
+    "error": null
+  },
+  {
+    "index": 39,
+    "run": "39-W02-gpt-6-astra-current",
+    "case": "W02",
+    "arm": "current",
+    "model": "gpt-6-astra",
+    "status": "delivered",
+    "calls": 2,
+    "session_seconds": 35.854332582995994,
+    "active_wait_seconds": 119.37310912497924,
+    "dispatch_wall_seconds": 155.33271116699325,
+    "usage": {
+      "input_tokens": 38367,
+      "cached_input_tokens": 15104,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 524,
+      "reasoning_output_tokens": 46
+    },
+    "usage_missing_calls": 0,
+    "loaded_paths": [
+      "skills/wae/SKILL.md"
+    ],
+    "answer_path": "runs/39-W02-gpt-6-astra-current/answer.txt",
+    "error": null
+  }
+]

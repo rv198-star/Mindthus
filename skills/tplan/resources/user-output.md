@@ -154,7 +154,9 @@ references or message text in that status line.
 
 For every terminal Mission handoff (`completed`, `blocked`, `budget_exhausted`,
 `abandoned`, `superseded`, or `requires_human`) and every explicit cost review, render
-the full Standard execution report before writing the final user response:
+the Standard execution artifacts before writing the final user response. This is an
+artifact/evidence obligation, not a requirement to paste the complete tree into ordinary
+business text. Lead with results, limitations and next action, and link the details:
 
 ```bash
 python3 skills/tplan/scripts/render_execution_cost_tree.py "$MISSION_DIR" \

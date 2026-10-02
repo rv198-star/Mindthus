@@ -1,0 +1,17 @@
+{
+  "execution_authorized": true,
+  "authorization_ref": "Owner reply 嗯，这次直接给120次额度，重跑吧 to the 40-path RC01/new-candidate regression proposal, 2026-10-03",
+  "baseline": "e7dbb473e955932f09c80dfb48b90ac1f4f8db43",
+  "candidate": "131ab6e4d7b04e3964193dc95c869f6eaad16730",
+  "new_calls_max": 120,
+  "historical_calls": 98,
+  "cumulative_calls_max": 218,
+  "path_calls_max": 3,
+  "technical_retries_max": 0,
+  "paths": 40,
+  "scope": "Sol 6.1 all 16 frozen cases paired; Astra F01/F02/W01/W02 paired; RC01 versus post-RC01 candidate; alternating order, medium, same official HTTP configuration",
+  "protocol": "mindthus.generation-scheduling.v2",
+  "constraints": "First complete answer retained; necessary reads and failures charged; no automatic retry, Jev, evaluator, bare controls, extra batch, release or main merge. New unknown or actual safety/permission refusal stops dispatch. Historical named risk acceptance is not extended.",
+  "measurement": "Task quality and boundaries before total input tokens/reads/calls; same CLI identity within each pair; session time, cooldown and wall time separate; unexposed HTTP attempts and price remain unknown",
+  "materials": "Existing T0 cases/oracles/freeze unchanged; public development regression, not holdout; norms and old answers never enter business prompts"
+}

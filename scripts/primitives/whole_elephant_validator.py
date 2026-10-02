@@ -563,8 +563,9 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def validate_audit(data: Any) -> list[str]:
+def validate_audit(data: Any, *, semantic_hints: list[str] | None = None) -> list[str]:
     findings: list[str] = []
+    semantic_hints = [] if semantic_hints is None else semantic_hints
     if not isinstance(data, dict):
         return ["audit root must be an object"]
 
@@ -637,13 +638,13 @@ def validate_audit(data: Any) -> list[str]:
             and non_empty_string(data.get("whole_object"))
             and not labels_align(hierarchy.get("whole_object"), data.get("whole_object"))
         ):
-            findings.append("object_hierarchy.whole_object must align with whole_object")
+            semantic_hints.append("object_hierarchy.whole_object must align with whole_object")
         if (
             non_empty_string(hierarchy.get("whole_object"))
             and non_empty_string(data.get("canonical_object"))
             and not labels_align(hierarchy.get("whole_object"), data.get("canonical_object"))
         ):
-            findings.append("object_hierarchy.whole_object must align with canonical_object")
+            semantic_hints.append("object_hierarchy.whole_object must align with canonical_object")
 
     reconstruction = data.get("whole_object_reconstruction")
     if reconstruction is None:
@@ -663,7 +664,7 @@ def validate_audit(data: Any) -> list[str]:
             == normalize_text(reconstruction.get("local_interface_role"))
             and raw_disposition != "grant_as_definition"
         ):
-            findings.append(
+            semantic_hints.append(
                 "whole_object_reconstruction.primary_value_carrier must differ from local_interface_role"
             )
 
@@ -690,30 +691,30 @@ def validate_audit(data: Any) -> list[str]:
         ):
             findings.append("formal_answer_plan.canonical_subject must match canonical_object")
         if looks_like_score_concession(plan.get("opening_core_thesis")):
-            findings.append("formal_answer_plan.opening_core_thesis must not use score-as-concession framing")
+            semantic_hints.append("formal_answer_plan.opening_core_thesis must not use score-as-concession framing")
         if looks_like_local_truth_concession_first(plan.get("opening_core_thesis")):
-            findings.append(
+            semantic_hints.append(
                 "formal_answer_plan.opening_core_thesis must start with the global thesis, not local-truth concession"
             )
         if looks_like_scope_correction_authority_transfer(plan.get("opening_core_thesis")):
-            findings.append(
+            semantic_hints.append(
                 "formal_answer_plan.opening_core_thesis must not transfer definition authority while correcting scope"
             )
         if looks_like_generic_not_only_caveat(plan.get("opening_core_thesis")):
-            findings.append(
+            semantic_hints.append(
                 "formal_answer_plan.opening_core_thesis must not over-accommodate local truth as a generic not-only caveat"
             )
         if looks_like_core_thesis_lacks_authority_shape(plan.get("opening_core_thesis")):
-            findings.append(
+            semantic_hints.append(
                 "formal_answer_plan.opening_core_thesis must carry definition authority, result control, or optimization consequence"
             )
         if looks_like_reduction_accepted_as_corrected_thesis(data.get("corrected_thesis")):
-            findings.append("corrected_thesis must not accept a local reduction as the corrected thesis")
+            semantic_hints.append("corrected_thesis must not accept a local reduction as the corrected thesis")
         if (
             plan.get("definition_disposition") == "reject_as_definition"
             and not thesis_aligns_with_plan(data.get("corrected_thesis"), plan.get("opening_core_thesis"))
         ):
-            findings.append("corrected_thesis must align with formal_answer_plan.opening_core_thesis")
+            semantic_hints.append("corrected_thesis must align with formal_answer_plan.opening_core_thesis")
         if (
             plan.get("definition_disposition") == "reject_as_definition"
             and looks_like_rejected_local_interface_granted_definition(
@@ -721,16 +722,16 @@ def validate_audit(data: Any) -> list[str]:
                 reconstruction.get("local_interface_role"),
             )
         ):
-            findings.append("corrected_thesis must align with formal_answer_plan.opening_core_thesis")
+            semantic_hints.append("corrected_thesis must align with formal_answer_plan.opening_core_thesis")
         if looks_like_both_sides_concession(plan.get("local_truth_boundary")):
-            findings.append(
+            semantic_hints.append(
                 "formal_answer_plan.local_truth_boundary must name the boundary of the local truth, not a both-sides concession"
             )
         if (
             plan.get("definition_disposition") == "reject_as_definition"
             and looks_like_soft_not_wrong_concession(plan.get("opening_core_thesis"))
         ):
-            findings.append(
+            semantic_hints.append(
                 "formal_answer_plan.opening_core_thesis must not soften a rejected definition into a not-wrong concession"
             )
         forbidden = plan.get("forbidden_answer_forms")
@@ -749,23 +750,23 @@ def validate_audit(data: Any) -> list[str]:
             if non_empty_string(opening) and not normalize_text(first_sentence).startswith(
                 normalize_text(opening)
             ):
-                findings.append(
+                semantic_hints.append(
                     "visible_formal_answer first sentence must start with formal_answer_plan.opening_core_thesis"
                 )
             if exposes_internal_stdout(visible_answer):
                 findings.append("visible_formal_answer must not expose internal script stdout")
             if looks_like_local_truth_concession_first(first_sentence):
-                findings.append(
+                semantic_hints.append(
                     "visible_formal_answer first sentence must start with the global thesis, not local-truth concession"
                 )
             if looks_like_score_concession(visible_answer):
-                findings.append("visible_formal_answer must not use score-as-concession framing")
+                semantic_hints.append("visible_formal_answer must not use score-as-concession framing")
             if looks_like_soft_not_wrong_concession(visible_answer):
-                findings.append(
+                semantic_hints.append(
                     "visible_formal_answer must not soften a rejected definition into a not-wrong concession"
                 )
             if looks_like_generic_not_only_caveat(first_sentence):
-                findings.append("visible_formal_answer first sentence must not be a generic not-only caveat")
+                semantic_hints.append("visible_formal_answer first sentence must not be a generic not-only caveat")
 
     local_success_points = data.get("local_success_points")
     if local_success_points is None:
@@ -801,7 +802,7 @@ def validate_audit(data: Any) -> list[str]:
             data.get("formal_thesis_subject"),
         )
         if not any(labels_align(user_named, candidate) for candidate in canonical_candidates):
-            findings.append(
+            semantic_hints.append(
                 "user_named_object_relation cannot be canonical_object when user_named_object is not aligned with canonical_object"
             )
         if audit_mentions_scope_correction(data) and looks_like_scope_correction_object_downgrade(
@@ -813,11 +814,18 @@ def validate_audit(data: Any) -> list[str]:
                 hierarchy.get("whole_object"),
             ),
         ):
-            findings.append(
+            semantic_hints.append(
                 "canonical_object must not downgrade the user-named object into a local carrier after scope correction"
             )
 
     return findings
+
+
+def collect_semantic_hints(data: Any) -> list[str]:
+    """Collect candidate review hints; wording cannot establish semantic failure."""
+    hints: list[str] = []
+    validate_audit(data, semantic_hints=hints)
+    return list(dict.fromkeys(hints))
 
 
 def build_report(path: Path, data: Any, findings: list[str]) -> dict[str, Any]:
@@ -827,6 +835,8 @@ def build_report(path: Path, data: Any, findings: list[str]) -> dict[str, Any]:
         "script_verdict": "shape_only_failed" if findings else "shape_only",
         "agentic_judgment_required": True,
         "findings": findings,
+        "semantic_hints": collect_semantic_hints(data),
+        "semantic_verdict": "not_validated",
         "script_must_not_decide": list(SCRIPT_MUST_NOT_DECIDE),
         "observed_fields": sorted(data) if isinstance(data, dict) else [],
     }
@@ -840,6 +850,9 @@ def print_text_report(report: dict[str, Any]) -> None:
             print(f"- BLOCK [invalid-audit]: {finding}")
     else:
         print("- OK [shape]: required audit fields are present")
+    for hint in report.get("semantic_hints", []):
+        print(f"- WARN [candidate-only-review-hint]: {hint}")
+    print("semantic_verdict: not_validated")
     print(f"script_verdict: {report['script_verdict']}")
     print("agentic_judgment_required: true")
     print("script_must_not_decide: " + ", ".join(report["script_must_not_decide"]))

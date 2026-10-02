@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "0f94ecd9763424119c9c739c172a53b21109488009699f6c8fabbc8c58e19f22",
+    "wire_sha256": "a315f3200c0077f5557a40432818fb79a4ad43b2f8ed3a74888d61f5b22bf661",
+    "batch_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "path": {
+      "case": "W02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 1,
+    "simulation": false,
+    "cumulative_call_ordinal": 124,
+    "batch_call_ordinal": 26
+  },
+  "raw_sha256": "f8edd7b7683e42dc08308dfe938ac5d3bb73ce486ee4d7de6eb15a2b34ef50be",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "控制边界应划在“规则已经确定”与“规则仍需判断或授权”之间。当前可以固定执行流程，但不能把跨地区例外的适用判断也固化成填字段。\n\n- **固定税率计算和格式校验由程序控制。** 按已签字的税率表执行确定性计算、字段检查和格式校验；计税基础、精度、舍入方式等会改变金额的规则也须明确。缺少规则或必要输入时停止该笔自动计算，不能让 Agent 补猜。\n- **跨地区例外由 Agent 辅助分析。** Agent 可以整理地区事实、检索已有条款、比较候选条款及适用证据，标明冲突和缺口。但适用条件尚未达成一致，这是规则内容未决，不能靠固定流程或“只填字段”解决，也不能让 Agent 自行形成具有约束力的政策。\n- **未决规则交给有权确认的人。** 本次需要确认的是例外的适用条件、条款冲突时的优先关系及生效范围。相关案例在确认前进入待决分支，暂不进入最终金额确认或开票；明确规则覆盖的普通案例可以继续自动处理。\n- **证据约束整个链条。** 保留税率表版本及签字记录、案例事实来源、条款依据和例外确认记录。格式校验通过只证明字段合规，不证明条款选对。\n\n规则达成一致后，再把明确的适用条件、优先关系和边界情况编入程序。只有完整输入能唯一确定适用条款及金额、未知情况会明确转入待决分支时，“Agent 只填字段”才成立。不能把尚未解决的判断藏进“适用条款”字段，让下游默认它已经正确。"
+  },
+  "usage": {
+    "input_tokens": 20275,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 525,
+    "reasoning_output_tokens": 82
+  },
+  "error": null,
+  "session_seconds": 31.528232334007043,
+  "ended_at_epoch": 1790964802.779215,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "0f94ecd9763424119c9c739c172a53b21109488009699f6c8fabbc8c58e19f22",
+    "transport_successor_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

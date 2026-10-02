@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "request_sha256": "61bfa6d580bbf1be0511530eaa7ab5e930a8725f504bb31e5aeaf8e48b98ea6e",
+    "wire_sha256": "38e5df432e8634c429b7f87b26d397d1e060ab32f258140a8a74e2149f1ceb3f",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "L01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "5b763d3e80454dba3ac86fe7406e0acdaeafca1f707161533648933fc5557722",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "最简任务记录（保存此条即可）：\n- 目标：更新两处过期链接；不涉及外部发布。\n- 进度：第一处已完成，第二处待更新；链接验证结果未记录。\n- 验收：两处更新后的链接均可打开。\n- 恢复信息：补记两处链接所在文件或页面、具体位置及新 URL。\n- 明天继续：定位第二处 → 更新链接 → 验证两处均可打开 → 记录结果并结束任务。\n\n本次仅提供记录，未实际执行或创建平台。"
+  },
+  "usage": {
+    "input_tokens": 18683,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 341,
+    "reasoning_output_tokens": 181
+  },
+  "error": null,
+  "session_seconds": 37.82310216699261,
+  "ended_at_epoch": 1790948540.894567,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "61bfa6d580bbf1be0511530eaa7ab5e930a8725f504bb31e5aeaf8e48b98ea6e",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}
