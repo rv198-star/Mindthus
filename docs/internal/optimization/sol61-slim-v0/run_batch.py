@@ -174,6 +174,12 @@ def bind_successor(batch, config, locked):
 
 
 def validate_successor(batch, config):
+    if config.get('retry_000049'):
+        # One named Owner disposition; never a generic unknown override.
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('slim_retry_000049',HERE/'retry_000049.py')
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        return module.validate(batch,config)
     parent = Path(config['parent_receipt']['root'])
     if parent_receipt(parent) != config['parent_receipt']:
         raise ValueError('successor_parent_changed')
@@ -254,8 +260,8 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
             start=monotonic()
             while monotonic()-start<60: sleep(min(60,60-(monotonic()-start)))
             write(batch/'parent-cooldown.json',dict(wait_seconds=monotonic()-start,
-                basis='conservative_monotonic_wait_after_known_parent_terminal'))
-        for index, path in enumerate(config['plan']):
+                basis=config.get('transition_wait_basis','conservative_monotonic_wait_after_known_parent_terminal')))
+        for index, path in enumerate(config['plan'],start=config.get('plan_start_index',0)):
             run = batch / 'runs' / f"{index:02d}-{path['case']}-{path['model']}-{path['arm']}"
             if (run / 'result.json').exists():
                 continue
@@ -267,9 +273,13 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
             existing = list(run.glob('call-*'))
             if any(not (p / 'accepted.json').exists() for p in existing):
                 raise ValueError('unimported_call_no_resend')
-            for seq in range(len(existing), config['path_calls_max']):
+            path_limit=config['path_calls_max']-config.get('prior_path_calls',{}).get(str(index),0)
+            for seq in range(len(existing), path_limit):
                 calls = list((batch / 'runs').glob('*/call-*/intent.json'))
                 spent = sum(read(p)['session_seconds'] for p in (batch / 'runs').glob('*/call-*/terminal.json'))
+                if hashlib.sha256(Path(BINARY).read_bytes()).hexdigest()!=config['binary_sha256']:
+                    record_stop(batch,'binary_changed_before_dispatch',dict(calls=len(calls)))
+                    return
                 if len(calls) >= config['total_calls_max'] or spent >= config['active_processing_limit_seconds']:
                     write(batch / 'STOP.json', dict(reason='authorized_budget_exhausted', calls=len(calls)))
                     return
@@ -281,6 +291,9 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
                 directory = run / f'call-{seq:02d}'
                 binding = dict(request_sha256=req['request_sha256'], wire_sha256=digest(outbound),
                     batch_sha256=digest(config), path=path, sequence=seq, simulation=config['simulation'])
+                if config.get('retry_000049'):
+                    binding.update(cumulative_call_ordinal=85+len(calls),
+                        retry_of=config['retry_000049']['request_sha256'] if index==31 and seq==0 else None)
                 write(directory / 'request.json', req); write(directory / 'wire.json', outbound)
                 transport_dir=external_transport_directory(batch,req,config)
                 write(directory / 'workspace-binding.json',dict(**binding,
@@ -325,7 +338,8 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
                 slot = sorted(serial.root.glob('[0-9]*'))[-1]
                 wait = a['read_record'](slot / 'intent.json')['active_wait_seconds']
                 measurement = dict(active_wait_seconds=wait, dispatch_wall_seconds=time.monotonic()-started,
-                    session_seconds=terminal['session_seconds'], cli_starts=1, outer_retries=0)
+                    session_seconds=terminal['session_seconds'], cli_starts=1,
+                    outer_retries=int(bool(binding.get('retry_of'))))
                 write(directory / 'measurement.json', measurement)
                 if (terminal['observation'] or {}).get('stop_subsequent_dispatch'):
                     record_stop(batch, 'unclassified_internal_recovery', binding)
@@ -355,7 +369,7 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
                     break
                 loaded += response['read_paths']
                 print('READ',run.name,response['read_paths'],flush=True)
-                if seq+1==config['path_calls_max']:
+                if seq+1==path_limit:
                     write(run / 'result.json', dict(status='read_budget_exhausted', answer=None))
                 if dispatch_stopped(batch): return
             if dispatch_stopped(batch): return
