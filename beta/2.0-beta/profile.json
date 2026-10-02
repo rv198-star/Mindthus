@@ -1,14 +1,14 @@
 {
   "schema_version": "mindthus-beta-composition-v0.3",
   "status": "beta-prerelease",
-  "release_line": "1.10.1-roi-beta",
-  "version": "1.10.1-roi-beta",
+  "release_line": "1.11.0-roi-beta",
+  "version": "1.11.0-roi-beta",
   "package_identity": "mindthus-beta",
   "marketplace_identity": "mindthus-beta",
   "shared_core": {
-    "version": "1.10.1",
-    "ref": "6a1ef3ce02eeb88997b512f9d5ee1e7d26d08729",
-    "tree_oid": "2532b0fe6e21b3ef979b31a62b2d23dbcceaebc3"
+    "version": "1.11.0",
+    "ref": "8b26492399b86fc824dd8eea4c951e9181152a82",
+    "tree_oid": "9fa58e4259aa43708ee151615da1c4f982810a90"
   },
   "runtime_profile": {
     "name": "roi.2-sra-thin-core",
@@ -23,7 +23,14 @@
       "required_at_build": false
     },
     "overlay_path": "beta/2.0-beta/overlays/using-mindthus-v1.9.0-sra/SKILL.md",
-    "historical_profile_path": "beta/2.0-roi-thin-core/profile.json"
+    "historical_profile_path": "beta/2.0-roi-thin-core/profile.json",
+    "package_time_anchor": {
+      "path": "skills/3l5s/SKILL.md",
+      "shared_source_sha256": "7e92cc9cbaee17d6ee4dae8366339cabea05d2dc253afe71e141fde8d603fee2",
+      "before": "；两次补规则后拟新增第三层时，\n先反螺旋，优先删除或根因替换。新反例支持的普通调试可以继续。",
+      "replacement_prefix": "。\n\n",
+      "reason": "Exact anchor adaptation to slim shared core; qualified historical correction.after remains byte-identical"
+    }
   },
   "declared_runtime_deltas": [
     "skills/using-mindthus/SKILL.md uses the compact ROI.2-compatible SRA overlay",
@@ -37,17 +44,17 @@
     "artifact_path": "capability-register.json"
   },
   "rollback": {
-    "version": "1.10.1",
+    "version": "1.11.0",
     "package_identity": "mindthus",
-    "tag": "v1.10.1"
+    "tag": "v1.11.0"
   },
   "publication": {
-    "status": "published",
-    "release_train": "1.10.1",
-    "source_tag": "v1.10.1-roi-beta",
+    "status": "prepared",
+    "release_train": "1.11.0",
+    "source_tag": "v1.11.0-roi-beta",
     "release_asset_channel": "experimental-roi-beta",
     "github_release": true,
-    "release_url": "https://github.com/rv198-star/Mindthus/releases/tag/v1.10.1",
+    "release_url": "https://github.com/rv198-star/Mindthus/releases/tag/v1.11.0",
     "marketplace": false,
     "automatic_migration": false
   }

@@ -292,6 +292,22 @@ def write_checksum(archive_path: Path, checksum_path: Path) -> None:
         temporary_path.unlink(missing_ok=True)
 
 
+def apply_guardrail_correction(text: str, correction: dict, anchor: dict | None) -> str:
+    before = correction["before"]
+    prefix = ""
+    if anchor is not None:
+        if anchor["path"] != correction["path"]:
+            raise SystemExit("Beta correction anchor path mismatch")
+        if sha256_bytes(text.encode("utf-8")) != anchor["shared_source_sha256"]:
+            raise SystemExit("Beta correction shared-source hash mismatch")
+        before = anchor["before"]
+        prefix = anchor["replacement_prefix"]
+    after = correction["after"]  # Frozen qualified correction, never regenerated.
+    if text.count(before) != 1 or after in text:
+        raise SystemExit("qualified 3L5S guardrail replacement no longer applies exactly once")
+    return text.replace(before, prefix + after)
+
+
 def build(output: Path, force: bool) -> Path:
     root = repo_root()
     require_clean_checkout(root)
@@ -364,11 +380,10 @@ def build(output: Path, force: bool) -> Path:
     correction = historical_profile["package_time_contract_correction"]
     correction_target = plugin_root / correction["path"]
     correction_text = correction_target.read_text(encoding="utf-8")
-    before = correction["before"]
-    after = correction["after"]
-    if correction_text.count(before) != 1 or after in correction_text:
-        raise SystemExit("qualified 3L5S guardrail replacement no longer applies exactly once")
-    correction_target.write_text(correction_text.replace(before, after), encoding="utf-8")
+    correction_target.write_text(
+        apply_guardrail_correction(correction_text, correction, runtime.get("package_time_anchor")),
+        encoding="utf-8",
+    )
 
     rewrite_runtime_diagnostics(
         plugin_root, profile["shared_core"]["version"], profile["version"]
