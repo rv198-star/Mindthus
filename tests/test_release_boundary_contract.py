@@ -41,7 +41,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_current_rc_preserves_stable_and_roi_beta_history(self):
+    def test_current_release_preserves_stable_and_roi_beta_history(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
@@ -50,12 +50,15 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         release_log = (REPO / "docs" / "releases" / "v1.8.0.md").read_text(encoding="utf-8")
         beta_notes = (REPO / "docs" / "releases" / "v1.8.0-roi-beta.md").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.11.0-rc.1`", readme)
+        self.assertIn("当前仓库版本：`v1.11.0`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
-        self.assertIn("当前已发布 Stable 是 `v1.10.1`", readme)
-        self.assertIn("mindthus-plugins-1.10.1.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.10.1.tar.gz", readme)
-        self.assertIn("mindthus-beta-1.10.1-roi-beta.tar.gz", readme)
+        self.assertIn("主力仍使用 Sol 6.1 以下版本", readme)
+        self.assertIn("不建议仅为本次优化升级", readme)
+        self.assertIn("不是相对v1.10.1的直接统计", readme)
+        self.assertIn("当前已发布 Stable 是 `v1.11.0`", readme)
+        self.assertIn("mindthus-plugins-1.11.0.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.11.0.tar.gz", readme)
+        self.assertIn("mindthus-beta-1.11.0-roi-beta.tar.gz", readme)
         self.assertIn("Scarce Resource Allocation", readme)
         self.assertIn("## v1.10.1", changelog)
         self.assertIn("## v1.10.0", changelog)
@@ -66,8 +69,8 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("## v1.8.0", changelog)
         self.assertIn("补充发布包：1.9.1 ROI Beta", changelog)
         self.assertIn("v1.9.1-roi-beta", changelog)
-        self.assertIn('VERSION = "1.11.0-rc.1"', builder)
-        self.assertIn('VERSION = "1.11.0-rc.1"', runtime_logger)
+        self.assertIn('VERSION = "1.11.0"', builder)
+        self.assertIn('VERSION = "1.11.0"', runtime_logger)
         self.assertIn('"package_version": "1.5.4"', tplan_manifest)
         self.assertIn('"source_id": "mindthus-v1.5.4"', tplan_manifest)
         for phrase in (
