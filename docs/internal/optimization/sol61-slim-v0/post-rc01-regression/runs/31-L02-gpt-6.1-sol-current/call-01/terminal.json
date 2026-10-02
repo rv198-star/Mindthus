@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "ec4540d987b7a4841c8df7eaf51b87b0a13289dcab845933a22deba370248dea",
+    "wire_sha256": "e17ea26109f42152d13c228cef86e76d498297af46e26a145ee92f7603015af0",
+    "batch_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "path": {
+      "case": "L02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 1,
+    "simulation": false,
+    "cumulative_call_ordinal": 144,
+    "batch_call_ordinal": 46
+  },
+  "raw_sha256": "4e4bf9542b1736e415f5f236823534805be55f79eba3b9fa054d7578fa3e543a",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "不继续重发。30 秒超时只说明本地等待结束，不能证明远端失败或未执行；仅有 intent 也不能证明请求已发送。一次发送授权不自动包含重试。\n\n最小可恢复处理：保留原 intent、一次发送授权、超时事实及缺少远端终态绑定的情况；状态记为“结果未知，暂停重发”，不标记成功或失败。恢复时先用已有请求标识只读核查并绑定远端结果；若无法核查，保留未知状态。再次发送须获得明确授权，并先处理重复执行风险。\n\n本轮仅生成摘要，不发送 API、不修改状态。"
+  },
+  "usage": {
+    "input_tokens": 20017,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 242,
+    "reasoning_output_tokens": 66
+  },
+  "error": null,
+  "session_seconds": 14.71730720900814,
+  "ended_at_epoch": 1790966430.274749,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "ec4540d987b7a4841c8df7eaf51b87b0a13289dcab845933a22deba370248dea",
+    "transport_successor_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

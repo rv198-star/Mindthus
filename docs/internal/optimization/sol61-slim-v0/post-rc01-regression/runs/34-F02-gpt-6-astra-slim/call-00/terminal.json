@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "088b72d5d70156f035989da30097a88cfdc01e30048b8eeee829d831ea12ce6b",
+    "wire_sha256": "03743b1265bd7c12396338967c233d9271bf95c3337a00af09edd6fbd4b11a2a",
+    "batch_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "path": {
+      "case": "F02",
+      "arm": "slim",
+      "model": "gpt-6-astra"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 148,
+    "batch_call_ordinal": 50
+  },
+  "raw_sha256": "6fd01076b797706882752fa0f6faa23dedf6f5cd3548208ac7b016a2a9ed2515",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "按你明确限定的“本质＝进入语言模型的文本接口”，你的核心观点成立：Skills 在这一层就是 Prompt，更准确地说，是被组织、按需加载的提示文本。组织方式不同，并不会让进入模型的文字变成另一种东西。\n\n本会话提供的 SKILL.md 就是例子：它用文字告诉模型何时使用、如何判断、遵守哪些边界。这些内容可以很复杂，也可以通过脚本选择和拼装，但在被送入模型时，仍然是在提供指令和上下文。模块化、动态加载、流程化，说明 Prompt 如何被管理，不构成“它不是 Prompt”的理由。\n\n不过，你的辅助论据“脚本只是安排什么时候、按什么顺序交付 Prompt”说得过满。脚本还可以执行计算、读写文件、调用服务；这些执行本身不是 Prompt。脚本输出如果作为文本回传模型，那个文本才进入你限定的讨论范围。**这需要修正你的论据，但不推翻你的核心判断。**\n\n因此，主次很明确：在文本接口层，你是对的。用“Skills 还包含脚本、资源和工作流”反驳你，讨论的是整个工程系统，换了判断对象；它只能反驳“整个 Skill 系统除了 Prompt 什么也没有”，不能反驳你实际限定的命题。\n\n你可以这样表述：\n\n“我说的是模型的文本输入层：Skill 被加载给模型的指令与上下文，本质上就是 Prompt。脚本可以决定这些文本怎样进入模型，也可以执行模型之外的操作；后者是执行机制，不改变前者的性质。我并没有说整个 Skill 工程包只包含 Prompt。”"
+  },
+  "usage": {
+    "input_tokens": 18162,
+    "cached_input_tokens": 15104,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 413,
+    "reasoning_output_tokens": 0
+  },
+  "error": null,
+  "session_seconds": 27.62162275001174,
+  "ended_at_epoch": 1790966783.571081,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "088b72d5d70156f035989da30097a88cfdc01e30048b8eeee829d831ea12ce6b",
+    "transport_successor_sha256": "ca2e07b8f73a7844651e35558c56845cfb612d9a98cf0be28dfa7b08a83bb233",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}
