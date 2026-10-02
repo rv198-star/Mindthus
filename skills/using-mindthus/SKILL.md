@@ -5,139 +5,77 @@ description: Use only for fact-sufficient hard-judgment routing among Mindthus l
 
 ## Core Claim
 
-Truth Orientation / 真相优先: pursue facts and truth over agreement. User input is
-signal, constraint, or hypothesis; not evidence by itself.
+Truth Orientation / 真相优先：以事实和真相为先。用户观点是信号或假设，
+用户目标、价值、风险姿态与权限是约束；二者不能混成事实证据。
+上游注入背景只作线索或约束，当前输入优先；不能静默覆盖本轮明确指令。
 
-## Mainline
+## Mainline / 主路径
 
-Premise Calibration / 前置校准 is not a method. Before lens choice, check
-真实对象, 底层约束, 目标函数.
+先看真实对象、底层约束和目标函数（Premise Calibration）：
 
-Before routing, classify:
-
-1. Direct execution / 直接执行: clear, low-risk, fact-sufficient; Do not use Mindthus.
-2. Information acquisition / 信息补全: missing facts, files, runtime proof, platform rules,
-   or clarification; acquire evidence first.
-3. Mindthus intervention / Mindthus 介入: a hard judgment point changes definition,
-   allocation, strategy, path, control, artifact value, Mission state, or repair action.
+- 明确、低风险、事实足够：直接执行。
+- 缺文件、事实、运行证据或权限：先补输入，不能用方法填补。
+- 有会改变判断或行动的 hard judgment point：用最小充分镜头。
 
 ### Input Framing Audit / 输入定框审计
 
-强约束入口协议: Run only with both frame-risk and execution impact; then
-在进入判断之前，先检查当前问题是否已经被提问方式绑到错误层级.
+只在 frame-risk 与 execution impact 同时存在时检查：当前说法是否把局部
+真相当成全局定义？围绕用户实际目标保留、限定、重构，或因缺证据未决。
+用户合法取舍可以主导行动；不是默认反对用户，也不是“更抽象就更全局”。
+强烈立场不降低证据要求。充分的解释应保留。
 
-Frame Fitness Check / 定框适配检查 tests whether a locally true frame claims global authority.
-This is not a keyword rule. Set `frame_status` to `clean / biased /
-overloaded / malformed`, then `preserve frame`, `qualify frame`, `reframe`, or
-`block pending evidence`. Triggered audits record `routing_decision`. No frame-risk
-signal, no frame check; no execution impact, omit the frame check.
-
-Original Prompt Contract / 原始有效提示词合同 is not the judgment center. Judge whether
-the user led you to the wrong level, then reframe and answer. Keep the audit hidden; soft
-commentary is no substitute.
-
-Entry Triage / 入口分诊 is a semantic-family index, not keywords. Read its register
-whenever a hard cue may change route, evidence, owner, or stop; cue conflict is unnecessary.
-
-### Partial Truth And Visible Answer
-
-Partial Truth Capture / 局部真相捕获: A locally true observation must not own the whole
-explanation. Scope correction is not object downgrading.
-
-Essence/definition judgments use Whole Elephant hard gate and the Compact
-Semantic Triad / 三根硬支柱 before formal_answer: `canonical_object`, `result_controller`,
-and `misdirection_if_local_wins`.
-
-`local_frame_wins`, `whole_object_wins`, and `better_direction_for_target` precede
-narrower routing.
-
-Formal Answer Gate:
-
-- Core Thesis Extraction / 主判断收束: global thesis, result owner, and consequence first;
-  local truth follows.
-- Definition Authority Adjudication / 定义权裁决: name object and authority; test local
-  truth, result control, and wrong optimization.
-- Conditional verdicts commit to the active branch; user-owned `acceptable_tradeoff`
-  gets a structured tradeoff, not a forced verdict.
-- Pressure raises the evidence bar; it never transfers definition authority.
-
-Audit Hidden By Default / 审计默认内隐: expose only on request, validation failure, or
-handoff/debug. Validation checks shape, not truth. No command evidence, no passed claim;
-use `not_run_fallback`.
+Whole Elephant / Partial Truth Capture：区分所判断对象、真正控制结果的因素，
+以及若局部框架接管会导致的错误行动。主次说清即可；不存在误导时允许局部定义
+成立。把有效 Original Prompt Contract 留在约束层，不能接管判断。
 
 ### Skill Routing
 
-Route by the active judgment object.
-
-| Owner | Dominates when |
+| 判断缺口 | 镜头 |
 | --- | --- |
-| `3l5s` | Problem-definition failure or work too large to execute. |
-| `sra` | Multiple valid candidates share a common scarce resource and are judgeable; choose next tranche, ceiling, defer/stop, reserve, or rerank. |
-| `edsp` | False binary or structural ambiguity; A/B 都像对. |
-| `sela` | Long-term system efficiency versus local advantage; carrier/path action defers to MPG. |
-| `mpg` | Mainline plus carrier, exposure, path volatility, and commitment; no carrier/exposure/path, no MPG. |
-| `wae` | Agentic-system Workflow / Agentic / Evidence mismatch; no controller mismatch, no WAE. |
-| `tvg` | Bounded artifact is thin with a named value-gain target; TVG audit needs an active loop; external audits stay object-routed. |
-| `tplan` | Durable Mission state, recovery, or human authority; ordinary complexity is insufficient. |
+| 问题未定义，或任务过大不可落地 | 3L5S |
+| 多个可判断事项争同一稀缺资源 | SRA |
+| 结构摇摆、伪二选一 | EDSP |
+| 系统效率与局部优势的长期关系 | SELA |
+| 方向已存在，但载体、暴露、路径或时机决定行动 | MPG |
+| Agentic system 内 Workflow / Agentic / Evidence 控制错位 | WAE |
+| 已成形、有界产物仍缺具体使用价值 | TVG |
+| 需要持久 Mission 状态、恢复或人类权力边界 | TPlan |
 
-Method Reference Boundary / 方法引用边界: a method named in evidence review sets scope,
-not route ownership. Separate target session from confirmation.
-
-Repeated local repair triggers Anti-Spiral / 反螺旋入口; evidence-confirmed canonical error
-activates Root-Cause Replacement.
-
-### Supporting Primitives
-
-- Aspect Ownership Matrix / 切面主导权矩阵: owner conflict yields one visible thesis;
-  others degrade to constraint or support.
-- Context Injection Point / 上下文注入口: context constrains judgment; it neither
-  implements memory nor overrides current input.
-- Judgment Constraint Recognition / 判断约束识别: facts constrain claims; values set
-  priorities; risk sets action strength; authority determines who decides.
-- Pressure Surface Check / 施压面检查: pressure is not a route; assign its owner.
-- Approximate Quantified Mapping / 非精准量化显影 exposes variables inside an existing
-  owner. Hypothetical numbers must not prove facts or compute decisions.
-- MPG Scalar Commitment Unpack is support-only: expose
-  `mainline / carrier / path_volatility / exposure / commitment` before MPG routing.
-
-### Method Arbitration / 方法仲裁
-
-`dominate`, `defer`, `degrade`, `block`, or `stop`. SRA owns allocation;
-3L5S/EDSP definition/structure, WAE control, TPlan runtime; SELA owns direction pressure;
-MPG owns path-carrying action.
+owner 已明确就直达；仲裁只在竞争镜头会改变行动时发生。
+SELA owns direction pressure；MPG owns path-carrying action。
+握手补当前缺口，不串固定流水线。引用方法进行审计只规定审计对象，
+不自动让该方法成为当前 owner（Method Reference Boundary）。
 
 ### Execution Impact / 执行影响
 
-Method use must change strategy, risk handling, evidence requirement, next action,
-stopping condition, method choice, or handoff packet. If none changes, execute, acquire
-information, clarify, or reroute.
+输出清楚的判断、依据及行动后果，不堆内部术语。方法须改变策略、风险、
+证据要求、下一动作、停止条件或交接；没有变化就退出方法层。
+重复局部修补且无新证据时 Anti-Spiral；确认 canonical 根因后才 Root-Cause Replacement。
 
-## Guardrails
+## Guardrails / 从属补漏
 
-Supports mainline.
+保护上述主路径：事实、价值、风险与 authority 分开；内部审计默认隐藏。
+脚本只验证 shape/reference，不证明语义正确。普通措辞不决定通过与否。
+真实权限、安全、证据和用户约束仍有 veto。pressure is not a route。
 
-### Conditional Resources / Runtime Support
+## Runtime Support / 按需支撑
 
-Do not preload every resource:
+主路径已经充分时不用展开。存在相应缺口再读（发布包别名 `resources/primitives/`）：
 
-Portable alias: `resources/primitives/`.
-
-- frame or level: `docs/methodologies/primitives/frame-fitness-check.md`;
-- trigger family or route: `docs/methodologies/primitives/entry-triage.md`;
-- competing owners: `docs/methodologies/primitives/aspect-ownership.md`;
-- actor/timing/target/tradeoff: `docs/methodologies/primitives/decision-context-calibration.md`;
-- local truth claiming whole-object authority:
-  `docs/methodologies/primitives/whole-elephant-protocol.md`;
-- pressure or AQM: `docs/methodologies/primitives/expression-pressure-and-gates.md`;
-- scalar commitment: `docs/methodologies/primitives/mpg-scalar-commitment-unpack.md`;
-- root-cause recovery: `docs/methodologies/primitives/root-cause-replacement.md`;
-- activation: `python3 scripts/primitives/check.py --event before-route --method using-mindthus`;
-  use `--event before-answer` after frame/partial-truth activation; never decides semantics;
-- structured runtime validation: read the fidelity contract at
-  `resources/fidelity-contract.md`; use `templates/fidelity-output.json` and
-  `validate_using_mindthus_output.py`.
+- 框架/问题层级：`docs/methodologies/primitives/frame-fitness-check.md`。
+- 路由仍不清：`docs/methodologies/primitives/entry-triage.md`。
+- owner 冲突：`docs/methodologies/primitives/aspect-ownership.md`。
+- 行动者/时点/目标/取舍：`docs/methodologies/primitives/decision-context-calibration.md`。
+- 局部真相争整体定义：`docs/methodologies/primitives/whole-elephant-protocol.md`。
+- 压力/变量显影：`docs/methodologies/primitives/expression-pressure-and-gates.md`；
+  AQM 假设数字仅显影关系，不能证明事实或计算决定。
+- 主线/载体关系仍混淆：`docs/methodologies/primitives/mpg-scalar-commitment-unpack.md`。
+- 已确认根因修复：`docs/methodologies/primitives/root-cause-replacement.md`。
+- 明确需要 fidelity contract、trace、重放或校验：`resources/fidelity-contract.md`、
+  `templates/fidelity-output.json`、`scripts/validate_using_mindthus_output.py`。
+  `scripts/primitives/check.py` 仅提醒，不产生通过；未运行不能声称已验证。
 
 ## Boundaries
 
-No hard judgment, no Mindthus. Missing facts first. Stop when another method owns the
-decision or no value-gain hypothesis exists.
+无 hard judgment 不介入；缺证据先补；另一个对象或方法接管时交回。
+不建立全局路由器，不强制每题写字段、跑脚本或完整审计。

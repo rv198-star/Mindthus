@@ -52,10 +52,12 @@ learning; it is responsibility separation, not a new runtime role model.
 
 ### Runtime Loop
 
-Use `3l5s` for success-critical Task proposal. Mutate structure through scripts, not
-hand edits. Separate logs from evidence. Survey state, build a packet with
-`scripts/make_decision_packet.py`, run the routed Mindthus hook, then apply only
-validated decisions. Stop in Chinese when continuation is unsafe.
+For a known, bounded Task, reuse its given objective and acceptance; start with
+`init_lite.py` and record `checkpoint.py`. Use `3l5s` only when the proposal is unclear
+or too large to execute. Mutate structure through scripts, not hand edits. Separate
+logs from evidence. A consequential structure/authority change, new blocker, unknown
+recovery or same-path continuation trigger needs the existing survey/decision packet
+and routed hook; apply only validated decisions. Stop in Chinese when continuation is unsafe.
 
 Lite Quickstart Recipe: Prefer these recipes over script-help exploration when inputs
 are known: start with `python3 skills/tplan/scripts/init_lite.py --dir ...`, checkpoint
@@ -84,7 +86,9 @@ Re-entry: a residual Mission is only a candidate. Require `--disposition` and
 
 Internal IDs are for runtime stability. User-facing output should lead with meaning;
 ordinary updates should not lead with raw IDs. Use `scripts/render_user_update.py` for
-compact Chinese status updates. For completion or cost review, use the Standard tree.
+compact Chinese status updates. For ordinary updates, show the result, remaining blocker and next action.
+At terminal handoff, retain the Standard artifacts below; a full tree need not be
+pasted into the business reply. Expand it for cost review or when dependencies matter.
 
 Terminal handoff: run `render_execution_cost_tree.py "$MISSION_DIR"
 --completion-handoff`; include both emitted links, or state the rendering failure. Full

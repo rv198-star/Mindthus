@@ -1,364 +1,49 @@
-# Whole Elephant Protocol / 全象流程
+# Whole Elephant / 全象流程
 
-Whole Elephant Protocol handles Partial Truth Capture / 局部真相捕获: a locally
-true observation must not own the whole explanation.
+## Core
 
-A locally true observation must not own the whole explanation.
+局部真相不能自动拥有整体定义权。围绕实际判断对象和用户目标，确认哪个因素
+真正控制结果；如果局部已经充分或用户明确只问局部，就保留它。
+全局不是更抽象、更大的对象，也不是强行唱反调。
 
-Core posture:
+## Mainline
 
-> First name the whole object and result controller; then preserve the local truth
-> inside its proper boundary. 先还原整头象，再限定摸到的那块在哪里是真的。
+说明对象是什么、结果由什么控制、当前局部观点覆盖到哪里：
 
-Use this as the main axis for essence, definition, `X is just Y`, or reduction claims.
+- 足够覆盖目标：retain / grant_as_definition。
+- 局部正确但接管整体会改变错误行动：限定范围或 reject_as_definition，讲清主次与后果。
+- 用户明确选择合法取舍：保留该目标，不拿另一目标替他决定。
+- 证据不足或对象未定：保留未知，指出最小补证据动作。
 
-## Local-Truth Boundary Support
+只有能改变策略、证据要求、风险、下一步或停止条件的纠偏才展开。
+让读者看见重要判断，不需要先展示六字段、固定首句或内部标签。
 
-Object Hierarchy Check: user_named_object may be only component_layer or role_layer.
+## Guardrail
 
-- `local_truth`: where the local observation is true.
-- `object_hierarchy`: separate the user-named object from whole object,
-  component layer, and role layer before judging authority.
-- `whole_object`: the object that must not be replaced by that local part.
-- `authority_weight`: value contribution, usage frequency, stable outcome,
-  replacement cost, decision impact.
-- `overreach_risk`: how judgment or action is distorted if the local part defines
-  the whole.
-- `corrected_thesis`: the sharp corrected judgment.
+这保护局部/整体混淆，不覆盖用户价值、权限或事实取证。
+不得把接口机制、指标、测试全绿等自动升为完整价值；也不得因它们是局部就
+贬低已经充分的局部解释。强压力要求更谨慎的证据，不转移定义权。
+“也很重要”未解决主次时需补判断，但“不只是”、让步句或句序本身不证明失败。
+scripts must not decide semantic truth。
 
-Optional expanded/debug fields:
+## Boundary
 
-- `variant_map`: the major usage forms or operating modes that may all be real.
-- `primary_value_distribution`: which variant carries common usage, high-value
-  usage, stable output, failure control, or strategic consequence.
-- `control_owner_shift`: whether the visible local mechanism serves the whole
-  system, or the whole system serves that local mechanism.
+没有定义/结果控制混淆就不用；缺事实先取证；风险/承载或结构问题交给具体方法。
+正确的条件性结论、规范性不确定性与用户合法取舍不应被强制改成否定。
 
-## Whole Object Reconstruction / 整体对象还原
+## Runtime support
 
-Reconstruct the whole object before essence judgment. reconstruct the whole object before essence judgment.
-Name the target job, main use cases, primary value carrier, and local interface role
-before deciding whether the local truth has definition authority.
+调试、handoff、独立审阅或结构化重放时才生成审计载荷：
+`canonical_object / result_controller / misdirection_if_local_wins` 是语义定位；
+现有 v0.1 compact 载荷仍包括 `local_frame_wins / whole_object_wins / better_direction_for_target`。
+展开载荷沿用既有 hierarchy、reconstruction、formal_answer_plan、strategy 的 schema。
+这属于显式 audit 合同，不是每份业务答案必须输出的流程。
 
-This prevents answers that only say "local truth overreaches" while never rebuilding
-what the whole object is for.
+`python3 scripts/primitives/validate_whole_elephant.py audit.json --json` 验证字段、
+枚举及内部信息泄漏；词面/标签相似性仅产生 `semantic_hints`，不能裁决真伪。
+`shape_only` 不代表内容正确，`semantic_verdict=not_validated`；没运行就不能冒称通过。
+调用 using-mindthus fidelity 校验时沿用其触发标记和验证/未运行证据要求。
 
-When the object has multiple real variants, do not force a single essence too early.
-Build a `variant_map`, then compare `primary_value_distribution` and
-`control_owner_shift`. Distinguish commonness from definition authority. A more
-common lightweight form may be a real usage without owning the higher-value form.
-Do not replace one reduction with the opposite reduction.
-
-When the local mechanism actually owns the target result, use `grant_as_definition`;
-`variant_map` may then collapse to a single causal owner instead of forcing a fake
-multi-variant template.
-
-## Terminology Authority Anchor / 术语权威锚定
-
-`user_named_object` is not automatically the `canonical_object`; user_named_object is
-not canonical_object. When a user term may be non-canonical, role-level, or
-rhetoric-loaded, anchor terminology before granting definition authority.
-
-Priority:
-
-local project docs/source > official/standard/primary source > web search > user term.
-
-Use official/standard/primary sources when project source is unavailable. If no anchor
-is available, mark the term as user-defined and do not let it define the whole object;
-mark user-defined and deny definition authority.
-
-## Canonical Object Centering
-
-canonical_object beats system_object unless object_hierarchy proves user_named_object
-is only interface. Record `canonical_object`, `formal_thesis_subject`,
-`umbrella_context`, and `subject_alignment_reason` so the formal thesis cannot silently
-drift from the judged object to its container.
-
-do not let the umbrella system absorb the canonical object. umbrella system is
-context, not thesis subject. if thesis subject drifts upward, rewrite around
-canonical_object. formal_answer core thesis must name canonical_object first.
-
-## Definition Object Lock / 待定义对象锁
-
-In essence/definition questions, user_named_object starts as the canonical_object
-candidate. in essence/definition questions, user_named_object starts as the canonical_object candidate. canonical_object may normalize user_named_object but must not widen to
-umbrella_context unless object_hierarchy proves the user-named object is only
-component_or_interface.
-
-Record `user_named_object_relation` as one of `canonical_object`,
-`component_or_interface`, `umbrella_context`, or `ambiguous_needs_evidence`.
-
-Exact enum anchor:
-
-canonical_object/component_or_interface/umbrella_context/ambiguous_needs_evidence.
-
-scope correction cannot transfer definition authority to the user's local carrier:
-correct the object without accepting the proposed essence. If the user says "I meant X
-itself, not the umbrella system", lock the answer to X, then rerun whole-object
-reconstruction; do not conclude that the user's local carrier now defines X merely
-because the previous answer over-expanded the object.
-
-Scope correction is not object downgrading: do not shrink the canonical object into
-context artifact, prompt wrapper, attention mechanism, or delivery format.
-
-The audit label itself is part of the judgment: `canonical_object`, `whole_object`,
-and `formal_thesis_subject` must not relabel the user-named object as the local carrier
-after a valid scope correction. The correction only removes the wrong umbrella
-context. It does not accept the original local carrier as the object's essence.
-
-lock back to the user-named object, then rebuild the whole object from target job and
-value carrier.
-
-## Compact Semantic Triad / 三根硬支柱
-
-The compact triad comes first:
-
-- `canonical_object`
-- `result_controller`
-- `misdirection_if_local_wins`
-
-triad first means the agent must lock the judged object, name who or what controls
-the target result, and state how optimization drifts if the local frame wins.
-expanded audit is guardrail/debug support; guardrail must not become the judgment
-center.
-
-## Problem Confirmation Granularity / 问题确认粒度
-
-Confirm whether the blocking issue is object definition, result controller,
-evidence path, validation mechanics, wording, or runtime cost before adding fixes.
-Prefer fixing the highest active blocker.
-
-Do not convert every local symptom into its own rule, field, validator branch, or
-calibration case. If a small issue does not change the main judgment or user-visible
-outcome, keep it as residual risk.
-
-## Contrastive Consequence Probe / 后果对比探针
-
-before formal_answer, compare:
-
-- `local_frame_wins`
-- `whole_object_wins`
-- `better_direction_for_target`
-
-This is a tiny consequence check, not a new skill: if accepting the local frame would
-optimize surface wording, single metrics, or visible interfaces while the whole object
-needs stable output, recovery, repeatability, or value delivery, the formal answer
-must say so.
-
-Then map `local_success_points`: what each local contact really got right, where it
-works, and what it cannot see. Then choose the strategy instead of blending by habit.
-start by naming the complete object before summarizing local truths. map local_success_points.
-
-do not route local-truth essence reduction to any narrower method, including WAE,
-before Whole Elephant audit.
-
-- use weighted_synthesis when local contacts are independent, comparable, and cover
-  enough of the object; assign `coverage_weight` by value contribution, usage
-  frequency, stable outcome, replacement cost, and decision impact.
-- use whole_first_re_evaluation when local contacts are correlated, same-surface, or
-  miss the governing structure; describe the whole object from its target result and
-  then reinterpret each local success as surface, evidence, constraint, mechanism, or
-  owner.
-
-do not average local truths before naming the whole object. Many true local reports
-are still one-leg evidence if they share the same sampling path, incentive, interface,
-or abstraction level.
-
-## Audit Package
-
-When Partial Truth Capture triggers, the formal answer is incomplete without the
-compact core: `canonical_object`, `result_controller`, `misdirection_if_local_wins`,
-plus the consequence probe `local_frame_wins`, `whole_object_wins`, and
-`better_direction_for_target`.
-
-Expanded/debug audit can add `object_hierarchy`, `user_named_object_relation`,
-`formal_thesis_subject`, `umbrella_context`, `subject_alignment_reason`,
-`whole_object_reconstruction`, `formal_answer_plan`, `whole_object`,
-`local_success_points`, `strategy_choice`, `definition_owner`,
-`decision_consequence`, `variant_map`, `primary_value_distribution`, and
-`control_owner_shift`.
-
-If an expanded package is used, its fields must be internally consistent; it is
-guardrail/debug support, not a new judgment center.
-
-### Validation Boundary / 校验边界
-
-Whole Elephant 可以配合结构校验器检查审计包是否缺字段、内部对象是否漂移，以及是否出现
-明显的让步型措辞风险。校验器只检查 shape 和确定性约束；它不能决定语义真相、定义是否
-正确、证据是否充分、领域价值或用户权限。
-
-校验状态本身也是证据 claim：没有真实运行证据时，只能说明“未运行”，不能声称“已经
-通过”。具体的审计文件格式、命令、路径解析、失败阻断和不可执行时的回退合同属于
-[`using-mindthus fidelity contract`](../../../skills/using-mindthus/resources/fidelity-contract.md)，
-不属于公共方法说明。
-
-Audit Package Consistency / 审计包一致性:
-`object_hierarchy.whole_object`, top-level `whole_object`, `canonical_object`, and
-`formal_thesis_subject` must not drift into different objects. `corrected_thesis` must
-not grant definition authority to a local interface that
-`formal_answer_plan.definition_disposition` rejects.
-
-### Public Explanation and Runtime Trace
-
-面向读者的解释以整体对象、结果主控者和实际后果为中心。机器可读审计包、validator trace
-和调试字段是 runtime 支撑物，不是方法结论本身。何时显示这些内部材料、如何处理 validator
-输出，由 skill runtime contract 约束；公共方法文档只说明这种分层关系。
-
-中文场景优先用中文讲清判断，避免混合语言术语墙。
-
-## Expanded Field Notes
-
-- `strategy_choice`: choose `weighted_synthesis` or `whole_first_re_evaluation`.
-- `formal_thesis_subject`: the subject the formal answer will name first.
-- `whole_object_reconstruction`: exposes target_job, main_use_cases,
-  primary_value_carrier, and local_interface_role before authority judgment.
-  whole_object_reconstruction(target_job/main_use_cases/primary_value_carrier/local_interface_role).
-  primary_value_carrier != local_interface_role: the main value carrier cannot merely
-  repeat the local interface unless `grant_as_definition` explicitly makes that local
-  mechanism the causal/result owner.
-- expanded-only `formal_answer_plan`: when present, names the opening core thesis,
-  canonical subject, local truth boundary, definition disposition, definition
-  consequence, optimization misdirection, and forbidden answer forms. The final answer
-  should follow this optional plan; otherwise the audit is only decorative. When
-  disposition is `reject_as_definition`, preserve the local truth but do not soften the
-  definition verdict into "not wrong".
-- `definition_owner`: the frame with definition authority; use `result_controller`
-  when stable outcome control is the decisive issue.
-- `decision_consequence`: what optimization, evidence, action, or stop condition
-  changes after the corrected frame.
-
-grant authority only when the local frame carries the target result, would change the
-decision if removed, and predicts outcomes or failures better than competing frames.
-A local frame earns definition authority only if it would change the decision if removed.
-Use blocked_by_missing_evidence when the whole-object carrier is unknown.
-
-Also name the definition consequence and optimization direction when relevant. A valid
-local usage is not the definition when it would move optimization from the target
-outcome to surface improvement.
-
-## Core Thesis Extraction / 主判断收束
-
-formal_answer must start with a one-sentence core thesis; do not leave the main
-judgment scattered in supporting paragraphs.
-
-Shape:
-
-global thesis -> corrected owner/carrier -> practical consequence.
-
-local truth belongs after the global thesis. core thesis must name the corrected
-owner/carrier; core thesis must name the result controller when the surface actor is
-salient; core thesis must convert primary_value_carrier into corrected_thesis;
-primary_value_carrier must not remain only an audit field.
-
-global thesis must name what owns definition authority; state why the local truth lacks
-definition authority; do not over-accommodate local truth. boundary repairs can make
-the answer precise, but must not become a 50/50 verdict.
-
-local truth is preserved only after definition authority is denied; generic A-but-B
-verdict is not enough; the strongest sentence must not be buried at the end.
-
-Weak placeholders such as "needs a broader view" or concession-first openings such as
-"有道理但不完整" fail because they do not name definition authority, result control, or
-optimization consequence.
-
-## Visible Thesis Language / 可说服主句
-
-translate internal definition authority into human language:
-
-谁说了算、什么控制结果、局部机制有没有定义权.
-
-Avoid copying mixed method labels into Chinese answers. name controller inversion when
-variants differ: whether the local surface serves the whole operating loop or the loop
-serves the local surface. Add one concrete contrast, preferably a two-pole concrete
-contrast: one case where the local surface leads and one case where it becomes
-subordinate, so the answer does not stay correct-but-untouching.
-
-## Result Controller Viewpoint / 结果主控视角
-
-For essence or definition judgments, explain from the result controller's viewpoint,
-not from the most visible actor, interface, or tool. when scripts or procedures carry
-the stable outcome, make them the narrative subject instead of describing the whole
-only as an agent using tools or scripts. do not describe the whole only as an agent using tools or scripts.
-
-This is not a script-first bias: if the local interface really owns the target result,
-grant it authority; otherwise narrate from the carrier that decides success, failure,
-continuation, or repeatability.
-
-## First Sentence Stress Test / 首句主判断压力测试
-
-If the reader needs a second question to get the point, the first sentence failed.
-
-For definition or essence judgments, the opening sentence should name the target
-result, corrected owner/carrier, subordinate local interface, and optimization
-consequence when relevant. Do not start with an abstract carrier label when a concrete
-result-controller relation is available. do not start with an abstract carrier label when a concrete result-controller relation is available.
-
-A valid local use is not definition authority until it carries the target result
-better than competing frames. optimization consequence belongs in the first sentence
-when relevant. 019f1666 regression: visible answer first sentence must be the
-corrected thesis.
-
-visible first sentence names the global thesis first. local truth acknowledgment
-belongs after the global thesis. Do not make the user ask a second question to get the
-point. The first visible sentence is not local-truth concession first, not audit
-scaffolding, not a compact field list, and not a generic not-only caveat.
-
-Chinese softened variants such as "当然很关键，但..." or "并非只有...还包括..." are still
-generic concessions; rewrite them into definition-authority judgment.
-
-## Essence Wording Guard / 本质措辞护栏
-
-do not restate carrier/interface as essence; corrected thesis must reject false essence
-claims.
-
-## Auxiliary Checks
-
-Non-Mirror Correction / 非镜像纠错 prevents same-generator mirrors from posing as
-independent correction: an independent source should differ by evidence, process,
-stakeholder, runtime result, or incentive, not merely by prompt wording or model
-instance.
-
-Failure Channel / 失败通道 asks what external fact, run, stakeholder, or counterfactual
-could falsify an important judgment.
-
-Anti-Sycophancy / 反谄媚 preserves user local truth without upgrading it to global
-truth.
-
-These guardrails must not become the core.
-
-Auxiliary checks belong inside step 3 and never become a new judgment center. They help
-identify local validity, overclaiming, layer shift, and the corrected question level;
-they do not replace the five-step audit.
-
-## Explanatory Authority / Dominant Carrier / System Subject
-
-Explanatory Authority Check / 解释权校准:
-use this when a local observation is trying to own the whole explanation. First name
-the `full_object` being explained, then identify the `local_frame_role`: evidence,
-sublayer, symptom, implementation detail, local mechanism, metric, analogy, value
-constraint, or another bounded role. Set `authority_status` to `owns_explanation`,
-`contributes_locally`, `misclaims_authority`, or `blocked_by_missing_evidence`. If the
-local frame cannot own the explanation, name the `global_owner` and the
-`downgraded_use` of the locally true part. `global_owner` must be a concrete
-higher-level explanatory frame or accountable decision object, not a vague label, and
-must imply an observable judgment or action difference. local correctness is not
-explanatory authority.
-
-Dominant Carrier Check / 主导承载校准:
-use this when the claim concerns stable or repeatable outcomes, readiness, control, or
-deterministic value. Ask which part carries stable or repeatable outcomes. Name the
-`target_result`, `primary_result_bearer`, `stability_basis`, and `carrier_status`:
-`primary_carrier`, `supporting_surface`, `incidental_signal`, or
-`blocked_by_missing_evidence`. Do not stop at runtime-also-matters; identify the
-dominant stability carrier and downgrade local influence surfaces that only steer
-attention, expose evidence, or assist execution.
-
-System Subject Check / 系统主体校准:
-use this when a visible actor, carrier, model, expert, tool, or signal is being treated
-as the subject of a whole system. Name the `system_object`, the visible actor, the
-`governing_structure`, the `actor_role`, and `subject_status`: `system_subject`,
-`local_operator`, `interface_surface`, `misassigned_subject`, or
-`blocked_by_missing_context`. Do not center the answer on how the visible actor thinks
-or behaves when the higher-level system allocates control, evidence, repetition,
-failure handling, and authority. visible carrier/interface answer must name
-system_object + primary_result_bearer; surface caveat is not enough.
+历史开发案例与完整旧文保留在固定基线 Git；公开案例不能作为每题预期答案。
+参见 [共享原语](../shared-primitives.md)、[Frame Fitness](frame-fitness-check.md)、
+[使用入口](../../../skills/using-mindthus/SKILL.md)。

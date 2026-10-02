@@ -6,7 +6,7 @@ This document defines EDSP, a project-level diagnostic method for ambiguous judg
 
 `EDSP` means `Extreme Deduction + Scenario Projection` (`极限推演 + 场景投影`).
 
-It is normally used inside the primary `3L5S` working method when a Discovery or Definition layer exposes a fuzzy structural/configuration judgment. Use it when the task needs fast structural diagnosis, proposition testing, trend reading, or concrete option selection.
+It can be used directly for an active structural judgment, or inside 3L5S when Discovery or Definition exposes that judgment. 3L5S is not a prerequisite. Use it when the task needs fast structural diagnosis, proposition testing, trend reading, or concrete option selection.
 
 This is a reasoning method, not a document-shaping template and not a replacement for BTGSB evidence, falsifiability, or action landing. Its value is judged by whether it improves applied decisions and output quality.
 
@@ -47,7 +47,7 @@ Do not use this method to:
 
 ### Trigger Question
 
-> `Inside the active 3L5S layer, is this a structure problem, or a configuration problem?`
+> `Is the active judgment a structure problem, or a configuration problem?`
 
 ## L1 Extreme Deduction（Structure Layer）
 
@@ -209,7 +209,7 @@ If L2 repeatedly fails to choose, return to L1 and rebuild the coordinate system
 
 When a 3L5S layer exposes a fuzzy judgment, first ask:
 
-> `Inside the active 3L5S layer, is this a structure problem, or a configuration problem?`
+> `Is the active judgment a structure problem, or a configuration problem?`
 
 | Problem Type | Signal | Method |
 |---|---|---|
@@ -246,8 +246,8 @@ Fuzzy phenomenon
 
 ## Trigger Rules
 
-- `Structural judgment / proposition diagnosis / trend identification` → stop at `L1` and return to the active 3L5S layer
-- `Concrete scenario selection / service-boundary landing` → run `L1 → L2`, then return to the active 3L5S layer
+- `Structural judgment / proposition diagnosis / trend identification` → stop at `L1` and return to the calling task or method
+- `Concrete scenario selection / service-boundary landing` → run `L1 → L2`, then return to the calling task or method
 - `L2 repeatedly cannot choose` → return to `L1` and rebuild the coordinate system before continuing BTGSB
 - `Evidence is missing` → acquire evidence before pretending L1 or L2 can decide
 - `The output becomes elegant but not useful` → treat the method use as failed

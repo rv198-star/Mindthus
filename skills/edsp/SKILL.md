@@ -51,7 +51,7 @@ right" abstraction unless the user's value tradeoff truly owns the choice.
    - collapse outcomes into discrete poles
    - read real-world drift
    - produce positioning or diagnose a malformed proposition
-3. Run the `Multi-Role Challenge` inside the same agent before accepting the L1 skeleton:
+3. If the skeleton still has a decisive ambiguity, use the `Multi-Role Challenge` inside the same agent:
    - `Builder`: proposes the dimensions, extremes, collapsed outcomes, and drift prior
    - `Challenger`: attacks missed variables, duplicated dimensions, weak extremes, forced collapse, and biased drift reading
    - `Synthesizer`: keeps, rebuilds, or rejects the coordinate system
@@ -68,8 +68,7 @@ Run Scenario Projection only when a concrete scenario must be selected inside a 
 
 ### Multi-Role Challenge
 
-Use `single-agent multi-role` pressure by default for non-trivial EDSP runs. The
-point is not theatrics; it protects L1 from a clean but wrong skeleton.
+Use `single-agent multi-role` perspectives when a decisive ambiguity remains. A stable skeleton needs no role transcript or extra call; challenge only the uncertain dimension.
 
 Boundary: do not run Scenario Projection if `Challenger` finds a missed decisive variable,
 duplicated dimension, under-pushed extreme, forced outcome collapse, or biased drift

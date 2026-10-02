@@ -17,7 +17,7 @@ MPG stress-tests how an actor crosses volatility, resistance, carrier fragility,
 
 ### SELA ↔ MPG Twin-Lens Handshake
 
-MPG direct-load companion check: when a system-efficiency/trend-based mainline appears, run SELA support check before path strategy; must read `mindthus:sela`; Do not treat this as an internal memory-only check.
+MPG direct-load companion check: if the direction evidence is still insufficient or disputed, read `mindthus:sela` for a system-efficiency claim, or EDSP for structural uncertainty. An already-supported mainline is a given premise; qualify its evidence ceiling without repeating a settled direction analysis.
 
 Direct-load output obligation: do not wait for using-mindthus to carry this handoff.
 When MPG is loaded directly, the first visible sentence must be a plain-language thesis

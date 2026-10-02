@@ -5,182 +5,41 @@ description: Use when a problem is unclear, noisy, repeatedly reworked, or too l
 
 # 3L5S
 
-## Core Claim / 核心判断
+## Core Claim
 
-`3L5S` means:
+不清楚问题时，把信号变成可复述、可定位、可证伪的问题；问题已经清楚但过大时，
+把它变成可启动、可验证的行动。已明确的小问题直接修复与受影响验证即可。
 
-> `Three Layers + Five Steps`
->
-> `三层五步`
+## Mainline
 
-The three layers are:
+- `Discovery -> Definition -> Resolution`：只在观察、问题与解法尚未分开时使用。
+  先取得真实信号，再定义可证伪问题，最后落地；不用摘要替代根因证据。
+- `Single-layer BTGSB`：问题已足够清楚，直接检查 Baseline / Target / Gap /
+  Strategy / Breakdown（基/标/差/策/拆）。信息已在任务中给出时复用，
+  不重新填表；输出最小可执行动作与验收证据。
+- 子项只有因具体依赖无法开始时才进一步拆分，不机械递归。
 
-> `Discovery -> Definition -> Resolution`
+## Guardrails
 
-The five steps are the BTGSB operator:
+保护问题定义和落地，不替代领域证据或 stakeholder 判断。
+重复返工无证据增量时回查问题、目标和策略；两次补规则后拟新增第三层时，
+先反螺旋，优先删除或根因替换。新反例支持的普通调试可以继续。
+完整模板或 script pass 不是根因正确、策略正确或语义通过。
 
-> `Baseline -> Target -> Gap -> Strategy -> Breakdown`
+## Boundaries
 
-Chinese mnemonic:
+结构判断可直接 EDSP；系统/局部趋势直接 SELA；承载路径直接 MPG；
+Agentic 控制错位用 WAE；多个已可判断事项争资源用 SRA。
+3L5S 不成为其他方法的必经母流程，也不重开已接受的定义。
 
-> `基 -> 标 -> 差 -> 策 -> 拆`
+## Runtime Support
 
-3L5S is a general-purpose problem-processing kernel. It is not a stage-specific checklist.
+已有清楚动作时不加载全套模板。仅在对应缺口时读取：
 
-It has two main use cases:
-
-1. Discover and define the real problem when phenomena are noisy, signals are scattered, and root cause is unclear.
-2. When the problem is already clear but too large or complex to execute directly, decompose it into executable, schedulable, verifiable tasks.
-
-一句话：
-
-> 不清楚问题时，先把信号变成可证伪的问题；问题太大时，再把问题变成可验证的行动。
-
-It has two valid forms:
-
-- `Single-layer BTGSB`: use the five-step landing method directly.
-- `Three-layer BTGSB`: run BTGSB across `Discovery`, `Definition`, and `Resolution` when signal, problem, and action are not yet separable.
-
-## Mainline / 主路径
-
-### Choose The Form / 选择形态
-
-Use `Single-layer BTGSB` when the problem is already accepted enough to solve.
-
-Use `Three-layer 3L5S` when the agent may be collapsing observation, definition, and resolution into one answer.
-
-Do not force three layers onto every task. The method's value comes from preventing layer collapse, not from maximizing ceremony.
-
-### Main Use Cases / 主用法
-
-#### 1. Discover And Define Problems
-
-Use 3L5S when the real problem is not yet clear. The discovery and definition layers turn abnormal world signals into a problem that can be restated, located, and falsified:
-
-- `Discovery`: locate and stabilize the signal
-- `Definition`: turn signal into a falsifiable problem
-- `Resolution`: turn accepted problem into action
-
-This prevents the agent from treating symptoms as problems or jumping from weak signal to solution.
-
-#### 2. Decompose And Land Known Problems
-
-Use the resolution layer and the five-step BTGSB operator when the problem is already clear but too large, complex, or non-executable:
-
-- clarify current state and target state
-- name the gap
-- choose the strategy
-- break the problem into executable, schedulable, verifiable tasks
-
-This is especially valuable in problem-solving work: it keeps complex problems from becoming vague task lists.
-
-### Single-Layer BTGSB
-
-Single-layer BTGSB is not a weaker version of the method. It is the most practical form when the active work is already in the problem-solving or resolution stage.
-
-Use it when:
-
-- the signal and problem are clear enough
-- the main need is to turn a vague problem into executable work
-- the current state and target state both need to be named
-- the gap, strategy, or next action is still fuzzy
-- a plan contains non-executable verbs like `improve`, `optimize`, `research`, or `handle`
-
-It is especially valuable in resolution work because it keeps the agent from jumping from problem statement to task list without naming the gap, strategy, acceptance evidence, and next executable action.
-
-Flow:
-
-1. `Baseline`: what is true now?
-2. `Target`: what state counts as arrival?
-3. `Gap`: what is missing between baseline and target?
-4. `Strategy`: which path crosses the gap, and why this path?
-5. `Breakdown`: what can start next, with acceptance evidence?
-
-If a breakdown item cannot start, run BTGSB again on that child problem.
-
-### Three-Layer BTGSB
-
-Three-layer BTGSB is the epistemic expansion of the same method. Use it when observation, definition, and resolution may be collapsed into one confident but premature answer.
-
-Layers:
-
-- `Discovery`: world -> signal
-- `Definition`: signal -> problem
-- `Resolution`: problem -> action
-
-Use it when:
-
-- a problem starts from noisy observations, user reports, logs, or partial evidence
-- the signal may not be reproducible yet
-- the problem statement may still be unfalsifiable
-- the work is jumping from symptom to solution
-- execution feedback is surprising and may require looping back
-
-Short rule:
-
-> Discover until the signal is real, define until the problem is falsifiable, resolve until the action is verifiable.
-
-## Guardrails / 从属补漏
-
-### Default Use In Work Items / 工单默认姿态
-
-- If the problem is unclear: do not start by fixing; use 3L5S to define the problem first.
-- If the problem is too large: do not start by doing; use the 5S operator to break it into tasks first.
-- If execution repeatedly loops or reworks: return to `Baseline -> Target -> Gap -> Strategy -> Breakdown` and check whether problem definition or task decomposition failed to close.
-- If two failed prompt rules, fallback branches, or local patches are followed by a request to add a third, brake before adding: restate the upstream problem, find the instability/root-cause evidence, and prefer deletion or equal replacement. Clear failing tests with new evidence can continue as ordinary debugging.
-
-### Script Assistance Boundary / 脚本辅助边界
-
-3L5S can be supported by lightweight scripts, but scripts must protect judgment rather than replace it.
-
-Scripts may:
-
-- initialize a single-layer or three-layer working draft
-- check whether required sections are present
-- flag vague action verbs, missing evidence, missing acceptance criteria, and missing next actions
-- surface possible layer collapse, such as solution language appearing inside Discovery
-- record assumptions, unresolved questions, rejected alternatives, and loopback reasons
-
-Scripts must not:
-
-- decide whether a signal is important
-- decide whether a root cause is true
-- choose the strategy under uncertainty
-- treat a complete template as proof of a correct judgment
-- erase meaningful ambiguity by forcing every concern into a field
-
-Script reports should be read as `Shape & Evidence Risk Reports`, not as truth validation.
-
-Full boundary: `resources/script-boundary.md`.
-
-### Relationship To Other Mindthus Skills
-
-- Use `sra` when multiple sufficiently defined problems or tasks compete for the same scarce resource; 3L5S makes candidates judgeable, SRA allocates them.
-- Use `edsp` when a 3L5S `Gap` or `Strategy` contains a fuzzy structural choice.
-- Use `wae` when deciding whether a 3L5S step should be controlled by workflow, agentic judgment, evidence, or a combination.
-- Use `tvg` after a bounded 3L5S output exists but may still be thin in practical value.
-
-## Boundaries / 边界
-
-- 3L5S must not become ceremony; use single-layer BTGSB when the problem is already clear.
-- Do not treat a complete template, script pass, or checklist pass as proof that the judgment is true.
-- Do not use 3L5S to replace domain evidence, runtime verification, or stakeholder judgment.
-
-## Runtime Support / 支撑材料
-
-### Resource Files
-
-- `resources/landing-method.md` — full single-layer BTGSB landing method.
-- `resources/three-layer-recursive-loop.md` — full three-layer BTGSB recursive loop.
-- `resources/script-boundary.md` — WAE-based boundary for script assistance.
-- `resources/fidelity-contract.md` — 3L5S fidelity contract for v0.9.
-
-### Templates And Scripts
-
-- `templates/single-layer-btgsb.md` — working draft for known-problem landing work.
-- `templates/three-layer-3l5s.md` — working draft for signal/problem/action separation.
-- `templates/loopback-record.md` — record surprising feedback and why the analysis loops back.
-- `templates/fidelity-output.json` — example v0.9 fidelity output shape.
-- `scripts/init_3l5s_run.py` — generate a draft from a template.
-- `scripts/check_3l5s_run.py` — produce a shape and evidence risk report.
-- `scripts/validate_3l5s_output.py` — validate fidelity contract output shape with the shared core.
+- `resources/landing-method.md`、`templates/single-layer-btgsb.md`：复杂问题落地。
+- `resources/three-layer-recursive-loop.md`、`templates/three-layer-3l5s.md`：信号/问题/行动仍混合。
+- `templates/loopback-record.md`：记录具体反馈、证据增量和返回上游原因。
+- `resources/script-boundary.md`：脚本边界。
+- 明确 fidelity contract audit/replay：`resources/fidelity-contract.md`、`templates/fidelity-output.json`、
+  `scripts/init_3l5s_run.py`、`scripts/check_3l5s_run.py`、`scripts/validate_3l5s_output.py`。
+  脚本只验证结构和引用，不决定重要性、根因、策略或 acceptance。
