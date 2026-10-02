@@ -174,6 +174,11 @@ def bind_successor(batch, config, locked):
 
 
 def validate_successor(batch, config):
+    if config.get('post_rc01_regression'):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('slim_post_rc01', HERE / 'post_rc01.py')
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+        return module.validate(batch, config)
     if config.get('retry_000049'):
         # One named Owner disposition; never a generic unknown override.
         import importlib.util
@@ -225,7 +230,8 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
     batch = Path(batch).resolve(); config = read(batch / 'batch.json')
     if read(batch / 'batch-binding.json') != dict(sha256=digest(config)):
         raise ValueError('batch_binding_changed')
-    if not 0<config['total_calls_max']<=64 or config['path_calls_max'] != 3:
+    ceiling = 120 if config.get('post_rc01_regression') else 64
+    if not 0<config['total_calls_max']<=ceiling or config['path_calls_max'] != 3:
         raise ValueError('unauthorized_mode_or_caps')
     if config.get('workspace_mode') != 'external_empty_directory_no_project_ancestors':
         raise ValueError('legacy_workspace_not_isolated_no_dispatch')
@@ -294,6 +300,8 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
                 if config.get('retry_000049'):
                     binding.update(cumulative_call_ordinal=85+len(calls),
                         retry_of=config['retry_000049']['request_sha256'] if index==31 and seq==0 else None)
+                if config.get('post_rc01_regression'):
+                    binding.update(cumulative_call_ordinal=99+len(calls), batch_call_ordinal=1+len(calls))
                 write(directory / 'request.json', req); write(directory / 'wire.json', outbound)
                 transport_dir=external_transport_directory(batch,req,config)
                 write(directory / 'workspace-binding.json',dict(**binding,
