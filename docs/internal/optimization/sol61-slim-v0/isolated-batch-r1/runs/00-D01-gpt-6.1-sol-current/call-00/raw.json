@@ -1,0 +1,56 @@
+{
+  "binding": {
+    "request_sha256": "47dc58d3aa4a0d32e9ea48c7a1d1bf47aed85a19fe3d32b0778e97cd27c9aa0c",
+    "wire_sha256": "0dfaac507b42fd34265da88f3f02829a9b876c4eae97f1bc506f2bc86e4a82dd",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "D01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "transport": {
+    "kind": "cli",
+    "events": [
+      {
+        "type": "thread.started",
+        "thread_id": "01a0fca1-806a-79e3-a8fb-a55b9f348eec"
+      },
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "item_0",
+          "type": "error",
+          "message": "Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /Users/william/.codex/config.toml."
+        }
+      },
+      {
+        "type": "turn.started"
+      },
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "item_1",
+          "type": "agent_message",
+          "text": "{\"kind\":\"answer\",\"objection\":\"\",\"read_paths\":[],\"text\":\"amber\\ncobalt\\njade\"}"
+        }
+      },
+      {
+        "type": "turn.completed",
+        "usage": {
+          "input_tokens": 18649,
+          "cached_input_tokens": 15232,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 31,
+          "reasoning_output_tokens": 0
+        }
+      }
+    ],
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"01a0fca1-806a-79e3-a8fb-a55b9f348eec\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /Users/william/.codex/config.toml.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"agent_message\",\"text\":\"{\\\"kind\\\":\\\"answer\\\",\\\"objection\\\":\\\"\\\",\\\"read_paths\\\":[],\\\"text\\\":\\\"amber\\\\ncobalt\\\\njade\\\"}\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":18649,\"cached_input_tokens\":15232,\"cache_write_input_tokens\":0,\"output_tokens\":31,\"reasoning_output_tokens\":0}}\n",
+    "stderr": "",
+    "returncode": 0,
+    "reply_text": "{\"kind\":\"answer\",\"objection\":\"\",\"read_paths\":[],\"text\":\"amber\\ncobalt\\njade\"}"
+  }
+}

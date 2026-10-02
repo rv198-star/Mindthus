@@ -1,0 +1,8 @@
+{
+  "kind": "read",
+  "objection": "",
+  "read_paths": [
+    "skills/tplan/SKILL.md"
+  ],
+  "text": "读取 TPlan 关于超时后的状态恢复与用户授权边界的规则，以确定是否可重发及最小可恢复处理；不执行脚本或发送 API。"
+}

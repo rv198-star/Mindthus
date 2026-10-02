@@ -1,0 +1,56 @@
+{
+  "binding": {
+    "request_sha256": "c8e93f2b365699f0f5ec134234fd80ed2a5156152efdcbb3f67cb0bb06d6b20f",
+    "wire_sha256": "16923bfe7341c6972f66369ad42511c9bd264520524febcad28583d9ad384d23",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "path": {
+      "case": "M02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "54edeb4617db3e7d4c070adcf68b5d36a85cc9866ce766f6f531600bd17edf02",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/mpg/SKILL.md",
+      "docs/methodologies/primitives/entry-triage.md",
+      "docs/methodologies/shared-primitives.md"
+    ],
+    "text": "读取迁移时机、停机暴露和回滚条件的判断规则，并核对路由与交付前检查；重点判断9小时窗口内现在应如何行动。"
+  },
+  "usage": {
+    "input_tokens": 22405,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 179,
+    "reasoning_output_tokens": 83
+  },
+  "error": null,
+  "session_seconds": 15.515910917005385,
+  "ended_at_epoch": 1790938809.2122738,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "c8e93f2b365699f0f5ec134234fd80ed2a5156152efdcbb3f67cb0bb06d6b20f",
+    "transport_successor_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

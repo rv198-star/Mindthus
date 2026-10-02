@@ -1,0 +1,329 @@
+{
+  "adapter_pin": "ed5171bf7b34746027acd730864d9c98ef1dd8d2",
+  "adapter_root": "/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus",
+  "workspace_mode": "external_empty_directory_no_project_ancestors",
+  "admission": {
+    "binary": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex"
+  },
+  "host_timeout": 300,
+  "active_processing_limit_seconds": 7200,
+  "effort": "medium",
+  "transport_overrides": [
+    "model_provider=\"mindthus_official_http\"",
+    "model_providers.mindthus_official_http.name=\"OpenAI\"",
+    "model_providers.mindthus_official_http.requires_openai_auth=true",
+    "model_providers.mindthus_official_http.request_max_retries=0",
+    "model_providers.mindthus_official_http.stream_max_retries=0",
+    "model_providers.mindthus_official_http.supports_websockets=false",
+    "features.unbounded_connection_retries=false"
+  ],
+  "transport_overrides_sha256": "24db7d9dbd3cdd6f26e7660f6883ee9772eb78bc9f7a49eb984025f9ed6fc151",
+  "overrides": [
+    "model_provider=\"mindthus_official_http\"",
+    "model_providers.mindthus_official_http.name=\"OpenAI\"",
+    "model_providers.mindthus_official_http.requires_openai_auth=true",
+    "model_providers.mindthus_official_http.request_max_retries=0",
+    "model_providers.mindthus_official_http.stream_max_retries=0",
+    "model_providers.mindthus_official_http.supports_websockets=false",
+    "features.unbounded_connection_retries=false",
+    "features.skip_host_skill_discovery=true",
+    "features.plugins=false"
+  ],
+  "isolation": "same call-level skill/plugin isolation in every arm; safety/approval/hooks unchanged",
+  "protocol": {
+    "version": "mindthus.generation-scheduling.v2",
+    "authority": "Scheme owner adopted limited transport recovery exception in current user instruction",
+    "effective": "forward only, after technical successor registration; no retroactive qualification",
+    "max_generation_work_in_flight": 1,
+    "gap_after_confirmed_generation_work_end_seconds": 60,
+    "applies_to": [
+      "native",
+      "direct",
+      "Jev layer 1",
+      "Jev layer 2",
+      "host",
+      "host read continuation"
+    ],
+    "within_invocation_exceptions": [
+      "Bound evidence confirms a connection-establishment failure before generation payload send",
+      "Explicit official recoverable HTTP 401 establishes non-acceptance for generation; existing official authentication manager refreshes the same account and resubmits"
+    ],
+    "recovery_constraints": [
+      "serial",
+      "unchanged input and linked request identity",
+      "existing official bounded recovery",
+      "original invocation timeout",
+      "no outer recovery loop"
+    ],
+    "not_exempt": [
+      "generic request timed out",
+      "post-send stream interruption",
+      "uncertain acceptance",
+      "safety or permission refusal"
+    ],
+    "unclassified_observed_resubmission": "preserve return and limitation; stop subsequent dispatch pending request-bound evidence reconciliation",
+    "account_credentials_channel_switch_for_refusal": false,
+    "no_future_401_proof_required": true,
+    "counting": "Separate driver retries, CLI starts, observed internal recovery logs, connection/authentication/generation attempts. Unobservable counts and timing remain null; include recovery in measured invocation wall time.",
+    "history": "Keep all prior intents, failures, answers, freezes and debits. A1/native remains delivered with old request-level compliance limitation and 2/4 CLI attempts used. Its 119s invocation is not a matched performance baseline.",
+    "scope_this_turn": "A1/direct only, official Jev jev-1.13.0 first; at most two Jev calls, original host budgets; first full answer or explicit failure then return. No auth probes. No safety-setting changes."
+  },
+  "protocol_sha256": "f6ca147aad5a2abc7098033d30bd265974084df8afd6325d6e1158efd6d4aa01",
+  "inputs_sha256": "cd9dcc04738cc4fd76e24f2a950e3779da63532f21f5feef73950a41cfee162e",
+  "evidence_scope": "controlled read exchange; not passive activation qualification",
+  "schema": "mindthus.slim-post-rc01.v1",
+  "simulation": false,
+  "post_rc01_regression": true,
+  "baseline": "e7dbb473e955932f09c80dfb48b90ac1f4f8db43",
+  "candidate": "131ab6e4d7b04e3964193dc95c869f6eaad16730",
+  "parent_receipt": {
+    "root": "/Users/william/Projects/Github/Mindthus/.tplan/slim-eval-v0-20261002",
+    "previous_root": "/Users/william/Projects/Github/Mindthus/.tplan/slim-eval-v0-20261002-isolated-r1/continuation-000049",
+    "logical_calls": 98,
+    "previous_batch_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "evidence_sha256": "8500e073df7d81a2757a50bd04acf636bb374a8444028831538cf6420658cbf9",
+    "historical_unknown": {
+      "request_sha256": "7d23f927a8aab39835d0b5be90584405af7e27b2422a3a11c401b96d65df88c6",
+      "status": "risk_accepted_remote_unknown",
+      "remote_completion": null
+    }
+  },
+  "successor_admission": {
+    "execution_authorized": true,
+    "cumulative_call_limit": 218
+  },
+  "regression_admission": {
+    "execution_authorized": true,
+    "authorization_ref": "Owner reply 嗯，这次直接给120次额度，重跑吧 to the 40-path RC01/new-candidate regression proposal, 2026-10-03",
+    "baseline": "e7dbb473e955932f09c80dfb48b90ac1f4f8db43",
+    "candidate": "131ab6e4d7b04e3964193dc95c869f6eaad16730",
+    "new_calls_max": 120,
+    "historical_calls": 98,
+    "cumulative_calls_max": 218,
+    "path_calls_max": 3,
+    "technical_retries_max": 0,
+    "paths": 40,
+    "scope": "Sol 6.1 all 16 frozen cases paired; Astra F01/F02/W01/W02 paired; RC01 versus post-RC01 candidate; alternating order, medium, same official HTTP configuration",
+    "protocol": "mindthus.generation-scheduling.v2",
+    "constraints": "First complete answer retained; necessary reads and failures charged; no automatic retry, Jev, evaluator, bare controls, extra batch, release or main merge. New unknown or actual safety/permission refusal stops dispatch. Historical named risk acceptance is not extended.",
+    "measurement": "Task quality and boundaries before total input tokens/reads/calls; same CLI identity within each pair; session time, cooldown and wall time separate; unexposed HTTP attempts and price remain unknown",
+    "materials": "Existing T0 cases/oracles/freeze unchanged; public development regression, not holdout; norms and old answers never enter business prompts"
+  },
+  "authorization": "Owner reply 嗯，这次直接给120次额度，重跑吧 to the 40-path RC01/new-candidate regression proposal, 2026-10-03",
+  "total_calls_max": 120,
+  "path_calls_max": 3,
+  "budget_status": "120_new_calls_plus_98_preserved_historical",
+  "plan": [
+    {
+      "case": "D01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "D01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "I01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "I01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "F01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "F01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "F02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "F02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "M01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "M01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "M02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "M02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "E01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "E01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "W01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "W01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "W02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "W02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "P01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "P01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "P02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "P02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "R01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "R01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "V01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "V01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "V02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "V02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "L01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "L01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "L02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "L02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "case": "F01",
+      "arm": "current",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "F01",
+      "arm": "slim",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "F02",
+      "arm": "slim",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "F02",
+      "arm": "current",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "W01",
+      "arm": "current",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "W01",
+      "arm": "slim",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "W02",
+      "arm": "slim",
+      "model": "gpt-6-astra"
+    },
+    {
+      "case": "W02",
+      "arm": "current",
+      "model": "gpt-6-astra"
+    }
+  ],
+  "arm_labels": {
+    "current": "RC01",
+    "slim": "post-RC01 candidate"
+  },
+  "source_sha256": {
+    "current": "ac7f2027e0b4574d6c5e3daae7607093d4d6f0f6417c84eb0b9ba903298fe436",
+    "slim": "76f8394698a7e8b28f53b1f3e5f9f02f33aabc8abbd288e026764baab190e12d"
+  },
+  "transition_wait_basis": "60s_after_confirmed_previous_terminal; historical accepted unknown not proven complete",
+  "binary_sha256": "1180e2d56ea06ec583092acd933345685da3441cb1769a436d76dbf320613e75",
+  "cli_version": "codex-cli 0.159.0-alpha.12.1"
+}

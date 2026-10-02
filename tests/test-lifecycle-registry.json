@@ -34,7 +34,8 @@
         "tests/test_tvg_contract.py",
         "tests/test_using_mindthus_whole_elephant_contract.py",
         "tests/test_v3_audit_optimization_contract.py",
-        "tests/test_wae_contract.py"
+        "tests/test_wae_contract.py",
+        "tests/test_slim_semantic_boundary.py"
       ],
       "owner": "shared",
       "protects": [
@@ -70,7 +71,10 @@
         "tests/test_benchmark_archive.py",
         "tests/test_judgment_benchmark_cases.py",
         "tests/test_judgment_benchmark_cli_runner.py",
-        "tests/test_router_wakeup_ab_runner.py"
+        "tests/test_router_wakeup_ab_runner.py",
+        "tests/test_slim_batch.py",
+        "tests/test_slim_post_rc01.py",
+        "tests/test_slim_retry_000049.py"
       ],
       "owner": "benchmark",
       "protects": [

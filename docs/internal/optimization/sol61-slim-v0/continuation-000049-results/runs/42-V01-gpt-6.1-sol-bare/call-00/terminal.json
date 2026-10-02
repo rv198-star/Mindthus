@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "5245943eeef98515a2aef5263e6c04f361630e5a15d3ae3477ee461f57d130f3",
+    "wire_sha256": "2166bbae305707b0ae6b842eb63f94e06c9ec65adeaee7c961c50e09e22a6bcf",
+    "batch_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "path": {
+      "case": "V01",
+      "arm": "bare",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 97,
+    "retry_of": null
+  },
+  "raw_sha256": "b9c197763b2ec025664bc4c8972bb49b16de1466fd24704c9faaac55dce394a1",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "缓存问题已复现两次，失效原因尚未定位；小流量关闭缓存后错误消失。明天仅获批一小时只读排查，禁止修改生产配置。"
+  },
+  "usage": {
+    "input_tokens": 16500,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 67,
+    "reasoning_output_tokens": 0
+  },
+  "error": null,
+  "session_seconds": 12.988178375002462,
+  "ended_at_epoch": 1790958006.0063381,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "5245943eeef98515a2aef5263e6c04f361630e5a15d3ae3477ee461f57d130f3",
+    "transport_successor_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

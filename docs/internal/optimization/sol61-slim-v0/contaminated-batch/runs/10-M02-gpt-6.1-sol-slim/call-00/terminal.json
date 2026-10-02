@@ -1,0 +1,55 @@
+{
+  "binding": {
+    "request_sha256": "177dc68d8e790152aad297513ecfbf5a8949664633bd0da44cfa20e01247e2ab",
+    "wire_sha256": "154a53d355469dd85d44b2c410d30c3729b95f385afbf1901dcc95d10dddd2cc",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "path": {
+      "case": "M02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "bd5a480b27fd7e62ce811ed31fef6b5199dfdbeec8ca81a783e7c8849020197a",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/mpg/SKILL.md",
+      "docs/methodologies/shared-primitives.md"
+    ],
+    "text": "读取 MPG 的迁移时机、回滚与退出条件，以及交付前检查要求。效率优势已得到验证；当前需要判断的是如何在9小时维护窗口内完成迁移、验收并保留回滚余量。"
+  },
+  "usage": {
+    "input_tokens": 21946,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 131,
+    "reasoning_output_tokens": 36
+  },
+  "error": null,
+  "session_seconds": 12.986993666010676,
+  "ended_at_epoch": 1790938652.415019,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "177dc68d8e790152aad297513ecfbf5a8949664633bd0da44cfa20e01247e2ab",
+    "transport_successor_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

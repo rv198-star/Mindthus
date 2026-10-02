@@ -5,11 +5,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 from pathlib import Path
 
 
-VERSION = "1.10.1"
+VERSION = "1.11.0"
 EXCLUDED_DIRS = {
     "__pycache__",
     ".pytest_cache",
@@ -173,12 +174,19 @@ def copy_using_mindthus_conditional_primitives(
     skill_dir: Path,
     replacements: dict[str, str] | None = None,
 ) -> None:
-    resource_replacements = {
-        "../../../skills/using-mindthus/resources/fidelity-contract.md": "../fidelity-contract.md",
-        **(replacements or {}),
-    }
     source_dir = methodologies_dir / "primitives"
     target_dir = skill_dir / "resources" / "primitives"
+    skills_root = next(parent for parent in skill_dir.parents if parent.name == "skills")
+    platform_root = skills_root.parent
+    if platform_root.name == ".opencode":
+        platform_root = platform_root.parent
+    shared_path = Path(os.path.relpath(platform_root / "docs/methodologies/shared-primitives.md", target_dir)).as_posix()
+    resource_replacements = {
+        "../../../skills/using-mindthus/resources/fidelity-contract.md": "../fidelity-contract.md",
+        "../../../skills/using-mindthus/SKILL.md": "../../SKILL.md",
+        "../shared-primitives.md": shared_path,
+        **(replacements or {}),
+    }
     for filename in USING_MINDTHUS_CONDITIONAL_PRIMITIVES:
         copy_file_filtered(
             source_dir / filename,

@@ -16,16 +16,7 @@ PILLOW_AVAILABLE = importlib.util.find_spec("PIL") is not None
 class TvgContractTests(unittest.TestCase):
     def test_skill_names_veto_constraints_and_auditor_separation(self):
         text = (TVG / "SKILL.md").read_text(encoding="utf-8")
-        for phrase in (
-            "veto_constraints",
-            "explicit unacceptable states",
-            "They are not value-gain axes",
-            "must not exit as `freeze`",
-            "independent_auditor",
-            "separate generator work from the exit auditor",
-            "create, waive, or satisfy veto constraints",
-            "decide whether independent auditor separation is required",
-        ):
+        for phrase in ("veto_constraints", "不是加分轴", "触发时不能 freeze", "independent_auditor", "与生成者分离", "脚本不能创建或免除 veto"):
             self.assertIn(phrase, text)
 
     def test_methodology_keeps_veto_constraints_outside_value_axes(self):
@@ -46,17 +37,7 @@ class TvgContractTests(unittest.TestCase):
 
     def test_skill_exposes_value_directed_grounded_insight_loop(self):
         text = (TVG / "SKILL.md").read_text(encoding="utf-8")
-        for phrase in (
-            "value-directed text/artifact transformation loop",
-            'standard of "good"',
-            "expected_value",
-            "exit gate",
-            "Thinking Thickness",
-            "Grounded Insight Yield",
-            "Value Density",
-            "output_profile",
-            "delivery bias, not an internal workflow fork",
-        ):
+        for phrase in ("具体使用价值", "expected_value", "exit gate", "Thinking Thickness", "Grounded Insight Yield", "Value Density", "output_profile", "不分叉工作流", "一次充分改进可以退出"):
             self.assertIn(phrase, text)
 
     def test_methodology_defines_primary_loop_dimensions_and_state_routing(self):
@@ -233,9 +214,9 @@ class TvgContractTests(unittest.TestCase):
             "evidence_boundary",
             "output_bias",
             "Gate is an internal stop condition compiled from expected_value",
-            "not a user-facing configuration burden",
+            "不给用户增加配置负担",
             "输出期望值",
-            "Gate 是 Agent 内部从输出期望值编译出来的停机条件",
+            "exit gate 是从该期望编译的内部停机条件",
         ):
             self.assertIn(phrase, combined)
 

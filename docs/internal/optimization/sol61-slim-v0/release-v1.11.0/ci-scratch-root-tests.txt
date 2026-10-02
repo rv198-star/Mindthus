@@ -1,0 +1,218 @@
+test_bound_successor_resumes_without_resend_and_rejects_copied_root (test_slim_batch.SlimBatchTests.test_bound_successor_resumes_without_resend_and_rejects_copied_root) ... DELIVERED 00-D01-gpt-6.1-sol-current calls 1
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+ok
+test_empty_answers_preserve_terminal_without_delivery_or_retry (test_slim_batch.SlimBatchTests.test_empty_answers_preserve_terminal_without_delivery_or_retry) ... DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+ok
+test_existing_transport_stop_alone_prevents_dispatch (test_slim_batch.SlimBatchTests.test_existing_transport_stop_alone_prevents_dispatch) ... ok
+test_internal_recovery_stops_every_response_branch_and_restart (test_slim_batch.SlimBatchTests.test_internal_recovery_stops_every_response_branch_and_restart) ... DELIVERED 00-D01-gpt-6.1-sol-current calls 1
+READ 00-D01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+ok
+test_legacy_in_repository_batch_cannot_resume (test_slim_batch.SlimBatchTests.test_legacy_in_repository_batch_cannot_resume) ... ok
+test_old_34_calls_are_debited_not_restored (test_slim_batch.SlimBatchTests.test_old_34_calls_are_debited_not_restored) ... ok
+test_pending_prepare_cannot_claim_a_successor (test_slim_batch.SlimBatchTests.test_pending_prepare_cannot_claim_a_successor) ... ok
+test_pending_successor_authority_does_not_send_or_reset_budget (test_slim_batch.SlimBatchTests.test_pending_successor_authority_does_not_send_or_reset_budget) ... ok
+test_plan_and_input_separation (test_slim_batch.SlimBatchTests.test_plan_and_input_separation) ... ok
+test_read_raw_terminal_import_and_cross_arm_cooldown (test_slim_batch.SlimBatchTests.test_read_raw_terminal_import_and_cross_arm_cooldown) ... READ 00-D01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+DELIVERED 00-D01-gpt-6.1-sol-current calls 2
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+ok
+test_repository_ancestor_cannot_enter_transport_workspace (test_slim_batch.SlimBatchTests.test_repository_ancestor_cannot_enter_transport_workspace) ... DELIVERED 00-D01-gpt-6.1-sol-current calls 1
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+ok
+test_simulated_parent_cannot_supply_real_successor_receipt (test_slim_batch.SlimBatchTests.test_simulated_parent_cannot_supply_real_successor_receipt) ... ok
+test_simulation_cannot_dispatch_through_official_adapter (test_slim_batch.SlimBatchTests.test_simulation_cannot_dispatch_through_official_adapter) ... ok
+test_successor_claim_is_exclusive_even_for_concurrent_preparations (test_slim_batch.SlimBatchTests.test_successor_claim_is_exclusive_even_for_concurrent_preparations) ... ok
+test_three_reads_stop_at_path_limit (test_slim_batch.SlimBatchTests.test_three_reads_stop_at_path_limit) ... READ 00-D01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 00-D01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 00-D01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+ok
+test_unknown_stops_without_completion_or_second_call (test_slim_batch.SlimBatchTests.test_unknown_stops_without_completion_or_second_call) ... ok
+test_read_binding_cooldown_and_resume_without_regeneration (test_slim_post_rc01.PostRC01Tests.test_read_binding_cooldown_and_resume_without_regeneration) ... READ 00-D01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+DELIVERED 00-D01-gpt-6.1-sol-current calls 2
+DELIVERED 01-D01-gpt-6.1-sol-slim calls 1
+DELIVERED 02-I01-gpt-6.1-sol-slim calls 1
+DELIVERED 03-I01-gpt-6.1-sol-current calls 1
+DELIVERED 04-F01-gpt-6.1-sol-current calls 1
+DELIVERED 05-F01-gpt-6.1-sol-slim calls 1
+DELIVERED 06-F02-gpt-6.1-sol-slim calls 1
+DELIVERED 07-F02-gpt-6.1-sol-current calls 1
+DELIVERED 08-M01-gpt-6.1-sol-current calls 1
+DELIVERED 09-M01-gpt-6.1-sol-slim calls 1
+DELIVERED 10-M02-gpt-6.1-sol-slim calls 1
+DELIVERED 11-M02-gpt-6.1-sol-current calls 1
+DELIVERED 12-E01-gpt-6.1-sol-current calls 1
+DELIVERED 13-E01-gpt-6.1-sol-slim calls 1
+DELIVERED 14-W01-gpt-6.1-sol-slim calls 1
+DELIVERED 15-W01-gpt-6.1-sol-current calls 1
+DELIVERED 16-W02-gpt-6.1-sol-current calls 1
+DELIVERED 17-W02-gpt-6.1-sol-slim calls 1
+DELIVERED 18-P01-gpt-6.1-sol-slim calls 1
+DELIVERED 19-P01-gpt-6.1-sol-current calls 1
+DELIVERED 20-P02-gpt-6.1-sol-current calls 1
+DELIVERED 21-P02-gpt-6.1-sol-slim calls 1
+DELIVERED 22-R01-gpt-6.1-sol-slim calls 1
+DELIVERED 23-R01-gpt-6.1-sol-current calls 1
+DELIVERED 24-V01-gpt-6.1-sol-current calls 1
+DELIVERED 25-V01-gpt-6.1-sol-slim calls 1
+DELIVERED 26-V02-gpt-6.1-sol-slim calls 1
+DELIVERED 27-V02-gpt-6.1-sol-current calls 1
+DELIVERED 28-L01-gpt-6.1-sol-current calls 1
+DELIVERED 29-L01-gpt-6.1-sol-slim calls 1
+DELIVERED 30-L02-gpt-6.1-sol-slim calls 1
+DELIVERED 31-L02-gpt-6.1-sol-current calls 1
+DELIVERED 32-F01-gpt-6-astra-current calls 1
+DELIVERED 33-F01-gpt-6-astra-slim calls 1
+DELIVERED 34-F02-gpt-6-astra-slim calls 1
+DELIVERED 35-F02-gpt-6-astra-current calls 1
+DELIVERED 36-W01-gpt-6-astra-current calls 1
+DELIVERED 37-W01-gpt-6-astra-slim calls 1
+DELIVERED 38-W02-gpt-6-astra-slim calls 1
+DELIVERED 39-W02-gpt-6-astra-current calls 1
+ok
+test_scope_identity_budget_and_no_second_allowance (test_slim_post_rc01.PostRC01Tests.test_scope_identity_budget_and_no_second_allowance) ... ok
+test_three_per_path_bounds_the_total_at_120 (test_slim_post_rc01.PostRC01Tests.test_three_per_path_bounds_the_total_at_120) ... READ 00-D01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 00-D01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 00-D01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 01-D01-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 01-D01-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 01-D01-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 02-I01-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 02-I01-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 02-I01-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 03-I01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 03-I01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 03-I01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 04-F01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 04-F01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 04-F01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 05-F01-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 05-F01-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 05-F01-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 06-F02-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 06-F02-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 06-F02-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 07-F02-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 07-F02-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 07-F02-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 08-M01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 08-M01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 08-M01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 09-M01-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 09-M01-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 09-M01-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 10-M02-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 10-M02-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 10-M02-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 11-M02-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 11-M02-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 11-M02-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 12-E01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 12-E01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 12-E01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 13-E01-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 13-E01-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 13-E01-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 14-W01-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 14-W01-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 14-W01-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 15-W01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 15-W01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 15-W01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 16-W02-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 16-W02-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 16-W02-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 17-W02-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 17-W02-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 17-W02-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 18-P01-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 18-P01-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 18-P01-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 19-P01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 19-P01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 19-P01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 20-P02-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 20-P02-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 20-P02-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 21-P02-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 21-P02-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 21-P02-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 22-R01-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 22-R01-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 22-R01-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 23-R01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 23-R01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 23-R01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 24-V01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 24-V01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 24-V01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 25-V01-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 25-V01-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 25-V01-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 26-V02-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 26-V02-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 26-V02-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 27-V02-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 27-V02-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 27-V02-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 28-L01-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 28-L01-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 28-L01-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 29-L01-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 29-L01-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 29-L01-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 30-L02-gpt-6.1-sol-slim ['skills/wae/SKILL.md']
+READ 30-L02-gpt-6.1-sol-slim ['skills/wae/resources/methodology.md']
+READ 30-L02-gpt-6.1-sol-slim ['skills/sra/SKILL.md']
+READ 31-L02-gpt-6.1-sol-current ['skills/wae/SKILL.md']
+READ 31-L02-gpt-6.1-sol-current ['skills/wae/resources/methodology.md']
+READ 31-L02-gpt-6.1-sol-current ['skills/sra/SKILL.md']
+READ 32-F01-gpt-6-astra-current ['skills/wae/SKILL.md']
+READ 32-F01-gpt-6-astra-current ['skills/wae/resources/methodology.md']
+READ 32-F01-gpt-6-astra-current ['skills/sra/SKILL.md']
+READ 33-F01-gpt-6-astra-slim ['skills/wae/SKILL.md']
+READ 33-F01-gpt-6-astra-slim ['skills/wae/resources/methodology.md']
+READ 33-F01-gpt-6-astra-slim ['skills/sra/SKILL.md']
+READ 34-F02-gpt-6-astra-slim ['skills/wae/SKILL.md']
+READ 34-F02-gpt-6-astra-slim ['skills/wae/resources/methodology.md']
+READ 34-F02-gpt-6-astra-slim ['skills/sra/SKILL.md']
+READ 35-F02-gpt-6-astra-current ['skills/wae/SKILL.md']
+READ 35-F02-gpt-6-astra-current ['skills/wae/resources/methodology.md']
+READ 35-F02-gpt-6-astra-current ['skills/sra/SKILL.md']
+READ 36-W01-gpt-6-astra-current ['skills/wae/SKILL.md']
+READ 36-W01-gpt-6-astra-current ['skills/wae/resources/methodology.md']
+READ 36-W01-gpt-6-astra-current ['skills/sra/SKILL.md']
+READ 37-W01-gpt-6-astra-slim ['skills/wae/SKILL.md']
+READ 37-W01-gpt-6-astra-slim ['skills/wae/resources/methodology.md']
+READ 37-W01-gpt-6-astra-slim ['skills/sra/SKILL.md']
+READ 38-W02-gpt-6-astra-slim ['skills/wae/SKILL.md']
+READ 38-W02-gpt-6-astra-slim ['skills/wae/resources/methodology.md']
+READ 38-W02-gpt-6-astra-slim ['skills/sra/SKILL.md']
+READ 39-W02-gpt-6-astra-current ['skills/wae/SKILL.md']
+READ 39-W02-gpt-6-astra-current ['skills/wae/resources/methodology.md']
+READ 39-W02-gpt-6-astra-current ['skills/sra/SKILL.md']
+ok
+test_unknown_still_stops_and_cannot_gain_new_allowance (test_slim_post_rc01.PostRC01Tests.test_unknown_still_stops_and_cannot_gain_new_allowance) ... ok
+test_exact_named_authority_remaining_budget_and_identity (test_slim_retry_000049.Retry000049Tests.test_exact_named_authority_remaining_budget_and_identity) ... ok
+test_fake_read_then_answer_and_remaining_paths_use_at_most14 (test_slim_retry_000049.Retry000049Tests.test_fake_read_then_answer_and_remaining_paths_use_at_most14) ... READ 31-L02-gpt-6.1-sol-current ['skills/tplan/SKILL.md']
+DELIVERED 31-L02-gpt-6.1-sol-current calls 2
+DELIVERED 32-F01-gpt-6-astra-current calls 1
+DELIVERED 33-F01-gpt-6-astra-slim calls 1
+DELIVERED 34-F02-gpt-6-astra-slim calls 1
+DELIVERED 35-F02-gpt-6-astra-current calls 1
+DELIVERED 36-V01-gpt-6-astra-current calls 1
+DELIVERED 37-V01-gpt-6-astra-slim calls 1
+DELIVERED 38-V02-gpt-6-astra-slim calls 1
+DELIVERED 39-V02-gpt-6-astra-current calls 1
+DELIVERED 40-F01-gpt-6.1-sol-bare calls 1
+DELIVERED 41-F02-gpt-6.1-sol-bare calls 1
+DELIVERED 42-V01-gpt-6.1-sol-bare calls 1
+DELIVERED 43-V02-gpt-6.1-sol-bare calls 1
+ok
+test_new_unknown_stops_without_second_retry (test_slim_retry_000049.Retry000049Tests.test_new_unknown_stops_without_second_retry) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 16.445s
+
+OK

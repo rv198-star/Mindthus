@@ -1,0 +1,83 @@
+{
+  "scope": "executor read-only, unblinded, frozen T0 oracles; no evaluator call",
+  "paths": {
+    "31-L02-gpt-6.1-sol-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "保留unknown及intent和耗时；不把本地超时当远端失败；停止自动重发并要求绑定证据或指定新授权。只给摘要，不执行实际API。"
+    },
+    "32-F01-gpt-6-astra-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "保留Prompt局部载体真实，区分完整能力与信息接口，具体说明执行、工具、状态和验证；允许纯文本Skill子类，不泛化成所有Skill均成熟自动化。无需另读方法。"
+    },
+    "33-F01-gpt-6-astra-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "明确完整任务能力不能还原为Prompt；保留文本方法型Skill主要价值可来自Prompt，区分执行程序与模型判断。实际读取EDSP增加一次往返；没有发现相对当前版的重要内容纠正。"
+    },
+    "34-F02-gpt-6-astra-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "按文本输入层限定承认核心命题成立；对脚本只调度这一局部概括作限定，不把完整系统价值强压回接口定义。与F01形成正确条件反转。"
+    },
+    "35-F02-gpt-6-astra-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "在限定文本接口的条件下支持命题，并说明效果差异不否认接口同类性；未把全面系统定义强加给限定目标。与当前版F01正确反转。"
+    },
+    "36-V01-gpt-6-astra-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "修掉解决及保证；保留两次复现、小流量关闭缓存错误消失的有限证据；明确一小时只读及禁止生产配置变更，结束后交接。"
+    },
+    "37-V01-gpt-6-astra-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "与当前版实质一致；纠正保证，保留复现/关闭缓存关联证据及根因未知，一小时只读与生产禁改清楚。"
+    },
+    "38-V02-gpt-6-astra-slim": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "认为文档足够，不要求扩写或多轮强化；仅条件式提示缺日志入口时补充。保留原事实、不把相关性当根因。"
+    },
+    "39-V02-gpt-6-astra-current": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "认为文档足够，不要求扩写或多轮强化；仅条件式提示缺日志入口时补充。保留原事实、不把相关性当根因。"
+    },
+    "40-F01-gpt-6.1-sol-bare": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "区分指令层与完整能力，指出可复用流程/资源/执行/验证主要价值，允许纯文本子类；未加载Mindthus也达到事前判据。仍含共同Codex系统背景，不是无系统提示纯API。"
+    },
+    "41-F02-gpt-6.1-sol-bare": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "接口限定下支持核心命题，仅收窄脚本全部只调度的概括；与裸F01正确反转。"
+    },
+    "42-V01-gpt-6.1-sol-bare": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "删除已解决/保证；保留两次复现及小流量关联证据、根因未知、一小时只读授权和生产禁改；一小时已构成排查上限。短于方法版但不以缺少固定交接字段扣分。"
+    },
+    "43-V02-gpt-6.1-sol-bare": {
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "rationale": "明确已足够，可原文使用；识别根因未知与关联证据区分，不要求增厚或多轮审计。"
+    }
+  }
+}

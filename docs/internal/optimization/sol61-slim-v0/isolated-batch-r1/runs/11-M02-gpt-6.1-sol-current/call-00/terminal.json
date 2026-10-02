@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "c8e93f2b365699f0f5ec134234fd80ed2a5156152efdcbb3f67cb0bb06d6b20f",
+    "wire_sha256": "16923bfe7341c6972f66369ad42511c9bd264520524febcad28583d9ad384d23",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "M02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "92e4de52741ded3d78671f2f05423cb1688a99d32b97054deac99fd2ca3decc6",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/mpg/SKILL.md"
+    ],
+    "text": "读取 MPG 的切换决策规则，判断在9小时维护窗口内如何安排6小时迁移、验收及1小时回滚，并确定现在是否应切换。"
+  },
+  "usage": {
+    "input_tokens": 18700,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 135,
+    "reasoning_output_tokens": 62
+  },
+  "error": null,
+  "session_seconds": 13.97388408400002,
+  "ended_at_epoch": 1790946175.44168,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "c8e93f2b365699f0f5ec134234fd80ed2a5156152efdcbb3f67cb0bb06d6b20f",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

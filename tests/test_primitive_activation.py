@@ -767,7 +767,7 @@ class PrimitiveActivationTests(unittest.TestCase):
         self.assertIn("whole_object_reconstruction is required", result.stdout)
         self.assertIn("formal_answer_plan is required", result.stdout)
 
-    def test_whole_elephant_validator_rejects_compact_visible_answer_that_starts_with_local_truth(self) -> None:
+    def test_whole_elephant_validator_warns_without_semantic_verdict_compact_visible_answer_that_starts_with_local_truth(self) -> None:
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
@@ -791,13 +791,15 @@ class PrimitiveActivationTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "visible_formal_answer first sentence must start with the global thesis, not local-truth concession",
             result.stdout,
         )
 
-    def test_whole_elephant_validator_rejects_compact_visible_answer_with_score_concession(self) -> None:
+
+    def test_whole_elephant_validator_warns_without_semantic_verdict_compact_visible_answer_with_score_concession(self) -> None:
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
@@ -808,13 +810,15 @@ class PrimitiveActivationTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "visible_formal_answer must not use score-as-concession framing",
             result.stdout,
         )
 
-    def test_whole_elephant_validator_rejects_compact_visible_answer_with_soft_not_wrong_concession(self) -> None:
+
+    def test_whole_elephant_validator_warns_without_semantic_verdict_compact_visible_answer_with_soft_not_wrong_concession(self) -> None:
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
@@ -825,13 +829,15 @@ class PrimitiveActivationTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "visible_formal_answer must not soften a rejected definition into a not-wrong concession",
             result.stdout,
         )
 
-    def test_whole_elephant_validator_rejects_visible_answer_that_later_softens_verdict(self) -> None:
+
+    def test_whole_elephant_validator_warns_without_semantic_verdict_visible_answer_that_later_softens_verdict(self) -> None:
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
@@ -845,11 +851,13 @@ class PrimitiveActivationTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "visible_formal_answer must not soften a rejected definition into a not-wrong concession",
             result.stdout,
         )
+
 
     def test_whole_elephant_validator_accepts_visible_answer_that_starts_with_core_thesis(self) -> None:
         opening = (
@@ -1126,7 +1134,7 @@ class PrimitiveActivationTests(unittest.TestCase):
             result.stdout,
         )
 
-    def test_whole_elephant_validator_rejects_weak_broader_view_thesis(self) -> None:
+    def test_whole_elephant_validator_warns_without_semantic_verdict_weak_broader_view_thesis(self) -> None:
         opening = "This needs a broader view."
         result = run_whole_elephant_validator(
             {
@@ -1164,13 +1172,15 @@ class PrimitiveActivationTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "formal_answer_plan.opening_core_thesis must carry definition authority, result control, or optimization consequence",
             result.stdout,
         )
 
-    def test_whole_elephant_validator_rejects_chinese_incomplete_concession_first(self) -> None:
+
+    def test_whole_elephant_validator_warns_without_semantic_verdict_chinese_incomplete_concession_first(self) -> None:
         opening = "这个判断有道理但不完整，release readiness 还需要回滚、监控和审批。"
         result = run_whole_elephant_validator(
             {
@@ -1208,11 +1218,13 @@ class PrimitiveActivationTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "formal_answer_plan.opening_core_thesis must start with the global thesis, not local-truth concession",
             result.stdout,
         )
+
 
     def test_whole_elephant_validator_allows_global_thesis_with_subordinate_local_importance(self) -> None:
         opening = (
@@ -1436,7 +1448,7 @@ class PrimitiveActivationTests(unittest.TestCase):
 
         self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
 
-    def test_whole_elephant_validator_rejects_local_signal_marked_canonical_object(self) -> None:
+    def test_whole_elephant_validator_warns_without_semantic_verdict_local_signal_marked_canonical_object(self) -> None:
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
@@ -1469,13 +1481,15 @@ class PrimitiveActivationTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "user_named_object_relation cannot be canonical_object when user_named_object is not aligned with canonical_object",
             result.stdout,
         )
 
-    def test_whole_elephant_validator_rejects_corrected_thesis_that_contradicts_plan(self) -> None:
+
+    def test_whole_elephant_validator_warns_without_semantic_verdict_corrected_thesis_that_contradicts_plan(self) -> None:
         opening = (
             "Release readiness is carried by safe recoverable shipping capability, "
             "so green tests cannot define readiness by themselves."
@@ -1517,10 +1531,12 @@ class PrimitiveActivationTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn("corrected_thesis must align with formal_answer_plan.opening_core_thesis", result.stdout)
 
-    def test_whole_elephant_validator_rejects_drifting_whole_object_package(self) -> None:
+
+    def test_whole_elephant_validator_warns_without_semantic_verdict_drifting_whole_object_package(self) -> None:
         result = run_whole_elephant_validator(
             {
                 "schema_version": "mindthus-whole-elephant-audit-v0.1",
@@ -1553,8 +1569,10 @@ class PrimitiveActivationTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn("object_hierarchy.whole_object must align with whole_object", result.stdout)
+
 
     def test_whole_elephant_validator_rejects_scope_correction_that_transfers_definition_authority(self) -> None:
         opening = (
@@ -1613,7 +1631,7 @@ class PrimitiveActivationTests(unittest.TestCase):
             result.stdout,
         )
 
-    def test_whole_elephant_validator_rejects_scope_correction_object_downgrade(self) -> None:
+    def test_whole_elephant_validator_warns_without_semantic_verdict_scope_correction_object_downgrade(self) -> None:
         opening = (
             "在讨论 Skills 定位时，定义权属于可复用上下文和行为约束注入单元本身，"
             "Agent 只是一个使用场景，不该拥有解释权。"
@@ -1682,11 +1700,13 @@ class PrimitiveActivationTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WARN [candidate-only-review-hint]", result.stdout)
         self.assertIn(
             "canonical_object must not downgrade the user-named object into a local carrier after scope correction",
             result.stdout,
         )
+
 
     def test_whole_elephant_validator_allows_scope_correction_to_control_interface(self) -> None:
         opening = (

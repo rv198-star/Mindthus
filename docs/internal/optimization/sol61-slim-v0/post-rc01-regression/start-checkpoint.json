@@ -1,0 +1,108 @@
+{
+  "recorded_log": {
+    "step_id": "checkpoint",
+    "task_id": "T0",
+    "summary": "Owner批准RC01与后续候选40路径真实回归，本轮120次上限；既有98次及unknown保留。20项新增接线及受影响回归通过，固定源码/配置后已启动首条。",
+    "payload": {
+      "new_cap": 120,
+      "historical_calls": 98,
+      "cumulative_cap": 218,
+      "baseline": "e7dbb473e955932f09c80dfb48b90ac1f4f8db43",
+      "candidate": "131ab6e4d7b04e3964193dc95c869f6eaad16730",
+      "paths": 40,
+      "path_cap": 3,
+      "technical_retries_max": 0,
+      "batch": ".tplan/slim-post-rc01-20261003",
+      "status": "running"
+    },
+    "id": "L11",
+    "timestamp": "2026-10-02T17:38:18.634190+00:00"
+  },
+  "recorded_evidence": null,
+  "noop": false,
+  "survey": {
+    "mission": {
+      "id": "mindthus-sol61-slim-20261002",
+      "title": "Mindthus Sol 6.1 减负优化",
+      "objective": "减少Mindthus重复提示和流程开销，保留重要判断、证据与权限边界；Sol 6.1主验收，Astra限定抽检。",
+      "status": "active",
+      "human_in_loop": 0,
+      "risk_tolerance": 35,
+      "resource_sufficiency": 70,
+      "acceptance_evidence": [
+        {
+          "id": "AE-T0",
+          "description": "事前场景与规范、配对条件、预算和停止规则固定"
+        },
+        {
+          "id": "AE-IMPLEMENTATION",
+          "description": "214-219最小实现及针对性验证"
+        },
+        {
+          "id": "AE-EVALUATION",
+          "description": "220真实对照或明确未执行与原因"
+        },
+        {
+          "id": "AE-PACKAGE",
+          "description": "221共享核心及打包兼容"
+        }
+      ]
+    },
+    "active_task": {
+      "id": "T0",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "提前固定验收对比场景",
+      "status": "active",
+      "role": "success-critical",
+      "evidence_links": [],
+      "mission_contribution": "在任何产品改动与实模观察之前固定业务输入、独立判据和比较条件，防止优化后按结果移动验收。",
+      "acceptance_evidence": [
+        "AE-T0",
+        "AE-IMPLEMENTATION",
+        "AE-EVALUATION",
+        "AE-PACKAGE"
+      ]
+    },
+    "active_parent_chain": [
+      {
+        "id": "T0",
+        "parent_id": null,
+        "kind": "task",
+        "level": 1,
+        "title": "提前固定验收对比场景",
+        "status": "active",
+        "role": "success-critical",
+        "evidence_links": [],
+        "mission_contribution": "在任何产品改动与实模观察之前固定业务输入、独立判据和比较条件，防止优化后按结果移动验收。",
+        "acceptance_evidence": [
+          "AE-T0",
+          "AE-IMPLEMENTATION",
+          "AE-EVALUATION",
+          "AE-PACKAGE"
+        ]
+      }
+    ],
+    "tasks_by_status": {
+      "abandoned": [],
+      "active": [
+        "T0"
+      ],
+      "blocked": [],
+      "completed": [],
+      "paused": [],
+      "pending": [],
+      "pruned": [],
+      "superseded": []
+    },
+    "resource_sufficiency": 70,
+    "shared_context": {
+      "active_risk_signals": [],
+      "recent_resolved_risk_signals": [],
+      "active_risk_signal_count": 0,
+      "highest_active_severity": null
+    },
+    "event_count": 6
+  }
+}

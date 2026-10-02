@@ -8,13 +8,14 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 SCRIPT = REPO / "scripts" / "log-mindthus-runtime.py"
-CURRENT_VERSION = "1.10.1"
+CURRENT_VERSION = "1.11.0"
 
 
 USING_TEXT = """\
 Original Prompt Contract / 原始有效提示词合同
 在回答前，先执行“输入审计”，不要顺着我的叙述直接推理
 Truth Orientation / 真相优先
+Input Framing Audit / 输入定框审计
 pursue facts and truth over agreement
 user input is signal, constraint, or hypothesis; not evidence by itself
 First task: judge whether the user led you to the wrong level
@@ -192,7 +193,7 @@ def write_runtime_tree(
             encoding="utf-8",
         )
     (root / "scripts" / "primitives" / "manifest.json").write_text(
-        '{"primitives":{"whole_elephant_protocol":{}}}\n',
+        '{"validation_scope":"shape_only_reminder_not_semantic_judgment","primitives":{"whole_elephant_protocol":{}}}\n',
         encoding="utf-8",
     )
     (root / "scripts" / "primitives" / "check.py").write_text(
@@ -367,86 +368,23 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             self.assertEqual(payload["summary"]["status"], "ok")
             self.assertTrue(payload["summary"]["all_required_markers_present"])
             self.assertTrue(payload["summary"]["all_available_hashes_match"])
-            self.assertIn("Truth Orientation / 真相优先", payload["markers"])
-            self.assertIn("pursue facts and truth over agreement", payload["markers"])
-            self.assertIn("Entry Triage / 入口分诊", payload["markers"])
-            self.assertIn("definition authority contest", payload["markers"])
-            self.assertIn("green tests imply release readiness", payload["markers"])
-            self.assertIn("negative and shadow controls", payload["markers"])
-            self.assertIn("Root-cause evidence gate", payload["markers"])
-            self.assertIn("same local repair count >= 3", payload["markers"])
-            self.assertIn("Visible consequence probe", payload["markers"])
-            self.assertIn("Partial Truth Capture / 局部真相捕获", payload["markers"])
-            self.assertIn("A locally true observation must not own the whole explanation", payload["markers"])
-            self.assertIn("Whole Object Reconstruction / 整体对象还原", payload["markers"])
-            self.assertIn(
-                "reconstruct the whole object before essence judgment",
-                payload["markers"],
-            )
-            self.assertIn("Whole Elephant Protocol / 全象流程", payload["markers"])
-            self.assertIn("Compact Semantic Triad / 三根硬支柱", payload["markers"])
-            self.assertIn("misdirection_if_local_wins", payload["markers"])
-            self.assertIn("Contrastive Consequence Probe / 后果对比探针", payload["markers"])
-            self.assertIn("better_direction_for_target", payload["markers"])
-            self.assertIn(
-                "start by naming the complete object before summarizing local truths",
-                payload["markers"],
-            )
-            self.assertIn("local_success_points", payload["markers"])
-            self.assertIn("coverage_weight", payload["markers"])
-            self.assertIn("weighted_synthesis", payload["markers"])
-            self.assertIn("whole_first_re_evaluation", payload["markers"])
-            self.assertIn("strategy_choice", payload["markers"])
-            self.assertIn("definition_owner", payload["markers"])
-            self.assertIn("result_controller", payload["markers"])
-            self.assertIn("decision_consequence", payload["markers"])
-            self.assertIn(
-                "When Partial Truth Capture triggers, the formal answer is incomplete without",
-                payload["markers"],
-            )
-            self.assertIn("mindthus-whole-elephant-audit-v0.1", payload["markers"])
-            self.assertIn(
+            # Installation health tracks stable identity/contract markers, not old prose recipes.
+            self.assertEqual(set(payload["markers"]), {
+                "Truth Orientation / 真相优先",
+                "Input Framing Audit / 输入定框审计",
+                "mindthus-whole-elephant-audit-v0.1",
+                "shape_only_reminder_not_semantic_judgment",
+            })
+            for relative in (
                 "scripts/primitives/validate_whole_elephant.py",
-                payload["locations"]["cache"]["files"],
-            )
-            self.assertIn(
                 "scripts/primitives/whole_elephant_validator.py",
-                payload["locations"]["cache"]["files"],
-            )
-            self.assertIn(
                 "docs/methodologies/primitives/entry-triage.md",
-                payload["locations"]["cache"]["files"],
-            )
-            self.assertIn(
                 "skills/using-mindthus/resources/calibration-pairs.yaml",
-                payload["locations"]["cache"]["files"],
-            )
-            self.assertIn("target job", payload["markers"])
-            self.assertIn("main use cases", payload["markers"])
-            self.assertIn("primary value carrier", payload["markers"])
-            self.assertIn("local interface role", payload["markers"])
-            self.assertIn("authority_weight", payload["markers"])
-            self.assertIn("corrected_thesis", payload["markers"])
-            self.assertIn(
-                "grant authority only when the local frame carries the target result",
-                payload["markers"],
-            )
-            self.assertIn("would change the decision if removed", payload["markers"])
-            self.assertIn(
-                "predicts outcomes or failures better than competing frames",
-                payload["markers"],
-            )
-            self.assertIn(
-                "blocked_by_missing_evidence when the whole-object carrier is unknown",
-                payload["markers"],
-            )
-            self.assertIn("definition consequence", payload["markers"])
-            self.assertIn("optimization direction", payload["markers"])
-            self.assertIn("Non-Mirror Correction / 非镜像纠错", payload["markers"])
-            self.assertIn("Failure Channel / 失败通道", payload["markers"])
+            ):
+                self.assertIn(relative, payload["locations"]["cache"]["files"])
             self.assertTrue(
                 payload["locations"]["cache"]["files"]["skills/using-mindthus/SKILL.md"]["markers"][
-                    "System Subject Check / 系统主体校准"
+                    "Truth Orientation / 真相优先"
                 ]
             )
 
@@ -460,8 +398,8 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             write_runtime_tree(marketplace, runtime_layout="top-level")
             write_runtime_tree(
                 cache,
-                using_text=USING_TEXT.replace("System Subject Check / 系统主体校准\n", ""),
-                primitives_text=PRIMITIVES_TEXT.replace("System Subject Check / 系统主体校准\n", ""),
+                using_text=USING_TEXT.replace("Truth Orientation / 真相优先\n", ""),
+                primitives_text=PRIMITIVES_TEXT.replace("Truth Orientation / 真相优先\n", ""),
                 runtime_layout="top-level",
             )
 
@@ -490,7 +428,7 @@ class LogMindthusRuntimeTests(unittest.TestCase):
             self.assertFalse(payload["summary"]["all_available_hashes_match"])
             self.assertFalse(
                 payload["locations"]["cache"]["files"]["skills/using-mindthus/SKILL.md"]["markers"][
-                    "System Subject Check / 系统主体校准"
+                    "Truth Orientation / 真相优先"
                 ]
             )
 

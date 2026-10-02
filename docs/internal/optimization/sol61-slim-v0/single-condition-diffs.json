@@ -1,0 +1,47 @@
+[
+  {
+    "pair_id": "skills-scope",
+    "ids": [
+      "F01",
+      "F02"
+    ],
+    "only_business_change": "condition",
+    "diff": [
+      "--- F01",
+      "+++ F02",
+      "@@ -1 +1 @@",
+      "-这里的“本质”指完整的任务能力及主要价值。",
+      "+这里的“本质”仅指进入语言模型的文本接口。"
+    ]
+  },
+  {
+    "pair_id": "migration-window",
+    "ids": [
+      "M01",
+      "M02"
+    ],
+    "only_business_change": "condition",
+    "diff": [
+      "--- M01",
+      "+++ M02",
+      "@@ -1 +1 @@",
+      "-本次获批维护窗口为2小时。",
+      "+本次获批维护窗口为9小时。"
+    ]
+  },
+  {
+    "pair_id": "exception-definition",
+    "ids": [
+      "W01",
+      "W02"
+    ],
+    "only_business_change": "condition",
+    "diff": [
+      "--- W01",
+      "+++ W02",
+      "@@ -1 +1 @@",
+      "-跨地区例外的适用条件也已经逐条签字确认。",
+      "+跨地区例外的适用条件尚未达成一致。"
+    ]
+  }
+]

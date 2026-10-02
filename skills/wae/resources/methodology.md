@@ -193,7 +193,7 @@ Tighten control when the skill is:
 
 Default rule:
 
-> Each additional nesting or automation layer lowers agentic freedom by one step unless explicit authority and evidence support keeping it open.
+> Reassess freedom when nesting introduces a new side effect, authority boundary, unattended commitment or unresolved semantic dependency. Depth alone neither grants authority nor lowers freedom by a fixed step.
 
 Top-level direct use may allow broader agentic exploration. Nested or automated use should prefer workflow gates, narrower tool tiers, and stronger evidence trails.
 
@@ -348,7 +348,7 @@ Use these rules:
 
 - the outer skill or caller may tighten the called skill's boundary
 - the stricter boundary wins when safety, evidence, or tool authority conflict
-- evidence requirements only increase across nested calls unless explicitly relaxed by the outer workflow
+- preserve applicable evidence and authority requirements across calls; add evidence only for a new risk or dependency, and never infer relaxation from nesting
 - irreversible operations follow the authority boundary of the initiating task, not merely the tool-owning skill
 
 If the conflict cannot be resolved mechanically, treat it as a boundary question and apply WAE explicitly.
@@ -433,7 +433,7 @@ Corrective move:
 
 > Keep the worksheet, but reopen the agentic core. Ask what judgment was actually made, what evidence constrained it, and what remains unresolved.
 
-A complete worksheet where every Expanded Field was filled, with no field left blank or marked `not applicable`, is a regression signal, not a quality signal. Decisions with real boundary tension should leave some fields unresolved, contested, or explicitly waived.
+Filled-field count is not a quality or regression signal. Inspect unsupported certainty and unresolved boundary tension; legitimate not-applicable fields may remain so, and do not invent uncertainty for a genuinely complete bounded judgment.
 
 ## Practical Decision Table
 

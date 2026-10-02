@@ -1,6 +1,6 @@
 ---
 name: wae
-description: Use when a workflow, script, schema, agent loop, evidence gate, or review step may be controlling the wrong part of the work; especially when clean structure may be freezing uncertain truth or hiding thin judgment.
+description: Use for unresolved or misplaced control in agentic systems, including workflows freezing truth, claims exceeding evidence, or unowned semantic choices. Conceptual comparisons alone do not require WAE.
 ---
 
 # WAE / Workflow-Agentic-Evidence
@@ -11,49 +11,25 @@ Workflow should control order. Agentic reasoning should resolve uncertainty and 
 
 Automation solves deterministic problems. Intelligence solves uncertain problems.
 
-WAE is an agentic-system control-boundary lens. Use it only when LLMs, agents, skills,
-prompts, scripts, schemas, workflows, review gates, or evidence gates may be
-controlling the wrong part of the work. It answers:
-
-Domain scope: LLMs, agents, skills, prompts, scripts, schemas, workflows, review gates, or evidence gates.
+WAE is an agentic-system control-boundary lens:
 
 > Who or what should control this part of the work?
-
-When a semantic owner delegates work and the boundary may still hide a result-changing
-choice, WAE may ask one conditional second question:
-
-> Is that ownership closed through the delegation, or did semantic choice leak downstream?
-
-Domain Gate: the object must be an LLM / agent / skill / workflow / script / schema /
-evidence-gate system. No agentic system, no WAE.
-
-Control Gate: workflow, agentic reasoning, evidence, schema, script, review, or human
-authority may be controlling the wrong part of the work. No controller mismatch, no WAE.
-
-It is not a generic workflow designer, and it is not a four-quadrant form to fill mechanically. Its value is in catching control mismatch:
-
-- workflow freezes truth that is still uncertain
-- agentic loops drift without evidence or exit criteria
-- evidence exists but does not constrain claims
-- schemas make judgment look complete while the real uncertainty remains unresolved
-- a nominal semantic owner delegates a result-changing choice to a generic downstream component
 
 ## Mainline / 主路径
 
 ### When To Use / 使用场景
 
-Use this skill when:
+Use when control assignment is unresolved or may be wrong in an LLM, agent, skill,
+workflow, script, schema, or evidence-gate system. No agentic system, no WAE;
+no controller mismatch or open control decision, no WAE.
 
-- deciding whether to use scripts, schemas, prompts, agents, or human review
-- a workflow may be freezing uncertain truth too early
-- an LLM-filled structure looks clean but may be judgment-thin
-- a claim needs proof, confidence caps, or review-bound items
-- repeated mechanical verification should be separated from semantic judgment
+Typical mismatches: workflow freezes uncertain truth; agentic loops lack evidence or
+exit criteria; clean schemas hide thin judgment; claims exceed proof; delegated
+components must invent semantic choices. Separate mechanical checks from judgment,
+then use the minimal check below. Inspect delegation only if Ownership Closure is triggered.
 
-Do not use it to slow down low-risk formatting or obviously deterministic work.
-Do not use it for ordinary conceptual, organizational, product, or structural
-boundaries unless they are inside an agentic system and have a real controller
-mismatch.
+Conceptual comparisons, ordinary organizational/product boundaries, and low-risk
+deterministic work do not by themselves require WAE.
 
 ### Minimal WAE Check / 最小检查
 

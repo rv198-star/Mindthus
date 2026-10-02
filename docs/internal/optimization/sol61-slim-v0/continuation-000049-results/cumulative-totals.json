@@ -1,0 +1,34 @@
+{
+  "planned_paths": 44,
+  "delivered_paths": 44,
+  "content": {
+    "usable": 42,
+    "partially_usable": 2
+  },
+  "logical_calls": 98,
+  "cli_starts": 98,
+  "outer_driver_retries": 1,
+  "confirmed_returned_calls": 97,
+  "historical_remote_unknown_calls": 1,
+  "risk_accepted_remote_unknown_calls": 1,
+  "new_unknown_calls": 0,
+  "remaining_call_budget": 0,
+  "session_seconds": 2160.289491246993,
+  "active_wait_seconds": 5816.177170038049,
+  "summed_activity_wall_including_transition_seconds": 7981.803961595462,
+  "wall_basis": "sum of active execution windows; excludes offline repair/review/gaps between windows; not pureHTTP or unknown remote completion",
+  "excluded_contaminated_calls": 34,
+  "isolated_attempts": 64,
+  "isolated_confirmed_returned": 63,
+  "fees": null,
+  "underlying_http_or_generation_attempts": null,
+  "known_usage": {
+    "input_tokens": 2009664,
+    "cache_write_input_tokens": 0,
+    "reasoning_output_tokens": 7450,
+    "output_tokens": 27624,
+    "cached_input_tokens": 977536
+  },
+  "unknown_usage_calls": 1,
+  "usage_basis": "known97 subtotals; old unknown missing usage is not zero"
+}

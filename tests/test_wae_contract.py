@@ -192,11 +192,10 @@ class WaeContractTests(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_complete_expanded_worksheet_can_signal_pseudo_agentic_drift(self):
-        methodology = (WAE / "resources" / "methodology.md").read_text(encoding="utf-8")
-        worksheet = (WAE / "templates" / "control-boundary-worksheet.md").read_text(encoding="utf-8")
-        for text in (methodology, worksheet):
-            self.assertIn("A complete worksheet where every Expanded Field was filled", text)
-            self.assertIn("regression signal, not a quality signal", text)
+        for path in (WAE / "resources/methodology.md", WAE / "templates/control-boundary-worksheet.md"):
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("Filled-field count is not a quality or regression signal", text)
+            self.assertIn("do not invent uncertainty", text)
 
     def test_skill_exposes_conditional_ownership_closure(self):
         text = (WAE / "SKILL.md").read_text(encoding="utf-8")

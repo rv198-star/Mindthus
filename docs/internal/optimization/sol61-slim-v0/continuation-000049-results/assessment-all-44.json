@@ -1,0 +1,564 @@
+{
+  "scope": "executor read-only, unblinded, frozen T0 norms; prior31 reused, new13 actually read; no evaluator calls; no independent audit claim",
+  "rows": [
+    {
+      "path": "00-D01-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/00-D01-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "排序正确，严格三行，无额外读取。"
+      }
+    },
+    {
+      "path": "01-D01-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/01-D01-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "排序正确，严格三行，无额外读取。"
+      }
+    },
+    {
+      "path": "02-I01-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/02-I01-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "指出附件未提供，索取含数据/公式的原材料；没有编造错误。"
+      }
+    },
+    {
+      "path": "03-I01-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/03-I01-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "缺附件时明确索取正文/数据，未编造错误。"
+      }
+    },
+    {
+      "path": "04-F01-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/04-F01-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "区分完整能力与文本载体，以执行/状态/验证说明主要价值，保留纯文本Skill可能主要受益于Prompt；一次回答，无额外读取。"
+      }
+    },
+    {
+      "path": "05-F01-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/05-F01-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "unknown",
+        "reason": "保留Prompt语义核心与纯文本例外，明确执行/状态/验证是完整能力；读取WAE+TPlan后2次交付，对比当前版未见关键纠错增量，额外读取价值未证明。"
+      }
+    },
+    {
+      "path": "06-F02-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/06-F02-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "在明确文本接口范围内认可用户主张；只限定脚本外部作用，没有把整体价值强压回接口问题；一次交付。"
+      }
+    },
+    {
+      "path": "07-F02-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/07-F02-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "接口限定内认可Prompt观点，同时修正脚本只是调度这一辅助论据；不否定用户有效范围。"
+      }
+    },
+    {
+      "path": "08-M01-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/08-M01-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "observed",
+        "reason": "正确保留10倍方向并拒绝2小时窗口直接切换；需批准覆盖7小时或验证可压缩方案。已知方向仍为MPG要求补读SELA，累计3次调用，未见新增方向问题。"
+      }
+    },
+    {
+      "path": "09-M01-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/09-M01-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "保留效率方向，明确2小时不足6+1小时，给出获批更大窗口或经验证缩短迁移方案的行动；只读MPG后2次交付，未重复SELA方向判断。"
+      }
+    },
+    {
+      "path": "10-M02-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/10-M02-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "9小时窗口覆盖6小时迁移+1小时回滚，支持推进并明确第8小时最迟回滚决定；没有无依据阻断。"
+      }
+    },
+    {
+      "path": "11-M02-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/11-M02-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "observed",
+        "reason": "正确支持9小时内切换，保留最迟第8小时回滚决定；已知方向仍追加SELA，累计3次。"
+      }
+    },
+    {
+      "path": "12-E01-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/12-E01-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "拆开支付与探索对象，以正确性/验证需求分别确定优先级，并保留影响隔离；没有全公司口号式二选一。"
+      }
+    },
+    {
+      "path": "13-E01-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/13-E01-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "明确拒绝全公司伪二选一；支付以正确性为门槛、探索以可撤回实验验证需求，保留隔离影响。两臂均2次，处理时间接近。"
+      }
+    },
+    {
+      "path": "14-W01-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/14-W01-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "认可已签字例外可规则化，Agent提取资料而非自由改税率；冲突/缺失输入仅条件性转例外处理，未无依据阻断整题。"
+      }
+    },
+    {
+      "path": "15-W01-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/15-W01-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "按已确认条件执行，字段事实需核验，未覆盖/冲突才转有权负责人；不因存在Agent无依据增加裁量。"
+      }
+    },
+    {
+      "path": "16-W02-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/16-W02-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "已确定计算继续流程化，未定适用规则由有权负责人裁定；不以填字段隐藏语义裁决，2次交付。"
+      }
+    },
+    {
+      "path": "17-W02-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/17-W02-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "已确定税率计算保留固定流程，适用条件未决交规则责任方裁定；证据/结构校验区分正确，2次交付。"
+      }
+    },
+    {
+      "path": "18-P01-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/18-P01-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "partially_usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "直接修已定位分隔常量，验证表头和下游解析，没有全系统重写；漏事前要求含引号/逗号字段样例，验证不完整，不追分补试。"
+      }
+    },
+    {
+      "path": "19-P01-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/19-P01-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "partially_usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "修已定位常量、验证表头与下游解析正确，不虚构已执行；同样遗漏含引号/逗号字段样例，两臂共同验证缺口。"
+      }
+    },
+    {
+      "path": "20-P02-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/20-P02-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "要求原始退回与提交版本，定位具体缺项/依据/确认人；回忆单列不当原始证据，根因未定，不加审批层。"
+      }
+    },
+    {
+      "path": "21-P02-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/21-P02-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "先取三次原始退回与版本，记录不存在时确认本次要求，不猜唯一根因/不增审批表；开头出现3L5S标签属轻微呈现差异。"
+      }
+    },
+    {
+      "path": "22-R01-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/22-R01-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "选择A+B完整6小时组合，C延后；预算无余量，超时/返修不能靠省复核伪称达标。"
+      }
+    },
+    {
+      "path": "23-R01-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/23-R01-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "同样保留A+B依赖及6小时上限，C暂缓，复核通过才可上线；未建立多余运行平台。"
+      }
+    },
+    {
+      "path": "24-V01-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/24-V01-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "删无据已解决/保证，保留两次复现与关闭缓存后错误消失的观测；明天仅一小时只读、禁止生产改动，时间上限作为停止边界。两臂正文一致。"
+      }
+    },
+    {
+      "path": "25-V01-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/25-V01-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "删无据已解决/保证，保留两次复现与关闭缓存后错误消失的观测；明天仅一小时只读、禁止生产改动，时间上限作为停止边界。两臂正文一致。"
+      }
+    },
+    {
+      "path": "26-V02-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/26-V02-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "认可现有交接充分，可原文保留；仅当接收者不知入口时补日志位置，未强制扩写/打分/多轮。"
+      }
+    },
+    {
+      "path": "27-V02-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/27-V02-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "认可现有交接充分，可原文保留；仅当接收者不知入口时补日志位置，未强制扩写/打分/多轮。"
+      }
+    },
+    {
+      "path": "28-L01-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/28-L01-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "简短checkpoint含目标、第一处完成、第二处待改、验证未记录；补定位与URL后明日更新并核验，不真实执行、不造平台、不假称完成。"
+      }
+    },
+    {
+      "path": "29-L01-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/29-L01-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "简短恢复记录含目标、进度、定位、范围与明日核验，保留验证未记录，不扩平台或任务树。"
+      }
+    },
+    {
+      "path": "30-L02-gpt-6.1-sol-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "../isolated-batch-r1/runs/30-L02-gpt-6.1-sol-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "unnecessary_work": "not_observed",
+        "reason": "不从本地超时或intent推断未发送，保留原intent、授权和错误；未知不重发，核验需绑定原请求，再发需新授权；仅合成状态文本回答。"
+      }
+    },
+    {
+      "path": "31-L02-gpt-6.1-sol-current",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/31-L02-gpt-6.1-sol-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "保留unknown及intent和耗时；不把本地超时当远端失败；停止自动重发并要求绑定证据或指定新授权。只给摘要，不执行实际API。"
+      }
+    },
+    {
+      "path": "32-F01-gpt-6-astra-current",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/32-F01-gpt-6-astra-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "保留Prompt局部载体真实，区分完整能力与信息接口，具体说明执行、工具、状态和验证；允许纯文本Skill子类，不泛化成所有Skill均成熟自动化。无需另读方法。"
+      }
+    },
+    {
+      "path": "33-F01-gpt-6-astra-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/33-F01-gpt-6-astra-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "明确完整任务能力不能还原为Prompt；保留文本方法型Skill主要价值可来自Prompt，区分执行程序与模型判断。实际读取EDSP增加一次往返；没有发现相对当前版的重要内容纠正。"
+      }
+    },
+    {
+      "path": "34-F02-gpt-6-astra-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/34-F02-gpt-6-astra-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "按文本输入层限定承认核心命题成立；对脚本只调度这一局部概括作限定，不把完整系统价值强压回接口定义。与F01形成正确条件反转。"
+      }
+    },
+    {
+      "path": "35-F02-gpt-6-astra-current",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/35-F02-gpt-6-astra-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "在限定文本接口的条件下支持命题，并说明效果差异不否认接口同类性；未把全面系统定义强加给限定目标。与当前版F01正确反转。"
+      }
+    },
+    {
+      "path": "36-V01-gpt-6-astra-current",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/36-V01-gpt-6-astra-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "修掉解决及保证；保留两次复现、小流量关闭缓存错误消失的有限证据；明确一小时只读及禁止生产配置变更，结束后交接。"
+      }
+    },
+    {
+      "path": "37-V01-gpt-6-astra-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/37-V01-gpt-6-astra-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "与当前版实质一致；纠正保证，保留复现/关闭缓存关联证据及根因未知，一小时只读与生产禁改清楚。"
+      }
+    },
+    {
+      "path": "38-V02-gpt-6-astra-slim",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/38-V02-gpt-6-astra-slim/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "认为文档足够，不要求扩写或多轮强化；仅条件式提示缺日志入口时补充。保留原事实、不把相关性当根因。"
+      }
+    },
+    {
+      "path": "39-V02-gpt-6-astra-current",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/39-V02-gpt-6-astra-current/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "认为文档足够，不要求扩写或多轮强化；仅条件式提示缺日志入口时补充。保留原事实、不把相关性当根因。"
+      }
+    },
+    {
+      "path": "40-F01-gpt-6.1-sol-bare",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/40-F01-gpt-6.1-sol-bare/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "区分指令层与完整能力，指出可复用流程/资源/执行/验证主要价值，允许纯文本子类；未加载Mindthus也达到事前判据。仍含共同Codex系统背景，不是无系统提示纯API。"
+      }
+    },
+    {
+      "path": "41-F02-gpt-6.1-sol-bare",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/41-F02-gpt-6.1-sol-bare/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "接口限定下支持核心命题，仅收窄脚本全部只调度的概括；与裸F01正确反转。"
+      }
+    },
+    {
+      "path": "42-V01-gpt-6.1-sol-bare",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/42-V01-gpt-6.1-sol-bare/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "删除已解决/保证；保留两次复现及小流量关联证据、根因未知、一小时只读授权和生产禁改；一小时已构成排查上限。短于方法版但不以缺少固定交接字段扣分。"
+      }
+    },
+    {
+      "path": "43-V02-gpt-6.1-sol-bare",
+      "dispatch_status": "delivered",
+      "answer_path": "runs/43-V02-gpt-6.1-sol-bare/answer.txt",
+      "content_assessed": true,
+      "assessment": {
+        "task_result": "usable",
+        "important_judgment": "correct",
+        "critical_boundary": "respected",
+        "rationale": "明确已足够，可原文使用；识别根因未知与关联证据区分，不要求增厚或多轮审计。"
+      }
+    }
+  ]
+}

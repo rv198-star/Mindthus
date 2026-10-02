@@ -1,0 +1,56 @@
+{
+  "binding": {
+    "request_sha256": "89ca3543507c4352b629e596fd8a86a056f5e2d482187b5464c137d7de4a9861",
+    "wire_sha256": "9a6a7cb405c815a13354d9efb817d0181a4234a456d35910c37b640be2283806",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "M01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "transport": {
+    "kind": "cli",
+    "events": [
+      {
+        "type": "thread.started",
+        "thread_id": "01a0fcac-f358-7f62-8ba9-8e99f9a0ab8b"
+      },
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "item_0",
+          "type": "error",
+          "message": "Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /Users/william/.codex/config.toml."
+        }
+      },
+      {
+        "type": "turn.started"
+      },
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "item_1",
+          "type": "agent_message",
+          "text": "{\"kind\":\"read\",\"objection\":\"仅通过受控读取获取材料；不联网、不调用工具、不执行脚本。\",\"read_paths\":[\"skills/mpg/SKILL.md\",\"docs/methodologies/primitives/entry-triage.md\",\"docs/methodologies/primitives/frame-fitness-check.md\"],\"text\":\"读取迁移路径决策及入口定框规则，判断性能提升能否支持当前切换，重点核对停机、回滚与2小时获批维护窗口的硬约束。\"}"
+        }
+      },
+      {
+        "type": "turn.completed",
+        "usage": {
+          "input_tokens": 18698,
+          "cached_input_tokens": 15232,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 260,
+          "reasoning_output_tokens": 139
+        }
+      }
+    ],
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"01a0fcac-f358-7f62-8ba9-8e99f9a0ab8b\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /Users/william/.codex/config.toml.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"agent_message\",\"text\":\"{\\\"kind\\\":\\\"read\\\",\\\"objection\\\":\\\"仅通过受控读取获取材料；不联网、不调用工具、不执行脚本。\\\",\\\"read_paths\\\":[\\\"skills/mpg/SKILL.md\\\",\\\"docs/methodologies/primitives/entry-triage.md\\\",\\\"docs/methodologies/primitives/frame-fitness-check.md\\\"],\\\"text\\\":\\\"读取迁移路径决策及入口定框规则，判断性能提升能否支持当前切换，重点核对停机、回滚与2小时获批维护窗口的硬约束。\\\"}\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":18698,\"cached_input_tokens\":15232,\"cache_write_input_tokens\":0,\"output_tokens\":260,\"reasoning_output_tokens\":139}}\n",
+    "stderr": "2026-10-02T12:53:13.060068Z ERROR codex_models_manager::manager: failed to refresh available models: request timed out\n",
+    "returncode": 0,
+    "reply_text": "{\"kind\":\"read\",\"objection\":\"仅通过受控读取获取材料；不联网、不调用工具、不执行脚本。\",\"read_paths\":[\"skills/mpg/SKILL.md\",\"docs/methodologies/primitives/entry-triage.md\",\"docs/methodologies/primitives/frame-fitness-check.md\"],\"text\":\"读取迁移路径决策及入口定框规则，判断性能提升能否支持当前切换，重点核对停机、回滚与2小时获批维护窗口的硬约束。\"}"
+  }
+}

@@ -120,28 +120,9 @@ class MpgContractTests(unittest.TestCase):
     def test_mpg_direct_load_runs_sela_support_check_for_trend_based_mainlines(self):
         for path in (MPG_SKILL, MPG_RESOURCE):
             text = path.read_text(encoding="utf-8")
-            for phrase in (
-                "SELA ↔ MPG Twin-Lens Handshake",
-                "MPG direct-load companion check",
-                "SELA support check",
-                "must read `mindthus:sela`",
-                "Do not treat this as an internal memory-only check",
-                "system-efficiency/trend-based mainline",
-                "SELA support + MPG dominate",
-                "MPG still owns the action posture",
-                "If the direction check fails, return to SELA or EDSP before path strategy",
-                "include a short AQM visibility map or say why it",
-                "Direct-load output obligation",
-                "do not wait for using-mindthus to carry this handoff",
-                "first visible sentence must be a plain-language thesis",
-                "Default answer must not start",
-                "debug/audit support",
-                "ordinary language",
-                "evidence-limited",
-                "carrier/path",
-                "visibly pull in different directions",
-            ):
-                self.assertIn(phrase, text, f"{path} missing {phrase!r}")
+            for phrase in ("SELA ↔ MPG Twin-Lens Handshake", "direction", "insufficient", "disputed", "evidence ceiling", "MPG still owns the action posture", "evidence-limited"):
+                self.assertIn(phrase, text)
+            self.assertNotIn("must read `mindthus:sela`", text)
 
     def test_public_methodology_explains_twin_lens_without_runtime_commands(self):
         text = MPG_DOC.read_text(encoding="utf-8")
@@ -219,30 +200,9 @@ class MpgContractTests(unittest.TestCase):
             self.assertIn(phrase, text)
 
     def test_using_mindthus_routes_mpg_as_sibling_to_sela(self):
-        text = (REPO / "skills" / "using-mindthus" / "SKILL.md").read_text(
-            encoding="utf-8"
-        )
-        compact = " ".join(text.split())
-        agents = (REPO / "AGENTS.md").read_text(encoding="utf-8")
-        for phrase in (
-            "Long-term system efficiency versus local advantage",
-            "carrier/path action defers to MPG",
-            "Mainline plus carrier, exposure, path volatility, and commitment",
-            "no carrier/exposure/path, no MPG",
-            "SELA owns direction pressure; MPG owns path-carrying action",
-            "Approximate Quantified Mapping / 非精准量化显影",
-            "must not prove facts or compute decisions",
-        ):
-            self.assertIn(phrase, compact)
-        for phrase in (
-            "MPG",
-            "主线-路径博弈",
-            "主线承载方案",
-            "SELA 看整体趋势",
-            "direction + carrier + visibility",
-        ):
-            self.assertIn(phrase, agents)
-
+        text = (REPO / "skills/using-mindthus/SKILL.md").read_text(encoding="utf-8")
+        for phrase in ("系统效率与局部优势", "载体、暴露、路径", "SELA owns direction pressure", "MPG owns path-carrying action", "不能证明事实或计算决定"):
+            self.assertIn(phrase, text)
 
 if __name__ == "__main__":
     unittest.main()

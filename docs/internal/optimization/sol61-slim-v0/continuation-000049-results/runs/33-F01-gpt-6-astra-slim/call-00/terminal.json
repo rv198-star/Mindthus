@@ -1,0 +1,56 @@
+{
+  "binding": {
+    "request_sha256": "5fd83dfea2ee4328b74cfd2c58efefe7f9a245123c31bb48f01e586e22b70aeb",
+    "wire_sha256": "671e81d96ed17632cfd00687a6b9a98c4ae6645e9c35b17042158cf5c55f1ee3",
+    "batch_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "path": {
+      "case": "F01",
+      "arm": "slim",
+      "model": "gpt-6-astra"
+    },
+    "sequence": 0,
+    "simulation": false,
+    "cumulative_call_ordinal": 87,
+    "retry_of": null
+  },
+  "raw_sha256": "14bc1119593c330e6e0f09c75a606e4bfeada29b5be577577f976746fde3d036",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/edsp/SKILL.md"
+    ],
+    "text": "读取结构判断镜头，检验“最终通过 Prompt 交给模型”能否推出“完整任务能力及主要价值就是 Prompt”，据此给出明确的主次判断。"
+  },
+  "usage": {
+    "input_tokens": 18156,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 130,
+    "reasoning_output_tokens": 54
+  },
+  "error": null,
+  "session_seconds": 23.15861970798869,
+  "ended_at_epoch": 1790957132.220562,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "5fd83dfea2ee4328b74cfd2c58efefe7f9a245123c31bb48f01e586e22b70aeb",
+    "transport_successor_sha256": "eae698af54aeeed40a9bb274654851168e21b4b21e470afb8b7bf4fd2d000f57",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

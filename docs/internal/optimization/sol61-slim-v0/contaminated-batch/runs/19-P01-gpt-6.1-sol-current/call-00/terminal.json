@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "request_sha256": "5b09cff337c69b37e1921b37d6d30f0191a2f5c397f55e1025d2a51ecac6503f",
+    "wire_sha256": "50cc2031e52d5f5ab048f661404badef919e8cfb702e21b3ec8f2f477db90045",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "path": {
+      "case": "P01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "862d0df3ffedea99a395ae67f10d0e030939a999dd864bcfa65a272151a03f17",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "本轮未修改文件或执行验证；按要求仅使用会话材料。",
+    "read_paths": [],
+    "text": "最小修复：将已定位的首行分隔符常量由 `';'` 改为 `','`，保留现有字段顺序、转义和数据行逻辑。\n\n验证：\n1. 用原复现输入重新导出，确认第一行与预期逗号分隔表头完全一致。\n2. 用下游的逗号解析方式读取该 CSV，确认表头字段数量、名称和顺序正确，并能正常读取数据行。\n3. 对比修复前后输出，确认只有首行分隔符发生变化。\n\n以上通过即可结束，不扩大到整个导出系统。"
+  },
+  "usage": {
+    "input_tokens": 22374,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 334,
+    "reasoning_output_tokens": 143
+  },
+  "error": null,
+  "session_seconds": 17.35070079199795,
+  "ended_at_epoch": 1790940012.968974,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "5b09cff337c69b37e1921b37d6d30f0191a2f5c397f55e1025d2a51ecac6503f",
+    "transport_successor_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

@@ -1,0 +1,97 @@
+{
+  "gpt-6.1-sol/current": {
+    "logical_calls": 25,
+    "cli_starts": 25,
+    "session_seconds": 581.1579252930387,
+    "active_wait_seconds": 1439.576153247035,
+    "dispatch_wall_seconds": 2021.2878613339853,
+    "planned": 16,
+    "delivered": 15,
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 304640,
+      "input_tokens": 472459,
+      "output_tokens": 6651,
+      "reasoning_output_tokens": 2227
+    },
+    "recovery_keyword_matches": 2,
+    "usage_missing_calls": 1,
+    "usage_scope": "known subtotals; no failed-call usage imputed"
+  },
+  "gpt-6.1-sol/slim": {
+    "logical_calls": 25,
+    "cli_starts": 25,
+    "session_seconds": 532.6843544129806,
+    "active_wait_seconds": 1499.5409206670447,
+    "dispatch_wall_seconds": 2032.8773488760053,
+    "planned": 16,
+    "delivered": 16,
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 353152,
+      "input_tokens": 472549,
+      "output_tokens": 6124,
+      "reasoning_output_tokens": 1472
+    },
+    "recovery_keyword_matches": 0,
+    "usage_missing_calls": 0,
+    "usage_scope": "known subtotals; no failed-call usage imputed"
+  },
+  "gpt-6.1-sol/bare": {
+    "logical_calls": 0,
+    "cli_starts": 0,
+    "session_seconds": 0,
+    "active_wait_seconds": 0,
+    "dispatch_wall_seconds": 0,
+    "planned": 4,
+    "delivered": 0,
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "reasoning_output_tokens": 0
+    },
+    "recovery_keyword_matches": 0,
+    "usage_missing_calls": 0,
+    "usage_scope": "known subtotals; no failed-call usage imputed"
+  },
+  "gpt-6-astra/current": {
+    "logical_calls": 0,
+    "cli_starts": 0,
+    "session_seconds": 0,
+    "active_wait_seconds": 0,
+    "dispatch_wall_seconds": 0,
+    "planned": 4,
+    "delivered": 0,
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "reasoning_output_tokens": 0
+    },
+    "recovery_keyword_matches": 0,
+    "usage_missing_calls": 0,
+    "usage_scope": "known subtotals; no failed-call usage imputed"
+  },
+  "gpt-6-astra/slim": {
+    "logical_calls": 0,
+    "cli_starts": 0,
+    "session_seconds": 0,
+    "active_wait_seconds": 0,
+    "dispatch_wall_seconds": 0,
+    "planned": 4,
+    "delivered": 0,
+    "usage": {
+      "cache_write_input_tokens": 0,
+      "cached_input_tokens": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "reasoning_output_tokens": 0
+    },
+    "recovery_keyword_matches": 0,
+    "usage_missing_calls": 0,
+    "usage_scope": "known subtotals; no failed-call usage imputed"
+  }
+}

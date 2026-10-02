@@ -1,0 +1,78 @@
+{
+  "scope": "one bounded read-only reconciliation; no dispatch, no overwrite, no serial completion",
+  "binding": {
+    "request_sha256": "7d23f927a8aab39835d0b5be90584405af7e27b2422a3a11c401b96d65df88c6",
+    "wire_sha256": "65df10cf41d971bcccbc582622f34490aa07a34a78131b6e1d18b1743c657960",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "L02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "thread_id": "01a0fcde-e871-70f3-9fcc-e0f6fe9c5cf2",
+  "turn_id": "01a0fcde-e8d2-7711-a997-43b95deb324d",
+  "serial_slot": "scheduling/serial/000049",
+  "request_error": "workspace routing discovery failed",
+  "cli_turn_terminal": "failed",
+  "generation_acceptance_or_completion": "unknown",
+  "safety_refusal_observed": false,
+  "legacy_observation_preserved": {
+    "fallback_or_prewarm_log_count": 2
+  },
+  "interpretation": "The two prewarm regex matches occur within one startup_prewarm log line. They do not establish two retries, nor any generation resampling. MCP initialize retry notices concern tool startup endpoints. Routing discovery failure identifies local CLI infrastructure failure; available events do not independently establish generation payload send/acceptance.",
+  "sampling_retry_log_count": 0,
+  "mcp_initialize_retry_notice_count": 5,
+  "prewarm_log_lines": [
+    "2026-10-02T13:47:57.160616Z  WARN codex_core::session::startup_prewarm: startup auth prewarm failed: workspace routing discovery timed out"
+  ],
+  "original_archive_sha256_at_review": "7f5141a694472cb3f5a11997677634b62fa2c65923b8b30ceade224bc6f02ddf",
+  "bound_event_excerpts": [
+    {
+      "source_line": 2,
+      "event": {
+        "timestamp": "2026-10-02T13:47:42.165Z",
+        "ordinal": 1,
+        "type": "event_msg",
+        "payload": {
+          "type": "task_started",
+          "turn_id": "01a0fcde-e8d2-7711-a997-43b95deb324d",
+          "root_turn_id": "01a0fcde-e8d2-7711-a997-43b95deb324d",
+          "started_at": 1790948862,
+          "model_context_window": 258400,
+          "collaboration_mode_kind": "default"
+        }
+      }
+    },
+    {
+      "source_line": 11,
+      "event": {
+        "timestamp": "2026-10-02T13:48:07.179Z",
+        "ordinal": 10,
+        "type": "event_msg",
+        "payload": {
+          "type": "task_complete",
+          "turn_id": "01a0fcde-e8d2-7711-a997-43b95deb324d",
+          "last_agent_message": null,
+          "error": {
+            "message": "workspace routing discovery failed",
+            "codex_error_info": "other"
+          },
+          "started_at": 1790948862,
+          "completed_at": 1790948887,
+          "duration_ms": 25014
+        }
+      }
+    }
+  ],
+  "action": "preserve unknown and both stop records; no new requests; no inherited risk exception",
+  "budget": {
+    "old_calls": 34,
+    "new_calls": 50,
+    "cumulative_calls": 84,
+    "cumulative_cap": 98,
+    "unspent_allowance": 14
+  }
+}

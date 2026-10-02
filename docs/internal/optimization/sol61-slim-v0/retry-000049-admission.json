@@ -1,0 +1,14 @@
+{
+  "execution_authorized": true,
+  "request_sha256": "7d23f927a8aab39835d0b5be90584405af7e27b2422a3a11c401b96d65df88c6",
+  "cumulative_call_limit": 98,
+  "technical_retries_max": 1,
+  "authorization_ref": "Owner reply 重试，可能是网络断开导致 to the scoped L02/current retry request in this task",
+  "prior_calls_charged": 84,
+  "remaining_calls_max": 14,
+  "scope": "Retry only isolated batch serial/000049 once, then continue the remaining original Astra 8 and bare Sol 4 paths while budget permits. L02 retains its already consumed call and 3/path limit.",
+  "risk": "Old request remains remote unknown. Owner accepts possible duplicate computation/billing and remote overlap for this named request only. Waiting does not prove completion.",
+  "new_unknown": "Stop; no automatic second retry",
+  "preserved": "All 31 delivered answers, frozen inputs, same product/source snapshots and official provider/model/effort configuration",
+  "identity": "Record currently installed CLI version and byte hash as technical successor; no CLI install or global configuration changes; exclude mixed-version L02 timing from matched speed claims"
+}

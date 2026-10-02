@@ -4,7 +4,7 @@
 
 ## 原则
 
-当一方在系统级费效比上形成数量级优势时，另一方的局部优势，即使真实、卓越，也无法阻止它被淘汰或边缘化。
+当一方在系统级费效比上形成数量级优势时，另一方的局部优势，即使真实、卓越，通常难以阻止长期边缘化；利基用途、不可逆伤害、过渡约束和用户价值仍可能改变选择。
 
 局部优势不会消失，但会退守小众。
 
@@ -60,7 +60,7 @@ SELA 的主要风险不是推理不够顺，而是太顺：一旦接受“系统
 
 ### SELA ↔ MPG Twin-Lens Handshake
 
-SELA direct-load companion check: if carrier, exposure, path volatility, or continue/exit commitment is present, run an MPG companion check after direction calibration. When this applies, you must read `mindthus:mpg` before the final answer. Do not treat this as an internal memory-only check.
+SELA direct-load companion check: carrier, exposure, path volatility or commitment belongs to MPG. Transfer action ownership; read `mindthus:mpg` when that path judgment is not already sufficiently specified. A real handoff preserves unresolved constraints; it does not repeat an already settled direction check.
 
 SELA calibrates direction; MPG owns path-carrying action. When the companion check
 applies, the first visible sentence must be a plain-language thesis that separates
@@ -119,7 +119,7 @@ SELA 不是要求把所有局部都压平到同一个效率目标上。更准确
 
 ### 调用时机
 
-重大决策前，第一步扫一遍本顶层原则是否适用；不适用再进入下层具体判断。
+只有系统效率与局部优势的长期关系改变选择时才使用；重大决策并不自动归 SELA。
 
 ### 正确用法
 

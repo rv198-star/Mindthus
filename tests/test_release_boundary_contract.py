@@ -41,7 +41,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
 
-    def test_current_v1_10_1_release_preserves_prior_roi_beta_history(self):
+    def test_current_release_preserves_stable_and_roi_beta_history(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
         builder = (REPO / "scripts" / "build-release-pack.py").read_text(encoding="utf-8")
@@ -50,12 +50,16 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         release_log = (REPO / "docs" / "releases" / "v1.8.0.md").read_text(encoding="utf-8")
         beta_notes = (REPO / "docs" / "releases" / "v1.8.0-roi-beta.md").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.10.1`", readme)
+        self.assertIn("当前仓库版本：`v1.11.0`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
-        self.assertIn("当前已发布 Stable 是 `v1.10.1`", readme)
-        self.assertIn("mindthus-plugins-1.10.1.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.10.1.tar.gz", readme)
+        self.assertIn("主力仍使用 Sol 6.1 以下版本", readme)
+        self.assertIn("不建议仅为本次优化升级", readme)
+        self.assertIn("不是相对v1.10.1的直接统计", readme)
+        self.assertIn("当前已发布 Stable 是 `v1.11.0`", readme)
+        self.assertIn("mindthus-plugins-1.11.0.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.11.0.tar.gz", readme)
         self.assertIn("mindthus-beta-1.10.1-roi-beta.tar.gz", readme)
+        self.assertNotIn("mindthus-beta-1.11.0-roi-beta.tar.gz", readme)
         self.assertIn("Scarce Resource Allocation", readme)
         self.assertIn("## v1.10.1", changelog)
         self.assertIn("## v1.10.0", changelog)
@@ -66,8 +70,8 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("## v1.8.0", changelog)
         self.assertIn("补充发布包：1.9.1 ROI Beta", changelog)
         self.assertIn("v1.9.1-roi-beta", changelog)
-        self.assertIn('VERSION = "1.10.1"', builder)
-        self.assertIn('VERSION = "1.10.1"', runtime_logger)
+        self.assertIn('VERSION = "1.11.0"', builder)
+        self.assertIn('VERSION = "1.11.0"', runtime_logger)
         self.assertIn('"package_version": "1.5.4"', tplan_manifest)
         self.assertIn('"source_id": "mindthus-v1.5.4"', tplan_manifest)
         for phrase in (
@@ -88,28 +92,22 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertNotIn("Release candidate", release_log + beta_notes)
         self.assertNotIn("Release date:", release_log)
 
-    def test_release_defaults_publish_roi_beta_unless_explicitly_exempted(self):
-        policy = (REPO / "docs" / "internal" / "release-defaults.md").read_text(encoding="utf-8")
-        release = (REPO / "docs" / "releases" / "v1.10.1.md").read_text(encoding="utf-8")
-        beta = (REPO / "docs" / "releases" / "v1.10.1-roi-beta.md").read_text(encoding="utf-8")
-        prior_beta = (REPO / "docs" / "releases" / "v1.9.1-roi-beta.md").read_text(encoding="utf-8")
-        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
-        for phrase in (
-            "Stable release 默认同步发布同版本 ROI Beta",
-            "只有当某个版本在**发布前**明确记录",
-            "没有明确例外，就按默认规则发布",
-        ):
-            self.assertIn(phrase, policy)
-        self.assertIn("ROI Beta 同步发布", release)
-        self.assertIn("mindthus-plugins-1.10.1.tar.gz", release)
-        self.assertIn("mindthus-skills-1.10.1.tar.gz", release)
-        self.assertIn("mindthus-beta-1.10.1-roi-beta.tar.gz", release)
-        self.assertIn("v1.10.1-roi-beta", beta)
-        self.assertIn("SRA-compatible ROI Thin Core", beta)
-        self.assertIn("Beta-specific", beta)
-        self.assertIn("v1.9.1-roi-beta", prior_beta)
-        self.assertIn("补充发布包：1.10.1 ROI Beta", changelog)
-        self.assertIn("覆盖三份归档的 `SHA256SUMS`", changelog)
+    def test_release_defaults_beta_is_optional_and_current_assets_match(self):
+        policy = (REPO / "docs/internal/release-defaults.md").read_text(encoding="utf-8")
+        release = (REPO / "docs/releases/v1.11.0.md").read_text(encoding="utf-8")
+        historical = (REPO / "docs/releases/v1.10.1.md").read_text(encoding="utf-8")
+        prior_beta = (REPO / "docs/releases/v1.10.1-roi-beta.md").read_text(encoding="utf-8")
+        self.assertIn("Stable发布不再要求同步ROI Beta", policy)
+        self.assertIn("本版v1.11.0不发布ROI Beta", policy)
+        self.assertIn("本版不发布ROI Beta", release)
+        for name in ("mindthus-plugins-1.11.0.tar.gz", "mindthus-skills-1.11.0.tar.gz"):
+            self.assertIn(name, release)
+        self.assertNotIn("mindthus-beta-1.11.0-roi-beta.tar.gz", release)
+        self.assertIn("覆盖上述两份归档", release)
+        self.assertIn("ROI Beta 同步发布", historical)
+        self.assertIn("mindthus-beta-1.10.1-roi-beta.tar.gz", historical)
+        self.assertIn("SRA-compatible ROI Thin Core", prior_beta)
+        self.assertIn("Beta-specific", prior_beta)
 
     def test_v1_4_6_release_surface_is_preserved(self):
         changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")

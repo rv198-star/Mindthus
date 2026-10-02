@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="516.0" viewBox="0 0 1180 516.0" role="img" aria-labelledby="tplan-title tplan-desc" data-layout="vertical-execution-timeline" data-view="standard" data-schema-version="tplan.execution_cost_tree.v0.9">
+<title id="tplan-title">Mindthus Sol 6.1 减负优化 · TPlan 纵向实际执行时间轴</title>
+<desc id="tplan-desc">纵向排列真实任务节点；左侧刻度显示 Mission 生命周期相对时间，时间条按同一 Mission 历时等比例显示；弱配色折线保留真实父子关系；缩进、6/4/2px 主干与分支结构线、短层级标记、类型牌及标题字重共同区分 Task、SubTask 与 Step；Task 主干与分支全线不透明以保持同色；父子线共享接头由父级等效色不透明覆盖，避免子级颜色透出混色；状态颜色集中在状态标签，异常节点才使用状态底色；中性耗时排名标签不表示失败。</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}
+.report-title{font-size:22px;font-weight:700;fill:#ffffff}
+.mission-title{font-size:18px;font-weight:650;fill:#dbeafe}
+.mission-meta{font-size:14px;fill:#dbeafe}
+.legend{font-size:13px;fill:#475569}
+.time-label{font-size:12px;font-variant-numeric:tabular-nums;fill:#475569}
+.node-title-task{font-size:16px;font-weight:700;fill:#0f172a}
+.node-title-subtask{font-size:15px;font-weight:650;fill:#0f172a}
+.node-title-step{font-size:14px;font-weight:600;fill:#0f172a}
+.kind-label{font-size:11px;font-weight:750;letter-spacing:.35px}
+.node-meta{font-size:12.5px;fill:#475569}
+.node-metric{font-size:13px;fill:#1e293b}
+.node-result{font-size:12.5px;fill:#334155}
+.status-label{font-size:12px;font-weight:650}
+.duration-hotspot-label{font-size:12px;font-weight:650;fill:#475569}
+.tree-edge{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.time-guide{stroke:#cbd5e1;stroke-width:1;stroke-dasharray:3 5}
+.axis{stroke:#64748b;stroke-width:2}
+.range-track{fill:#e8edf3}
+</style>
+<rect width="1180" height="516.0" fill="#f8fafc"/>
+<rect x="32" y="24" width="1116" height="216" rx="16" fill="#172554" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="58" y="58" class="report-title">TPlan 纵向实际执行时间轴</text>
+<text x="58" y="88" class="mission-title">Mindthus Sol 6.1 减负优化</text>
+<text x="58" y="116" class="mission-meta">Mission · 执行中 · 实际历时 6h27m</text>
+<text x="58" y="140" class="mission-meta">遥测覆盖：未采集成本通道；未采集：LLM调用、脚本时长、工具时长、等待时长、Token；未显示字段不代表 0。</text>
+<text x="58" y="164" class="mission-meta">未被精确记录 6h27m</text>
+<text x="58" y="188" class="mission-meta">真实节点 1/1 · 产出归因 P4/C2 · 生命周期 exact · 运行时 exact · standard</text>
+<text x="32" y="270" class="legend">纵向=首次执行；左侧是实际相对时间；蓝灰条=起止/持续；层级线=Task 主干 6 / SubTask 分支 4 / Step 末梢 2px；中性标签=Task 耗时排名。</text>
+<line x1="112" y1="369.0" x2="112" y2="369.0" class="axis"/>
+<line x1="120" y1="369.0" x2="260" y2="369.0" class="time-guide"/>
+<circle cx="112" cy="369.0" r="5" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+<text x="100" y="373.0" class="time-label" text-anchor="end">+00:00.000</text>
+<path d="M 242 240 V 369.0 H 270" class="tree-edge" stroke="#64748b" stroke-width="6.0" opacity="1.0" data-tree-from="mission" data-tree-to="T0" data-child-kind="task"/>
+<g id="node-T0" class="task-card" data-task-id="T0" data-depth="0" data-start-offset-ms="0" data-finish-offset-ms="23254974">
+<rect x="270" y="292.0" width="876" height="154" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+<rect x="273" y="305.0" width="6" height="28" rx="3.0" fill="#64748b" class="hierarchy-accent" data-node-kind="task"/>
+<rect x="288" y="305.0" width="72" height="24" rx="6" fill="#475569" stroke="#475569" stroke-width="1.25"/>
+<text x="324" y="322.0" class="kind-label" text-anchor="middle" fill="#ffffff">TASK</text>
+<text x="374" y="321.0" class="node-title-task">提前固定验收对比场景 · T0</text>
+<rect x="1052" y="305.0" width="76" height="24" rx="12" fill="#2563eb" opacity=".13"/>
+<text x="1090" y="322.0" class="status-label" text-anchor="middle" fill="#1e3a8a">▶ 执行中</text>
+<text x="288" y="346.0" class="node-meta">#1 · 子树汇总</text>
+<text x="288" y="371.0" class="node-metric">时间 +00:00.000 → +06:27:34.974 · 实际历时 6h27m · 未被精确记录 6h27m</text>
+<text x="288" y="396.0" class="node-result">结果：未记录</text>
+<text x="288" y="421.0" class="node-result">产出归因：可计推进（acceptance AE-EVALUATION, AE-IMPLEMENTATION, AE-PACKAGE, AE-T0），另有 2…</text>
+<rect x="288" y="432.0" width="840" height="6" rx="3" class="range-track"/>
+<rect x="288.00" y="432.0" width="840.00" height="6" rx="4" fill="#64748b" class="node-range" data-task-id="T0"/>
+</g>
+<line x1="32" y1="462.0" x2="1148" y2="462.0" stroke="#e2e8f0"/>
+<text x="32" y="486.0" class="legend">Mission 结束 +06:27:34.974 · 纵向行距不代表持续时间；精确时间由刻度、节点起止值及统一比例时间条表达。</text>
+</svg>

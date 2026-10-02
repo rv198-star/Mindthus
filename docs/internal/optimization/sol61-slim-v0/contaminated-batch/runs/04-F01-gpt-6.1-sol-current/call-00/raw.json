@@ -1,0 +1,56 @@
+{
+  "binding": {
+    "request_sha256": "40a1c7c3015196cd40caca23f15e6c98a0ba8ab417fb36e535b1edfb74b0a33c",
+    "wire_sha256": "d481477b558d8102c04ea8e6d11d869fce64eca4501ed026dbc7ef1730e8241a",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "path": {
+      "case": "F01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "transport": {
+    "kind": "cli",
+    "events": [
+      {
+        "type": "thread.started",
+        "thread_id": "01a0fc36-9ddc-7271-b366-6f4179efe4e1"
+      },
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "item_0",
+          "type": "error",
+          "message": "Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /Users/william/.codex/config.toml."
+        }
+      },
+      {
+        "type": "turn.started"
+      },
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "item_1",
+          "type": "agent_message",
+          "text": "{\"kind\":\"read\",\"objection\":\"\",\"read_paths\":[\"docs/methodologies/primitives/entry-triage.md\",\"docs/methodologies/primitives/frame-fitness-check.md\",\"docs/methodologies/primitives/whole-elephant-protocol.md\",\"docs/methodologies/shared-primitives.md\",\"skills/edsp/SKILL.md\"],\"text\":\"读取结构判断及定义层级的必要规则，检查“最终进入模型的是 Prompt”能否推出“完整任务能力及主要价值就是 Prompt”，据此给出明确的主次判断。\"}"
+        }
+      },
+      {
+        "type": "turn.completed",
+        "usage": {
+          "input_tokens": 22395,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 240,
+          "reasoning_output_tokens": 114
+        }
+      }
+    ],
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"01a0fc36-9ddc-7271-b366-6f4179efe4e1\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /Users/william/.codex/config.toml.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"agent_message\",\"text\":\"{\\\"kind\\\":\\\"read\\\",\\\"objection\\\":\\\"\\\",\\\"read_paths\\\":[\\\"docs/methodologies/primitives/entry-triage.md\\\",\\\"docs/methodologies/primitives/frame-fitness-check.md\\\",\\\"docs/methodologies/primitives/whole-elephant-protocol.md\\\",\\\"docs/methodologies/shared-primitives.md\\\",\\\"skills/edsp/SKILL.md\\\"],\\\"text\\\":\\\"读取结构判断及定义层级的必要规则，检查“最终进入模型的是 Prompt”能否推出“完整任务能力及主要价值就是 Prompt”，据此给出明确的主次判断。\\\"}\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":22395,\"cached_input_tokens\":0,\"cache_write_input_tokens\":0,\"output_tokens\":240,\"reasoning_output_tokens\":114}}\n",
+    "stderr": "",
+    "returncode": 0,
+    "reply_text": "{\"kind\":\"read\",\"objection\":\"\",\"read_paths\":[\"docs/methodologies/primitives/entry-triage.md\",\"docs/methodologies/primitives/frame-fitness-check.md\",\"docs/methodologies/primitives/whole-elephant-protocol.md\",\"docs/methodologies/shared-primitives.md\",\"skills/edsp/SKILL.md\"],\"text\":\"读取结构判断及定义层级的必要规则，检查“最终进入模型的是 Prompt”能否推出“完整任务能力及主要价值就是 Prompt”，据此给出明确的主次判断。\"}"
+  }
+}

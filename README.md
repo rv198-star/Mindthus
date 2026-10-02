@@ -56,7 +56,7 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 
 - [`using-mindthus / 路由入口`](skills/using-mindthus/SKILL.md)：先判断要不要介入。低风险任务直接做；输入带偏时先纠偏；缺事实时先取证。
 - [`3L5S / 三层五步`](docs/methodologies/3l5s.md)：问题还乱时，把“感觉不对”压成能复述、能验证、能执行的真问题。
-- [`SRA / 稀缺资源优先分配`](docs/methodologies/sra.md)：多个有效事项争夺同一批时间、人力或资金时，决定现在先投什么、哪些只保底、哪些延后或停止；普通执行用 Lite，重大组合决策用 Full。
+- [`SRA / Scarce Resource Allocation / 稀缺资源优先分配`](docs/methodologies/sra.md)：多个有效事项争夺同一批时间、人力或资金时，决定现在先投什么、哪些只保底、哪些延后或停止；普通执行用 Lite，重大组合决策用 Full。
 - [`EDSP / Extreme Deduction + Scenario Projection`](docs/methodologies/edsp.md)：A/B 都像对时，先检查命题、边界和评价轴，避免温吞折中。
 - [`SELA / 系统效率碾压局部优势`](docs/methodologies/sela.md)：旧方式局部很好时，判断它会不会被更高效的系统长期压过。
 - [`MPG / 主线-路径博弈 / Mainline-Path Game`](docs/methodologies/mpg.md)：长期方向看对了，还要判断当前载体能不能穿过波动、成本和时机。
@@ -114,21 +114,18 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
-**发布默认规则**：Stable release 默认同步提供同版本 ROI Beta supplemental asset；只有该版本在发布前明确声明例外时才不发布 ROI Beta。
+当前已发布 Stable 是 `v1.11.0`，主要面向 **Sol 6.1 降低不必要的 token 消耗**：减少重复提示、方法读取往返和无必要的流程展开，保留重要判断、证据与权限边界。
 
-当前已发布 Stable 是 `v1.10.1`。这是 `v1.10.0` 的 **TPlan Authority Integrity Bugfix patch**：
-不新增方法、route、判断 owner 或 TPlan runtime generation，而是修复真实 Codex App / Sol High 长任务事故复盘中确认的四类确定性合同缺口：证据引用必须真实解析、动态节点创建与激活游标原子一致、续行授权必须约束实际 mutation、Mission 只有在 success-critical 工作完成且当前验收观察为正时才能进入 completed。
+**升级建议**：主力使用 Sol 6.1 的用户可升级；主力仍使用 Sol 6.1 以下版本的用户，不建议仅为本次优化升级，可继续使用 [v1.10.1](https://github.com/rv198-star/Mindthus/releases/tag/v1.10.1)。这不是旧模型不兼容声明，而是本轮没有建立旧模型的升级收益。
 
-SRA / Scarce Resource Allocation 的 Proportionate Allocation、v0.4 输入合同、Lite / Full 与 Single / Dual 校准、checked Decision Card、completion criterion reference 与 rerank lineage 均保持 `v1.10.0` 行为；TPlan runtime generation 继续保持 `1.5.4` 代际。此次 patch 关闭的是确定性 authority-integrity 缺陷，不声称 Codex App / Sol High 下类似 16 小时执行过载已经被端到端证明消失。
+RC01→本版候选的公开开发例回归中，Sol 6.1 输入 token 少16.9%、Astra抽检少14.9%，主要来自减少读取。不是相对v1.10.1的直接统计，不承诺固定节省率、普遍提速或金额ROI。详见 [v1.11.0 发布说明](docs/releases/v1.11.0.md)。
 
-`v1.10.1` Release 同步提供 Stable plugins、Stable skills 与 ROI Beta supplemental experimental asset。ROI Beta 从精确 `v1.10.1` Stable shared core 组装，继承本版 TPlan 修复；其 runtime delta 继续限定为已资格验证的 SRA-compatible ROI Thin Core、历史 ROI.2 3L5S Anti-Spiral correction、Beta identity / namespace 与 diagnostic 坐标。Beta 不取代 Stable，也不自动迁移。
+**发布默认规则**：Stable发布不再要求同步ROI Beta。本版仅提供Stable插件包、Skills包及校验和；既有Beta版本保留，后续仅在明确需要时单独安排。TPlan runtime generation仍为 `1.5.4`。
 
-- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.10.1.tar.gz`。
-- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.10.1.tar.gz`。
-- 只在高能力 Codex / GPT-Sol 上复查低开销唤起实验：下载
-  `mindthus-beta-1.10.1-roi-beta.tar.gz`；它使用独立的 Codex plugin / marketplace 包与
-  `mindthus-beta` 命名空间，不是通用 skills-pack，也不是 v1.10.1 Stable 的替代品。
+[RC01源码标签](https://github.com/rv198-star/Mindthus/tree/v1.11.0-rc.1)保留用于回退与对照；该预发布曾撤下，不恢复其Release。
 
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.11.0.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.11.0.tar.gz`。
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
 ### 下载
@@ -137,22 +134,22 @@ SRA / Scarce Resource Allocation 的 Proportionate Allocation、v0.4 输入合�
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-plugins-1.10.1.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.10.1/mindthus-plugins-1.10.1.tar.gz"
+  -o /tmp/mindthus-plugins-1.11.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.11.0/mindthus-plugins-1.11.0.tar.gz"
 rm -rf /tmp/mindthus-plugins
 mkdir -p /tmp/mindthus-plugins
-tar -xzf /tmp/mindthus-plugins-1.10.1.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+tar -xzf /tmp/mindthus-plugins-1.11.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
 ```
 
 Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-skills-1.10.1.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.10.1/mindthus-skills-1.10.1.tar.gz"
+  -o /tmp/mindthus-skills-1.11.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.11.0/mindthus-skills-1.11.0.tar.gz"
 rm -rf /tmp/mindthus-skills
 mkdir -p /tmp/mindthus-skills
-tar -xzf /tmp/mindthus-skills-1.10.1.tar.gz -C /tmp/mindthus-skills --strip-components=1
+tar -xzf /tmp/mindthus-skills-1.11.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
 ### Codex Plugin Mode（推荐）
@@ -173,28 +170,13 @@ codex plugin remove mindthus@mindthus
 codex plugin marketplace remove mindthus
 ```
 
-### Codex ROI Beta（实验）
+### 历史 ROI Beta（可选实验包）
 
-只在高能力 Codex / GPT-Sol 上复查低开销唤起实验时使用。这个
-`v1.10.1-roi-beta` 包从精确 `v1.10.1` Stable shared core 组装，继承完整 SRA Skill 与本版 TPlan authority-integrity 修复、
-v0.3/v0.4 输入兼容、比例化校准、checked Decision Card、rerank lineage、Root-Cause Replacement、
-competitive-frame convergence、WAE Ownership Closure、Judgment Trace、Case Export、case-prep、
-Test Lifecycle 与现有 TPlan 能力；运行时差异限定为 SRA-compatible ROI Thin Core、历史 ROI.2
-单句 3L5S Anti-Spiral correction、Beta identity / namespace 与 diagnostic 坐标。
-Stable 与 ROI Beta 可以独立安装或移除：
-
-```bash
-curl -L \
-  -o /tmp/mindthus-beta-1.10.1-roi-beta.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.10.1/mindthus-beta-1.10.1-roi-beta.tar.gz"
-rm -rf /tmp/mindthus-roi-beta
-mkdir -p /tmp/mindthus-roi-beta
-tar -xzf /tmp/mindthus-beta-1.10.1-roi-beta.tar.gz -C /tmp/mindthus-roi-beta --strip-components=1
-codex plugin marketplace add /tmp/mindthus-roi-beta
-codex plugin add mindthus-beta@mindthus-beta
-```
-
-需要完整被动唤起、跨模型一致性或保守默认行为时，使用 Stable 而不是 ROI Beta。
+本版不发布ROI Beta，也不要求后续Stable同步发布。已有 `v1.10.1-roi-beta` 保留，
+使用独立的 `mindthus-beta` 命名空间，不自动升级或迁移；需要旧实验包时可从
+[v1.10.1 Release](https://github.com/rv198-star/Mindthus/releases/tag/v1.10.1)下载
+`mindthus-beta-1.10.1-roi-beta.tar.gz`。它不包含v1.11.0的共享方法减负改动，
+不把本版Stable实测外推为Beta收益。
 
 ### Claude Code Plugin Mode（推荐）
 
@@ -308,7 +290,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.10.1`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.11.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md)，正式安装版见 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 

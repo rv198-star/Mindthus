@@ -1,0 +1,159 @@
+{
+  "scope": "executor, unblinded read-only content assessment; not independent model review",
+  "rows": [
+    {
+      "path": "00-D01-gpt-6.1-sol-current",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "排序严格三行；缺附件正确索取材料，无编造。",
+      "answer_path": "runs/00-D01-gpt-6.1-sol-current/answer.txt"
+    },
+    {
+      "path": "01-D01-gpt-6.1-sol-slim",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "排序严格三行；缺附件正确索取材料，无编造。",
+      "answer_path": "runs/01-D01-gpt-6.1-sol-slim/answer.txt"
+    },
+    {
+      "path": "02-I01-gpt-6.1-sol-slim",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "排序严格三行；缺附件正确索取材料，无编造。",
+      "answer_path": "runs/02-I01-gpt-6.1-sol-slim/answer.txt"
+    },
+    {
+      "path": "03-I01-gpt-6.1-sol-current",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "排序严格三行；缺附件正确索取材料，无编造。",
+      "answer_path": "runs/03-I01-gpt-6.1-sol-current/answer.txt"
+    },
+    {
+      "path": "04-F01-gpt-6.1-sol-current",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "按事前规范读取完整首份回答；没有新增语义评阅调用。F01两臂区分接口与完整能力，F02两臂保留狭义接口定义。",
+      "answer_path": "runs/04-F01-gpt-6.1-sol-current/answer.txt"
+    },
+    {
+      "path": "05-F01-gpt-6.1-sol-slim",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "unknown",
+      "reason": "按事前规范读取完整首份回答；没有新增语义评阅调用。F01两臂区分接口与完整能力，F02两臂保留狭义接口定义。",
+      "answer_path": "runs/05-F01-gpt-6.1-sol-slim/answer.txt"
+    },
+    {
+      "path": "06-F02-gpt-6.1-sol-slim",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "按事前规范读取完整首份回答；没有新增语义评阅调用。F01两臂区分接口与完整能力，F02两臂保留狭义接口定义。",
+      "answer_path": "runs/06-F02-gpt-6.1-sol-slim/answer.txt"
+    },
+    {
+      "path": "07-F02-gpt-6.1-sol-current",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "按事前规范读取完整首份回答；没有新增语义评阅调用。F01两臂区分接口与完整能力，F02两臂保留狭义接口定义。",
+      "answer_path": "runs/07-F02-gpt-6.1-sol-current/answer.txt"
+    },
+    {
+      "path": "08-M01-gpt-6.1-sol-current",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "完整读取原始回答：窗口条件正确改变行动；结构二选一被拆开；W规则授权与事实证据分离。未运行评分模型。",
+      "answer_path": "runs/08-M01-gpt-6.1-sol-current/answer.txt"
+    },
+    {
+      "path": "09-M01-gpt-6.1-sol-slim",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "unknown",
+      "reason": "完整读取原始回答：窗口条件正确改变行动；结构二选一被拆开；W规则授权与事实证据分离。未运行评分模型。",
+      "answer_path": "runs/09-M01-gpt-6.1-sol-slim/answer.txt"
+    },
+    {
+      "path": "10-M02-gpt-6.1-sol-slim",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "完整读取原始回答：窗口条件正确改变行动；结构二选一被拆开；W规则授权与事实证据分离。未运行评分模型。",
+      "answer_path": "runs/10-M02-gpt-6.1-sol-slim/answer.txt"
+    },
+    {
+      "path": "11-M02-gpt-6.1-sol-current",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "完整读取原始回答：窗口条件正确改变行动；结构二选一被拆开；W规则授权与事实证据分离。未运行评分模型。",
+      "answer_path": "runs/11-M02-gpt-6.1-sol-current/answer.txt"
+    },
+    {
+      "path": "12-E01-gpt-6.1-sol-current",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "完整读取原始回答：窗口条件正确改变行动；结构二选一被拆开；W规则授权与事实证据分离。未运行评分模型。",
+      "answer_path": "runs/12-E01-gpt-6.1-sol-current/answer.txt"
+    },
+    {
+      "path": "13-E01-gpt-6.1-sol-slim",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "完整读取原始回答：窗口条件正确改变行动；结构二选一被拆开；W规则授权与事实证据分离。未运行评分模型。",
+      "answer_path": "runs/13-E01-gpt-6.1-sol-slim/answer.txt"
+    },
+    {
+      "path": "14-W01-gpt-6.1-sol-slim",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "完整读取原始回答：窗口条件正确改变行动；结构二选一被拆开；W规则授权与事实证据分离。未运行评分模型。",
+      "answer_path": "runs/14-W01-gpt-6.1-sol-slim/answer.txt"
+    },
+    {
+      "path": "15-W01-gpt-6.1-sol-current",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "完整读取原始回答：窗口条件正确改变行动；结构二选一被拆开；W规则授权与事实证据分离。未运行评分模型。",
+      "answer_path": "runs/15-W01-gpt-6.1-sol-current/answer.txt"
+    },
+    {
+      "path": "16-W02-gpt-6.1-sol-current",
+      "task_result": "usable",
+      "important_judgment": "correct",
+      "critical_boundary": "respected",
+      "unnecessary_work": "not_observed",
+      "reason": "完整读取原始回答：窗口条件正确改变行动；结构二选一被拆开；W规则授权与事实证据分离。未运行评分模型。",
+      "answer_path": "runs/16-W02-gpt-6.1-sol-current/answer.txt"
+    }
+  ],
+  "qualification": "Content notes remain observational; invalid for T0 isolated comparison due inherited project AGENTS"
+}

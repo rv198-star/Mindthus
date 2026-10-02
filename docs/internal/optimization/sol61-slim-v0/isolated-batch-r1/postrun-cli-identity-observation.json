@@ -1,0 +1,314 @@
+{
+  "frozen_binary_sha256": "50ac633af64851511f9bbc71032cdae7f1ba20b3234c189687d61ba846c354c5",
+  "observed_binary_sha256": "1180e2d56ea06ec583092acd933345685da3441cb1769a436d76dbf320613e75",
+  "observed_version": "codex-cli 0.159.0-alpha.12.1",
+  "binary_mtime_epoch": 1790932802.7284262,
+  "binary_ctime_epoch": 1790953750.0730863,
+  "binary_birthtime_epoch": 1790361138.694931,
+  "last_call_local_end_epoch": 1790948892.225183,
+  "bound_cli_versions": {
+    "0.159.2": 50
+  },
+  "calls": [
+    {
+      "path": "runs/00-D01-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fca1-806a-79e3-a8fb-a55b9f348eec",
+      "session_timestamp": "2026-10-02T12:40:40.908Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/01-D01-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fca2-a11e-7213-91ee-1a8a00505550",
+      "session_timestamp": "2026-10-02T12:41:54.487Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/02-I01-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fca3-c085-75f2-99d5-b08a139a0b30",
+      "session_timestamp": "2026-10-02T12:43:08.174Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/03-I01-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fca4-f40a-7962-8833-e0b69a714942",
+      "session_timestamp": "2026-10-02T12:44:23.950Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/04-F01-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fca6-22ec-7462-83a3-50bf09d56afd",
+      "session_timestamp": "2026-10-02T12:45:41.486Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fca7-94f5-7a91-9d63-251153c41ce0",
+      "session_timestamp": "2026-10-02T12:47:18.787Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/05-F01-gpt-6.1-sol-slim/call-01",
+      "thread_id": "01a0fca8-c406-7b11-8f18-a3763f60a4e0",
+      "session_timestamp": "2026-10-02T12:48:36.649Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/06-F02-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fcaa-2afd-7ce3-91ac-126b0edafe91",
+      "session_timestamp": "2026-10-02T12:50:05.695Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/07-F02-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcab-790e-7683-83eb-2fd7e8a79760",
+      "session_timestamp": "2026-10-02T12:51:33.656Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcac-f358-7f62-8ba9-8e99f9a0ab8b",
+      "session_timestamp": "2026-10-02T12:53:13.064Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-01",
+      "thread_id": "01a0fcae-496c-79f2-bfbd-019ae9cd5c3c",
+      "session_timestamp": "2026-10-02T12:54:40.632Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/08-M01-gpt-6.1-sol-current/call-02",
+      "thread_id": "01a0fcaf-909d-7513-a428-867ed7892f58",
+      "session_timestamp": "2026-10-02T12:56:02.410Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fcb0-d3a7-7353-8e5f-540ebc3cd5a3",
+      "session_timestamp": "2026-10-02T12:57:25.113Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/09-M01-gpt-6.1-sol-slim/call-01",
+      "thread_id": "01a0fcb2-039f-7750-a077-ac5b658e7107",
+      "session_timestamp": "2026-10-02T12:58:44.910Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fcb3-5150-7381-9a73-b22ac54bef0a",
+      "session_timestamp": "2026-10-02T13:00:05.331Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/10-M02-gpt-6.1-sol-slim/call-01",
+      "thread_id": "01a0fcb4-74de-7302-b7bb-a3567b39ed2f",
+      "session_timestamp": "2026-10-02T13:01:22.795Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcb5-b39d-7691-9b21-8e28fc67eec0",
+      "session_timestamp": "2026-10-02T13:02:41.569Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-01",
+      "thread_id": "01a0fcb6-d49d-7f60-a157-19ea1a786d22",
+      "session_timestamp": "2026-10-02T13:03:58.232Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/11-M02-gpt-6.1-sol-current/call-02",
+      "thread_id": "01a0fcb8-014e-7362-a301-26d7d40d74fe",
+      "session_timestamp": "2026-10-02T13:05:15.728Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcb9-5763-7311-bac1-50544c27ada7",
+      "session_timestamp": "2026-10-02T13:06:40.101Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/12-E01-gpt-6.1-sol-current/call-01",
+      "thread_id": "01a0fcba-7ef8-7763-a893-feb4432617e4",
+      "session_timestamp": "2026-10-02T13:07:58.351Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fcbb-d570-7e92-be1e-f53a728d67d8",
+      "session_timestamp": "2026-10-02T13:09:23.442Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/13-E01-gpt-6.1-sol-slim/call-01",
+      "thread_id": "01a0fcbd-0673-75f0-bb02-e8b8dfa42e82",
+      "session_timestamp": "2026-10-02T13:10:41.525Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fcbe-5417-70c3-a411-866c4be4b904",
+      "session_timestamp": "2026-10-02T13:12:06.938Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/14-W01-gpt-6.1-sol-slim/call-01",
+      "thread_id": "01a0fcbf-700f-7070-9e95-2929a795793a",
+      "session_timestamp": "2026-10-02T13:13:22.680Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcc0-c762-79e1-b98a-07c712e54b41",
+      "session_timestamp": "2026-10-02T13:14:50.399Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/15-W01-gpt-6.1-sol-current/call-01",
+      "thread_id": "01a0fcc1-f925-7091-a81f-cc55c70d9dac",
+      "session_timestamp": "2026-10-02T13:16:05.799Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcc3-3ff5-7110-9517-778c0d1cdfa0",
+      "session_timestamp": "2026-10-02T13:17:34.468Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/16-W02-gpt-6.1-sol-current/call-01",
+      "thread_id": "01a0fcc4-756f-72e2-a0ed-8387b3ea92ea",
+      "session_timestamp": "2026-10-02T13:18:52.289Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fcc5-ccf0-7fc0-a2c7-5fcccf1b15a5",
+      "session_timestamp": "2026-10-02T13:20:16.627Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/17-W02-gpt-6.1-sol-slim/call-01",
+      "thread_id": "01a0fcc6-eb00-7770-989b-916996a0f707",
+      "session_timestamp": "2026-10-02T13:21:34.861Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/18-P01-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fcc8-53f9-74c2-8658-3a7aee0cea00",
+      "session_timestamp": "2026-10-02T13:23:02.267Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/19-P01-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcc9-8245-7c42-beeb-15d141a24ddc",
+      "session_timestamp": "2026-10-02T13:24:19.655Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcca-bf45-72d0-b8aa-712da572e8c9",
+      "session_timestamp": "2026-10-02T13:25:40.807Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/20-P02-gpt-6.1-sol-current/call-01",
+      "thread_id": "01a0fccb-fbc7-74d0-ba50-cdb570a6caa7",
+      "session_timestamp": "2026-10-02T13:27:04.675Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fccd-4f65-7cd2-a073-501a070dc0aa",
+      "session_timestamp": "2026-10-02T13:28:33.780Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/21-P02-gpt-6.1-sol-slim/call-01",
+      "thread_id": "01a0fcce-870d-7320-bbe0-7532e23df8f7",
+      "session_timestamp": "2026-10-02T13:29:48.560Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fccf-d652-79e3-9171-e618822983b4",
+      "session_timestamp": "2026-10-02T13:31:17.327Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/22-R01-gpt-6.1-sol-slim/call-01",
+      "thread_id": "01a0fcd1-01f5-7fc3-afdb-071dd1731723",
+      "session_timestamp": "2026-10-02T13:32:33.813Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcd2-41d7-7822-a812-55bce19d202c",
+      "session_timestamp": "2026-10-02T13:33:52.985Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/23-R01-gpt-6.1-sol-current/call-01",
+      "thread_id": "01a0fcd3-6a72-72c0-9ffd-21e57fdf6362",
+      "session_timestamp": "2026-10-02T13:35:13.919Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/24-V01-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcd4-b4e6-7670-83fc-d0d5bb1835fa",
+      "session_timestamp": "2026-10-02T13:36:33.512Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/25-V01-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fcd5-d1ed-7452-afea-c46f22a7e161",
+      "session_timestamp": "2026-10-02T13:37:49.433Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/26-V02-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fcd6-ff0c-7271-b2e4-c9c995bffe86",
+      "session_timestamp": "2026-10-02T13:39:03.567Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/27-V02-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcd8-2a53-7523-b2ba-2800b637ff34",
+      "session_timestamp": "2026-10-02T13:40:25.187Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/28-L01-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcd9-6e63-7fa3-a517-59eeac365155",
+      "session_timestamp": "2026-10-02T13:41:46.046Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/29-L01-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fcda-ec92-7db1-a163-2593c94f5482",
+      "session_timestamp": "2026-10-02T13:43:20.980Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-00",
+      "thread_id": "01a0fcdc-4db0-7f62-8065-6058ef8bb9ad",
+      "session_timestamp": "2026-10-02T13:44:54.004Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/30-L02-gpt-6.1-sol-slim/call-01",
+      "thread_id": "01a0fcdd-7842-72c2-9ba6-d969955d73cf",
+      "session_timestamp": "2026-10-02T13:46:10.606Z",
+      "cli_version": "0.159.2"
+    },
+    {
+      "path": "runs/31-L02-gpt-6.1-sol-current/call-00",
+      "thread_id": "01a0fcde-e871-70f3-9fcc-e0f6fe9c5cf2",
+      "session_timestamp": "2026-10-02T13:47:42.068Z",
+      "cli_version": "0.159.2"
+    }
+  ]
+}
