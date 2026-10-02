@@ -1,0 +1,30 @@
+{
+  "source_commit": "e7dbb473e955932f09c80dfb48b90ac1f4f8db43",
+  "workspace": "/private/tmp/mindthus-rc01-zkypqb1q",
+  "assets_dir": "/private/tmp/mindthus-rc01-zkypqb1q/dist",
+  "builds": [
+    {
+      "kind": "plugins",
+      "two_builds_byte_identical": true,
+      "forbidden_paths_or_secret_patterns": 0
+    },
+    {
+      "kind": "skills",
+      "two_builds_byte_identical": true,
+      "forbidden_paths_or_secret_patterns": 0
+    }
+  ],
+  "assets": [
+    {
+      "name": "mindthus-plugins-1.11.0-rc.1.tar.gz",
+      "sha256": "e7c6a9d4a43ca31a1947a44d3184071b23980899d176c31ae6b9a314f3b22bda",
+      "bytes": 1303975
+    },
+    {
+      "name": "mindthus-skills-1.11.0-rc.1.tar.gz",
+      "sha256": "61ae9cc2f60dbd2014f934568ffdfd2e1f05e2739af216ba44283ab0251c384c",
+      "bytes": 1960885
+    }
+  ],
+  "metadata_sha256": "b163d80678c2fa0b3edb5deacf4df978ed1cb188321087373cc0b9da0549b3af"
+}

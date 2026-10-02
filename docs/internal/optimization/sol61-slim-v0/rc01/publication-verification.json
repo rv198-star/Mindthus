@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "date": "2026-10-03",
+  "scope": "RC publication/package verification only; no new model calls or product re-audit",
+  "url": "https://github.com/rv198-star/Mindthus/releases/tag/v1.11.0-rc.1",
+  "tag": "v1.11.0-rc.1",
+  "source_commit": "e7dbb473e955932f09c80dfb48b90ac1f4f8db43",
+  "prerelease": true,
+  "draft": false,
+  "latest_stable": "v1.10.1",
+  "main_unchanged": true,
+  "source_tag_verified": true,
+  "tag_object": "247d35c67dfa38bad06e3bd20ae231cddb8a5821",
+  "assets_verified": [
+    {
+      "name": "RC01-SOURCE.json",
+      "sha256": "b163d80678c2fa0b3edb5deacf4df978ed1cb188321087373cc0b9da0549b3af",
+      "download_matches_build": true,
+      "bytes": 956
+    },
+    {
+      "name": "mindthus-plugins-1.11.0-rc.1.tar.gz",
+      "sha256": "e7c6a9d4a43ca31a1947a44d3184071b23980899d176c31ae6b9a314f3b22bda",
+      "download_matches_build": true,
+      "bytes": 1303975
+    },
+    {
+      "name": "mindthus-skills-1.11.0-rc.1.tar.gz",
+      "sha256": "61ae9cc2f60dbd2014f934568ffdfd2e1f05e2739af216ba44283ab0251c384c",
+      "download_matches_build": true,
+      "bytes": 1960885
+    }
+  ],
+  "checksum_file_identical": true,
+  "packaging_version_tests_passed": 16,
+  "two_independent_builds_per_package_identical": true,
+  "method_scopes_unchanged_from_tested_candidate": true,
+  "real_model_calls": 0,
+  "read_only_git_remote_error": "Initial ls-remote: Empty reply from server; exact remote tag independently resolved using GitHub API"
+}
