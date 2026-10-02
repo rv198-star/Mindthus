@@ -168,16 +168,13 @@ class SraWakeupAndBoundaryAuditTests(unittest.TestCase):
         using = USING.read_text(encoding="utf-8")
         using_compact = " ".join(using.split())
         triage = ENTRY_TRIAGE.read_text(encoding="utf-8")
+        # The compact entry retains the trigger; details stay in linked conditional material.
         for phrase in (
-            "Multiple valid candidates share a common scarce resource",
-            "are judgeable",
-            "choose next tranche, ceiling, defer/stop, reserve, or rerank",
-            "SRA owns allocation",
-            "3L5S/EDSP definition/structure",
-            "WAE control",
-            "TPlan runtime",
+            "multiple judgeable candidates share a scarce resource",
+            "多个可判断事项争同一稀缺资源 | SRA",
             "SELA owns direction pressure",
             "MPG owns path-carrying action",
+            "entry-triage.md",
         ):
             self.assertIn(phrase, using_compact)
         for phrase in (
@@ -192,11 +189,11 @@ class SraWakeupAndBoundaryAuditTests(unittest.TestCase):
         self.assertRegex(runner, re.compile(r'"sra"\s*:\s*\{"sra"\}'))
         self.assertIn("|sra|", runner)
 
-    def test_sra_method_relationships_are_bidirectional_on_skill_surfaces(self):
+    def test_sra_method_relationships_remain_on_compact_or_canonical_surfaces(self):
         checks = {
             REPO / "skills" / "3l5s" / "SKILL.md": (
-                "same scarce resource",
-                "3L5S makes candidates judgeable, SRA allocates them",
+                "多个已可判断事项争资源用 SRA",
+                "不成为其他方法的必经母流程",
             ),
             REPO / "skills" / "edsp" / "SKILL.md": (
                 "candidate structure is already stable",
@@ -217,9 +214,9 @@ class SraWakeupAndBoundaryAuditTests(unittest.TestCase):
                 "use SRA",
                 "does not allocate",
             ),
-            REPO / "skills" / "tvg" / "SKILL.md": (
-                "competes with external work for the same scarce resource",
-                "use SRA for the cross-task allocation",
+            REPO / "docs" / "methodologies" / "tvg.md": (
+                "交给 `SRA` 做跨任务资源分配",
+                "TVG 继续拥有产物内部的 value-gain 判断",
             ),
             REPO / "skills" / "tplan" / "SKILL.md": (
                 "SRA may judge cross-task resource allocation",

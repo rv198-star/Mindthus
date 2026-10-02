@@ -7,6 +7,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 from test_slim_batch import Clock, Fake, answer
+from _slim_fixture import resources
 
 ROOT=Path(__file__).resolve().parents[1]
 HERE=ROOT/'docs/internal/optimization/sol61-slim-v0'
@@ -17,9 +18,15 @@ AUTH=dict(execution_authorized=True,request_sha256=r.REQUEST_SHA,cumulative_call
 
 
 class Retry000049Tests(unittest.TestCase):
+    def setUp(self):
+        self.adapter_root, self.binary = resources()
+        self.enterContext(patch.object(r.m, "BINARY", self.binary))
+
     def fixture(self,directory):
         parent=(Path(directory)/'isolated').resolve();parent.mkdir()
         old=r.m.read(HERE/'isolated-batch-r1/batch.json')
+        old["adapter_root"] = self.adapter_root
+        old["admission"]["binary"] = self.binary
         old['parent_receipt']['root']=str(Path(directory)/'earlier')
         r.m.write(parent/'batch.json',old)
         r.m.write(parent/'inputs.json',r.m.read(HERE/'isolated-batch-r1/inputs.json'))

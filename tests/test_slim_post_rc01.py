@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 from test_slim_batch import Clock, Fake, answer
+from _slim_fixture import resources
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / 'docs/internal/optimization/sol61-slim-v0'
@@ -13,10 +14,16 @@ r = importlib.util.module_from_spec(spec); spec.loader.exec_module(r)
 
 
 class PostRC01Tests(unittest.TestCase):
+    def setUp(self):
+        self.adapter_root, self.binary = resources()
+        self.enterContext(patch.object(r.m, "BINARY", self.binary))
+
     def fixture(self, td):
         root = Path(td).resolve(); previous = root / 'previous'; batch = root / 'new'
         parent = root / 'historical'; parent.mkdir()
         old = r.m.read(HERE / 'isolated-batch-r1/batch.json')
+        old["adapter_root"] = self.adapter_root
+        old["admission"]["binary"] = self.binary
         old['parent_receipt']['root'] = str(parent)
         r.m.write(previous / 'batch.json', old)
         r.m.write(previous / 'inputs.json', r.m.read(HERE / 'isolated-batch-r1/inputs.json'))

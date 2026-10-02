@@ -12,7 +12,7 @@ import shutil
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location('slim_batch', ROOT/'docs/internal/optimization/sol61-slim-v0/run_batch.py')
 m = importlib.util.module_from_spec(SPEC); SPEC.loader.exec_module(m)
-ADAPTER = '/Users/william/.codex/worktrees/jev-direct-continuation/Mindthus'
+from _slim_fixture import resources
 
 
 class Clock:
@@ -41,8 +41,12 @@ def answer(text='SIMULATION ONLY'):
 
 
 class SlimBatchTests(unittest.TestCase):
+    def setUp(self):
+        self.adapter_root, binary = resources()
+        self.enterContext(patch.object(m, "BINARY", binary))
+
     def batch(self, root):
-        config = m.prepare(root, ADAPTER, m.git(ROOT,'rev-parse','HEAD').decode().strip(), simulation=True)
+        config = m.prepare(root, self.adapter_root, m.git(ROOT,'rev-parse','HEAD').decode().strip(), simulation=True)
         # Reduce only a simulated test plan, retaining the authorized hard caps.
         config['plan'] = config['plan'][:2]
         (root/'batch.json').write_text(json.dumps(config))
@@ -187,7 +191,7 @@ class SlimBatchTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)/'child';parent=Path(tmp)/'parent';parent.mkdir()
             with self.assertRaisesRegex(ValueError,'successor_not_authorized_no_prepare'):
-                m.prepare(root,ADAPTER,'HEAD',admission={'execution_authorized':False},parent_batch=parent)
+                m.prepare(root,self.adapter_root,'HEAD',admission={'execution_authorized':False},parent_batch=parent)
             self.assertFalse(root.exists())
             self.assertEqual(list(parent.iterdir()),[])
 
@@ -196,7 +200,7 @@ class SlimBatchTests(unittest.TestCase):
             parent=Path(tmp)/'parent';parent.mkdir();roots=[Path(tmp)/'one',Path(tmp)/'two']
             receipt={'root':str(parent),'logical_calls':34,'fixture':'offline only'}
             config={'simulation':False,'parent_receipt':receipt}
-            locked=m.adapters(ADAPTER)['_locked'];barrier=Barrier(2)
+            locked=m.adapters(self.adapter_root)['_locked'];barrier=Barrier(2)
             def claim(root):
                 barrier.wait()
                 try:m.bind_successor(root,config,locked);return 'bound'
@@ -221,7 +225,7 @@ class SlimBatchTests(unittest.TestCase):
             (root/'batch.json').write_text(json.dumps(c));(root/'batch-binding.json').write_text(json.dumps(dict(sha256=m.digest(c))))
             fake=Fake([answer(),answer()]);fake.simulation=False;clock=Clock()
             with patch.object(m,'parent_receipt',return_value=receipt), patch.object(m,'inspect_bound_context',return_value={'simulation':True}):
-                m.bind_successor(root,c,m.adapters(ADAPTER)['_locked'])
+                m.bind_successor(root,c,m.adapters(self.adapter_root)['_locked'])
                 m.drive(root,adapter=fake,clock=clock.now,monotonic=clock.now,sleep=clock.sleep)
                 self.assertEqual(clock.t,120)  # Parent cooling plus cross-arm cooling.
                 self.assertEqual(len(fake.prompts),2)

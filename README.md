@@ -120,16 +120,12 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 RC01→本版候选的公开开发例回归中，Sol 6.1 输入 token 少16.9%、Astra抽检少14.9%，主要来自减少读取。不是相对v1.10.1的直接统计，不承诺固定节省率、普遍提速或金额ROI。详见 [v1.11.0 发布说明](docs/releases/v1.11.0.md)。
 
-**发布默认规则**：Stable release 默认同步提供同版本 ROI Beta supplemental asset；只有该版本在发布前明确声明例外时才不发布 ROI Beta。`v1.11.0` 同步提供三份归档；Beta沿用独立命名空间、原ROI Thin Core及既有纠偏差异，不自动迁移，也不把Stable测试外推为Beta收益证明。TPlan runtime generation仍为 `1.5.4`。
+**发布默认规则**：Stable发布不再要求同步ROI Beta。本版仅提供Stable插件包、Skills包及校验和；既有Beta版本保留，后续仅在明确需要时单独安排。TPlan runtime generation仍为 `1.5.4`。
 
 [RC01源码标签](https://github.com/rv198-star/Mindthus/tree/v1.11.0-rc.1)保留用于回退与对照；该预发布曾撤下，不恢复其Release。
 
 - Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.11.0.tar.gz`。
 - 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.11.0.tar.gz`。
-- 只在高能力 Codex / GPT-Sol 上复查低开销唤起实验：下载
-  `mindthus-beta-1.11.0-roi-beta.tar.gz`；它使用独立的 Codex plugin / marketplace 包与
-  `mindthus-beta` 命名空间，不是通用 skills-pack，也不是 v1.11.0 Stable 的替代品。
-
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
 ### 下载
@@ -174,28 +170,13 @@ codex plugin remove mindthus@mindthus
 codex plugin marketplace remove mindthus
 ```
 
-### Codex ROI Beta（实验）
+### 历史 ROI Beta（可选实验包）
 
-只在高能力 Codex / GPT-Sol 上复查低开销唤起实验时使用。这个
-`v1.11.0-roi-beta` 包从精确 `v1.11.0` Stable shared core 组装，继承本版共享方法减负及完整 SRA Skill、既有 TPlan authority-integrity 修复、
-v0.3/v0.4 输入兼容、比例化校准、checked Decision Card、rerank lineage、Root-Cause Replacement、
-competitive-frame convergence、WAE Ownership Closure、Judgment Trace、Case Export、case-prep、
-Test Lifecycle 与现有 TPlan 能力；运行时差异限定为 SRA-compatible ROI Thin Core、历史 ROI.2
-单句 3L5S Anti-Spiral correction、Beta identity / namespace 与 diagnostic 坐标。
-Stable 与 ROI Beta 可以独立安装或移除：
-
-```bash
-curl -L \
-  -o /tmp/mindthus-beta-1.11.0-roi-beta.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.11.0/mindthus-beta-1.11.0-roi-beta.tar.gz"
-rm -rf /tmp/mindthus-roi-beta
-mkdir -p /tmp/mindthus-roi-beta
-tar -xzf /tmp/mindthus-beta-1.11.0-roi-beta.tar.gz -C /tmp/mindthus-roi-beta --strip-components=1
-codex plugin marketplace add /tmp/mindthus-roi-beta
-codex plugin add mindthus-beta@mindthus-beta
-```
-
-需要完整被动唤起、跨模型一致性或保守默认行为时，使用 Stable 而不是 ROI Beta。
+本版不发布ROI Beta，也不要求后续Stable同步发布。已有 `v1.10.1-roi-beta` 保留，
+使用独立的 `mindthus-beta` 命名空间，不自动升级或迁移；需要旧实验包时可从
+[v1.10.1 Release](https://github.com/rv198-star/Mindthus/releases/tag/v1.10.1)下载
+`mindthus-beta-1.10.1-roi-beta.tar.gz`。它不包含v1.11.0的共享方法减负改动，
+不把本版Stable实测外推为Beta收益。
 
 ### Claude Code Plugin Mode（推荐）
 

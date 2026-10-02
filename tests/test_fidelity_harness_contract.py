@@ -1,3 +1,4 @@
+import json
 import unittest
 from pathlib import Path
 
@@ -117,6 +118,16 @@ class FidelityHarnessContractTests(unittest.TestCase):
             path = REPO / "skills" / skill_name / "resources" / "fidelity-contract.md"
             text = path.read_text(encoding="utf-8")
 
+            if skill_name == "using-mindthus":
+                # Explicit audit contract is compact; executable schema/template remain canonical.
+                for phrase in ("显式审计合同", "判断动作", "acquire_information", "不适用可以退出",
+                               "semantic_verdict", "not_validated", "scripts must not decide semantic truth"):
+                    self.assertIn(phrase, text)
+                template = json.loads((path.parent.parent / "templates/fidelity-output.json").read_text())
+                self.assertIn("applicability", template)
+                self.assertIn("required_judgment_moves", template)
+                self.assertIn("resources/fidelity-contract.md", (path.parent.parent / "SKILL.md").read_text())
+                continue
             for phrase in (
                 "Fidelity Contract",
                 "required judgment moves",

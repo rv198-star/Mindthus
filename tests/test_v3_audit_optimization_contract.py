@@ -26,9 +26,9 @@ class V3AuditOptimizationContractTests(unittest.TestCase):
     def test_using_mindthus_has_thin_before_route_entry_triage_index(self):
         text = read("skills/using-mindthus/SKILL.md")
         for phrase in (
-            "Entry Triage / 入口分诊",
-            "semantic-family index",
-            "not keywords",
+            "路由仍不清",
+            "docs/methodologies/primitives/entry-triage.md",
+            "按剩余判断缺口选方法，不按话题词选",
         ):
             self.assertIn(phrase, text)
 
@@ -89,8 +89,11 @@ class V3AuditOptimizationContractTests(unittest.TestCase):
 
         self.assertIn("third prompt rule, third fallback, or next local patch after instability", entry)
         self.assertIn("Anti-Spiral hard brake", entry)
-        self.assertIn("anti_spiral_brake_before_addition", contract)
-        self.assertIn("loaded owners must put the case-critical action into visible prose", contract)
+        self.assertIn("普通业务回答的固定步骤", contract)
+        self.assertIn("主路径见 SKILL.md", contract)
+        using = read("skills/using-mindthus/SKILL.md")
+        self.assertIn("重复局部修补且无新证据时 Anti-Spiral", using)
+        self.assertIn("输出清楚的判断、依据及行动后果", using)
 
     def test_v5_target_trigger_register_covers_no_load_cases(self):
         register = json.loads(read("docs/benchmarks/v5-target-trigger-register.json"))

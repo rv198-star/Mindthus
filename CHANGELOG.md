@@ -12,8 +12,8 @@
 - 主力仍使用 Sol 6.1 以下版本的用户，不建议仅为本次优化升级；旧版仍可使用。本轮没有建立旧模型的升级收益，不等于声明旧模型不兼容。
 - RC01/后续候选40条真实回归全部交付，59/120次调用；执行端知晓分组核对38可用、P01两臂部分可用，未观察到新增关键质量回归。Sol 6.1/Astra输入token分别少16.9%/14.9%，主要来自减少读取；Astra会话耗时基本持平。这是相对RC01的单批结果，不是相对v1.10.1的直接统计，不宣称普遍质量、速度或金额ROI。旧44条及历史损失另行保留，见[回归报告](docs/internal/optimization/sol61-slim-v0/post-rc01-regression/REPORT.md)。
 - 发布前修复TPlan入口的体积上限与决策脚本路径检查：仅压缩重复说明、补回现有脚本引用，判断/权限/未知处理规则保持；不把该文字整理追认为已跑过新的真实对照。
-- 补充发布包：1.11.0 ROI Beta，与精确Stable共享核心绑定；保持已资格验证的ROI Thin Core和历史3L5S纠偏内容，只适配精简后的替换位置。Beta使用独立命名空间，不自动迁移，不新增Beta收益声明。
-- 提供Stable plugins、Stable skills、ROI Beta及覆盖三份归档的 `SHA256SUMS`。TPlan runtime generation仍为1.5.4。RC01仅保留原标签，已撤下的RC Release不恢复。
+- Owner取消每次Stable必须同步发布ROI Beta的要求；本版不发布ROI Beta，既有Beta源码、标签和资产保留，后续按需单独安排。
+- 提供Stable plugins、Stable skills及覆盖两份归档的 `SHA256SUMS`。TPlan runtime generation仍为1.5.4。RC01仅保留原标签，已撤下的RC Release不恢复。
 
 ## v1.11.0-rc.1 — RC01
 
