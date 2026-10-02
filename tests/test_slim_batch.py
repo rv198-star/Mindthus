@@ -19,9 +19,10 @@ class Clock:
 
 class Fake:
     simulation = True
-    def __init__(self, replies): self.replies = iter(replies); self.prompts = []
+    def __init__(self, replies): self.replies = iter(replies); self.prompts = []; self.directories=[]
     def invoke(self, req, wire, directory, config):
         self.prompts.append(wire['prompt'])
+        self.directories.append(directory)
         reply = next(self.replies)
         if reply is None:
             return dict(kind='cli',events=[dict(type='thread.started',thread_id='sim-thread')],
@@ -92,6 +93,43 @@ class SlimBatchTests(unittest.TestCase):
             first=sorted(root.glob('runs/*/result.json'))[0]
             self.assertEqual(m.read(first)['status'],'read_budget_exhausted')
             self.assertEqual(len(list(first.parent.glob('call-*/intent.json'))),3)
+
+    def test_repository_ancestor_cannot_enter_transport_workspace(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project=Path(tmp)/'project';project.mkdir();(project/'AGENTS.md').write_text('SENTINEL_REPO_INSTRUCTION')
+            root=project/'.tplan'/'batch';self.batch(root);fake=Fake([answer(),answer()]);clock=Clock()
+            m.drive(root,adapter=fake,clock=clock.now,monotonic=clock.now,sleep=clock.sleep)
+            for directory in fake.directories:
+                self.assertFalse(directory.is_relative_to(project))
+                self.assertTrue(all(not (p/'AGENTS.md').exists() for p in (directory,*directory.parents)))
+            self.assertNotIn('SENTINEL_REPO_INSTRUCTION',''.join(fake.prompts))
+            self.assertEqual(len(list(root.glob('runs/*/call-*/workspace-binding.json'))),2)
+
+    def test_legacy_in_repository_batch_cannot_resume(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/'batch';c=self.batch(root);del c['workspace_mode']
+            (root/'batch.json').write_text(json.dumps(c));(root/'batch-binding.json').write_text(json.dumps(dict(sha256=m.digest(c))))
+            fake=Fake([answer()])
+            with self.assertRaisesRegex(ValueError,'legacy_workspace_not_isolated'):m.drive(root,adapter=fake)
+            self.assertEqual(fake.prompts,[])
+
+    def test_pending_successor_authority_does_not_send_or_reset_budget(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/'batch';c=self.batch(root);c['simulation']=False
+            c['successor_admission']=dict(execution_authorized=False,cumulative_call_limit=98)
+            (root/'batch.json').write_text(json.dumps(c));(root/'batch-binding.json').write_text(json.dumps(dict(sha256=m.digest(c))))
+            with self.assertRaisesRegex(ValueError,'successor_not_authorized'):m.drive(root)
+            self.assertEqual(list(root.glob('runs/*/call-*/intent.json')),[])
+
+    def test_old_34_calls_are_debited_not_restored(self):
+        self.assertEqual(m.carry_budget(34,64),30)
+        self.assertEqual(m.carry_budget(34,98),64)
+        with self.assertRaisesRegex(ValueError,'successor_cumulative_limit'):m.carry_budget(34,99)
+
+    def test_simulated_parent_cannot_supply_real_successor_receipt(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/'batch';self.batch(root)
+            with self.assertRaisesRegex(ValueError,'simulated_parent_not_real'):m.parent_receipt(root)
 
 
 if __name__ == '__main__': unittest.main()

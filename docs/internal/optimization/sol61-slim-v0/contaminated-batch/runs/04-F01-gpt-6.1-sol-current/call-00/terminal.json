@@ -1,0 +1,58 @@
+{
+  "binding": {
+    "request_sha256": "40a1c7c3015196cd40caca23f15e6c98a0ba8ab417fb36e535b1edfb74b0a33c",
+    "wire_sha256": "d481477b558d8102c04ea8e6d11d869fce64eca4501ed026dbc7ef1730e8241a",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "path": {
+      "case": "F01",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "2a2dff2c60e619b05dec1a7c76e622fa9d46927042b688e619d6d5a1b9502391",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "docs/methodologies/primitives/entry-triage.md",
+      "docs/methodologies/primitives/frame-fitness-check.md",
+      "docs/methodologies/primitives/whole-elephant-protocol.md",
+      "docs/methodologies/shared-primitives.md",
+      "skills/edsp/SKILL.md"
+    ],
+    "text": "读取结构判断及定义层级的必要规则，检查“最终进入模型的是 Prompt”能否推出“完整任务能力及主要价值就是 Prompt”，据此给出明确的主次判断。"
+  },
+  "usage": {
+    "input_tokens": 22395,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 240,
+    "reasoning_output_tokens": 114
+  },
+  "error": null,
+  "session_seconds": 18.271666208005627,
+  "ended_at_epoch": 1790937850.856545,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "40a1c7c3015196cd40caca23f15e6c98a0ba8ab417fb36e535b1edfb74b0a33c",
+    "transport_successor_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

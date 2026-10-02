@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "request_sha256": "0171755f24bde94ca37c32fa00b7cf8d93d55defc817ed6c9a06b8b6d92fcdc9",
+    "wire_sha256": "7ca648462fa08da17de4a68f0eefc7208809bace028d43f34b3bceac020a8ac2",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "path": {
+      "case": "M01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "58adfa0df1d69616c4d572ca6bc4e519bd3349bd30b329d471fef4899b1d98ee",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/mpg/SKILL.md"
+    ],
+    "text": "读取 MPG 的行动与停止条件，用于判断效率优势已确认、但迁移停机超过获批窗口时，现在应采取什么行动。"
+  },
+  "usage": {
+    "input_tokens": 21946,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 132,
+    "reasoning_output_tokens": 66
+  },
+  "error": null,
+  "session_seconds": 12.663230417005252,
+  "ended_at_epoch": 1790938498.288588,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "0171755f24bde94ca37c32fa00b7cf8d93d55defc817ed6c9a06b8b6d92fcdc9",
+    "transport_successor_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

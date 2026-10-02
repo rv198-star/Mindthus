@@ -8,6 +8,7 @@ import argparse
 import hashlib
 import io
 import json
+import os
 import re
 import subprocess
 import sys
@@ -89,7 +90,7 @@ def adapters(root):
     return locals()
 
 
-def prepare(batch, adapter_root, candidate, *, simulation=False):
+def prepare(batch, adapter_root, candidate, *, simulation=False, admission=None, parent_batch=None):
     batch = Path(batch).resolve()
     if batch.exists():
         raise ValueError('fresh_batch_required')
@@ -108,6 +109,7 @@ def prepare(batch, adapter_root, candidate, *, simulation=False):
         authorization='Owner approved 64 host logical calls; 44 paths, 3/path; no retry/Jev/evaluator',
         baseline=BASELINE, candidate=candidate, adapter_pin=ADAPTER_PIN,
         adapter_root=str(Path(adapter_root).resolve()), cli_version=version,
+        workspace_mode='external_empty_directory_no_project_ancestors',
         binary_sha256=hashlib.sha256(Path(BINARY).read_bytes()).hexdigest(),
         admission=dict(binary=BINARY), host_timeout=300, active_processing_limit_seconds=7200,
         total_calls_max=64, path_calls_max=3, effort='medium',
@@ -118,6 +120,18 @@ def prepare(batch, adapter_root, candidate, *, simulation=False):
         inputs_sha256=digest({c['id']:render(c) for c in cases}),
         source_sha256={arm:digest(value) for arm,value in sources.items()},
         plan=plan(cases), evidence_scope='controlled read exchange; not passive activation qualification')
+    if not simulation:
+        if not isinstance(admission,dict) or not parent_batch:
+            raise ValueError('explicit_successor_admission_and_parent_required')
+        parent=parent_receipt(parent_batch)
+        if admission.get('parent_receipt_sha256')!=digest(parent):
+            raise ValueError('successor_parent_binding')
+        cap=admission.get('cumulative_call_limit')
+        allowance=carry_budget(parent['logical_calls'],cap)
+        config.update(successor_admission=admission,parent_receipt=parent,
+            total_calls_max=allowance,
+            authorization=admission.get('authorization_ref','pending_owner_confirmation'),
+            budget_status='authorized_successor' if admission.get('execution_authorized') is True else 'proposal_only_no_dispatch')
     write(batch / 'batch.json', config)
     write(batch / 'batch-binding.json', dict(sha256=digest(config)))
     write(batch / 'inputs.json', {c['id']:render(c) for c in cases})
@@ -152,8 +166,20 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
     batch = Path(batch).resolve(); config = read(batch / 'batch.json')
     if read(batch / 'batch-binding.json') != dict(sha256=digest(config)):
         raise ValueError('batch_binding_changed')
-    if config['total_calls_max'] != 64 or config['path_calls_max'] != 3:
+    if not 0<config['total_calls_max']<=64 or config['path_calls_max'] != 3:
         raise ValueError('unauthorized_mode_or_caps')
+    if config.get('workspace_mode') != 'external_empty_directory_no_project_ancestors':
+        raise ValueError('legacy_workspace_not_isolated_no_dispatch')
+    if not config['simulation']:
+        # Existing 34 attempts remain charged. A new real batch needs an explicit
+        # cumulative allowance and parent binding, never a fresh 64-call balance.
+        admission=config.get('successor_admission') or {}
+        if admission.get('execution_authorized') is not True:
+            raise ValueError('successor_not_authorized_no_dispatch')
+        if parent_receipt(config['parent_receipt']['root'])!=config['parent_receipt']:
+            raise ValueError('successor_parent_changed')
+        if config['total_calls_max']+config['parent_receipt']['logical_calls']>admission['cumulative_call_limit']:
+            raise ValueError('successor_budget_reset')
     if hashlib.sha256(Path(BINARY).read_bytes()).hexdigest() != config['binary_sha256']:
         raise ValueError('binary_changed')
     a = adapters(config['adapter_root']); adapter = adapter or a['OfficialAdapters']()
@@ -170,6 +196,12 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
         if (batch / 'STOP.json').exists():
             raise ValueError('batch_stopped_no_resend')
         serial.validate()
+        if not config['simulation'] and not list(serial.root.glob('[0-9]*')):
+            # Conservative monotonic cooling across the technical successor.
+            start=monotonic()
+            while monotonic()-start<60: sleep(min(60,60-(monotonic()-start)))
+            write(batch/'parent-cooldown.json',dict(wait_seconds=monotonic()-start,
+                basis='conservative_monotonic_wait_after_known_parent_terminal'))
         for index, path in enumerate(config['plan']):
             run = batch / 'runs' / f"{index:02d}-{path['case']}-{path['model']}-{path['arm']}"
             if (run / 'result.json').exists():
@@ -197,17 +229,29 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
                 binding = dict(request_sha256=req['request_sha256'], wire_sha256=digest(outbound),
                     batch_sha256=digest(config), path=path, sequence=seq, simulation=config['simulation'])
                 write(directory / 'request.json', req); write(directory / 'wire.json', outbound)
+                transport_dir=external_transport_directory(batch,req,config)
+                write(directory / 'workspace-binding.json',dict(**binding,
+                    transport_directory=str(transport_dir),cwd=str(transport_dir/'workspace'),
+                    preflight_project_AGENTS_ancestors=[]))
                 started = time.monotonic(); terminal = None
                 def invoke():
                     nonlocal terminal
                     write(directory / 'intent.json', binding)
                     begin = time.monotonic()
                     try:
-                        raw = adapter.invoke(req, outbound, directory, config)
+                        raw = adapter.invoke(req, outbound, transport_dir, config)
+                        for name in ('schema.api.json','reply.json'):
+                            file=transport_dir/name
+                            if file.exists():
+                                (directory/name).write_bytes(file.read_bytes())
                     except (OSError, subprocess.TimeoutExpired) as exc:
                         raw = dict(kind='transport_error', code=type(exc).__name__, diagnostic=None)
                     write(directory / 'raw.json', dict(binding=binding, transport=raw))
                     status, response, usage, error = a['classify'](req, raw)
+                    context = inspect_bound_context(raw, transport_dir/'workspace') if not config['simulation'] else dict(simulation=True)
+                    write(directory/'context-observation.json',context)
+                    if context.get('project_AGENTS_message_count',0) or context.get('cwd_matches') is False:
+                        write(batch/'STOP.json',dict(reason='actual_context_not_isolated',binding=binding))
                     observation = None
                     if raw.get('kind') == 'cli':
                         proc = subprocess.CompletedProcess([],raw['returncode'],raw['stdout'],raw['stderr'])
@@ -260,9 +304,77 @@ def drive(batch, *, adapter=None, clock=time.time, monotonic=time.monotonic, sle
             if (batch / 'STOP.json').exists(): return
 
 
+def external_transport_directory(batch, req, config):
+    """The existing adapter makes cwd beneath its output directory. Keep that
+    directory outside every repository, while preserving evidence in the ledger.
+    """
+    target=Path('/private/tmp')/'mindthus-slim-cli'/digest(config)/digest(str(Path(batch).resolve()))/req['request_sha256']
+    target=target.resolve()
+    if target.is_relative_to(REPO) or target.is_relative_to(Path(batch).resolve()):
+        raise ValueError('workspace_inside_project')
+    for parent in (target,*target.parents):
+        if (parent/'AGENTS.md').exists() or (parent/'.git').exists():
+            raise ValueError('workspace_has_project_ancestor')
+    if target.exists():
+        raise ValueError('transport_directory_already_exists_no_resend')
+    target.mkdir(parents=True)
+    return target
+
+
+def parent_receipt(root):
+    root=Path(root).resolve();config=read(root/'batch.json')
+    if read(root/'batch-binding.json')!={'sha256':digest(config)}:
+        raise ValueError('parent_config_changed')
+    if config.get('simulation') is not False:
+        raise ValueError('simulated_parent_not_real')
+    intents=sorted(root.glob('runs/*/call-*/intent.json'))
+    evidence=[]
+    for intent in intents:
+        terminal=intent.with_name('terminal.json')
+        if not terminal.exists() or read(terminal)['status']!='returned':
+            raise ValueError('parent_not_all_returned_no_successor')
+        evidence.append(dict(intent_sha256=digest(read(intent)),terminal_sha256=digest(read(terminal))))
+    if not intents or not (root/'dispatch-pause-context-check.json').exists():
+        raise ValueError('parent_not_named_context_failure')
+    return dict(root=str(root),batch_sha256=digest(config),logical_calls=len(intents),
+        evidence_sha256=digest(evidence),last_terminal_epoch=read(intents[-1].with_name('terminal.json'))['ended_at_epoch'])
+
+
+def carry_budget(prior_calls, cumulative_limit):
+    if type(prior_calls) is not int or type(cumulative_limit) is not int or not 0<=prior_calls<=64 or not prior_calls<cumulative_limit<=98:
+        raise ValueError('successor_cumulative_limit')
+    return min(64,cumulative_limit-prior_calls)
+
+
+def inspect_bound_context(raw, expected_cwd):
+    """Only this invocation's existing rollout, never auth files or other chats."""
+    ids=[e['thread_id'] for e in raw.get('events',[]) if e.get('type')=='thread.started' and e.get('thread_id')]
+    if len(ids)!=1:return dict(archive_available=False,reason='missing_bound_thread')
+    session_root=Path(os.environ.get('CODEX_HOME',str(Path.home()/'.codex')))/'sessions'
+    files=list(session_root.glob('**/*'+ids[0]+'*.jsonl'))
+    if len(files)!=1:return dict(thread_id=ids[0],archive_available=False,reason='bound_archive_unavailable')
+    file=files[0];cwd=None;matches=[]
+    for no,line in enumerate(file.read_text().splitlines(),1):
+        try:event=json.loads(line)
+        except ValueError:continue
+        payload=event.get('payload') or {}
+        if event.get('type')=='session_meta':cwd=payload.get('cwd')
+        if event.get('type')!='response_item' or payload.get('type')!='message' or payload.get('role')!='user':continue
+        for part in payload.get('content',[]):
+            text=part.get('text','')
+            if text.startswith('# AGENTS.md instructions for ') and str(REPO) in text:
+                matches.append(dict(line=no,text_sha256=hashlib.sha256(text.encode()).hexdigest()))
+    return dict(thread_id=ids[0],archive_available=True,archive=str(file),
+        archive_sha256=hashlib.sha256(file.read_bytes()).hexdigest(),actual_cwd=cwd,
+        cwd_matches=None if cwd is None else str(Path(cwd).resolve())==str(Path(expected_cwd).resolve()),
+        project_AGENTS_message_count=len(matches),project_AGENTS_bindings=matches)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(); parser.add_argument('operation',choices=['prepare','run'])
     parser.add_argument('batch'); parser.add_argument('--adapter-root'); parser.add_argument('--candidate')
+    parser.add_argument('--admission'); parser.add_argument('--parent-batch')
     args = parser.parse_args()
-    if args.operation=='prepare': prepare(args.batch,args.adapter_root,args.candidate)
+    if args.operation=='prepare': prepare(args.batch,args.adapter_root,args.candidate,
+        admission=read(args.admission) if args.admission else None,parent_batch=args.parent_batch)
     else: drive(args.batch)

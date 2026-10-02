@@ -1,0 +1,442 @@
+[
+  {
+    "case": "D01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "00-D01-gpt-6.1-sol-current",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 1,
+    "answer_path": "runs/00-D01-gpt-6.1-sol-current/answer.txt"
+  },
+  {
+    "case": "D01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "01-D01-gpt-6.1-sol-slim",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 1,
+    "answer_path": "runs/01-D01-gpt-6.1-sol-slim/answer.txt"
+  },
+  {
+    "case": "I01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "02-I01-gpt-6.1-sol-slim",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 1,
+    "answer_path": "runs/02-I01-gpt-6.1-sol-slim/answer.txt"
+  },
+  {
+    "case": "I01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "03-I01-gpt-6.1-sol-current",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 1,
+    "answer_path": "runs/03-I01-gpt-6.1-sol-current/answer.txt"
+  },
+  {
+    "case": "F01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "04-F01-gpt-6.1-sol-current",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 2,
+    "answer_path": "runs/04-F01-gpt-6.1-sol-current/answer.txt"
+  },
+  {
+    "case": "F01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "05-F01-gpt-6.1-sol-slim",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 3,
+    "answer_path": "runs/05-F01-gpt-6.1-sol-slim/answer.txt"
+  },
+  {
+    "case": "F02",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "06-F02-gpt-6.1-sol-slim",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 1,
+    "answer_path": "runs/06-F02-gpt-6.1-sol-slim/answer.txt"
+  },
+  {
+    "case": "F02",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "07-F02-gpt-6.1-sol-current",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 1,
+    "answer_path": "runs/07-F02-gpt-6.1-sol-current/answer.txt"
+  },
+  {
+    "case": "M01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "08-M01-gpt-6.1-sol-current",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 1,
+    "answer_path": "runs/08-M01-gpt-6.1-sol-current/answer.txt"
+  },
+  {
+    "case": "M01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "09-M01-gpt-6.1-sol-slim",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 2,
+    "answer_path": "runs/09-M01-gpt-6.1-sol-slim/answer.txt"
+  },
+  {
+    "case": "M02",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "10-M02-gpt-6.1-sol-slim",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 2,
+    "answer_path": "runs/10-M02-gpt-6.1-sol-slim/answer.txt"
+  },
+  {
+    "case": "M02",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "11-M02-gpt-6.1-sol-current",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 2,
+    "answer_path": "runs/11-M02-gpt-6.1-sol-current/answer.txt"
+  },
+  {
+    "case": "E01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "12-E01-gpt-6.1-sol-current",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 2,
+    "answer_path": "runs/12-E01-gpt-6.1-sol-current/answer.txt"
+  },
+  {
+    "case": "E01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "13-E01-gpt-6.1-sol-slim",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 2,
+    "answer_path": "runs/13-E01-gpt-6.1-sol-slim/answer.txt"
+  },
+  {
+    "case": "W01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "14-W01-gpt-6.1-sol-slim",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 2,
+    "answer_path": "runs/14-W01-gpt-6.1-sol-slim/answer.txt"
+  },
+  {
+    "case": "W01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "15-W01-gpt-6.1-sol-current",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 2,
+    "answer_path": "runs/15-W01-gpt-6.1-sol-current/answer.txt"
+  },
+  {
+    "case": "W02",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "16-W02-gpt-6.1-sol-current",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 2,
+    "answer_path": "runs/16-W02-gpt-6.1-sol-current/answer.txt"
+  },
+  {
+    "case": "W02",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "17-W02-gpt-6.1-sol-slim",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 2,
+    "answer_path": "runs/17-W02-gpt-6.1-sol-slim/answer.txt"
+  },
+  {
+    "case": "P01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "18-P01-gpt-6.1-sol-slim",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 1,
+    "answer_path": "runs/18-P01-gpt-6.1-sol-slim/answer.txt"
+  },
+  {
+    "case": "P01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "19-P01-gpt-6.1-sol-current",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 1,
+    "answer_path": "runs/19-P01-gpt-6.1-sol-current/answer.txt"
+  },
+  {
+    "case": "P02",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "20-P02-gpt-6.1-sol-current",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 1,
+    "answer_path": "runs/20-P02-gpt-6.1-sol-current/answer.txt"
+  },
+  {
+    "case": "P02",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "21-P02-gpt-6.1-sol-slim",
+    "actual_status": "delivered",
+    "T0_qualification": "contaminated",
+    "logical_calls": 1,
+    "answer_path": "runs/21-P02-gpt-6.1-sol-slim/answer.txt"
+  },
+  {
+    "case": "R01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "22-R01-gpt-6.1-sol-slim",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "R01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "23-R01-gpt-6.1-sol-current",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "V01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "24-V01-gpt-6.1-sol-current",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "V01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "25-V01-gpt-6.1-sol-slim",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "V02",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "26-V02-gpt-6.1-sol-slim",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "V02",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "27-V02-gpt-6.1-sol-current",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "L01",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "28-L01-gpt-6.1-sol-current",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "L01",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "29-L01-gpt-6.1-sol-slim",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "L02",
+    "arm": "slim",
+    "model": "gpt-6.1-sol",
+    "path": "30-L02-gpt-6.1-sol-slim",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "L02",
+    "arm": "current",
+    "model": "gpt-6.1-sol",
+    "path": "31-L02-gpt-6.1-sol-current",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "F01",
+    "arm": "current",
+    "model": "gpt-6-astra",
+    "path": "32-F01-gpt-6-astra-current",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "F01",
+    "arm": "slim",
+    "model": "gpt-6-astra",
+    "path": "33-F01-gpt-6-astra-slim",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "F02",
+    "arm": "slim",
+    "model": "gpt-6-astra",
+    "path": "34-F02-gpt-6-astra-slim",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "F02",
+    "arm": "current",
+    "model": "gpt-6-astra",
+    "path": "35-F02-gpt-6-astra-current",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "V01",
+    "arm": "current",
+    "model": "gpt-6-astra",
+    "path": "36-V01-gpt-6-astra-current",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "V01",
+    "arm": "slim",
+    "model": "gpt-6-astra",
+    "path": "37-V01-gpt-6-astra-slim",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "V02",
+    "arm": "slim",
+    "model": "gpt-6-astra",
+    "path": "38-V02-gpt-6-astra-slim",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "V02",
+    "arm": "current",
+    "model": "gpt-6-astra",
+    "path": "39-V02-gpt-6-astra-current",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "F01",
+    "arm": "bare",
+    "model": "gpt-6.1-sol",
+    "path": "40-F01-gpt-6.1-sol-bare",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "F02",
+    "arm": "bare",
+    "model": "gpt-6.1-sol",
+    "path": "41-F02-gpt-6.1-sol-bare",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "V01",
+    "arm": "bare",
+    "model": "gpt-6.1-sol",
+    "path": "42-V01-gpt-6.1-sol-bare",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  },
+  {
+    "case": "V02",
+    "arm": "bare",
+    "model": "gpt-6.1-sol",
+    "path": "43-V02-gpt-6.1-sol-bare",
+    "actual_status": "not_sent",
+    "T0_qualification": "unrun",
+    "logical_calls": 0,
+    "answer_path": null
+  }
+]

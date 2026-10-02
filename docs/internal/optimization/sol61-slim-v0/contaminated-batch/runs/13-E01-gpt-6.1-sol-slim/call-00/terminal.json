@@ -1,0 +1,55 @@
+{
+  "binding": {
+    "request_sha256": "03072ed5a6b35a5e57e0d31fc832979a371875ecfbd845362a1a0880cd94505c",
+    "wire_sha256": "a1fa942fa5da61b1f1ed2592559c29d62a3055626c0de7f8b246c4ed37bc70e7",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "path": {
+      "case": "E01",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "6927ba7004dbfad8c61e57a91ef367dedab0011ea9c7e7150949d1ed037ab4e6",
+  "status": "returned",
+  "response": {
+    "kind": "read",
+    "objection": "",
+    "read_paths": [
+      "skills/edsp/SKILL.md",
+      "docs/methodologies/shared-primitives.md"
+    ],
+    "text": "我会用 EDSP 检查“稳定或速度”的二选一是否适用于这两类模块，并读取交付前的 Gate Probes。重点是判断公司统一取舍会带来什么具体后果，再给出明确决策。"
+  },
+  "usage": {
+    "input_tokens": 21918,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 141,
+    "reasoning_output_tokens": 42
+  },
+  "error": null,
+  "session_seconds": 15.833557916994323,
+  "ended_at_epoch": 1790939127.708566,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "03072ed5a6b35a5e57e0d31fc832979a371875ecfbd845362a1a0880cd94505c",
+    "transport_successor_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

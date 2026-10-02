@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "request_sha256": "39ac733fefe2acf9eacaa32dcfd71aa61da549a2e37ecb37d181e6a6e4b3d816",
+    "wire_sha256": "7dc610b5079898b8e4954f2a15b8dab3aa2e1889b6435a6d8952bdfbac1aad6c",
+    "batch_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "path": {
+      "case": "F02",
+      "arm": "current",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "5194305e047e5c24de34f51502c8c0b7add825f8f726c9954b6300751abdc074",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "按你给定的定义——“本质”仅指进入语言模型的文本接口——你的核心观点成立：Skills 的指令内容进入模型时，就是 Prompt。文件组织、按需加载、分步注入，都不会让这些文本变成另一种模型接口。这个口径下，Prompt 是主，Skill 是组织和使用 Prompt 的方式。\n\n但你用于支持结论的“脚本只是安排什么时候、按什么顺序交 Prompt”说得过窄。脚本也可以执行计算、读取数据、检查结果、改变外部状态；这些动作本身不是 Prompt。只是当它们的结果以文本形式交给模型时，那部分文本又成为模型输入。这需要修正你的理由，不需要推翻你限定范围内的结论。\n\n你可以这样表述：“我讨论的是语言模型的文本输入接口。在这个层面，Skills 的指令仍然是 Prompt，脚本反馈的文本也属于输入上下文。Skill 可以增加组织、执行和复用能力，但这些能力不能证明它在模型文本接口上超出了 Prompt。”\n\n因此，这场争论的关键是定义口径：对方若用整个执行系统的能力反驳你关于文本接口的判断，就换了讨论对象。但你也应保留这个限定，不能从‘接口上就是 Prompt’进一步推出‘整个 Skill 系统只有 Prompt 的作用’。"
+  },
+  "usage": {
+    "input_tokens": 22395,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 428,
+    "reasoning_output_tokens": 97
+  },
+  "error": null,
+  "session_seconds": 24.497129167008097,
+  "ended_at_epoch": 1790938346.558055,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "39ac733fefe2acf9eacaa32dcfd71aa61da549a2e37ecb37d181e6a6e4b3d816",
+    "transport_successor_sha256": "9d16641d3d0de81c4e1e532d16d00e83dda028728fc97197eba5f1d1ecb747e1",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

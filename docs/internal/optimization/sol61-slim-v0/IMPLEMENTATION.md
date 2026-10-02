@@ -28,7 +28,8 @@ T0 提交：`d73aec69394dd70df0bbd321451b940622a06156`。冻结四份材料保�
 
 ```sh
 python3 docs/internal/optimization/sol61-slim-v0/run_batch.py prepare BATCH_DIR \
-  --adapter-root PINNED_EXPERIMENT_CHECKOUT --candidate CANDIDATE_SHA
+  --adapter-root PINNED_EXPERIMENT_CHECKOUT --candidate CANDIDATE_SHA \
+  --parent-batch PRESERVED_PARENT_BATCH --admission AUTHORIZED_ADMISSION_JSON
 python3 docs/internal/optimization/sol61-slim-v0/run_batch.py run BATCH_DIR
 ```
 
@@ -41,3 +42,16 @@ python3 docs/internal/optimization/sol61-slim-v0/run_batch.py run BATCH_DIR
 
 业务只渲染 prompt/condition，规范和历史答案不进入请求。模拟与真实绑定显式分离。
 CLI会话时间不是纯HTTP时间；未暴露的底层尝试与金额保持unknown。
+
+## 首批运行偏差与修复
+
+上述31a145候选首次运行将CLI工作目录放在仓库内，继承了项目AGENTS。
+34个绑定线程均确认该污染；22份实际答案保存，不能作为T0隔离对照验收。
+派发已停止；34次均有明确返回，无unknown，原64次预算剩30次。
+详见 `CONTEXT-FAILURE-AND-REPAIR.md` 与 `contaminated-batch/`。
+
+修复仅调整本实验传输输出目录到仓库外，沿用原官方适配器。
+请求摘要、工作目录、线程归档与账本绑定；实际发现项目指令或目录不符即停止后续派发。
+父记录和已消耗预算不可重置。10项相关离线接线测试通过，未重复361项回归。
+当前 `successor-admission-proposal.json` 明确未授权，不能派发。
+修复后的产品材料仍可固定使用31a145候选，不改变T0输入或判据。
