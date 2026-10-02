@@ -114,6 +114,9 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
+**RC01 可选试用**：[v1.11.0-rc.1](https://github.com/rv198-star/Mindthus/releases/tag/v1.11.0-rc.1) 固定本轮已测减负实现，目标是在保留任务质量的前提下降低不必要的 token。提供 `mindthus-plugins-1.11.0-rc.1.tar.gz` 和 `mindthus-skills-1.11.0-rc.1.tar.gz`；安装步骤与下方相同，试用时换用该 Release 的对应归档。它不是 Stable 更新，本次不追加 ROI Beta RC；现有 Stable / ROI Beta 资产及同步发布约定保持。详见[RC01 发布说明](https://github.com/rv198-star/Mindthus/blob/v1.11.0-rc.1/docs/releases/v1.11.0-rc.1.md)。
+
+
 **发布默认规则**：Stable release 默认同步提供同版本 ROI Beta supplemental asset；只有该版本在发布前明确声明例外时才不发布 ROI Beta。
 
 当前已发布 Stable 是 `v1.10.1`。这是 `v1.10.0` 的 **TPlan Authority Integrity Bugfix patch**：
@@ -308,7 +311,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.10.1`。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.11.0-rc.1`（RC01 预发布）。完整变化请看 [CHANGELOG.md](CHANGELOG.md) 和 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 
