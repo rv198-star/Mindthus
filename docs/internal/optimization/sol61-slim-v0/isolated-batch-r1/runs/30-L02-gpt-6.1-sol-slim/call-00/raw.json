@@ -1,0 +1,56 @@
+{
+  "binding": {
+    "request_sha256": "62138b14844175a556896a89e97c2c267f610aa76f74db7de2de0ea12a005357",
+    "wire_sha256": "49f46f257becb2bab621b3c6d4ba89d1a3ddb1846a58da7033d20b0bd11df368",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "L02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "transport": {
+    "kind": "cli",
+    "events": [
+      {
+        "type": "thread.started",
+        "thread_id": "01a0fcdc-4db0-7f62-8065-6058ef8bb9ad"
+      },
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "item_0",
+          "type": "error",
+          "message": "Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /Users/william/.codex/config.toml."
+        }
+      },
+      {
+        "type": "turn.started"
+      },
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "item_1",
+          "type": "agent_message",
+          "text": "{\"kind\":\"read\",\"objection\":\"\",\"read_paths\":[\"skills/tplan/SKILL.md\"],\"text\":\"读取 TPlan 的恢复与权限边界规则，用于判断一次发送授权下，超时且仅留 intent 时能否重发，以及最小可恢复处理。\"}"
+        }
+      },
+      {
+        "type": "turn.completed",
+        "usage": {
+          "input_tokens": 18206,
+          "cached_input_tokens": 15232,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 120,
+          "reasoning_output_tokens": 49
+        }
+      }
+    ],
+    "stdout": "{\"type\":\"thread.started\",\"thread_id\":\"01a0fcdc-4db0-7f62-8065-6058ef8bb9ad\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"error\",\"message\":\"Under-development features enabled: skip_host_skill_discovery. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in /Users/william/.codex/config.toml.\"}}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"agent_message\",\"text\":\"{\\\"kind\\\":\\\"read\\\",\\\"objection\\\":\\\"\\\",\\\"read_paths\\\":[\\\"skills/tplan/SKILL.md\\\"],\\\"text\\\":\\\"读取 TPlan 的恢复与权限边界规则，用于判断一次发送授权下，超时且仅留 intent 时能否重发，以及最小可恢复处理。\\\"}\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":18206,\"cached_input_tokens\":15232,\"cache_write_input_tokens\":0,\"output_tokens\":120,\"reasoning_output_tokens\":49}}\n",
+    "stderr": "",
+    "returncode": 0,
+    "reply_text": "{\"kind\":\"read\",\"objection\":\"\",\"read_paths\":[\"skills/tplan/SKILL.md\"],\"text\":\"读取 TPlan 的恢复与权限边界规则，用于判断一次发送授权下，超时且仅留 intent 时能否重发，以及最小可恢复处理。\"}"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "request_sha256": "3717db5682d51def4a21b3b284bac42b5308bdbf5863142e8fdd4666f6480e0f",
+    "wire_sha256": "42d6aa426b13a23e2388359c30609faca64b3003ea1f417fcacbc3b669542cb8",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "V02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 0,
+    "simulation": false
+  },
+  "raw_sha256": "be40e63cd7c6e91fa688dfddd067733c3b651c064ade0fb418cf06d8cdf4be95",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "已经足够，按原文交接即可。它说明了已观察到的现象、根因仍未知、明天检查的范围和时限、禁止事项，以及不能定位时如何收尾，没有把“关闭缓存后错误消失”直接当成根因结论。\n\n只需确认同事知道原始日志在哪里、对应哪两次复现；若不知道，补一个日志位置或事件标识即可，不必扩写。"
+  },
+  "usage": {
+    "input_tokens": 18253,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 170,
+    "reasoning_output_tokens": 44
+  },
+  "error": null,
+  "session_seconds": 16.611132707999786,
+  "ended_at_epoch": 1790948360.098028,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "3717db5682d51def4a21b3b284bac42b5308bdbf5863142e8fdd4666f6480e0f",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

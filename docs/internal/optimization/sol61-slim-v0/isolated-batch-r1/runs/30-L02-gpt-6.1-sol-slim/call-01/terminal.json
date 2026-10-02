@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "request_sha256": "5c4616d6b7d3813fbb2c152bc6cf333d8bc9d5838034eb2f5ce0f085cea7438b",
+    "wire_sha256": "e17ea26109f42152d13c228cef86e76d498297af46e26a145ee92f7603015af0",
+    "batch_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "path": {
+      "case": "L02",
+      "arm": "slim",
+      "model": "gpt-6.1-sol"
+    },
+    "sequence": 1,
+    "simulation": false
+  },
+  "raw_sha256": "128100d21bd66b4bce78f488c99dd590d5d3f64eef1ddee662184d79efd457c5",
+  "status": "returned",
+  "response": {
+    "kind": "answer",
+    "objection": "",
+    "read_paths": [],
+    "text": "不继续重发。30秒超时只说明本地等待结束，不能证明远端未执行；intent 也不能证明发送成功或失败。一次发送授权不包含再次发送。\n\n最小可恢复处理：\n1. 保留原 intent、已有请求标识、一次授权及超时记录，状态记为“结果未知，禁止自动重发”。\n2. 若之后有获授权的只读核验渠道，用原请求标识查询并绑定远端结果；没有则保留待核验状态。\n3. 取得与原请求绑定的成功终态后再确认完成；仍未知或确认失败时，也不自动重发，再次发送须取得新的明确授权。\n\n本次仅生成摘要，不发送 API，不修改状态。"
+  },
+  "usage": {
+    "input_tokens": 20023,
+    "cached_input_tokens": 15232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 298,
+    "reasoning_output_tokens": 101
+  },
+  "error": null,
+  "session_seconds": 34.24132558298879,
+  "ended_at_epoch": 1790948801.982964,
+  "observation": {
+    "schema": "mindthus.invocation-transport-observation.v2",
+    "request_sha256": "5c4616d6b7d3813fbb2c152bc6cf333d8bc9d5838034eb2f5ce0f085cea7438b",
+    "transport_successor_sha256": "9a02be364a2c2d2a2c42a6d8c2b075a276d85fa2186fd11afb618824a52207c5",
+    "outer_driver_retries": 0,
+    "cli_starts": 1,
+    "sampling_retry_log_count": 0,
+    "reconnect_notice_count": 0,
+    "auth_or_401_log_count": 0,
+    "fallback_or_prewarm_log_count": 0,
+    "actual_underlying_request_count": null,
+    "generation_attempt_count": null,
+    "connection_recovery_seconds": null,
+    "authentication_recovery_seconds": null,
+    "observation": "no_recovery_observed",
+    "no_recovery_observed_is_not_zero_http_proof": true,
+    "stop_subsequent_dispatch": false
+  },
+  "underlying_requests": null,
+  "cost": null
+}

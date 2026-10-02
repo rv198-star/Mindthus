@@ -1,0 +1,29 @@
+{
+  "scope": "15 complete Sol pairs; explicit exclusion L02 transport unknown, Astra8 and bare4 unrun; descriptive single-batch subset, full costs separately retained",
+  "groups": {
+    "current": {
+      "logical_calls": 24,
+      "session_seconds": 550.9310667510435,
+      "active_wait_seconds": 1379.6107068720303,
+      "dispatch_wall_seconds": 1931.061924708978,
+      "usage": {
+        "input_tokens": 472459,
+        "cached_input_tokens": 304640,
+        "output_tokens": 6651,
+        "reasoning_output_tokens": 2227
+      }
+    },
+    "slim": {
+      "logical_calls": 23,
+      "session_seconds": 482.0253705380019,
+      "active_wait_seconds": 1379.6090259580378,
+      "dispatch_wall_seconds": 1862.221132584018,
+      "usage": {
+        "input_tokens": 434320,
+        "cached_input_tokens": 322688,
+        "output_tokens": 5706,
+        "reasoning_output_tokens": 1322
+      }
+    }
+  }
+}
