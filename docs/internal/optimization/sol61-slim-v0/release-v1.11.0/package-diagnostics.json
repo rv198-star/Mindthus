@@ -1,0 +1,32 @@
+[
+  {
+    "layout": "plugin-codex",
+    "exit_code": 0,
+    "summary": {
+      "all_available_hashes_match": true,
+      "all_required_markers_present": true,
+      "all_tracked_files_present": true,
+      "status": "ok"
+    }
+  },
+  {
+    "layout": "skills-codex",
+    "exit_code": 0,
+    "summary": {
+      "all_available_hashes_match": true,
+      "all_required_markers_present": true,
+      "all_tracked_files_present": true,
+      "status": "ok"
+    }
+  },
+  {
+    "layout": "skills-opencode",
+    "exit_code": 0,
+    "summary": {
+      "all_available_hashes_match": true,
+      "all_required_markers_present": true,
+      "all_tracked_files_present": true,
+      "status": "ok"
+    }
+  }
+]

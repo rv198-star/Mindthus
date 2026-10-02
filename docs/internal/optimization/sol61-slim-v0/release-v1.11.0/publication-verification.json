@@ -1,0 +1,43 @@
+{
+  "source_commit": "335aa7cc1aa90fb7fcffe59e79ddd71e4e7b03c5",
+  "source_tree": "c4ee562be28094acfa9fe102d4e76f4aa43e3575",
+  "stable_tag_object": "072a848b4872f5ba7e0841429c6bf1606cef2156",
+  "main_merge": "541049486ce8b61c4c7e212397922999a9b8ff2e",
+  "ci_run": 37057139289,
+  "full_suite": {
+    "tests": 1083,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 7
+  },
+  "latest": [
+    {
+      "isLatest": true,
+      "tagName": "v1.11.0"
+    }
+  ],
+  "assets": [
+    {
+      "name": "mindthus-plugins-1.11.0.tar.gz",
+      "bytes": 1300913,
+      "sha256": "cda05738015244506bf05ba9290c2549be0fdd8f28bebf5b448bafdbf34a7afe",
+      "downloaded_bytes_equal_build": true
+    },
+    {
+      "name": "mindthus-skills-1.11.0.tar.gz",
+      "bytes": 1957748,
+      "sha256": "77ea53f95b5826ed78205839d28f10d6060ec0777da5c912c99a8f6931916dc5",
+      "downloaded_bytes_equal_build": true
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 193,
+      "sha256": "3dba3e654ce8a2056efded236e96dc6cc99f4ca8b91de03688ce9d5d915092ae",
+      "downloaded_bytes_equal_build": true
+    }
+  ],
+  "sha256sums_check": "2/2 passed",
+  "beta_published": false,
+  "prior_beta_asset_preserved": "mindthus-beta-1.10.1-roi-beta.tar.gz",
+  "rc01_tag_unchanged": "247d35c67dfa38bad06e3bd20ae231cddb8a5821"
+}
