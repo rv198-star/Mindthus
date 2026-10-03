@@ -1,0 +1,40 @@
+{
+ "format":"wave1-response-index-v1",
+ "original_raw_root":"/tmp/mindthus-207-fixed-wave1-20260907",
+ "durable_raw_root":"/var/lib/devspace/runtime-artifacts/mindthus-207-fixed-wave1-20260907/raw",
+ "response_text_sha256":{
+ "call-01-transport-probe":"4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93",
+ "call-02-F-A-owner1":"2472124065ee7322b032d3dc5765b6c5d31c6266c8dff5d851e96e1be59eab93",
+ "call-03-F-A-receiver":"668498e17c65b7785e4b364b12a8cbcc5aa9b49a3c77314417f95094b04e647a",
+ "call-04-K-B-owner1":"76fd353c4d9842690a58d264ebcd6f772ec969cad1d138ac73be3f83b34afe1d",
+ "call-05-K-B-receiver":"ee1d35657c78e01a0489491d2ff77d66d6896840475521c02fcb8c0057afff17",
+ "call-06-S-C-owner1":"373a76fe8bd0c78eeac61989277d8552c02cbff67d1110057af49e7d6c257b33",
+ "call-07-S-C-receiver":"ee89dad785f2fdec42d4cf9a8ced6e3d7e3dc67f1d8d7fc740c279514759411c",
+ "call-08-F-B-owner1":"868265d10499b08e8b52a685df8e9979361f0c0e689565c566a5aca899177dfb",
+ "call-09-F-B-receiver":"6272e23419e4fa4d0fd347c28fdb65caf5efd804f2bae134e213fbcff4bc1ec4",
+ "call-10-K-C-owner1":"67a145b9e196b11884266a3f20d163f41e09d271f0d8f2b709fadd59ce49be1b",
+ "call-11-K-C-receiver":"a6adc4c2705e4a99d926543591ff96ff5c47a9908d5e56b6d9e15d303389322e",
+ "call-12-S-A-owner1":"f4fb396495e6efca9c0f8e0ef79aae31fe6895028bf72b18f45ba7e5e82ad267",
+ "call-13-S-A-receiver":"4ccc01af51785bfda801756e5277a58101fc9e77748d89c9230199597ec2d051",
+ "call-14-F-C-owner1":"0a4e125a1897ac09f4fdeefcbc1ee27eaae918af14cd156f503ae045c4e080f9",
+ "call-15-F-C-receiver":"0e9b3acba33f6d67507fea0f100d04b8adc711fa1a8e087499195dcea248679e",
+ "call-16-K-A-owner1":"fde16c44b0e93d23fffc3d9c4a70e4587647d7cd95598575685406c56ab84cdb",
+ "call-17-K-A-receiver":"19a76f854029a62c08de656f4661978037af96ad726f7d4772a31a34804eddea",
+ "call-18-S-B-owner1":"cde4040f72429b0a6d63cd3c0cb434ecf9365df4592e52d61cb4411eebba58f8",
+ "call-19-S-B-receiver":"71b4a47e8ae4ce8d2e68bba36934e601d7409602d7441f24cfabde467894ab48",
+ "call-20-F-ready-C-owner1":"d706fa8706309e393f73b0919ca94dca83c9078afd4341420cab663db0a95c71",
+ "call-21-K-guarantee-C-owner1":"b36768a293b521166fca165ff4cd6930b3e45297bd6ac8ef876b9e0728ddab30",
+ "call-22-S-missing-C-owner1":"2e5798b2491b77bdfd3edebc68fe190334251d85aee738c16098e822db49a6a7"
+ },
+ "selected_verbatim_excerpts":[
+  {"call":"call-02-F-A-owner1","field":"artifact","text":"Published and reader projections are never editable.","meaning":"One legitimate read-only published-view choice, disputed by the oracle rather than directly forbidden by source."},
+  {"call":"call-20-F-ready-C-owner1","field":"artifact","text":"Thus published content is editable only when that approved revision is also current.","meaning":"Adequate boundary variant selected another legitimate interpretation; not a same-input repeatability trial."},
+  {"call":"call-10-K-C-owner1","field":"artifact","text":"The local marker suppresses later sends only after durable completion recording.","meaning":"Local guarantee is limited rather than promoted to external exactly-once."},
+  {"call":"call-11-K-C-receiver","field":"content","text":"It does **not** establish duplicate final effects: the remote contract, external deduplication, and final-effect semantics are unknown.","meaning":"Condition survived the actual knowledge handoff."},
+  {"call":"call-16-K-A-owner1","field":"artifact","text":"The existing call cannot simply be reordered unchanged because `mark_done` also requires the receipt produced by `send`","meaning":"Published-method arm identified a useful extra ordering constraint; do not equate shorter with better."},
+  {"call":"call-06-S-C-owner1","field":"artifact","text":"The data supports further bounded diagnosis, not expansion or full rollout.","meaning":"Replacement preserves the requested decision rather than draft expansion."},
+  {"call":"call-12-S-A-owner1","field":"artifact","text":"The pilot intervention/procedure and the operational definition or confirmer of `confirmed safety harm` were not supplied.","meaning":"A surfaced extra operating dependencies; this is not failure merely because unresolved is nonempty."},
+  {"call":"call-22-S-missing-C-owner1","field":"artifact","text":"The supplied material contains **0 of 3 required evidence components**","meaning":"Boundary produced an entire page plan despite need_input, under a conflicting inherited production request."}
+ ],
+ "limits":"Index and excerpts are a selected durable record, not an entire offline transcript. The full normalized capsule and original requests/results remain at the recorded OCI paths."
+}

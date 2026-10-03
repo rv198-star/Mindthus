@@ -1,0 +1,46 @@
+{
+  "experiment": "mindthus-207-pressure-wave2-v2",
+  "source_revision": "f7a8d44dc5f3554bb203d4abf8147a328414c5f4",
+  "assessment_type": "post-run same-session ChatGPT semantic audit against pre-frozen obligations; unblinded, not an independent human or model review",
+  "rubric_source": "evaluation_v2.py at the frozen source revision",
+  "F": {
+    "A": {"behavior": "156/156 under published_read_only", "owner_delivery": "contract, edge cases and required return values; recipient implements the function", "note": "Owner prose says six public fields while its explicit object and the public API contain five; the recipient emits the correct five. This local wording defect is retained, not treated as a behavioral failure."},
+    "B": {"behavior": "156/156 under published_read_only", "owner_delivery": "full present function already supplied", "note": "Core implementation was completed by Owner. Successful downstream reproduction is not evidence that the recipient independently resolved the implementation."},
+    "C": {"behavior": "156/156 under published_read_only", "owner_delivery": "full present function already supplied", "note": "Architecture-to-code delivery is observed, but it occurred in one synthesis after retrieval, not multiple design-refinement cycles."}
+  },
+  "K": {
+    "A": {"obligations": "K1-K7 supported at the stated fixture scope", "receiver": "call-16-K-A-receiver/result.json", "note": "Correctly separates expiry, attempt identity, local fencing, remote acceptance and unknown final effects; deployment and identity-encoding limitations retained."},
+    "B": {"obligations": "K1-K7 supported at the stated fixture scope", "receiver": "call-07-K-B-receiver/result.json", "note": "t20 busy, t30 attempt2; remote tokens change; old completion cannot reverse effects; digest/identity and non-production bounds retained."},
+    "C": {"obligations": "K1-K7 supported at the stated fixture scope", "receiver": "call-25-K-C-receiver/result.json", "note": "Required local/remote relations survive knowledge handoff; final-effect and production unknowns remain conditional."},
+    "economy_limit": "All arms read the complete 2554-byte miniature corpus, including telemetry. Knowledge packages A/B/C are 6999/6315/6442 bytes. No selective exploration or compression saving is demonstrated. More prose may help explanation, but its net value is not established."
+  },
+  "S": {
+    "A": {"quantitative_and_core_argument": "S1-S5 supported for page representation", "receiver": "call-10-S-A-receiver/result.json", "note": "Counts, denominators, subgroup reversal, simulation identity and bounded trial are retained. Unnamed risk owner and lack of statistical assurance are disclosed without claiming actual rollout."},
+    "B": {
+      "quantitative_and_core_argument": "Numbers, simulation marker and core request preserved",
+      "end_to_end_scope": "NOT CLEAN: recipient strengthened unresolved details into mandatory prerequisites",
+      "owner_source": "call-27-S-B-owner2/result.json",
+      "receiver_source": "call-28-S-B-receiver/result.json",
+      "owner_excerpt": "No minimum observation count by segment, allocation rule, or treatment for a segment with zero opportunities is supplied. Do not claim a segment passed its threshold without a valid denominator.",
+      "receiver_excerpt": "## Required before trial start\n\n- Name the risk owner.\n- Resolve the minimum observation count by segment.\n- Resolve the allocation rule.\n- Resolve how to treat a segment with zero opportunities.",
+      "judgment": "The source and planner distinguish unknown measurement details from the named-risk-owner operating condition. The maker promoted the former into new start conditions. This is downstream constraint escalation, not proof that the Owner's depth decision or causal loop is wrong. The frozen scope/authority rubric already requires preservation of the authorized request. No assessment rule was added after seeing the result."
+    },
+    "C": {"quantitative_and_core_argument": "S1-S5 supported for page representation", "receiver": "call-19-S-C-receiver/result.json", "note": "Aggregate 50% to 38.6% and both segments +10pp retained. Proposed follow-up, ceilings, pending approval, harm stop and review-only boundaries preserved. No visual or audience testing occurred."}
+  },
+  "boundary_controls": {
+    "F-ready": {"observed": "handoff", "additional_reads": 0, "note": "No extra loop; nevertheless expanded the already adequate 396-byte contract to 2264 bytes in 31.919793 seconds. Early route exit does not prove minimum single-call work or low overhead."},
+    "K-external": {"observed": "need_input", "additional_reads": 0, "note": "Did not certify production from synthetic fixture guarantees; identified required gateway/deployment evidence."},
+    "S-missing": {"observed": "need_input", "additional_reads": 0, "note": "724-byte prerequisite statement, no three-page substitute. This is corrected task scoping, not a measured method speed improvement against the contaminated old fixture."}
+  },
+  "trajectory_interpretation": {
+    "all_9_main_trials": "refine(read all sources) -> handoff(one synthesis) -> fresh recipient",
+    "C_refine_trials": "3/3, one retrieval refinement each",
+    "public_probe_calls": 0,
+    "semantic_only_refine_calls_after_evidence": 0,
+    "initial_artifact_changed_during_read_step": false,
+    "supported": "The pressure setup exposes a genuine insufficiency-to-evidence-to-handoff route. Final artifacts contain lower-level decision/behavior relations, not merely copied lookup labels.",
+    "not_supported": "No multi-level iterative semantic convergence, selective read economy, or C-specific incremental benefit is established. Moving facts from inline to on-demand naturally creates a retrieval turn; that extra request alone is not a WAE success metric."
+  },
+  "provider_observation": "One completed response reports 1505 output tokens against a requested 1500 cap. Charged the actual 1505; cumulative campaign output budget remains respected. Do not claim strict per-request enforcement has been certified.",
+  "next_scope": "No product promotion or additional calls automatically authorized. The remaining hypothesis is adaptive depth after an initial supported representation exists, tested against baseline evidence access without required round counts or staged file unlocking."
+}
