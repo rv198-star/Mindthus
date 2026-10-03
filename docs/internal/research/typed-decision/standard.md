@@ -6,7 +6,7 @@
 > Normative Decision Contract design principles: `docs/methodologies/typed-decision-principles.md`.
 > 本文件负责实验治理、接入、验证与价值账；若涉及 State / Question / Choice-Noul-Score / batching / policy / dynamic design 的设计规则，以该规范资产为准。
 
-## 当前设计口径 / 十条使用手册 v1.1
+## 当前设计口径 / 十一条使用手册 v1.2
 
 [规范性使用手册](../../../methodologies/typed-decision-principles.md)已统一直接裁决、同State多维矩阵、
 针对已知失效模式的语义检查、树/DAG与有界LLM动态设计。评估必须绑定对象/关系/时点，

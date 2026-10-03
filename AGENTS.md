@@ -41,7 +41,7 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 ## Typed Decision / System-One 规约
 
 设计或审查快速语义裁决、同 State 评估矩阵、定点纠偏或动态题组时，按需阅读
-`docs/methodologies/typed-decision-principles.md`（十条使用手册 v1.1），不把全文放入常驻上下文。
+`docs/methodologies/typed-decision-principles.md`（十一条使用手册 v1.2），不把全文放入常驻上下文。
 通用合同与 Engine/Serving/Resolved Runtime 分离；问题绑定对象、范围、材料和消费后果。
 直接分类、多维并发、候选回答检查与树/DAG可组合，不要求每轮全量扫描或把所有判断原子化。
 认知元语与方法正文仍为语义来源；快速检查结果不证明事实、不授予权限、不自动覆盖主判断。
