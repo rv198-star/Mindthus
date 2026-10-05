@@ -83,10 +83,9 @@ For very high-impact or long-term decisions, separate agents are an escalation o
 - If the output becomes elegant but does not improve a decision, treat the method use as failed.
 - If candidate structure is already stable and several valid actions compete for one shared scarce resource, use SRA for allocation; EDSP only stabilizes a malformed proposition or comparison axis.
 
-### Presentation Boundary / 表达边界
+### Presentation
 
-User-facing delivery follows the **Explain Core Presentation Contract**; no extra
-Explain/model pass or authority change.
+Use [Explain Core Presentation Contract](../explain/resources/presentation-contract.md) for user output in this pass, retaining method authority.
 
 ## Runtime Support / 支撑材料
 

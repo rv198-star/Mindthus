@@ -26,7 +26,13 @@ For an already-formed source result:
    and presentation.
 
 The baseline is satisfied when the method can express its own result this way directly.
-No separate Explain transformation is required.
+No separate Explain transformation is required. Reuse the loaded contract in the current
+response; consult this resource when needed, without loading the full Skill on every turn.
+
+Machine-readable schemas, logs, required artifact links, and exact-output requests retain
+their upstream format contracts. Apply this baseline to human-facing explanations rather
+than rewriting control data or forcing a universal schema. Method-specific evidence and
+delivery requirements remain in force.
 
 ## Explicit Explain Transformation
 

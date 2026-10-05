@@ -158,10 +158,9 @@ The worksheet is an aid for judgment, not evidence that the judgment is correct.
 - Do not treat human escalation as a routine fourth control layer.
 - If control is settled and valid actions compete for one scarce resource, use SRA; WAE constrains the runtime but does not allocate.
 
-### Presentation Boundary / 表达边界
+### Presentation
 
-User-facing delivery follows the **Explain Core Presentation Contract**; no extra
-Explain/model pass or authority change.
+Use [Explain Core Presentation Contract](../explain/resources/presentation-contract.md) for user output in this pass, retaining method authority.
 
 ## Runtime Support / 支撑材料
 

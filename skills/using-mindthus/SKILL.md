@@ -56,7 +56,7 @@ owner 面向用户交付时的共享表达基础；完整 Explain transformation
 
 ### Presentation Boundary / 表达边界
 
-方法 owner 先完成自己的判断；随后直接按 Explain Core Presentation Contract 交付：
+方法 owner 先完成自己的判断；随后直接按 [Explain Core Presentation Contract](../explain/resources/presentation-contract.md) 交付：
 结论/方向先行，主体、动作和条件明确，事实/判断/不确定性/风险分开，关键证据边界和
 未知不丢失。能由当前方法直接讲清就直接交付，不插入固定的第二模型调用或 refine loop。
 

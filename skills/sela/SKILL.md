@@ -117,10 +117,9 @@ Do not apply SELA as the main principle when:
   market value; use the Timing Check before converting long-term direction into an
   immediate cutover
 
-### Presentation Boundary / 表达边界
+### Presentation
 
-User-facing delivery follows the **Explain Core Presentation Contract**; no extra
-Explain/model pass or authority change.
+Use [Explain Core Presentation Contract](../explain/resources/presentation-contract.md) for user output in this pass, retaining method authority.
 
 ## Runtime Support / 支撑材料
 

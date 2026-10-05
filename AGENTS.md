@@ -30,6 +30,7 @@ Presentation Contract：先讲清结果，保留证据强度、条件、风险�
 共享表达基础，不等于额外调用一次 `explain`。用户明确要求 brief / ELI5 / audience /
 HTML，或确有较大表达重构需要时，再执行完整 Explain transformation；沿用已有对象、
 受众和目标，不重新要求用户指定判断方法。
+完整基线见 [Explain Core Presentation Contract](skills/explain/resources/presentation-contract.md)。
 
 上游平台可以通过上下文注入口提供少量相关背景，例如长期目标、用户偏好、历史经验、
 风险姿态、角色立场或权限边界。当前用户输入优先；注入上下文只能作为判断约束或线索，

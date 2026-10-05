@@ -81,12 +81,12 @@ a receipt before mutation. Active-Mission continuation is separate.
 
 ### User-Facing Output Adapter
 
-User-facing output should lead with meaning.
-ordinary updates should not lead with raw IDs. Internal IDs are for runtime stability.
-Follow the **Explain Core Presentation
-Contract** without a second Explain pass. Use `scripts/render_user_update.py`:
-`--progress` text; `--visualization` ChatGPT; `--html PATH` saves. Keep optional
-`work_plan`; unknown stays unknown.
+Internal IDs are for runtime stability.
+User-facing output should lead with meaning; ordinary updates should not lead with raw IDs.
+Follow [Explain Core Presentation Contract](../explain/resources/presentation-contract.md)
+in this pass. Use `scripts/render_user_update.py`: `--progress` text,
+`--visualization` ChatGPT, `--html PATH` export.
+Keep optional `work_plan` from known context; leave gaps unknown.
 
 Terminal handoff: `render_execution_cost_tree.py "$MISSION_DIR" --completion-handoff`;
 include both emitted links or error. See `resources/user-output.md`.

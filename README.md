@@ -52,7 +52,7 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 
 ## 方法论导航
 
-下面这些方法按场景选择，不组成固定判断流水线；它们的面向用户输出共享 Explain Core Presentation Contract，完整 Explain transformation 再按需使用：
+下面这些方法按场景选择，不组成固定判断流水线；它们的面向用户输出共享 Explain Core Presentation Contract，完整 Explain transformation 再按需使用。共享规则见 [Explain Core Presentation Contract](skills/explain/resources/presentation-contract.md)：
 
 - [`using-mindthus / 路由入口`](skills/using-mindthus/SKILL.md)：先判断要不要介入。低风险任务直接做；输入带偏时先纠偏；缺事实时先取证。
 - [`3L5S / 三层五步`](docs/methodologies/3l5s.md)：问题还乱时，把“感觉不对”压成能复述、能验证、能执行的真问题。

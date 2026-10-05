@@ -185,10 +185,9 @@ survival alone is not success. Surviving by abandoning mainline, core advantage,
 - If a Mission needs durable task state and decision hooks, use tplan; route to MPG only when active object fits.
 - Do not use MPG as a generic risk matrix, opportunity list, or narrative essay.
 
-### Presentation Boundary / 表达边界
+### Presentation
 
-User-facing delivery follows the **Explain Core Presentation Contract**; no extra
-Explain/model pass or authority change.
+Use [Explain Core Presentation Contract](../explain/resources/presentation-contract.md) for user output in this pass, retaining method authority.
 
 ## Runtime Support / 支撑材料
 

@@ -16,16 +16,46 @@
 - 同一 HTML 在 Chromium 的 1440px/390px 视口可展开原生 details，无横向溢出、外部请求或 JavaScript 错误。这是独立浏览器验证，不是当前对话显示验收。
 - 交互表面已在当前 ChatGPT 对话用 Visualizations / app_block 现场确认：用户明确反馈该效果就是此前满意的内嵌交互式可视化。HTML MIME、附件、PNG、Jupyter rich output、MagicPath Canvas 和 Code/Preview 均已实测排除为目标路径。后续验收只需确认 Mindthus 生成的 app_block payload 保留同一交互语义。
 
-## 设计对齐修正
+## 设计对齐修正与依据边界
 
-本轮按最初 Design Spec 回查后，修正此前把 Explain 过度收缩为“按需外挂”的集成偏移：
+依据为用户重新上传的 `mindthus-explain-v1-design-spec(2).md`，SHA-256：
+`673b45a07122ed33c4dcc143095a04d12a8a65a04f2cda26efc2a4a58e004182`。
+原文件不改写。
 
-1. `AGENTS.md` / README 从“需要时再用 Explain”改为：所有 Mindthus 面向用户输出默认继承 Core Presentation Contract。
-2. Explain runtime 明确分成共享 baseline 与完整 transformation；baseline 不增加第二次模型调用。
-3. `using-mindthus` 增加统一 Presentation Boundary，但 Explain 仍不进入 judgment owner 路由。
-4. 3L5S / SELA / MPG / SRA / EDSP / WAE / TVG / TPlan 均声明共享 Presentation Contract，保留各自判断、证据、状态和 authority。
-5. TPlan 从“首个正式上游接入”更正为首个专用 structured presentation adapter；其他方法不需要 TPlan 式 renderer 才算使用 Explain 基础层。
-6. `--html` 的 ChatGPT Visualizations / app_block 是已现场批准的宿主适配演进，保留不回退；它位于 presentation adapter 层，不改变上述基础依赖方向。
+原稿 §16 规定独立 Skill、其他方法可依赖、上游 → Explain 以及 fail-open；§17 描述
+Explain 产物的交付路径。§25 同时明确不强制所有 Skill 接入、不做全系统默认自动
+Explain。原稿没有逐字规定“所有方法必须默认继承共享表达合同”。此前把这一具体
+实现声称为原稿已经强制要求，属于审计归因过度，现更正。
+
+本轮按用户随后明确批准的“列出偏移点，并逐个修复”执行：把已有表达原则复用为
+默认基础合同，完整 Explain transformation 仍按需。不新增统一 Schema、第二模型
+调用、运行时复审或插件前置。以下是相对于这项已确认接入目标的六个修复点，
+不是对 §25 非目标的否定。
+
+| 编号 | 原接入缺口 | 已完成修复与检查入口 |
+| --- | --- | --- |
+| D1 | 全局入口只描述按需 Explain，未区分基础表达纪律 | `AGENTS.md` / README 定义共享基础与按需转换；链接到同一合同 |
+| D2 | Explain 本体没有把基础合同与完整转换分层 | `presentation-contract.md` 提取已有清晰表达原则；当前响应内执行，不增加模型轮次 |
+| D3 | 路由入口仅声明“可选表达支撑” | `using-mindthus` 增加表达边界，八个判断 owner 及 trace enum 保持原样 |
+| D4 | 八方法有分散表达规则但无共享合同入口 | 八个 `SKILL.md` 均链接到同一合同；直接调用也可解析，保留方法特有要求 |
+| D5 | TPlan 专用集成与全方法基础接入混淆 | TPlan 是首个结构化展示适配器；其他方法不需要复制 renderer 才能继承表达规则 |
+| D6 | 测试只能检查合同名称，未验证接线和范围 | 增加源目录及五种发行布局的九入口链接检查；明确机器输出、精确格式和必需交付物沿用上游合同 |
+
+Visualizations / app_block 已获现场确认，是后续批准的展示适配，不在本轮回退或重做。
+本轮不修改任何工作量计算、TPlan 状态、判断路由、证据校验或 HTML/Visualizations renderer。
+
+### 本次中断恢复
+
+`1f6e529a` 已完成主体接入并推送。GitHub run `37368761044` 因 hosted runner 未能领取
+任务而取消，官方 annotation 为 “The job was not acquired by Runner of type hosted even
+after multiple attempts”；测试步骤未运行，不能视作测试失败或通过。
+本次只完成最终复核、合同链接、依据归因和最后验证，保留此前功能验收。
+
+恢复后的 Explain/TPlan/打包集中回归共 149 项：148 通过，1 个既有可选依赖跳过；
+新增测试覆盖九个直接入口及五种发行布局的共享合同链接，并约束机器输出合同保留。
+Explain 可移植性 lint 为 `portable=true`，0 error / 0 warning。完整 unittest 与最终
+提交的 GitHub CI 结果记录在 PR #224 和持久任务中，避免沿用旧提交的绿色状态。
+这些检查证明合同/链接/打包接线及程序回归，不把文档断言当作所有模型输出质量的实测。
 
 ## 已确认的产品范围
 

@@ -87,6 +87,25 @@ class ExplainPresentationFoundationTests(unittest.TestCase):
                 self.assertIn("Explain Core Presentation Contract", text)
                 self.assertNotIn("mandatory second Explain", text)
 
+    def test_direct_method_entries_resolve_the_shared_contract(self):
+        canonical = (REPO / "skills/explain/resources/presentation-contract.md").resolve()
+        for name in (*self.METHOD_SKILLS, "using-mindthus"):
+            entry = REPO / f"skills/{name}/SKILL.md"
+            with self.subTest(skill=name):
+                text = entry.read_text(encoding="utf-8")
+                links = re.findall(r"\[Explain Core Presentation Contract\]\(([^)]+)\)", text)
+                self.assertEqual(len(links), 1, "direct entry needs one resolvable baseline, not just its name")
+                self.assertEqual((entry.parent / links[0]).resolve(), canonical)
+                self.assertTrue(canonical.is_file())
+
+    def test_baseline_retains_machine_contracts_and_reuses_current_context(self):
+        contract = " ".join((REPO / "skills/explain/resources/presentation-contract.md").read_text().split())
+        self.assertIn("Reuse the loaded contract in the current response", contract)
+        self.assertIn("without loading the full Skill on every turn", contract)
+        self.assertIn("Machine-readable schemas, logs, required artifact links, and exact-output requests retain their upstream format contracts", contract)
+        self.assertIn("rather than rewriting control data or forcing a universal schema", contract)
+        self.assertIn("Method-specific evidence and delivery requirements remain in force", contract)
+
     def test_shared_presentation_does_not_add_explain_to_judgment_routing(self):
         text = (REPO / "skills/using-mindthus/SKILL.md").read_text(encoding="utf-8")
         section = text.split("### Skill Routing", 1)[1].split("\n### ", 1)[0]
@@ -221,6 +240,30 @@ class ExplainPackagingContractTests(unittest.TestCase):
                                 f"packaged link escapes release: {packaged} -> {target}",
                             )
                             self.assertTrue(resolved.exists(), f"broken packaged link: {packaged} -> {target}")
+
+    def test_method_contract_links_survive_all_five_layouts(self):
+        layouts = (
+            ("claude-code/claude-plugin", "skills"),
+            ("claude-code", "skills"),
+            ("codex-plugin/mindthus", "skills"),
+            ("codex", "skills/mindthus"),
+            ("opencode", ".opencode/skills/mindthus"),
+        )
+        source = (REPO / "skills/explain/resources/presentation-contract.md").read_text(encoding="utf-8")
+        methods = (*ExplainPresentationFoundationTests.METHOD_SKILLS, "using-mindthus")
+        for platform, prefix in layouts:
+            root = self.output / platform / prefix
+            expected = (root / "explain/resources/presentation-contract.md").resolve()
+            for name in methods:
+                entry = root / name / "SKILL.md"
+                with self.subTest(platform=platform, skill=name):
+                    links = re.findall(r"\[Explain Core Presentation Contract\]\(([^)]+)\)", entry.read_text(encoding="utf-8"))
+                    self.assertEqual(len(links), 1)
+                    resolved = (entry.parent / links[0]).resolve()
+                    self.assertEqual(resolved, expected)
+                    self.assertTrue(resolved.is_relative_to(self.output.resolve()))
+                    self.assertTrue(resolved.is_file())
+                    self.assertEqual(resolved.read_text(encoding="utf-8"), source)
 
     def test_namespaced_agents_reference_the_packaged_explain_skill(self):
         for platform, prefix in (

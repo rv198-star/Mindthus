@@ -43,10 +43,9 @@ canonical model 错误先根因替换，不继续加厚。没有收益假设就�
 brief / ELI5 / audience / HTML 或表达重构时才交给完整 `explain` transformation。需要补判断、
 证据或使用价值才由 TVG 强化；源信息缺口交回原 owner，不用更顺的表达补齐事实。
 
-### Presentation Boundary / 表达边界
+### Presentation
 
-User-facing delivery follows the **Explain Core Presentation Contract**; no extra
-Explain/model pass or authority change.
+Use [Explain Core Presentation Contract](../explain/resources/presentation-contract.md) for user output in this pass, retaining method authority.
 
 ## Runtime Support / 按需支撑
 

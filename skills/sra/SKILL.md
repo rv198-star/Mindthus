@@ -206,10 +206,9 @@ alternative, or priority.
 Do not use SRA when there is no real shared resource contention. Do not treat the words
 “priority”, “important”, “ROI”, or “resource” as sufficient wake-up evidence.
 
-### Presentation Boundary / 表达边界
+### Presentation
 
-User-facing delivery follows the **Explain Core Presentation Contract**; no extra
-Explain/model pass or authority change.
+Use [Explain Core Presentation Contract](../explain/resources/presentation-contract.md) for user output in this pass, retaining method authority.
 
 ## Runtime Support
 
