@@ -12,7 +12,8 @@ small inline JavaScript needed for reading interactions. Set the document langua
 title, character encoding, and viewport. Use system fonts.
 
 In an ordinary conversation, keep this representation in the response and submit it to
-the available inline HTML/code preview surface. Do **not** persist it as a file solely
+an available sandboxed inline HTML renderer. Use an HTML code-block preview only as the
+fallback when no direct rendered surface exists. Do **not** persist it as a file solely
 because `--html` was requested.
 
 When the user explicitly asks for a saved/downloadable/exported file, persist the same
@@ -75,10 +76,10 @@ provider. Provider-specific adapters are optional host integrations and must sta
 outside the portable Explain core.
 
 An explicit request for **HTML visible and interactive inside the conversation**
-requires the HTML itself on a real host preview surface. A downloadable copy is added
-when the user also requests HTML/file export or when the host naturally exposes the
-same artifact as a file. General visual summaries may still use images; they fulfill a
-different request.
+requires the HTML itself on a real rendered host surface, not merely source code with a
+possible Preview tab. A downloadable copy is added when the user also requests
+HTML/file export or when the host naturally exposes the same artifact as a file. General
+visual summaries may still use images; they fulfill a different request.
 
 Prefer a host-provided **sandboxed inline HTML renderer** that runs the generated
 self-contained document directly in the conversation. The host may expose this as an
@@ -95,6 +96,13 @@ merely to obtain a preview block, and do not invent an undocumented directive su
 A code block that initially opens as source code does **not** satisfy a request for
 direct interactive inline HTML. Keep that acceptance open until the rendered surface is
 actually visible and usable.
+
+For upstream runtimes that can return structured presentation requests, use the compact
+provider-agnostic envelope `explain.inline_html.v1`: `mime_type=text/html`,
+`preferred_surface=sandboxed_inline_html`, `preferred_container=iframe`,
+`fallback_surface=html_code_block`, `status=prepared_not_rendered`, plus the exact
+self-contained `html`. The envelope requests presentation only; it is not proof that
+the host rendered it and it adds no external-provider dependency.
 
 If an HTML file already exists because the user requested a file artifact, the optional
 `scripts/prepare_html_delivery.py` helper can prepare a preview block from that file

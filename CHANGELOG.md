@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- 新增 `Explain / 解释与表达` 及 TPlan 进展视图。`--html` 只选择 HTML 表示方式，普通对话优先交给宿主的 **sandboxed inline HTML renderer**（iframe / artifact preview / 等价隔离容器）直接运行；HTML code block 仅作为无直接渲染面时的 fallback，不再把“能切 Preview”误当成交互式内嵌交付。只有用户明确要求保存、下载、导出、附件或交接文件时才持久化 `.html` artifact。Explain 核心不依赖任何外部插件、App、Canvas 或具体提供商。
+- 新增 `Explain / 解释与表达` 及 TPlan 进展视图。`--html` 只选择 HTML 表示方式，普通对话优先交给宿主的 **sandboxed inline HTML renderer**（iframe / artifact preview / 等价隔离容器）直接运行；HTML code block 仅作为无直接渲染面时的 fallback，不再把“能切 Preview”误当成交互式内嵌交付。TPlan 新增 `render_user_update.py --inline-html` 作为第一等无文件传输：直接输出完整 HTML；`--json` 时返回 `explain.inline_html.v1` envelope（preferred `sandboxed_inline_html` / `iframe`，状态 `prepared_not_rendered`）。只有用户明确要求保存、下载、导出、附件或交接文件时才持久化 `.html` artifact。Explain 核心不依赖任何外部插件、App、Canvas 或具体提供商。
 - TPlan 新增可选 `work_plan` 与受控元数据写入，记录剩余估计、已声明前置和并行条件；估计更新不计为任务推进，未知、部分覆盖和不同单位分别保留。
 - 新增文字、JSON 与离线 HTML 进展视图；普通聊天文本直接显示来源明确的进度条与剩余占比条，区间占比保留确定/不确定段而不取中值。HTML 首屏固定为整体进度、剩余工作与剩余工作占比，风险、阻塞、证据、依赖和估算依据保留在默认折叠的下钻区。对话内交互由宿主能力协商决定，可选适配器只负责表示层，不成为 Explain/TPlan 运行时依赖，也不再强绑下载 HTML；风险与主要阻塞点为可选信息，有当前来源时保留。展示不改变计划、验收或继续执行的授权。
 - 同步 Explain 的插件/Skills 打包、调用示例与卸载清单；源码合同与打包检查不构成模型质量、token 收益或历史 benchmark 的新增证明。本节为未发布变更。

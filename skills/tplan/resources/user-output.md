@@ -164,6 +164,11 @@ unknown rather than being replaced by a fabricated percentage.
 ```bash
 python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --progress
 
+# Preferred for an in-conversation sandboxed renderer: emits the complete
+# self-contained HTML to stdout and writes no file.
+python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --inline-html
+
+# Explicit saved/exported artifact only.
 python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" \
   --html "$MISSION_DIR/reports/progress.html"
 ```
@@ -192,7 +197,13 @@ dependencies or Mission authority.
 For an explicit inline HTML request, prefer an available **sandboxed rendered HTML
 surface** (iframe, artifact preview, or equivalent isolated renderer) so the existing
 SVG/node selection, native disclosure controls and local JavaScript remain directly
-usable. A previewable HTML code block is a fallback transport for the same source, not
+usable. `render_user_update.py --inline-html` is the first-class transport for that
+surface: without `--json` it emits the exact self-contained document to stdout and
+persists nothing; with `--json` it returns an `explain.inline_html.v1` envelope whose
+preferred surface is `sandboxed_inline_html` / `iframe`. The envelope status is
+`prepared_not_rendered` until the host actually mounts it.
+
+A previewable HTML code block is a fallback transport for the same source, not
 equivalent interactive delivery. PNG and static chat summaries are useful fallback
 representations but do not satisfy an interaction request. Keep interaction acceptance
 open until controls are actually visible and usable in the conversation; tests and file
@@ -307,9 +318,11 @@ Mission schema, judgment owner or acceptance result.
 and adds `progress`. An explicit request gets `update_kind=progress` even if the
 source cursor is unchanged; automatic unchanged calls retain `quiet`/`heartbeat`
 delivery. A runtime incompatibility returns `update_kind=diagnostic` even for an
-unchanged cursor. `--html PATH --json` also returns `html_path`. An explicitly requested HTML
-artifact is generated even when the same snapshot was previously rendered. Without
-either option, the original compact update and heartbeat contract is unchanged.
+unchanged cursor. `--inline-html --json` adds the provider-agnostic
+`explain.inline_html.v1` presentation envelope without writing a file. `--html PATH --json`
+returns `html_path` for an explicitly requested saved/exported artifact. When both are
+requested, the persisted file and inline envelope use the exact same rendered HTML.
+Without these options, the original compact update and heartbeat contract is unchanged.
 
 Explain may use this view as input for a requested clearer or shorter delivery.
 Preserve the source constraints, risks, uncertainty and optional workload information;

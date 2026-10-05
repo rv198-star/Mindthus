@@ -308,6 +308,11 @@ def main() -> int:
     parser.add_argument("--delivery", choices=("automatic", "explicit"), default="explicit")
     parser.add_argument("--json", action="store_true", help="Print machine-readable render fields.")
     parser.add_argument("--progress", action="store_true", help="Explain overall progress, remaining work and declared dependencies.")
+    parser.add_argument(
+        "--inline-html",
+        action="store_true",
+        help="Emit self-contained progress HTML for a sandboxed inline renderer; implies --progress and does not write a file.",
+    )
     parser.add_argument("--html", metavar="PATH", help="Write a self-contained progress HTML artifact; implies --progress.")
     args = parser.parse_args()
 
@@ -320,7 +325,7 @@ def main() -> int:
             delivery=args.delivery,
             include_internal=args.include_internal,
         )
-        if args.progress or args.html:
+        if args.progress or args.inline_html or args.html:
             from render_progress_view import (
                 build_progress_report,
                 render_progress_html,
@@ -335,7 +340,7 @@ def main() -> int:
                 args.delivery == "explicit" or result["update_kind"] == "full"
                 or snapshot["runtime_provenance"].get("compatible") is False
             )
-            if show_progress or args.html:
+            if show_progress or args.inline_html or args.html:
                 progress = build_progress_report(
                     snapshot, include_internal=args.include_internal, mission_dir=mission_dir,
                     guard_just_released=result["guard_just_released"],
@@ -344,10 +349,29 @@ def main() -> int:
                 if show_progress:
                     result["text"] = render_progress_text(progress)
                     result["update_kind"] = "diagnostic" if progress["diagnostic_only"] else "progress"
+
+                # Render the HTML once so inline and optional file delivery are
+                # guaranteed to expose the exact same representation.
+                html_source = None
+                if args.inline_html or args.html:
+                    output_path = Path(args.html) if args.html else None
+                    html_source = render_progress_html(progress, output_path=output_path)
+
+                if args.inline_html:
+                    result["inline_html"] = {
+                        "schema_version": "explain.inline_html.v1",
+                        "mime_type": "text/html",
+                        "preferred_surface": "sandboxed_inline_html",
+                        "preferred_container": "iframe",
+                        "fallback_surface": "html_code_block",
+                        "status": "prepared_not_rendered",
+                        "html": html_source,
+                    }
+
                 if args.html:
-                    output = write_progress_artifact(Path(args.html), render_progress_html(progress, output_path=Path(args.html)), mission_dir)
+                    output = write_progress_artifact(Path(args.html), html_source, mission_dir)
                     result["html_path"] = str(output)
-                    if not args.json:
+                    if not args.json and not args.inline_html:
                         result["text"] += f"\n- [TPlan 进展与剩余工作](<{output}>)\n"
     except (KeyError, OSError, json.JSONDecodeError, TplanError, ValueError) as exc:
         print(str(exc), file=sys.stderr)
@@ -355,6 +379,8 @@ def main() -> int:
 
     if args.json:
         print(json.dumps({**result, "include_internal": args.include_internal, "delivery": args.delivery}, ensure_ascii=False, indent=2))
+    elif args.inline_html:
+        sys.stdout.write(result["inline_html"]["html"])
     else:
         print(result["text"], end="")
     return 0

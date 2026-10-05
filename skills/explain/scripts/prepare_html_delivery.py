@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Prepare the actual HTML for a host's previewable code block, without rendering it.
+"""Prepare an existing HTML file for the code-block fallback path only.
 
-The download stays the original file. This helper emits its exact UTF-8 source;
-only the host or user can establish whether the preview is visible and interactive.
+Direct sandboxed inline rendering should consume the HTML itself without this helper.
+This helper preserves exact UTF-8 source for hosts that expose only a previewable code
+block; only the host or user can establish whether any rendered preview is actually
+visible and interactive.
 """
 from __future__ import annotations
 

@@ -8,7 +8,7 @@
 ## 最后交付返修（现场未验收）
 
 - chat-native 文本进展视图新增直接可见的 Unicode 进度条：源数据提供百分比时按原值绘制；剩余占比区间用 `█` 表示确定下界、`▒` 表示不确定区间、`░` 表示其余范围。没有源百分比时不为“好看”而造数字。
-- `--html` 已从“文件附件”与“代码块 Preview”语义中进一步解耦：普通对话的首选技术是宿主提供的 **sandboxed inline HTML render surface**（例如 iframe / artifact preview / 等价隔离容器），让现有 HTML、SVG 和本地 JavaScript 直接运行。HTML code block 只是 fallback；如果默认显示源码，即使用户可以手动切 Preview，也不算“直接交互式内嵌”已经通过。只有用户明确要求保存、下载、导出、附件或文件交接时才持久化 `.html`。用户只要“对话内可交互”时，由运行时实际可用的宿主 surface / 可选适配器消费同一只读 view；Explain portable core 不依赖任何外部插件、App、Canvas 或具体提供商。
+- `--html` 已从“文件附件”与“代码块 Preview”语义中进一步解耦：普通对话的首选技术是宿主提供的 **sandboxed inline HTML render surface**（例如 iframe / artifact preview / 等价隔离容器），让现有 HTML、SVG 和本地 JavaScript 直接运行。HTML code block 只是 fallback；如果默认显示源码，即使用户可以手动切 Preview，也不算“直接交互式内嵌”已经通过。TPlan 现提供 `render_user_update.py --inline-html`：非 JSON 模式直接输出完整 self-contained HTML 且不写文件；JSON 模式返回 `explain.inline_html.v1` presentation envelope，明确请求 `sandboxed_inline_html` / `iframe`，直到宿主真正挂载前状态保持 `prepared_not_rendered`。只有用户明确要求保存、下载、导出、附件或文件交接时才持久化 `.html`。用户只要“对话内可交互”时，由运行时实际可用的宿主 surface / 可选适配器消费同一只读 view；Explain portable core 不依赖任何外部插件、App、Canvas 或具体提供商。
 
 - 新增 `skills/explain/scripts/prepare_html_delivery.py`：只读现有 HTML，输出可预览 HTML 代码块及同源 SHA-256；状态固定为 `prepared_not_verified`，不假装拥有宿主的显示回执。
 - [当前任务的真实交付状态](current-delivery-status.html)替代先前无来源的87%进度图；状态页现在区分已完成 Skill 功能、当前交互表面验收、后续合并与发布，不再把下载 HTML 作为交互请求的必选项。
@@ -18,7 +18,7 @@
 
 ## 已确认的产品范围
 
-Explain 是独立的理解与表达技能。它解释已有结果，保留原判断、证据强度、状态、验收和执行权限。默认完整清晰；`--brief` 减少阅读负担，`--eli5` 按受众做最低必要降阶，`--audience` 覆盖受众，`--html` 交付单文件离线阅读产物。参数可以组合，任务入口与最终交付共用同一套转换规则。
+Explain 是独立的理解与表达技能。它解释已有结果，保留原判断、证据强度、状态、验收和执行权限。默认完整清晰；`--brief` 减少阅读负担，`--eli5` 按受众做最低必要降阶，`--audience` 覆盖受众，`--html` 选择自包含 HTML 表示方式：对话内优先 sandboxed renderer，显式保存/下载时才持久化为文件。参数可以组合，任务入口与最终交付共用同一套转换规则。
 
 TPlan 是首个正式上游接入场景。用户需要理解整体进展、剩余工作块、剩余估计、各块在剩余量中的占比，以及已知前置和并行条件。
 
@@ -31,7 +31,7 @@ Explain 的入口与按需参考材料位于 [skills/explain](../../../skills/ex
 ```text
 /mindthus:explain 把这份说明讲清楚，保留条件与未知。
 /mindthus:explain --brief --eli5 --audience 产品负责人 解释这段技术材料。
-/mindthus:explain --html --brief 把当前任务结果做成离线阅读报告。
+/mindthus:explain --html --brief 把当前任务结果做成对话内可交互 HTML；需要文件时再明确要求导出。
 ```
 
 TPlan 增加可选 `work_plan`。创建 Mission 的两个入口支持 `--work-plan-json`；已存在 Mission 使用受控元数据入口更新：
@@ -41,8 +41,9 @@ python3 skills/tplan/scripts/record_work_plan.py MISSION_DIR \
   --input work-plan.json --summary "更新剩余估计与已知条件"
 
 python3 skills/tplan/scripts/render_user_update.py MISSION_DIR --progress
+python3 skills/tplan/scripts/render_user_update.py MISSION_DIR --inline-html
 python3 skills/tplan/scripts/render_user_update.py MISSION_DIR \
-  --html MISSION_DIR/reports/progress.html
+  --html MISSION_DIR/reports/progress.html  # 仅显式文件导出
 
 python3 skills/tplan/scripts/render_progress_view.py MISSION_DIR --format json
 ```

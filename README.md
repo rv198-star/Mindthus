@@ -78,7 +78,7 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 /mindthus:tvg 强化这份方案的证据与取舍；完成后，用 /mindthus:explain 向新同事讲清。
 ```
 
-`--brief` 降低阅读负担，`--eli5` 按受众做最低必要的降阶解释，`--html` 交付离线单文件；参数可以组合，顺序不改变含义。
+`--brief` 降低阅读负担，`--eli5` 按受众做最低必要的降阶解释，`--html` 选择 HTML 表示方式；在对话中优先使用 sandboxed inline renderer 直接运行，只有显式保存/下载/导出时才落为 `.html` 文件。参数可以组合，顺序不改变含义。
 
 已有 TPlan Mission 时，可以让 Explain 展示当前计划与进展；来源中已有的重要风险和主要阻塞点会一并保留。
 展示沿用 TPlan 的事实、状态和验收依据；需要调整计划或改变状态时交回 TPlan。解释不增加新的判断 owner，也不要求其他方法每次都接一轮 Explain。

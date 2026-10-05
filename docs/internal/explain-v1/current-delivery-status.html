@@ -35,7 +35,7 @@
 <summary>展开：验收条件与依据</summary>
 <div class="notice"><strong>现场验收：</strong>当前消息中能直接看到进展视图；交互请求还要求用户可直接操作展开、选择或筛选等控件。PNG、附件、外部浏览器、文件生成或 CI 通过均不替代交互验收。下载 HTML 仅在用户明确要求文件时才是额外条件。</div>
 <p>PR #224 仍为 Draft；既有 CI 和本轮聚焦回归只证明工程实现，不证明聊天内交互成功。</p>
-<p>本轮交付新增 chat-native 进度条；对话内交互通过运行时宿主能力协商选择可用 surface / 可选适配器，Explain/TPlan 不依赖任何具体插件或提供商；不改 TPlan 的工作量、任务状态、依赖或验收逻辑。</p>
+<p>本轮交付新增 chat-native 进度条，并恢复 sandboxed inline HTML 为首选交付技术。TPlan 的 <code>--inline-html</code> 直接输出完整 HTML，JSON 模式提供 <code>explain.inline_html.v1</code> iframe/sandbox presentation request；HTML code block 只作 fallback。Explain/TPlan 不依赖任何具体插件或提供商，也不改 TPlan 的工作量、任务状态、依赖或验收逻辑。</p>
 <p><a href="https://github.com/rv198-star/Mindthus/pull/224" target="_blank" rel="noopener noreferrer">查看 PR #224 与提交记录</a></p>
 </details>
 </main>

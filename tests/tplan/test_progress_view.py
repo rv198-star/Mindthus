@@ -535,6 +535,47 @@ class ProgressViewTests(unittest.TestCase):
             self.assertIn("交互保护：已解除", html_path.read_text())
             self.assertEqual(data["progress"]["interaction_guard_text"], "交互保护：已解除。")
 
+    def test_inline_html_is_first_class_delivery_and_does_not_require_a_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            mission_dir.mkdir()
+            mission = source_mission()
+            (mission_dir / "mission.json").write_text(json.dumps(mission, ensure_ascii=False))
+            (mission_dir / "evidence.jsonl").write_text(
+                "\n".join(json.dumps(event, ensure_ascii=False) for event in source_events()) + "\n"
+            )
+            (mission_dir / "execution_trace.jsonl").write_text("")
+
+            inline = run_script("render_user_update.py", mission_dir, "--inline-html")
+            self.assertEqual(inline.returncode, 0, inline.stderr)
+            self.assertTrue(inline.stdout.startswith("<!doctype html>"))
+            self.assertIn('data-select="block-', inline.stdout)
+            self.assertIn("dependency-edge", inline.stdout)
+            self.assertIn("<script>", inline.stdout)
+            self.assertFalse((mission_dir / "reports").exists(), "inline delivery must not persist an artifact")
+
+            envelope_result = run_script("render_user_update.py", mission_dir, "--inline-html", "--json")
+            self.assertEqual(envelope_result.returncode, 0, envelope_result.stderr)
+            envelope = json.loads(envelope_result.stdout)["inline_html"]
+            self.assertEqual(envelope["schema_version"], "explain.inline_html.v1")
+            self.assertEqual(envelope["mime_type"], "text/html")
+            self.assertEqual(envelope["preferred_surface"], "sandboxed_inline_html")
+            self.assertEqual(envelope["preferred_container"], "iframe")
+            self.assertEqual(envelope["fallback_surface"], "html_code_block")
+            self.assertEqual(envelope["status"], "prepared_not_rendered")
+            self.assertEqual(envelope["html"], inline.stdout)
+            self.assertFalse((mission_dir / "reports").exists())
+
+            html_path = mission_dir / "reports" / "progress.html"
+            both_result = run_script(
+                "render_user_update.py", mission_dir,
+                "--inline-html", "--html", html_path, "--json",
+            )
+            self.assertEqual(both_result.returncode, 0, both_result.stderr)
+            both = json.loads(both_result.stdout)
+            self.assertEqual(both["html_path"], str(html_path))
+            self.assertEqual(html_path.read_text(), both["inline_html"]["html"])
+
     def test_real_cli_reads_work_plan_and_preserves_existing_delivery_cadence(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = Path(tmp) / "mission"
