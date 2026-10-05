@@ -129,11 +129,64 @@ class ProgressViewTests(unittest.TestCase):
         page = render_progress_html(report)
         self.assertIn("已验收范围：30 %", text)
         self.assertIn("预计剩余工作量：60 点", text)
-        self.assertIn("已验收范围：30 %", page)
+        self.assertIn(">30%</div>", page)
+        self.assertIn(">已验收范围</div>", page)
         self.assertIn("60 点", page)
         self.assertNotIn("整体完成率：20", text)
         self.assertEqual(json.loads(json.dumps(report))["work_view"]["remaining"], report["work_view"]["remaining"])
         self.assertNotIn("T2", text)
+
+    def test_html_first_screen_contract_is_progress_remaining_work_and_shares(self):
+        mission = source_mission()
+        mission["work_plan"]["risks"] = [{"summary": "测试风险", "task_ids": ["T3"]}]
+        mission["work_plan"]["blockers"] = [{"summary": "测试阻塞", "task_ids": ["T2"], "release_condition": "输入到齐"}]
+        report = build_progress_report(snapshot(mission))
+        page = render_progress_html(report)
+
+        dashboard_start = page.index('<section id="dashboard"')
+        dashboard_end = page.index("</section>", dashboard_start)
+        detail_start = page.index('<details id="deep-dive"', dashboard_end)
+        dashboard = page[dashboard_start:dashboard_end]
+
+        self.assertIn('data-ui-contract="core-progress-dashboard"', dashboard)
+        self.assertIn("整体进度", dashboard)
+        self.assertIn(">30%</div>", dashboard)
+        self.assertIn("剩余工作", dashboard)
+        self.assertIn("60 点", dashboard)
+        for title in ("界面整合", "回归测试", "使用文档", "交付验收"):
+            self.assertIn(title, dashboard)
+        for share in ("25%", "33.3", "16.7"):
+            self.assertIn(share, dashboard)
+
+        for secondary in (
+            "测试风险", "测试阻塞", "重要限制", "已有结果与依据", "下一步",
+            "前置关系与并行条件", "查找工作块", "任务说明",
+        ):
+            self.assertNotIn(secondary, dashboard)
+        self.assertLess(dashboard_end, detail_start)
+        self.assertIn('<details id="deep-dive" class="deep-dive">', page)
+        self.assertNotIn('<details id="deep-dive" class="deep-dive" open', page)
+        self.assertGreater(page.index("测试风险"), detail_start)
+        self.assertGreater(page.index("测试阻塞"), detail_start)
+        self.assertGreater(page.index("前置关系与并行条件"), detail_start)
+
+    def test_interval_share_bar_uses_source_bounds_without_midpoint(self):
+        mission = source_mission()
+        estimate = mission["work_plan"]["blocks"][1]["remaining"]
+        estimate["low"], estimate["high"] = 10, 20
+        report = build_progress_report(snapshot(mission))
+        block = next(item for item in report["work_view"]["blocks"] if item["task_id"] == "T2")
+        share = block["remaining_share"]
+        self.assertNotEqual(share["low"], share["high"])
+
+        page = render_progress_html(report)
+        dashboard_start = page.index('<section id="dashboard"')
+        dashboard_end = page.index("</section>", dashboard_start)
+        dashboard = page[dashboard_start:dashboard_end]
+        self.assertIn(f'data-share-low="{share["low"]:.10g}"', dashboard)
+        self.assertIn(f'data-share-high="{share["high"]:.10g}"', dashboard)
+        self.assertIn('class="share-range"', dashboard)
+        self.assertNotIn("midpoint", dashboard.lower())
 
     def test_completed_but_unresolved_work_stays_visible_without_rewriting_status(self):
         for positive_estimate in (False, True):
@@ -203,7 +256,7 @@ class ProgressViewTests(unittest.TestCase):
                     self.assertFalse(report["diagnostic_only"])
                     warning = "运行时来源未固定" if case == "legacy_unpinned" else "运行时位置已变化"
                     self.assertIn(warning, text)
-                    self.assertLess(page.index(warning), page.index('id="work"'))
+                    self.assertGreater(page.index(warning), page.index('id="deep-dive"'))
                     self.assertIn("预计剩余工作量：60 点", text)
 
     def test_existing_constraints_facts_next_step_and_estimate_confidence_are_preserved(self):
@@ -353,7 +406,7 @@ class ProgressViewTests(unittest.TestCase):
         self.assertTrue(report["work_view"]["diagnostics"])
         page = render_progress_html(report)
         self.assertIn("规划元数据未通过校验", page)
-        self.assertLess(page.index("规划元数据未通过校验"), page.index('id="work"'))
+        self.assertGreater(page.index("规划元数据未通过校验"), page.index('id="deep-dive"'))
 
     def test_existing_risks_and_blockers_are_visible_without_flags_and_are_escaped(self):
         mission = source_mission()
@@ -376,17 +429,22 @@ class ProgressViewTests(unittest.TestCase):
         self.assertFalse(any(key in {"src", "srcset"} for _, key, _ in parser.attributes))
         self.assertTrue(all(value.startswith("#") for _, key, value in parser.attributes if key == "href"))
         self.assertIn(hostile, render_progress_text(report))
-        self.assertLess(page.index("可能影响验收"), page.index('id="work"'))
+        self.assertIn('<details id="deep-dive" class="deep-dive">', page)
+        self.assertGreater(page.index("可能影响验收"), page.index('id="deep-dive"'))
 
-    def test_human_authority_and_guard_limits_are_not_hidden_in_details(self):
+    def test_human_authority_and_guard_limits_are_preserved_below_the_dashboard(self):
         source = snapshot()
         source["mission"]["mission"]["status"] = "requires_human"
         source["interaction_guard_state"] = {"present": True, "phase": "awaiting_authority", "revision": 7}
         source["mission"]["tasks"][1]["status"] = "blocked"
         report = build_progress_report(source)
         page = render_progress_html(report)
-        for message in ("等待人类确认", "写保护已开启", "已阻塞的工作块：界面整合"):
-            self.assertIn(message, page[:page.index('id="work"')])
+        dashboard_start = page.index('id="dashboard"')
+        detail_start = page.index('id="deep-dive"')
+        self.assertIn("Mission 状态：等待人类确认", page[:dashboard_start])
+        self.assertIn("项限制", page[detail_start:page.index("</summary>", detail_start)])
+        for message in ("写保护已开启", "已阻塞的工作块：界面整合"):
+            self.assertGreater(page.index(message), detail_start)
         self.assertNotIn("message_ref", page)
 
     def test_graph_uses_declared_dependencies_and_has_real_selection_controls(self):
@@ -399,6 +457,7 @@ class ProgressViewTests(unittest.TestCase):
         self.assertIn('id="work-search"', page)
         self.assertIn('id="work-status"', page)
         self.assertIn("row.hidden=", "".join(parser.script_text))
+        self.assertIn("deep.open=true", "".join(parser.script_text))
         self.assertIn("target.open=true", "".join(parser.script_text))
         self.assertIn("前置条件已满足只描述已记录的关系", page)
         self.assertNotIn("fetch(", "".join(parser.script_text))

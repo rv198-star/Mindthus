@@ -471,31 +471,75 @@ def _graph(view: dict[str, Any], keys: dict[str, str]) -> str:
     return "".join(parts)
 
 
+def _progress_display(progress: dict[str, Any] | None) -> str:
+    if progress is None:
+        return "未提供数值"
+    unit = progress["unit"]
+    value = _number(progress["value"])
+    return f"{value}%" if unit in {"%", "percent"} else f"{value} {unit}"
+
+
+def _progress_percent(progress: dict[str, Any] | None) -> float | None:
+    if progress is None or progress.get("unit") not in {"%", "percent"}:
+        return None
+    value = progress.get("value")
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    return max(0.0, min(100.0, float(value)))
+
+
+def _primary_blocks(blocks: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Return real remaining accounting blocks for the first-screen dashboard."""
+    return [block for block in blocks if block.get("accounting_role") != "state_context"]
+
+
+def _share_bar_html(share: dict[str, Any] | None) -> str:
+    if share is None:
+        return (
+            '<div class="share-track is-unknown" aria-label="剩余占比未估算">'
+            '<span class="share-unknown">未估算</span></div>'
+        )
+    low = max(0.0, min(100.0, float(share["low"])))
+    high = max(low, min(100.0, float(share["high"])))
+    label = _range(share, percent=True)
+    if low == high:
+        fill = f'<span class="share-fill" style="width:{low:.6g}%"></span>'
+    else:
+        fill = (
+            f'<span class="share-fill" style="width:{low:.6g}%"></span>'
+            f'<span class="share-range" style="left:{low:.6g}%;width:{high - low:.6g}%"></span>'
+        )
+    return (
+        f'<div class="share-track" aria-label="剩余占比 {html.escape(label, quote=True)}" '
+        f'data-share-low="{low:.10g}" data-share-high="{high:.10g}">{fill}</div>'
+    )
+
+
 STYLE = """
-:root{color-scheme:light dark;--bg:#f5f6f8;--paper:#fff;--ink:#20252b;--muted:#5e6875;--line:#d9dfe7;--soft:#f0f4f8;--blue:#315f9a;--blue-soft:#e9f0fa;--warn:#805315;--warn-bg:#fff6e7}
-@media(prefers-color-scheme:dark){:root{--bg:#191c21;--paper:#242930;--ink:#edf1f6;--muted:#b8c1ce;--line:#424d5c;--soft:#2d3540;--blue:#9bc0f1;--blue-soft:#2c3e57;--warn:#f1c57b;--warn-bg:#3a3021}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-main{overflow-wrap:anywhere;max-width:1100px;margin:28px auto;padding:28px;background:var(--paper);border:1px solid var(--line);border-radius:16px}
-h1{font-size:27px;line-height:1.3;margin:0 0 10px}h2{font-size:19px;margin:0 0 12px}h3{font-size:15px;margin:0 0 7px}p{margin:7px 0}a{color:var(--blue)}button,input,select{font:inherit;color:inherit}
-header{padding-bottom:20px;border-bottom:1px solid var(--line)}.eyebrow,.muted,.meta{color:var(--muted);font-size:13px}.eyebrow{letter-spacing:.08em;margin-bottom:8px}
-nav{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:14px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:22px 0}
-.stat{padding:16px;border:1px solid var(--line);border-radius:10px;min-width:0}.stat-value{font-size:23px;font-weight:650;line-height:1.4;overflow-wrap:anywhere;margin:5px 0}.stat-label{color:var(--muted);font-size:13px}
-section{margin-top:28px}.notice{padding:14px 17px;background:var(--warn-bg);color:var(--warn);border-left:4px solid var(--warn);border-radius:7px}.notice ul{margin:4px 0;padding-left:22px}
-.signal{padding:13px 16px;border:1px solid var(--line);border-radius:9px;margin-top:10px}.signal strong{display:block}.signal p{margin:3px 0}.signal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.controls{display:none;gap:12px;flex-wrap:wrap;align-items:end;margin:14px 0}.js .controls{display:flex}.controls label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
-input,select{border:1px solid var(--line);border-radius:6px;background:var(--paper);padding:8px 10px}input{min-width:235px}button{cursor:pointer}
-.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;text-align:left;font-size:14px}th{font-size:12px;color:var(--muted);font-weight:600;border-bottom:2px solid var(--line);padding:10px 9px}
-td{vertical-align:top;border-bottom:1px solid var(--line);padding:13px 9px}td:first-child{min-width:210px;width:28%}td:nth-child(3),td:nth-child(4){min-width:105px}.select-block{border:0;background:none;padding:0;text-align:left;font-weight:600;color:var(--ink)}
-tr[data-selected="true"]{background:var(--blue-soft)}.badge{display:inline-block;font-size:12px;color:var(--muted);white-space:nowrap}.metric{font-variant-numeric:tabular-nums}
-details{font-size:13px;margin-top:8px}summary{cursor:pointer;color:var(--blue);width:fit-content}details p{overflow-wrap:anywhere}.detail-list{padding-left:18px;margin:7px 0}
-.dependency-graph{display:block;max-width:none;margin:0 auto}.graph-wrap{overflow-x:auto}.graph-node rect{fill:var(--paper);stroke:var(--line);stroke-width:1.4}
-.graph-node[role="button"]{cursor:pointer}.graph-node[data-selected="true"] rect{fill:var(--blue-soft);stroke:var(--blue);stroke-width:2}.node-title{fill:var(--ink);font-size:14px;font-weight:600}.node-caption{fill:var(--muted);font-size:12px}.graph-node[data-uncertain="true"] rect{stroke:var(--warn)}.uncertain{color:var(--warn);font-size:12px;margin:7px 0}
-.dependency-edge{fill:none;stroke:var(--line);color:var(--muted);stroke-width:1.8}.dependency-edge[data-selected="true"]{stroke:var(--blue);color:var(--blue);stroke-width:2.5}
-*:focus-visible{outline:3px solid var(--blue);outline-offset:3px}.empty{padding:20px;color:var(--muted)}[hidden]{display:none!important}.source{padding:15px;background:var(--soft);border-radius:9px}
-footer{margin-top:28px;border-top:1px solid var(--line);padding-top:15px;font-size:12px;color:var(--muted)}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-@media(max-width:720px){main{margin:0;padding:20px 15px;border-radius:0;border:0}.stats,.signal-grid{grid-template-columns:1fr}.stats{gap:10px}.stat{padding:12px 15px}.stat-value{font-size:22px}h1{font-size:23px}}
-@media print{body{background:white;color:black}main{max-width:none;border:0;margin:0;padding:0}.controls,nav{display:none!important}.stats{grid-template-columns:repeat(3,1fr)}.table-wrap,.graph-wrap{overflow:visible}section,.stat{break-inside:avoid}.dependency-graph{min-width:0}a{color:inherit}}
+:root{color-scheme:light dark;--bg:#f5f6f8;--paper:#fff;--ink:#20252b;--muted:#687280;--line:#d9dfe7;--soft:#f0f4f8;--accent:#315f9a;--accent-soft:#e9f0fa;--warn:#805315;--warn-bg:#fff6e7}
+@media(prefers-color-scheme:dark){:root{--bg:#191c21;--paper:#242930;--ink:#edf1f6;--muted:#b8c1ce;--line:#424d5c;--soft:#2d3540;--accent:#9bc0f1;--accent-soft:#2c3e57;--warn:#f1c57b;--warn-bg:#3a3021}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{overflow-wrap:anywhere;max-width:980px;margin:28px auto;padding:28px;background:var(--paper);border:1px solid var(--line);border-radius:16px}
+h1{font-size:27px;line-height:1.3;margin:0 0 8px}h2{font-size:19px;margin:0 0 10px}h3{font-size:15px;margin:0 0 7px}p{margin:7px 0}a{color:var(--accent)}button,input,select{font:inherit;color:inherit}
+.page-head{padding-bottom:15px}.eyebrow,.muted,.meta{color:var(--muted);font-size:13px}.eyebrow{letter-spacing:.08em;margin-bottom:7px}.meta{margin:0}
+.dashboard{margin-top:6px}.dashboard-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:14px}.summary-card{border:1px solid var(--line);border-radius:12px;padding:15px 17px;min-width:0}.summary-label{font-size:13px;color:var(--muted)}.summary-value{font-size:32px;font-weight:680;line-height:1.2;margin:5px 0}.summary-sub{font-size:13px;color:var(--muted)}
+.progress-track{height:10px;border-radius:999px;background:var(--soft);overflow:hidden;margin-top:14px}.progress-fill{display:block;height:100%;background:var(--accent);border-radius:inherit}
+.work-overview{margin-top:24px}.work-overview-head{display:flex;justify-content:space-between;gap:18px;align-items:baseline;margin-bottom:10px}.work-overview-head p{margin:0;max-width:560px}
+.work-chart{border-top:1px solid var(--line)}.work-bar{padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}.work-bar:hover .work-title,.work-bar:focus .work-title{color:var(--accent)}.work-bar[data-selected="true"]{background:var(--accent-soft);margin-inline:-10px;padding-inline:10px;border-radius:8px}
+.work-bar-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.work-title-wrap{min-width:0}.work-title{font-weight:650}.work-state{display:inline-block;margin-left:8px;font-size:12px;color:var(--muted);font-weight:500}.work-numbers{flex:none;text-align:right}.share-value{font-size:18px;font-weight:650;font-variant-numeric:tabular-nums}.remaining-value{font-size:12px;color:var(--muted)}
+.share-line{display:grid;grid-template-columns:minmax(0,1fr);gap:5px;margin-top:9px}.share-track{height:10px;border-radius:999px;background:var(--soft);position:relative;overflow:hidden}.share-fill{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:999px}.share-range{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,var(--accent),var(--accent) 4px,var(--accent-soft) 4px,var(--accent-soft) 8px)}.share-track.is-unknown{height:24px;display:flex;align-items:center;padding:0 8px}.share-unknown{font-size:12px;color:var(--muted)}
+.work-footnote{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;color:var(--muted);font-size:12px}.uncertain-inline{color:var(--warn)}
+.deep-dive{margin-top:28px;border-top:1px solid var(--line);padding-top:16px}.deep-dive>summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:18px;font-weight:650}.deep-dive>summary::marker{color:var(--accent)}.detail-counts{font-weight:400;color:var(--muted);font-size:12px}.deep-dive-body{padding-top:8px}.detail-section{margin-top:26px}
+.notice{padding:13px 16px;background:var(--warn-bg);color:var(--warn);border-left:4px solid var(--warn);border-radius:7px}.notice ul{margin:4px 0;padding-left:22px}.signal{padding:13px 16px;border:1px solid var(--line);border-radius:9px;margin-top:10px}.signal strong{display:block}.signal p{margin:3px 0}.signal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.controls{display:none;gap:12px;flex-wrap:wrap;align-items:end;margin:14px 0}.js .controls{display:flex}.controls label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}input,select{border:1px solid var(--line);border-radius:6px;background:var(--paper);padding:8px 10px}input{min-width:235px}
+.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;text-align:left;font-size:14px}th{font-size:12px;color:var(--muted);font-weight:600;border-bottom:2px solid var(--line);padding:10px 9px}td{vertical-align:top;border-bottom:1px solid var(--line);padding:13px 9px}td:first-child{min-width:210px;width:28%}td:nth-child(3),td:nth-child(4){min-width:105px}.select-block{border:0;background:none;padding:0;text-align:left;font-weight:600;color:var(--ink);cursor:pointer}tr[data-selected="true"]{background:var(--accent-soft)}.badge{display:inline-block;font-size:12px;color:var(--muted);white-space:nowrap}.metric{font-variant-numeric:tabular-nums}
+details details{font-size:13px;margin-top:8px}summary{width:fit-content}details p{overflow-wrap:anywhere}.detail-list{padding-left:18px;margin:7px 0}
+.dependency-graph{display:block;max-width:none;margin:0 auto}.graph-wrap{overflow-x:auto}.graph-node rect{fill:var(--paper);stroke:var(--line);stroke-width:1.4}.graph-node[role="button"]{cursor:pointer}.graph-node[data-selected="true"] rect{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}.node-title{fill:var(--ink);font-size:14px;font-weight:600}.node-caption{fill:var(--muted);font-size:12px}.graph-node[data-uncertain="true"] rect{stroke:var(--warn)}.uncertain{color:var(--warn);font-size:12px;margin:7px 0}.dependency-edge{fill:none;stroke:var(--line);color:var(--muted);stroke-width:1.8}.dependency-edge[data-selected="true"]{stroke:var(--accent);color:var(--accent);stroke-width:2.5}
+*:focus-visible{outline:3px solid var(--accent);outline-offset:3px}.empty{padding:18px 0;color:var(--muted)}[hidden]{display:none!important}.source{padding:15px;background:var(--soft);border-radius:9px}footer{margin-top:28px;border-top:1px solid var(--line);padding-top:15px;font-size:12px;color:var(--muted)}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:720px){main{margin:0;padding:20px 15px;border-radius:0;border:0}.dashboard-grid,.signal-grid{grid-template-columns:1fr}.summary-card{padding:15px}.summary-value{font-size:30px}.work-bar-head{gap:10px}.work-numbers{max-width:42%}.work-overview-head{display:block}.work-overview-head p{margin-top:3px}.deep-dive>summary{align-items:flex-start}.detail-counts{text-align:right}h1{font-size:23px}}
+@media print{body{background:white;color:black}main{max-width:none;border:0;margin:0;padding:0}.controls{display:none!important}.dashboard-grid{grid-template-columns:1.25fr 1fr}.table-wrap,.graph-wrap{overflow:visible}.work-bar,.summary-card,.signal{break-inside:avoid}.dependency-graph{min-width:0}a{color:inherit}.deep-dive{display:block}.deep-dive>summary{display:none}.deep-dive-body{display:block!important}}
 """
+
 
 SCRIPT = """
 (function(){
@@ -506,6 +550,7 @@ SCRIPT = """
   const rows=Array.from(root.querySelectorAll('tr[data-work-row]'));
   const count=root.querySelector('#visible-count');
   function applyFilter(){
+    if(!search||!filter||!count)return;
     const term=search.value.trim().toLocaleLowerCase();
     let visible=0;
     rows.forEach(function(row){
@@ -513,7 +558,8 @@ SCRIPT = """
       if(!row.hidden)visible++;
     });
     count.textContent='显示 '+visible+' / '+rows.length+' 条工作记录';
-    root.querySelector('#no-match').hidden=visible!==0||rows.length===0;
+    const empty=root.querySelector('#no-match');
+    if(empty)empty.hidden=visible!==0||rows.length===0;
   }
   function select(key){
     root.querySelectorAll('[data-select]').forEach(function(node){
@@ -521,17 +567,21 @@ SCRIPT = """
       node.dataset.selected=String(active);
       node.setAttribute('aria-pressed',String(active));
     });
-    root.querySelectorAll('[data-work-row]').forEach(function(row){row.dataset.selected=String(row.dataset.workRow===key);});
+    rows.forEach(function(row){row.dataset.selected=String(row.dataset.workRow===key);});
     root.querySelectorAll('.dependency-edge').forEach(function(edge){edge.dataset.selected=String(edge.dataset.from===key||edge.dataset.to===key);});
+    const deep=root.querySelector('#deep-dive');
+    if(deep)deep.open=true;
     const target=root.querySelector('[data-detail="'+key+'"]');
     if(target){
-      search.value='';filter.value='';applyFilter();
+      if(search&&filter){search.value='';filter.value='';applyFilter();}
       target.open=true;
       target.scrollIntoView({block:'nearest'});
     }
   }
-  search.addEventListener('input',applyFilter);
-  filter.addEventListener('change',applyFilter);
+  if(search&&filter){
+    search.addEventListener('input',applyFilter);
+    filter.addEventListener('change',applyFilter);
+  }
   root.querySelectorAll('[data-select]').forEach(function(node){
     node.addEventListener('click',function(){select(node.dataset.select);});
     if(node.tagName.toLowerCase()!=='button')node.addEventListener('keydown',function(event){
@@ -557,45 +607,104 @@ def render_progress_html(report: dict[str, Any], *, output_path: Path | None = N
             f'<section><h2>诊断明细</h2><pre style="white-space:pre-wrap;overflow-wrap:anywhere">{_esc(diagnostic)}</pre></section>'
             '</main></body></html>\n'
         )
+
     view = report["work_view"]
     mission = report["mission"]
     titles = _title_lookup(view, report["task_titles"])
     blocks = _remaining_blocks(view)
+    primary_blocks = _primary_blocks(blocks)
     keys = {block["task_id"]: f"block-{index}" for index, block in enumerate(view["blocks"])}
-    clear = [
-        block for block in blocks
-        if block["is_remaining"] and not block.get("remaining_uncertain")
-        and block["dependency_status"] == "declared_clear"
-    ]
+    progress = view.get("progress")
+    progress_percent = _progress_percent(progress)
+
+    detail_counts = []
+    if view.get("risks"):
+        detail_counts.append(f"{len(view['risks'])} 项风险")
+    if view.get("blockers"):
+        detail_counts.append(f"{len(view['blockers'])} 项阻塞")
+    if report["limitations"]:
+        detail_counts.append(f"{len(report['limitations'])} 项限制")
+    detail_count_text = " · ".join(detail_counts) if detail_counts else "依赖、证据与口径"
+
     parts = [
         '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">',
         '<meta name="viewport" content="width=device-width, initial-scale=1">',
         '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; script-src \'unsafe-inline\'; style-src \'unsafe-inline\'; img-src data:; base-uri \'none\'; form-action \'none\'; connect-src \'none\'">',
         f"<title>{_esc(mission['title'])} · 进展与剩余工作</title><style>{STYLE}</style></head>",
-        '<body><main id="progress-view"><header><div class="eyebrow">TPLAN · 进展与剩余工作</div>',
-        f"<h1>{_esc(mission['title'])}</h1><p>{_esc(mission['objective'])}</p>",
+        '<body><main id="progress-view"><header class="page-head"><div class="eyebrow">TPLAN · 进展与剩余工作</div>',
+        f"<h1>{_esc(mission['title'])}</h1>",
         f'<p class="meta">Mission 状态：{_esc(_status(mission["status"]))}',
     ]
     if mission["active_task_title"]:
         parts.append(f" · 当前工作：{_esc(mission['active_task_title'])}")
     if report["source"].get("as_of"):
-        parts.append(f" · 估计记录时点：{_esc(report['source']['as_of'])}")
+        parts.append(f" · 更新：{_esc(report['source']['as_of'])}")
+    parts.append("</p></header>")
+
     parts.extend([
-        '</p><nav aria-label="页面导航"><a href="#overview">整体进展</a><a href="#work">剩余工作</a><a href="#dependencies">前置与并行条件</a><a href="#sources">口径与依据</a></nav></header>',
-        '<section id="overview" aria-labelledby="overview-title"><h2 id="overview-title">整体进展</h2><div class="stats">',
-        f'<div class="stat"><div class="stat-label">已有进展声明</div><div class="stat-value">{_esc(_progress_text(view))}</div><div class="muted">保留源口径与依据</div></div>',
-        f'<div class="stat"><div class="stat-label">预计剩余工作量</div><div class="stat-value">{_esc(_remaining_text(view))}</div><div class="muted">{_esc(_block_count_text(blocks))}</div></div>',
-        f'<div class="stat"><div class="stat-label">前置已声明满足</div><div class="stat-value">{len(clear)} <span class="muted">个工作块</span></div><div class="muted">仍须核对资源、并行条件与授权</div></div></div>',
+        '<section id="dashboard" class="dashboard" data-ui-contract="core-progress-dashboard" aria-label="核心进展看板">',
+        '<div class="dashboard-grid">',
+        '<article class="summary-card"><div class="summary-label">整体进度</div>',
+        f'<div class="summary-value">{_esc(_progress_display(progress))}</div>',
+    ])
+    if progress is not None:
+        parts.append(f'<div class="summary-sub">{_esc(progress["label"])}</div>')
+    else:
+        parts.append('<div class="summary-sub">源计划没有可用的整体进度数值</div>')
+    if progress_percent is not None:
+        parts.append(
+            f'<div class="progress-track" role="img" aria-label="整体进度 {_esc(_progress_display(progress))}">'
+            f'<span class="progress-fill" style="width:{progress_percent:.6g}%"></span></div>'
+        )
+    parts.extend([
+        '</article>',
+        '<article class="summary-card"><div class="summary-label">剩余工作</div>',
+        f'<div class="summary-value">{_esc(_remaining_text(view))}</div>',
+        f'<div class="summary-sub">{_esc(_block_count_text(blocks))}</div></article>',
+        '</div>',
+        '<div class="work-overview"><div class="work-overview-head"><div><h2>剩余工作构成</h2>',
+        '<p class="muted">先看还剩哪些工作，以及它们占已估剩余工作量的比例。</p></div></div>',
+        '<div id="work" class="work-chart" aria-label="剩余工作块及工作量占比">',
+    ])
+
+    if not primary_blocks:
+        parts.append('<p class="empty">当前没有可作为独立剩余工作量展示的工作块；验收仍以原状态和证据为准。</p>')
+    for block in primary_blocks:
+        key = keys[block["task_id"]]
+        share = block.get("remaining_share")
+        share_label = _range(share, percent=True)
+        remaining_label = _range(block.get("remaining"))
+        parts.append(
+            f'<article class="work-bar" role="button" tabindex="0" data-select="{key}" '
+            f'aria-pressed="false" data-primary-work="{_esc(block["task_id"])}">'
+            '<div class="work-bar-head"><div class="work-title-wrap">'
+            f'<span class="work-title">{_esc(block["title"])}</span>'
+            f'<span class="work-state">{_esc(_status(block["status"]) + (" · 待核对" if block.get("remaining_uncertain") else ""))}</span></div>'
+            f'<div class="work-numbers"><div class="share-value">{_esc(share_label)}</div>'
+            f'<div class="remaining-value">剩余 {_esc(remaining_label)}</div></div></div>'
+            f'{_share_bar_html(share)}'
+        )
+        parts.append("</article>")
+    parts.extend([
+        '</div>',
+        f'<div class="work-footnote"><span>{_esc(SHARE_NOTE)}</span></div>',
+        '</div></section>',
+        f'<details id="deep-dive" class="deep-dive"><summary><span>查看风险、阻塞、依赖与依据</span>'
+        f'<span class="detail-counts">{_esc(detail_count_text)}</span></summary><div class="deep-dive-body">',
+        '<section class="detail-section" aria-labelledby="mission-detail-title"><h2 id="mission-detail-title">任务说明</h2>',
+        f'<p>{_esc(mission["objective"])}</p>',
     ])
     if view["planning"].get("scope_note"):
-        parts.append(f'<p>覆盖范围：{_esc(view["planning"]["scope_note"])}</p>')
-    if report["limitations"]:
-        parts.append('<div class="notice" role="note"><h3>读图前需要知道</h3><ul>')
-        parts.extend(f"<li>{_esc(item)}</li>" for item in report["limitations"])
-        parts.append("</ul></div>")
+        parts.append(f'<p class="muted">覆盖范围：{_esc(view["planning"]["scope_note"])}</p>')
     parts.append("</section>")
+
+    if report["limitations"]:
+        parts.append('<section class="detail-section"><div class="notice" role="note"><h3>重要限制</h3><ul>')
+        parts.extend(f"<li>{_esc(item)}</li>" for item in report["limitations"])
+        parts.append("</ul></div></section>")
+
     if view.get("risks") or view.get("blockers"):
-        parts.append('<section class="signal-grid" aria-label="已有风险和主要阻塞">')
+        parts.append('<section class="detail-section signal-grid" aria-label="已有风险和主要阻塞">')
         for field, label in (("risks", "当前风险"), ("blockers", "主要阻塞点")):
             if not view.get(field):
                 continue
@@ -606,22 +715,23 @@ def render_progress_html(report: dict[str, Any], *, output_path: Path | None = N
                 parts.append("</article>")
             parts.append("</div>")
         parts.append("</section>")
+
     if report["constraint_deltas"]:
-        parts.append('<section aria-labelledby="constraints-title"><h2 id="constraints-title">已记录限制与验收反例</h2><p class="muted">以下保留各次记录的时点；历史阻塞的当前有效性以当前状态为准。</p><ul>')
+        parts.append('<section class="detail-section" aria-labelledby="constraints-title"><h2 id="constraints-title">已记录限制与验收反例</h2><p class="muted">以下保留各次记录的时点；历史阻塞的当前有效性以当前状态为准。</p><ul>')
         parts.extend(f"<li>{_esc(_outcome_text(item, report))}</li>" for item in report["constraint_deltas"])
         parts.append("</ul></section>")
     if report["countable_progress"]:
-        parts.append('<section aria-labelledby="verified-title"><h2 id="verified-title">已有结果与依据</h2><ul>')
+        parts.append('<section class="detail-section" aria-labelledby="verified-title"><h2 id="verified-title">已有结果与依据</h2><ul>')
         parts.extend(f"<li>{_esc(_outcome_text(item, report))}</li>" for item in report["countable_progress"])
         parts.append("</ul></section>")
     if report["confirmed_facts"]:
-        parts.append('<section><h2>已确认事实</h2><ul>')
+        parts.append('<section class="detail-section"><h2>已确认事实</h2><ul>')
         parts.extend(f"<li>{_esc(item)}</li>" for item in report["confirmed_facts"])
         parts.append("</ul></section>")
-    parts.append(f'<section><h2>下一步</h2><p>{_esc(report["next_step"])}</p></section>')
+    parts.append(f'<section class="detail-section"><h2>下一步</h2><p>{_esc(report["next_step"])}</p></section>')
+
     parts.extend([
-        '<section id="work" aria-labelledby="work-title"><h2 id="work-title">剩余工作块</h2>',
-        f'<p class="muted">{_esc(SHARE_NOTE)}</p>',
+        '<section id="work-details" class="detail-section" aria-labelledby="work-detail-title"><h2 id="work-detail-title">工作块详情</h2>',
         '<div class="controls"><label for="work-search">查找工作块<input id="work-search" type="search" placeholder="按名称、前置或条件查找"></label>',
         '<label for="work-status">状态<select id="work-status"><option value="">全部状态</option>',
     ])
@@ -634,12 +744,12 @@ def render_progress_html(report: dict[str, Any], *, output_path: Path | None = N
     for block in blocks:
         key = keys[block["task_id"]]
         share = block.get("remaining_share")
-        search = " ".join([block["title"], _dependencies_text(block), _parallel_text(block)]).lower()
-        parts.append(f'<tr data-work-row="{key}" data-state="{_esc(block["status"])}" data-search="{_esc(search)}"><td>')
+        search_text = " ".join([block["title"], _dependencies_text(block), _parallel_text(block)]).lower()
+        parts.append(f'<tr data-work-row="{key}" data-state="{_esc(block["status"])}" data-search="{_esc(search_text)}"><td>')
         parts.append(f'<button type="button" class="select-block" data-select="{key}" aria-pressed="false">{_esc(block["title"])}</button>')
         if block.get("remaining_uncertain"):
             parts.append('<p class="uncertain"><strong>状态与剩余依据待核对</strong><br>')
-            parts.append(_esc("；".join(block.get("uncertainty_reasons", []))) + '</p>')
+            parts.append(_esc("；".join(block.get("uncertainty_reasons", []))) + "</p>")
         if block.get("accounting_role") == "state_context":
             parts.append('<p class="muted">层级状态记录，不是新增估量块；未分摊或复制父子估计。</p>')
         parts.append(f'<details data-detail="{key}" id="{key}"><summary>查看依据与条件</summary>')
@@ -647,8 +757,7 @@ def render_progress_html(report: dict[str, Any], *, output_path: Path | None = N
             estimate = block["remaining"]
             parts.append(f'<p>估计依据：{_esc(estimate["basis"])}</p>')
             if estimate.get("confidence"):
-                confidence = _confidence_text(estimate["confidence"])
-                parts.append(f'<p>来源声明的信心：{_esc(confidence)}</p>')
+                parts.append(f'<p>来源声明的信心：{_esc(_confidence_text(estimate["confidence"]))}</p>')
         else:
             parts.append('<p>源计划未给出剩余估计；未估计不等于零。</p>')
         if share:
@@ -663,10 +772,11 @@ def render_progress_html(report: dict[str, Any], *, output_path: Path | None = N
             parts.append(f'<div class="muted">{_esc(scope)}</div>')
         parts.append(f'</td><td>{_esc(_dependencies_text(block))}</td><td>{_esc(_parallel_text(block))}</td></tr>')
     parts.append('</tbody></table></div><p id="no-match" class="empty" hidden>没有匹配的工作块，请调整搜索或状态筛选。</p></section>')
+
     parts.extend([
-        '<section id="dependencies" aria-labelledby="dependencies-title"><h2 id="dependencies-title">前置关系与并行条件</h2>',
+        '<section id="dependencies" class="detail-section" aria-labelledby="dependencies-title"><h2 id="dependencies-title">前置关系与并行条件</h2>',
         f'<p>{_esc(PARALLEL_NOTE)}</p><div class="graph-wrap">{_graph(view, keys)}</div></section>',
-        '<section id="sources" class="source" aria-labelledby="sources-title"><h2 id="sources-title">口径与已有依据</h2>',
+        '<section id="sources" class="detail-section source" aria-labelledby="sources-title"><h2 id="sources-title">口径与已有依据</h2>',
         f'<p>{_esc(PROGRESS_NOTE)}</p><p>{_esc(SHARE_NOTE)}</p>',
     ])
     if view.get("progress"):
@@ -679,19 +789,19 @@ def render_progress_html(report: dict[str, Any], *, output_path: Path | None = N
     if report["artifacts"]:
         parts.append('<h3>已有执行记录</h3><ul>')
         for artifact in report["artifacts"]:
-            path = Path(artifact["path"])
+            artifact_path = Path(artifact["path"])
             if output_path is not None:
-                href = quote(os.path.relpath(path, output_path.expanduser().resolve().parent).replace(os.sep, "/"), safe="/.")
+                href = quote(os.path.relpath(artifact_path, output_path.expanduser().resolve().parent).replace(os.sep, "/"), safe="/.")
             else:
-                href = path.as_uri()
+                href = artifact_path.as_uri()
             parts.append(f'<li><a href="{_esc(href)}">{_esc(artifact["label"])}</a></li>')
         parts.append('</ul><p class="muted">这些链接指向已有产物，可能早于当前快照；本次只生成理解视图，没有重新生成执行记录。</p>')
     parts.extend([
-        '</section><footer>这是从同一 Mission 快照生成的理解视图，不修改任务状态、验收结果或执行授权。终态交付仍需保留 TPlan Standard 执行报告与 SVG 链接。</footer>',
+        '</section></div></details>',
+        '<footer>这是从同一 Mission 快照生成的理解视图，不修改任务状态、验收结果或执行授权。终态交付仍需保留 TPlan Standard 执行报告与 SVG 链接。</footer>',
         f"</main><script>{SCRIPT}</script></body></html>\n",
     ])
     return "".join(parts)
-
 
 def write_progress_artifact(path: Path, rendered: str, mission_dir: Path) -> Path:
     """Write only a delivery artifact, never replace Mission control or Standard reports."""

@@ -26,25 +26,39 @@ dependencies, resource constraints, risks, and blockers. Explain reads these fac
 judgments. If answering the user's task requires new analysis, let that normal upstream
 work produce the result before explaining it.
 
-### Answer The Five Progress Questions
+### First-Screen Contract
 
-| Question | Explain from the source |
-| --- | --- |
-| Where are we overall? | The goal, original state, evidenced results, current work, and material unresolved constraints |
-| What work remains? | Understandable work blocks, their deliverables, source states, and known prerequisites |
-| How much effort remains? | Current remaining estimates, units, coverage, and unestimated work |
-| Which blocks account for most of it? | Shares of comparable, estimated remaining effort, with the denominator stated |
-| What can run in parallel? | Known precedence, stated independence, resource conditions, and execution-capability limits |
+The default HTML progress view is a **progress dashboard first, detailed report second**.
+The first screen answers only the user's highest-frequency questions:
 
-Lead with work blocks the reader can describe. Expand individual Steps, evidence, and
-historical execution detail as needed. Reading groups may reorganize presentation
-while retaining the underlying task references and source meanings.
+1. **Where are we overall?** Show the upstream's declared overall progress when a
+   meaningful value exists. Do not derive one from task counts or historical cost.
+2. **What work remains?** Show the real remaining work blocks with their current state
+   and remaining estimate.
+3. **How is the remaining work distributed?** Show each comparable block's share of the
+   estimated remaining workload. Keep interval shares as intervals; do not choose a
+   midpoint for presentation.
 
-Risk and major-blocker columns or sections are optional. When source material supports
-them, explain their effect and any known condition for resolution; include an owner or
-timing only when supplied. Without such information, omit the dedicated section instead
-of inventing entries or an empty checklist. Known critical constraints remain visible
-in a brief view.
+A compact Mission title/status/as-of line may orient the reader. The first screen must
+not be displaced by risk narratives, blocker details, evidence lists, acceptance
+counterexamples, dependency graphs, search controls, source notes, or historical
+execution detail.
+
+Put those secondary semantics behind progressive disclosure. One default-collapsed
+detail area may contain:
+
+- risk and major blockers, including their effect and known resolution condition;
+- prerequisites, parallel conditions, and the dependency graph;
+- qualified progress evidence, constraints, facts, and next-step wording;
+- estimate basis, uncertainty, scope notes, source information, search/filter controls;
+- existing TPlan Standard report and execution SVG links.
+
+The collapsed summary should still signal that important risks, blockers, or limitations
+exist, without forcing their full text into the first screen. Missing optional
+information remains omitted rather than being represented by empty sections.
+
+This information hierarchy is a UI contract, not a stylistic suggestion. Adding a new
+semantic field does not by itself justify promoting it above the dashboard.
 
 ### Keep Progress, Estimates, And History Distinct
 

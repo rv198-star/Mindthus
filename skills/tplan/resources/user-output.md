@@ -164,10 +164,18 @@ python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" \
 ```
 
 The HTML option implies the progress view. It produces one self-contained offline
-document with embedded styling and a small script for search, status filtering and
-selecting a work block's declared prerequisites and estimate details. It has no CDN,
-remote font, external script, implicit network request or action button. The view does
-not write Mission state or evidence and cannot replace the Standard execution report.
+document. Its **first-screen contract** is deliberately narrow: show the declared
+overall progress, remaining work, and the remaining-work share for each comparable
+block. A compact Mission status line may orient the user. Risk/blocker narratives,
+qualified evidence, dependency graphs, detailed estimate basis, search/filter controls,
+source notes and existing execution artifacts belong in a default-collapsed detail
+area. New semantic fields do not move onto the first screen merely because they exist.
+
+The document embeds styling and a small script for selecting a work block and, inside
+the detail area, search/status filtering. It has no CDN, remote font, external script,
+implicit network request or action button. The view does not write Mission state or
+evidence and cannot replace the Standard execution report. Interval shares remain
+intervals in the visual representation; the renderer does not select a midpoint.
 
 For the view alone, use the dedicated renderer:
 
