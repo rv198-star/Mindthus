@@ -25,7 +25,7 @@ EXCLUDED_SUFFIXES = {".gif", ".jpeg", ".jpg", ".log", ".mov", ".mp4", ".png", ".
 EXCLUDED_NAME_SUBSTRINGS = ("ab_run", "pilot")
 JSONL_ALLOWLIST = {Path("tplan/templates/evidence.jsonl")}
 TEXT_REWRITE_SUFFIXES = {".md"}
-SKILL_NAMES = ("3l5s", "sra", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus", "case-prep")
+SKILL_NAMES = ("3l5s", "sra", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus", "case-prep", "explain")
 LICENSE_FILES = ("LICENSE", "COMMERCIAL-LICENSE.md")
 CODEX_PLUGIN_VISUAL_ASSETS = (
     Path("assets/mindthus-icon.svg"),

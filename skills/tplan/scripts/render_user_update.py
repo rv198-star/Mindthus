@@ -21,6 +21,7 @@ from tplan_runtime import (
     TplanError,
     active_task,
     read_user_update_snapshot,
+    runtime_provenance_report,
 )
 
 
@@ -235,6 +236,7 @@ def render_delivery(
     if cursor_value is None:
         return {
             "changed": True,
+            "guard_just_released": False,
             "update_kind": "full",
             "quiet_streak": 0,
             "cursor": _encode_cursor(snapshot, 0),
@@ -255,6 +257,7 @@ def render_delivery(
     if changed:
         return {
             "changed": True,
+            "guard_just_released": guard_changed and not snapshot["interaction_guard_state"]["present"],
             "update_kind": "full",
             "quiet_streak": 0,
             "cursor": _encode_cursor(snapshot, 0),
@@ -270,6 +273,7 @@ def render_delivery(
     if delivery == "explicit":
         return {
             "changed": False,
+            "guard_just_released": False,
             "update_kind": "brief",
             "quiet_streak": 0,
             "cursor": _encode_cursor(snapshot, 0),
@@ -280,6 +284,7 @@ def render_delivery(
     if next_streak == 3:
         return {
             "changed": False,
+            "guard_just_released": False,
             "update_kind": "heartbeat",
             "quiet_streak": 0,
             "cursor": _encode_cursor(snapshot, 0),
@@ -287,6 +292,7 @@ def render_delivery(
         }
     return {
         "changed": False,
+        "guard_just_released": False,
         "update_kind": "quiet",
         "quiet_streak": next_streak,
         "cursor": _encode_cursor(snapshot, next_streak),
@@ -301,16 +307,48 @@ def main() -> int:
     parser.add_argument("--cursor", help="Opaque cursor returned by a prior user update render.")
     parser.add_argument("--delivery", choices=("automatic", "explicit"), default="explicit")
     parser.add_argument("--json", action="store_true", help="Print machine-readable render fields.")
+    parser.add_argument("--progress", action="store_true", help="Explain overall progress, remaining work and declared dependencies.")
+    parser.add_argument("--html", metavar="PATH", help="Write a self-contained progress HTML artifact; implies --progress.")
     args = parser.parse_args()
 
     try:
         mission_dir = Path(args.mission_dir)
+        snapshot = read_user_update_snapshot(mission_dir)
         result = render_delivery(
-            read_user_update_snapshot(mission_dir),
+            snapshot,
             cursor_value=args.cursor,
             delivery=args.delivery,
             include_internal=args.include_internal,
         )
+        if args.progress or args.html:
+            from render_progress_view import (
+                build_progress_report,
+                render_progress_html,
+                render_progress_text,
+                write_progress_artifact,
+            )
+
+            # Ordinary automatic delivery keeps its quiet/heartbeat cadence. An
+            # explicitly requested artifact is still rendered from this snapshot.
+            snapshot["runtime_provenance"] = runtime_provenance_report(snapshot["mission"])
+            show_progress = (
+                args.delivery == "explicit" or result["update_kind"] == "full"
+                or snapshot["runtime_provenance"].get("compatible") is False
+            )
+            if show_progress or args.html:
+                progress = build_progress_report(
+                    snapshot, include_internal=args.include_internal, mission_dir=mission_dir,
+                    guard_just_released=result["guard_just_released"],
+                )
+                result["progress"] = progress
+                if show_progress:
+                    result["text"] = render_progress_text(progress)
+                    result["update_kind"] = "diagnostic" if progress["diagnostic_only"] else "progress"
+                if args.html:
+                    output = write_progress_artifact(Path(args.html), render_progress_html(progress, output_path=Path(args.html)), mission_dir)
+                    result["html_path"] = str(output)
+                    if not args.json:
+                        result["text"] += f"\n- [TPlan 进展与剩余工作](<{output}>)\n"
     except (KeyError, OSError, json.JSONDecodeError, TplanError, ValueError) as exc:
         print(str(exc), file=sys.stderr)
         return 1

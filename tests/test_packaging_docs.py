@@ -647,6 +647,7 @@ class PackagingDocsTests(unittest.TestCase):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
         for phrase in (
             "mindthus:tplan",
+            "mindthus:explain",
             "mindthus:*",
             "当前仓库版本：`v1.11.0`",
             "GitHub Releases",
@@ -689,6 +690,7 @@ class PackagingDocsTests(unittest.TestCase):
             "EDSP / Extreme Deduction + Scenario Projection",
             "WAE / Workflow-Agentic-Evidence",
             "TVG / Thinking Value-Gain",
+            "Explain / 解释与表达",
             "TPlan / OKR-Runtime",
             "Anti-Spiral / 反螺旋自检",
         ):
@@ -1600,7 +1602,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertNotIn("python3 skills/tvg/scripts/trace/init.py", opencode_tvg_skill)
             self.assertFalse((out / "opencode-plugin").exists())
 
-            skill_names = ("3l5s", "sra", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus")
+            skill_names = ("3l5s", "sra", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus", "case-prep", "explain")
             for platform_dir in (out / "codex", out / "opencode"):
                 markdown = "\n".join(
                     path.read_text(encoding="utf-8") for path in sorted(platform_dir.rglob("*.md"))

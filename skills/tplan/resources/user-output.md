@@ -150,6 +150,134 @@ references or message text in that status line.
 `checkpoint.py` with neither a log nor evidence is a survey-only no-op. It reports
 `checkpoint_noop` and does not claim that work was recorded.
 
+## Progress And Remaining Work View
+
+When the user asks to understand overall progress, remaining work, workload shares or
+parallel execution conditions, render the optional work view from one read-only
+Mission/evidence snapshot:
+
+```bash
+python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --progress
+
+python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" \
+  --html "$MISSION_DIR/reports/progress.html"
+```
+
+The HTML option implies the progress view. It produces one self-contained offline
+document with embedded styling and a small script for search, status filtering and
+selecting a work block's declared prerequisites and estimate details. It has no CDN,
+remote font, external script, implicit network request or action button. The view does
+not write Mission state or evidence and cannot replace the Standard execution report.
+
+For the view alone, use the dedicated renderer:
+
+```bash
+python3 skills/tplan/scripts/render_progress_view.py "$MISSION_DIR" --format text
+
+python3 skills/tplan/scripts/render_progress_view.py "$MISSION_DIR" \
+  --format html --out "$MISSION_DIR/reports/progress.html"
+
+python3 skills/tplan/scripts/render_progress_view.py "$MISSION_DIR" --format json
+```
+
+Formats are `text`, `html` and `json`; output defaults to stdout. `--out` (or
+`--output`) writes an artifact atomically. Outputs inside the Mission must be under
+`reports/`; the renderer refuses runtime-state targets and the Standard execution
+report filenames. `--include-internal` adds secondary recovery references.
+
+When `reports/execution-cost-tree.md` or `.svg` already exists, the view links that
+actual file. HTML written to a file uses relative links; text uses absolute links.
+The links are labelled as existing records that may predate the current snapshot.
+Rendering the overview does not generate, refresh or overwrite either Standard
+artifact, and missing files do not produce invented links.
+
+### Keep Planning Metadata Current
+
+When a plan is formed, its scope changes, a major blocker changes the remaining work,
+or estimates are revised, maintain the optional `work_plan` using already available
+context. Use the canonical writer, whose full input contract is in `schema.md`:
+
+```bash
+python3 skills/tplan/scripts/record_work_plan.py "$MISSION_DIR" \
+  --input /path/to/work-plan.json --summary "Updated the existing planning facts."
+```
+
+Do not edit Mission control JSON directly. Leave unknown estimates, prerequisites and
+parallel conditions unknown; do not question the user block by block or invent values
+to fill the view. Planning metadata is not an acceptance result or continuation grant.
+
+### Read The Numbers And Conditions Faithfully
+
+The optional `mission.json.work_plan` contract is defined in `schema.md`. Its
+`build_work_view` projection supplies the numbers and relationships; text and HTML
+use that same projection.
+
+- Show a declared overall progress value only with its source label, unit and basis.
+  When none exists, show known state and qualified progress evidence without
+  inventing an overall percentage.
+- Show real, non-overlapping work blocks. Parent/child hierarchy is not a dependency
+  graph and does not imply that a parent's estimate is additional to its children.
+- Keep explicit zero estimates distinct from unknown estimates. Add comparable
+  remaining ranges only within one unit and expose incomplete coverage. Mixed units
+  produce separate declared subtotals, never one total.
+- A completed node with positive source remaining work, or without qualified progress
+  evidence in the supplied attribution, remains visible as needing reconciliation.
+  Preserve its original status and estimate; expose the reason, mark coverage partial
+  and do not assert a complete remaining total. Real unresolved ancestor/descendant
+  state rows may appear separately, without adding a new estimate or copying a
+  parent's amount. `remaining_uncertain` and `accounting_role=state_context` identify
+  those presentation cases; they do not change task state or authorize execution.
+- A block's remaining share describes the already estimated work in the same unit.
+  Partial coverage stays visible; interval shares need not add to 100%. This is not a
+  Mission completion percentage, schedule or cost estimate.
+- Missing prerequisite data means unknown. An explicit empty dependency list means
+  the source declared no prerequisite. Only recorded dependencies produce graph
+  edges; visual position and task hierarchy create no edges.
+- A completed recorded prerequisite satisfies that recorded dependency only.
+  Present supplied parallel conditions; do not infer that execution units, workspaces,
+  budget, timing or authority are available.
+- Current risks and major blockers are optional source information. Show their
+  supplied summaries, impacts and release conditions when present; omit absent
+  sections instead of inventing entries or empty tables. This includes active existing
+  Shared Risk Context signals with their original severity, scope, affected surfaces,
+  confidence, recovery condition and source. A reporting task is not the entire affected
+  scope. Do not hide a known major restriction behind disclosure.
+- Keep Mission stop/human-authority states, write protection and material data
+  limitations visible before the work table. A useful explanation cannot upgrade an
+  implementation to accepted, or a plan to authorization.
+
+The overview retains the ordinary adapter's five semantic inputs: qualified progress,
+recorded constraints, confirmed facts, next-step text and Interaction Guard state
+including a just-released transition. It reuses their existing source rules and helpers.
+Constraints and acceptance counterexamples retain evidence type, time and task source;
+historical blockers are not silently relabelled as current risks. Estimate confidence
+is preserved in text and HTML when supplied.
+
+Runtime provenance is checked against the same in-memory Mission snapshot, without a
+second Mission read. Legacy and compatible-relocated records carry visible warnings.
+An incompatible runtime returns diagnostics only: `diagnostic_only=true`,
+`work_view=null`, no business progress summary and no new recovery/adoption path.
+The complete existing provenance report remains in `runtime`; see
+`runtime-provenance.md` for its unchanged authority boundary.
+
+The JSON payload is `tplan.progress_view.v1`; `work_view` retains the
+`tplan.work_view.v0.1` source projection, alongside Mission meaning, snapshot digests,
+qualified progress, constraints, facts, next step, guard transition and display limitations. JSON keeps stable task references;
+ordinary human text leads with titles. This is a read-only representation, not a new
+Mission schema, judgment owner or acceptance result.
+
+`render_user_update.py --progress --json` preserves its cursor and change metadata
+and adds `progress`. An explicit request gets `update_kind=progress` even if the
+source cursor is unchanged; automatic unchanged calls retain `quiet`/`heartbeat`
+delivery. A runtime incompatibility returns `update_kind=diagnostic` even for an
+unchanged cursor. `--html PATH --json` also returns `html_path`. An explicitly requested HTML
+artifact is generated even when the same snapshot was previously rendered. Without
+either option, the original compact update and heartbeat contract is unchanged.
+
+Explain may use this view as input for a requested clearer or shorter delivery.
+Preserve the source constraints, risks, uncertainty and optional workload information;
+do not add a compulsory Explain step to every Mission update.
+
 ## Terminal Mission Delivery Contract
 
 For every terminal Mission handoff (`completed`, `blocked`, `budget_exhausted`,

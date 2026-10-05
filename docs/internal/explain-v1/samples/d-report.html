@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="演示项目：报表导出兼容旧格式的进展说明。保留待验证结论、证据缺口、剩余估算和执行限制。">
+<title>报表导出兼容旧格式｜进展说明（演示数据）</title>
+<style>
+:root{--ink:#172c38;--muted:#4c616c;--line:#ccd7db;--paper:#fff;--bg:#eef2f3;--blue:#175c79;--soft:#edf5f8;--amber:#70480b;--amber-bg:#fff4df;--green:#24644e;--green-bg:#edf6f0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.65}
+main{max-width:1020px;margin:24px auto;padding:28px 36px;background:var(--paper);border:1px solid var(--line);border-radius:14px}
+p,h1,h2,h3{margin:0}
+p+p{margin-top:6px}
+h1{font-size:27px;line-height:1.35;letter-spacing:-.02em;margin:9px 0}
+h2{font-size:18px;line-height:1.4}
+h3{font-size:15px;line-height:1.5}
+strong{font-weight:700}
+.topline{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.demo{font-weight:700;color:var(--blue);letter-spacing:.03em}
+.lead{font-size:20px;line-height:1.5;font-weight:700;margin:11px 0 5px}
+.state{display:inline-block;color:var(--amber);background:var(--amber-bg);padding:1px 9px;border:1px solid #e4ca96;border-radius:5px;white-space:nowrap}
+.context{color:var(--muted)}
+section{margin-top:19px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.note{padding:12px 15px;border-radius:8px;border:1px solid var(--line)}
+.note p{margin-top:4px}
+.ready{background:var(--green-bg);border-color:#c1d8cb}
+.ready h2{color:var(--green);font-size:16px}
+.blocked{background:var(--amber-bg);border-color:#e4ca96}
+.blocked h2{color:var(--amber);font-size:16px}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.small{font-size:13px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;text-align:left;font-size:14px}
+th,td{padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{background:#edf2f4;color:#36505d;font-size:13px}
+tbody th{font-weight:650;min-width:92px}
+.effort{white-space:nowrap;font-weight:650}
+.effort-summary{padding:10px 11px 0}
+.effort-summary strong{color:var(--blue)}
+.resource{margin-top:9px;color:var(--muted);font-size:14px}
+.next{border-left:4px solid var(--blue);background:var(--soft);padding:12px 15px}
+.next h2{font-size:16px}
+.next p{margin-top:4px}
+.risk{margin-top:9px;font-size:14px}
+details{border:1px solid var(--line);border-radius:7px;margin-top:10px;background:#fbfcfc}
+summary{padding:9px 12px;cursor:pointer;font-weight:650;font-size:14px;color:var(--blue)}
+summary:hover{background:#eef5f7}
+summary:focus-visible,a:focus-visible{outline:3px solid #16759c;outline-offset:3px}
+.detail-body{padding:3px 14px 13px;font-size:14px;color:var(--muted)}
+.detail-body table{font-size:14px;margin:6px 0}
+.detail-body blockquote{margin:8px 0;padding:0 0 0 12px;border-left:3px solid #b6c9d2;color:var(--ink)}
+.source{white-space:normal}
+footer{margin-top:16px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+a{color:var(--blue);text-underline-offset:3px}
+@media(max-width:680px){
+ body{font-size:14px}
+ main{margin:0;border:0;border-radius:0;padding:21px 17px}
+ h1{font-size:24px}
+ .lead{font-size:18px}
+ .two{grid-template-columns:1fr}
+ th,td{padding:8px 6px;font-size:13px}
+ .effort{white-space:normal}
+ tbody th{min-width:72px}
+ .small{font-size:12px}
+}
+@media print{
+ @page{size:A4;margin:12mm}
+ body{background:white;font-size:11px}
+ main{max-width:none;margin:0;padding:0;border:0;border-radius:0}
+ h1{font-size:21px}.lead{font-size:16px}h2{font-size:15px}
+ section{margin-top:11px}
+ th,td{padding:6px 8px;font-size:11px}
+ .note{padding:9px 12px}
+ .small,.resource,.risk,.detail-body{font-size:11px}
+ summary{padding:6px 10px;font-size:11px}
+ footer{font-size:10px}
+ section,details{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="topline">
+    <span class="demo">演示项目数据 · 不是 Mindthus 本身进度</span>
+    <span>面向业务负责人 · 离线阅读</span>
+  </div>
+  <h1>报表导出兼容旧格式</h1>
+  <p class="lead">字段映射已实现，原任务仍为 <span class="state">待验证</span>。</p>
+  <p class="context">新旧字段已能对应，11 项回归检查通过。现有验收证据只覆盖 <strong>CSV UTF-8</strong>，不覆盖 <strong>XLSX</strong>；“全部通过”与检查记录的差异仍未解决。</p>
+  <details>
+    <summary>为什么 11 项通过后，仍不能认定全部通过？</summary>
+    <div class="detail-body">
+      <p>以下是源材料中尚未对齐的两份记录。本页保留原任务结论，不替原任务重新验收。</p>
+      <table>
+        <thead><tr><th scope="col">源记录</th><th scope="col">材料给出的内容</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">记录甲</th><td>写着“目标格式已全部通过”。</td></tr>
+          <tr><th scope="row">记录乙</th><td>列出的检查只有 CSV。</td></tr>
+        </tbody>
+      </table>
+      <p>源材料明确：验收证据只覆盖 CSV UTF-8，不覆盖 XLSX；两份记录差异未解决，原任务当前结论仍为“待验证”。11 项通过不能据此扩展成所有目标格式均已通过。</p>
+    </div>
+  </details>
+</header>
+
+<section class="two" aria-label="当前能继续的工作和主要阻塞">
+  <div class="note ready">
+    <h2>现在可继续：格式兼容</h2>
+    <p>按已确定的下一步，先处理格式兼容。凭证未发放没有阻止这部分工作继续。</p>
+  </div>
+  <div class="note blocked">
+    <h2>主要卡点：测试凭证未发放</h2>
+    <p><strong>权限确认尚不能开始。</strong>已有离线样本只能检查格式，不能替代线上权限验证。</p>
+  </div>
+</section>
+
+<section aria-labelledby="remaining-title">
+  <div class="section-head">
+    <h2 id="remaining-title">还剩哪些工作？</h2>
+    <span class="small">人时是工作投入量，不是完成日期</span>
+  </div>
+  <table>
+    <thead>
+      <tr><th scope="col">剩余工作</th><th scope="col">当前条件</th><th scope="col">剩余估计</th></tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">格式兼容</th><td>仍可继续；格式兼容检查通过后，联调才可进行。</td><td class="effort">约 2–4 人时</td></tr>
+      <tr><th scope="row">权限确认</th><td>等待测试凭证发放。</td><td class="effort">尚未估计</td></tr>
+      <tr><th scope="row">联调</th><td>把实际服务连接起来做联合验证；需等格式兼容检查通过。</td><td class="effort">约 3 人时</td></tr>
+    </tbody>
+  </table>
+  <p class="effort-summary"><strong>已估部分合计约 5–7 人时</strong>，另有尚未估计的权限确认。没有确定完成日期，也没有整体完成百分比。</p>
+  <p class="resource"><strong>能否并行：</strong>权限确认与格式兼容在逻辑上独立，但测试环境同一时间只允许一个写入者，也未安排其他执行者，现有条件不支持直接把两项排成并行。</p>
+  <details>
+    <summary>工时怎么算？哪些数字不能当作剩余进度？</summary>
+    <div class="detail-body">
+      <p>部分小计：格式兼容约 2–4 人时 ＋ 联调约 3 人时 ＝ 约 5–7 人时。这里只相加两项已给出的剩余估计，未覆盖权限确认，也没有把等待时间算成工作投入。</p>
+      <p>两项估计的大小关系随格式兼容的实际投入而变；不能用区间中点编出固定占比，权限确认在全部剩余工作中的份额也未知。</p>
+      <p><strong>历史投入：</strong>4 人时，记录到 18,000 token。这两者均不是剩余估计，不能据此倒推出剩余工作或整体完成百分比。</p>
+      <p><strong>执行关系：</strong>联调有“格式兼容检查通过”的前置条件。权限确认与格式兼容的逻辑独立，仍受凭证、单写入者环境与执行者安排限制。</p>
+    </div>
+  </details>
+</section>
+
+<section aria-labelledby="next-title">
+  <div class="next">
+    <h2 id="next-title">已经确定的下一步</h2>
+    <p><strong>先处理格式兼容；收到凭证后完成权限确认与联调。</strong>联调仍以格式兼容检查通过为前提。</p>
+  </div>
+  <p class="risk"><strong>后续风险：</strong>服务商限流可能使联调延后。离线样本的替代范围仅限格式检查，线上权限验证仍需完成。</p>
+</section>
+
+<details>
+  <summary>展开查看完整源材料（演示数据）</summary>
+  <div class="detail-body source">
+    <p>以下为本次提供的演示项目材料，所有进展、估计和限制均来自此处；不是 Mindthus 本身进度。</p>
+    <blockquote>目标是让报表导出兼容旧格式。字段映射已实现，11项回归检查通过；验收证据只覆盖 CSV UTF-8，不覆盖 XLSX。记录甲写“目标格式已全部通过”；记录乙列出的检查只有 CSV。原任务当前结论仍为“待验证”，两份记录差异未解决。剩余估计：格式兼容约2–4人时，联调约3人时，权限确认尚未估计。这里的联调指把实际服务连接起来做联合验证。联调要等格式兼容检查通过；权限确认与格式兼容逻辑上独立，但现有测试环境同一时间只允许一个写入者，也没有安排其他执行者。历史投入为4人时，记录到18,000 token；这两者不是剩余估计。风险：服务商限流可能使联调延后。已有备选离线样本只能检查格式，不能代替线上权限验证。当前主要阻塞：测试凭证尚未发放，权限确认不能开始；格式兼容工作仍可继续。已确定的下一步是先处理格式兼容，并在收到凭证后完成权限确认与联调。没有确定完成日期，也没有整体完成百分比。</blockquote>
+  </div>
+</details>
+
+<footer>
+  本页是源材料的解释视图。依据已内置，展开内容无需联网。请求与源材料原样存于 <a href="d-source.md">d-source.md</a>。
+</footer>
+</main>
+</body>
+</html>

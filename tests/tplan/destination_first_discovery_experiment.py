@@ -50,6 +50,10 @@ def baseline_surface(source_root: Path) -> dict[str, Any]:
     hooks = read_text(source_root / "skills/tplan/resources/hooks.md")
     lifecycle = read_text(source_root / "skills/tplan/resources/lifecycle.md")
     runtime = read_text(source_root / "skills/tplan/scripts/tplan_runtime.py")
+    # This probe concerns the existing Task control contract. Optional planning
+    # metadata may describe predecessors without adding Task scheduling support.
+    _, mission_heading, mission_schema = schema.partition("\n## mission.json\n")
+    mission_schema = mission_schema.split("\n## ", 1)[0]
     checks = {
         "schema_is_v0_1": "must be `tplan.v0.1`" in schema,
         "runtime_nodes_are_task_subtask_step": (
@@ -76,7 +80,9 @@ def baseline_surface(source_root: Path) -> dict[str, Any]:
             and "fog" not in lifecycle.lower()
         ),
         "no_declared_task_dependency_contract": (
-            "depends_on" not in schema and '"depends_on"' not in runtime
+            bool(mission_heading)
+            and "depends_on" not in mission_schema
+            and '"depends_on"' not in runtime
         ),
     }
     return {

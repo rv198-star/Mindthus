@@ -17,6 +17,9 @@ Truth Orientation / 真相优先：以事实和真相为先。用户观点是信
 - 缺文件、事实、运行证据或权限：先补输入，不能用方法填补。
 - 有会改变判断或行动的 hard judgment point：用最小充分镜头。
 
+这些介入门槛只约束判断镜头。用户要求解释或上游任务需要按需说明时，可直接使用
+`explain`；沿用已有对象、受众和目标，不先重跑判断选路。
+
 ### Input Framing Audit / 输入定框审计
 
 只在 frame-risk 与 execution impact 同时存在时检查：当前说法是否把局部
@@ -45,6 +48,7 @@ Whole Elephant / Partial Truth Capture：区分所判断对象、真正控制结
 明确指定的方法仍按要求使用；握手只补缺口，不串固定流水线。
 SELA owns direction pressure；MPG owns path-carrying action。
 引用方法审计不自动让该方法成为当前 owner（Method Reference Boundary）。
+`explain` 是可选表达支撑，不进入上表的判断 owner 路由；解释保留上游判断与证据边界。
 
 ### Execution Impact / 执行影响
 
@@ -77,5 +81,5 @@ SELA owns direction pressure；MPG owns path-carrying action。
 
 ## Boundaries
 
-无 hard judgment 不介入；缺证据先补；另一个对象或方法接管时交回。
+判断镜头无 hard judgment 不介入；缺证据先补；另一个对象或方法接管时交回。
 不建立全局路由器，不强制每题写字段、跑脚本或完整审计。

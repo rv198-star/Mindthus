@@ -1,0 +1,80 @@
+[
+  {
+    "id": "T1",
+    "kind": "task",
+    "level": 1,
+    "parent_id": null,
+    "title": "演示数据：准备演示输入（非真实项目）",
+    "status": "pending",
+    "role": "success-critical",
+    "mission_contribution": "演示数据：T1 仅用于展示工作块、状态与前置关系，不代表真实项目交付或合格验收。",
+    "acceptance_evidence": [
+      "A-DEMO-1"
+    ]
+  },
+  {
+    "id": "T2",
+    "kind": "task",
+    "level": 1,
+    "parent_id": null,
+    "title": "演示数据：构造演示样本（非真实项目）",
+    "status": "pending",
+    "role": "supporting",
+    "mission_contribution": "演示数据：T2 仅用于展示工作块、状态与前置关系，不代表真实项目交付或合格验收。",
+    "acceptance_evidence": [
+      "A-DEMO-1"
+    ]
+  },
+  {
+    "id": "T3",
+    "kind": "task",
+    "level": 1,
+    "parent_id": null,
+    "title": "演示数据：检查占位阻塞（非真实项目）",
+    "status": "blocked",
+    "role": "supporting",
+    "mission_contribution": "演示数据：T3 仅用于展示工作块、状态与前置关系，不代表真实项目交付或合格验收。",
+    "acceptance_evidence": [
+      "A-DEMO-1"
+    ]
+  },
+  {
+    "id": "T4",
+    "kind": "task",
+    "level": 1,
+    "parent_id": null,
+    "title": "演示数据：暂停的独立分支（非真实项目）",
+    "status": "paused",
+    "role": "exploratory",
+    "mission_contribution": "演示数据：T4 仅用于展示工作块、状态与前置关系，不代表真实项目交付或合格验收。",
+    "acceptance_evidence": [
+      "A-DEMO-1"
+    ]
+  },
+  {
+    "id": "T5",
+    "kind": "task",
+    "level": 1,
+    "parent_id": null,
+    "title": "演示数据：汇总演示材料（非真实项目）",
+    "status": "pending",
+    "role": "supporting",
+    "mission_contribution": "演示数据：T5 仅用于展示工作块、状态与前置关系，不代表真实项目交付或合格验收。",
+    "acceptance_evidence": [
+      "A-DEMO-1"
+    ]
+  },
+  {
+    "id": "T6",
+    "kind": "task",
+    "level": 1,
+    "parent_id": null,
+    "title": "演示数据：查看演示结果（非真实项目）",
+    "status": "pending",
+    "role": "success-critical",
+    "mission_contribution": "演示数据：T6 仅用于展示工作块、状态与前置关系，不代表真实项目交付或合格验收。",
+    "acceptance_evidence": [
+      "A-DEMO-1"
+    ]
+  }
+]

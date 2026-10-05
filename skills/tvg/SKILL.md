@@ -39,6 +39,8 @@ pressure 是资源投入约束，不是最低轮数或质量分。
 没有 bounded artifact 和明确 value-gain target 就不用。
 TVG audit 只用于 active TVG loop 内退出，不是通用代码、release、事实或战略审计。
 canonical model 错误先根因替换，不继续加厚。没有收益假设就停止。
+只需把既有内容讲清、保留结论和证据强度时，可交给 `explain`；需要补判断、证据或
+使用价值才由 TVG 强化。Explain 发现源信息缺口时交回原 owner，不用更顺的表达补齐事实。
 
 ## Runtime Support / 按需支撑
 

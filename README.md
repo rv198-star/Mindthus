@@ -52,7 +52,7 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 
 ## 方法论导航
 
-下面这些方法不是固定流水线，而是一组按场景选择的判断镜头：
+下面这些方法按场景选择，不组成固定流水线；判断镜头之外，还提供按需使用的解释与表达支撑：
 
 - [`using-mindthus / 路由入口`](skills/using-mindthus/SKILL.md)：先判断要不要介入。低风险任务直接做；输入带偏时先纠偏；缺事实时先取证。
 - [`3L5S / 三层五步`](docs/methodologies/3l5s.md)：问题还乱时，把“感觉不对”压成能复述、能验证、能执行的真问题。
@@ -64,10 +64,24 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 - [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)：产物已经成形但价值薄时，补判断、取舍、证据边界、失败路径和下游可用性。
 - [`TPlan / OKR-Runtime`](docs/methodologies/tplan.md)：长任务需要持续对齐目标、证据、任务状态和验收责任时，用它保持 Mission 不漂移。
 - [`Anti-Spiral / 反螺旋自检`](docs/methodologies/anti-spiral-self-audit.md)：同一个局部反复修时，先问是不是目标、素材或路径错了，而不是继续加层。
+- [`Explain / 解释与表达`](skills/explain/SKILL.md)：把已有材料、概念、判断或工作计划讲给具体受众，保留结论、证据强度和未知；只在需要说明时使用。
 
 ## 从哪里开始
 
 如果你只是想试一下，建议从 `using-mindthus` 开始。它会告诉 agent：什么时候直接做，什么时候先取证，什么时候进入某个 Mindthus 方法。
+
+需要把已有内容讲清时，可以直接调用 Explain，也可以在上游任务中按需使用。Explain 当前位于 **Unreleased**，已发布的 v1.11.0 安装包尚不包含它。
+
+```text
+/mindthus:explain --brief --html --audience 业务负责人 整理这份进展报告，保留限制和待验证项。
+/mindthus:3l5s 梳理这项工作；计划明确后，用 /mindthus:explain 做一份 HTML 工作计划与进展说明。
+/mindthus:tvg 强化这份方案的证据与取舍；完成后，用 /mindthus:explain 向新同事讲清。
+```
+
+`--brief` 降低阅读负担，`--eli5` 按受众做最低必要的降阶解释，`--html` 交付离线单文件；参数可以组合，顺序不改变含义。
+
+已有 TPlan Mission 时，可以让 Explain 展示当前计划与进展；来源中已有的重要风险和主要阻塞点会一并保留。
+展示沿用 TPlan 的事实、状态和验收依据；需要调整计划或改变状态时交回 TPlan。解释不增加新的判断 owner，也不要求其他方法每次都接一轮 Explain。
 
 需要整理案例时，最简单的调用是：
 
@@ -230,7 +244,7 @@ done
 卸载：
 
 ```bash
-rm -rf ~/.claude/skills/{3l5s,case-prep,edsp,mpg,sela,sra,tplan,tvg,using-mindthus,wae}
+rm -rf ~/.claude/skills/{3l5s,case-prep,edsp,explain,mpg,sela,sra,tplan,tvg,using-mindthus,wae}
 rm -rf ~/.claude/skills/_runtime
 rm -f ~/.claude/skills/runtime_bootstrap.py
 ```

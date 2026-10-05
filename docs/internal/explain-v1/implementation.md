@@ -1,0 +1,100 @@
+# Explain V1 与 TPlan 进展输出：实现与开发期验证
+
+- 日期：2026-10-05（Asia/Shanghai）
+- 源码基线：`541049486ce8b61c4c7e212397922999a9b8ff2e`
+- 交付版本：Unreleased
+- 验证状态：功能与独立复核完成，最终完整工程 gate 结果见下文。
+
+## 已确认的产品范围
+
+Explain 是独立的理解与表达技能。它解释已有结果，保留原判断、证据强度、状态、验收和执行权限。默认完整清晰；`--brief` 减少阅读负担，`--eli5` 按受众做最低必要降阶，`--audience` 覆盖受众，`--html` 交付单文件离线阅读产物。参数可以组合，任务入口与最终交付共用同一套转换规则。
+
+TPlan 是首个正式上游接入场景。用户需要理解整体进展、剩余工作块、剩余估计、各块在剩余量中的占比，以及已知前置和并行条件。
+
+用户追加确认：**风险与主要阻塞点为可选信息**。有当前来源时默认呈现重要内容；没有记录时省略栏目。影响、关联工作块和解除条件按已有来源说明，不要求用户填空表，不新增固定风险评估流程，也不把未提供信息写成“没有风险”。精简输出仍保留已知重大限制。
+
+## 实现入口
+
+Explain 的入口与按需参考材料位于 [skills/explain](../../../skills/explain/SKILL.md)。它未进入八个判断 owner、判断 trace enum 或固定加工流水线。TVG 保留原有强化能力；Explain 的普通执行没有独立复审循环。
+
+```text
+/mindthus:explain 把这份说明讲清楚，保留条件与未知。
+/mindthus:explain --brief --eli5 --audience 产品负责人 解释这段技术材料。
+/mindthus:explain --html --brief 把当前任务结果做成离线阅读报告。
+```
+
+TPlan 增加可选 `work_plan`。创建 Mission 的两个入口支持 `--work-plan-json`；已存在 Mission 使用受控元数据入口更新：
+
+```bash
+python3 skills/tplan/scripts/record_work_plan.py MISSION_DIR \
+  --input work-plan.json --summary "更新剩余估计与已知条件"
+
+python3 skills/tplan/scripts/render_user_update.py MISSION_DIR --progress
+python3 skills/tplan/scripts/render_user_update.py MISSION_DIR \
+  --html MISSION_DIR/reports/progress.html
+
+python3 skills/tplan/scripts/render_progress_view.py MISSION_DIR --format json
+```
+
+完整字段语义见 [TPlan schema](../../../skills/tplan/resources/schema.md)，输出方式见 [user-output](../../../skills/tplan/resources/user-output.md)。HTML 与文字视图从一致快照读取信息；普通自动更新保留既有心跳与静默节奏。
+
+## 数字和状态的含义
+
+| 信息 | 处理方式 |
+| --- | --- |
+| 整体进展 | 保留源状态、已有结果与证据；数值只来自含义明确的上游指标 |
+| 剩余估计 | 保留单位、上下界、依据与覆盖范围；未知不计作零 |
+| 工作块占比 | 只对同单位、非重叠的已估剩余范围计算；部分覆盖明确标注 |
+| 历史投入 | 继续由原执行报告承载，不倒算完成度或剩余量 |
+| 并行条件 | 展示已声明的前置、资源条件及未确认信息，不自动派发或授权 |
+| 规划更新 | 作为 `planning_metadata_updated` 状态记录，不计为任务或验收推进 |
+
+父子范围不重复统计；缩减范围不算新增完成成果。`completed` 与合格证据分开，状态和剩余估计冲突时保留源信息并提示核对。旧 Mission 缺规划数据时仍可解释已登记信息，已存在的运行时兼容规则继续有效。
+
+## 发行与职责接入
+
+构建脚本的 `SKILL_NAMES` 加入 Explain，覆盖 Claude plugin、Claude personal skills、Codex skills、Codex plugin、OpenCode skills 五种布局及路径重写。README、Codex 安装说明、卸载清单和 Unreleased 记录同步更新。
+
+技能本体保持薄入口，HTML、表达模式、TPlan 进展细则按需加载。工程结构检查只保护其能机械判断的合同；它们不能证明解释更容易理解。
+
+## 开发期验证记录
+
+### 工程检查
+
+- 完整 unittest gate 通过：`python3 -B -m unittest discover -s tests -v` 共 1,144 项，1,137 项通过，7 项按既有依赖条件跳过，0 失败、0 错误；运行时间 245.647 秒。7 个跳过项为 5 个依赖 Pillow 的 atlas 检查和 2 个依赖 jsonschema 的 case-prep schema 检查；本次没有改变跳过规则。`-v` 仅用于保留逐项日志，与 CI 的 `-q` 使用同一发现范围。
+- CI 中四项 primitive/runtime smoke 命令全部通过。
+- Explain 在 Claude plugin、Claude personal skills、Codex skills、Codex plugin、OpenCode skills 五种实际构建布局中均存在，资源与链接有效；八个判断 owner 保持原集合。
+- TPlan 新增工作计划与进展视图回归覆盖未知、混单位、父子范围、区间份额、状态与证据冲突、共享风险、Guard、事务及来源诊断。最后的后端与 renderer 组合为 55 项通过。
+- `runtime_doctor.py` 返回 `ok`，无缺失脚本与诊断错误；运行时指纹为 `sha256:484874ee3323079cc1e7919257e2012706f37c30e4dd3e1ff6b5eb3a88073ab0`。
+
+### 页面与保真检查
+
+E 页面由公共 CLI 生成。在 Chromium 离线环境中实际测试 1440×1024 与 390×844 视口：搜索、状态筛选、详情、空结果提示与依赖图键盘选择通过；无页面横向溢出、外部 HTTP 请求或 JavaScript 异常。窄屏关系图在自身容器滚动，标题与说明保持 14px、12px。桌面与窄屏截图已实际检查。D 页面原生详情展开与离线访问也已通过浏览器检查。
+
+独立复核已关闭。已报告的完成声明/剩余估计冲突、完成证据缺口、当前共享风险、运行时来源诊断、后续验收失败、Guard 解除和估计信心保留问题均已修复。被父工作块覆盖的前置任务，其证据警告仍在首层出现，且不被新增为计量块。
+
+A 的重复解释保留全部关键事实与限定，只有结构变化；D 内置引文与源材料的事实正文逐字一致，演示性质在引文前保留。
+
+### 复现环境与既有实验探针
+
+完整 gate 使用隔离 Python 3.11.16，并让子进程使用同一版本，与 CI 的 Python 3.11 系列一致。最初仅拉取 main 历史的开发克隆缺少既有测试所需的两个侧分支对象；已补回 `ed5171bf7b34746027acd730864d9c98ef1dd8d2` 与 `be25f4834e01596a0e62e311eccd3d42c4bab610`。这两条历史引用仍在远端存在，现有 CI 的完整历史 checkout 可取得它们。
+
+另将 destination-first 研究 harness 的旧探针限定到它实际保护的 Task 控制合同节，避免把独立可选规划说明中的 `depends_on` 误认作 Task 调度支持。新增反例证明：Task 控制字段真的加入依赖，或合同节缺失时，探针仍失败。冻结期待值、历史 replay 与 source manifest 保留原样；本轮不将旧实验结果用作 Explain 的效果证明。
+
+## 原材料与交付样例
+
+这些都是开发期的合成样例，不是 Mindthus 项目的真实进度或效果统计：
+
+| 场景 | 记录 |
+| --- | --- |
+| A：复杂任务进展，brief | [原材料与输出](samples/a-brief.md)、[重复解释](samples/a-brief-repeat.md) |
+| B：概念解释，ELI5 + audience | [原材料与输出](samples/b-eli5.md) |
+| C：操作说明，普通 Explain | [原材料与输出](samples/c-instructions.md) |
+| D：组合参数离线 HTML | [源材料](samples/d-source.md)、[实际 HTML](samples/d-report.html) |
+| E：TPlan 工作进展视图 | [输入与复现记录](samples/e-source.md)、[实际 HTML](samples/e-report.html)、[文字输出](samples/e-report.txt) |
+
+A–D 由只获得技能、原始请求和源材料的独立会话完成，再进行原文对照。没有给执行者提供预期答案。E 使用真实 TPlan 脚本和合成 Mission，验证数据到视图的实现；六个工作块合计 13–22 小时，40 percent 是独立的人工显示样本，源数据和页面均明确标注其演示性质。
+
+## 验证边界
+
+这些有限样例与回归检查不构成跨模型的质量、token 节省率或金额 ROI 证明。它们不复用历史冻结实验为 Explain 背书，也不进入技能的正常运行链。当前变更属于 Unreleased，正式发布仍按项目原有发行流程处理。

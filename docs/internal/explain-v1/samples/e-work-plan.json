@@ -1,0 +1,133 @@
+{
+  "schema_version": "tplan.work_plan.v0.1",
+  "coverage": "complete",
+  "scope_note": "演示数据：仅覆盖本脚本的六个根工作块，不涉及真实项目。",
+  "as_of": "2026-10-05T00:00:00Z",
+  "source": "演示数据：create_work_plan_demo.py 内固定样本。",
+  "blocks": [
+    {
+      "task_id": "T1",
+      "remaining": {
+        "low": 2,
+        "high": 4,
+        "unit": "小时",
+        "basis": "演示数据：脚本内人工设定的剩余区间，用于界面预览；不是测量结果或真实项目预测。",
+        "confidence": "unknown"
+      },
+      "depends_on": [],
+      "parallel_conditions": [
+        "演示条件：需由演示操作员另行确认独立输入、隔离目录、可用资源和权限。"
+      ]
+    },
+    {
+      "task_id": "T2",
+      "remaining": {
+        "low": 3,
+        "high": 5,
+        "unit": "小时",
+        "basis": "演示数据：脚本内人工设定的剩余区间，用于界面预览；不是测量结果或真实项目预测。",
+        "confidence": "unknown"
+      },
+      "depends_on": [
+        "T1"
+      ],
+      "parallel_conditions": [
+        "演示条件：需由演示操作员另行确认独立输入、隔离目录、可用资源和权限。"
+      ]
+    },
+    {
+      "task_id": "T3",
+      "remaining": {
+        "low": 1,
+        "high": 2,
+        "unit": "小时",
+        "basis": "演示数据：脚本内人工设定的剩余区间，用于界面预览；不是测量结果或真实项目预测。",
+        "confidence": "unknown"
+      },
+      "depends_on": [
+        "T2"
+      ],
+      "parallel_conditions": [
+        "演示条件：需由演示操作员另行确认独立输入、隔离目录、可用资源和权限。"
+      ]
+    },
+    {
+      "task_id": "T4",
+      "remaining": {
+        "low": 2,
+        "high": 3,
+        "unit": "小时",
+        "basis": "演示数据：脚本内人工设定的剩余区间，用于界面预览；不是测量结果或真实项目预测。",
+        "confidence": "unknown"
+      },
+      "depends_on": [],
+      "parallel_conditions": [
+        "演示条件：需由演示操作员另行确认独立输入、隔离目录、可用资源和权限。"
+      ]
+    },
+    {
+      "task_id": "T5",
+      "remaining": {
+        "low": 4,
+        "high": 6,
+        "unit": "小时",
+        "basis": "演示数据：脚本内人工设定的剩余区间，用于界面预览；不是测量结果或真实项目预测。",
+        "confidence": "unknown"
+      },
+      "depends_on": [
+        "T2",
+        "T4"
+      ],
+      "parallel_conditions": [
+        "演示条件：需由演示操作员另行确认独立输入、隔离目录、可用资源和权限。"
+      ]
+    },
+    {
+      "task_id": "T6",
+      "remaining": {
+        "low": 1,
+        "high": 2,
+        "unit": "小时",
+        "basis": "演示数据：脚本内人工设定的剩余区间，用于界面预览；不是测量结果或真实项目预测。",
+        "confidence": "unknown"
+      },
+      "depends_on": [
+        "T3",
+        "T5"
+      ],
+      "parallel_conditions": [
+        "演示条件：需由演示操作员另行确认独立输入、隔离目录、可用资源和权限。"
+      ]
+    }
+  ],
+  "progress": {
+    "label": "演示数据：人为声明的界面进度",
+    "value": 40,
+    "unit": "percent",
+    "basis": "演示数据：40% 是人为设置的显示样本，不是任务数计算结果，也不是真实项目完成率或验收结论。"
+  },
+  "risks": [
+    {
+      "summary": "演示数据：占位输入可能不完整（非真实项目风险）。",
+      "task_ids": [
+        "T2",
+        "T5"
+      ],
+      "impact": "演示数据：用于展示风险如何影响后续工作说明。",
+      "source": "演示数据：脚本固定风险样本。",
+      "status": "active"
+    }
+  ],
+  "blockers": [
+    {
+      "summary": "演示数据：T3 等待占位输入（非真实项目阻塞）。",
+      "task_ids": [
+        "T3"
+      ],
+      "impact": "演示数据：该分支保持 blocked 以展示限制。",
+      "release_condition": "演示数据：演示操作员提供占位输入并明确解除此演示阻塞。",
+      "source": "演示数据：脚本固定阻塞样本。",
+      "status": "active"
+    }
+  ]
+}
