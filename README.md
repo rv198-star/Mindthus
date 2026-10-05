@@ -52,7 +52,7 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 
 ## 方法论导航
 
-下面这些方法按场景选择，不组成固定判断流水线；它们的面向用户输出共享 Explain Core Presentation Contract，完整 Explain transformation 再按需使用。共享规则见 [Explain Core Presentation Contract](skills/explain/resources/presentation-contract.md)：
+下面这些方法按场景选择，不组成固定判断流水线。方法形成结果后，当前 Agent 默认使用 [Explain](skills/explain/SKILL.md) 组织人向交付：默认完整清晰，按需压缩、降阶或可视化，不另起一轮模型调用。
 
 - [`using-mindthus / 路由入口`](skills/using-mindthus/SKILL.md)：先判断要不要介入。低风险任务直接做；输入带偏时先纠偏；缺事实时先取证。
 - [`3L5S / 三层五步`](docs/methodologies/3l5s.md)：问题还乱时，把“感觉不对”压成能复述、能验证、能执行的真问题。
@@ -64,13 +64,13 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 - [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)：产物已经成形但价值薄时，补判断、取舍、证据边界、失败路径和下游可用性。
 - [`TPlan / OKR-Runtime`](docs/methodologies/tplan.md)：长任务需要持续对齐目标、证据、任务状态和验收责任时，用它保持 Mission 不漂移。
 - [`Anti-Spiral / 反螺旋自检`](docs/methodologies/anti-spiral-self-audit.md)：同一个局部反复修时，先问是不是目标、素材或路径错了，而不是继续加层。
-- [`Explain / 解释与表达`](skills/explain/SKILL.md)：Mindthus Human Comprehension Layer；Core Presentation Contract 是所有方法面向用户交付的共享表达基础，完整 Explain transformation 在需要 brief / ELI5 / audience / HTML 或明显重构时按需使用。
+- [`Explain / 解释与表达`](skills/explain/SKILL.md)：Mindthus 默认的人向结果交付 Skill。当前 Agent 使用 clarity 模式讲清结果，保留原判断与证据；brief / ELI5 / audience / HTML 是按需模式。
 
 ## 从哪里开始
 
 如果你只是想试一下，建议从 `using-mindthus` 开始。它会告诉 agent：什么时候直接做，什么时候先取证，什么时候进入某个 Mindthus 方法。
 
-所有 Mindthus 方法的面向用户输出默认遵循 Explain Core Presentation Contract；这不会额外启动一次 Explain。需要显式压缩、降阶、受众适配、HTML 交互或其他明显表达重构时，再直接调用完整 Explain transformation。Explain 当前位于 **Unreleased**，已发布的 v1.11.0 安装包尚不包含它。
+所有 Mindthus 方法的人向结果默认使用 Explain，用户无需再补“请解释清楚”。当前 Agent 首次缺少有效规则上下文时读取正式 Skill，之后复用，资源按需加载；不要求先写完整原答案再重写。机器/精确格式及必需交付链接保持，短确认不扩写。Explain 当前位于 **Unreleased**，已发布的 v1.11.0 安装包尚不包含它。
 
 ```text
 /mindthus:explain --brief --html --audience 业务负责人 整理这份进展报告，保留限制和待验证项。
@@ -80,7 +80,7 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 
 `--brief` 降低阅读负担，`--eli5` 按受众做最低必要的降阶解释，`--html` 选择 HTML 表示方式；在 ChatGPT 中优先使用 Visualizations / app_block 直接内嵌交互展示，只有显式保存/下载/导出时才落为 `.html` 文件。参数可以组合，顺序不改变含义。
 
-TPlan 是 Explain 的首个专用 structured presentation adapter：它可以把同一只读 Mission 进展数据输出为文本、Visualizations / app_block 或显式保存的 HTML。其他方法不需要复制 TPlan renderer，也同样继承 Core Presentation Contract。展示沿用上游事实、状态和验收依据；需要改变判断、计划或状态时交回原 owner。Explain 不增加新的 judgment owner，也不要求其他方法每次额外接一轮模型调用。
+TPlan 保留专用 structured presentation adapter，把同一只读 Mission 数据输出为文本、Visualizations / app_block 或显式导出的 HTML。其他方法默认使用 Explain，不需要复制 TPlan renderer。具体范围和保真规则见 [交付合同](skills/explain/resources/presentation-contract.md)；判断、计划、状态、验收仍由上游负责。
 
 需要整理案例时，最简单的调用是：
 

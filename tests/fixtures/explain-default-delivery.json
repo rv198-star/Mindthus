@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "provenance": "synthetic_development_examples",
+  "comparison_kind": "constructed_same_source_pairs",
+  "baseline_commit": "4bcaf7609c1b524e4df5a34818488d05c76fa208",
+  "assessment": "Same Agent authored and reviewed these fixed examples; not independently sampled baseline/candidate model runs. Mechanical tests check stated retention and exactness only.",
+  "cases": [
+    {
+      "id": "short-clear",
+      "scope": "human_result",
+      "source": "补丁已应用。8项回归通过。尚未部署。",
+      "baseline_output": "补丁已应用。8项回归通过。尚未部署。",
+      "explain_output": "补丁已应用。8项回归通过。尚未部署。",
+      "required": [
+        "补丁已应用",
+        "8项回归通过",
+        "尚未部署"
+      ],
+      "forbidden": [
+        "已部署",
+        "全部上线"
+      ],
+      "exact": true,
+      "review": "原表达已充分；默认使用Explain允许不改写，不为显示加工而扩写。"
+    },
+    {
+      "id": "qualified-judgment",
+      "scope": "human_result",
+      "source": "测试仅包含1000个合成请求，不包含生产数据。方法owner建议只做10%流量灰度，不授权全量上线。若错误率超过2%，立即回滚；由值班负责人批准启动。证据见 evidence/canary-01.md。",
+      "baseline_output": "测试：1000个合成请求；无生产数据。建议：10%流量灰度，非全量上线授权。错误率超过2%回滚。值班负责人批准启动。依据：evidence/canary-01.md。",
+      "explain_output": "建议先做10%流量灰度，由值班负责人批准启动；这不是全量上线授权。\n\n依据目前只有1000个合成请求，不包含生产数据。灰度期间若错误率超过2%，立即回滚。证据：evidence/canary-01.md。",
+      "required": [
+        "10%",
+        "值班负责人批准启动",
+        "不是全量上线授权",
+        "1000个合成请求",
+        "不包含生产数据",
+        "错误率超过2%",
+        "立即回滚",
+        "evidence/canary-01.md"
+      ],
+      "forbidden": [
+        "已获全量",
+        "生产验证通过",
+        "无风险"
+      ],
+      "exact": false,
+      "review": "先说明建议及授权边界，再说明证据限度和回滚条件；没有把测试通过升级为上线许可。"
+    },
+    {
+      "id": "tplan-progress",
+      "scope": "human_result",
+      "source": "共6个工作块，4个已验收，1个回归测试进行中，1个等待外部验收回执。剩余测试6点，交付验收4点，同单位完整估算合计10点。没有整体工作量进度百分比，没有并行资源声明。标准报告：[执行报告](reports/execution-cost-tree.md) 与 [执行图](reports/execution-cost-tree.svg)。",
+      "baseline_output": "工作块6，已验收4；测试进行中6点，验收等回执4点；剩余10点。整体百分比未提供，并行条件未提供。[执行报告](reports/execution-cost-tree.md) / [执行图](reports/execution-cost-tree.svg)。",
+      "explain_output": "6个工作块中4个已验收。剩下回归测试正在进行，交付验收等待外部验收回执。\n\n已估剩余工作共10点：测试6点，占剩余工作量60%；交付验收4点，占40%。这些比例只表示剩余构成，不是整体完成率。当前没有并行资源声明，不能确认可并行。\n\n[执行报告](reports/execution-cost-tree.md) · [执行图](reports/execution-cost-tree.svg)",
+      "required": [
+        "4个已验收",
+        "等待外部验收回执",
+        "10点",
+        "6点",
+        "4点",
+        "60%",
+        "40%",
+        "不是整体完成率",
+        "不能确认可并行",
+        "reports/execution-cost-tree.md",
+        "reports/execution-cost-tree.svg"
+      ],
+      "forbidden": [
+        "整体完成率66.7%",
+        "整体进度67%",
+        "全部验收通过"
+      ],
+      "exact": false,
+      "review": "任务计数与工作量分开；60%/40%仅为已给定剩余点数的透明算术；标准报告链接保留。"
+    },
+    {
+      "id": "exact-json",
+      "scope": "machine_exact",
+      "source": "用户要求只返回这个JSON，不加围栏或解释：\n{\"status\":\"blocked\",\"count\":0}\n",
+      "baseline_output": "{\"status\":\"blocked\",\"count\":0}\n",
+      "explain_output": "{\"status\":\"blocked\",\"count\":0}\n",
+      "required": [],
+      "forbidden": [
+        "```"
+      ],
+      "exact": true,
+      "review": "纯机器交付保持UTF-8字节一致；不自动增加解释。"
+    },
+    {
+      "id": "exact-command",
+      "scope": "machine_exact",
+      "source": "用户要求原样返回命令，仅命令，不执行：python3 -m unittest tests.test_explain_contract -q",
+      "baseline_output": "python3 -m unittest tests.test_explain_contract -q",
+      "explain_output": "python3 -m unittest tests.test_explain_contract -q",
+      "required": [],
+      "forbidden": [
+        "```",
+        "已执行",
+        "通过"
+      ],
+      "exact": true,
+      "review": "精确命令原样保留，不执行，也不制造执行结果。"
+    },
+    {
+      "id": "short-ack",
+      "scope": "routine_notice",
+      "source": "用户只要求确认收到材料，不要求报告。",
+      "baseline_output": "已收到材料。",
+      "explain_output": "已收到材料。",
+      "required": [
+        "已收到材料"
+      ],
+      "forbidden": [
+        "##",
+        "下一步"
+      ],
+      "exact": true,
+      "review": "简短确认直接保留，不把默认交付扩大为每句话都写报告。"
+    }
+  ]
+}

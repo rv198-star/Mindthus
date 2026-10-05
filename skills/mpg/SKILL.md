@@ -187,7 +187,7 @@ survival alone is not success. Surviving by abandoning mainline, core advantage,
 
 ### Presentation
 
-Use [Explain Core Presentation Contract](../explain/resources/presentation-contract.md) for user output in this pass, retaining method authority.
+For human-facing results, use [Explain](../explain/SKILL.md) by default (clarity) in this response; retain method authority.
 
 ## Runtime Support / 支撑材料
 

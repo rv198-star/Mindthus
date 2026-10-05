@@ -16,7 +16,9 @@
 - 同一 HTML 在 Chromium 的 1440px/390px 视口可展开原生 details，无横向溢出、外部请求或 JavaScript 错误。这是独立浏览器验证，不是当前对话显示验收。
 - 交互表面已在当前 ChatGPT 对话用 Visualizations / app_block 现场确认：用户明确反馈该效果就是此前满意的内嵌交互式可视化。HTML MIME、附件、PNG、Jupyter rich output、MagicPath Canvas 和 Code/Preview 均已实测排除为目标路径。后续验收只需确认 Mindthus 生成的 app_block payload 保留同一交互语义。
 
-## 设计对齐修正与依据边界
+## 上一阶段：共享基础合同与依据边界
+
+本节保留 `1f6e529a` / `4bcaf760` 阶段记录；默认触发策略已由下方的新决议替代。
 
 依据为用户重新上传的 `mindthus-explain-v1-design-spec(2).md`，SHA-256：
 `673b45a07122ed33c4dcc143095a04d12a8a65a04f2cda26efc2a4a58e004182`。
@@ -57,17 +59,29 @@ Explain 可移植性 lint 为 `portable=true`，0 error / 0 warning。完整 uni
 提交的 GitHub CI 结果记录在 PR #224 和持久任务中，避免沿用旧提交的绿色状态。
 这些检查证明合同/链接/打包接线及程序回归，不把文档断言当作所有模型输出质量的实测。
 
-## 已确认的产品范围
+## 当前决议：默认使用 Explain Skill
 
-Explain 是 Mindthus Human Comprehension Layer，同时保留独立 Skill 入口。所有 Mindthus 面向用户的结果默认继承 Explain Core Presentation Contract：先讲清结果，保留源判断、证据强度、条件、风险、未知和权限边界；这不是固定的第二次 Explain/模型调用。完整 `/mindthus:explain` transformation 只在 brief、ELI5、audience、HTML 或明显表达重构时按需执行。
+用户在比较“只继承表达规则”与“实际默认使用 Explain”后，已批准后者。当前正式入口
+为 `skills/explain/SKILL.md`，不是另一份基线规则：方法形成结果后，当前 Agent 默认
+使用 Explain 的 clarity 模式组织人向交付。首次缺有效上下文则读取入口，之后复用；
+增强资源按需读取，清楚的结果可以不改写。不新增独立 Agent、二次模型调用、原答案
+重写流水线或运行时调用回执。
 
-TPlan 是首个专用 **structured presentation adapter** 场景，而不是第一个才算“接入 Explain”的方法。它把同一只读进展语义进一步适配为文本、Visualizations / app_block 和显式 HTML artifact；其他方法无需复制 renderer，但同样继承 Core Presentation Contract。
+这是对早期 V1 默认接入策略的后续调整，不追认为原稿 §25 已经要求默认全方法调用。
+纯机器输出、代码/命令/逐字引用/精确格式、内部记录沿用原合同；短确认不扩写。
+TPlan 保留首个结构化展示适配器的位置；其工作量、状态、验收与 Visualizations 实现
+不因本次策略调整而变化。其他方法无需复制 renderer，直接链接正式 Explain Skill。
+
+决议、六个同源开发用例和成本口径见 [默认交付评审](default-delivery-review.md)。
 
 用户追加确认：**风险与主要阻塞点为可选信息**。有当前来源时默认呈现重要内容；没有记录时省略栏目。影响、关联工作块和解除条件按已有来源说明，不要求用户填空表，不新增固定风险评估流程，也不把未提供信息写成“没有风险”。精简输出仍保留已知重大限制。
 
 ## 实现入口
 
-Explain 的入口与按需参考材料位于 [skills/explain](../../../skills/explain/SKILL.md)，共享基础合同位于 `skills/explain/resources/presentation-contract.md`。它未进入八个判断 owner、判断 trace enum 或固定加工流水线。各方法可以直接按基础合同组织自己的用户输出，不需要额外调用 Explain；完整 transformation 仍没有独立复审循环。
+Explain 的正式入口位于 [skills/explain](../../../skills/explain/SKILL.md)，
+`presentation-contract.md` 是同一 Skill 的范围与保真资源，不再是跳过 Skill 的默认
+替代路径。八个方法与 using-mindthus 的链接指向正式入口；Explain 仍未进入八个判断
+owner、判断 trace enum 或独立复审循环。
 
 ```text
 /mindthus:explain 把这份说明讲清楚，保留条件与未知。

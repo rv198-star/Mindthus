@@ -1,6 +1,6 @@
 ---
 name: explain
-description: "Use when the user asks to make existing results, reports, concepts, or task progress easier to understand, invokes /mindthus:explain, or an upstream delivery calls for Explain. Supports brief, ELI5, audience adaptation, and self-contained HTML while preserving source judgments, evidence, and task authority."
+description: "Use by default when Mindthus delivers human-facing conclusions, reports, stage results, or progress, and for explicit explanation requests. The current Agent applies clarity, with brief, ELI5, audience, or HTML modes as needed. Preserve source judgment and exact machine formats; keep routine acknowledgements short."
 ---
 
 # Explain
@@ -11,9 +11,13 @@ Make an existing result easier for a person to understand accurately. Improve it
 expression, structure, and representation while preserving what the source concludes
 and what supports it. Explain is Mindthus's human comprehension layer, not a judgment owner.
 
-All Mindthus user-facing outputs inherit the **Explain Core Presentation Contract**
-without a second Explain call. The full Explain transformation is on-demand for explicit
-Explain/brief/ELI5/audience/HTML or another material representation change.
+Use this Skill by default for Mindthus human-facing results in the current Agent's
+response. Default to clarity; choose transformation intensity inside Explain rather than
+first deciding whether to use Explain. Already-clear output may remain unchanged.
+
+If this SKILL.md is absent from effective context, read it before delivery; otherwise
+reuse it. Load resources only when relevant. No separate Agent/model call or mandatory
+first-draft/rewrite pass is needed.
 
 Prioritize semantic fidelity, comprehension, decision-relevant information, brevity,
 then presentation.
@@ -21,6 +25,10 @@ then presentation.
 ## Mainline
 
 ### 1. Read The Source And Delivery Intent
+
+Use the [delivery scope](resources/presentation-contract.md): explain human-facing
+results; preserve exact JSON, code, commands, quotations, internal records and required
+links. Routine acknowledgements and heartbeats stay short. Explicit delivery intent wins.
 
 Accept ordinary text, Markdown, reports, documents, and task results. Use available
 source context and evidence; optional hints such as conclusion, constraints, risks,
@@ -119,12 +127,8 @@ preview surface. An image is not a substitute for requested interaction. Keep ac
 display acceptance open until the host or user confirms the interactive surface is
 visible and usable.
 
-For other reports, follow the requested delivery format. Use the environment's normal
-delivery mechanism. Multiple delivery surfaces are representations of the same source
-result, not new factual authorities.
-
-Aim for semantic convergence: processing the result again for the same goal should
-remain stable in meaning and level of detail.
+Use the requested delivery format. Representations are not new factual authorities.
+Reapplying the same goal should preserve meaning and detail.
 
 ## Guardrails
 
@@ -152,9 +156,8 @@ method's judgment, state, acceptance, or the user's delivery requirements.
 
 Read resources only when their guidance is relevant:
 
-- [Core Presentation Contract](resources/presentation-contract.md): shared baseline for
-  Mindthus user-facing delivery; applying it does not itself invoke the full Explain
-  transformation.
+- [Core Presentation Contract](resources/presentation-contract.md): scope and fidelity
+  rules for this Skill, not a baseline-only alternative to using Explain.
 - [HTML V1](resources/html-v1.md): read for `--html`, inline HTML presentation, or an
   explicitly requested saved/exported HTML artifact.
 - [TPlan progress](resources/tplan-progress.md): read for task-progress delivery,
@@ -167,11 +170,8 @@ Read resources only when their guidance is relevant:
 Use Input → Explain → Output; no runtime AI Review/refine loop. Development
 qualification belongs outside normal runtime.
 
-All Mindthus human-facing delivery inherits the Explain Core Presentation Contract;
-this is not a mandatory second Skill/model pass. Full transformation stays on-demand.
-TPlan keeps planning/state/acceptance authority and is the first **structured presentation
-adapter** for progress/Visualizations, not the only upstream using the shared baseline.
-TVG keeps its own strengthening/exit authority.
-
-V1 does not force every Skill through full Explain. Online AI reasoning inside artifacts,
-external actions, video generation, and strict ASD-STE100 compliance stay out of scope.
+Explain is the default human-facing delivery Skill, outside judgment-owner routing.
+TPlan keeps planning/state/acceptance authority and its structured presentation adapter;
+TVG keeps strengthening/exit authority. Use modes as needed, not as entry requirements.
+Online AI reasoning inside artifacts, external actions, video generation, and strict
+ASD-STE100 compliance stay out of scope.

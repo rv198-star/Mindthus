@@ -85,7 +85,7 @@ For very high-impact or long-term decisions, separate agents are an escalation o
 
 ### Presentation
 
-Use [Explain Core Presentation Contract](../explain/resources/presentation-contract.md) for user output in this pass, retaining method authority.
+For human-facing results, use [Explain](../explain/SKILL.md) by default (clarity) in this response; retain method authority.
 
 ## Runtime Support / 支撑材料
 

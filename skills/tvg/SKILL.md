@@ -39,13 +39,13 @@ pressure 是资源投入约束，不是最低轮数或质量分。
 没有 bounded artifact 和明确 value-gain target 就不用。
 TVG audit 只用于 active TVG loop 内退出，不是通用代码、release、事实或战略审计。
 canonical model 错误先根因替换，不继续加厚。没有收益假设就停止。
-只需按默认清晰度交付时，直接遵循 Explain Core Presentation Contract；需要明显的
-brief / ELI5 / audience / HTML 或表达重构时才交给完整 `explain` transformation。需要补判断、
-证据或使用价值才由 TVG 强化；源信息缺口交回原 owner，不用更顺的表达补齐事实。
+面向用户的结果默认由当前 Agent 使用 Explain 交付，clarity 无需额外指令；
+brief / ELI5 / audience / HTML 是按需模式。需要补判断、证据或使用价值才由 TVG
+强化；源信息缺口交回原 owner，不用更顺的表达补齐事实。
 
 ### Presentation
 
-Use [Explain Core Presentation Contract](../explain/resources/presentation-contract.md) for user output in this pass, retaining method authority.
+For human-facing results, use [Explain](../explain/SKILL.md) by default (clarity) in this response; retain method authority.
 
 ## Runtime Support / 按需支撑
 

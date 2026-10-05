@@ -53,64 +53,118 @@ class ExplainRoutingContractTests(unittest.TestCase):
                 self.assertNotIn("explain", routing["loaded_methods"]["items"]["enum"])
 
 
-class ExplainPresentationFoundationTests(unittest.TestCase):
+class ExplainDefaultDeliveryTests(unittest.TestCase):
+    """Instruction and wiring checks, not proof of every model's runtime behavior."""
     METHOD_SKILLS = ("3l5s", "sela", "mpg", "sra", "edsp", "wae", "tvg", "tplan")
 
-    def test_core_presentation_contract_is_default_without_forcing_a_second_pass(self):
-        contract = " ".join(
-            (REPO / "skills/explain/resources/presentation-contract.md").read_text().split()
-        )
-        skill = " ".join((REPO / "skills/explain/SKILL.md").read_text().split())
-        agents = " ".join((REPO / "AGENTS.md").read_text().split())
-        router = " ".join((REPO / "skills/using-mindthus/SKILL.md").read_text().split())
+    def normalized(self, relative):
+        return " ".join((REPO / relative).read_text(encoding="utf-8").split())
 
-        self.assertIn("shared human-facing presentation baseline for Mindthus", contract)
-        self.assertIn("does **not** mean every method must invoke the full `explain` Skill", contract)
-        self.assertIn("No separate Explain transformation is required", contract)
-        self.assertIn("Explain Core Presentation Contract", skill)
-        self.assertIn("All Mindthus human-facing delivery inherits", skill)
-        self.assertIn("this is not a mandatory second Skill/model pass", skill)
-        self.assertIn("structured presentation adapter", skill)
-        self.assertNotIn("selected upstream delivery", skill)
-        self.assertNotIn("first formal integration", skill)
+    def test_default_is_actual_skill_use_not_only_a_shared_baseline(self):
+        skill = self.normalized("skills/explain/SKILL.md")
+        contract = self.normalized("skills/explain/resources/presentation-contract.md")
+        agents = self.normalized("AGENTS.md")
+        router = self.normalized("skills/using-mindthus/SKILL.md")
+        self.assertIn("Use by default when Mindthus delivers human-facing", skill)
+        self.assertIn("Use this Skill by default for Mindthus human-facing results", skill)
+        self.assertIn("Default to clarity; choose transformation intensity inside Explain", skill)
+        self.assertIn("default human-facing delivery Skill for Mindthus", contract)
+        self.assertIn("It is not a baseline-only alternative", contract)
+        self.assertIn("No explicit Explain request is needed", contract)
+        self.assertIn("默认由当前 Agent 使用 [Explain](skills/explain/SKILL.md)", agents)
+        self.assertIn("当前 Agent 默认使用 [Explain](../explain/SKILL.md)", router)
+        for text in (skill, contract, agents, router):
+            self.assertNotIn("Full transformation stays on-demand", text)
+            self.assertNotIn("完整 Explain transformation 才是按需能力", text)
+            self.assertNotIn("The baseline is satisfied when the method can express", text)
 
-        self.assertIn("所有 Mindthus 面向用户的输出默认遵循 Explain Core Presentation Contract", agents)
-        self.assertIn("共享表达基础，不等于额外调用一次 `explain`", agents)
-        self.assertIn("判断完成后的面向用户交付默认遵循 Explain Core Presentation Contract", router)
-        self.assertIn("不要求再跑一次 Explain", router)
-        self.assertIn("完整 Explain transformation 才是按需能力", router)
+    def test_loaded_entry_is_reused_without_extra_model_or_rewrite_pipeline(self):
+        skill = self.normalized("skills/explain/SKILL.md")
+        contract = self.normalized("skills/explain/resources/presentation-contract.md")
+        self.assertIn("If this SKILL.md is absent from effective context, read it before delivery", skill)
+        self.assertIn("otherwise reuse it", skill)
+        self.assertIn("Load resources only when relevant", skill)
+        self.assertIn("Already-clear output may remain unchanged", skill)
+        self.assertIn("No separate Agent/model call or mandatory first-draft/rewrite pass", skill)
+        self.assertIn("do not reload the full package on every turn", contract)
+        self.assertIn("Do not add a call receipt or delivery state machine", contract)
 
-    def test_all_primary_method_skills_inherit_the_presentation_boundary(self):
-        for name in self.METHOD_SKILLS:
-            with self.subTest(skill=name):
-                text = " ".join((REPO / f"skills/{name}/SKILL.md").read_text(encoding="utf-8").split())
-                self.assertIn("Explain Core Presentation Contract", text)
-                self.assertNotIn("mandatory second Explain", text)
+    def test_scope_preserves_machine_formats_internal_records_and_short_notices(self):
+        contract = self.normalized("skills/explain/resources/presentation-contract.md")
+        for phrase in (
+            "JSON, code, commands, verbatim quotations, fixed-format files",
+            "Preserve the exact upstream format",
+            "Tool returns, internal state, logs, evidence records, machine-to-machine handoffs",
+            "no human-facing conversion",
+            "Routine acknowledgements, short status notices, heartbeats",
+            "do not expand them into a report",
+            "Explicit user format or explanation requirements take precedence",
+            "keep the machine artifact unchanged",
+            "Preserve required artifact links and method-specific evidence/delivery obligations",
+        ):
+            self.assertIn(phrase, contract)
 
-    def test_direct_method_entries_resolve_the_shared_contract(self):
-        canonical = (REPO / "skills/explain/resources/presentation-contract.md").resolve()
+    def test_modes_are_not_entry_requirements_and_fail_open_is_recovery(self):
+        contract = self.normalized("skills/explain/resources/presentation-contract.md")
+        for flag in ("--brief", "--eli5", "--audience", "--html"):
+            self.assertIn(flag, contract)
+        self.assertIn("they are not prerequisites for using Explain", contract)
+        self.assertIn("No particular plugin or presentation host is required", contract)
+        self.assertIn("is recovery, not the normal baseline-only shortcut", contract)
+        self.assertIn("A specifically required artifact remains incomplete until delivered", contract)
+
+    def test_direct_method_entries_resolve_the_official_skill(self):
+        canonical = (REPO / "skills/explain/SKILL.md").resolve()
         for name in (*self.METHOD_SKILLS, "using-mindthus"):
             entry = REPO / f"skills/{name}/SKILL.md"
             with self.subTest(skill=name):
                 text = entry.read_text(encoding="utf-8")
-                links = re.findall(r"\[Explain Core Presentation Contract\]\(([^)]+)\)", text)
-                self.assertEqual(len(links), 1, "direct entry needs one resolvable baseline, not just its name")
+                links = re.findall(r"\[Explain\]\(([^)]+)\)", text)
+                self.assertEqual(len(links), 1, "default delivery must reach the official Skill entry")
                 self.assertEqual((entry.parent / links[0]).resolve(), canonical)
-                self.assertTrue(canonical.is_file())
-
-    def test_baseline_retains_machine_contracts_and_reuses_current_context(self):
-        contract = " ".join((REPO / "skills/explain/resources/presentation-contract.md").read_text().split())
-        self.assertIn("Reuse the loaded contract in the current response", contract)
-        self.assertIn("without loading the full Skill on every turn", contract)
-        self.assertIn("Machine-readable schemas, logs, required artifact links, and exact-output requests retain their upstream format contracts", contract)
-        self.assertIn("rather than rewriting control data or forcing a universal schema", contract)
-        self.assertIn("Method-specific evidence and delivery requirements remain in force", contract)
+                if name != "using-mindthus":
+                    self.assertIn("by default", text)
+                    self.assertIn("human-facing results", text)
+                    self.assertIn("clarity", text)
+                self.assertNotIn("[Explain Core Presentation Contract]", text)
+        contract = REPO / "skills/explain/resources/presentation-contract.md"
+        self.assertIn("[Explain](../SKILL.md)", contract.read_text())
 
     def test_shared_presentation_does_not_add_explain_to_judgment_routing(self):
         text = (REPO / "skills/using-mindthus/SKILL.md").read_text(encoding="utf-8")
         section = text.split("### Skill Routing", 1)[1].split("\n### ", 1)[0]
         self.assertNotIn("| explain |", section.lower())
         self.assertIn("`explain` 不进入上表的判断 owner 路由", text)
+
+
+class ExplainSameSourceExampleTests(unittest.TestCase):
+    """Fixed synthetic examples check retention, not model-generation quality."""
+    @classmethod
+    def setUpClass(cls):
+        cls.fixture = json.loads((REPO / "tests/fixtures/explain-default-delivery.json").read_text())
+
+    def test_examples_declare_their_limits_and_cover_the_approved_scope(self):
+        self.assertEqual(self.fixture["provenance"], "synthetic_development_examples")
+        self.assertEqual(self.fixture["comparison_kind"], "constructed_same_source_pairs")
+        self.assertIn("not independently sampled", self.fixture["assessment"])
+        self.assertEqual({c["id"] for c in self.fixture["cases"]}, {
+            "short-clear", "qualified-judgment", "tplan-progress", "exact-json", "exact-command", "short-ack",
+        })
+
+    def test_examples_preserve_stated_qualifications_and_exact_payloads(self):
+        for case in self.fixture["cases"]:
+            with self.subTest(case=case["id"]):
+                self.assertTrue(case["source"])
+                self.assertTrue(case["review"])
+                output = case["explain_output"]
+                for phrase in case["required"]:
+                    self.assertIn(phrase, output)
+                for phrase in case["forbidden"]:
+                    self.assertNotIn(phrase, output)
+                if case["exact"]:
+                    self.assertEqual(output.encode("utf-8"), case["baseline_output"].encode("utf-8"))
+                if case["id"] == "exact-json":
+                    self.assertEqual(json.loads(output), {"status": "blocked", "count": 0})
 
 
 class ExplainDeliveryContractTests(unittest.TestCase):
@@ -241,7 +295,7 @@ class ExplainPackagingContractTests(unittest.TestCase):
                             )
                             self.assertTrue(resolved.exists(), f"broken packaged link: {packaged} -> {target}")
 
-    def test_method_contract_links_survive_all_five_layouts(self):
+    def test_default_skill_links_survive_all_five_layouts(self):
         layouts = (
             ("claude-code/claude-plugin", "skills"),
             ("claude-code", "skills"),
@@ -249,15 +303,15 @@ class ExplainPackagingContractTests(unittest.TestCase):
             ("codex", "skills/mindthus"),
             ("opencode", ".opencode/skills/mindthus"),
         )
-        source = (REPO / "skills/explain/resources/presentation-contract.md").read_text(encoding="utf-8")
-        methods = (*ExplainPresentationFoundationTests.METHOD_SKILLS, "using-mindthus")
+        source = (REPO / "skills/explain/SKILL.md").read_text(encoding="utf-8")
+        methods = (*ExplainDefaultDeliveryTests.METHOD_SKILLS, "using-mindthus")
         for platform, prefix in layouts:
             root = self.output / platform / prefix
-            expected = (root / "explain/resources/presentation-contract.md").resolve()
+            expected = (root / "explain/SKILL.md").resolve()
             for name in methods:
                 entry = root / name / "SKILL.md"
                 with self.subTest(platform=platform, skill=name):
-                    links = re.findall(r"\[Explain Core Presentation Contract\]\(([^)]+)\)", entry.read_text(encoding="utf-8"))
+                    links = re.findall(r"\[Explain\]\(([^)]+)\)", entry.read_text(encoding="utf-8"))
                     self.assertEqual(len(links), 1)
                     resolved = (entry.parent / links[0]).resolve()
                     self.assertEqual(resolved, expected)

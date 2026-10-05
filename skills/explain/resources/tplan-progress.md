@@ -1,8 +1,8 @@
 # TPlan Progress — Work, Evidence, And Remaining Effort
 
-Runtime support for task-progress explanations. TPlan is the first formal upstream
-integration. Use this view for meaningful progress reports, stage deliveries, or
-questions about remaining work; keep routine short updates proportionate.
+Runtime support for Explain's default task-progress delivery. TPlan provides the first
+structured presentation adapter. Use this resource for meaningful progress reports,
+stage deliveries, or remaining-work questions; keep routine short updates proportionate.
 
 Contents: [Mainline](#mainline) · [Guardrails](#guardrails) ·
 [Examples](#examples) · [Boundaries](#boundaries).

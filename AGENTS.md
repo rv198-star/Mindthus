@@ -25,12 +25,13 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 - 只有出现 hard judgment point 时才进入 Mindthus 介入，例如问题未定义、结构判断、
   趋势/时机取舍、主线-路径博弈、控制边界、薄产物、长任务漂移或局部修补螺旋。
 
-这些门槛只约束判断镜头。所有 Mindthus 面向用户的输出默认遵循 Explain Core
-Presentation Contract：先讲清结果，保留证据强度、条件、风险、未知与权限边界。这是
-共享表达基础，不等于额外调用一次 `explain`。用户明确要求 brief / ELI5 / audience /
-HTML，或确有较大表达重构需要时，再执行完整 Explain transformation；沿用已有对象、
-受众和目标，不重新要求用户指定判断方法。
-完整基线见 [Explain Core Presentation Contract](skills/explain/resources/presentation-contract.md)。
+这些门槛只约束判断镜头。Mindthus 的方法结论、分析报告、阶段成果和有意义的进展
+默认由当前 Agent 使用 [Explain](skills/explain/SKILL.md) 的 clarity 模式组织交付。
+正式入口不在有效上下文时先读取；已加载则复用，支持资源按需读取。不是只继承几条
+表达规则，也不要求用户另加解释指令。无需先生成完整原答案、另起 Agent 或二次模型调用。
+brief / ELI5 / audience / HTML 是同一 Skill 的按需模式，不是启用条件。
+机器 JSON、代码、命令、逐字引用和精确格式保留原合同；内部记录不做人向转换，
+短确认与心跳保持必要长度。上游判断、证据、状态和验收权不变。
 
 上游平台可以通过上下文注入口提供少量相关背景，例如长期目标、用户偏好、历史经验、
 风险姿态、角色立场或权限边界。当前用户输入优先；注入上下文只能作为判断约束或线索，
@@ -175,9 +176,11 @@ TVG 的 audit 是内部退出检查，用来判断 active TVG loop 里的产物�
 
 ### `skills/explain/` — Explain / 解释与表达
 
-Explain 是 Mindthus 的 Human Comprehension Layer，不加入判断 owner 路由。它的 Core Presentation Contract 是所有 Mindthus 面向用户输出的共享表达基础；完整 `/mindthus:explain` transformation 仍是按需能力，不要求每个方法额外跑一轮。
+Explain 是 Mindthus 的默认人向结果交付 Skill，不加入判断 owner 路由。当前 Agent
+在本次回答中使用其正式入口：默认完整清晰，增强模式按需；已经清楚的结果可以原样保留。
 
-保留源信息、结论、证据强度、未知和权限边界；需要 brief / ELI5 / audience / HTML 或明显表达重构时使用完整 Explain。需要补判断、证据或使用价值时交回原 owner 或 TVG。能讲清就结束，不建立固定加工流水线。
+保留源信息、结论、证据强度、未知和权限边界。需要补判断、证据或使用价值时交回
+原 owner 或 TVG；只调整表达时仍由 Explain 完成，不建立独立后处理或复审流水线。
 
 ### `skills/case-prep/` — Case Prep（显式调用）
 
@@ -197,7 +200,7 @@ runtime 合同；不参与被动路由，不自动上传，也不自动进入 be
 - agentic system 内出现 controller mismatch 时，用 `WAE` 分配控制权；否则不要因
   “控制/边界/流程”字样自动唤醒 WAE。
 - 任一方法产出物看似完整但价值不足，用 `TVG` 做定向强化。
-- 所有方法面向用户交付时继承 Explain Core Presentation Contract；需要明显压缩、降阶、受众适配或 HTML 交互时，再按需执行完整 `Explain` transformation。Explain 不接管判断。
+- 所有方法的人向结果默认由当前 Agent 使用 `Explain` 交付；默认 clarity，按需 brief / ELI5 / audience / HTML。不另起模型调用，不改变判断或精确格式。
 - 长任务出现第三次处理同一局部对象、负反馈、只加不减或新增层冲动时，
   激活反螺旋自检；它不是独立 skill，而是防止目标函数被局部循环吞掉的
   执行纪律。刹车后若多个候选争夺释放出的资源，再由 `SRA` 分配。

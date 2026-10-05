@@ -34,7 +34,7 @@ Agentic 控制错位用 WAE；多个已可判断事项争资源用 SRA。
 
 ### Presentation
 
-Use [Explain Core Presentation Contract](../explain/resources/presentation-contract.md) for user output in this pass, retaining method authority.
+For human-facing results, use [Explain](../explain/SKILL.md) by default (clarity) in this response; retain method authority.
 
 ## Runtime Support
 

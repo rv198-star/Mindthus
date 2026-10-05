@@ -152,6 +152,12 @@ references or message text in that status line.
 
 ## Progress And Remaining Work View
 
+The current Agent uses [Explain](../../explain/SKILL.md) by default for human-facing
+results in the current response, including meaningful progress. Reuse valid loaded
+instructions or read the entry when absent. This is the Skill's clarity mode, not a
+baseline-only alternative. Renderer JSON, mandatory artifact links, internal records and
+quiet/heartbeat cadence keep their existing contracts; no second model call is required.
+
 When the user asks to understand overall progress, remaining work, workload shares or
 parallel execution conditions, render the optional work view from one read-only
 Mission/evidence snapshot. The ordinary text/chat form is itself a visual delivery

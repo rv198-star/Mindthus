@@ -83,8 +83,8 @@ a receipt before mutation. Active-Mission continuation is separate.
 
 Internal IDs are for runtime stability.
 User-facing output should lead with meaning; ordinary updates should not lead with raw IDs.
-Follow [Explain Core Presentation Contract](../explain/resources/presentation-contract.md)
-in this pass. Use `scripts/render_user_update.py`: `--progress` text,
+Use [Explain](../explain/SKILL.md) by default for human-facing results in this response
+(clarity). Use `scripts/render_user_update.py`: `--progress` text,
 `--visualization` ChatGPT, `--html PATH` export.
 Keep optional `work_plan` from known context; leave gaps unknown.
 
