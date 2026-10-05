@@ -8,7 +8,7 @@
 ## 最后交付返修（现场未验收）
 
 - chat-native 文本进展视图新增直接可见的 Unicode 进度条：源数据提供百分比时按原值绘制；剩余占比区间用 `█` 表示确定下界、`▒` 表示不确定区间、`░` 表示其余范围。没有源百分比时不为“好看”而造数字。
-- `--html` 已从“文件附件”语义中解耦：它只选择 HTML 表示方式，普通对话优先直接提交 inline preview；只有用户明确要求保存、下载、导出、附件或文件交接时才持久化 `.html`。用户只要“对话内可交互”时，由运行时实际可用的宿主 surface / 可选适配器消费同一只读 view；Explain portable core 不依赖任何外部插件、App、Canvas 或具体提供商。
+- `--html` 已从“文件附件”语义中解耦：它只选择 HTML 表示方式，普通对话把 Preview 作为首选初始视图并直接提交 inline preview；只有用户明确要求保存、下载、导出、附件或文件交接时才持久化 `.html`。当前 ChatGPT 官方只公开 Code/Preview 切换，没有向模型公开强制初始 Tab 的参数，所以当宿主不暴露该控制时，Explain 只声明 Preview 偏好、不伪造宿主 metadata，也不声称已经强制打开 Preview。用户只要“对话内可交互”时，由运行时实际可用的宿主 surface / 可选适配器消费同一只读 view；Explain portable core 不依赖任何外部插件、App、Canvas 或具体提供商。
 
 - 新增 `skills/explain/scripts/prepare_html_delivery.py`：只读现有 HTML，输出可预览 HTML 代码块及同源 SHA-256；状态固定为 `prepared_not_verified`，不假装拥有宿主的显示回执。
 - [当前任务的真实交付状态](current-delivery-status.html)替代先前无来源的87%进度图；状态页现在区分已完成 Skill 功能、当前交互表面验收、后续合并与发布，不再把下载 HTML 作为交互请求的必选项。

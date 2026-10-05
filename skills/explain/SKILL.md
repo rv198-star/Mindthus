@@ -38,7 +38,7 @@ Use the current audience and language context, honoring explicit user preference
 | `--brief` | Reduce reading load while retaining information that affects understanding, judgment, or action |
 | `--eli5` | Connect unfamiliar knowledge to existing understanding with the least necessary simplification |
 | `--audience ...` | Override the inferred audience; beginner, developer, and executive are examples |
-| `--html` | Present the explanation as self-contained HTML with only useful local reading interactions; in conversation, prefer inline preview rather than a file attachment |
+| `--html` | Present the explanation as self-contained HTML with only useful local reading interactions; in conversation, request **Preview as the preferred initial view** rather than Code or a file attachment |
 
 Combine flags in any order; apply each at the lowest sufficient intensity. Default
 clarity preserves detail and cognitive level, using ordinary text presentation.
@@ -91,8 +91,15 @@ negotiation: an available adapter may enhance delivery, but its absence must not
 Explain or change the source result.
 
 `--html` selects an **HTML representation**, not a persistence target. In an ordinary
-conversation, present that HTML inline through an available host preview surface. Do
-not create or attach a downloadable file merely because `--html` was requested.
+conversation, its presentation preference is `inline_html` with **initial view =
+Preview**. Ask the host presentation layer to open Preview first when that control is
+actually exposed. Do not create or attach a downloadable file merely because `--html`
+was requested.
+
+This preference is not permission to invent host metadata. If the host exposes only a
+Code/Preview toggle and no initial-view control, submit previewable HTML and leave the
+host-selected initial tab unchanged; report the limitation accurately rather than
+claiming Preview was forced.
 
 Persist a `.html` file only when the user explicitly asks to save, download, export,
 attach, hand off, or otherwise receive a file artifact. For an in-conversation HTML

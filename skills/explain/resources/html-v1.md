@@ -81,8 +81,13 @@ same artifact as a file. General visual summaries may still use images; they ful
 different request.
 
 For hosts offering previewable HTML code blocks, submit the generated HTML source
-directly as an `html` code block in the response. Do not first write a file merely to
-obtain a preview block.
+directly as an `html` code block in the response and prefer **Preview as the initial
+view** when the host API exposes an initial-view or presentation-state control. Do not
+first write a file merely to obtain a preview block.
+
+Do not invent an undocumented directive such as `default=preview`. If the host only
+offers a user-facing Code/Preview toggle, the portable Explain core can express the
+Preview preference but cannot force the client's initial tab.
 
 If an HTML file already exists because the user requested a file artifact, the optional
 `scripts/prepare_html_delivery.py` helper can prepare a preview block from that file
