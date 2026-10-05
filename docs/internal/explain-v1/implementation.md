@@ -3,9 +3,12 @@
 - 日期：2026-10-05（Asia/Shanghai）
 - 源码基线：`541049486ce8b61c4c7e212397922999a9b8ff2e`
 - 交付版本：Unreleased
-- 验证状态：核心实现和已有工程验证完成；当前对话内 HTML 可见与交互尚待现场验收，不能宣布开发交付全部结束。
+- 验证状态：除宿主侧“对话内可交互展示”外，Explain V1 核心技能、表达模式、TPlan 进展模型、chat-native 进度条、离线 HTML、打包与工程验证均已完成；交互表面仍待当前宿主现场验收，因此整体开发交付尚未关单。
 
 ## 最后交付返修（现场未验收）
+
+- chat-native 文本进展视图新增直接可见的 Unicode 进度条：源数据提供百分比时按原值绘制；剩余占比区间用 `█` 表示确定下界、`▒` 表示不确定区间、`░` 表示其余范围。没有源百分比时不为“好看”而造数字。
+- 交互需求已从 HTML 文件格式中解耦：用户只要“对话内可交互”时，可由宿主原生 artifact、已安装 interactive app/canvas 或其他 widget 直接消费同一只读 view；只有显式要求 HTML/文件导出时才必须生成下载文件。
 
 - 新增 `skills/explain/scripts/prepare_html_delivery.py`：只读现有 HTML，输出可预览 HTML 代码块及同源 SHA-256；状态固定为 `prepared_not_verified`，不假装拥有宿主的显示回执。
 - [当前任务的真实交付状态](current-delivery-status.html)替代先前无来源的87%进度图。该快照固定到 `c33957c9` 核查基线，并保留当前内嵌交付未验收、PR 草稿和未发布状态。

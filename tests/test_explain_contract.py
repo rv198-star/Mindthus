@@ -57,12 +57,14 @@ class ExplainDeliveryContractTests(unittest.TestCase):
         skill = " ".join((REPO / "skills/explain/SKILL.md").read_text().split())
         contract = " ".join((REPO / "skills/explain/resources/html-v1.md").read_text().split())
         tplan = " ".join((REPO / "skills/tplan/resources/user-output.md").read_text().split())
-        self.assertIn("An image is not a substitute for requested inline HTML", skill)
-        self.assertIn("host or user confirms", skill)
+        self.assertIn("An image is not a substitute for requested interaction", skill)
+        self.assertIn("host or user", skill)
+        self.assertIn("downloadable HTML file", contract)
         self.assertIn("actual source as an `html` code block", contract)
         self.assertIn("prepared content, not a rendering receipt", contract)
-        self.assertIn("same HTML file for independent download", tplan)
-        self.assertIn("delivery requirement open", tplan)
+        self.assertIn("installed interactive app/canvas", contract)
+        self.assertIn("does not need to create an HTML download", tplan)
+        self.assertIn("interaction acceptance open", tplan)
 
     def prepare(self, path):
         helper = runpy.run_path(str(REPO / "skills/explain/scripts/prepare_html_delivery.py"))

@@ -10,12 +10,12 @@
 <h1>Explain V1 · 进展与剩余工作</h1>
 <p class="muted">真实任务状态 · 2026 年 10 月 5 日 · 非演示数据</p>
 <div class="summary">
-<div><div class="muted">核心功能</div><div class="value done">已实现</div><div class="muted">Explain、TPlan、首页返修</div></div>
-<div><div class="muted">HTML 内嵌交付</div><div class="value active">待现场验收</div><div class="muted">本条消息须直接可见、可交互</div></div>
+<div><div class="muted">Skill 功能</div><div class="value done">已实现</div><div class="muted">Explain、TPlan、chat-native 进度条、离线 HTML</div></div>
+<div><div class="muted">对话内交互表面</div><div class="value active">待现场验收</div><div class="muted">不再与 HTML 下载强绑定</div></div>
 <div><div class="muted">合并 / 发布</div><div class="value">未执行</div><div class="muted">PR #224 仍为草稿</div></div>
 </div>
 <div class="stage" aria-label="阶段状态，不表示工作量占比">
-<span class="done">核心实现 ✓</span><span class="done">既有测试 ✓</span><span class="active">内嵌交付 · 当前</span><span>合并 / 发布</span>
+<span class="done">核心实现 ✓</span><span class="done">进度条 / 测试 ✓</span><span class="active">交互表面 · 当前</span><span>合并 / 发布</span>
 </div>
 <p class="muted">以上是阶段状态，不是工作量百分比。</p>
 <section class="work">
@@ -23,8 +23,8 @@
 <table>
 <thead><tr><th>工作块</th><th>当前位置</th><th>剩余占比</th></tr></thead>
 <tbody>
-<tr class="current"><td><strong>HTML 对话内显示与交互</strong></td><td>当前返修，等待实际显示确认</td><td>未估算</td></tr>
-<tr><td><strong>交付复核与任务关单</strong></td><td>等内嵌交付验收</td><td>未估算</td></tr>
+<tr class="current"><td><strong>对话内可交互展示</strong></td><td>当前返修，等待真实宿主交互确认</td><td>未估算</td></tr>
+<tr><td><strong>交付复核与任务关单</strong></td><td>等交互表面验收</td><td>未估算</td></tr>
 <tr><td>PR 最终审阅与合并</td><td>待批准；尚未合并 main</td><td>未估算</td></tr>
 <tr><td>正式版本发布</td><td>待决定；仍为 Unreleased</td><td>未估算</td></tr>
 </tbody>
@@ -33,9 +33,9 @@
 </section>
 <details>
 <summary>展开：验收条件与依据</summary>
-<div class="notice"><strong>现场验收：</strong>当前消息中能看到本页面、能直接展开这一段，并能下载同一份 HTML。PNG、外链、文件生成或 CI 通过均不替代这一验收。</div>
-<p>已核查基线：<code>c33957c9</code>，PR #224 为 Draft，基线 CI 为 SUCCESS。该结论只证明已有工程检查，不证明聊天内显示成功。</p>
-<p>本轮只修最后交付：实际 HTML 预览块与同源文件，不改 TPlan 的工作量、任务状态、依赖或验收逻辑。</p>
+<div class="notice"><strong>现场验收：</strong>当前消息中能直接看到进展视图；交互请求还要求用户可直接操作展开、选择或筛选等控件。PNG、附件、外部浏览器、文件生成或 CI 通过均不替代交互验收。下载 HTML 仅在用户明确要求文件时才是额外条件。</div>
+<p>PR #224 仍为 Draft；既有 CI 和本轮聚焦回归只证明工程实现，不证明聊天内交互成功。</p>
+<p>本轮交付新增 chat-native 进度条，并允许宿主原生 artifact / interactive app / canvas 直接消费同一只读 progress view；不改 TPlan 的工作量、任务状态、依赖或验收逻辑。</p>
 <p><a href="https://github.com/rv198-star/Mindthus/pull/224" target="_blank" rel="noopener noreferrer">查看 PR #224 与提交记录</a></p>
 </details>
 </main>

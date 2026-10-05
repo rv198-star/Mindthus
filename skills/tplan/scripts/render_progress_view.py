@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import math
 import os
 import sys
 import unicodedata
@@ -99,6 +100,38 @@ def _progress_text(view: dict[str, Any]) -> str:
     if progress is None:
         return "未提供可用的整体进度数值"
     return f"{progress['label']}：{_number(progress['value'])} {progress['unit']}"
+
+
+def _text_percent_bar(low: float, high: float | None = None, *, width: int = 20) -> str:
+    """Render a conservative chat-native percentage bar.
+
+    Exact values use solid/empty cells. Intervals use solid cells only for the
+    guaranteed lower bound and shaded cells for the uncertain interval.
+    """
+    low = max(0.0, min(100.0, float(low)))
+    high = low if high is None else max(low, min(100.0, float(high)))
+    if low == high:
+        filled = max(0, min(width, round(low * width / 100)))
+        return "█" * filled + "░" * (width - filled)
+    guaranteed = max(0, min(width, math.floor(low * width / 100)))
+    possible = max(guaranteed, min(width, math.ceil(high * width / 100)))
+    return "█" * guaranteed + "▒" * (possible - guaranteed) + "░" * (width - possible)
+
+
+def _progress_bar_text(view: dict[str, Any]) -> str | None:
+    progress = view.get("progress")
+    if progress is None or progress.get("unit") not in {"%", "percent"}:
+        return None
+    value = progress.get("value")
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    return f"[{_text_percent_bar(float(value))}] {_number(value)}%"
+
+
+def _share_bar_text(share: dict[str, Any] | None) -> str | None:
+    if share is None:
+        return None
+    return f"[{_text_percent_bar(float(share['low']), float(share['high']))}]"
 
 
 def _remaining_text(view: dict[str, Any]) -> str:
@@ -313,6 +346,9 @@ def render_progress_text(report: dict[str, Any]) -> str:
     ]
     if mission["active_task_title"]:
         lines.append(f"当前工作：{mission['active_task_title']}")
+    progress_bar = _progress_bar_text(view)
+    if progress_bar:
+        lines.append(f"进度条：{progress_bar}")
     if view.get("progress"):
         lines.append(f"进展依据：{view['progress']['basis']}")
     lines.extend(["", f"预计剩余工作量：{_remaining_text(view)}", f"工作范围：{_block_count_text(blocks)}"])
@@ -341,7 +377,9 @@ def render_progress_text(report: dict[str, Any]) -> str:
             if share["coverage"] != "complete":
                 share_label += "，覆盖不完整"
             share_label += "）"
-        lines.append(f"- {block['title']} [{_status(block['status'])}]：预计剩余 {_range(block['remaining'])}；占比 {share_label}。")
+        share_bar = _share_bar_text(share)
+        share_visual = f"{share_bar} " if share_bar else ""
+        lines.append(f"- {block['title']} [{_status(block['status'])}]：预计剩余 {_range(block['remaining'])}；占比 {share_visual}{share_label}。")
         if block.get("remaining_uncertain"):
             lines.append("  状态与剩余依据待核对：" + "；".join(block.get("uncertainty_reasons", [])))
         if block.get("accounting_role") == "state_context":
@@ -352,6 +390,8 @@ def render_progress_text(report: dict[str, Any]) -> str:
             lines.append(f"  估计依据：{block['remaining']['basis']}")
             if block["remaining"].get("confidence"):
                 lines.append("  来源声明的信心：" + _confidence_text(block["remaining"]["confidence"]))
+    if any(block.get("remaining_share") and block["remaining_share"]["low"] != block["remaining_share"]["high"] for block in blocks):
+        lines.append("占比图例：█ 为确定下界，▒ 为区间不确定部分，░ 为其余范围。")
     lines.extend(["", SHARE_NOTE, PARALLEL_NOTE, PROGRESS_NOTE])
     if report["source"].get("as_of"):
         lines.append(f"估计记录时点：{report['source']['as_of']}")

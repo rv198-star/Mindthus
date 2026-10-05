@@ -28,7 +28,11 @@ work produce the result before explaining it.
 
 ### First-Screen Contract
 
-The default HTML progress view is a **progress dashboard first, detailed report second**.
+The default progress delivery is a **progress dashboard first, detailed report second**.
+In ordinary chat/text delivery, show source-backed progress and remaining-work shares
+with compact visible bars so the user can understand the state without opening another
+artifact. HTML uses the same information hierarchy when requested.
+
 The first screen answers only the user's highest-frequency questions:
 
 1. **Where are we overall?** Show the upstream's declared overall progress when a

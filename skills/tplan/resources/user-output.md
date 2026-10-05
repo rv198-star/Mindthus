@@ -154,7 +154,12 @@ references or message text in that status line.
 
 When the user asks to understand overall progress, remaining work, workload shares or
 parallel execution conditions, render the optional work view from one read-only
-Mission/evidence snapshot:
+Mission/evidence snapshot. The ordinary text/chat form is itself a visual delivery
+surface: when a source-backed percentage exists it includes a Unicode progress bar;
+comparable workload shares include compact bars as well. Interval shares use a solid
+guaranteed segment plus a shaded uncertain segment. Missing numeric progress stays
+unknown rather than being replaced by a fabricated percentage.
+
 
 ```bash
 python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --progress
@@ -177,14 +182,24 @@ implicit network request or action button. The view does not write Mission state
 evidence and cannot replace the Standard execution report. Interval shares remain
 intervals in the visual representation; the renderer does not select a midpoint.
 
-HTML delivery follows Explain's requested-surface contract. For an explicit inline
-HTML request, submit the generated HTML itself to a native artifact/HTML preview, and
-retain that same HTML file for independent download. Where supported, a previewable
-HTML code block can carry the actual source rather than a download-only link. PNG or
-other chat-native summaries remain separate representations, not inline HTML acceptance.
-Keep the delivery requirement open until actual in-conversation display and interaction
-are observed; tests and file creation are not a host rendering receipt. The renderer
-continues to own artifacts only, not host UI or Mission acceptance.
+Interactive chat delivery follows Explain's requested-surface contract. A host-native
+interactive artifact, installed interactive app/canvas, or other usable conversation
+widget may consume this same read-only work view directly; it does not need to create
+an HTML download unless the user asks for HTML/file export. For an explicit inline HTML
+request, submit the generated HTML itself to a native artifact/HTML preview. A
+previewable HTML code block may carry the actual source when supported. PNG and static
+chat summaries are useful fallback representations but do not satisfy an interaction
+request. Keep interaction acceptance open until controls are actually visible and
+usable in the conversation; tests and file creation are not a host rendering receipt.
+The renderer continues to own source-backed views/artifacts only, not host UI or Mission
+acceptance.
+
+A host interactive progress surface should consume the same `tplan.progress_view.v1`
+JSON and preserve the first-screen contract. Minimum useful interaction is small:
+selecting a work block may reveal its source estimate, prerequisites, parallel
+conditions, risks or blockers; supporting detail may collapse/expand; filtering is
+optional for long lists. The host must not invent a new completion percentage, midpoint
+an interval, or reinterpret an interactive click as Mission authority.
 
 For the view alone, use the dedicated renderer:
 

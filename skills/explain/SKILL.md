@@ -67,17 +67,31 @@ repeating its full original output alongside the explanation. Preserve upstream
 artifact links that remain required.
 
 For content that is materially easier to understand visually, prefer a **chat-native
-visual view in the current conversation**: use the host's native cards, progress bars,
-charts, diagrams, image surface, or other directly visible representation. The user
-should not have to download a file merely to see the main explanation.
+visual view in the current conversation**. Use the lightest directly visible surface
+that preserves the source: Markdown/Unicode progress bars, native cards, charts,
+diagrams, image surfaces, or a host interactive surface. The user should not have to
+download or open a file merely to see the main explanation.
 
-Produce a formal artifact for an explicit saved-report, HTML, or file-delivery request.
-For an explicit in-conversation HTML request, deliver the HTML itself through the host's
-native preview surface and retain the same self-contained `.html` file for download.
-Follow `resources/html-v1.md`; its optional preparation helper submits actual HTML to
-previewable code blocks when that is the available host capability. An image is not a
-substitute for requested inline HTML. Keep actual display acceptance open until the
-host or user confirms the artifact is visible and interactive in the conversation.
+For progress/status views, make the progress representation visible in the ordinary
+chat output itself. If the source supplies a meaningful percentage, render a progress
+bar with that same value. For interval workload shares, distinguish the guaranteed
+lower bound from the uncertain interval rather than choosing a midpoint. If the source
+has only stage/status facts, show a discrete stage strip or ordered states and do not
+invent a percentage merely to make a bar.
+
+When the user asks for **interaction inside the conversation**, prefer an actual host
+interactive surface: a native artifact/HTML preview, an installed interactive
+app/canvas, or another host-provided interactive widget. Feed it the same source-backed
+view; do not regenerate a second set of progress numbers. Interaction acceptance means
+the user can actually see and use controls in the conversation.
+
+A downloadable file is **not required for an interaction-only request**. Produce a
+formal artifact only for an explicit saved-report, HTML, export, or file-delivery
+request. For an explicit in-conversation HTML request, follow
+`resources/html-v1.md`: submit the HTML itself to the host preview surface and keep the
+same file only when HTML/file export was also requested. An image is not a substitute
+for requested interaction. Keep actual display acceptance open until the host or user
+confirms the interactive surface is visible and usable.
 
 For other reports, follow the requested delivery format. Use the environment's normal
 delivery mechanism. Multiple delivery surfaces are representations of the same source

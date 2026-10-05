@@ -58,10 +58,18 @@ artifact links that the upstream delivery contract still requires.
 
 ### Deliver The Requested Surface
 
+HTML is the portable file format for this resource; it is **not the only valid
+interactive surface**. If the user asks only for an interactive view inside the
+conversation, a host-native interactive artifact, installed interactive app/canvas, or
+other directly usable host widget may satisfy that request without creating a
+downloadable HTML file. It must consume the same source-backed result and must be
+visibly interactive in the current conversation.
+
 An explicit request for **HTML visible and interactive inside the conversation**
-requires the HTML itself plus the same downloadable file. Use the host's actual
-native HTML/artifact tool when available. General visual summaries may still use
-images; they fulfill a different request.
+requires the HTML itself on a real host preview surface. A downloadable copy is added
+when the user also requests HTML/file export or when the host naturally exposes the
+same artifact as a file. General visual summaries may still use images; they fulfill a
+different request.
 
 For hosts offering previewable HTML code blocks, submit the artifact's actual source
 as an `html` code block in the response, rather than linking only to the file. The

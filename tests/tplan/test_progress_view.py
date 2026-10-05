@@ -128,7 +128,9 @@ class ProgressViewTests(unittest.TestCase):
         text = render_progress_text(report)
         page = render_progress_html(report)
         self.assertIn("已验收范围：30 %", text)
+        self.assertIn("进度条：[██████░░░░░░░░░░░░░░] 30%", text)
         self.assertIn("预计剩余工作量：60 点", text)
+        self.assertIn("占比 [█████░░░░░░░░░░░░░░░] 25%", text)
         self.assertIn(">30%</div>", page)
         self.assertIn(">已验收范围</div>", page)
         self.assertIn("60 点", page)
@@ -179,6 +181,9 @@ class ProgressViewTests(unittest.TestCase):
         share = block["remaining_share"]
         self.assertNotEqual(share["low"], share["high"])
 
+        text = render_progress_text(report)
+        self.assertIn("▒", text)
+        self.assertIn("占比图例：█ 为确定下界，▒ 为区间不确定部分", text)
         page = render_progress_html(report)
         dashboard_start = page.index('<section id="dashboard"')
         dashboard_end = page.index("</section>", dashboard_start)
@@ -353,6 +358,7 @@ class ProgressViewTests(unittest.TestCase):
         text = render_progress_text(report)
         page = render_progress_html(report)
         self.assertIn("暂无可合计的剩余估计", text)
+        self.assertNotIn("进度条：", text, "missing source progress must not create a fake percentage bar")
         self.assertIn("前置信息未提供", text)
         self.assertIn("不能据此确认可并行", text)
         self.assertNotIn("data-from=", page)
