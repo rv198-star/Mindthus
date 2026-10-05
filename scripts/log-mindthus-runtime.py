@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 
-VERSION = "1.11.0"
+VERSION = "1.12.0"
 PACKAGE_IDENTITY = "mindthus"
 MARKETPLACE_IDENTITY = "mindthus"
 RELATIVE_FILES = (

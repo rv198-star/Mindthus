@@ -3,7 +3,7 @@
 - 日期：2026-10-05（Asia/Shanghai）
 - 源码基线：`541049486ce8b61c4c7e212397922999a9b8ff2e`
 - 交付版本：Unreleased
-- 验证状态：ChatGPT 当前对话已现场确认 **Visualizations / app_block** 能直接呈现所需的内嵌交互效果；Explain V1 核心技能、表达模式、TPlan 进展模型、chat-native 进度条、Visualizations adapter、离线 HTML、打包与工程验证进入最终回归阶段。
+- 验证状态：ChatGPT 当前对话已现场确认 **Visualizations / app_block** 能直接呈现所需的内嵌交互效果；Explain V1 核心技能、默认人向交付、表达模式、TPlan 进展模型、chat-native 进度条、Visualizations adapter、离线 HTML、打包与工程验证均已完成验收；发行目标为 v1.12.0。
 
 ## 最后交付返修（Visualizations 已现场确认）
 

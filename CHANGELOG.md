@@ -2,11 +2,17 @@
 
 ## Unreleased
 
+## v1.12.0 — Explain 人向交付与 TPlan 进展视图
+
+发布日期：2026-10-06。完整说明：[v1.12.0](docs/releases/v1.12.0.md)。
+
 - 根据用户后续裁决，将 Explain 设为 Mindthus 人向结果的默认交付 Skill：当前 Agent 使用正式入口，默认 clarity，增强模式按需；有效上下文复用、资源按需读取。八方法及路由入口直接链接 Explain，而不是仅继承表达合同。机器/精确格式、内部记录、短确认及上游权限保持，不新增独立 Agent、二次模型调用或固定重写循环。这是对早期 V1 接入策略的明确调整，不追认为原规格强制要求。
 - 新增 `Explain / 解释与表达` 及 TPlan 进展视图。ChatGPT 上的 `--html` 已确认使用 **Visualizations / app_block** 作为首选对话内交互表面；它直接提交 raw HTML fragment，由宿主负责 sandbox/iframe-like 展示，不再走 HTML Code/Preview。TPlan 新增 `render_user_update.py --visualization` 与 `render_progress_view.py --format app-block`，从同一 `tplan.progress_view.v1` 生成 `variant=inline` 的 app_block payload，不写文件；`--inline-html` 仅保留为其他宿主的通用完整 HTML transport。只有用户明确要求保存、下载、导出、附件或交接文件时才持久化 `.html` artifact。Visualizations 是可选宿主适配器，不进入 Explain 核心依赖或判断/验收链。
 - TPlan 新增可选 `work_plan` 与受控元数据写入，记录剩余估计、已声明前置和并行条件；估计更新不计为任务推进，未知、部分覆盖和不同单位分别保留。
 - 新增文字、JSON 与离线 HTML 进展视图；普通聊天文本直接显示来源明确的进度条与剩余占比条，区间占比保留确定/不确定段而不取中值。HTML 首屏固定为整体进度、剩余工作与剩余工作占比，风险、阻塞、证据、依赖和估算依据保留在默认折叠的下钻区。对话内交互由宿主能力协商决定，可选适配器只负责表示层，不成为 Explain/TPlan 运行时依赖，也不再强绑下载 HTML；风险与主要阻塞点为可选信息，有当前来源时保留。展示不改变计划、验收或继续执行的授权。
 - 同步 Explain 的插件/Skills 打包、调用示例与卸载清单；源码合同与打包检查不构成模型质量、token 收益或历史 benchmark 的新增证明。本节为未发布变更。
+
+- 本版按当前 Stable 默认规则不发布 ROI Beta；提供 plugins、skills 两份归档与覆盖两份资产的 `SHA256SUMS`。TPlan runtime generation 仍为 `1.5.4`。
 
 ## v1.11.0 — Sol 6.1 减负优化
 
