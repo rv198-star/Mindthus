@@ -17,8 +17,10 @@ Truth Orientation / 真相优先：以事实和真相为先。用户观点是信
 - 缺文件、事实、运行证据或权限：先补输入，不能用方法填补。
 - 有会改变判断或行动的 hard judgment point：用最小充分镜头。
 
-这些介入门槛只约束判断镜头。用户要求解释或上游任务需要按需说明时，可直接使用
-`explain`；沿用已有对象、受众和目标，不先重跑判断选路。
+这些介入门槛只约束判断镜头。判断完成后的面向用户交付默认遵循 Explain Core
+Presentation Contract；这不是新的判断路由，也不要求再跑一次 Explain。用户明确要求
+brief / ELI5 / audience / HTML，或确有较大表达重构需要时，直接使用完整 `explain`
+transformation；沿用已有对象、受众和目标，不先重跑判断选路。
 
 ### Input Framing Audit / 输入定框审计
 
@@ -48,7 +50,15 @@ Whole Elephant / Partial Truth Capture：区分所判断对象、真正控制结
 明确指定的方法仍按要求使用；握手只补缺口，不串固定流水线。
 SELA owns direction pressure；MPG owns path-carrying action。
 引用方法审计不自动让该方法成为当前 owner（Method Reference Boundary）。
-`explain` 是可选表达支撑，不进入上表的判断 owner 路由；解释保留上游判断与证据边界。
+`explain` 不进入上表的判断 owner 路由。Explain Core Presentation Contract 是上述
+owner 面向用户交付时的共享表达基础；完整 Explain transformation 才是按需能力，并始终
+保留上游判断与证据边界。
+
+### Presentation Boundary / 表达边界
+
+方法 owner 先完成自己的判断；随后直接按 Explain Core Presentation Contract 交付：
+结论/方向先行，主体、动作和条件明确，事实/判断/不确定性/风险分开，关键证据边界和
+未知不丢失。能由当前方法直接讲清就直接交付，不插入固定的第二模型调用或 refine loop。
 
 ### Execution Impact / 执行影响
 

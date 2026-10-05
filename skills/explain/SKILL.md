@@ -9,7 +9,11 @@ description: "Use when the user asks to make existing results, reports, concepts
 
 Make an existing result easier for a person to understand accurately. Improve its
 expression, structure, and representation while preserving what the source concludes
-and what supports it. Explain is a human comprehension layer, not a judgment owner.
+and what supports it. Explain is Mindthus's human comprehension layer, not a judgment owner.
+
+All Mindthus user-facing outputs inherit the **Explain Core Presentation Contract**
+without a second Explain call. The full Explain transformation is on-demand for explicit
+Explain/brief/ELI5/audience/HTML or another material representation change.
 
 Prioritize semantic fidelity, comprehension, decision-relevant information, brevity,
 then presentation.
@@ -148,6 +152,9 @@ method's judgment, state, acceptance, or the user's delivery requirements.
 
 Read resources only when their guidance is relevant:
 
+- [Core Presentation Contract](resources/presentation-contract.md): shared baseline for
+  Mindthus user-facing delivery; applying it does not itself invoke the full Explain
+  transformation.
 - [HTML V1](resources/html-v1.md): read for `--html`, inline HTML presentation, or an
   explicitly requested saved/exported HTML artifact.
 - [TPlan progress](resources/tplan-progress.md): read for task-progress delivery,
@@ -157,17 +164,14 @@ Read resources only when their guidance is relevant:
 
 ## Boundaries
 
-Use the lightweight path Input → Explain → Output. Normal use has no second AI Review,
-generation-review-rewrite loop, or mandatory independent reviewer. Development
-qualification and original-versus-explained comparison belong outside normal runtime.
+Use Input → Explain → Output; no runtime AI Review/refine loop. Development
+qualification belongs outside normal runtime.
 
-Keep the dependency direction upstream method → Explain. TPlan owns planning estimates,
-task changes, execution, and acceptance; Explain may organize existing information and
-perform transparent arithmetic on a stated basis. TVG may strengthen a bounded
-artifact; Explain does not inherit TVG's loop or exit authority.
+All Mindthus human-facing delivery inherits the Explain Core Presentation Contract;
+this is not a mandatory second Skill/model pass. Full transformation stays on-demand.
+TPlan keeps planning/state/acceptance authority and is the first **structured presentation
+adapter** for progress/Visualizations, not the only upstream using the shared baseline.
+TVG keeps its own strengthening/exit authority.
 
-Support direct requests and selected upstream delivery, with TPlan as the first formal
-integration. This does not make Explain automatic for every response or every skill.
-V1 covers explanatory text, simple diagrams, and offline interactive reading; online
-AI apps, external actions, video generation, and strict ASD-STE100 compliance are
-outside its scope.
+V1 does not force every Skill through full Explain. Online AI reasoning inside artifacts,
+external actions, video generation, and strict ASD-STE100 compliance stay out of scope.

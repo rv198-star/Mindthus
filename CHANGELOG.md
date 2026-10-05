@@ -3,6 +3,7 @@
 ## Unreleased
 
 - 新增 `Explain / 解释与表达` 及 TPlan 进展视图。ChatGPT 上的 `--html` 已确认使用 **Visualizations / app_block** 作为首选对话内交互表面；它直接提交 raw HTML fragment，由宿主负责 sandbox/iframe-like 展示，不再走 HTML Code/Preview。TPlan 新增 `render_user_update.py --visualization` 与 `render_progress_view.py --format app-block`，从同一 `tplan.progress_view.v1` 生成 `variant=inline` 的 app_block payload，不写文件；`--inline-html` 仅保留为其他宿主的通用完整 HTML transport。只有用户明确要求保存、下载、导出、附件或交接文件时才持久化 `.html` artifact。Visualizations 是可选宿主适配器，不进入 Explain 核心依赖或判断/验收链。
+- 修正 Explain 的集成层偏移：恢复其作为 Mindthus Human Comprehension Layer 的定位，新增共享 **Explain Core Presentation Contract**。3L5S / SELA / MPG / SRA / EDSP / WAE / TVG / TPlan 的面向用户输出默认继承该合同，但不额外启动 Explain/model pass；完整 Explain transformation 仅在 brief / ELI5 / audience / HTML 或明显表达重构时按需执行。TPlan 更正为首个专用 structured presentation adapter，而非唯一/首个才算接入 Explain 的上游。
 - TPlan 新增可选 `work_plan` 与受控元数据写入，记录剩余估计、已声明前置和并行条件；估计更新不计为任务推进，未知、部分覆盖和不同单位分别保留。
 - 新增文字、JSON 与离线 HTML 进展视图；普通聊天文本直接显示来源明确的进度条与剩余占比条，区间占比保留确定/不确定段而不取中值。HTML 首屏固定为整体进度、剩余工作与剩余工作占比，风险、阻塞、证据、依赖和估算依据保留在默认折叠的下钻区。对话内交互由宿主能力协商决定，可选适配器只负责表示层，不成为 Explain/TPlan 运行时依赖，也不再强绑下载 HTML；风险与主要阻塞点为可选信息，有当前来源时保留。展示不改变计划、验收或继续执行的授权。
 - 同步 Explain 的插件/Skills 打包、调用示例与卸载清单；源码合同与打包检查不构成模型质量、token 收益或历史 benchmark 的新增证明。本节为未发布变更。

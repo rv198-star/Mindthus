@@ -25,8 +25,11 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 - 只有出现 hard judgment point 时才进入 Mindthus 介入，例如问题未定义、结构判断、
   趋势/时机取舍、主线-路径博弈、控制边界、薄产物、长任务漂移或局部修补螺旋。
 
-这些门槛只约束判断镜头。用户要求讲清已有材料，或上游任务需要按需解释时，可使用
-`explain`；沿用已给出的对象、受众和目标，不重新要求用户指定方法。
+这些门槛只约束判断镜头。所有 Mindthus 面向用户的输出默认遵循 Explain Core
+Presentation Contract：先讲清结果，保留证据强度、条件、风险、未知与权限边界。这是
+共享表达基础，不等于额外调用一次 `explain`。用户明确要求 brief / ELI5 / audience /
+HTML，或确有较大表达重构需要时，再执行完整 Explain transformation；沿用已有对象、
+受众和目标，不重新要求用户指定判断方法。
 
 上游平台可以通过上下文注入口提供少量相关背景，例如长期目标、用户偏好、历史经验、
 风险姿态、角色立场或权限边界。当前用户输入优先；注入上下文只能作为判断约束或线索，
@@ -171,9 +174,9 @@ TVG 的 audit 是内部退出检查，用来判断 active TVG loop 里的产物�
 
 ### `skills/explain/` — Explain / 解释与表达
 
-把已有材料、概念、判断或工作计划讲给具体受众。用户可以直接要求解释，上游任务也可以按需调用；不加入判断 owner 路由。
+Explain 是 Mindthus 的 Human Comprehension Layer，不加入判断 owner 路由。它的 Core Presentation Contract 是所有 Mindthus 面向用户输出的共享表达基础；完整 `/mindthus:explain` transformation 仍是按需能力，不要求每个方法额外跑一轮。
 
-保留源信息、结论、证据强度、未知和权限边界；只解决表达缺口时用 Explain，需要补判断、证据或使用价值时交回原 owner 或 TVG。能讲清就结束，不建立固定加工流水线。
+保留源信息、结论、证据强度、未知和权限边界；需要 brief / ELI5 / audience / HTML 或明显表达重构时使用完整 Explain。需要补判断、证据或使用价值时交回原 owner 或 TVG。能讲清就结束，不建立固定加工流水线。
 
 ### `skills/case-prep/` — Case Prep（显式调用）
 
@@ -193,7 +196,7 @@ runtime 合同；不参与被动路由，不自动上传，也不自动进入 be
 - agentic system 内出现 controller mismatch 时，用 `WAE` 分配控制权；否则不要因
   “控制/边界/流程”字样自动唤醒 WAE。
 - 任一方法产出物看似完整但价值不足，用 `TVG` 做定向强化。
-- 已有材料需要向具体受众讲清时，按需用 `Explain`；它保真表达上游结果，不接管判断。
+- 所有方法面向用户交付时继承 Explain Core Presentation Contract；需要明显压缩、降阶、受众适配或 HTML 交互时，再按需执行完整 `Explain` transformation。Explain 不接管判断。
 - 长任务出现第三次处理同一局部对象、负反馈、只加不减或新增层冲动时，
   激活反螺旋自检；它不是独立 skill，而是防止目标函数被局部循环吞掉的
   执行纪律。刹车后若多个候选争夺释放出的资源，再由 `SRA` 分配。

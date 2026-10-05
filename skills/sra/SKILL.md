@@ -206,6 +206,11 @@ alternative, or priority.
 Do not use SRA when there is no real shared resource contention. Do not treat the words
 “priority”, “important”, “ROI”, or “resource” as sufficient wake-up evidence.
 
+### Presentation Boundary / 表达边界
+
+User-facing delivery follows the **Explain Core Presentation Contract**; no extra
+Explain/model pass or authority change.
+
 ## Runtime Support
 
 Conversational Lite may give bounded advice without creating a run. Controlled

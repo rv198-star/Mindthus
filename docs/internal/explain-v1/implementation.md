@@ -16,17 +16,28 @@
 - 同一 HTML 在 Chromium 的 1440px/390px 视口可展开原生 details，无横向溢出、外部请求或 JavaScript 错误。这是独立浏览器验证，不是当前对话显示验收。
 - 交互表面已在当前 ChatGPT 对话用 Visualizations / app_block 现场确认：用户明确反馈该效果就是此前满意的内嵌交互式可视化。HTML MIME、附件、PNG、Jupyter rich output、MagicPath Canvas 和 Code/Preview 均已实测排除为目标路径。后续验收只需确认 Mindthus 生成的 app_block payload 保留同一交互语义。
 
+## 设计对齐修正
+
+本轮按最初 Design Spec 回查后，修正此前把 Explain 过度收缩为“按需外挂”的集成偏移：
+
+1. `AGENTS.md` / README 从“需要时再用 Explain”改为：所有 Mindthus 面向用户输出默认继承 Core Presentation Contract。
+2. Explain runtime 明确分成共享 baseline 与完整 transformation；baseline 不增加第二次模型调用。
+3. `using-mindthus` 增加统一 Presentation Boundary，但 Explain 仍不进入 judgment owner 路由。
+4. 3L5S / SELA / MPG / SRA / EDSP / WAE / TVG / TPlan 均声明共享 Presentation Contract，保留各自判断、证据、状态和 authority。
+5. TPlan 从“首个正式上游接入”更正为首个专用 structured presentation adapter；其他方法不需要 TPlan 式 renderer 才算使用 Explain 基础层。
+6. `--html` 的 ChatGPT Visualizations / app_block 是已现场批准的宿主适配演进，保留不回退；它位于 presentation adapter 层，不改变上述基础依赖方向。
+
 ## 已确认的产品范围
 
-Explain 是独立的理解与表达技能。它解释已有结果，保留原判断、证据强度、状态、验收和执行权限。默认完整清晰；`--brief` 减少阅读负担，`--eli5` 按受众做最低必要降阶，`--audience` 覆盖受众，`--html` 选择 HTML 表示方式：ChatGPT 中优先 Visualizations / app_block，其他宿主使用其真实 rendered HTML surface；显式保存/下载时才持久化为文件。参数可以组合，任务入口与最终交付共用同一套转换规则。
+Explain 是 Mindthus Human Comprehension Layer，同时保留独立 Skill 入口。所有 Mindthus 面向用户的结果默认继承 Explain Core Presentation Contract：先讲清结果，保留源判断、证据强度、条件、风险、未知和权限边界；这不是固定的第二次 Explain/模型调用。完整 `/mindthus:explain` transformation 只在 brief、ELI5、audience、HTML 或明显表达重构时按需执行。
 
-TPlan 是首个正式上游接入场景。用户需要理解整体进展、剩余工作块、剩余估计、各块在剩余量中的占比，以及已知前置和并行条件。
+TPlan 是首个专用 **structured presentation adapter** 场景，而不是第一个才算“接入 Explain”的方法。它把同一只读进展语义进一步适配为文本、Visualizations / app_block 和显式 HTML artifact；其他方法无需复制 renderer，但同样继承 Core Presentation Contract。
 
 用户追加确认：**风险与主要阻塞点为可选信息**。有当前来源时默认呈现重要内容；没有记录时省略栏目。影响、关联工作块和解除条件按已有来源说明，不要求用户填空表，不新增固定风险评估流程，也不把未提供信息写成“没有风险”。精简输出仍保留已知重大限制。
 
 ## 实现入口
 
-Explain 的入口与按需参考材料位于 [skills/explain](../../../skills/explain/SKILL.md)。它未进入八个判断 owner、判断 trace enum 或固定加工流水线。TVG 保留原有强化能力；Explain 的普通执行没有独立复审循环。
+Explain 的入口与按需参考材料位于 [skills/explain](../../../skills/explain/SKILL.md)，共享基础合同位于 `skills/explain/resources/presentation-contract.md`。它未进入八个判断 owner、判断 trace enum 或固定加工流水线。各方法可以直接按基础合同组织自己的用户输出，不需要额外调用 Explain；完整 transformation 仍没有独立复审循环。
 
 ```text
 /mindthus:explain 把这份说明讲清楚，保留条件与未知。

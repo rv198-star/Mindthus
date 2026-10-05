@@ -13,6 +13,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 EXPLAIN_FILES = (
     "SKILL.md",
+    "resources/presentation-contract.md",
     "resources/html-v1.md",
     "resources/tplan-progress.md",
     "resources/expression-modes.md",
@@ -50,6 +51,47 @@ class ExplainRoutingContractTests(unittest.TestCase):
                 self.assertNotIn("explain", routing["judgment_owner"]["enum"])
                 self.assertNotIn("explain", routing["selected_method"]["enum"])
                 self.assertNotIn("explain", routing["loaded_methods"]["items"]["enum"])
+
+
+class ExplainPresentationFoundationTests(unittest.TestCase):
+    METHOD_SKILLS = ("3l5s", "sela", "mpg", "sra", "edsp", "wae", "tvg", "tplan")
+
+    def test_core_presentation_contract_is_default_without_forcing_a_second_pass(self):
+        contract = " ".join(
+            (REPO / "skills/explain/resources/presentation-contract.md").read_text().split()
+        )
+        skill = " ".join((REPO / "skills/explain/SKILL.md").read_text().split())
+        agents = " ".join((REPO / "AGENTS.md").read_text().split())
+        router = " ".join((REPO / "skills/using-mindthus/SKILL.md").read_text().split())
+
+        self.assertIn("shared human-facing presentation baseline for Mindthus", contract)
+        self.assertIn("does **not** mean every method must invoke the full `explain` Skill", contract)
+        self.assertIn("No separate Explain transformation is required", contract)
+        self.assertIn("Explain Core Presentation Contract", skill)
+        self.assertIn("All Mindthus human-facing delivery inherits", skill)
+        self.assertIn("this is not a mandatory second Skill/model pass", skill)
+        self.assertIn("structured presentation adapter", skill)
+        self.assertNotIn("selected upstream delivery", skill)
+        self.assertNotIn("first formal integration", skill)
+
+        self.assertIn("所有 Mindthus 面向用户的输出默认遵循 Explain Core Presentation Contract", agents)
+        self.assertIn("共享表达基础，不等于额外调用一次 `explain`", agents)
+        self.assertIn("判断完成后的面向用户交付默认遵循 Explain Core Presentation Contract", router)
+        self.assertIn("不要求再跑一次 Explain", router)
+        self.assertIn("完整 Explain transformation 才是按需能力", router)
+
+    def test_all_primary_method_skills_inherit_the_presentation_boundary(self):
+        for name in self.METHOD_SKILLS:
+            with self.subTest(skill=name):
+                text = " ".join((REPO / f"skills/{name}/SKILL.md").read_text(encoding="utf-8").split())
+                self.assertIn("Explain Core Presentation Contract", text)
+                self.assertNotIn("mandatory second Explain", text)
+
+    def test_shared_presentation_does_not_add_explain_to_judgment_routing(self):
+        text = (REPO / "skills/using-mindthus/SKILL.md").read_text(encoding="utf-8")
+        section = text.split("### Skill Routing", 1)[1].split("\n### ", 1)[0]
+        self.assertNotIn("| explain |", section.lower())
+        self.assertIn("`explain` 不进入上表的判断 owner 路由", text)
 
 
 class ExplainDeliveryContractTests(unittest.TestCase):

@@ -117,6 +117,11 @@ Do not apply SELA as the main principle when:
   market value; use the Timing Check before converting long-term direction into an
   immediate cutover
 
+### Presentation Boundary / 表达边界
+
+User-facing delivery follows the **Explain Core Presentation Contract**; no extra
+Explain/model pass or authority change.
+
 ## Runtime Support / 支撑材料
 
 Read `resources/methodology.md` for the full principle, prototype cases, timing check,
