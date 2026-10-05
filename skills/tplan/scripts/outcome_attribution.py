@@ -205,6 +205,14 @@ def build_outcome_attribution(
                 extra["acceptance_ids"] = list(payload.get("acceptance_ids", []))
             entry = _event_entry(event, "constraint_delta", commit_ids=commit_ids, **extra)
             target = "constraint_deltas"
+        elif classification == "planning_metadata":
+            entry = _event_entry(
+                event,
+                "planning_metadata",
+                event_type="planning_metadata_updated",
+                commit_ids=commit_ids,
+            )
+            target = "state_writebacks"
         elif classification == "decision_applied_candidate":
             entry, reason = _path_delta(event, commit_ids)
             if entry is not None:

@@ -18,12 +18,20 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 和权限边界是判断约束，不能被当作偏见抹掉。
 如果表述本身在错误层级上，先纠正问题层级，再回答；不要因为某个说法在实现层成立，就默认它在定义层也成立。
 
-在选择具体 skill 前，先做介入边界判断：
+在选择判断镜头前，先做介入边界判断：
 
-- 简单、明确、低风险、事实足够的任务，直接执行，不用 Mindthus。
+- 简单、明确、低风险、事实足够的任务，直接执行，不用判断镜头。
 - 信息不足时，先补事实、读文件、运行验证或继续问用户，不要用方法包装缺口。
 - 只有出现 hard judgment point 时才进入 Mindthus 介入，例如问题未定义、结构判断、
   趋势/时机取舍、主线-路径博弈、控制边界、薄产物、长任务漂移或局部修补螺旋。
+
+这些门槛只约束判断镜头。Mindthus 的方法结论、分析报告、阶段成果和有意义的进展
+默认由当前 Agent 使用 [Explain](skills/explain/SKILL.md) 的 clarity 模式组织交付。
+正式入口不在有效上下文时先读取；已加载则复用，支持资源按需读取。不是只继承几条
+表达规则，也不要求用户另加解释指令。无需先生成完整原答案、另起 Agent 或二次模型调用。
+brief / ELI5 / audience / HTML 是同一 Skill 的按需模式，不是启用条件。
+机器 JSON、代码、命令、逐字引用和精确格式保留原合同；内部记录不做人向转换，
+短确认与心跳保持必要长度。上游判断、证据、状态和验收权不变。
 
 上游平台可以通过上下文注入口提供少量相关背景，例如长期目标、用户偏好、历史经验、
 风险姿态、角色立场或权限边界。当前用户输入优先；注入上下文只能作为判断约束或线索，
@@ -166,6 +174,14 @@ Truth Orientation / 真相优先：pursue facts and truth over agreement。user 
 边界：TVG 不负责战略方向，不重开整个问题空间；它只转换命名清楚、有边界的产物。脚本只能做记录和校验，不能替代 judgment。
 TVG 的 audit 是内部退出检查，用来判断 active TVG loop 里的产物能否 freeze、return-remediate 或 blocked；不是通用外部审计路线。外部审计先按对象路由：代码、release、workflow、结构、证据、战略或 Mission runtime。
 
+### `skills/explain/` — Explain / 解释与表达
+
+Explain 是 Mindthus 的默认人向结果交付 Skill，不加入判断 owner 路由。当前 Agent
+在本次回答中使用其正式入口：默认完整清晰，增强模式按需；已经清楚的结果可以原样保留。
+
+保留源信息、结论、证据强度、未知和权限边界。需要补判断、证据或使用价值时交回
+原 owner 或 TVG；只调整表达时仍由 Explain 完成，不建立独立后处理或复审流水线。
+
 ### `skills/case-prep/` — Case Prep（显式调用）
 
 内部案例准备工具，用来把用户明确指定的判断、benchmark case 或 TPlan Mission
@@ -184,6 +200,7 @@ runtime 合同；不参与被动路由，不自动上传，也不自动进入 be
 - agentic system 内出现 controller mismatch 时，用 `WAE` 分配控制权；否则不要因
   “控制/边界/流程”字样自动唤醒 WAE。
 - 任一方法产出物看似完整但价值不足，用 `TVG` 做定向强化。
+- 所有方法的人向结果默认由当前 Agent 使用 `Explain` 交付；默认 clarity，按需 brief / ELI5 / audience / HTML。不另起模型调用，不改变判断或精确格式。
 - 长任务出现第三次处理同一局部对象、负反馈、只加不减或新增层冲动时，
   激活反螺旋自检；它不是独立 skill，而是防止目标函数被局部循环吞掉的
   执行纪律。刹车后若多个候选争夺释放出的资源，再由 `SRA` 分配。

@@ -104,6 +104,129 @@ Structure changes should go through `scripts/add_node.py` or another runtime scr
 Agentic judgment decides what to add and why; scripts own field defaults, shape
 normalization, and validation before write.
 
+## Optional Work Plan Metadata
+
+`mission.json.work_plan` is optional planning metadata using
+`tplan.work_plan.v0.1`. It references existing task IDs and stores no duplicate
+task title, status, or acceptance result. Missions without it remain valid and
+can render current state and unfinished registered work.
+
+Required fields are:
+
+- `schema_version`: `tplan.work_plan.v0.1`.
+- `coverage`: `complete` or `partial`, describing the declared planning scope.
+- `scope_note`: a non-empty explanation of the scope and accounting basis.
+- `blocks`: a list of non-overlapping real task references.
+
+Optional `as_of` is an ISO-8601 timestamp with timezone; optional `source`
+records the supplied source description. These are source annotations, not
+another runtime fingerprint.
+
+Each block requires only `task_id`. Optional fields are:
+
+- `remaining`: null/absent when unknown, otherwise
+  `{low, high, unit, basis, confidence?}`. Bounds must be finite, non-negative
+  numbers with `low <= high`; `unit` and `basis` are non-empty strings.
+  Confidence, when supplied, is `low`, `medium`, `high`, or `unknown`.
+- `depends_on`: null/absent means unknown; an explicit empty list means no
+  declared task predecessors. Non-empty lists contain distinct existing task IDs.
+  Self-references and declared dependency cycles are rejected.
+- `parallel_conditions`: null/absent means no recorded conditions; otherwise a
+  list of non-empty source statements. These statements confer no resource,
+  authority, readiness, dispatch, or scheduling guarantee.
+
+A block accounts for its task scope, including its descendants. Listing both
+an ancestor and descendant as accounting blocks is rejected, even if one lacks
+an estimate. Parent-child hierarchy is never converted into a dependency edge.
+Units are compared literally and are not silently converted.
+
+Optional `progress` is a source-declared measure with `label`, `value`, `unit`,
+and `basis`. Its value must be finite and non-negative; units `%`, `percent`,
+and `percentage` also require a value no greater than 100. Rendering copies
+this declaration; it does not invent a global progress measure from task counts,
+elapsed telemetry, acceptance-event counts, or remaining-work shares.
+
+Optional `risks` and `blockers` are lists of source notes. Only `summary` is
+required. Supply `task_ids`, `impact`, or `source` only when available; blockers
+may also provide `release_condition`. Optional `status` is `active` or
+`resolved`; absent status means a current declaration. Resolved notes are not
+shown as current risks or blockers. Missing notes do not create a mandatory
+assessment, an empty risk table, or a question to the user.
+
+### Recording And Reading
+
+Both `init_mission.py` and `init_lite.py` accept optional
+`--work-plan-json /path/to/work-plan.json`. Update an existing compatible
+Mission through the dedicated metadata writer:
+
+```bash
+python3 skills/tplan/scripts/record_work_plan.py "$MISSION_DIR" \
+  --input /path/to/work-plan.json --summary "Update the remaining-work estimates."
+```
+
+The writer replaces only `work_plan` and atomically records the runtime-reserved
+`planning_metadata_updated` evidence event. It reuses the existing Mission
+transaction, concurrent-change check, Interaction Guard, and runtime-provenance
+gate. This event is a planning state writeback, never `decision_applied`,
+`path_delta`, acceptance evidence, or countable progress. Re-recording identical
+metadata creates no event and writes no files. A metadata update does not bypass
+an open Guard or an incompatible pinned runtime.
+
+`work_plan.py:build_work_view(mission, evidence=None, outcome_attribution=None)`
+is pure and read-only. `read_work_view_snapshot(mission_dir)` uses the established
+atomic no-write Mission/evidence/trace snapshot and appends `work_view` using
+`tplan.work_view.v0.1`. Pending transactions are reported, not recovered by
+reading. Existing runtime-provenance diagnostics remain available.
+
+The work view uses declared accounting blocks and retains uncovered real
+branches. With no plan it displays real root Tasks. It keeps current statuses,
+source progress, unfinished blocks, unknown estimates, declared predecessors, and
+parallel conditions separate. Historical blocker events remain in the existing
+outcome view; they do not automatically become current planning blockers.
+
+Current risks also include the Mission's existing `shared_context.risk_signals`
+selected by `active_risk_signals`. These signals retain their source ID, source
+task, scope, severity, confidence, affected surfaces, value effect, and recovery
+condition. The view maps `signal` to `summary` and `value_effect` to `impact`
+for presentation only. The source task is not treated as the whole affected
+scope. Resolved, superseded, and invalidated records are not current risks.
+Source notes carry `source_kind` and `source_path`; shared signals also carry
+`source_ref`. Planning notes retain their supplied source text. Each source
+record is projected once and kept distinct; matching wording alone does not
+authorize merging two different source declarations. No historical event is
+upgraded to a current risk, and no new severity or risk assessment is generated.
+
+Remaining-work subtotals retain supplied estimates for unfinished blocks and
+unresolved completion declarations. A completed block with a positive remaining
+estimate has a state/estimate conflict; neither declaration is silently judged
+obsolete. The existing outcome-attribution warning
+`completion_without_progress_evidence` leaves completion status intact but marks
+remaining work uncertain. Without evidence attribution, completion evidence is
+unknown. A missing estimate in these cases remains unknown, never zero.
+
+`blocks[].is_remaining` reflects only the source unfinished status.
+`remaining_uncertain` and `uncertainty_reasons` identify unresolved declarations;
+current-work presentation includes either condition. If a closed planning
+frontier conceals unfinished descendants or ancestors, the view adds real
+`accounting_role: state_context` nodes with unknown quantities. These are state
+context, not additional accounting blocks: parent estimates are never copied,
+divided, or counted twice. Normal frontier rows use `accounting_role: block`.
+
+A single total is available only for declared complete coverage, no unknown or
+unresolved blocks, and one unit. Otherwise supplied amounts form explicitly
+partial subtotals grouped by unit. `remaining.unresolved_task_ids` identifies
+the unresolved rows. Pruned, abandoned, and superseded nodes remain outside
+current execution quantities according to their source state; retained estimates
+stay visible and are not called obsolete or treated as completion evidence.
+
+For comparable estimated blocks, remaining-work shares use conservative bounds:
+`low_i / (low_i + sum(high_others))` through
+`high_i / (high_i + sum(low_others))`. Zero-denominator boundaries stay
+conservative; an all-zero subtotal has no share. Each share names its estimated
+same-unit denominator and coverage. Independent share intervals need not sum
+to 100%, and none is a Mission completion percentage or an ETA.
+
+
 ## Execution Trace Sidecar
 
 The Mission schema remains `tplan.v0.1`; execution telemetry uses the additive
@@ -379,6 +502,7 @@ Sparse evidence categories:
 - key finding
 - risk_context_update
 - risk_context_recovery
+- planning_metadata_updated (runtime-owned planning annotations)
 
 Each line is one JSON object with:
 
@@ -397,8 +521,9 @@ not the script, remains responsible for deciding whether the acceptance claim is
 
 Legacy `acceptance` remains readable. A complete legacy record is classified using the
 same reference rules; an incomplete one is retained as `unclassified_writeback` with
-an audit warning and is never silently upgraded. `decision_applied` is runtime-reserved
-and cannot be appended through the public evidence command.
+an audit warning and is never silently upgraded. `decision_applied` and
+`planning_metadata_updated` are runtime-reserved and cannot be appended through
+the public evidence command. Planning annotations remain state writeback.
 
 Validated writeback and countable progress are different. Only qualified acceptance
 and a runtime-applied path decision count as positive progress. Blockers, failures,

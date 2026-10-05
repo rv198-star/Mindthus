@@ -36,7 +36,7 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("rather than encoded in the SPDX field", readme)
 
     def test_current_release_log_does_not_record_exact_suite_count(self):
-        release_log = (REPO / "docs" / "releases" / "v1.10.1.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.12.0.md").read_text(
             encoding="utf-8"
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
@@ -50,16 +50,16 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         release_log = (REPO / "docs" / "releases" / "v1.8.0.md").read_text(encoding="utf-8")
         beta_notes = (REPO / "docs" / "releases" / "v1.8.0-roi-beta.md").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.11.0`", readme)
+        self.assertIn("当前仓库版本：`v1.12.0`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
-        self.assertIn("主力仍使用 Sol 6.1 以下版本", readme)
-        self.assertIn("不建议仅为本次优化升级", readme)
-        self.assertIn("不是相对v1.10.1的直接统计", readme)
-        self.assertIn("当前已发布 Stable 是 `v1.11.0`", readme)
-        self.assertIn("mindthus-plugins-1.11.0.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.11.0.tar.gz", readme)
+        self.assertIn("Explain / 解释与表达", readme)
+        self.assertIn("Visualizations", readme)
+        self.assertIn("不宣称固定质量提升、token 节省、延迟收益或金额 ROI", readme)
+        self.assertIn("当前已发布 Stable 是 `v1.12.0`", readme)
+        self.assertIn("mindthus-plugins-1.12.0.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.12.0.tar.gz", readme)
         self.assertIn("mindthus-beta-1.10.1-roi-beta.tar.gz", readme)
-        self.assertNotIn("mindthus-beta-1.11.0-roi-beta.tar.gz", readme)
+        self.assertNotIn("mindthus-beta-1.12.0-roi-beta.tar.gz", readme)
         self.assertIn("Scarce Resource Allocation", readme)
         self.assertIn("## v1.10.1", changelog)
         self.assertIn("## v1.10.0", changelog)
@@ -70,8 +70,8 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("## v1.8.0", changelog)
         self.assertIn("补充发布包：1.9.1 ROI Beta", changelog)
         self.assertIn("v1.9.1-roi-beta", changelog)
-        self.assertIn('VERSION = "1.11.0"', builder)
-        self.assertIn('VERSION = "1.11.0"', runtime_logger)
+        self.assertIn('VERSION = "1.12.0"', builder)
+        self.assertIn('VERSION = "1.12.0"', runtime_logger)
         self.assertIn('"package_version": "1.5.4"', tplan_manifest)
         self.assertIn('"source_id": "mindthus-v1.5.4"', tplan_manifest)
         for phrase in (
@@ -94,15 +94,15 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
 
     def test_release_defaults_beta_is_optional_and_current_assets_match(self):
         policy = (REPO / "docs/internal/release-defaults.md").read_text(encoding="utf-8")
-        release = (REPO / "docs/releases/v1.11.0.md").read_text(encoding="utf-8")
+        release = (REPO / "docs/releases/v1.12.0.md").read_text(encoding="utf-8")
         historical = (REPO / "docs/releases/v1.10.1.md").read_text(encoding="utf-8")
         prior_beta = (REPO / "docs/releases/v1.10.1-roi-beta.md").read_text(encoding="utf-8")
         self.assertIn("Stable发布不再要求同步ROI Beta", policy)
-        self.assertIn("本版v1.11.0不发布ROI Beta", policy)
-        self.assertIn("本版不发布ROI Beta", release)
-        for name in ("mindthus-plugins-1.11.0.tar.gz", "mindthus-skills-1.11.0.tar.gz"):
+        self.assertIn("当前 `v1.12.0` 同样按默认规则不发布 ROI Beta", policy)
+        self.assertIn("v1.12.0 不发布 ROI Beta", release)
+        for name in ("mindthus-plugins-1.12.0.tar.gz", "mindthus-skills-1.12.0.tar.gz"):
             self.assertIn(name, release)
-        self.assertNotIn("mindthus-beta-1.11.0-roi-beta.tar.gz", release)
+        self.assertNotIn("mindthus-beta-1.12.0-roi-beta.tar.gz", release)
         self.assertIn("覆盖上述两份归档", release)
         self.assertIn("ROI Beta 同步发布", historical)
         self.assertIn("mindthus-beta-1.10.1-roi-beta.tar.gz", historical)

@@ -83,6 +83,10 @@ For very high-impact or long-term decisions, separate agents are an escalation o
 - If the output becomes elegant but does not improve a decision, treat the method use as failed.
 - If candidate structure is already stable and several valid actions compete for one shared scarce resource, use SRA for allocation; EDSP only stabilizes a malformed proposition or comparison axis.
 
+### Presentation
+
+For human-facing results, use [Explain](../explain/SKILL.md) by default (clarity) in this response; retain method authority.
+
 ## Runtime Support / 支撑材料
 
 Read `resources/methodology.md` when you need the detailed EDSP procedure, anti-patterns, or examples of coordinate-system failure.

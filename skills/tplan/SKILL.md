@@ -81,15 +81,15 @@ a receipt before mutation. Active-Mission continuation is separate.
 
 ### User-Facing Output Adapter
 
-Internal IDs are for runtime stability. User-facing output should lead with meaning;
-ordinary updates should not lead with raw IDs. Use `scripts/render_user_update.py`
-for Chinese updates: result, blocker and next action.
-Retain Standard handoff artifacts below; expand the tree for cost or dependency review,
-without routinely pasting it into the business reply.
+Internal IDs are for runtime stability.
+User-facing output should lead with meaning; ordinary updates should not lead with raw IDs.
+Use [Explain](../explain/SKILL.md) by default for human-facing results in this response
+(clarity). Use `scripts/render_user_update.py`: `--progress` text,
+`--visualization` ChatGPT, `--html PATH` export.
+Keep optional `work_plan` from known context; leave gaps unknown.
 
-Terminal handoff: run `render_execution_cost_tree.py "$MISSION_DIR"
---completion-handoff`; include both emitted links, or state the rendering failure. Full
-delivery contract: `resources/user-output.md`.
+Terminal handoff: `render_execution_cost_tree.py "$MISSION_DIR" --completion-handoff`;
+include both emitted links or error. See `resources/user-output.md`.
 
 ### Read-only SubAgent Acceleration
 
@@ -156,4 +156,4 @@ context.
 - Review carriers: `resources/subagents.md`, `resources/platforms/*.md`, and
   `scripts/*review_packet.py`.
 - Runtime views: `scripts/mission_pulse.py`, `render_user_update.py`, and
-  `render_execution_cost_tree.py`.
+  `render_progress_view.py`, `render_execution_cost_tree.py`.

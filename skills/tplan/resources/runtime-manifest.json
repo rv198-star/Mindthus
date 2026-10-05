@@ -9,7 +9,10 @@
     "codex_telemetry_adapter": "tplan.codex_telemetry_adapter.v0.2",
     "codex_telemetry_dispatcher": "tplan.codex_telemetry_dispatcher.v0.1",
     "runtime_provenance": "tplan.runtime_provenance.v0.1",
-    "runtime_doctor": "tplan.runtime_doctor.v0.1"
+    "runtime_doctor": "tplan.runtime_doctor.v0.1",
+    "work_plan": "tplan.work_plan.v0.1",
+    "work_view": "tplan.work_view.v0.1",
+    "progress_view": "tplan.progress_view.v1"
   },
   "capabilities": [
     "atomic_mission_mutation",
@@ -21,7 +24,10 @@
     "runtime_provenance",
     "runtime_doctor",
     "standard_execution_timeline",
-    "terminal_completion_handoff"
+    "terminal_completion_handoff",
+    "work_plan_metadata",
+    "read_only_work_view",
+    "read_only_progress_view"
   ],
   "required_scripts": [
     "scripts/tplan_runtime.py",
@@ -37,7 +43,10 @@
     "scripts/codex_telemetry_dispatcher.py",
     "scripts/generate_codex_telemetry_hooks.py",
     "scripts/render_execution_cost_tree.py",
-    "scripts/runtime_doctor.py"
+    "scripts/runtime_doctor.py",
+    "scripts/work_plan.py",
+    "scripts/record_work_plan.py",
+    "scripts/render_progress_view.py"
   ],
   "fingerprint_files": [
     "resources/runtime-manifest.json",
@@ -54,6 +63,9 @@
     "scripts/codex_telemetry_dispatcher.py",
     "scripts/generate_codex_telemetry_hooks.py",
     "scripts/render_execution_cost_tree.py",
-    "scripts/runtime_doctor.py"
+    "scripts/runtime_doctor.py",
+    "scripts/work_plan.py",
+    "scripts/record_work_plan.py",
+    "scripts/render_progress_view.py"
   ]
 }

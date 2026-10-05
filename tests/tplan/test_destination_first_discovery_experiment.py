@@ -4,8 +4,13 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
-from tests.tplan.destination_first_discovery_experiment import run_report
+from tests.tplan.destination_first_discovery_experiment import (
+    baseline_surface,
+    read_text,
+    run_report,
+)
 
 
 REPO = Path(__file__).resolve().parents[2]
@@ -62,6 +67,63 @@ def result_projection(report):
 
 
 class DestinationFirstDiscoveryExperimentTests(unittest.TestCase):
+    BASELINE_SCHEMA = """# tplan Schema
+
+## mission.json
+
+- `schema_version`: must be `tplan.v0.1`.
+- Runtime supports `task`, `subtask`, and
+  `step` nodes.
+- Lite permits `Mission -> active Task` with no materialized Step.
+- `exploratory`: uncertain payoff governed by risk/resource policy
+
+### Task fields
+
+- `id`: the Task identifier.
+
+## Optional Work Plan Metadata
+
+- `depends_on`: optional predecessor declarations in planning metadata.
+"""
+
+    def _baseline_with_schema(self, schema):
+        schema_path = REPO / "skills" / "tplan" / "resources" / "schema.md"
+        with patch(
+            "tests.tplan.destination_first_discovery_experiment.read_text",
+            side_effect=lambda path: schema if path == schema_path else read_text(path),
+        ):
+            return baseline_surface(REPO)
+
+    def test_baseline_allows_dependencies_in_planning_metadata_only(self):
+        baseline = self._baseline_with_schema(self.BASELINE_SCHEMA)
+
+        self.assertTrue(baseline["checks"]["no_declared_task_dependency_contract"])
+        self.assertTrue(baseline["passed"])
+
+    def test_baseline_rejects_task_dependencies_and_missing_mission_contract(self):
+        schemas = {
+            "canonical_task_dependency": self.BASELINE_SCHEMA.replace(
+                "- `id`: the Task identifier.",
+                "- `id`: the Task identifier.\n- `depends_on`: Task predecessor IDs.",
+            ),
+            "missing_mission_section": self.BASELINE_SCHEMA.replace(
+                "## mission.json", "## Unrecognized Mission Contract"
+            ),
+        }
+        for case, schema in schemas.items():
+            with self.subTest(case=case):
+                baseline = self._baseline_with_schema(schema)
+
+                self.assertFalse(baseline["checks"]["no_declared_task_dependency_contract"])
+                self.assertFalse(baseline["passed"])
+                self.assertTrue(
+                    all(
+                        passed
+                        for name, passed in baseline["checks"].items()
+                        if name != "no_declared_task_dependency_contract"
+                    )
+                )
+
     def test_fixture_preserves_tplan_control_boundaries(self):
         with tempfile.TemporaryDirectory() as tmp:
             report = run_report(REPO, Path(tmp))

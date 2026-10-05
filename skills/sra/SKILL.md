@@ -206,6 +206,10 @@ alternative, or priority.
 Do not use SRA when there is no real shared resource contention. Do not treat the words
 “priority”, “important”, “ROI”, or “resource” as sufficient wake-up evidence.
 
+### Presentation
+
+For human-facing results, use [Explain](../explain/SKILL.md) by default (clarity) in this response; retain method authority.
+
 ## Runtime Support
 
 Conversational Lite may give bounded advice without creating a run. Controlled

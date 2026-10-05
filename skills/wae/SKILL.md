@@ -158,6 +158,10 @@ The worksheet is an aid for judgment, not evidence that the judgment is correct.
 - Do not treat human escalation as a routine fourth control layer.
 - If control is settled and valid actions compete for one scarce resource, use SRA; WAE constrains the runtime but does not allocate.
 
+### Presentation
+
+For human-facing results, use [Explain](../explain/SKILL.md) by default (clarity) in this response; retain method authority.
+
 ## Runtime Support / 支撑材料
 
 Read `resources/methodology.md` when you need quadrants, risk modulators, runtime governance, boundary questions, hard rules, anti-patterns, or the practical decision table.

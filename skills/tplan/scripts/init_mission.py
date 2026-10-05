@@ -10,6 +10,8 @@ import argparse
 import sys
 from pathlib import Path
 
+from work_plan import load_work_plan
+
 from tplan_runtime import (
     MISSION_REENTRY_DISPOSITIONS,
     TplanError,
@@ -67,6 +69,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--human-in-loop", type=int, default=0)
     parser.add_argument("--risk-tolerance", type=int, default=50)
     parser.add_argument("--resource-sufficiency", type=int, default=50)
+    parser.add_argument("--work-plan-json", help="Optional planning metadata; references existing task IDs.")
     return parser.parse_args()
 
 
@@ -92,6 +95,7 @@ def main() -> int:
             risk_tolerance=args.risk_tolerance,
             resource_sufficiency=args.resource_sufficiency,
             tasks=load_task_json(Path(args.task_json) if args.task_json else None),
+            work_plan=load_work_plan(Path(args.work_plan_json) if args.work_plan_json else None),
         )
         reentry_preflight = None
         if args.project_root:

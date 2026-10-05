@@ -153,6 +153,21 @@
       "suite_role": "mixed",
       "runtime_cost": "high",
       "notes": "Kept separate from Judgment Trace lifecycle because TPlan is a stateful runtime rather than a judgment lens."
+    },
+    {
+      "test_id": "explain-delivery-contract",
+      "paths": [
+        "tests/test_explain_contract.py"
+      ],
+      "owner": "skill",
+      "protects": [
+        "Explain source-preserving delivery, auxiliary routing, optional TPlan progress presentation, and installed package contents"
+      ],
+      "introduced_by": "Explain V1 implementation 2026-10-05",
+      "lifecycle_status": "active_gate",
+      "suite_role": "contract",
+      "runtime_cost": "medium",
+      "notes": "Structural and packaging checks; development source/output comparison separately assesses comprehension and semantic fidelity."
     }
   ],
   "review_candidates": [],

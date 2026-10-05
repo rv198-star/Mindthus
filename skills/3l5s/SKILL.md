@@ -32,6 +32,10 @@ description: Use when a problem is unclear, noisy, repeatedly reworked, or too l
 Agentic 控制错位用 WAE；多个已可判断事项争资源用 SRA。
 3L5S 不成为其他方法的必经母流程，也不重开已接受的定义。
 
+### Presentation
+
+For human-facing results, use [Explain](../explain/SKILL.md) by default (clarity) in this response; retain method authority.
+
 ## Runtime Support
 
 已有清楚动作时不加载全套模板。仅在对应缺口时读取：

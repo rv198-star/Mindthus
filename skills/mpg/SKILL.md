@@ -185,6 +185,10 @@ survival alone is not success. Surviving by abandoning mainline, core advantage,
 - If a Mission needs durable task state and decision hooks, use tplan; route to MPG only when active object fits.
 - Do not use MPG as a generic risk matrix, opportunity list, or narrative essay.
 
+### Presentation
+
+For human-facing results, use [Explain](../explain/SKILL.md) by default (clarity) in this response; retain method authority.
+
 ## Runtime Support / 支撑材料
 
 - `resources/methodology.md` — full MPG methodology, contract, boundaries, mixed cases.

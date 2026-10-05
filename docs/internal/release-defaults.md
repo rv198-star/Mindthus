@@ -10,8 +10,9 @@
 - 覆盖实际发布归档的 `SHA256SUMS`。
 
 ROI Beta仅在明确需要时单独安排，不因Stable发布自动产生构建、资格验证或发布任务。
-本版v1.11.0不发布ROI Beta。既有Beta tag、资产、源码与历史资格记录保留，
-不删除、不自动迁移，也不将本次Jev或Stable优化结论外推为Beta无价值。
+`v1.11.0` 是规则调整后的首个 Stable；当前 `v1.12.0` 同样按默认规则不发布 ROI Beta。
+既有Beta tag、资产、源码与历史资格记录保留，不删除、不自动迁移，也不把 Stable
+功能/质量结论外推成 Beta 资格结论。
 
 若未来另行发布Beta，仍保持独立package/marketplace/cache/skill namespace，
 通过精确shared-core ref继承Stable；overlay不复制共享实现，发布时核验相应来源与资产。

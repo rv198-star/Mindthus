@@ -117,6 +117,10 @@ Do not apply SELA as the main principle when:
   market value; use the Timing Check before converting long-term direction into an
   immediate cutover
 
+### Presentation
+
+For human-facing results, use [Explain](../explain/SKILL.md) by default (clarity) in this response; retain method authority.
+
 ## Runtime Support / 支撑材料
 
 Read `resources/methodology.md` for the full principle, prototype cases, timing check,

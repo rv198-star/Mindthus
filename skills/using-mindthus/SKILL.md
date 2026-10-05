@@ -17,6 +17,10 @@ Truth Orientation / 真相优先：以事实和真相为先。用户观点是信
 - 缺文件、事实、运行证据或权限：先补输入，不能用方法填补。
 - 有会改变判断或行动的 hard judgment point：用最小充分镜头。
 
+这些介入门槛只约束判断镜头。Mindthus 面向用户的结果默认由当前 Agent 使用 Explain
+的 clarity 模式交付；无需用户另行要求，也不重跑判断选路。加工强度在 Explain 内部
+按需选择，brief / ELI5 / audience / HTML 是模式，不是使用 Explain 的前置条件。
+
 ### Input Framing Audit / 输入定框审计
 
 只在 frame-risk 与 execution impact 同时存在时检查：当前说法是否把局部
@@ -45,6 +49,14 @@ Whole Elephant / Partial Truth Capture：区分所判断对象、真正控制结
 明确指定的方法仍按要求使用；握手只补缺口，不串固定流水线。
 SELA owns direction pressure；MPG owns path-carrying action。
 引用方法审计不自动让该方法成为当前 owner（Method Reference Boundary）。
+`explain` 不进入上表的判断 owner 路由；它默认负责面向人的交付，保留上游判断与证据边界。
+
+### Presentation Boundary / 表达边界
+
+方法 owner 形成结果后，当前 Agent 默认使用 [Explain](../explain/SKILL.md) 组织交付。
+正式入口不在有效上下文时先读取；已经加载则复用，只按需要读取资源。不要求先写完整
+原答案、另起 Agent 或二次模型调用。已清楚的结果可原样保留；机器/精确格式按原合同，
+内部记录不转换，短确认与心跳不扩写。关键条件、证据、未知和权限不变。
 
 ### Execution Impact / 执行影响
 
@@ -77,5 +89,5 @@ SELA owns direction pressure；MPG owns path-carrying action。
 
 ## Boundaries
 
-无 hard judgment 不介入；缺证据先补；另一个对象或方法接管时交回。
+判断镜头无 hard judgment 不介入；缺证据先补；另一个对象或方法接管时交回。
 不建立全局路由器，不强制每题写字段、跑脚本或完整审计。

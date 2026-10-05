@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Explain V1 · 进展与剩余工作</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#191a1c;color:#eef0f3;font:15px/1.65 system-ui,sans-serif}main{max-width:930px;margin:auto;padding:24px}h1{font-size:24px;margin:0 0 6px}h2{font-size:17px;margin:0}p{margin:6px 0}.muted{color:#abb2bc;font-size:13px}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:22px 0}.value{font-size:25px;font-weight:650}.done{color:#a6d8c2}.active{color:#9fbff3}.stage{display:flex;gap:6px;margin:0 0 10px}.stage span{flex:1;padding:9px 4px;background:#30353e;border-radius:6px;text-align:center;font-size:13px}.stage .done{background:#263e35}.stage .active{background:#293b55}.work{margin-top:23px;border-top:1px solid #42464f;padding-top:17px}table{width:100%;border-collapse:collapse;margin-top:9px;text-align:left}th{font-size:12px;color:#abb2bc;font-weight:400}td,th{padding:12px 9px;border-bottom:1px solid #353941}th:last-child,td:last-child{text-align:right}.current{background:#27374c}details{margin-top:20px;border-top:1px solid #42464f;padding-top:14px}summary{cursor:pointer;font-weight:600}a{color:#9fbff3}code{overflow-wrap:anywhere}.notice{margin-top:12px;padding:10px 13px;border-radius:7px;background:#25292f}button{font:inherit}summary:focus-visible{outline:2px solid #9fbff3;outline-offset:4px}@media(max-width:520px){main{padding:17px}.summary{gap:10px}.value{font-size:21px}.stage span{font-size:12px}td,th{padding:10px 5px;font-size:13px}}
+</style>
+<main>
+<h1>Explain V1 · 进展与剩余工作</h1>
+<p class="muted">真实任务状态 · 2026 年 10 月 5 日 · 非演示数据</p>
+<div class="summary">
+<div><div class="muted">Skill 功能</div><div class="value done">已实现</div><div class="muted">Explain、TPlan、chat-native 进度条、离线 HTML</div></div>
+<div><div class="muted">对话内交互表面</div><div class="value done">已现场确认</div><div class="muted">ChatGPT Visualizations / app_block</div></div>
+<div><div class="muted">合并 / 发布</div><div class="value">未执行</div><div class="muted">PR #224 仍为草稿</div></div>
+</div>
+<div class="stage" aria-label="阶段状态，不表示工作量占比">
+<span class="done">核心实现 ✓</span><span class="done">进度条 / 测试 ✓</span><span class="done">Visualizations ✓</span><span class="done">功能验收 ✓</span>
+</div>
+<p class="muted">以上是阶段状态，不是工作量百分比。</p>
+<section class="work">
+<h2>剩余工作块</h2>
+<table>
+<thead><tr><th>工作块</th><th>当前位置</th><th>剩余占比</th></tr></thead>
+<tbody>
+<tr><td><strong>对话内可交互展示</strong></td><td>已确认：Visualizations / app_block</td><td>已完成</td></tr>
+<tr><td><strong>交付复核与任务关单</strong></td><td>已完成：功能与整合验收 PASS</td><td>已完成</td></tr>
+<tr><td>PR 最终审阅与合并</td><td>待批准；尚未合并 main</td><td>未估算</td></tr>
+<tr><td>正式版本发布</td><td>待决定；仍为 Unreleased</td><td>未估算</td></tr>
+</tbody>
+</table>
+<p class="muted">源计划没有剩余工作量估计；撤回先前无来源的“87%”和“PR 20%”。</p>
+</section>
+<details>
+<summary>展开：验收条件与依据</summary>
+<div class="notice"><strong>现场验收：</strong>当前 ChatGPT 对话已用 Visualizations / app_block 真实展示可点击交互块，用户确认该效果就是此前满意的内嵌交互式可视化。Code/Preview、附件、Jupyter rich HTML 与 MagicPath Canvas 均已排除为目标表面。</div>
+<p>PR #224 仍为 Draft；当前剩余的是 Mindthus app_block adapter 回归、交付复核与任务关单，不再等待“宿主是否支持 iframe”的确认。</p>
+<p>TPlan 现在通过 <code>--visualization</code> / <code>--format app-block</code> 从同一只读进展数据生成 ChatGPT Visualizations payload；宿主负责 sandbox 与 iframe-like 外壳。<code>--inline-html</code> 仅保留给其他真实 HTML renderer，文件导出仍需用户显式请求。</p>
+<p><a href="https://github.com/rv198-star/Mindthus/pull/224" target="_blank" rel="noopener noreferrer">查看 PR #224 与提交记录</a></p>
+</details>
+</main>
+</html>

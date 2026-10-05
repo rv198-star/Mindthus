@@ -21,6 +21,8 @@ Codex's system `skill-installer` is useful for individual skills, but it install
 
 > 当问题涉及资源竞争、战略判断、结构歧义、路径波动、控制边界、产物价值厚度时，优先使用 `using-mindthus` 选择最小充分方法；清楚低风险任务直接执行。
 
+上述门槛只约束判断镜头。用户要求解释或上游任务需要按需说明时，可直接使用 `mindthus:explain`，保留已有判断与证据边界。
+
 ## Codex Plugin Mode
 
 Generated release packs include `codex-plugin/mindthus/` with `.codex-plugin/plugin.json` and the same packaged `skills/` tree. Use this mode when Codex App should present Mindthus as one plugin product.
@@ -46,6 +48,8 @@ Generated release packs include `codex-plugin/mindthus/` with `.codex-plugin/plu
 
 After installation, Codex should discover:
 
+以下清单对应当前源码；发行包以所选版本为准，Explain 当前为 Unreleased。
+
 - `mindthus:using-mindthus`
 - `mindthus:sela`
 - `mindthus:mpg`
@@ -55,6 +59,8 @@ After installation, Codex should discover:
 - `mindthus:wae`
 - `mindthus:tvg`
 - `mindthus:tplan`
+- `mindthus:explain`
+- `mindthus:case-prep`
 
 ## Verify
 

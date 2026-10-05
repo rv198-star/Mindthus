@@ -42,6 +42,7 @@ from _runtime.core.io import load_json
 from _runtime.core.report import Finding
 from _runtime.core.shape import findings_from_messages
 from tplan_errors import TplanError
+from work_plan import WORK_PLAN_SCHEMA_VERSION, validate_work_plan
 from tplan_identity import (
     RUNTIME_MANIFEST_SCHEMA_VERSION, RUNTIME_FINGERPRINT_SCHEMA_VERSION,
     RUNTIME_PROVENANCE_SCHEMA_VERSION, RUNTIME_MANIFEST_RELATIVE_PATH,
@@ -68,7 +69,7 @@ USER_UPDATE_CURSOR_SCHEMA_VERSION = "tplan.user_update_cursor.v0.2"
 OUTCOME_ATTRIBUTION_SCHEMA_VERSION = "tplan.outcome_attribution.v0.1"
 MISSION_REENTRY_PREFLIGHT_SCHEMA_VERSION = "tplan.mission_reentry_preflight.v0.1"
 MISSION_REENTRY_RECEIPT_SCHEMA_VERSION = "tplan.mission_reentry_receipt.v0.1"
-RESERVED_EVIDENCE_EVENT_TYPES = {"decision_applied"}
+RESERVED_EVIDENCE_EVENT_TYPES = {"decision_applied", "planning_metadata_updated"}
 _RESERVED_EVIDENCE_AUTHORITY = object()
 _RESERVED_EVIDENCE_CONTEXT = threading.local()
 QUALIFIED_ACCEPTANCE_EVENT_TYPES = {"acceptance_passed", "acceptance_failed"}
@@ -1819,6 +1820,8 @@ def validate_mission(state: Any) -> list[str]:
         if evidence_id not in covered_acceptance_ids:
             errors.append(f"acceptance evidence {evidence_id} is not covered by a success-critical task")
 
+    if "work_plan" in state:
+        errors.extend(validate_work_plan(state, state["work_plan"]))
     return errors
 
 
@@ -1855,8 +1858,9 @@ def build_mission(
     risk_tolerance: int,
     resource_sufficiency: int,
     tasks: list[dict[str, Any]],
+    work_plan: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    return {
+    mission = {
         "schema_version": SCHEMA_VERSION,
         "runtime_provenance": new_runtime_provenance(),
         "mission": {
@@ -1875,6 +1879,59 @@ def build_mission(
         ],
         "active_task_id": None,
     }
+    if work_plan is not None:
+        errors = validate_work_plan(mission, work_plan)
+        if errors:
+            raise TplanError("; ".join(errors))
+        mission["work_plan"] = copy.deepcopy(work_plan)
+    return mission
+
+
+def record_work_plan(
+    mission_dir: Path,
+    work_plan: dict[str, Any],
+    summary: str = "Work plan metadata updated.",
+) -> dict[str, Any]:
+    """Replace optional planning annotations through the existing protected transaction."""
+    before = read_mission(mission_dir)
+    errors = validate_work_plan(before, work_plan)
+    if errors:
+        raise TplanError("; ".join(errors))
+    after = copy.deepcopy(before)
+    after["work_plan"] = copy.deepcopy(work_plan)
+    if before.get("work_plan") == after["work_plan"]:
+        with execution_trace_lock(mission_dir):
+            _require_no_pending_mission_transaction_unlocked(mission_dir, "checking a work plan update")
+            if _read_mission_unlocked(mission_dir) != before:
+                raise TplanError("Mission state changed concurrently; reload and retry the mutation")
+            if _read_interaction_guard_unlocked(mission_dir) is not None:
+                raise TplanError("interaction guard is open; work plan mutation requires an authorized resolution")
+            checked = copy.deepcopy(before)
+            _prepare_runtime_provenance(before, checked, allow_legacy_adoption=True)
+        return {"changed": False, "work_plan": copy.deepcopy(work_plan), "event": None}
+    event = prepare_event(
+        mission_dir,
+        {
+            "event_type": "planning_metadata_updated",
+            "summary": summary,
+            "task_id": None,
+            "payload": {
+                "schema_version": WORK_PLAN_SCHEMA_VERSION,
+                "coverage": work_plan["coverage"],
+                "task_ids": [block["task_id"] for block in work_plan["blocks"]],
+                "work_plan_digest": _sha256_digest(work_plan),
+            },
+        },
+    )
+    with _reserved_evidence_commit_scope():
+        commit_mission_state(
+            mission_dir,
+            before,
+            after,
+            source={"kind": "runtime_script", "name": "record_work_plan"},
+            prepared_evidence_events=[event],
+        )
+    return {"changed": True, "work_plan": copy.deepcopy(work_plan), "event": event}
 
 
 def shared_context_dir(project_root: Path) -> Path:
@@ -3244,6 +3301,8 @@ def classify_evidence_outcome(mission: dict[str, Any], event: Any) -> dict[str, 
         return {"classification": "constraint_delta", "warnings": []}
     if event_type == "decision_applied":
         return {"classification": "decision_applied_candidate", "warnings": []}
+    if event_type == "planning_metadata_updated":
+        return {"classification": "planning_metadata", "warnings": []}
     return {"classification": "unclassified_writeback", "warnings": []}
 
 

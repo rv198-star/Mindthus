@@ -52,7 +52,7 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 
 ## 方法论导航
 
-下面这些方法不是固定流水线，而是一组按场景选择的判断镜头：
+下面这些方法按场景选择，不组成固定判断流水线。方法形成结果后，当前 Agent 默认使用 [Explain](skills/explain/SKILL.md) 组织人向交付：默认完整清晰，按需压缩、降阶或可视化，不另起一轮模型调用。
 
 - [`using-mindthus / 路由入口`](skills/using-mindthus/SKILL.md)：先判断要不要介入。低风险任务直接做；输入带偏时先纠偏；缺事实时先取证。
 - [`3L5S / 三层五步`](docs/methodologies/3l5s.md)：问题还乱时，把“感觉不对”压成能复述、能验证、能执行的真问题。
@@ -64,10 +64,23 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 - [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)：产物已经成形但价值薄时，补判断、取舍、证据边界、失败路径和下游可用性。
 - [`TPlan / OKR-Runtime`](docs/methodologies/tplan.md)：长任务需要持续对齐目标、证据、任务状态和验收责任时，用它保持 Mission 不漂移。
 - [`Anti-Spiral / 反螺旋自检`](docs/methodologies/anti-spiral-self-audit.md)：同一个局部反复修时，先问是不是目标、素材或路径错了，而不是继续加层。
+- [`Explain / 解释与表达`](skills/explain/SKILL.md)：Mindthus 默认的人向结果交付 Skill。当前 Agent 使用 clarity 模式讲清结果，保留原判断与证据；brief / ELI5 / audience / HTML 是按需模式。
 
 ## 从哪里开始
 
 如果你只是想试一下，建议从 `using-mindthus` 开始。它会告诉 agent：什么时候直接做，什么时候先取证，什么时候进入某个 Mindthus 方法。
+
+所有 Mindthus 方法的人向结果默认使用 Explain，用户无需再补“请解释清楚”。当前 Agent 首次缺少有效规则上下文时读取正式 Skill，之后复用，资源按需加载；不要求先写完整原答案再重写。机器/精确格式及必需交付链接保持，短确认不扩写。Explain 已纳入 **v1.12.0 Stable**。
+
+```text
+/mindthus:explain --brief --html --audience 业务负责人 整理这份进展报告，保留限制和待验证项。
+/mindthus:3l5s 梳理这项工作；计划明确后，用 /mindthus:explain 做一份 HTML 工作计划与进展说明。
+/mindthus:tvg 强化这份方案的证据与取舍；完成后，用 /mindthus:explain 向新同事讲清。
+```
+
+`--brief` 降低阅读负担，`--eli5` 按受众做最低必要的降阶解释，`--html` 选择 HTML 表示方式；在 ChatGPT 中优先使用 Visualizations / app_block 直接内嵌交互展示，只有显式保存/下载/导出时才落为 `.html` 文件。参数可以组合，顺序不改变含义。
+
+TPlan 保留专用 structured presentation adapter，把同一只读 Mission 数据输出为文本、Visualizations / app_block 或显式导出的 HTML。其他方法默认使用 Explain，不需要复制 TPlan renderer。具体范围和保真规则见 [交付合同](skills/explain/resources/presentation-contract.md)；判断、计划、状态、验收仍由上游负责。
 
 需要整理案例时，最简单的调用是：
 
@@ -114,18 +127,16 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
-当前已发布 Stable 是 `v1.11.0`，主要面向 **Sol 6.1 降低不必要的 token 消耗**：减少重复提示、方法读取往返和无必要的流程展开，保留重要判断、证据与权限边界。
+当前已发布 Stable 是 `v1.12.0`。本版新增 **Explain / 解释与表达** 作为 Mindthus 默认人向结果交付层，并加入 TPlan 的来源约束进展/剩余工作视图与 ChatGPT Visualizations / `app_block` 交互展示。
 
-**升级建议**：主力使用 Sol 6.1 的用户可升级；主力仍使用 Sol 6.1 以下版本的用户，不建议仅为本次优化升级，可继续使用 [v1.10.1](https://github.com/rv198-star/Mindthus/releases/tag/v1.10.1)。这不是旧模型不兼容声明，而是本轮没有建立旧模型的升级收益。
+**升级建议**：希望使用默认 clarity、`--brief` / `--eli5` / `--audience` / `--html`，或需要 TPlan 进展与剩余工作可视化的用户建议升级。继续使用 v1.11.0 不会自动获得 Explain 与本轮 TPlan 展示能力。
 
-RC01→本版候选的公开开发例回归中，Sol 6.1 输入 token 少16.9%、Astra抽检少14.9%，主要来自减少读取。不是相对v1.10.1的直接统计，不承诺固定节省率、普遍提速或金额ROI。详见 [v1.11.0 发布说明](docs/releases/v1.11.0.md)。
+本版验证支持功能、边界、发行布局和工程回归；默认 Explain 的六个同源对照是开发期合成样例，不是跨模型生产 A/B，不宣称固定质量提升、token 节省、延迟收益或金额 ROI。详见 [v1.12.0 发布说明](docs/releases/v1.12.0.md)。
 
 **发布默认规则**：Stable发布不再要求同步ROI Beta。本版仅提供Stable插件包、Skills包及校验和；既有Beta版本保留，后续仅在明确需要时单独安排。TPlan runtime generation仍为 `1.5.4`。
 
-[RC01源码标签](https://github.com/rv198-star/Mindthus/tree/v1.11.0-rc.1)保留用于回退与对照；该预发布曾撤下，不恢复其Release。
-
-- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.11.0.tar.gz`。
-- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.11.0.tar.gz`。
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.12.0.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.12.0.tar.gz`。
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
 ### 下载
@@ -134,22 +145,22 @@ RC01→本版候选的公开开发例回归中，Sol 6.1 输入 token 少16.9%�
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-plugins-1.11.0.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.11.0/mindthus-plugins-1.11.0.tar.gz"
+  -o /tmp/mindthus-plugins-1.12.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.12.0/mindthus-plugins-1.12.0.tar.gz"
 rm -rf /tmp/mindthus-plugins
 mkdir -p /tmp/mindthus-plugins
-tar -xzf /tmp/mindthus-plugins-1.11.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+tar -xzf /tmp/mindthus-plugins-1.12.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
 ```
 
 Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-skills-1.11.0.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.11.0/mindthus-skills-1.11.0.tar.gz"
+  -o /tmp/mindthus-skills-1.12.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.12.0/mindthus-skills-1.12.0.tar.gz"
 rm -rf /tmp/mindthus-skills
 mkdir -p /tmp/mindthus-skills
-tar -xzf /tmp/mindthus-skills-1.11.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
+tar -xzf /tmp/mindthus-skills-1.12.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
 ### Codex Plugin Mode（推荐）
@@ -230,7 +241,7 @@ done
 卸载：
 
 ```bash
-rm -rf ~/.claude/skills/{3l5s,case-prep,edsp,mpg,sela,sra,tplan,tvg,using-mindthus,wae}
+rm -rf ~/.claude/skills/{3l5s,case-prep,edsp,explain,mpg,sela,sra,tplan,tvg,using-mindthus,wae}
 rm -rf ~/.claude/skills/_runtime
 rm -f ~/.claude/skills/runtime_bootstrap.py
 ```
@@ -290,7 +301,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.11.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md)，正式安装版见 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.12.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md)，正式安装版见 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 
