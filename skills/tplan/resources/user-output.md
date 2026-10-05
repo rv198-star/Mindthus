@@ -177,11 +177,13 @@ implicit network request or action button. The view does not write Mission state
 evidence and cannot replace the Standard execution report. Interval shares remain
 intervals in the visual representation; the renderer does not select a midpoint.
 
-HTML delivery follows Explain's dual-surface contract: after generating the one
-self-contained file, a host with native HTML/artifact preview should display that same
-artifact inline in the conversation and also expose the file for independent download.
-A host without inline HTML support falls back to the downloadable artifact and states
-the host limitation. The TPlan renderer itself only produces the artifact; host UI
+HTML delivery follows Explain's multi-surface contract. The normal conversation
+should first show a chat-native progress visualization when the host can render cards,
+bars, charts, diagrams, or images directly; this must not depend on native HTML preview.
+The same source view may additionally be exposed as an inline HTML/artifact preview when
+supported, and the self-contained HTML file remains available for independent download.
+A host without inline HTML support still shows the chat-native visualization and provides
+the file. The TPlan renderer only produces source-backed views/artifacts; host UI
 presentation does not become Mission state or runtime authority.
 
 For the view alone, use the dedicated renderer:

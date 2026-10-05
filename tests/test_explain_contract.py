@@ -50,20 +50,31 @@ class ExplainRoutingContractTests(unittest.TestCase):
 
 
 class ExplainDeliveryContractTests(unittest.TestCase):
-    def test_html_requires_inline_when_supported_and_downloadable_file_always(self):
+    def test_html_keeps_chat_native_visual_download_and_optional_inline_preview(self):
         skill = (REPO / "skills/explain/SKILL.md").read_text(encoding="utf-8")
         html_contract = (REPO / "skills/explain/resources/html-v1.md").read_text(encoding="utf-8")
         tplan_output = (REPO / "skills/tplan/resources/user-output.md").read_text(encoding="utf-8")
 
-        self.assertIn("show that artifact directly in the conversation", skill)
-        self.assertIn("same self-contained `.html` file for download", skill)
-        self.assertIn("Inline conversation view when the host supports native HTML/artifact preview", html_contract)
-        self.assertIn("Downloadable file always", html_contract)
-        self.assertIn("does not count as inline HTML", html_contract)
-        self.assertIn("HTML preview is unavailable in that host", html_contract)
-        self.assertIn("should display that same", tplan_output)
-        self.assertIn("artifact inline in the conversation", tplan_output)
-        self.assertIn("also expose the file for independent download", tplan_output)
+        skill_flat = " ".join(skill.split())
+        html_flat = " ".join(html_contract.split())
+        tplan_flat = " ".join(tplan_output.split())
+
+        self.assertIn("chat-native visual view in the current conversation", skill_flat)
+        self.assertIn("should not have to download a file merely to see the main explanation", skill_flat)
+        self.assertIn("self-contained `.html` file for download", skill_flat)
+        self.assertIn("Lack of HTML-preview support must not remove the chat-native view", skill_flat)
+
+        self.assertIn("Chat-native visual explanation first", html_flat)
+        self.assertIn("does **not** depend on HTML-preview support", html_flat)
+        self.assertIn("Inline HTML preview when supported", html_flat)
+        self.assertIn("Downloadable HTML file always", html_flat)
+        self.assertIn("generated image **can** satisfy the chat-native visual surface", html_flat)
+        self.assertIn("Do not make file download the only", html_flat)
+
+        self.assertIn("should first show a chat-native progress visualization", tplan_flat)
+        self.assertIn("must not depend on native HTML preview", tplan_flat)
+        self.assertIn("self-contained HTML file remains available for independent download", tplan_flat)
+        self.assertIn("still shows the chat-native visualization", tplan_flat)
 
 
 class ExplainPackagingContractTests(unittest.TestCase):

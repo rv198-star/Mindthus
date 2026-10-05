@@ -56,25 +56,32 @@ Explain what each linked item supports. External evidence can be unavailable off
 without making the main explanation unreadable. Preserve any standard report or
 artifact links that the upstream delivery contract still requires.
 
-### Deliver Inline And As A File
+### Deliver In Conversation And As A File
 
-The HTML artifact has **two delivery surfaces**, not two different contents:
+HTML delivery has **three presentation surfaces** that share one semantic source:
 
-1. **Inline conversation view when the host supports native HTML/artifact preview.**
-   Present the generated HTML directly in the current conversation so the user can read
-   and interact with it without first downloading the file.
-2. **Downloadable file always.** Preserve the same self-contained `.html` artifact as a
-   file the user can download, save, transfer, or open independently.
+1. **Chat-native visual explanation first.** When the result benefits from a visual
+   summary, render it directly in the current conversation using the host's available
+   native surface: cards, progress bars, charts, diagrams, an image, or another
+   immediately visible representation. This does **not** depend on HTML-preview support.
+2. **Inline HTML preview when supported.** If the host can natively render an HTML or
+   artifact preview, show the generated HTML in the conversation as an additional
+   interactive surface.
+3. **Downloadable HTML file always.** Preserve the self-contained `.html` artifact so
+   the user can download, save, transfer, or open it independently.
 
-Prefer the host's native artifact/HTML preview for the inline surface. The inline view
-and downloadable file should refer to the same generated artifact, not two separately
-rewritten reports. A screenshot, image preview, Markdown transcription, or prose
-description does not count as inline HTML.
+The chat-native view and HTML artifact may use different presentation primitives, but
+they must express the same source result and preserve the same important qualifications.
+Do not independently re-analyze or invent a second set of progress numbers for one
+surface.
 
-If the current host cannot render HTML inline, do not pretend that it did. Deliver the
-actual HTML file through the host's normal file/artifact mechanism and state that inline
-HTML preview is unavailable in that host. This is a graceful presentation fallback; it
-does not change the artifact or the source result.
+A screenshot or generated image **can** satisfy the chat-native visual surface when that
+is the host's normal in-conversation rendering mechanism. It still does not count as
+"inline HTML"; describe it as a visual preview, not as an embedded HTML document.
+
+If the host cannot render HTML inline, keep the chat-native visual explanation in the
+conversation and provide the downloadable HTML file. Do not make file download the only
+way to see the main explanation merely because inline HTML is unavailable.
 
 Use available ordinary file or syntax checks appropriate to the artifact; describe
 browser behavior as verified only if it was actually exercised.

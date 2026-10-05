@@ -66,16 +66,21 @@ Present the explained view by default. Preserve the source result and context wi
 repeating its full original output alongside the explanation. Preserve upstream
 artifact links that remain required.
 
+For content that is materially easier to understand visually, prefer a **chat-native
+visual view in the current conversation**: use the host's native cards, progress bars,
+charts, diagrams, image surface, or other directly visible representation. The user
+should not have to download a file merely to see the main explanation.
+
 Produce a formal artifact for an explicit saved-report, HTML, or file-delivery request.
-For HTML, use the dual-delivery contract in `resources/html-v1.md`: when the host can
-render a native HTML/artifact preview, show that artifact directly in the conversation
-**and** retain the same self-contained `.html` file for download. If the host lacks
-inline HTML rendering, deliver the file and say that the inline surface is unavailable;
-do not substitute a screenshot or Markdown rendering while claiming HTML was shown.
+For HTML, use the multi-surface delivery contract in `resources/html-v1.md`: keep the
+chat-native visual explanation visible in the conversation, also preserve a
+self-contained `.html` file for download, and additionally show that HTML artifact
+inline when the host supports native HTML/artifact preview. Lack of HTML-preview support
+must not remove the chat-native view.
 
 For other reports, follow the requested delivery format. Use the environment's normal
-delivery mechanism. An explanation artifact remains a view of the source, not a new
-factual authority.
+delivery mechanism. Multiple delivery surfaces are representations of the same source
+result, not new factual authorities.
 
 Aim for semantic convergence: processing the result again for the same goal should
 remain stable in meaning and level of detail.

@@ -61,7 +61,7 @@ python3 skills/tplan/scripts/render_progress_view.py MISSION_DIR --format json
 
 ### 工程检查
 
-- 当前 HEAD 的 GitHub 完整 unittest gate 通过：共 1,147 项，1,140 项通过，7 项按既有依赖条件跳过，0 失败、0 错误。首屏 UI Contract、区间占比不取中值和 HTML inline+download 双重交付合同均有回归保护。7 个跳过项为既有可选依赖检查；本次没有改变跳过规则。
+- 当前 HEAD 的 GitHub 完整 unittest gate 通过：共 1,147 项，1,140 项通过，7 项按既有依赖条件跳过，0 失败、0 错误。首屏 UI Contract、区间占比不取中值和对话原生可视化 + HTML 文件/可选 inline preview 的多表面交付合同均有回归保护。7 个跳过项为既有可选依赖检查；本次没有改变跳过规则。
 - CI 中四项 primitive/runtime smoke 命令全部通过。
 - Explain 在 Claude plugin、Claude personal skills、Codex skills、Codex plugin、OpenCode skills 五种实际构建布局中均存在，资源与链接有效；八个判断 owner 保持原集合。
 - TPlan 工作计划与进展视图回归覆盖未知、混单位、父子范围、区间份额、状态与证据冲突、共享风险、Guard、事务、来源诊断和首屏 UI Contract；最后的后端与 renderer 组合为 57 项通过。
@@ -73,7 +73,7 @@ E 页面由公共 CLI 生成。第一次实现把限制、风险/阻塞、验收
 
 修复后的首屏 UI Contract 固定为：Mission 极简状态行 → 整体进度 → 剩余总量 → 剩余工作块及占比条。风险、阻塞、依赖图、证据、估算依据、搜索/筛选、来源和历史执行链接全部进入一个默认折叠的详情区；折叠标题仍显示风险/阻塞/限制计数。区间占比使用确定段与区间段，不取中值。
 
-HTML 交付另固定为双重表面合同：宿主支持原生 HTML/Artifact preview 时，直接在当前对话中展示生成的同一 artifact，并同时保留 `.html` 文件供下载、转交和离线打开；宿主不支持时明确说明 inline preview 不可用并退回文件交付。截图、图片预览、Markdown 转录都不能冒充 inline HTML。该规则属于宿主交付层，不改变 TPlan renderer、Mission 状态或验收权。
+可视化交付固定为多表面合同：首先在普通对话里使用宿主已经具备的原生卡片、进度条、图表、简图或图片直接展示核心结果，让用户无需先下载文件；若请求 HTML，则同时保留自包含 `.html` 文件供下载、转交和离线打开，宿主支持原生 HTML/Artifact preview 时还可以额外显示交互版本。截图或生成图片可以作为 chat-native 视觉表面，但不能冒充 inline HTML。各表面共享同一源结果，不允许各算一套进度数字。该规则属于宿主交付层，不改变 TPlan renderer、Mission 状态或验收权。
 
 在 Chromium 离线环境中实际测试 1440×1024 与 390×844 视口：桌面核心看板结束于约 927px、详情入口约 955px，可在一屏内读完核心信息；窄屏保持相同信息层级并纵向排列。两个视口均无页面横向溢出、外部 HTTP 请求或 JavaScript 异常；点击工作块会打开详情并定位对应依据，详情内搜索与筛选仍可用。D 页面原生详情展开与离线访问也保持通过。
 
