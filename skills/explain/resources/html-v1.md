@@ -60,10 +60,13 @@ artifact links that the upstream delivery contract still requires.
 
 HTML is the portable file format for this resource; it is **not the only valid
 interactive surface**. If the user asks only for an interactive view inside the
-conversation, a host-native interactive artifact, installed interactive app/canvas, or
-other directly usable host widget may satisfy that request without creating a
-downloadable HTML file. It must consume the same source-backed result and must be
-visibly interactive in the current conversation.
+conversation, any actually available host interaction surface may satisfy that request
+without creating a downloadable HTML file. It must consume the same source-backed result
+and must be visibly interactive in the current conversation.
+
+This resource has no mandatory dependency on any external plugin, app, canvas, or
+provider. Provider-specific adapters are optional host integrations and must stay
+outside the portable Explain core.
 
 An explicit request for **HTML visible and interactive inside the conversation**
 requires the HTML itself on a real host preview surface. A downloadable copy is added

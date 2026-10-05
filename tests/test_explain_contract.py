@@ -62,7 +62,7 @@ class ExplainDeliveryContractTests(unittest.TestCase):
         self.assertIn("downloadable HTML file", contract)
         self.assertIn("actual source as an `html` code block", contract)
         self.assertIn("prepared content, not a rendering receipt", contract)
-        self.assertIn("installed interactive app/canvas", contract)
+        self.assertIn("no mandatory dependency on any external plugin, app, canvas, or provider", contract)
         self.assertIn("does not need to create an HTML download", tplan)
         self.assertIn("interaction acceptance open", tplan)
 

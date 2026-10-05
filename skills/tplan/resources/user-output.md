@@ -182,17 +182,20 @@ implicit network request or action button. The view does not write Mission state
 evidence and cannot replace the Standard execution report. Interval shares remain
 intervals in the visual representation; the renderer does not select a midpoint.
 
-Interactive chat delivery follows Explain's requested-surface contract. A host-native
-interactive artifact, installed interactive app/canvas, or other usable conversation
-widget may consume this same read-only work view directly; it does not need to create
-an HTML download unless the user asks for HTML/file export. For an explicit inline HTML
-request, submit the generated HTML itself to a native artifact/HTML preview. A
-previewable HTML code block may carry the actual source when supported. PNG and static
-chat summaries are useful fallback representations but do not satisfy an interaction
-request. Keep interaction acceptance open until controls are actually visible and
-usable in the conversation; tests and file creation are not a host rendering receipt.
-The renderer continues to own source-backed views/artifacts only, not host UI or Mission
-acceptance.
+Interactive chat delivery follows Explain's requested-surface contract. Any actually
+available host interaction surface may consume this same read-only work view directly;
+it does not need to create an HTML download unless the user asks for HTML/file export.
+No external plugin, app, canvas, or provider is required by TPlan or Explain. Specific
+host adapters are optional presentation integrations and must not become runtime
+dependencies or Mission authority.
+
+For an explicit inline HTML request, submit the generated HTML itself to an available
+host HTML/artifact preview. A previewable HTML code block may carry the actual source
+when supported. PNG and static chat summaries are useful fallback representations but do
+not satisfy an interaction request. Keep interaction acceptance open until controls are
+actually visible and usable in the conversation; tests and file creation are not a host
+rendering receipt. The renderer continues to own source-backed views/artifacts only, not
+host UI or Mission acceptance.
 
 A host interactive progress surface should consume the same `tplan.progress_view.v1`
 JSON and preserve the first-screen contract. Minimum useful interaction is small:
