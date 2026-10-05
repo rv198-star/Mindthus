@@ -49,6 +49,23 @@ class ExplainRoutingContractTests(unittest.TestCase):
                 self.assertNotIn("explain", routing["loaded_methods"]["items"]["enum"])
 
 
+class ExplainDeliveryContractTests(unittest.TestCase):
+    def test_html_requires_inline_when_supported_and_downloadable_file_always(self):
+        skill = (REPO / "skills/explain/SKILL.md").read_text(encoding="utf-8")
+        html_contract = (REPO / "skills/explain/resources/html-v1.md").read_text(encoding="utf-8")
+        tplan_output = (REPO / "skills/tplan/resources/user-output.md").read_text(encoding="utf-8")
+
+        self.assertIn("show that artifact directly in the conversation", skill)
+        self.assertIn("same self-contained `.html` file for download", skill)
+        self.assertIn("Inline conversation view when the host supports native HTML/artifact preview", html_contract)
+        self.assertIn("Downloadable file always", html_contract)
+        self.assertIn("does not count as inline HTML", html_contract)
+        self.assertIn("HTML preview is unavailable in that host", html_contract)
+        self.assertIn("should display that same", tplan_output)
+        self.assertIn("artifact inline in the conversation", tplan_output)
+        self.assertIn("also expose the file for independent download", tplan_output)
+
+
 class ExplainPackagingContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

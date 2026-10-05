@@ -56,10 +56,28 @@ Explain what each linked item supports. External evidence can be unavailable off
 without making the main explanation unreadable. Preserve any standard report or
 artifact links that the upstream delivery contract still requires.
 
-Return the actual HTML file through the current environment's normal artifact delivery
-mechanism. A description, screenshot, or Markdown preview alone does not fulfill an
-HTML request. Use available ordinary file or syntax checks appropriate to the artifact;
-describe browser behavior as verified only if it was actually exercised.
+### Deliver Inline And As A File
+
+The HTML artifact has **two delivery surfaces**, not two different contents:
+
+1. **Inline conversation view when the host supports native HTML/artifact preview.**
+   Present the generated HTML directly in the current conversation so the user can read
+   and interact with it without first downloading the file.
+2. **Downloadable file always.** Preserve the same self-contained `.html` artifact as a
+   file the user can download, save, transfer, or open independently.
+
+Prefer the host's native artifact/HTML preview for the inline surface. The inline view
+and downloadable file should refer to the same generated artifact, not two separately
+rewritten reports. A screenshot, image preview, Markdown transcription, or prose
+description does not count as inline HTML.
+
+If the current host cannot render HTML inline, do not pretend that it did. Deliver the
+actual HTML file through the host's normal file/artifact mechanism and state that inline
+HTML preview is unavailable in that host. This is a graceful presentation fallback; it
+does not change the artifact or the source result.
+
+Use available ordinary file or syntax checks appropriate to the artifact; describe
+browser behavior as verified only if it was actually exercised.
 
 ## Guardrails
 

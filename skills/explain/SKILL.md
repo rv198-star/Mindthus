@@ -67,6 +67,12 @@ repeating its full original output alongside the explanation. Preserve upstream
 artifact links that remain required.
 
 Produce a formal artifact for an explicit saved-report, HTML, or file-delivery request.
+For HTML, use the dual-delivery contract in `resources/html-v1.md`: when the host can
+render a native HTML/artifact preview, show that artifact directly in the conversation
+**and** retain the same self-contained `.html` file for download. If the host lacks
+inline HTML rendering, deliver the file and say that the inline surface is unavailable;
+do not substitute a screenshot or Markdown rendering while claiming HTML was shown.
+
 For other reports, follow the requested delivery format. Use the environment's normal
 delivery mechanism. An explanation artifact remains a view of the source, not a new
 factual authority.
