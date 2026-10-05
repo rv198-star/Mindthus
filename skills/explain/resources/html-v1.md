@@ -80,14 +80,21 @@ when the user also requests HTML/file export or when the host naturally exposes 
 same artifact as a file. General visual summaries may still use images; they fulfill a
 different request.
 
-For hosts offering previewable HTML code blocks, submit the generated HTML source
-directly as an `html` code block in the response and prefer **Preview as the initial
-view** when the host API exposes an initial-view or presentation-state control. Do not
-first write a file merely to obtain a preview block.
+Prefer a host-provided **sandboxed inline HTML renderer** that runs the generated
+self-contained document directly in the conversation. The host may expose this as an
+iframe, artifact preview, or equivalent isolated HTML surface. This is the preferred
+delivery path for interactive HTML because native `details`, SVG controls, keyboard
+selection and local JavaScript can run as designed.
 
-Do not invent an undocumented directive such as `default=preview`. If the host only
-offers a user-facing Code/Preview toggle, the portable Explain core can express the
-Preview preference but cannot force the client's initial tab.
+A previewable HTML code block is only a fallback when no direct render surface is
+available. In that fallback, submit the generated HTML source directly as an `html`
+code block and prefer Preview if the host exposes that choice. Do not first write a file
+merely to obtain a preview block, and do not invent an undocumented directive such as
+`default=preview`.
+
+A code block that initially opens as source code does **not** satisfy a request for
+direct interactive inline HTML. Keep that acceptance open until the rendered surface is
+actually visible and usable.
 
 If an HTML file already exists because the user requested a file artifact, the optional
 `scripts/prepare_html_delivery.py` helper can prepare a preview block from that file

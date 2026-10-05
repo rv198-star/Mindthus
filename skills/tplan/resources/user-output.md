@@ -189,13 +189,15 @@ No external plugin, app, canvas, or provider is required by TPlan or Explain. Sp
 host adapters are optional presentation integrations and must not become runtime
 dependencies or Mission authority.
 
-For an explicit inline HTML request, submit the generated HTML itself to an available
-host HTML/artifact preview. A previewable HTML code block may carry the actual source
-when supported. PNG and static chat summaries are useful fallback representations but do
-not satisfy an interaction request. Keep interaction acceptance open until controls are
-actually visible and usable in the conversation; tests and file creation are not a host
-rendering receipt. The renderer continues to own source-backed views/artifacts only, not
-host UI or Mission acceptance.
+For an explicit inline HTML request, prefer an available **sandboxed rendered HTML
+surface** (iframe, artifact preview, or equivalent isolated renderer) so the existing
+SVG/node selection, native disclosure controls and local JavaScript remain directly
+usable. A previewable HTML code block is a fallback transport for the same source, not
+equivalent interactive delivery. PNG and static chat summaries are useful fallback
+representations but do not satisfy an interaction request. Keep interaction acceptance
+open until controls are actually visible and usable in the conversation; tests and file
+creation are not a host rendering receipt. The renderer continues to own source-backed
+views/artifacts only, not host UI or Mission acceptance.
 
 A host interactive progress surface should consume the same `tplan.progress_view.v1`
 JSON and preserve the first-screen contract. Minimum useful interaction is small:
