@@ -38,7 +38,7 @@ Use the current audience and language context, honoring explicit user preference
 | `--brief` | Reduce reading load while retaining information that affects understanding, judgment, or action |
 | `--eli5` | Connect unfamiliar knowledge to existing understanding with the least necessary simplification |
 | `--audience ...` | Override the inferred audience; beginner, developer, and executive are examples |
-| `--html` | Deliver a self-contained HTML artifact with only useful local reading interactions |
+| `--html` | Present the explanation as self-contained HTML with only useful local reading interactions; in conversation, prefer inline preview rather than a file attachment |
 
 Combine flags in any order; apply each at the lowest sufficient intensity. Default
 clarity preserves detail and cognitive level, using ordinary text presentation.
@@ -90,13 +90,16 @@ The portable core must stay provider-agnostic. Host interaction is late-bound ca
 negotiation: an available adapter may enhance delivery, but its absence must not block
 Explain or change the source result.
 
-A downloadable file is **not required for an interaction-only request**. Produce a
-formal artifact only for an explicit saved-report, HTML, export, or file-delivery
-request. For an explicit in-conversation HTML request, follow
-`resources/html-v1.md`: submit the HTML itself to an available host preview surface and
-keep the same file only when HTML/file export was also requested. An image is not a
-substitute for requested interaction. Keep actual display acceptance open until the
-host or user confirms the interactive surface is visible and usable.
+`--html` selects an **HTML representation**, not a persistence target. In an ordinary
+conversation, present that HTML inline through an available host preview surface. Do
+not create or attach a downloadable file merely because `--html` was requested.
+
+Persist a `.html` file only when the user explicitly asks to save, download, export,
+attach, hand off, or otherwise receive a file artifact. For an in-conversation HTML
+request, follow `resources/html-v1.md` and submit the HTML itself to the available
+preview surface. An image is not a substitute for requested interaction. Keep actual
+display acceptance open until the host or user confirms the interactive surface is
+visible and usable.
 
 For other reports, follow the requested delivery format. Use the environment's normal
 delivery mechanism. Multiple delivery surfaces are representations of the same source
@@ -131,8 +134,8 @@ method's judgment, state, acceptance, or the user's delivery requirements.
 
 Read resources only when their guidance is relevant:
 
-- [HTML V1](resources/html-v1.md): read for `--html` or an explicitly requested HTML
-  explanation artifact.
+- [HTML V1](resources/html-v1.md): read for `--html`, inline HTML presentation, or an
+  explicitly requested saved/exported HTML artifact.
 - [TPlan progress](resources/tplan-progress.md): read for task-progress delivery,
   remaining effort, work-block shares, or parallel conditions.
 - [Expression modes](resources/expression-modes.md): read when compression, analogy,

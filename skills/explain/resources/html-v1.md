@@ -5,15 +5,21 @@ navigate, and inspect. Choose the smallest useful set of interactions for the so
 
 ## Mainline
 
-### Deliver One Self-contained File
+### Build One Self-contained HTML Representation
 
-Create a UTF-8 HTML file, such as `report.html`, containing its HTML, inline CSS, and
-only the small inline JavaScript needed for local reading interactions. Set the
-document language, title, character encoding, and viewport. Use system fonts.
+Create one UTF-8 HTML representation containing its HTML, inline CSS, and only the
+small inline JavaScript needed for reading interactions. Set the document language,
+title, character encoding, and viewport. Use system fonts.
 
-Keep the explanation readable when opened directly from the filesystem. Inline
-necessary diagrams as SVG or other self-contained assets. Link existing external
-evidence as ordinary links the reader may choose to open.
+In an ordinary conversation, keep this representation in the response and submit it to
+the available inline HTML/code preview surface. Do **not** persist it as a file solely
+because `--html` was requested.
+
+When the user explicitly asks for a saved/downloadable/exported file, persist the same
+representation as an HTML file such as `report.html`. The persisted copy must remain
+readable directly from the filesystem. Inline necessary diagrams as SVG or other
+self-contained assets. Link existing external evidence as ordinary links the reader may
+choose to open.
 
 ### Organize For Understanding
 
@@ -74,28 +80,32 @@ when the user also requests HTML/file export or when the host naturally exposes 
 same artifact as a file. General visual summaries may still use images; they fulfill a
 different request.
 
-For hosts offering previewable HTML code blocks, submit the artifact's actual source
-as an `html` code block in the response, rather than linking only to the file. The
-optional `scripts/prepare_html_delivery.py` helper prepares that block from the existing
-file without rewriting it. The downloadable file stays the original artifact.
+For hosts offering previewable HTML code blocks, submit the generated HTML source
+directly as an `html` code block in the response. Do not first write a file merely to
+obtain a preview block.
+
+If an HTML file already exists because the user requested a file artifact, the optional
+`scripts/prepare_html_delivery.py` helper can prepare a preview block from that file
+without rewriting it:
 
 ```bash
 python3 scripts/prepare_html_delivery.py /path/to/report.html
 ```
 
-The helper returns prepared content, not a rendering receipt. A host can initially
-show Code rather than Preview; do not claim automatic display unless observed. When a
-native inline artifact tool exists, prefer it to a code block. Use only documented,
+The helper returns prepared content, not a rendering receipt. A host can initially show
+Code rather than Preview; do not claim automatic display unless observed. When a native
+inline HTML/artifact tool exists, prefer it to a code block. Use only documented,
 currently exposed host capabilities; do not invent an embedding directive.
 
-Keep three facts separate: the file exists, its HTML was submitted to a presentation
-surface, and the user actually saw and interacted with it there. Record the last as
-verified only with host evidence or user confirmation. Code/CI/browser checks alone
+Keep these facts separate: HTML content was generated; it was submitted to a
+presentation surface; the user actually saw and interacted with it there; and,
+separately, a file artifact exists when one was requested. Record visibility/interaction
+as verified only with host evidence or user confirmation. Code/CI/browser checks alone
 establish neither in-conversation visibility nor delivery acceptance.
 
-When the requested inline surface remains unverified or unavailable, preserve the
-useful artifact and keep that delivery requirement open. State the actual attempted
-path and result instead of reclassifying a file, screenshot, or PNG as inline HTML.
+When the requested inline surface remains unverified or unavailable, keep that delivery
+requirement open and state the actual attempted path and result. Do not silently replace
+it with a file attachment, screenshot, or PNG.
 
 Reference: [ChatGPT code-block previews](https://help.openai.com/en/articles/20001246-working-with-writing-blocks-and-code-blocks-in-chatgpt).
 
