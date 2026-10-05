@@ -38,7 +38,7 @@ Use the current audience and language context, honoring explicit user preference
 | `--brief` | Reduce reading load while retaining information that affects understanding, judgment, or action |
 | `--eli5` | Connect unfamiliar knowledge to existing understanding with the least necessary simplification |
 | `--audience ...` | Override the inferred audience; beginner, developer, and executive are examples |
-| `--html` | Present the explanation as self-contained HTML with only useful local reading interactions; in conversation, prefer a **sandboxed rendered surface** (iframe/artifact/equivalent) rather than source Code or a file attachment |
+| `--html` | Present the explanation as interactive HTML; on ChatGPT prefer **Visualizations / app_block** so the explanation renders directly in the conversation, while saved `.html` remains an explicit export path |
 
 Combine flags in any order; apply each at the lowest sufficient intensity. Default
 clarity preserves detail and cognitive level, using ordinary text presentation.
@@ -90,22 +90,21 @@ The portable core must stay provider-agnostic. Host interaction is late-bound ca
 negotiation: an available adapter may enhance delivery, but its absence must not block
 Explain or change the source result.
 
-`--html` selects an **HTML representation**, not a persistence target. In an ordinary
-conversation, prefer a **sandboxed inline HTML render surface** that executes the
-self-contained HTML directly in the conversation. A host may implement this as an
-iframe, artifact preview, or equivalent isolated renderer. This is the preferred path
-because CSS, native controls, SVG selection and local JavaScript interactions remain
-usable without first showing source code.
+`--html` selects an **HTML representation**, not a persistence target. On ChatGPT,
+when the **Visualizations / app_block** surface is available, use it first. Submit one
+complete app block with `variant=inline`, `language=html`, and the explanation as a
+raw HTML fragment. The host owns the sandbox, title chrome, expand affordance, and
+iframe-like presentation; Explain must not recreate that shell or wrap the fragment in
+Markdown fences.
 
+Visualizations is a host adapter, not an Explain dependency. On another host, use an
+actually available sandboxed rendered HTML surface with the same source-backed result.
 A previewable `html` code block is **not** an automatic fallback for an explicit
-`--html` delivery request. Source code inside a host container is a different surface
-from a rendered HTML document. Use a code block only when the user explicitly asks to
-see or inspect the HTML source.
+`--html` delivery request. Use a code block only when the user explicitly asks to see
+or inspect HTML source.
 
-If the host has no sandboxed rendered HTML surface, keep the requested HTML delivery
-open and state that limitation accurately. Do not silently downgrade `--html` to
-source Code/Preview, and do not invent undocumented host metadata such as
-`default=preview`.
+If no rendered HTML surface exists, keep the requested HTML delivery open and state
+that limitation accurately. Do not silently downgrade `--html` to source Code/Preview.
 
 Do not create or attach a downloadable file merely because `--html` was requested.
 

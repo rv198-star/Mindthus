@@ -5,22 +5,26 @@ navigate, and inspect. Choose the smallest useful set of interactions for the so
 
 ## Mainline
 
-### Build One Self-contained HTML Representation
+### Build One Source-backed HTML View
 
-Create one UTF-8 HTML representation containing its HTML, inline CSS, and only the
-small inline JavaScript needed for reading interactions. Set the document language,
-title, character encoding, and viewport. Use system fonts.
+Build one explanation view from the source result, then adapt only its presentation
+wrapper to the host.
 
-In an ordinary conversation, keep this representation in the response and submit it to
-an available sandboxed inline HTML renderer. Use an HTML code-block preview only as the
-fallback when no direct rendered surface exists. Do **not** persist it as a file solely
-because `--html` was requested.
+On ChatGPT, when **Visualizations / app_block** is available, submit a raw HTML fragment
+through that surface with `variant=inline` and `language=html`. The fragment must not
+contain `<!doctype>`, `<html>`, `<head>`, `<body>`, Markdown fences, or a nested
+iframe. The host already supplies the sandbox document and iframe-like presentation.
+Use one stable root, local CSS, semantic controls, inline SVG when useful, and one final
+local script when interaction adds reading value.
 
-When the user explicitly asks for a saved/downloadable/exported file, persist the same
-representation as an HTML file such as `report.html`. The persisted copy must remain
-readable directly from the filesystem. Inline necessary diagrams as SVG or other
-self-contained assets. Link existing external evidence as ordinary links the reader may
-choose to open.
+When the user explicitly asks for a saved/downloadable/exported file, render the same
+source-backed view as a complete UTF-8 HTML document such as `report.html`, with its
+own title, character encoding, viewport, inline CSS, and only the small inline
+JavaScript needed for reading interactions. The persisted copy must remain readable
+directly from the filesystem.
+
+These are two wrappers around the same explanation semantics, not two independent
+analyses. Do **not** persist a file solely because `--html` was requested.
 
 ### Organize For Understanding
 
@@ -81,32 +85,25 @@ possible Preview tab. A downloadable copy is added when the user also requests
 HTML/file export or when the host naturally exposes the same artifact as a file. General
 visual summaries may still use images; they fulfill a different request.
 
-Prefer a host-provided **sandboxed inline HTML renderer** that runs the generated
-self-contained document directly in the conversation. The host may expose this as an
-iframe, artifact preview, or equivalent isolated HTML surface. This is the preferred
-delivery path for interactive HTML because native `details`, SVG controls, keyboard
-selection and local JavaScript can run as designed.
+On ChatGPT, **Visualizations / app_block is the preferred rendered HTML adapter**.
+Use its host chrome instead of recreating a title bar, expand button, iframe, or app
+shell. Keep the block focused on one explanation experience and let its height follow
+content. Local state and reading interactions may update the block in place.
 
 A previewable HTML code block is **not** a substitute or automatic fallback for an
 explicit rendered `--html` request. Use an `html` code block only when the user asks
-to inspect the HTML source itself.
+to inspect the HTML source itself. Code/Preview belongs to the code-block surface, not
+to Visualizations.
 
-If no direct sandboxed render surface exists, keep the rendered-HTML requirement open
-and report that host limitation. Do not first write a file merely to obtain a preview
-block, and do not invent an undocumented directive such as `default=preview`.
+On hosts without Visualizations, use another actually available sandboxed HTML renderer
+when one exists. A generic runtime may carry the same complete document through its own
+transport (for example the current `explain.inline_html.v1` envelope), but that
+transport is not the ChatGPT Visualizations trigger.
 
-A code block, whether it opens as Code or can be switched to Preview, does **not**
-establish that the requested sandboxed HTML document was mounted. Keep acceptance open
-until the rendered surface is actually visible and usable.
-
-For upstream runtimes that can return structured presentation requests, use the compact
-provider-agnostic envelope `explain.inline_html.v1`: `mime_type=text/html`,
-`preferred_surface=sandboxed_inline_html`, `preferred_container=iframe`,
-`fallback_surface=null`, `source_inspection_surface=html_code_block`,
-`status=prepared_not_rendered`, plus the exact self-contained `html`. The code-block
-surface is source inspection only, not delivery fallback. The envelope requests
-presentation only; it is not proof that the host rendered it and it adds no
-external-provider dependency.
+If no rendered HTML surface exists, keep the rendered-HTML requirement open and report
+that host limitation. Do not first write a file merely to obtain a preview block and do
+not invent undocumented embedding metadata. Rendering is accepted only when the user
+can actually see the rendered surface.
 
 If an HTML file already exists because the user requested a file artifact, the optional
 `scripts/prepare_html_delivery.py` helper can prepare a preview block from that file

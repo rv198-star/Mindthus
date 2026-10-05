@@ -83,7 +83,7 @@ a receipt before mutation. Active-Mission continuation is separate.
 
 Internal IDs are for runtime stability. User-facing output should lead with meaning;
 ordinary updates should not lead with raw IDs. Use `scripts/render_user_update.py`:
-`--progress` for text; `--inline-html` for inline HTML; `--html PATH` saves it.
+`--progress` for text; `--visualization` for ChatGPT; `--html PATH` saves it.
 Maintain optional `work_plan` from known context at planning, scope changes, major
 blockers or re-estimation; leave gaps unknown without per-block questions.
 

@@ -164,8 +164,10 @@ unknown rather than being replaced by a fabricated percentage.
 ```bash
 python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --progress
 
-# Preferred for an in-conversation sandboxed renderer: emits the complete
-# self-contained HTML to stdout and writes no file.
+# Preferred on ChatGPT: returns a Visualizations / app_block payload and writes no file.
+python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --visualization
+
+# Generic rendered-HTML transport for non-ChatGPT hosts.
 python3 skills/tplan/scripts/render_user_update.py "$MISSION_DIR" --inline-html
 
 # Explicit saved/exported artifact only.
@@ -194,23 +196,21 @@ No external plugin, app, canvas, or provider is required by TPlan or Explain. Sp
 host adapters are optional presentation integrations and must not become runtime
 dependencies or Mission authority.
 
-For an explicit inline HTML request, prefer an available **sandboxed rendered HTML
-surface** (iframe, artifact preview, or equivalent isolated renderer) so the existing
-SVG/node selection, native disclosure controls and local JavaScript remain directly
-usable. `render_user_update.py --inline-html` is the first-class transport for that
-surface: without `--json` it emits the exact self-contained document to stdout and
-persists nothing; with `--json` it returns an `explain.inline_html.v1` envelope whose
-preferred surface is `sandboxed_inline_html` / `iframe`, with `fallback_surface=null`.
-`html_code_block` is recorded only as `source_inspection_surface`, never as automatic
-HTML delivery fallback. The envelope status is `prepared_not_rendered` until the host
-actually mounts it.
+For an explicit `--html` request on ChatGPT, prefer **Visualizations / app_block**.
+`render_user_update.py --visualization` returns the exact app-block payload needed by
+that host surface: `language=html`, `entrypoint=index.html`, `variant=inline`, and
+a raw HTML fragment in `content`. The fragment contains the same source-backed progress
+view and preserves block selection, dependency-edge highlighting, disclosures and local
+interaction without creating a file.
 
-A previewable HTML code block is not an automatic fallback for an explicit rendered
-HTML request. It may expose source only when the user asks for source. PNG and static
-chat summaries remain useful alternate representations but do not satisfy an HTML
-interaction request. If the host cannot mount a sandboxed HTML surface, keep that
-delivery requirement open. The renderer continues to own source-backed views/artifacts
-only, not host UI or Mission acceptance.
+The app block is a presentation adapter only. It does not own Mission state, planning
+numbers, acceptance, or execution authority. The host supplies its shell and
+iframe-like sandbox; the renderer must not add a nested iframe or Markdown code fence.
+
+`--inline-html` remains a generic complete-document transport for other sandboxed HTML
+hosts. A previewable HTML code block is not an automatic fallback for an explicit
+rendered HTML request. It may expose source only when the user asks for source. If the
+host cannot mount a rendered HTML surface, keep that delivery requirement open.
 
 A host interactive progress surface should consume the same `tplan.progress_view.v1`
 JSON and preserve the first-screen contract. Minimum useful interaction is small:
@@ -228,9 +228,11 @@ python3 skills/tplan/scripts/render_progress_view.py "$MISSION_DIR" \
   --format html --out "$MISSION_DIR/reports/progress.html"
 
 python3 skills/tplan/scripts/render_progress_view.py "$MISSION_DIR" --format json
+
+python3 skills/tplan/scripts/render_progress_view.py "$MISSION_DIR" --format app-block
 ```
 
-Formats are `text`, `html` and `json`; output defaults to stdout. `--out` (or
+Formats are `text`, `html`, `json` and `app-block`; output defaults to stdout. `app-block` emits the ChatGPT Visualizations payload as JSON and never changes Mission state. `--out` (or
 `--output`) writes an artifact atomically. Outputs inside the Mission must be under
 `reports/`; the renderer refuses runtime-state targets and the Standard execution
 report filenames. `--include-internal` adds secondary recovery references.

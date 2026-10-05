@@ -535,6 +535,45 @@ class ProgressViewTests(unittest.TestCase):
             self.assertIn("交互保护：已解除", html_path.read_text())
             self.assertEqual(data["progress"]["interaction_guard_text"], "交互保护：已解除。")
 
+    def test_chatgpt_visualization_payload_is_app_block_fragment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mission_dir = Path(tmp) / "mission"
+            mission_dir.mkdir()
+            mission = source_mission()
+            (mission_dir / "mission.json").write_text(json.dumps(mission, ensure_ascii=False))
+            (mission_dir / "evidence.jsonl").write_text(
+                "\n".join(json.dumps(event, ensure_ascii=False) for event in source_events()) + "\n"
+            )
+            (mission_dir / "execution_trace.jsonl").write_text("")
+
+            rendered = run_script("render_progress_view.py", mission_dir, "--format", "app-block")
+            self.assertEqual(rendered.returncode, 0, rendered.stderr)
+            payload = json.loads(rendered.stdout)
+            self.assertEqual(payload["language"], "html")
+            self.assertEqual(payload["entrypoint"], "index.html")
+            self.assertEqual(payload["bundle_version"], 1)
+            self.assertEqual(payload["variant"], "inline")
+            self.assertEqual(payload["icon"], "app")
+            content = payload["content"]
+            self.assertTrue(content.startswith('<div id="tplan-viz">'))
+            self.assertNotIn("<!doctype", content.lower())
+            self.assertNotIn("<html", content.lower())
+            self.assertNotIn("<head", content.lower())
+            self.assertNotIn("<body", content.lower())
+            self.assertNotIn("<iframe", content.lower())
+            self.assertNotIn("```", content)
+            self.assertIn('data-select="block-', content)
+            self.assertIn("dependency-edge", content)
+            self.assertIn("<script>", content)
+            self.assertIn("var(--viz-accent)", content)
+
+            update = run_script("render_user_update.py", mission_dir, "--visualization", "--json")
+            self.assertEqual(update.returncode, 0, update.stderr)
+            data = json.loads(update.stdout)
+            self.assertEqual(data["visualization"], payload)
+            self.assertEqual(data["progress"]["schema_version"], "tplan.progress_view.v1")
+            self.assertFalse((mission_dir / "reports").exists(), "visualization delivery must not persist an artifact")
+
     def test_inline_html_is_first_class_delivery_and_does_not_require_a_file(self):
         with tempfile.TemporaryDirectory() as tmp:
             mission_dir = Path(tmp) / "mission"

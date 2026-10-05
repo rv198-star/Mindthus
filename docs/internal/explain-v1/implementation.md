@@ -3,22 +3,22 @@
 - 日期：2026-10-05（Asia/Shanghai）
 - 源码基线：`541049486ce8b61c4c7e212397922999a9b8ff2e`
 - 交付版本：Unreleased
-- 验证状态：除宿主侧“对话内可交互展示”外，Explain V1 核心技能、表达模式、TPlan 进展模型、chat-native 进度条、离线 HTML、打包与工程验证均已完成；交互表面仍待当前宿主现场验收，因此整体开发交付尚未关单。
+- 验证状态：ChatGPT 当前对话已现场确认 **Visualizations / app_block** 能直接呈现所需的内嵌交互效果；Explain V1 核心技能、表达模式、TPlan 进展模型、chat-native 进度条、Visualizations adapter、离线 HTML、打包与工程验证进入最终回归阶段。
 
-## 最后交付返修（现场未验收）
+## 最后交付返修（Visualizations 已现场确认）
 
 - chat-native 文本进展视图新增直接可见的 Unicode 进度条：源数据提供百分比时按原值绘制；剩余占比区间用 `█` 表示确定下界、`▒` 表示不确定区间、`░` 表示其余范围。没有源百分比时不为“好看”而造数字。
-- `--html` 已从“文件附件”与“代码块 Preview”语义中进一步解耦：普通对话的首选技术是宿主提供的 **sandboxed inline HTML render surface**（例如 iframe / artifact preview / 等价隔离容器），让现有 HTML、SVG 和本地 JavaScript 直接运行。HTML code block 不再是 `--html` 的自动 fallback；只在用户明确要求查看源码时使用。如果宿主没有直接渲染面，就保持 HTML 交付未完成，不能用 Code/Preview 冒充“直接交互式内嵌”。TPlan 现提供 `render_user_update.py --inline-html`：非 JSON 模式直接输出完整 self-contained HTML 且不写文件；JSON 模式返回 `explain.inline_html.v1` presentation envelope，明确请求 `sandboxed_inline_html` / `iframe`，直到宿主真正挂载前状态保持 `prepared_not_rendered`。只有用户明确要求保存、下载、导出、附件或文件交接时才持久化 `.html`。用户只要“对话内可交互”时，由运行时实际可用的宿主 surface / 可选适配器消费同一只读 view；Explain portable core 不依赖任何外部插件、App、Canvas 或具体提供商。
+- `--html` 的 ChatGPT 宿主实现已定位并现场确认：使用 **Visualizations / app_block**，不是 Markdown HTML code block、附件、Jupyter HTML、MagicPath Canvas，也不是项目自定义 envelope。Explain 直接提交 `variant=inline`、`language=html` 的 raw HTML fragment，由 ChatGPT 提供 sandbox 与 iframe-like 宿主展示；Code/Preview 只属于源码查看面。TPlan 新增 `render_user_update.py --visualization` 与 `render_progress_view.py --format app-block`，从同一个 `tplan.progress_view.v1` 生成 Visualizations payload；工作块选择、dependency-edge 高亮、展开与本地交互继续存在。`--inline-html` 保留为非 ChatGPT 宿主的通用 transport，`.html` 只在显式文件导出时持久化。Explain portable core 仍不依赖具体插件或提供商。
 
 - 新增 `skills/explain/scripts/prepare_html_delivery.py`：只读现有 HTML，输出可预览 HTML 代码块及同源 SHA-256；状态固定为 `prepared_not_verified`，不假装拥有宿主的显示回执。
 - [当前任务的真实交付状态](current-delivery-status.html)替代先前无来源的87%进度图；状态页现在区分已完成 Skill 功能、当前交互表面验收、后续合并与发布，不再把下载 HTML 作为交互请求的必选项。
 - 本轮 Python 3.11 聚焦回归：107 项，106 通过、1 个既有可选依赖跳过；覆盖 Explain 合同、`work_plan`、progress renderer、五种打包布局，以及新增聊天进度条/区间条。另单独运行 progress + Explain 29 项全部通过。
 - 同一 HTML 在 Chromium 的 1440px/390px 视口可展开原生 details，无横向溢出、外部请求或 JavaScript 错误。这是独立浏览器验证，不是当前对话显示验收。
-- 交互表面保持独立未验收：HTML MIME、附件、PNG、代码测试和外部浏览器都不算通过。当前策略是优先使用宿主真正可调用的 interactive artifact / app / canvas；若宿主只提供静态聊天表面，继续用直接可见的进度条交付，但不把静态输出冒充交互成功。
+- 交互表面已在当前 ChatGPT 对话用 Visualizations / app_block 现场确认：用户明确反馈该效果就是此前满意的内嵌交互式可视化。HTML MIME、附件、PNG、Jupyter rich output、MagicPath Canvas 和 Code/Preview 均已实测排除为目标路径。后续验收只需确认 Mindthus 生成的 app_block payload 保留同一交互语义。
 
 ## 已确认的产品范围
 
-Explain 是独立的理解与表达技能。它解释已有结果，保留原判断、证据强度、状态、验收和执行权限。默认完整清晰；`--brief` 减少阅读负担，`--eli5` 按受众做最低必要降阶，`--audience` 覆盖受众，`--html` 选择自包含 HTML 表示方式：对话内优先 sandboxed renderer，显式保存/下载时才持久化为文件。参数可以组合，任务入口与最终交付共用同一套转换规则。
+Explain 是独立的理解与表达技能。它解释已有结果，保留原判断、证据强度、状态、验收和执行权限。默认完整清晰；`--brief` 减少阅读负担，`--eli5` 按受众做最低必要降阶，`--audience` 覆盖受众，`--html` 选择 HTML 表示方式：ChatGPT 中优先 Visualizations / app_block，其他宿主使用其真实 rendered HTML surface；显式保存/下载时才持久化为文件。参数可以组合，任务入口与最终交付共用同一套转换规则。
 
 TPlan 是首个正式上游接入场景。用户需要理解整体进展、剩余工作块、剩余估计、各块在剩余量中的占比，以及已知前置和并行条件。
 
@@ -85,9 +85,9 @@ E 页面由公共 CLI 生成。第一次实现把限制、风险/阻塞、验收
 
 修复后的首屏 UI Contract 固定为：Mission 极简状态行 → 整体进度 → 剩余总量 → 剩余工作块及占比条。风险、阻塞、依赖图、证据、估算依据、搜索/筛选、来源和历史执行链接全部进入一个默认折叠的详情区；折叠标题仍显示风险/阻塞/限制计数。区间占比使用确定段与区间段，不取中值。
 
-**交付状态更正：**用户明确要求的是当前消息中可见、可交互的 HTML，同时可以独立下载。`c33957c9` 的图片优先合同不能代替这项验收。本轮新增实际 HTML 预览块准备器，保持源文件和预览内容一致；文件生成、代码测试、外部浏览器验证与当前对话内验收分开记录。没有宿主或用户的可见/交互证据前，内嵌交付保持未验收。
+**交付状态更正：**用户明确要求的是当前消息中直接可见、可交互的 HTML。现场探针最终确认目标宿主表面是 ChatGPT **Visualizations / app_block**；其宿主外壳提供右上角菜单（如复制为图像、发布为 Site），与此前成功样例一致。Markdown HTML code block 的 Code/Preview、文件附件、Jupyter rich HTML、直接 iframe 标签和 MagicPath Canvas 均不是该目标表面。Visualizations 的现场确认因此关闭“宿主是否存在”这一不确定性，项目侧改为输出 app_block payload。
 
-先前聊天图中的“87%”和“PR 已完成20%”来自临时人为权重，未见于源计划；撤回这些数字及“只剩合并发布”的结论。真实剩余工作是：内嵌交付现场验收、相应复核与任务关单；随后是待批准的合并和待决定的发布，剩余工作量与占比尚未估算。
+先前聊天图中的“87%”和“PR 已完成20%”来自临时人为权重，未见于源计划；撤回这些数字及“只剩合并发布”的结论。Visualizations 宿主表面已经现场确认；真实剩余工作变为：项目侧 app_block adapter 的回归与交付复核、任务关单，随后是待批准的合并和待决定的发布。剩余工作量与占比仍未估算。
 
 在 Chromium 离线环境中实际测试 1440×1024 与 390×844 视口：桌面核心看板结束于约 927px、详情入口约 955px，可在一屏内读完核心信息；窄屏保持相同信息层级并纵向排列。两个视口均无页面横向溢出、外部 HTTP 请求或 JavaScript 异常；点击工作块会打开详情并定位对应依据，详情内搜索与筛选仍可用。D 页面原生详情展开与离线访问也保持通过。
 

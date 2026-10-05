@@ -633,6 +633,199 @@ SCRIPT = """
 """
 
 
+APP_BLOCK_STYLE = """
+#tplan-viz{color:var(--viz-text);font:inherit;min-width:0}
+#tplan-viz *{box-sizing:border-box}
+#tplan-viz .tp-head{display:grid;gap:5px;margin-bottom:16px}
+#tplan-viz .tp-eyebrow{font-size:12px;letter-spacing:.08em;color:var(--viz-muted)}
+#tplan-viz .tp-title{font-size:22px;line-height:1.3;font-weight:700;margin:0}
+#tplan-viz .tp-meta{font-size:13px;color:var(--viz-muted);margin:0}
+#tplan-viz .tp-summary{display:grid;grid-template-columns:1.15fr 1fr;gap:12px;margin-bottom:18px}
+#tplan-viz .tp-card{border:1px solid var(--viz-border);border-radius:12px;padding:14px;background:var(--viz-card);min-width:0}
+#tplan-viz .tp-label{font-size:12px;color:var(--viz-muted)}
+#tplan-viz .tp-value{font-size:28px;line-height:1.2;font-weight:700;margin-top:4px;overflow-wrap:anywhere}
+#tplan-viz .tp-sub{font-size:12px;color:var(--viz-muted);margin-top:4px}
+#tplan-viz .tp-progress,#tplan-viz .tp-share{height:9px;border-radius:999px;background:var(--viz-panel);overflow:hidden;position:relative;margin-top:10px}
+#tplan-viz .tp-fill{display:block;height:100%;background:var(--viz-accent);border-radius:inherit}
+#tplan-viz .tp-range{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,var(--viz-series-2),var(--viz-series-2) 4px,transparent 4px,transparent 8px)}
+#tplan-viz .tp-section-title{font-size:15px;font-weight:700;margin:0 0 5px}
+#tplan-viz .tp-help{font-size:13px;color:var(--viz-muted);margin:0 0 10px}
+#tplan-viz .tp-work{display:grid;gap:8px}
+#tplan-viz .tp-work-btn{width:100%;text-align:left;border:1px solid var(--viz-border);border-radius:11px;background:transparent;color:inherit;padding:12px;cursor:pointer;min-height:58px}
+#tplan-viz .tp-work-btn[aria-pressed="true"]{border-color:var(--viz-accent);background:var(--viz-accent-bg)}
+#tplan-viz .tp-work-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+#tplan-viz .tp-work-title{font-weight:650;min-width:0;overflow-wrap:anywhere}
+#tplan-viz .tp-state{font-size:12px;color:var(--viz-muted);white-space:nowrap}
+#tplan-viz .tp-work-metrics{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:5px;font-size:12px;color:var(--viz-muted)}
+#tplan-viz .tp-detail{margin-top:14px;border:1px solid var(--viz-border);border-radius:12px;padding:14px;background:var(--viz-panel)}
+#tplan-viz .tp-detail h3{font-size:15px;margin:0 0 7px}
+#tplan-viz .tp-detail p{font-size:13px;line-height:1.55;margin:6px 0}
+#tplan-viz .tp-detail strong{font-weight:650}
+#tplan-viz details{margin-top:14px;border-top:1px solid var(--viz-border);padding-top:12px}
+#tplan-viz summary{cursor:pointer;font-weight:650;font-size:14px}
+#tplan-viz .tp-deep{display:grid;gap:14px;padding-top:10px}
+#tplan-viz .tp-note{font-size:12px;line-height:1.55;color:var(--viz-muted)}
+#tplan-viz .graph-wrap{overflow-x:auto}
+#tplan-viz .dependency-graph{display:block;max-width:none;margin:0 auto}
+#tplan-viz .graph-node rect{fill:var(--viz-card);stroke:var(--viz-border);stroke-width:1.4}
+#tplan-viz .graph-node[role="button"]{cursor:pointer}
+#tplan-viz .graph-node[data-selected="true"] rect{fill:var(--viz-accent-bg);stroke:var(--viz-accent);stroke-width:2}
+#tplan-viz .node-title{fill:var(--viz-text);font-size:14px;font-weight:600}
+#tplan-viz .node-caption{fill:var(--viz-muted);font-size:12px}
+#tplan-viz .dependency-edge{fill:none;stroke:var(--viz-border);color:var(--viz-muted);stroke-width:1.8}
+#tplan-viz .dependency-edge[data-selected="true"]{stroke:var(--viz-accent);color:var(--viz-accent);stroke-width:2.5}
+#tplan-viz :focus-visible{outline:3px solid var(--viz-accent);outline-offset:3px}
+@media(max-width:560px){#tplan-viz .tp-summary{grid-template-columns:1fr}#tplan-viz .tp-work-top{display:block}#tplan-viz .tp-state{display:block;margin-top:2px}}
+"""
+
+APP_BLOCK_SCRIPT = """
+(()=>{
+  const root=document.getElementById('tplan-viz');
+  if(!root||root.dataset.ready==='1') return;
+  root.dataset.ready='1';
+  const buttons=Array.from(root.querySelectorAll('[data-select]'));
+  const panels=Array.from(root.querySelectorAll('[data-detail-key]'));
+  function select(key){
+    buttons.forEach(node=>{
+      const active=node.dataset.select===key;
+      node.dataset.selected=String(active);
+      node.setAttribute('aria-pressed',String(active));
+    });
+    root.querySelectorAll('.dependency-edge').forEach(edge=>{
+      edge.dataset.selected=String(edge.dataset.from===key||edge.dataset.to===key);
+    });
+    panels.forEach(panel=>{panel.hidden=panel.dataset.detailKey!==key;});
+  }
+  buttons.forEach(node=>{
+    node.addEventListener('click',()=>select(node.dataset.select));
+    if(node.tagName.toLowerCase()!=='button') node.addEventListener('keydown',event=>{
+      if(event.key==='Enter'||event.key===' '){event.preventDefault();select(node.dataset.select);}
+    });
+  });
+  const first=root.querySelector('.tp-work-btn[data-select]');
+  if(first) select(first.dataset.select);
+})();
+"""
+
+
+def _app_share_bar_html(share: dict[str, Any] | None) -> str:
+    if share is None:
+        return '<div class="tp-share" aria-label="剩余占比未估算"></div>'
+    low = max(0.0, min(100.0, float(share["low"])))
+    high = max(low, min(100.0, float(share["high"])))
+    if low == high:
+        fill = f'<span class="tp-fill" style="width:{low:.6g}%"></span>'
+    else:
+        fill = (
+            f'<span class="tp-fill" style="width:{low:.6g}%"></span>'
+            f'<span class="tp-range" style="left:{low:.6g}%;width:{high-low:.6g}%"></span>'
+        )
+    return f'<div class="tp-share" aria-label="剩余占比 {_esc(_range(share, percent=True))}">{fill}</div>'
+
+
+def render_progress_app_block(report: dict[str, Any]) -> dict[str, Any]:
+    """Return a ChatGPT Visualizations/app_block payload from the same read-only report."""
+    mission = report["mission"]
+    title = (mission.get("title") or "TPlan 进展与剩余工作") + " · 进展与剩余工作"
+    if report["diagnostic_only"]:
+        warnings = "".join(f"<li>{_esc(item)}</li>" for item in report["limitations"])
+        content = (
+            '<div id="tplan-viz"><div class="tp-head"><div class="tp-eyebrow">TPLAN · 运行时来源诊断</div>'
+            f'<h2 class="tp-title">{_esc(mission["title"])}</h2></div>'
+            f'<div class="tp-card"><div class="tp-label">运行时状态</div><div class="tp-value">{_esc(report["runtime"]["status"])}</div>'
+            f'<ul>{warnings}</ul></div><style>{APP_BLOCK_STYLE}</style></div>'
+        )
+        return {
+            "language": "html", "entrypoint": "index.html", "bundle_version": 1,
+            "title": title, "variant": "inline", "icon": "app", "content": content,
+        }
+
+    view = report["work_view"]
+    blocks = _remaining_blocks(view)
+    primary_blocks = _primary_blocks(blocks)
+    keys = {block["task_id"]: f"block-{index}" for index, block in enumerate(view["blocks"])}
+    progress = view.get("progress")
+    progress_percent = _progress_percent(progress)
+    parts = [
+        '<div id="tplan-viz">',
+        '<div class="tp-head"><div class="tp-eyebrow">TPLAN · 进展与剩余工作</div>',
+        f'<h2 class="tp-title">{_esc(mission["title"])}</h2>',
+        f'<p class="tp-meta">Mission 状态：{_esc(_status(mission["status"]))}',
+    ]
+    if mission.get("active_task_title"):
+        parts.append(f' · 当前工作：{_esc(mission["active_task_title"])}')
+    if report["source"].get("as_of"):
+        parts.append(f' · 更新：{_esc(report["source"]["as_of"])}')
+    parts.extend(['</p></div>', '<div class="tp-summary">', '<section class="tp-card"><div class="tp-label">整体进度</div>',
+                  f'<div class="tp-value">{_esc(_progress_display(progress))}</div>'])
+    if progress is not None:
+        parts.append(f'<div class="tp-sub">{_esc(progress["label"])}</div>')
+    else:
+        parts.append('<div class="tp-sub">源计划未提供整体进度数值</div>')
+    if progress_percent is not None:
+        parts.append(f'<div class="tp-progress" aria-label="整体进度 {_esc(_progress_display(progress))}"><span class="tp-fill" style="width:{progress_percent:.6g}%"></span></div>')
+    parts.extend(['</section>', '<section class="tp-card"><div class="tp-label">预计剩余工作</div>',
+                  f'<div class="tp-value">{_esc(_remaining_text(view))}</div>',
+                  f'<div class="tp-sub">{_esc(_block_count_text(blocks))}</div></section></div>',
+                  '<section><h3 class="tp-section-title">剩余工作构成</h3>',
+                  '<p class="tp-help">选择工作块可查看估计依据、前置关系与并行条件。</p><div class="tp-work">'])
+    if not primary_blocks:
+        parts.append('<div class="tp-card">当前没有可作为独立剩余工作量展示的工作块。</div>')
+    for block in primary_blocks:
+        key = keys[block["task_id"]]
+        share = block.get("remaining_share")
+        parts.extend([
+            f'<button type="button" class="tp-work-btn" data-select="{key}" aria-pressed="false">',
+            '<div class="tp-work-top">',
+            f'<span class="tp-work-title">{_esc(block["title"])}</span>',
+            f'<span class="tp-state">{_esc(_status(block["status"]))}</span></div>',
+            '<div class="tp-work-metrics">',
+            f'<span>剩余 {_esc(_range(block.get("remaining")))}</span>',
+            f'<span>占比 {_esc(_range(share, percent=True))}</span></div>',
+            _app_share_bar_html(share), '</button>'
+        ])
+    parts.append('</div></section>')
+
+    for block in primary_blocks:
+        key = keys[block["task_id"]]
+        estimate = block.get("remaining")
+        parts.extend([
+            f'<section class="tp-detail" data-detail-key="{key}" hidden>',
+            f'<h3>{_esc(block["title"])}</h3>',
+            f'<p><strong>前置：</strong>{_esc(_dependencies_text(block))}</p>',
+            f'<p><strong>并行条件：</strong>{_esc(_parallel_text(block))}</p>',
+        ])
+        if estimate:
+            parts.append(f'<p><strong>估计依据：</strong>{_esc(estimate["basis"])}</p>')
+        if block.get("remaining_uncertain"):
+            parts.append(f'<p><strong>待核对：</strong>{_esc("；".join(block.get("uncertainty_reasons", [])))}</p>')
+        parts.append('</section>')
+
+    parts.extend(['<details><summary>查看完整关系与口径</summary><div class="tp-deep">'])
+    if view.get("risks"):
+        parts.append('<section><h3 class="tp-section-title">当前风险</h3>')
+        for record in view["risks"]:
+            parts.append(f'<p class="tp-note">{_esc(record["summary"])}</p>')
+        parts.append('</section>')
+    if view.get("blockers"):
+        parts.append('<section><h3 class="tp-section-title">主要阻塞点</h3>')
+        for record in view["blockers"]:
+            parts.append(f'<p class="tp-note">{_esc(record["summary"])}</p>')
+        parts.append('</section>')
+    parts.append(f'<section><h3 class="tp-section-title">前置关系图</h3><div class="graph-wrap">{_graph(view, keys)}</div></section>')
+    parts.extend([
+        '<section><h3 class="tp-section-title">口径</h3>',
+        f'<p class="tp-note">{_esc(PROGRESS_NOTE)}</p>',
+        f'<p class="tp-note">{_esc(SHARE_NOTE)}</p>',
+        f'<p class="tp-note">{_esc(PARALLEL_NOTE)}</p></section>',
+        '</div></details>', f'<style>{APP_BLOCK_STYLE}</style>', f'<script>{APP_BLOCK_SCRIPT}</script>', '</div>'
+    ])
+    return {
+        "language": "html", "entrypoint": "index.html", "bundle_version": 1,
+        "title": title, "variant": "inline", "icon": "app", "content": "".join(parts),
+    }
+
+
 def render_progress_html(report: dict[str, Any], *, output_path: Path | None = None) -> str:
     if report["diagnostic_only"]:
         diagnostic = json.dumps(report["runtime"], ensure_ascii=False, indent=2, allow_nan=False)
@@ -858,7 +1051,7 @@ def write_progress_artifact(path: Path, rendered: str, mission_dir: Path) -> Pat
 def main() -> int:
     parser = argparse.ArgumentParser(description="Render TPlan progress and remaining work without changing Mission state.")
     parser.add_argument("mission_dir")
-    parser.add_argument("--format", choices=("text", "html", "json"), default="text")
+    parser.add_argument("--format", choices=("text", "html", "json", "app-block"), default="text")
     parser.add_argument("--out", "--output", dest="out", help="Write the view atomically to this file; default is stdout.")
     parser.add_argument("--include-internal", action="store_true", help="Show secondary recovery references.")
     args = parser.parse_args()
@@ -867,6 +1060,8 @@ def main() -> int:
         report = build_progress_report(read_user_update_snapshot(mission_dir), include_internal=args.include_internal, mission_dir=mission_dir)
         if args.format == "html":
             rendered = render_progress_html(report, output_path=Path(args.out) if args.out else None)
+        elif args.format == "app-block":
+            rendered = json.dumps(render_progress_app_block(report), ensure_ascii=False, indent=2, allow_nan=False) + "\n"
         elif args.format == "json":
             rendered = json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
         else:

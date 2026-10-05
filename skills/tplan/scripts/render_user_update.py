@@ -309,9 +309,14 @@ def main() -> int:
     parser.add_argument("--json", action="store_true", help="Print machine-readable render fields.")
     parser.add_argument("--progress", action="store_true", help="Explain overall progress, remaining work and declared dependencies.")
     parser.add_argument(
+        "--visualization",
+        action="store_true",
+        help="Emit a ChatGPT Visualizations app_block payload; implies --progress and does not write a file.",
+    )
+    parser.add_argument(
         "--inline-html",
         action="store_true",
-        help="Emit self-contained progress HTML for a sandboxed inline renderer; implies --progress and does not write a file.",
+        help="Emit self-contained progress HTML for a generic sandboxed inline renderer; implies --progress and does not write a file.",
     )
     parser.add_argument("--html", metavar="PATH", help="Write a self-contained progress HTML artifact; implies --progress.")
     args = parser.parse_args()
@@ -325,9 +330,10 @@ def main() -> int:
             delivery=args.delivery,
             include_internal=args.include_internal,
         )
-        if args.progress or args.inline_html or args.html:
+        if args.progress or args.visualization or args.inline_html or args.html:
             from render_progress_view import (
                 build_progress_report,
+                render_progress_app_block,
                 render_progress_html,
                 render_progress_text,
                 write_progress_artifact,
@@ -340,7 +346,7 @@ def main() -> int:
                 args.delivery == "explicit" or result["update_kind"] == "full"
                 or snapshot["runtime_provenance"].get("compatible") is False
             )
-            if show_progress or args.inline_html or args.html:
+            if show_progress or args.visualization or args.inline_html or args.html:
                 progress = build_progress_report(
                     snapshot, include_internal=args.include_internal, mission_dir=mission_dir,
                     guard_just_released=result["guard_just_released"],
@@ -350,8 +356,12 @@ def main() -> int:
                     result["text"] = render_progress_text(progress)
                     result["update_kind"] = "diagnostic" if progress["diagnostic_only"] else "progress"
 
-                # Render the HTML once so inline and optional file delivery are
-                # guaranteed to expose the exact same representation.
+                if args.visualization:
+                    result["visualization"] = render_progress_app_block(progress)
+
+                # Generic inline HTML and explicit file export share one complete
+                # document representation; ChatGPT Visualizations uses the same
+                # report data but a host-native app_block fragment.
                 html_source = None
                 if args.inline_html or args.html:
                     output_path = Path(args.html) if args.html else None
@@ -380,6 +390,8 @@ def main() -> int:
 
     if args.json:
         print(json.dumps({**result, "include_internal": args.include_internal, "delivery": args.delivery}, ensure_ascii=False, indent=2))
+    elif args.visualization:
+        print(json.dumps(result["visualization"], ensure_ascii=False, indent=2))
     elif args.inline_html:
         sys.stdout.write(result["inline_html"]["html"])
     else:
