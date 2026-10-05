@@ -11,10 +11,10 @@
 - 交互需求已从 HTML 文件格式中解耦：用户只要“对话内可交互”时，可由宿主原生 artifact、已安装 interactive app/canvas 或其他 widget 直接消费同一只读 view；只有显式要求 HTML/文件导出时才必须生成下载文件。
 
 - 新增 `skills/explain/scripts/prepare_html_delivery.py`：只读现有 HTML，输出可预览 HTML 代码块及同源 SHA-256；状态固定为 `prepared_not_verified`，不假装拥有宿主的显示回执。
-- [当前任务的真实交付状态](current-delivery-status.html)替代先前无来源的87%进度图。该快照固定到 `c33957c9` 核查基线，并保留当前内嵌交付未验收、PR 草稿和未发布状态。
-- 聚焦回归：70 项，69 通过、1 个既有可选依赖跳过；覆盖实际 HTML 内容与文件同源、反引号不逃逸、只读和五种打包布局。
+- [当前任务的真实交付状态](current-delivery-status.html)替代先前无来源的87%进度图；状态页现在区分已完成 Skill 功能、当前交互表面验收、后续合并与发布，不再把下载 HTML 作为交互请求的必选项。
+- 本轮 Python 3.11 聚焦回归：107 项，106 通过、1 个既有可选依赖跳过；覆盖 Explain 合同、`work_plan`、progress renderer、五种打包布局，以及新增聊天进度条/区间条。另单独运行 progress + Explain 29 项全部通过。
 - 同一 HTML 在 Chromium 的 1440px/390px 视口可展开原生 details，无横向溢出、外部请求或 JavaScript 错误。这是独立浏览器验证，不是当前对话显示验收。
-- 当前对话已经尝试 HTML MIME 输出，但没有获得可见与交互回执；本轮实际交付改用完整 HTML 预览代码块并同时提供文件。当前宿主是否默认打开 Preview 仍需现场证据，任务不能据此自动标为完成。
+- 交互表面保持独立未验收：HTML MIME、附件、PNG、代码测试和外部浏览器都不算通过。当前策略是优先使用宿主真正可调用的 interactive artifact / app / canvas；若宿主只提供静态聊天表面，继续用直接可见的进度条交付，但不把静态输出冒充交互成功。
 
 ## 已确认的产品范围
 
