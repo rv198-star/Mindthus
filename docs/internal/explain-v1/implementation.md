@@ -8,7 +8,7 @@
 ## 最后交付返修（现场未验收）
 
 - chat-native 文本进展视图新增直接可见的 Unicode 进度条：源数据提供百分比时按原值绘制；剩余占比区间用 `█` 表示确定下界、`▒` 表示不确定区间、`░` 表示其余范围。没有源百分比时不为“好看”而造数字。
-- `--html` 已从“文件附件”与“代码块 Preview”语义中进一步解耦：普通对话的首选技术是宿主提供的 **sandboxed inline HTML render surface**（例如 iframe / artifact preview / 等价隔离容器），让现有 HTML、SVG 和本地 JavaScript 直接运行。HTML code block 只是 fallback；如果默认显示源码，即使用户可以手动切 Preview，也不算“直接交互式内嵌”已经通过。TPlan 现提供 `render_user_update.py --inline-html`：非 JSON 模式直接输出完整 self-contained HTML 且不写文件；JSON 模式返回 `explain.inline_html.v1` presentation envelope，明确请求 `sandboxed_inline_html` / `iframe`，直到宿主真正挂载前状态保持 `prepared_not_rendered`。只有用户明确要求保存、下载、导出、附件或文件交接时才持久化 `.html`。用户只要“对话内可交互”时，由运行时实际可用的宿主 surface / 可选适配器消费同一只读 view；Explain portable core 不依赖任何外部插件、App、Canvas 或具体提供商。
+- `--html` 已从“文件附件”与“代码块 Preview”语义中进一步解耦：普通对话的首选技术是宿主提供的 **sandboxed inline HTML render surface**（例如 iframe / artifact preview / 等价隔离容器），让现有 HTML、SVG 和本地 JavaScript 直接运行。HTML code block 不再是 `--html` 的自动 fallback；只在用户明确要求查看源码时使用。如果宿主没有直接渲染面，就保持 HTML 交付未完成，不能用 Code/Preview 冒充“直接交互式内嵌”。TPlan 现提供 `render_user_update.py --inline-html`：非 JSON 模式直接输出完整 self-contained HTML 且不写文件；JSON 模式返回 `explain.inline_html.v1` presentation envelope，明确请求 `sandboxed_inline_html` / `iframe`，直到宿主真正挂载前状态保持 `prepared_not_rendered`。只有用户明确要求保存、下载、导出、附件或文件交接时才持久化 `.html`。用户只要“对话内可交互”时，由运行时实际可用的宿主 surface / 可选适配器消费同一只读 view；Explain portable core 不依赖任何外部插件、App、Canvas 或具体提供商。
 
 - 新增 `skills/explain/scripts/prepare_html_delivery.py`：只读现有 HTML，输出可预览 HTML 代码块及同源 SHA-256；状态固定为 `prepared_not_verified`，不假装拥有宿主的显示回执。
 - [当前任务的真实交付状态](current-delivery-status.html)替代先前无来源的87%进度图；状态页现在区分已完成 Skill 功能、当前交互表面验收、后续合并与发布，不再把下载 HTML 作为交互请求的必选项。

@@ -87,22 +87,26 @@ iframe, artifact preview, or equivalent isolated HTML surface. This is the prefe
 delivery path for interactive HTML because native `details`, SVG controls, keyboard
 selection and local JavaScript can run as designed.
 
-A previewable HTML code block is only a fallback when no direct render surface is
-available. In that fallback, submit the generated HTML source directly as an `html`
-code block and prefer Preview if the host exposes that choice. Do not first write a file
-merely to obtain a preview block, and do not invent an undocumented directive such as
-`default=preview`.
+A previewable HTML code block is **not** a substitute or automatic fallback for an
+explicit rendered `--html` request. Use an `html` code block only when the user asks
+to inspect the HTML source itself.
 
-A code block that initially opens as source code does **not** satisfy a request for
-direct interactive inline HTML. Keep that acceptance open until the rendered surface is
-actually visible and usable.
+If no direct sandboxed render surface exists, keep the rendered-HTML requirement open
+and report that host limitation. Do not first write a file merely to obtain a preview
+block, and do not invent an undocumented directive such as `default=preview`.
+
+A code block, whether it opens as Code or can be switched to Preview, does **not**
+establish that the requested sandboxed HTML document was mounted. Keep acceptance open
+until the rendered surface is actually visible and usable.
 
 For upstream runtimes that can return structured presentation requests, use the compact
 provider-agnostic envelope `explain.inline_html.v1`: `mime_type=text/html`,
 `preferred_surface=sandboxed_inline_html`, `preferred_container=iframe`,
-`fallback_surface=html_code_block`, `status=prepared_not_rendered`, plus the exact
-self-contained `html`. The envelope requests presentation only; it is not proof that
-the host rendered it and it adds no external-provider dependency.
+`fallback_surface=null`, `source_inspection_surface=html_code_block`,
+`status=prepared_not_rendered`, plus the exact self-contained `html`. The code-block
+surface is source inspection only, not delivery fallback. The envelope requests
+presentation only; it is not proof that the host rendered it and it adds no
+external-provider dependency.
 
 If an HTML file already exists because the user requested a file artifact, the optional
 `scripts/prepare_html_delivery.py` helper can prepare a preview block from that file

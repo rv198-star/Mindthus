@@ -363,7 +363,8 @@ def main() -> int:
                         "mime_type": "text/html",
                         "preferred_surface": "sandboxed_inline_html",
                         "preferred_container": "iframe",
-                        "fallback_surface": "html_code_block",
+                        "fallback_surface": None,
+                        "source_inspection_surface": "html_code_block",
                         "status": "prepared_not_rendered",
                         "html": html_source,
                     }

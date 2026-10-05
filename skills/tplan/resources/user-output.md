@@ -200,15 +200,17 @@ SVG/node selection, native disclosure controls and local JavaScript remain direc
 usable. `render_user_update.py --inline-html` is the first-class transport for that
 surface: without `--json` it emits the exact self-contained document to stdout and
 persists nothing; with `--json` it returns an `explain.inline_html.v1` envelope whose
-preferred surface is `sandboxed_inline_html` / `iframe`. The envelope status is
-`prepared_not_rendered` until the host actually mounts it.
+preferred surface is `sandboxed_inline_html` / `iframe`, with `fallback_surface=null`.
+`html_code_block` is recorded only as `source_inspection_surface`, never as automatic
+HTML delivery fallback. The envelope status is `prepared_not_rendered` until the host
+actually mounts it.
 
-A previewable HTML code block is a fallback transport for the same source, not
-equivalent interactive delivery. PNG and static chat summaries are useful fallback
-representations but do not satisfy an interaction request. Keep interaction acceptance
-open until controls are actually visible and usable in the conversation; tests and file
-creation are not a host rendering receipt. The renderer continues to own source-backed
-views/artifacts only, not host UI or Mission acceptance.
+A previewable HTML code block is not an automatic fallback for an explicit rendered
+HTML request. It may expose source only when the user asks for source. PNG and static
+chat summaries remain useful alternate representations but do not satisfy an HTML
+interaction request. If the host cannot mount a sandboxed HTML surface, keep that
+delivery requirement open. The renderer continues to own source-backed views/artifacts
+only, not host UI or Mission acceptance.
 
 A host interactive progress surface should consume the same `tplan.progress_view.v1`
 JSON and preserve the first-screen contract. Minimum useful interaction is small:

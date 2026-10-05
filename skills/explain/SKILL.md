@@ -97,10 +97,14 @@ iframe, artifact preview, or equivalent isolated renderer. This is the preferred
 because CSS, native controls, SVG selection and local JavaScript interactions remain
 usable without first showing source code.
 
-A previewable `html` code block is a fallback presentation surface, not equivalent to
-a rendered interactive surface. If the host exposes only Code/Preview switching, prefer
-Preview when possible but keep interactive-inline acceptance open unless the rendered
-HTML is actually shown and usable. Do not invent undocumented host metadata such as
+A previewable `html` code block is **not** an automatic fallback for an explicit
+`--html` delivery request. Source code inside a host container is a different surface
+from a rendered HTML document. Use a code block only when the user explicitly asks to
+see or inspect the HTML source.
+
+If the host has no sandboxed rendered HTML surface, keep the requested HTML delivery
+open and state that limitation accurately. Do not silently downgrade `--html` to
+source Code/Preview, and do not invent undocumented host metadata such as
 `default=preview`.
 
 Do not create or attach a downloadable file merely because `--html` was requested.
