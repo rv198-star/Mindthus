@@ -56,35 +56,37 @@ Explain what each linked item supports. External evidence can be unavailable off
 without making the main explanation unreadable. Preserve any standard report or
 artifact links that the upstream delivery contract still requires.
 
-### Deliver In Conversation And As A File
+### Deliver The Requested Surface
 
-HTML delivery has **three presentation surfaces** that share one semantic source:
+An explicit request for **HTML visible and interactive inside the conversation**
+requires the HTML itself plus the same downloadable file. Use the host's actual
+native HTML/artifact tool when available. General visual summaries may still use
+images; they fulfill a different request.
 
-1. **Chat-native visual explanation first.** When the result benefits from a visual
-   summary, render it directly in the current conversation using the host's available
-   native surface: cards, progress bars, charts, diagrams, an image, or another
-   immediately visible representation. This does **not** depend on HTML-preview support.
-2. **Inline HTML preview when supported.** If the host can natively render an HTML or
-   artifact preview, show the generated HTML in the conversation as an additional
-   interactive surface.
-3. **Downloadable HTML file always.** Preserve the self-contained `.html` artifact so
-   the user can download, save, transfer, or open it independently.
+For hosts offering previewable HTML code blocks, submit the artifact's actual source
+as an `html` code block in the response, rather than linking only to the file. The
+optional `scripts/prepare_html_delivery.py` helper prepares that block from the existing
+file without rewriting it. The downloadable file stays the original artifact.
 
-The chat-native view and HTML artifact may use different presentation primitives, but
-they must express the same source result and preserve the same important qualifications.
-Do not independently re-analyze or invent a second set of progress numbers for one
-surface.
+```bash
+python3 scripts/prepare_html_delivery.py /path/to/report.html
+```
 
-A screenshot or generated image **can** satisfy the chat-native visual surface when that
-is the host's normal in-conversation rendering mechanism. It still does not count as
-"inline HTML"; describe it as a visual preview, not as an embedded HTML document.
+The helper returns prepared content, not a rendering receipt. A host can initially
+show Code rather than Preview; do not claim automatic display unless observed. When a
+native inline artifact tool exists, prefer it to a code block. Use only documented,
+currently exposed host capabilities; do not invent an embedding directive.
 
-If the host cannot render HTML inline, keep the chat-native visual explanation in the
-conversation and provide the downloadable HTML file. Do not make file download the only
-way to see the main explanation merely because inline HTML is unavailable.
+Keep three facts separate: the file exists, its HTML was submitted to a presentation
+surface, and the user actually saw and interacted with it there. Record the last as
+verified only with host evidence or user confirmation. Code/CI/browser checks alone
+establish neither in-conversation visibility nor delivery acceptance.
 
-Use available ordinary file or syntax checks appropriate to the artifact; describe
-browser behavior as verified only if it was actually exercised.
+When the requested inline surface remains unverified or unavailable, preserve the
+useful artifact and keep that delivery requirement open. State the actual attempted
+path and result instead of reclassifying a file, screenshot, or PNG as inline HTML.
+
+Reference: [ChatGPT code-block previews](https://help.openai.com/en/articles/20001246-working-with-writing-blocks-and-code-blocks-in-chatgpt).
 
 ## Guardrails
 

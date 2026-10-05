@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Explain V1 · 进展与剩余工作</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#191a1c;color:#eef0f3;font:15px/1.65 system-ui,sans-serif}main{max-width:930px;margin:auto;padding:24px}h1{font-size:24px;margin:0 0 6px}h2{font-size:17px;margin:0}p{margin:6px 0}.muted{color:#abb2bc;font-size:13px}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:22px 0}.value{font-size:25px;font-weight:650}.done{color:#a6d8c2}.active{color:#9fbff3}.stage{display:flex;gap:6px;margin:0 0 10px}.stage span{flex:1;padding:9px 4px;background:#30353e;border-radius:6px;text-align:center;font-size:13px}.stage .done{background:#263e35}.stage .active{background:#293b55}.work{margin-top:23px;border-top:1px solid #42464f;padding-top:17px}table{width:100%;border-collapse:collapse;margin-top:9px;text-align:left}th{font-size:12px;color:#abb2bc;font-weight:400}td,th{padding:12px 9px;border-bottom:1px solid #353941}th:last-child,td:last-child{text-align:right}.current{background:#27374c}details{margin-top:20px;border-top:1px solid #42464f;padding-top:14px}summary{cursor:pointer;font-weight:600}a{color:#9fbff3}code{overflow-wrap:anywhere}.notice{margin-top:12px;padding:10px 13px;border-radius:7px;background:#25292f}button{font:inherit}summary:focus-visible{outline:2px solid #9fbff3;outline-offset:4px}@media(max-width:520px){main{padding:17px}.summary{gap:10px}.value{font-size:21px}.stage span{font-size:12px}td,th{padding:10px 5px;font-size:13px}}
+</style>
+<main>
+<h1>Explain V1 · 进展与剩余工作</h1>
+<p class="muted">真实任务状态 · 2026 年 10 月 5 日 · 非演示数据</p>
+<div class="summary">
+<div><div class="muted">核心功能</div><div class="value done">已实现</div><div class="muted">Explain、TPlan、首页返修</div></div>
+<div><div class="muted">HTML 内嵌交付</div><div class="value active">待现场验收</div><div class="muted">本条消息须直接可见、可交互</div></div>
+<div><div class="muted">合并 / 发布</div><div class="value">未执行</div><div class="muted">PR #224 仍为草稿</div></div>
+</div>
+<div class="stage" aria-label="阶段状态，不表示工作量占比">
+<span class="done">核心实现 ✓</span><span class="done">既有测试 ✓</span><span class="active">内嵌交付 · 当前</span><span>合并 / 发布</span>
+</div>
+<p class="muted">以上是阶段状态，不是工作量百分比。</p>
+<section class="work">
+<h2>剩余工作块</h2>
+<table>
+<thead><tr><th>工作块</th><th>当前位置</th><th>剩余占比</th></tr></thead>
+<tbody>
+<tr class="current"><td><strong>HTML 对话内显示与交互</strong></td><td>当前返修，等待实际显示确认</td><td>未估算</td></tr>
+<tr><td><strong>交付复核与任务关单</strong></td><td>等内嵌交付验收</td><td>未估算</td></tr>
+<tr><td>PR 最终审阅与合并</td><td>待批准；尚未合并 main</td><td>未估算</td></tr>
+<tr><td>正式版本发布</td><td>待决定；仍为 Unreleased</td><td>未估算</td></tr>
+</tbody>
+</table>
+<p class="muted">源计划没有剩余工作量估计；撤回先前无来源的“87%”和“PR 20%”。</p>
+</section>
+<details>
+<summary>展开：验收条件与依据</summary>
+<div class="notice"><strong>现场验收：</strong>当前消息中能看到本页面、能直接展开这一段，并能下载同一份 HTML。PNG、外链、文件生成或 CI 通过均不替代这一验收。</div>
+<p>已核查基线：<code>c33957c9</code>，PR #224 为 Draft，基线 CI 为 SUCCESS。该结论只证明已有工程检查，不证明聊天内显示成功。</p>
+<p>本轮只修最后交付：实际 HTML 预览块与同源文件，不改 TPlan 的工作量、任务状态、依赖或验收逻辑。</p>
+<p><a href="https://github.com/rv198-star/Mindthus/pull/224" target="_blank" rel="noopener noreferrer">查看 PR #224 与提交记录</a></p>
+</details>
+</main>
+</html>

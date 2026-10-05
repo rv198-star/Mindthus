@@ -1,5 +1,7 @@
 """Explain integration contracts; local source and real release-pack checks only."""
 import json
+import hashlib
+import runpy
 import re
 import subprocess
 import sys
@@ -14,6 +16,7 @@ EXPLAIN_FILES = (
     "resources/html-v1.md",
     "resources/tplan-progress.md",
     "resources/expression-modes.md",
+    "scripts/prepare_html_delivery.py",
 )
 
 
@@ -50,31 +53,64 @@ class ExplainRoutingContractTests(unittest.TestCase):
 
 
 class ExplainDeliveryContractTests(unittest.TestCase):
-    def test_html_keeps_chat_native_visual_download_and_optional_inline_preview(self):
-        skill = (REPO / "skills/explain/SKILL.md").read_text(encoding="utf-8")
-        html_contract = (REPO / "skills/explain/resources/html-v1.md").read_text(encoding="utf-8")
-        tplan_output = (REPO / "skills/tplan/resources/user-output.md").read_text(encoding="utf-8")
+    def test_explicit_inline_html_requires_actual_html_and_observed_acceptance(self):
+        skill = " ".join((REPO / "skills/explain/SKILL.md").read_text().split())
+        contract = " ".join((REPO / "skills/explain/resources/html-v1.md").read_text().split())
+        tplan = " ".join((REPO / "skills/tplan/resources/user-output.md").read_text().split())
+        self.assertIn("An image is not a substitute for requested inline HTML", skill)
+        self.assertIn("host or user confirms", skill)
+        self.assertIn("actual source as an `html` code block", contract)
+        self.assertIn("prepared content, not a rendering receipt", contract)
+        self.assertIn("same HTML file for independent download", tplan)
+        self.assertIn("delivery requirement open", tplan)
 
-        skill_flat = " ".join(skill.split())
-        html_flat = " ".join(html_contract.split())
-        tplan_flat = " ".join(tplan_output.split())
+    def prepare(self, path):
+        helper = runpy.run_path(str(REPO / "skills/explain/scripts/prepare_html_delivery.py"))
+        return helper["prepare_html_delivery"](path)
 
-        self.assertIn("chat-native visual view in the current conversation", skill_flat)
-        self.assertIn("should not have to download a file merely to see the main explanation", skill_flat)
-        self.assertIn("self-contained `.html` file for download", skill_flat)
-        self.assertIn("Lack of HTML-preview support must not remove the chat-native view", skill_flat)
+    def test_preview_uses_exact_download_source_without_mutation(self):
+        raw = '<!doctype html>\r\n<html lang="zh-CN"><details><summary>依据</summary>真实来源</details></html>'.encode()
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "progress.html"
+            path.write_bytes(raw)
+            result = self.prepare(path)
+            self.assertEqual(path.read_bytes(), raw)
+            self.assertEqual(result["html"].encode(), raw)
+            self.assertEqual(result["sha256"], hashlib.sha256(raw).hexdigest())
+            self.assertEqual(result["preview_block"], "```html\n" + raw.decode() + "\n```\n")
+            self.assertEqual(result["status"], "prepared_not_verified")
+            self.assertEqual(sorted(p.name for p in Path(directory).iterdir()), ["progress.html"])
 
-        self.assertIn("Chat-native visual explanation first", html_flat)
-        self.assertIn("does **not** depend on HTML-preview support", html_flat)
-        self.assertIn("Inline HTML preview when supported", html_flat)
-        self.assertIn("Downloadable HTML file always", html_flat)
-        self.assertIn("generated image **can** satisfy the chat-native visual surface", html_flat)
-        self.assertIn("Do not make file download the only", html_flat)
+    def test_markdown_examples_cannot_escape_the_html_block(self):
+        source = '<html><pre>````html\nexample\n````</pre></html>\n'
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "report.html"
+            path.write_text(source)
+            result = self.prepare(path)
+            self.assertEqual(result["preview_block"], "`````html\n" + source + "`````\n")
 
-        self.assertIn("should first show a chat-native progress visualization", tplan_flat)
-        self.assertIn("must not depend on native HTML preview", tplan_flat)
-        self.assertIn("self-contained HTML file remains available for independent download", tplan_flat)
-        self.assertIn("still shows the chat-native visualization", tplan_flat)
+    def test_invalid_file_is_rejected_without_writes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            for name, raw in (("report.png", b"image"), ("blank.html", b""),
+                              ("bad.html", b"\xff"), ("nul.html", b"<html>\x00</html>")):
+                with self.subTest(name=name):
+                    path = Path(directory) / name
+                    path.write_bytes(raw)
+                    with self.assertRaises((ValueError, UnicodeError)):
+                        self.prepare(path)
+                    self.assertEqual(path.read_bytes(), raw)
+
+    def test_cli_submits_html_not_a_file_link_or_success_claim(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "report.html"
+            path.write_text('<html><details><summary>查看</summary>内容</details></html>')
+            helper = REPO / "skills/explain/scripts/prepare_html_delivery.py"
+            result = subprocess.run([sys.executable, str(helper), str(path)], capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout, self.prepare(path)["preview_block"])
+            result = subprocess.run([sys.executable, str(helper), str(path), "--format", "json"], capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(json.loads(result.stdout)["status"], "prepared_not_verified")
 
 
 class ExplainPackagingContractTests(unittest.TestCase):

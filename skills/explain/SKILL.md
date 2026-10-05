@@ -72,11 +72,12 @@ charts, diagrams, image surface, or other directly visible representation. The u
 should not have to download a file merely to see the main explanation.
 
 Produce a formal artifact for an explicit saved-report, HTML, or file-delivery request.
-For HTML, use the multi-surface delivery contract in `resources/html-v1.md`: keep the
-chat-native visual explanation visible in the conversation, also preserve a
-self-contained `.html` file for download, and additionally show that HTML artifact
-inline when the host supports native HTML/artifact preview. Lack of HTML-preview support
-must not remove the chat-native view.
+For an explicit in-conversation HTML request, deliver the HTML itself through the host's
+native preview surface and retain the same self-contained `.html` file for download.
+Follow `resources/html-v1.md`; its optional preparation helper submits actual HTML to
+previewable code blocks when that is the available host capability. An image is not a
+substitute for requested inline HTML. Keep actual display acceptance open until the
+host or user confirms the artifact is visible and interactive in the conversation.
 
 For other reports, follow the requested delivery format. Use the environment's normal
 delivery mechanism. Multiple delivery surfaces are representations of the same source
