@@ -61,7 +61,7 @@ python3 skills/tplan/scripts/render_progress_view.py MISSION_DIR --format json
 
 ### 工程检查
 
-- 完整 unittest gate 通过：`python3 -B -m unittest discover -s tests -v` 共 1,146 项，1,139 项通过，7 项按既有依赖条件跳过，0 失败、0 错误；运行时间 222.331 秒。新增的两项分别锁定首屏信息层级和区间占比不取中值。7 个跳过项为 5 个依赖 Pillow 的 atlas 检查和 2 个依赖 jsonschema 的 case-prep schema 检查；本次没有改变跳过规则。`-v` 仅用于保留逐项日志，与 CI 的 `-q` 使用同一发现范围。
+- 当前 HEAD 的 GitHub 完整 unittest gate 通过：共 1,147 项，1,140 项通过，7 项按既有依赖条件跳过，0 失败、0 错误。首屏 UI Contract、区间占比不取中值和 HTML inline+download 双重交付合同均有回归保护。7 个跳过项为既有可选依赖检查；本次没有改变跳过规则。
 - CI 中四项 primitive/runtime smoke 命令全部通过。
 - Explain 在 Claude plugin、Claude personal skills、Codex skills、Codex plugin、OpenCode skills 五种实际构建布局中均存在，资源与链接有效；八个判断 owner 保持原集合。
 - TPlan 工作计划与进展视图回归覆盖未知、混单位、父子范围、区间份额、状态与证据冲突、共享风险、Guard、事务、来源诊断和首屏 UI Contract；最后的后端与 renderer 组合为 57 项通过。
