@@ -8,7 +8,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 SCRIPT = REPO / "scripts" / "log-mindthus-runtime.py"
-CURRENT_VERSION = "1.12.0"
+CURRENT_VERSION = "1.13.0"
 
 
 USING_TEXT = """\

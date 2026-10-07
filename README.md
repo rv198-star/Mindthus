@@ -127,16 +127,16 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
-当前已发布 Stable 是 `v1.12.0`。本版新增 **Explain / 解释与表达** 作为 Mindthus 默认人向结果交付层，并加入 TPlan 的来源约束进展/剩余工作视图与 ChatGPT Visualizations / `app_block` 交互展示。
+当前已发布 Stable 是 `v1.13.0`。本版在 v1.12.0 的 Explain/TPlan 交付基础上升级 **Explain HTML V2**：紧凑高信息密度表达、Node优先/Python回退、源稿恢复与时序图；ChatGPT有 Visualizations 时优先在对话内显示，并自动适配宿主/系统明暗主题。
 
-**升级建议**：希望使用默认 clarity、`--brief` / `--eli5` / `--audience` / `--html`，或需要 TPlan 进展与剩余工作可视化的用户建议升级。继续使用 v1.11.0 不会自动获得 Explain 与本轮 TPlan 展示能力。
+**升级建议**：希望使用 Explain HTML V2、内嵌时序图、自动明暗主题或更新的宿主交付规则的用户建议升级。既有 TPlan 状态/验收权仍由 TPlan 管理；如果无需这些新增表达能力，可继续使用 v1.12.0。
 
-本版验证支持功能、边界、发行布局和工程回归；默认 Explain 的六个同源对照是开发期合成样例，不是跨模型生产 A/B，不宣称固定质量提升、token 节省、延迟收益或金额 ROI。详见 [v1.12.0 发布说明](docs/releases/v1.12.0.md)。
+本版验证支持功能、边界、发行布局和工程回归；对话内原生 AppBlock 的视觉及主题已获用户认可，但编译器**逐字生成的完整 HTML**尚未单独取得宿主交互回执。既有 18 次有限实验与开发期样例不构成普遍收益保证，不宣称固定质量提升、token 节省、延迟收益或金额 ROI。详见 [v1.13.0 发布说明](docs/releases/v1.13.0.md)。
 
 **发布默认规则**：Stable发布不再要求同步ROI Beta。本版仅提供Stable插件包、Skills包及校验和；既有Beta版本保留，后续仅在明确需要时单独安排。TPlan runtime generation仍为 `1.5.4`。
 
-- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.12.0.tar.gz`。
-- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.12.0.tar.gz`。
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.13.0.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.13.0.tar.gz`。
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
 ### 下载
@@ -145,22 +145,22 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-plugins-1.12.0.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.12.0/mindthus-plugins-1.12.0.tar.gz"
+  -o /tmp/mindthus-plugins-1.13.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.13.0/mindthus-plugins-1.13.0.tar.gz"
 rm -rf /tmp/mindthus-plugins
 mkdir -p /tmp/mindthus-plugins
-tar -xzf /tmp/mindthus-plugins-1.12.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+tar -xzf /tmp/mindthus-plugins-1.13.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
 ```
 
 Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-skills-1.12.0.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.12.0/mindthus-skills-1.12.0.tar.gz"
+  -o /tmp/mindthus-skills-1.13.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.13.0/mindthus-skills-1.13.0.tar.gz"
 rm -rf /tmp/mindthus-skills
 mkdir -p /tmp/mindthus-skills
-tar -xzf /tmp/mindthus-skills-1.12.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
+tar -xzf /tmp/mindthus-skills-1.13.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
 ### Codex Plugin Mode（推荐）
@@ -301,7 +301,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.12.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md)，正式安装版见 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.13.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md)，正式安装版见 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 
