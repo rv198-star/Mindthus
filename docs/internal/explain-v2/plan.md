@@ -2,6 +2,8 @@
 
 ## 当前状态
 
+2026-10-08 Owner 视觉验收：当前会话的原生 ChatGPT Visualizations 内嵌展示已由 Owner 观看并认可，紧凑布局及主题视觉 **PASS**；授权仅**提交并推送，暂不发布**。该会话展示以编译器结构与现有材料为基础，但包含手工精简和宿主主题绑定，故不能将其扩大为“编译器逐字原始 HTML 端到端宿主回执已通过”。详见 [Host/Theme R1 Owner 确认](evidence/d2/host-theme-r1/RESULT.md)。PR #230 保持 OPEN，不合并 main、不打 tag、不创建 Release。
+
 2026-10-08 交付与主题整改：ChatGPT 暴露 Visualizations 时，Explain 交互式 HTML 必须在当前对话直接通过宿主能力交付；Codex 按实际渲染能力，其他环境保真降级。编译器和内嵌原型默认跟随系统明暗并支持真实宿主主题覆盖，深色高对比色已修复。Python 109项（108通过/1既有skip），浏览器主题144/144、原展示8/8，Skill lint 57文件零错误。见 [R1证据](evidence/d2/host-theme-r1/RESULT.md)。这仍是开发分支实现，**编译器生成的HTML尚待真实宿主回执**，不把此前手工 AppBlock 的可见性追认给编译器。
 
 

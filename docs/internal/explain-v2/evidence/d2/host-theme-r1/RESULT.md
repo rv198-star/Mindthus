@@ -3,6 +3,15 @@
 Date: 2026-10-08. Status: **implementation and local qualification PASS**;
 does not imply full #228 host acceptance, main merge, publication or #229 expansion.
 
+**Owner visual acceptance (2026-10-08): PASS for the demonstrated native ChatGPT
+Visualization and its compact layout / light-dark presentation.** The Owner saw
+the actual in-conversation interface and subsequently instructed us to commit/push
+while withholding release. The chat demo drew on compiler output but manually
+simplified some markup/styles and added a host theme control. Therefore this
+approval is an observed UI/visual acceptance, **not a byte-identical compiler
+payload submission receipt or proof that every compiled control was exercised**.
+No main merge, tag or release is authorized.
+
 ## Reason for change
 
 The owner observed a **real native ChatGPT visualization** (a hand-authored AppBlock,
