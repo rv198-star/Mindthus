@@ -1,6 +1,6 @@
 ---
 name: explain
-version: 1.1.0-dev.4
+version: 1.1.0
 description: "Use by default when Mindthus delivers human-facing conclusions, reports, stage results, or progress, and for explicit explanation requests. The current Agent applies clarity, with brief, ELI5, audience, or HTML modes as needed. Preserve source judgment and exact machine formats; keep routine acknowledgements short."
 ---
 
