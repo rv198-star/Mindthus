@@ -1610,6 +1610,27 @@ class PackagingDocsTests(unittest.TestCase):
                 for skill_name in skill_names:
                     self.assertNotIn(f"skills/{skill_name}/", markdown)
 
+    def test_release_pack_supports_explicit_prerelease_metadata_without_changing_stable_default(self):
+        script = REPO / "scripts" / "build-release-pack.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "rc"
+            cmd = ["python3", str(script), "--package", "plugins", "--out", str(target)]
+            completed = subprocess.run(cmd + ["--release-version", "1.13.0-rc.1"], text=True, capture_output=True)
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            for manifest in (
+                target / "codex-plugin/mindthus/.codex-plugin/plugin.json",
+                target / "claude-code/claude-plugin/.claude-plugin/plugin.json",
+            ):
+                self.assertEqual(json.loads(manifest.read_text())["version"], "1.13.0-rc.1")
+            failed = subprocess.run(
+                ["python3", str(script), "--out", str(Path(tmp) / "invalid"),
+                 "--release-version", "v1.13.0"], text=True, capture_output=True,
+            )
+            self.assertNotEqual(failed.returncode, 0)
+            self.assertIn("--release-version", failed.stderr)
+        source = script.read_text(encoding="utf-8")
+        self.assertIn('VERSION = "1.12.0"', source)
+
     def test_release_pack_builder_can_split_plugin_and_skills_packages(self):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:

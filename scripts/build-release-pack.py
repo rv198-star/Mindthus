@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 from pathlib import Path
 
@@ -410,6 +411,7 @@ def build_opencode(root: Path, repo: Path, skills_dir: Path, agents_file: Path, 
 
 
 def main() -> int:
+    global VERSION
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", required=True, type=Path, help="Output directory for the release pack.")
     parser.add_argument(
@@ -419,7 +421,14 @@ def main() -> int:
         help="Package surface to build. Release assets use plugins and skills; all is for local inspection.",
     )
     parser.add_argument("--force", action="store_true", help="Replace a non-empty output directory.")
+    parser.add_argument(
+        "--release-version", default=VERSION,
+        help="Optional explicit prerelease/package version; default remains the current Stable version.",
+    )
     args = parser.parse_args()
+    if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+(?:-(?:alpha|beta|rc)\.[0-9]+)?", args.release_version):
+        parser.error("--release-version must be a numeric SemVer or alpha/beta/rc prerelease")
+    VERSION = args.release_version
 
     root = repo_root()
     skills_dir = root / "skills"
