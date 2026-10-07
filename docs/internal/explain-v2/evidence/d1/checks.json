@@ -1,0 +1,91 @@
+{
+  "schema": "explain.d1.engineering-evidence.v1",
+  "source_manifest_sha256": "874734eef9a1a7ef9b6272002ca15372d01db8786bad341f6236e0cfb769e715",
+  "checks": {
+    "focused": {
+      "total": 101,
+      "passed": 100,
+      "skipped": 1,
+      "errors": 0
+    },
+    "compiler_python312": {
+      "total": 42,
+      "passed": 42
+    },
+    "pack_layouts": 5,
+    "real_pack_cli_runs": 10,
+    "browser_matrix": {
+      "total": 8,
+      "passed": 8
+    },
+    "test_registry": {
+      "covered": 87,
+      "total": 87
+    },
+    "skill_entry_bytes": 10223,
+    "portable_lint": {
+      "portable": true,
+      "errors": 0,
+      "warnings": 0
+    }
+  },
+  "full_scan": {
+    "python": "3.12.14",
+    "total": 1204,
+    "initial_error_reports": 26,
+    "skipped": 7,
+    "affected_modules": [
+      "test_slim_batch",
+      "test_slim_post_rc01",
+      "test_slim_retry_000049"
+    ],
+    "repair": "Hydrate the exact existing fixture commit and its blobs; use already-installed Python3.12 for pre-existing enterContext tests; no production/test source relaxation.",
+    "focused_rerun_total": 23,
+    "focused_rerun_passed": 23,
+    "claim": "Full discovery plus targeted environment-repaired rerun; not a single clean full run."
+  },
+  "real_runtimes": {
+    "python": [
+      "3.10.12",
+      "3.12.14"
+    ],
+    "node": "22.23.1",
+    "node20": "selection branch simulated; no real Node20 binary run claimed"
+  },
+  "non_claims": [
+    "No paired model calls",
+    "No independent model review",
+    "No ChatGPT inline HTML visibility receipt",
+    "No release or main merge"
+  ],
+  "local_raw_logs": {
+    "final-focused.log": {
+      "sha256": "1edf811d5749e7631c240dae4c0e9bb175c6ab6ca54f0bdf4eb138dd8f18809c",
+      "bytes": 112
+    },
+    "full-suite.log": {
+      "sha256": "75cd50f59263b41599b80a5c84d1e888f1f73da5587e0c4bb58180619ce70a48",
+      "bytes": 24536
+    },
+    "full-suite-py312.log": {
+      "sha256": "8817a88af35c97556f5f60ebfe78a81f8d0996b0c9cf8d9eb721622228b3aa53",
+      "bytes": 518923
+    },
+    "fixture-rerun.log": {
+      "sha256": "670f13a948c5b8f57c58b9edbb134312ab1f9b902797da22c7ad65a3d23c4707",
+      "bytes": 2049
+    },
+    "fixture-rerun-corrected.log": {
+      "sha256": "54593579fe9cb916dbb36becbf794f073f78535d7fbebc4aab9ccb0d2f68524d",
+      "bytes": 495336
+    },
+    "fixture-py312-hydrated.log": {
+      "sha256": "935d762a938b5e2bfd7fc4f27777b299a68941b33e86cc3af6ae896178684b1a",
+      "bytes": 10422
+    },
+    "browser.log": {
+      "sha256": "322a4eb7d056f6604c0a7c0f087c5e0f4a2322c5bf674851e048785008fc5d40",
+      "bytes": 3142
+    }
+  }
+}

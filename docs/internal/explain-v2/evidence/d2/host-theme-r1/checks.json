@@ -1,0 +1,64 @@
+{
+  "schema": "explain.d2.host-theme.v1",
+  "baseline_head": "9bf342182d246de122a63e504e7b4883bffdcd52",
+  "scope": "Host selection contract + system/host theme; Explain compiler and authored inline prototype only",
+  "compiler_unit": {
+    "total": 109,
+    "passed": 108,
+    "skipped": 1,
+    "failures": 0,
+    "runtime": "Python 3.12.14"
+  },
+  "browser_theme": {
+    "total": 144,
+    "passed": 144,
+    "failures": 0,
+    "result_sha256": "b8357caf441ee1712543d7feb148d10889e0af19ee6010d97311ce8a7cb1044f"
+  },
+  "browser_showcase": {
+    "total": 8,
+    "passed": 8,
+    "failures": 0
+  },
+  "managed_skill_lint": {
+    "checked_files": 57,
+    "portable": true,
+    "errors": 0,
+    "warnings": 0
+  },
+  "entrypoint_bytes": 10152,
+  "qa_screenshots": [
+    {
+      "filename": "compiler-dark.png",
+      "sha256": "c331c20449f1e32a4207729bc355174be35888b574473616312b7e48a4fd45d6",
+      "bytes": 112476
+    },
+    {
+      "filename": "compiler-light.png",
+      "sha256": "9dce3e2b68a770b65caf4be8cce6181959f0188681b61c513469c92b8289f140",
+      "bytes": 112046
+    },
+    {
+      "filename": "inline-comparison-dark-640.png",
+      "sha256": "2e4bf94cfc423c05c8d502ad09b0c0843a050730d092c580b10ef64c8e310c11",
+      "bytes": 139457
+    },
+    {
+      "filename": "inline-mechanism-dark-640.png",
+      "sha256": "4d74f9b96e5eca55ce9949d4811c6b59323964b91f90181938b0722c3617bc71",
+      "bytes": 155253
+    },
+    {
+      "filename": "inline-progress-dark-640.png",
+      "sha256": "facc09edd697d77806dc0cc4087d364c9aac1fef1dee30688aecadca128098b6",
+      "bytes": 132043
+    },
+    {
+      "filename": "inline-report-dark-640.png",
+      "sha256": "9d37b22a36ab06e204ecf079687eb67f26ecbcf0aadaee059eff3a5bd093c57c",
+      "bytes": 201550
+    }
+  ],
+  "new_model_generations": 0,
+  "actual_compiled_appblock_host_receipt": false
+}

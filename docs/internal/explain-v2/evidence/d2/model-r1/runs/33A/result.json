@@ -1,0 +1,42 @@
+{
+  "id": "33A",
+  "case": "tplan-progress-semantics",
+  "case_index": 3,
+  "repeat": 3,
+  "arm": "A",
+  "prompt_sha256": "26737e9b938bd6321f90603d1d15560a6063fa2ba2d03fbb6b58bdbed24d58ed",
+  "started_at_utc": "2026-10-07T17:18:07.080740+00:00",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "cli_wall_seconds": 54.892,
+  "usage_turns": [
+    {
+      "input_tokens": 11243,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 2240,
+      "reasoning_output_tokens": 143
+    }
+  ],
+  "session_ids": [
+    "01a1175f-598c-74e3-80a4-7cc18561702d"
+  ],
+  "tool_items": [],
+  "transport_errors": [],
+  "render_wall_seconds": 0.0001,
+  "cost_usd": null,
+  "host_transport_seconds": null,
+  "raw_log_sha256": "c3befb38fd907c9be77bc2839fb311150ba1bd69ed4fd2d82241e5d9be034224",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "output_sha256": "8cdd4779a28943626c6766e0f6a4f8fa124184585dacd10f8ef513fb644ff4ae",
+  "model_output_bytes": 6703,
+  "normalization": null,
+  "file_readback_ms": 0.02,
+  "page_sha256": "8cdd4779a28943626c6766e0f6a4f8fa124184585dacd10f8ef513fb644ff4ae",
+  "page_bytes": 6703,
+  "status": "generated_and_rendered",
+  "local_delivery_seconds": 54.892,
+  "finished_at_utc": "2026-10-07T17:19:01.974022+00:00"
+}

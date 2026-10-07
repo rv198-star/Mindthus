@@ -1,0 +1,25 @@
+{
+  "checks": [
+    {
+      "case": "report",
+      "critical_facts": 16,
+      "pass": true
+    },
+    {
+      "case": "progress",
+      "critical_facts": 11,
+      "pass": true
+    },
+    {
+      "case": "comparison",
+      "critical_facts": 7,
+      "pass": true
+    },
+    {
+      "case": "mechanism",
+      "critical_facts": 7,
+      "pass": true
+    }
+  ],
+  "claim": "Local prototype checks; not a host rendering receipt"
+}

@@ -1,5 +1,6 @@
 ---
 name: explain
+version: 1.1.0-dev.4
 description: "Use by default when Mindthus delivers human-facing conclusions, reports, stage results, or progress, and for explicit explanation requests. The current Agent applies clarity, with brief, ELI5, audience, or HTML modes as needed. Preserve source judgment and exact machine formats; keep routine acknowledgements short."
 ---
 
@@ -50,7 +51,7 @@ Use the current audience and language context, honoring explicit user preference
 | `--brief` | Reduce reading load while retaining information that affects understanding, judgment, or action |
 | `--eli5` | Connect unfamiliar knowledge to existing understanding with the least necessary simplification |
 | `--audience ...` | Override the inferred audience; beginner, developer, and executive are examples |
-| `--html` | Present the explanation as interactive HTML; on ChatGPT prefer **Visualizations / app_block** so the explanation renders directly in the conversation, while saved `.html` remains an explicit export path |
+| `--html` | Deliver the HTML view in the current conversation. In ChatGPT, **Visualizations / AppBlock is the required first delivery path when that host surface is exposed**; a saved `.html` is only an explicitly requested export. |
 
 Combine flags in any order; apply each at the lowest sufficient intensity. Default
 clarity preserves detail and cognitive level, using ordinary text presentation.
@@ -74,6 +75,9 @@ Explicit HTML intent still calls for HTML when the content is simple.
 
 ### 4. Deliver The Understanding View
 
+Compile generic HTML from a short draft with [HTML V2](resources/html-v2.md).
+TPlan retains its dedicated progress renderer.
+
 Present the explained view by default. Preserve the source result and context without
 repeating its full original output alongside the explanation. Preserve upstream
 artifact links that remain required.
@@ -91,41 +95,36 @@ lower bound from the uncertain interval rather than choosing a midpoint. If the 
 has only stage/status facts, show a discrete stage strip or ordered states and do not
 invent a percentage merely to make a bar.
 
-When the user asks for **interaction inside the conversation**, use a host-provided
-interactive surface or adapter only when that capability is actually available. Feed it
-the same source-backed view; do not regenerate a second set of progress numbers.
-Interaction acceptance means the user can actually see and use controls in the
-conversation.
+For **interaction inside the conversation**, use an actually available host adapter
+with the same source-backed view. Acceptance requires controls the user can see and
+operate there; do not regenerate progress numbers.
 
 Explain has **no required external plugin, app, canvas, or provider dependency**.
-The portable core must stay provider-agnostic. Host interaction is late-bound capability
-negotiation: an available adapter may enhance delivery, but its absence must not block
-Explain or change the source result.
+Late-bound host adapters enhance presentation without changing or blocking the
+provider-agnostic core or its source result.
 
-`--html` selects an **HTML representation**, not a persistence target. On ChatGPT,
-when the **Visualizations / app_block** surface is available, use it first. Submit one
-complete app block with `variant=inline`, `language=html`, and the explanation as a
-raw HTML fragment. The host owns the sandbox, title chrome, expand affordance, and
-iframe-like presentation; Explain must not recreate that shell or wrap the fragment in
-Markdown fences.
+`--html` selects an **HTML representation**, not a persistence target.
+**Host selection is mandatory** for interactive/rich views:
+- **ChatGPT:** If **Visualizations / app_block** is available, MUST deliver the
+  **raw HTML fragment** in the conversation with `variant=inline`, `language=html`;
+  no image or external HTML link is a substitute.
+- **Codex:** Use its actual native rendered host surface. Codex CLI alone does not
+  expose ChatGPT Visualizations; otherwise give a readable result, disclose unmet HTML.
+- **Other hosts:** Degrade to available native visuals/Markdown/text; do not claim an
+  interactive HTML view was displayed.
+Only the live host UI can verify presentation; `--format app-block` prepares a payload.
+A previewable `html` code block is **not** an automatic fallback.
+Normal clarity responses need not become HTML.
 
-Visualizations is a host adapter, not an Explain dependency. On another host, use an
-actually available sandboxed rendered HTML surface with the same source-backed result.
-A previewable `html` code block is **not** an automatic fallback for an explicit
-`--html` delivery request. Use a code block only when the user explicitly asks to see
-or inspect HTML source.
-
-If no rendered HTML surface exists, keep the requested HTML delivery open and state
-that limitation accurately. Do not silently downgrade `--html` to source Code/Preview.
+**Theme:** default `auto`; live `data-host-theme=light|dark` when supplied, else
+`prefers-color-scheme`. Honor user overrides; keep text, tables, SVG and statuses
+readable in both themes. Details: [Host delivery](resources/host-delivery.md).
 
 Do not create or attach a downloadable file merely because `--html` was requested.
 
-Persist a `.html` file only when the user explicitly asks to save, download, export,
-attach, hand off, or otherwise receive a file artifact. For an in-conversation HTML
-request, follow `resources/html-v1.md` and submit the HTML itself to the available
-preview surface. An image is not a substitute for requested interaction. Keep actual
-display acceptance open until the host or user confirms the interactive surface is
-visible and usable.
+Persist `.html` only on explicit export/save/handoff. See `resources/html-v1.md`
+for native delivery. An image is not a substitute for requested interaction. Keep
+acceptance open until the host or user confirms visibility and working controls.
 
 Use the requested delivery format. Representations are not new factual authorities.
 Reapplying the same goal should preserve meaning and detail.
@@ -158,8 +157,9 @@ Read resources only when their guidance is relevant:
 
 - [Core Presentation Contract](resources/presentation-contract.md): scope and fidelity
   rules for this Skill, not a baseline-only alternative to using Explain.
-- [HTML V1](resources/html-v1.md): read for `--html`, inline HTML presentation, or an
-  explicitly requested saved/exported HTML artifact.
+- [HTML V2 compiler](resources/html-v2.md): short drafts, layout, writing hints and recovery.
+- [HTML V1](resources/html-v1.md): portable surface, fidelity and delivery boundaries
+  shared by the compiler and existing TPlan adapter.
 - [TPlan progress](resources/tplan-progress.md): read for task-progress delivery,
   remaining effort, work-block shares, or parallel conditions.
 - [Expression modes](resources/expression-modes.md): read when compression, analogy,

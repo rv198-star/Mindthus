@@ -1,0 +1,45 @@
+{
+  "id": "22B",
+  "case": "qualified-comparison",
+  "case_index": 2,
+  "repeat": 2,
+  "arm": "B",
+  "prompt_sha256": "a5642d60592d9243c6628448f2376bcc9ecdbaed9abae8f8107d93ad84e38b47",
+  "started_at_utc": "2026-10-07T17:16:11.620270+00:00",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "cli_wall_seconds": 12.096,
+  "usage_turns": [
+    {
+      "input_tokens": 12768,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 248,
+      "reasoning_output_tokens": 0
+    }
+  ],
+  "session_ids": [
+    "01a1175d-9684-7e83-b729-0dcda93a3280"
+  ],
+  "tool_items": [],
+  "transport_errors": [],
+  "render_wall_seconds": 0.0134,
+  "cost_usd": null,
+  "host_transport_seconds": null,
+  "raw_log_sha256": "3f3191724d3bd45812b8907af0aa1454142ae86b1c7cf1ad7e9e89ac512c28ee",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "output_sha256": "e45b6f3b6c15ec4b7a17001158990b53676916a9be0221b4863eaace2822c49f",
+  "model_output_bytes": 931,
+  "normalization": null,
+  "warnings": [],
+  "render_primary_ms": 6.113,
+  "source_sha256": "e45b6f3b6c15ec4b7a17001158990b53676916a9be0221b4863eaace2822c49f",
+  "file_readback_ms": 0.028,
+  "page_sha256": "5b14eb30c770fe6ea04fc3b25bd0e40d3ea2756678c8040281bdb4cb3bab716d",
+  "page_bytes": 14026,
+  "status": "generated_and_rendered",
+  "local_delivery_seconds": 12.109,
+  "finished_at_utc": "2026-10-07T17:16:23.730535+00:00"
+}

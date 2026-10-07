@@ -1,0 +1,44 @@
+{
+  "baseline": "f6e30e7bca69f58d25fa6440a62ad6e2961e6c2a",
+  "scope": "prototype-only, inline-first",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "container_widths": [
+    320,
+    390,
+    480,
+    640,
+    768,
+    960
+  ],
+  "browser": {
+    "passed": 96,
+    "total": 96
+  },
+  "extra_checks": [
+    {
+      "name": "two-embeds-dark-scope",
+      "pass": true
+    },
+    {
+      "name": "source-copy-fallback",
+      "pass": true
+    },
+    {
+      "name": "print",
+      "pass": true
+    }
+  ],
+  "source_digest_matches": true,
+  "root_horizontal_overflow_cases": 0,
+  "raw_qa_sha256": "984d1a4e714d40ec593e50417d24cd3f99d75d86c1129f60b30908d2a3b64670",
+  "actual_chatgpt_receipt": false,
+  "files": {
+    "inline.css": "dc08936147cf67bc9ba08fa39c2806d5447026bf7153c852b7e3f4e200c6d06f",
+    "inline.js": "fcf73b6c98c4c9ee627a659f0dbf2fe7490120ca989812ab23a45b2faba14706",
+    "render_inline.py": "863045495bab26651a14257ad7bfef9c57e0aa5a82be37a8e97c2c23b5590323",
+    "check_inline.mjs": "0f6d68987e1d06dc78172b7a2e2f39fffd31f9fdd609374b1911085d060383ac"
+  }
+}

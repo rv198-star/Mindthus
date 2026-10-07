@@ -1,5 +1,9 @@
 # HTML V1 — Interactive Reading
 
+Generic HTML generation now uses the [HTML V2 compiler](html-v2.md). This resource
+continues to define the source, interaction, persistence and host-surface contract;
+TPlan keeps its existing dedicated renderer.
+
 Runtime support for `--html`. Build a portable explanation that is easier to read,
 navigate, and inspect. Choose the smallest useful set of interactions for the source.
 
@@ -10,7 +14,7 @@ navigate, and inspect. Choose the smallest useful set of interactions for the so
 Build one explanation view from the source result, then adapt only its presentation
 wrapper to the host.
 
-On ChatGPT, when **Visualizations / app_block** is available, submit a raw HTML fragment
+On ChatGPT, when **Visualizations / AppBlock** is available, **use it as the mandatory primary delivery surface**, not just a preferred optional export. Submit a raw HTML fragment
 through that surface with `variant=inline` and `language=html`. The fragment must not
 contain `<!doctype>`, `<html>`, `<head>`, `<body>`, Markdown fences, or a nested
 iframe. The host already supplies the sandbox document and iframe-like presentation.
@@ -53,7 +57,7 @@ visible even when a dedicated section is unnecessary.
 
 Prefer semantic HTML and native controls. Keep navigation keyboard accessible, show
 focus clearly, and label controls. Use readable contrast and spacing; accompany color
-with text. Let narrow screens reflow or scroll wide tables without losing labels.
+with text. Let narrow screens reflow or scroll wide tables without losing labels. Theme defaults to auto: use host light/dark binding when available, otherwise browser/system `prefers-color-scheme`. Apply scoped high-contrast tokens to text, background, statuses, tables, SVG and controls; honor a user override without forcing the host theme.
 
 Simple local search and filtering remain reading aids. They need not appear in every
 report. Make an empty filter result understandable; keep the unfiltered content
@@ -85,7 +89,7 @@ possible Preview tab. A downloadable copy is added when the user also requests
 HTML/file export or when the host naturally exposes the same artifact as a file. General
 visual summaries may still use images; they fulfill a different request.
 
-On ChatGPT, **Visualizations / app_block is the preferred rendered HTML adapter**.
+On ChatGPT, **Visualizations / app_block is the required primary HTML adapter whenever exposed**.
 Use its host chrome instead of recreating a title bar, expand button, iframe, or app
 shell. Keep the block focused on one explanation experience and let its height follow
 content. Local state and reading interactions may update the block in place.

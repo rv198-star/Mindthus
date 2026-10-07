@@ -137,6 +137,37 @@ class ExplainDefaultDeliveryTests(unittest.TestCase):
         self.assertIn("`explain` 不进入上表的判断 owner 路由", text)
 
 
+class ExplainHostThemeContractTests(unittest.TestCase):
+    """Static instructions and real preparatory markup, not host presentation proof."""
+
+    def test_visualizations_is_mandatory_when_chatgpt_exposes_it(self):
+        skill = (REPO / 'skills/explain/SKILL.md').read_text(encoding='utf-8')
+        agents = (REPO / 'AGENTS.md').read_text(encoding='utf-8')
+        html = (REPO / 'skills/explain/resources/html-v1.md').read_text(encoding='utf-8')
+        for phrase in ('Host selection is mandatory', 'Visualizations / app_block',
+                       'Codex CLI', 'Other hosts:', 'Only the live host UI'):
+            self.assertIn(phrase, skill)
+        self.assertIn('required primary HTML adapter whenever exposed', html)
+        self.assertIn('Visualizations 则必须在当前对话内直接用', agents)
+        self.assertNotIn('prefer **Visualizations / app_block**', skill)
+
+    def test_theme_defaults_to_auto_and_host_override_is_explicit(self):
+        from skills.explain.scripts.explain_compiler import compile_source
+        sample = (REPO / 'tests/fixtures/explain-v2/showcase.md').read_text(encoding='utf-8')
+        output = compile_source(sample, engine='python')['html']
+        self.assertIn('data-mode="auto" data-host-theme="auto"', output)
+        self.assertIn('prefers-color-scheme: dark', output)
+        self.assertIn('[data-host-theme=dark]', output)
+        self.assertIn('[data-host-theme=light]', output)
+        self.assertIn('data-ex-action="dark"', output)
+        self.assertNotIn('data-mode="light"', output)
+        inline_css = (REPO / 'docs/internal/explain-v2/prototypes/analysis-layout-r1/inline.css').read_text(encoding='utf-8')
+        inline_src = (REPO / 'docs/internal/explain-v2/prototypes/analysis-layout-r1/render_inline.py').read_text(encoding='utf-8')
+        self.assertIn('prefers-color-scheme:dark', inline_css)
+        self.assertIn('[data-host-theme=dark]', inline_css)
+        self.assertIn('data-ex-theme="auto" data-host-theme="auto"', inline_src)
+
+
 class ExplainSameSourceExampleTests(unittest.TestCase):
     """Fixed synthetic examples check retention, not model-generation quality."""
     @classmethod
@@ -179,7 +210,7 @@ class ExplainDeliveryContractTests(unittest.TestCase):
         self.assertIn("raw HTML fragment", skill)
         self.assertIn("A previewable `html` code block is **not** an automatic fallback", skill)
         self.assertIn("Do not create or attach a downloadable file merely because `--html` was requested", skill)
-        self.assertIn("Visualizations / app_block is the preferred rendered HTML adapter", contract)
+        self.assertIn("Visualizations / app_block is the required primary HTML adapter", contract)
         self.assertIn("Code/Preview belongs to the code-block surface, not to Visualizations", contract)
         self.assertIn("explain.inline_html.v1", contract)
         self.assertIn("not the ChatGPT Visualizations trigger", contract)
