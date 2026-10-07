@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>V1 默认交付用例｜开发期进展语义样例</title>
+<style>
+  :root {
+    color-scheme: light;
+    --ink: #172b3a;
+    --muted: #526574;
+    --line: #d7e1e8;
+    --paper: #ffffff;
+    --blue: #205ca5;
+    --teal: #167568;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f3f6f8;
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.6;
+  }
+  main { max-width: 1040px; margin: auto; padding: 40px 28px; }
+  .eyebrow { margin: 0 0 8px; color: var(--muted); font-size: .9rem; font-weight: 650; }
+  h1 { margin: 0 0 22px; font-size: clamp(1.6rem, 4vw, 2.25rem); line-height: 1.3; }
+  h2 { margin: 0 0 16px; font-size: 1.15rem; }
+  p { margin: 0; }
+  .conclusion {
+    padding: 24px;
+    border: 1px solid #b9cfdf;
+    border-left: 5px solid var(--blue);
+    border-radius: 12px;
+    background: #edf4fb;
+  }
+  .lead { font-size: 1.2rem; font-weight: 700; }
+  .conclusion p + p { margin-top: 12px; }
+  .limits { color: #344f65; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .card { padding: 24px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; }
+  .metric { margin: 4px 0 8px; font-size: 2.5rem; font-weight: 750; line-height: 1.2; }
+  .metric small { font-size: 1rem; font-weight: 500; }
+  .muted { color: var(--muted); }
+  dl { margin: 20px 0 0; }
+  dl > div { padding: 12px 0; border-top: 1px solid var(--line); }
+  dt { color: var(--muted); font-size: .9rem; }
+  dd { margin: 3px 0 0; font-weight: 650; }
+  .portion { margin-top: 20px; }
+  .portion-label { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .portion-label strong { white-space: nowrap; }
+  .track { height: 14px; background: #e9eef2; border-radius: 8px; overflow: hidden; }
+  .fill { display: block; height: 100%; border-radius: 8px; }
+  .test { width: 60%; background: var(--blue); }
+  .acceptance { width: 40%; background: var(--teal); }
+  .bar-note { margin-top: 18px; color: var(--muted); font-size: .9rem; }
+  details { margin-top: 20px; padding: 0 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+  summary { padding: 16px 0; font-weight: 650; cursor: pointer; }
+  summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; border-radius: 4px; }
+  .detail-body { padding: 0 0 18px; color: var(--muted); }
+  .detail-body p + p { margin-top: 10px; }
+  @media (max-width: 640px) {
+    main { padding: 24px 16px; }
+    .grid { grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
+    .card, .conclusion { padding: 20px; }
+    .lead { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">开发期假设 / 语义样例</p>
+    <h1>V1 默认交付用例</h1>
+  </header>
+
+  <section class="conclusion" aria-label="结论与关键条件">
+    <p class="lead">6 个工作块中，4 个已验收；剩余估计合计 10 点。</p>
+    <p>回归测试进行中，交付验收等待外部回执。</p>
+    <p class="limits"><strong>60% / 40% 仅表示剩余量的构成，不是整体完成率。</strong>整体工作量进度百分比未知；未声明并行资源，并行情况未知。</p>
+  </section>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="status-title">
+      <h2 id="status-title">验收计数与当前状态</h2>
+      <p class="metric">4 <small>/ 6 个工作块已验收</small></p>
+      <p class="muted">这是工作块计数，不代表整体工作量完成比例。</p>
+      <dl>
+        <div>
+          <dt>回归测试</dt>
+          <dd>进行中</dd>
+        </div>
+        <div>
+          <dt>交付验收</dt>
+          <dd>等待外部回执</dd>
+        </div>
+        <div>
+          <dt>其余工作块的逐块状态</dt>
+          <dd>未提供，未知</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="card" aria-labelledby="remaining-title">
+      <h2 id="remaining-title">剩余量及其构成</h2>
+      <p class="metric">10 <small>点剩余估计</small></p>
+      <p class="muted">测试与验收的估计已声明使用同一单位。</p>
+
+      <div class="portion">
+        <div class="portion-label">
+          <span>测试 · 6 点</span>
+          <strong>剩余量的 60%</strong>
+        </div>
+        <div class="track" role="img" aria-label="测试剩余估计为6点，占总剩余10点的60%，不是完成率">
+          <span class="fill test"></span>
+        </div>
+      </div>
+
+      <div class="portion">
+        <div class="portion-label">
+          <span>验收 · 4 点</span>
+          <strong>剩余量的 40%</strong>
+        </div>
+        <div class="track" role="img" aria-label="验收剩余估计为4点，占总剩余10点的40%，不是完成率">
+          <span class="fill acceptance"></span>
+        </div>
+      </div>
+
+      <p class="bar-note">条形长度表示各项占剩余量的比例，不表示测试或验收已经完成的比例。</p>
+    </section>
+  </div>
+
+  <details>
+    <summary>如何理解这些数字</summary>
+    <div class="detail-body">
+      <p>“4 / 6”按工作块计数；“6 点 + 4 点 = 10 点”按同单位剩余估计计量。两种口径不能直接换算为整体工作量完成率。</p>
+      <p>本页是开发期假设 / 语义样例，不作为实际生产进度报告。源材料没有提供整体工作量进度百分比，也没有声明并行资源。</p>
+    </div>
+  </details>
+</main>
+</body>
+</html>

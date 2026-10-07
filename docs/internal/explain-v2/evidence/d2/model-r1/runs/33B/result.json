@@ -1,0 +1,53 @@
+{
+  "id": "33B",
+  "case": "tplan-progress-semantics",
+  "case_index": 3,
+  "repeat": 3,
+  "arm": "B",
+  "prompt_sha256": "9d2940fecf02da10e47719305a3dab89cbf19c53a1277c109e6b940ff10db4d0",
+  "started_at_utc": "2026-10-07T17:19:01.974397+00:00",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "exit_code": 0,
+  "timed_out": false,
+  "cli_wall_seconds": 36.65,
+  "usage_turns": [
+    {
+      "input_tokens": 12833,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 712,
+      "reasoning_output_tokens": 175
+    }
+  ],
+  "session_ids": [
+    "01a11760-2ff6-7d51-aa8d-397d3227392f"
+  ],
+  "tool_items": [],
+  "transport_errors": [],
+  "render_wall_seconds": 0.0162,
+  "cost_usd": null,
+  "host_transport_seconds": null,
+  "raw_log_sha256": "011b0d95a0159b64fe68735fd32e95d145854e4c6c0715fce914bd56c436587a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "output_sha256": "7dec2fec5803fd63e1b05e26338aada36f0bcc9f162d50a99c72f3c7b0c9adfa",
+  "model_output_bytes": 1721,
+  "normalization": null,
+  "warnings": [
+    {
+      "rule": "paragraph-length",
+      "line": 19,
+      "severity": "warning",
+      "message": "段落有 8 句；可考虑分组。",
+      "suggestion": ""
+    }
+  ],
+  "render_primary_ms": 6.999,
+  "source_sha256": "7dec2fec5803fd63e1b05e26338aada36f0bcc9f162d50a99c72f3c7b0c9adfa",
+  "file_readback_ms": 0.033,
+  "page_sha256": "a874e15a499d209cae7e077ba3a85d1521c756e7080e75bd2c1784ae60a76fba",
+  "page_bytes": 17793,
+  "status": "generated_and_rendered",
+  "local_delivery_seconds": 36.666,
+  "finished_at_utc": "2026-10-07T17:19:38.641077+00:00"
+}

@@ -1,0 +1,223 @@
+{
+  "schema": "explain.d2.model-summary.v1",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "main_generations": 18,
+  "regenerations": 0,
+  "model_tool_calls": 0,
+  "arms": {
+    "A": {
+      "count": 9,
+      "output_tokens_total": 17903,
+      "output_tokens_median": 2122,
+      "local_seconds_median": 61.265,
+      "input_tokens_total": 100806,
+      "cached_input_tokens_total": 87168,
+      "page_bytes_median": 5204
+    },
+    "B": {
+      "count": 9,
+      "output_tokens_total": 4005,
+      "output_tokens_median": 424,
+      "local_seconds_median": 21.605,
+      "input_tokens_total": 115116,
+      "cached_input_tokens_total": 70528,
+      "page_bytes_median": 16996
+    }
+  },
+  "pairs": [
+    {
+      "case": "流程解释",
+      "repeat": 1,
+      "A": {
+        "id": "11A",
+        "path": "pages/01-flow-r1-A.html",
+        "tokens": 2084,
+        "seconds": 62.568
+      },
+      "B": {
+        "id": "11B",
+        "path": "pages/02-flow-r1-B.html",
+        "tokens": 424,
+        "seconds": 21.605
+      },
+      "B_faster": true,
+      "B_fewer_output_tokens": true
+    },
+    {
+      "case": "流程解释",
+      "repeat": 2,
+      "A": {
+        "id": "12A",
+        "path": "pages/03-flow-r2-A.html",
+        "tokens": 2198,
+        "seconds": 93.831
+      },
+      "B": {
+        "id": "12B",
+        "path": "pages/04-flow-r2-B.html",
+        "tokens": 507,
+        "seconds": 22.462
+      },
+      "B_faster": true,
+      "B_fewer_output_tokens": true
+    },
+    {
+      "case": "流程解释",
+      "repeat": 3,
+      "A": {
+        "id": "13A",
+        "path": "pages/05-flow-r3-A.html",
+        "tokens": 2283,
+        "seconds": 63.255
+      },
+      "B": {
+        "id": "13B",
+        "path": "pages/06-flow-r3-B.html",
+        "tokens": 299,
+        "seconds": 17.794
+      },
+      "B_faster": true,
+      "B_fewer_output_tokens": true
+    },
+    {
+      "case": "方案比较",
+      "repeat": 1,
+      "A": {
+        "id": "21A",
+        "path": "pages/07-comparison-r1-A.html",
+        "tokens": 1467,
+        "seconds": 40.818
+      },
+      "B": {
+        "id": "21B",
+        "path": "pages/08-comparison-r1-B.html",
+        "tokens": 290,
+        "seconds": 17.022
+      },
+      "B_faster": true,
+      "B_fewer_output_tokens": true
+    },
+    {
+      "case": "方案比较",
+      "repeat": 2,
+      "A": {
+        "id": "22A",
+        "path": "pages/09-comparison-r2-A.html",
+        "tokens": 1640,
+        "seconds": 43.312
+      },
+      "B": {
+        "id": "22B",
+        "path": "pages/10-comparison-r2-B.html",
+        "tokens": 248,
+        "seconds": 12.109
+      },
+      "B_faster": true,
+      "B_fewer_output_tokens": true
+    },
+    {
+      "case": "方案比较",
+      "repeat": 3,
+      "A": {
+        "id": "23A",
+        "path": "pages/11-comparison-r3-A.html",
+        "tokens": 1654,
+        "seconds": 70.36
+      },
+      "B": {
+        "id": "23B",
+        "path": "pages/12-comparison-r3-B.html",
+        "tokens": 394,
+        "seconds": 20.472
+      },
+      "B_faster": true,
+      "B_fewer_output_tokens": true
+    },
+    {
+      "case": "任务进展",
+      "repeat": 1,
+      "A": {
+        "id": "31A",
+        "path": "pages/13-progress-r1-A.html",
+        "tokens": 2215,
+        "seconds": 61.265
+      },
+      "B": {
+        "id": "31B",
+        "path": "pages/14-progress-r1-B.html",
+        "tokens": 564,
+        "seconds": 28.144
+      },
+      "B_faster": true,
+      "B_fewer_output_tokens": true
+    },
+    {
+      "case": "任务进展",
+      "repeat": 2,
+      "A": {
+        "id": "32A",
+        "path": "pages/15-progress-r2-A.html",
+        "tokens": 2122,
+        "seconds": 55.247
+      },
+      "B": {
+        "id": "32B",
+        "path": "pages/16-progress-r2-B.html",
+        "tokens": 567,
+        "seconds": 28.642
+      },
+      "B_faster": true,
+      "B_fewer_output_tokens": true
+    },
+    {
+      "case": "任务进展",
+      "repeat": 3,
+      "A": {
+        "id": "33A",
+        "path": "pages/17-progress-r3-A.html",
+        "tokens": 2240,
+        "seconds": 54.892
+      },
+      "B": {
+        "id": "33B",
+        "path": "pages/18-progress-r3-B.html",
+        "tokens": 712,
+        "seconds": 36.666
+      },
+      "B_faster": true,
+      "B_fewer_output_tokens": true
+    }
+  ],
+  "cost_usd": null,
+  "chatgpt_inline_receipt": "not_verified",
+  "scope": "Three small fixed development sources, each repeated three times; CLI plus local rendering/verification wall, not user-host transport latency.",
+  "browser": {
+    "initial": {
+      "passed": 104,
+      "total": 108
+    },
+    "transform_corrected": 108,
+    "note": "Four rotated-label measurement false positives were rechecked only; pages and frozen compiler unchanged."
+  },
+  "independent_review": {
+    "A": {
+      "count": 9,
+      "fidelity_passed": 9,
+      "initial_qualifications_passed": 9,
+      "diagram_or_quantity_passed": 8
+    },
+    "B": {
+      "count": 9,
+      "fidelity_passed": 9,
+      "initial_qualifications_passed": 9,
+      "diagram_or_quantity_passed": 7
+    }
+  },
+  "experiment_status": "completed",
+  "acceptance": "revise",
+  "unresolved": [
+    "11B/12B default graph overview shows only part of scrollable flow",
+    "ChatGPT inline receipt remains unverified separately"
+  ]
+}

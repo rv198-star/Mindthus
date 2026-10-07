@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>V1默认交付用例：开发期进展语义</title></head><body><div class="ex-root" data-layout="sheet" data-theme="paper" data-mode="light" data-lang="zh-CN"><style>.ex-root{--ex-bg:#f6f8f5;--ex-card:#fff;--ex-ink:#17313b;--ex-muted:#536873;--ex-line:#d5dfdc;--ex-accent:#236e61;--ex-tint:#e9f4ef;--ex-warn:#865b15;--ex-error:#a13d38;box-sizing:border-box;background:var(--ex-bg);color:var(--ex-ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;border:1px solid var(--ex-line);border-radius:18px;padding:28px;max-width:1220px;margin:12px auto;overflow-wrap:anywhere;color-scheme:light}
+.ex-root *{box-sizing:border-box}.ex-root[data-theme=blueprint]{--ex-bg:#edf4fa;--ex-accent:#285e9b;--ex-tint:#e4eef9;--ex-line:#cad9e6;background-image:linear-gradient(#234d7206 1px,transparent 1px),linear-gradient(90deg,#234d7206 1px,transparent 1px);background-size:24px 24px}
+.ex-root[data-mode=dark]{--ex-bg:#152329;--ex-card:#1d3038;--ex-ink:#edf4f4;--ex-muted:#b6c6cc;--ex-line:#3c525b;--ex-accent:#8ed8c4;--ex-tint:#203f3a;--ex-warn:#f0c887;--ex-error:#ffb3ae;color-scheme:dark}
+.ex-root a{color:var(--ex-accent);text-underline-offset:3px}.ex-root a:hover{text-decoration-thickness:2px}.ex-root :focus-visible{outline:3px solid var(--ex-accent);outline-offset:4px}
+.ex-root h1,.ex-root h2,.ex-root h3,.ex-root p,.ex-root figure{margin:0}.ex-root p+p{margin-top:12px}.ex-root h1{font-size:clamp(25px,3.8vw,39px);line-height:1.25;letter-spacing:-.025em;max-width:1000px}.ex-root h2{font-size:20px;line-height:1.45}.ex-root h3{font-size:17px}.ex-root h4,.ex-root h5,.ex-root h6{font-size:16px;margin:16px 0 8px}
+.ex-eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--ex-accent);margin-bottom:12px}.ex-subtitle{color:var(--ex-muted);margin-top:14px!important;max-width:950px}.ex-hero{padding:4px 0 24px;border-bottom:1px solid var(--ex-line);margin-bottom:20px}
+.ex-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.ex-root button{font:inherit;font-size:13px;border:1px solid var(--ex-line);color:var(--ex-ink);background:var(--ex-card);border-radius:8px;padding:7px 12px;cursor:pointer}.ex-root button:hover{background:var(--ex-tint)}.ex-js-only{display:none}.ex-enhanced .ex-js-only{display:inline-block}
+.ex-nav{display:flex;gap:10px 18px;flex-wrap:wrap;font-size:13px;padding:0 0 20px}.ex-nav a{text-decoration:none}.ex-grid{display:grid;gap:18px}.ex-root[data-layout=sheet] .ex-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ex-panel{min-width:0;background:var(--ex-card);border:1px solid var(--ex-line);border-radius:12px;padding:22px}.ex-span-2{grid-column:1/-1}.ex-panel-head{display:flex;gap:12px;align-items:baseline;margin-bottom:16px}.ex-number{font:700 11px/1.2 ui-monospace,monospace;color:var(--ex-accent);border:1px solid var(--ex-line);border-radius:5px;padding:4px 6px;flex:none}.ex-content>*+*{margin-top:16px}.ex-content h1,.ex-content h2{font-size:21px}.ex-content ul,.ex-content ol{padding-left:1.5em}.ex-content li+li{margin-top:4px}.ex-content blockquote{border-left:3px solid var(--ex-line);padding-left:16px;color:var(--ex-muted);margin:12px 0}
+.ex-callout{border-left:4px solid var(--ex-accent);background:var(--ex-tint);padding:17px 18px;border-radius:0 8px 8px 0}.ex-callout[data-tone=warn]{border-left-color:var(--ex-warn)}.ex-callout[data-tone=error]{border-left-color:var(--ex-error)}.ex-callout h3{margin-bottom:8px}.ex-tone{color:var(--ex-muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:5px}
+.ex-table-scroll,.ex-graph-scroll{max-width:100%;overflow:auto;overscroll-behavior:contain}.ex-root table{border-collapse:collapse;min-width:100%;font-size:14px;text-align:left}.ex-root th,.ex-root td{padding:11px 13px;border-bottom:1px solid var(--ex-line);vertical-align:top;min-width:95px}.ex-root th{background:var(--ex-tint);font-size:12px;letter-spacing:.02em}.ex-root tr:last-child td{border-bottom:0}.ex-root td:first-child{font-weight:600}
+.ex-root pre{max-width:100%;overflow:auto;white-space:pre;margin:0;border:1px solid var(--ex-line);border-radius:8px;padding:14px;background:var(--ex-bg);font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}.ex-root code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.9em}.ex-root p code,.ex-root li code{background:var(--ex-tint);padding:2px 4px;border-radius:3px}.ex-code-label{font-size:11px;color:var(--ex-muted);margin-bottom:6px}
+.ex-root details>summary{cursor:pointer;font-weight:600;color:var(--ex-ink)}.ex-root details[open]>summary{margin-bottom:14px}.ex-root details.ex-panel>summary{font-size:19px}.ex-relations{font-size:13px;margin-top:12px!important;color:var(--ex-muted)}.ex-relations ul{margin-bottom:0}.ex-relations li{padding-bottom:3px}.ex-root svg{display:block;flex:none;font-family:inherit;margin:0 auto}.ex-node-box{fill:var(--ex-card);stroke:var(--ex-accent);stroke-width:1.6}.ex-node-text{fill:var(--ex-ink);font-size:14px;font-weight:550}.ex-edge{fill:none;stroke:var(--ex-accent);stroke-width:1.6;stroke-linejoin:round}.ex-edge-dashed{stroke-dasharray:5 4}.ex-edge-label-box{fill:var(--ex-card);stroke:var(--ex-line);stroke-width:.7}.ex-edge-label{fill:var(--ex-muted);font-size:12px}.ex-arrow{fill:var(--ex-accent)}
+.ex-metrics{display:grid;gap:18px}.ex-metric{border-bottom:1px solid var(--ex-line);padding-bottom:16px}.ex-metric:last-child{border-bottom:0;padding-bottom:0}.ex-metric-top{display:flex;justify-content:space-between;gap:16px;align-items:baseline}.ex-value{font:650 23px/1.4 ui-monospace,monospace;white-space:nowrap;color:var(--ex-accent)}.ex-basis{color:var(--ex-muted);font-size:13px;margin-top:5px!important}.ex-bar{height:13px;background:var(--ex-line);border-radius:6px;overflow:hidden;display:flex;margin:10px 0}.ex-bar-solid{height:100%;background:var(--ex-accent)}.ex-bar-uncertain{height:100%;background:repeating-linear-gradient(135deg,var(--ex-accent) 0px,var(--ex-accent) 2px,var(--ex-tint) 2px,var(--ex-tint) 6px)}.ex-range-legend{font-size:12px;color:var(--ex-muted);margin-top:12px!important}.ex-unknown{font:600 17px/1.5 system-ui,sans-serif;color:var(--ex-muted)}.ex-footer{margin-top:20px;font-size:11px;color:var(--ex-muted)}.ex-source-view{margin-top:16px;font-size:13px}.ex-source-view textarea{width:100%;min-height:160px;font:12px/1.5 ui-monospace,monospace;background:var(--ex-card);color:var(--ex-ink);border:1px solid var(--ex-line);padding:12px;border-radius:8px;resize:vertical}.ex-status{font-size:12px;color:var(--ex-muted)}
+@media(max-width:650px){.ex-root{padding:16px;border-radius:12px;margin:6px auto}.ex-root[data-layout=sheet] .ex-grid{grid-template-columns:minmax(0,1fr)}.ex-panel{padding:16px}.ex-root h2{font-size:18px}.ex-metric-top{flex-wrap:wrap;gap:2px 16px}.ex-nav{gap:8px 12px}.ex-value{font-size:21px}}
+@media print{.ex-root{border:0;padding:0;color:#111;background:#fff}.ex-tools,.ex-nav,.ex-source-view{display:none!important}.ex-root[data-layout=sheet] .ex-grid{display:block}.ex-panel{break-inside:avoid;margin-bottom:14px}.ex-graph-scroll,.ex-table-scroll{overflow:visible}.ex-root svg{max-width:100%;height:auto}}
+</style><header class="ex-hero"><div class="ex-eyebrow">MINDTHUS / EXPLAIN</div><h1>V1默认交付用例：开发期进展语义</h1><p class="ex-subtitle">开发期假设 / 语义样例，不代表生产进度</p><div class="ex-tools"><button type="button" class="ex-js-only" data-ex-action="layout" aria-pressed="false">线性阅读</button><button type="button" class="ex-js-only" data-ex-action="dark" aria-pressed="false">深色模式</button><button type="button" class="ex-js-only" data-ex-action="expand" aria-pressed="false">展开详情</button><button type="button" class="ex-js-only" data-ex-action="copy">复制源稿</button></div></header><nav class="ex-nav" aria-label="章节导航"><a href="#ex-d2d4ea17fd05-result">结论与限定</a><a href="#ex-d2d4ea17fd05-status">工作块与状态</a><a href="#ex-d2d4ea17fd05-remaining">剩余量与构成</a><a href="#ex-d2d4ea17fd05-notes">数值阅读说明</a></nav><div class="ex-grid"><section class="ex-panel ex-span-2" id="ex-d2d4ea17fd05-result" data-block-id="result"><div class="ex-panel-head"><span class="ex-number">01</span><h2>结论与限定</h2></div><div class="ex-content"><aside class="ex-callout" data-component="callout" data-tone="info"><span class="ex-tone">info</span><h3>6个工作块中4个已验收；剩余估计合计10点</h3><p>回归测试进行中，交付验收等待外部回执。
+60%和40%仅表示测试、验收在剩余量中的占比，不是整体完成率。
+整体工作量进度百分比未知；未声明并行资源，并行情况未知。</p>
+</aside></div></section><section class="ex-panel" id="ex-d2d4ea17fd05-status" data-block-id="status"><div class="ex-panel-head"><span class="ex-number">02</span><h2>工作块与状态</h2></div><div class="ex-content"><div class="ex-table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead>
+<tr>
+  <th>项目</th>
+  <th>已声明信息</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>工作块总数</td>
+  <td>6个</td>
+</tr>
+<tr>
+  <td>已验收工作块</td>
+  <td>4个</td>
+</tr>
+<tr>
+  <td>回归测试</td>
+  <td>进行中</td>
+</tr>
+<tr>
+  <td>交付验收</td>
+  <td>等待外部回执</td>
+</tr>
+<tr>
+  <td>整体工作量进度百分比</td>
+  <td>未提供，未知</td>
+</tr>
+<tr>
+  <td>并行资源与并行情况</td>
+  <td>未声明资源，并行情况未知</td>
+</tr>
+</tbody>
+</table></div>
+</div></section><section class="ex-panel" id="ex-d2d4ea17fd05-remaining" data-block-id="remaining"><div class="ex-panel-head"><span class="ex-number">03</span><h2>剩余量与构成</h2></div><div class="ex-content"><p>已声明的剩余估计使用同一单位：测试6点、验收4点，合计10点。</p>
+<div class="ex-metrics" data-component="progress"><div class="ex-metric"><div class="ex-metric-top"><strong>剩余总量</strong><span class="ex-value">10 <small>点</small></span></div><p class="ex-basis">开发期假设 / 语义样例；测试6点与验收4点合计</p></div><div class="ex-metric"><div class="ex-metric-top"><strong>测试占剩余量</strong><span class="ex-value">60 <small>%</small></span></div><div class="ex-bar" role="progressbar" aria-label="测试占剩余量" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60"><span class="ex-bar-solid" style="width:60%"></span><span class="ex-bar-uncertain" style="width:0%"></span></div><p class="ex-basis">开发期假设 / 语义样例；剩余10点中的6点</p></div><div class="ex-metric"><div class="ex-metric-top"><strong>验收占剩余量</strong><span class="ex-value">40 <small>%</small></span></div><div class="ex-bar" role="progressbar" aria-label="验收占剩余量" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40"><span class="ex-bar-solid" style="width:40%"></span><span class="ex-bar-uncertain" style="width:0%"></span></div><p class="ex-basis">开发期假设 / 语义样例；剩余10点中的4点</p></div></div></div></section><details class="ex-panel" id="ex-d2d4ea17fd05-notes" data-block-id="notes"><summary>数值阅读说明</summary><div class="ex-content"><p>“4个已验收 / 6个工作块”是工作块计数，不据此生成整体工作量完成率。</p>
+<p>60%与40%的分母均为剩余10点，只展示剩余量的构成。上述内容均为V1默认交付用例的开发期假设 / 语义样例。</p>
+</div></details></div><script type="application/json" data-explain-source="v2">{"schema": "explain.presentation.v2", "source_sha256": "d2d4ea17fd05ce5735767fe6baacd38102d9e8fa54af2e6b7ede9864a2ed9a19", "source": "---\ntitle: V1默认交付用例：开发期进展语义\nsubtitle: 开发期假设 / 语义样例，不代表生产进度\nlayout: sheet\nlang: zh-CN\n---\n\n## 结论与限定 {#result span=2}\n\n```callout info\n6个工作块中4个已验收；剩余估计合计10点\n回归测试进行中，交付验收等待外部回执。\n60%和40%仅表示测试、验收在剩余量中的占比，不是整体完成率。\n整体工作量进度百分比未知；未声明并行资源，并行情况未知。\n```\n\n## 工作块与状态 {#status}\n\n| 项目 | 已声明信息 |\n| --- | --- |\n| 工作块总数 | 6个 |\n| 已验收工作块 | 4个 |\n| 回归测试 | 进行中 |\n| 交付验收 | 等待外部回执 |\n| 整体工作量进度百分比 | 未提供，未知 |\n| 并行资源与并行情况 | 未声明资源，并行情况未知 |\n\n## 剩余量与构成 {#remaining}\n\n已声明的剩余估计使用同一单位：测试6点、验收4点，合计10点。\n\n```progress\n剩余总量 | 10 | 点 | 开发期假设 / 语义样例；测试6点与验收4点合计\n测试占剩余量 | 60 | % | 开发期假设 / 语义样例；剩余10点中的6点\n验收占剩余量 | 40 | % | 开发期假设 / 语义样例；剩余10点中的4点\n```\n\n## 数值阅读说明 {#notes collapsed}\n\n“4个已验收 / 6个工作块”是工作块计数，不据此生成整体工作量完成率。\n\n60%与40%的分母均为剩余10点，只展示剩余量的构成。上述内容均为V1默认交付用例的开发期假设 / 语义样例。"}</script><details class="ex-source-view"><summary>本页交付稿</summary><textarea readonly aria-label="本页交付稿">---
+title: V1默认交付用例：开发期进展语义
+subtitle: 开发期假设 / 语义样例，不代表生产进度
+layout: sheet
+lang: zh-CN
+---
+
+## 结论与限定 {#result span=2}
+
+```callout info
+6个工作块中4个已验收；剩余估计合计10点
+回归测试进行中，交付验收等待外部回执。
+60%和40%仅表示测试、验收在剩余量中的占比，不是整体完成率。
+整体工作量进度百分比未知；未声明并行资源，并行情况未知。
+```
+
+## 工作块与状态 {#status}
+
+| 项目 | 已声明信息 |
+| --- | --- |
+| 工作块总数 | 6个 |
+| 已验收工作块 | 4个 |
+| 回归测试 | 进行中 |
+| 交付验收 | 等待外部回执 |
+| 整体工作量进度百分比 | 未提供，未知 |
+| 并行资源与并行情况 | 未声明资源，并行情况未知 |
+
+## 剩余量与构成 {#remaining}
+
+已声明的剩余估计使用同一单位：测试6点、验收4点，合计10点。
+
+```progress
+剩余总量 | 10 | 点 | 开发期假设 / 语义样例；测试6点与验收4点合计
+测试占剩余量 | 60 | % | 开发期假设 / 语义样例；剩余10点中的6点
+验收占剩余量 | 40 | % | 开发期假设 / 语义样例；剩余10点中的4点
+```
+
+## 数值阅读说明 {#notes collapsed}
+
+“4个已验收 / 6个工作块”是工作块计数，不据此生成整体工作量完成率。
+
+60%与40%的分母均为剩余10点，只展示剩余量的构成。上述内容均为V1默认交付用例的开发期假设 / 语义样例。</textarea></details><p class="ex-status" aria-live="polite"></p><footer class="ex-footer">Explain HTML 2.0.0-dev.1 · d2d4ea17fd05</footer><script>(() => {
+  const root = document.currentScript.closest('.ex-root');
+  if (!root) return;
+  root.classList.add('ex-enhanced');
+  const button = (action) => root.querySelector(`[data-ex-action="${action}"]`);
+  const layout = button('layout');
+  const dark = button('dark');
+  layout?.addEventListener('click', () => {
+    const doc = root.dataset.layout === 'doc';
+    root.dataset.layout = doc ? 'sheet' : 'doc';
+    layout.setAttribute('aria-pressed', String(!doc));
+  });
+  dark?.addEventListener('click', () => {
+    const enabled = root.dataset.mode !== 'dark';
+    root.dataset.mode = enabled ? 'dark' : 'light';
+    dark.setAttribute('aria-pressed', String(enabled));
+  });
+  button('expand')?.addEventListener('click', () => {
+    const details = [...root.querySelectorAll('details.ex-panel')];
+    const open = details.some(d => !d.open);
+    details.forEach(d => { d.open = open; });
+    button('expand').setAttribute('aria-pressed', String(open));
+  });
+  const copy = button('copy');
+  copy?.addEventListener('click', async () => {
+    const data = root.querySelector('[data-explain-source="v2"]');
+    const view = root.querySelector('.ex-source-view');
+    const area = view?.querySelector('textarea');
+    const status = root.querySelector('.ex-status');
+    try {
+      const source = JSON.parse(data.textContent).source;
+      if (!navigator.clipboard?.writeText) throw new Error('clipboard_unavailable');
+      await navigator.clipboard.writeText(source);
+      status.textContent = root.dataset.lang.startsWith('zh') ? '已复制本页源稿。' : 'Source copied.';
+    } catch (_) {
+      if (view && area) { view.open = true; area.focus(); area.select(); }
+      if (status) status.textContent = root.dataset.lang.startsWith('zh') ? '请选择并复制下方源稿。' : 'Select and copy the source below.';
+    }
+  });
+})();
+</script></div></body></html>

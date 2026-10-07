@@ -1,0 +1,116 @@
+{
+  "reason": "Original getBBox comparison ignored SVG rotate transforms. Use transformed viewport rectangles; no page or compiler changes.",
+  "original_initial_passed": 104,
+  "original_total": 108,
+  "rechecks": [
+    {
+      "id": "11A",
+      "backend": "direct",
+      "width": 1440,
+      "js": true,
+      "pass": true,
+      "overflow": false,
+      "tables": 0,
+      "graphs": 1,
+      "details": 1,
+      "clipped": [],
+      "keyboard": true,
+      "errors": [],
+      "network": [],
+      "transformed_texts": [
+        {
+          "text": "返回结果给用户",
+          "transform": "rotate(90 22 168)",
+          "outside": false
+        },
+        {
+          "text": "修正后再提交",
+          "transform": "rotate(-90 338 252)",
+          "outside": false
+        }
+      ]
+    },
+    {
+      "id": "11A",
+      "backend": "direct",
+      "width": 1440,
+      "js": false,
+      "pass": true,
+      "overflow": false,
+      "tables": 0,
+      "graphs": 1,
+      "details": 1,
+      "clipped": [],
+      "keyboard": true,
+      "errors": [],
+      "network": [],
+      "transformed_texts": [
+        {
+          "text": "返回结果给用户",
+          "transform": "rotate(90 22 168)",
+          "outside": false
+        },
+        {
+          "text": "修正后再提交",
+          "transform": "rotate(-90 338 252)",
+          "outside": false
+        }
+      ]
+    },
+    {
+      "id": "11A",
+      "backend": "direct",
+      "width": 390,
+      "js": true,
+      "pass": true,
+      "overflow": false,
+      "tables": 0,
+      "graphs": 1,
+      "details": 1,
+      "clipped": [],
+      "keyboard": true,
+      "errors": [],
+      "network": [],
+      "transformed_texts": [
+        {
+          "text": "返回结果给用户",
+          "transform": "rotate(90 22 168)",
+          "outside": false
+        },
+        {
+          "text": "修正后再提交",
+          "transform": "rotate(-90 338 252)",
+          "outside": false
+        }
+      ]
+    },
+    {
+      "id": "11A",
+      "backend": "direct",
+      "width": 390,
+      "js": false,
+      "pass": true,
+      "overflow": false,
+      "tables": 0,
+      "graphs": 1,
+      "details": 1,
+      "clipped": [],
+      "keyboard": true,
+      "errors": [],
+      "network": [],
+      "transformed_texts": [
+        {
+          "text": "返回结果给用户",
+          "transform": "rotate(90 22 168)",
+          "outside": false
+        },
+        {
+          "text": "修正后再提交",
+          "transform": "rotate(-90 338 252)",
+          "outside": false
+        }
+      ]
+    }
+  ],
+  "effective_passed": 108
+}

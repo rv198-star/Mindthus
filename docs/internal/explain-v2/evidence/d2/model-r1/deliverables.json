@@ -1,0 +1,168 @@
+{
+  "entries": [
+    {
+      "id": "11A",
+      "number": 1,
+      "case": "流程解释",
+      "repeat": 1,
+      "arm": "A",
+      "path": "pages/01-flow-r1-A.html",
+      "sha256": "ea9369b6460a9a559dd051c3dbd13d8602fd12439a349411619d9a288ffef2c8"
+    },
+    {
+      "id": "11B",
+      "number": 2,
+      "case": "流程解释",
+      "repeat": 1,
+      "arm": "B",
+      "path": "pages/02-flow-r1-B.html",
+      "sha256": "be390562c3757f777523064dcfc7fd0d87ba5c96010c3c359ab50f53656397fe"
+    },
+    {
+      "id": "12A",
+      "number": 3,
+      "case": "流程解释",
+      "repeat": 2,
+      "arm": "A",
+      "path": "pages/03-flow-r2-A.html",
+      "sha256": "d398548240b0b4dbc30955c7ec74eee63be1ea2f89133facbc34cc890cf7e03a"
+    },
+    {
+      "id": "12B",
+      "number": 4,
+      "case": "流程解释",
+      "repeat": 2,
+      "arm": "B",
+      "path": "pages/04-flow-r2-B.html",
+      "sha256": "a2f083b34a92f267cb72eb9b1815d06a873d9088e1ce9c38cc370348c3866994"
+    },
+    {
+      "id": "13A",
+      "number": 5,
+      "case": "流程解释",
+      "repeat": 3,
+      "arm": "A",
+      "path": "pages/05-flow-r3-A.html",
+      "sha256": "6b6651741051011a7dcad294dbcdb402eec92709077fc7f075d1782a8577101b"
+    },
+    {
+      "id": "13B",
+      "number": 6,
+      "case": "流程解释",
+      "repeat": 3,
+      "arm": "B",
+      "path": "pages/06-flow-r3-B.html",
+      "sha256": "c31f6684dd3e5d2acb55954319cf225105b6d34a0f0d31b3446cd4ea2f1073d6"
+    },
+    {
+      "id": "21A",
+      "number": 7,
+      "case": "方案比较",
+      "repeat": 1,
+      "arm": "A",
+      "path": "pages/07-comparison-r1-A.html",
+      "sha256": "3f2524807fea073d9184710411db2950674391df926b525448a53a0950bf28e3"
+    },
+    {
+      "id": "21B",
+      "number": 8,
+      "case": "方案比较",
+      "repeat": 1,
+      "arm": "B",
+      "path": "pages/08-comparison-r1-B.html",
+      "sha256": "376f04bbe6461ba27d99105e93c15f414a6a4dd6b00f1570883debbc1a9d4526"
+    },
+    {
+      "id": "22A",
+      "number": 9,
+      "case": "方案比较",
+      "repeat": 2,
+      "arm": "A",
+      "path": "pages/09-comparison-r2-A.html",
+      "sha256": "c1b88d63de5a5fd41da3374d4266983b5d1f3467632f8fb8d5f5db48599dbef9"
+    },
+    {
+      "id": "22B",
+      "number": 10,
+      "case": "方案比较",
+      "repeat": 2,
+      "arm": "B",
+      "path": "pages/10-comparison-r2-B.html",
+      "sha256": "5b14eb30c770fe6ea04fc3b25bd0e40d3ea2756678c8040281bdb4cb3bab716d"
+    },
+    {
+      "id": "23A",
+      "number": 11,
+      "case": "方案比较",
+      "repeat": 3,
+      "arm": "A",
+      "path": "pages/11-comparison-r3-A.html",
+      "sha256": "46cb9f494f447cfa94ea3bb7c095ef7285285e5fb994ed8a544e464dcccc584f"
+    },
+    {
+      "id": "23B",
+      "number": 12,
+      "case": "方案比较",
+      "repeat": 3,
+      "arm": "B",
+      "path": "pages/12-comparison-r3-B.html",
+      "sha256": "32f4669b6afd9c7afd4b4367d73be1be693e524820258222dac3b2f35ef310c5"
+    },
+    {
+      "id": "31A",
+      "number": 13,
+      "case": "任务进展",
+      "repeat": 1,
+      "arm": "A",
+      "path": "pages/13-progress-r1-A.html",
+      "sha256": "4f6e5ef6db31697e8115d8f5bb019d1747735f7bdce50aa49b8b8db71564cf1c"
+    },
+    {
+      "id": "31B",
+      "number": 14,
+      "case": "任务进展",
+      "repeat": 1,
+      "arm": "B",
+      "path": "pages/14-progress-r1-B.html",
+      "sha256": "a9910fd60fbceb64891a7aa2af528f0691fd0b7511b912f25e77a509098e75c0"
+    },
+    {
+      "id": "32A",
+      "number": 15,
+      "case": "任务进展",
+      "repeat": 2,
+      "arm": "A",
+      "path": "pages/15-progress-r2-A.html",
+      "sha256": "2e83e52222960feaab8103a1ba12f794f1d028133b29d80b69ed9c3513b2cc7f"
+    },
+    {
+      "id": "32B",
+      "number": 16,
+      "case": "任务进展",
+      "repeat": 2,
+      "arm": "B",
+      "path": "pages/16-progress-r2-B.html",
+      "sha256": "308cc3f8476fc48e13ccdc1d4c85c7f00e82bb4c8e3905d576625bed29d2f4f2"
+    },
+    {
+      "id": "33A",
+      "number": 17,
+      "case": "任务进展",
+      "repeat": 3,
+      "arm": "A",
+      "path": "pages/17-progress-r3-A.html",
+      "sha256": "8cdd4779a28943626c6766e0f6a4f8fa124184585dacd10f8ef513fb644ff4ae"
+    },
+    {
+      "id": "33B",
+      "number": 18,
+      "case": "任务进展",
+      "repeat": 3,
+      "arm": "B",
+      "path": "pages/18-progress-r3-B.html",
+      "sha256": "a874e15a499d209cae7e077ba3a85d1521c756e7080e75bd2c1784ae60a76fba"
+    }
+  ],
+  "index_sha256": "aae5d3f51ed7e48fe5f3c670c1b3d1c98382448e89f752193af8b9c4941b6d3d",
+  "zip_sha256": "375f5dda527b576b7f01917423a1ef8d7ae23c2a9f5d57ea98a94335abc7f5e0"
+}

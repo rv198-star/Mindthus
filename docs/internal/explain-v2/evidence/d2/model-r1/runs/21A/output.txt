@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>开发期假设比较：建议选择 A</title>
+<style>
+:root {
+  color-scheme: light;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #182a35;
+  background: #f3f6f8;
+  line-height: 1.65;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 960px; margin: 0 auto; padding: 40px 24px; }
+.label { margin: 0 0 12px; font-size: .9rem; color: #4b6070; }
+h1 { margin: 0 0 18px; font-size: clamp(1.65rem, 4vw, 2.3rem); line-height: 1.3; }
+h2 { margin: 0 0 16px; font-size: 1.2rem; }
+p { margin: 0 0 12px; }
+p:last-child { margin-bottom: 0; }
+.conclusion {
+  padding: 24px;
+  border: 1px solid #a5c8bd;
+  border-left: 5px solid #27664f;
+  border-radius: 10px;
+  background: #eef7f2;
+}
+.conditions {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #b7d3c7;
+}
+section { margin-top: 28px; }
+.table-wrap { border: 1px solid #ccd6dd; border-radius: 10px; overflow: hidden; background: #fff; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+caption { padding: 16px; text-align: left; font-weight: 600; }
+th, td { padding: 14px 16px; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+thead th { background: #e8eef2; }
+tbody th, tbody td { border-top: 1px solid #dbe3e8; }
+thead th:first-child { width: 28%; }
+.note { margin-top: 12px; color: #4b6070; font-size: .95rem; }
+.limit { padding: 20px; background: #fff; border: 1px solid #ccd6dd; border-radius: 10px; }
+details { margin-top: 24px; border: 1px solid #ccd6dd; border-radius: 10px; background: #fff; }
+summary { padding: 16px 20px; cursor: pointer; font-weight: 600; }
+summary:focus-visible { outline: 3px solid #2559a6; outline-offset: 3px; }
+details p { padding: 0 20px 20px; }
+@media (max-width: 480px) {
+  main { padding: 24px 16px; }
+  .conclusion { padding: 18px; }
+  th, td { padding: 12px 10px; }
+  caption { padding: 14px 10px; }
+}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="label">开发期假设比较 · 语义样例</p>
+    <h1>建议 A：离线是必需条件</h1>
+    <div class="conclusion">
+      <p><strong>A 方案需要 8 小时，保留离线能力，因此建议 A。</strong>B 方案需要 3 小时，但需要持续联网，不满足本任务的离线必需条件。</p>
+      <div class="conditions">
+        <p><strong>证据限制：</strong>目前仅有两次开发环境试验，没有生产验证。</p>
+        <p><strong>执行条件：</strong>最终执行须由负责人批准。</p>
+      </div>
+    </div>
+  </header>
+
+  <section aria-labelledby="comparison-title">
+    <h2 id="comparison-title">两个方案的时间与网络条件</h2>
+    <div class="table-wrap">
+      <table>
+        <caption>开发期假设 / 语义样例</caption>
+        <thead>
+          <tr>
+            <th scope="col">比较项</th>
+            <th scope="col">A 方案</th>
+            <th scope="col">B 方案</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">所需时间</th>
+            <td>8 小时</td>
+            <td>3 小时</td>
+          </tr>
+          <tr>
+            <th scope="row">网络条件</th>
+            <td>保留离线能力</td>
+            <td>需要持续联网</td>
+          </tr>
+          <tr>
+            <th scope="row">离线必需条件</th>
+            <td>满足，因此建议 A</td>
+            <td>不满足</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">表中时间与网络条件属于开发期假设比较，不代表生产验证结果或生产进度。</p>
+  </section>
+
+  <section class="limit" aria-labelledby="limits-title">
+    <h2 id="limits-title">验证与审批边界</h2>
+    <p>两次试验均在开发环境中进行；<strong>生产环境表现尚未验证</strong>。</p>
+    <p>建议 A 不等于已获执行批准；最终执行仍须由负责人批准。</p>
+  </section>
+
+  <details>
+    <summary>展开：为什么不按时间更短选择 B？</summary>
+    <p>B 的假设所需时间为 3 小时，但它需要持续联网。本任务必须具备离线能力，因此建议保留离线能力的 A，即使 A 的假设所需时间为 8 小时。</p>
+  </details>
+</main>
+</body>
+</html>
