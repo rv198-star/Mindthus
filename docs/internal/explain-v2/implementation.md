@@ -77,13 +77,13 @@ relations, quantities, uncertainty, quotations and citations. Write errors prese
 original files; source recovery verifies integrity but does not authenticate an author.
 No production TPlan state, original Jev checkout, main branch or release was changed.
 
-## Next step
+## Current #228 authorization
 
-#228 can run fixed-source engineering checks on the frozen D1 commit. Its model arm
-still needs a specifically authorized channel/model/settings and budget for nine pairs
-(18 generations), and actual hosted HTML interaction must be observed separately.
-Previous Jev-specific budgets/authorizations do not transfer. Keep #229 waiting rather
-than treating synthetic fixtures or screenshots as a completed benefit decision.
+The user has now authorized the 18 main generations and one independent review round.
+Use `evidence/d2/model-r1/registration.json`; old channel/budget discussion is archived
+in `archive/legacy-jev-channel-scope.md` and is not an active constraint. Keep the
+compiler frozen; deliver one clickable output per generation, including failures.
+Do not rerun accepted D1/engineering tests or promote #229 before D2 acceptance.
 
 ## Local recovery
 
