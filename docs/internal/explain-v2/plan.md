@@ -2,6 +2,10 @@
 
 ## 当前状态
 
+2026-10-08 最新纠正：Owner 明确 HTML 最终应直接在 ChatGPT 对话内显示，不能把独立宽屏 Dashboard 或 HTML 下载当作目标。已新增 **Inline Container 原型**：默认 stdout fragment／prepare-only app-block；按实际容器宽度重排，不复制网页外壳或写死 ChatGPT 宽度。1440px 浏览器内嵌 320/390/480/640/768/960px 容器，96/96 本地浏览器检查通过；原材料、共享 Skill/TPlan 和历史18次生成不变。真实 ChatGPT raw-HTML 展示入口本会话仍未取得，实际可见可操作回执保持未完成，不能用截图或文件链接替代。见 [内嵌纠正](prototypes/analysis-layout-r1/INLINE.md)。恢复任务 `tsk_c2e804d5d586cc9f`；证据 `/srv/agentdock/.cache/mindthus-explain-inline-r1/qa/`。
+
+### 宽屏原型（历史，只作信息组合参考）
+
 2026-10-08 最新：按已确认的 Dashboard / Report 方向完成 **Analysis Layout R1 可操作原型**，先供 Owner 视觉确认，不覆盖共享运行时。四种样例为执行简报、进度分析、方案矩阵、组合图解；均绑定既有材料。48/48 浏览器检查、2/2 打印检查、24/24 新旧查看器检查通过；原 18 次生成、Skill/TPlan 功能和发布状态不变。见 [原型与来源说明](prototypes/analysis-layout-r1/README.md)。本轮恢复任务 `tsk_b4fe243f717e595e`，最终查看器 `/srv/agentdock/.cache/mindthus-explain-analysis-r1/final/index.html`。下一步按实际页面反馈决定是否提炼通用布局，不再仅作字号或配色微调。
 
 ### Compact Style R1（历史，未被 Owner 认可为最终风格）
