@@ -11,6 +11,7 @@ from ._vendor.mistune.plugins.table import table
 CODE_LANGUAGES = frozenset('text txt plaintext python py javascript js typescript ts json yaml yml bash sh shell zsh sql css html svg xml diff toml ini rust rs go java c cpp csharp ruby rb php md markdown dockerfile powershell ps1'.split())
 EXAMPLES = {
     'flow': '```flow LR\n输入 -> 编译: 语义稿\n编译 -> 页面\n```',
+    'sequence': '```sequence\n用户 -> 验证器: 提交请求\n验证器 -> 处理器: 格式有效\n处理器 -> 用户: 返回结果\n```',
     'progress': '```progress\n已声明进度 | 62 | % | 上游给出的指标\n剩余工作 | 6..9 | 小时 | 估计，不是测量\n未知项 | ? | 小时 | 尚未估计\n```',
     'callout': '```callout info\n结论标题\n结论与重要限定。\n```',
     'document': '---\ntitle: 报告\nlayout: sheet\n---\n## 结论 {#result}\n内容。',
@@ -217,6 +218,72 @@ def parse_flow(text: str, args: list[str], line: int) -> dict:
             'nodes': list(nodes.values()), 'edges': edges, 'line': line}
 
 
+def parse_sequence(text: str, args: list[str], line: int) -> dict:
+    if args:
+        error('sequence accepts no options.', line, 'sequence')
+    participants, messages = {}, []
+
+    def participant(raw: str, at: int) -> str:
+        raw = raw.strip()
+        if raw in participants:
+            return participants[raw]['id']
+        explicit = re.fullmatch(r'([A-Za-z][A-Za-z0-9_.-]*)\[(.*)\]', raw)
+        if explicit:
+            key, label = explicit.groups()
+        else:
+            if raw.startswith('[') and raw.endswith(']'):
+                label = raw[1:-1]
+            elif raw.startswith('"'):
+                try:
+                    label = json.loads(raw)
+                except json.JSONDecodeError:
+                    error('Invalid quoted participant label.', at, 'sequence')
+            else:
+                label = raw
+            key = label
+        if not isinstance(label, str) or not label.strip() or len(label) > 200:
+            error('Sequence participant labels must be nonempty and at most 200 characters.', at, 'sequence')
+        if key in participants:
+            if participants[key]['label'] != label:
+                error(f'Conflicting labels for participant {key}.', at, 'sequence')
+        else:
+            if len(participants) >= 12:
+                error('sequence supports at most 12 participants.', at, 'sequence', 'size_limit')
+            participants[key] = {'id': f's{len(participants)}', 'label': label, 'line': at}
+        return participants[key]['id']
+
+    for offset, raw in enumerate(text.splitlines()):
+        if not raw.strip():
+            continue
+        at = line + offset
+        try:
+            fields = _outside_split(raw, ':')
+            relation, label = fields[0], ':'.join(fields[1:]).strip()
+            dashed_parts = _outside_split(relation, '-->')
+            dashed = len(dashed_parts) == 2
+            chain = dashed_parts if dashed else _outside_split(relation, '->')
+            if len(chain) != 2 or not chain[0] or not chain[1]:
+                error('Use A -> B: message or A --> B: message.', at, 'sequence')
+            if len(messages) >= MAX_EDGES:
+                error('sequence message limit exceeded.', at, 'sequence', 'size_limit')
+            messages.append({
+                'id': f'm{len(messages)}',
+                'from': participant(chain[0], at),
+                'to': participant(chain[1], at),
+                'label': label,
+                'dashed': dashed,
+                'line': at,
+            })
+        except ValueError as exc:
+            if isinstance(exc, CompilerError):
+                raise
+            error(str(exc), at, 'sequence')
+    if not messages:
+        error('sequence needs at least one message.', line, 'sequence')
+    return {'kind': 'sequence', 'participants': list(participants.values()),
+            'messages': messages, 'line': line}
+
+
 def parse_progress(text: str, args: list[str], line: int) -> dict:
     if args: error('progress accepts no options.', line, 'progress')
     rows = []
@@ -285,6 +352,8 @@ def _blocks(body: str, start_line: int) -> list[dict]:
         content = ''.join(inner)
         if kind == 'flow':
             blocks.append(parse_flow(content, args, at + 1))
+        elif kind == 'sequence':
+            blocks.append(parse_sequence(content, args, at + 1))
         elif kind in ('progress', 'range'):
             blocks.append(parse_progress(content, args, at + 1))
         elif kind == 'callout':

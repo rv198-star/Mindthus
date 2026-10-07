@@ -53,10 +53,23 @@ def svg_text(lines: list[str], x: float, y: float, css: str, gap: int = 20) -> s
     return f'<text class="{css}" text-anchor="middle" dominant-baseline="central">{body}</text>'
 
 
+def graph_shell_open(aria_label: str, zh: bool) -> str:
+    natural = '原始大小' if zh else 'Actual size'
+    fit = '适配全图' if zh else 'Fit diagram'
+    return (
+        '<div class="ex-graph-shell">'
+        '<div class="ex-graph-tools">'
+        f'<button type="button" class="ex-js-only" data-ex-graph-size aria-pressed="false" '
+        f'data-natural-label="{escape(natural, quote=True)}" data-fit-label="{escape(fit, quote=True)}">{escape(natural)}</button>'
+        '</div>'
+        f'<div class="ex-graph-scroll" tabindex="0" role="region" aria-label="{escape(aria_label, quote=True)}">'
+    )
+
+
 def graph_html(graph: dict, prefix: str, zh: bool) -> str:
     geo = graph['geometry']; marker = prefix + '-arrow'
     lookup = {n['id']: n for n in graph['nodes']}
-    parts = [f'<figure data-component="flow"><div class="ex-graph-scroll" tabindex="0" role="region" aria-label="{ "流程关系图" if zh else "Flow diagram" }">',
+    parts = [f'<figure data-component="flow">{graph_shell_open("流程关系图" if zh else "Flow diagram", zh)}',
              f'<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="{prefix}-title" width="{fmt(geo["width"])}" height="{fmt(geo["height"])}" viewBox="0 0 {fmt(geo["width"])} {fmt(geo["height"])}">',
              f'<title id="{prefix}-title">{escape("；".join(n["label"] for n in graph["nodes"]))}</title>',
              f'<defs><marker id="{marker}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ex-arrow" d="M0 0 L10 5 L0 10 Z"/></marker></defs>']
@@ -74,7 +87,7 @@ def graph_html(graph: dict, prefix: str, zh: bool) -> str:
         parts.append(f'<g data-node-id="{node["id"]}"><rect class="ex-node-box" x="{fmt(x-w/2)}" y="{fmt(y-h/2)}" width="{fmt(w)}" height="{fmt(h)}" rx="9"/>')
         parts.append(svg_text(node['lines'], x, y, 'ex-node-text'))
         parts.append('</g>')
-    parts.extend(['</svg></div>', '<details class="ex-relations"><summary>' + ('查看文字关系' if zh else 'Read the relationships') + '</summary><ul>'])
+    parts.extend(['</svg></div></div>', '<details class="ex-relations"><summary>' + ('查看文字关系' if zh else 'Read the relationships') + '</summary><ul>'])
     if not graph['edges']:
         parts.extend(f'<li>{escape(n["label"])}</li>' for n in graph['nodes'])
     for edge in graph['edges']:
@@ -82,6 +95,55 @@ def graph_html(graph: dict, prefix: str, zh: bool) -> str:
         if edge['label']: description += '：' + edge['label']
         parts.append('<li>' + escape(description) + '</li>')
     parts.append('</ul></details></figure>')
+    return ''.join(parts)
+
+
+def sequence_html(block: dict, prefix: str, zh: bool) -> str:
+    participants = block['participants']; messages = block['messages']
+    lookup = {p['id']: p for p in participants}
+    count = len(participants)
+    width = max(480.0, 140.0 + max(0, count - 1) * 190.0)
+    height = 132.0 + len(messages) * 58.0
+    left, right = 70.0, width - 70.0
+    if count == 1:
+        xs = {participants[0]['id']: width / 2}
+    else:
+        step = (right - left) / (count - 1)
+        xs = {p['id']: left + i * step for i, p in enumerate(participants)}
+    marker = prefix + '-seq-arrow'
+    parts = [f'<figure data-component="sequence">{graph_shell_open("时序图" if zh else "Sequence diagram", zh)}',
+             f'<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="{prefix}-title" width="{fmt(width)}" height="{fmt(height)}" viewBox="0 0 {fmt(width)} {fmt(height)}">',
+             f'<title id="{prefix}-title">{escape("；".join(p["label"] for p in participants))}</title>',
+             f'<defs><marker id="{marker}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ex-arrow" d="M0 0 L10 5 L0 10 Z"/></marker></defs>']
+    for p in participants:
+        x = xs[p['id']]
+        label = p['label']
+        box_w = min(156.0, max(108.0, 28.0 + len(label) * 13.0))
+        parts.append(f'<g data-sequence-participant="{p["id"]}"><rect class="ex-seq-participant" x="{fmt(x-box_w/2)}" y="12" width="{fmt(box_w)}" height="38" rx="8"/>')
+        parts.append(svg_text([label], x, 31, 'ex-seq-participant-text', 18))
+        parts.append(f'<line class="ex-seq-life" x1="{fmt(x)}" y1="50" x2="{fmt(x)}" y2="{fmt(height-20)}"/></g>')
+    for i, message in enumerate(messages):
+        y = 86.0 + i * 58.0
+        x1, x2 = xs[message['from']], xs[message['to']]
+        cls = 'ex-seq-message ex-edge-dashed' if message['dashed'] else 'ex-seq-message'
+        if message['from'] == message['to']:
+            loop = 46.0 if x1 + 62.0 < width else -46.0
+            path = f'M {fmt(x1)} {fmt(y)} L {fmt(x1+loop)} {fmt(y)} L {fmt(x1+loop)} {fmt(y+22)} L {fmt(x1)} {fmt(y+22)}'
+            label_x, label_y = x1 + loop / 2, y - 10
+        else:
+            path = f'M {fmt(x1)} {fmt(y)} L {fmt(x2)} {fmt(y)}'
+            label_x, label_y = (x1 + x2) / 2, y - 10
+        parts.append(f'<g data-sequence-message="{message["id"]}" data-from="{message["from"]}" data-to="{message["to"]}"><path class="{cls}" d="{path}" marker-end="url(#{marker})"/>')
+        if message['label']:
+            parts.append(svg_text([message['label']], label_x, label_y, 'ex-seq-label', 16))
+        parts.append('</g>')
+    parts.extend(['</svg></div></div>', '<details class="ex-relations"><summary>' + ('查看文字时序' if zh else 'Read the sequence') + '</summary><ol>'])
+    for message in messages:
+        description = lookup[message['from']]['label'] + ' → ' + lookup[message['to']]['label']
+        if message['label']:
+            description += '：' + message['label']
+        parts.append('<li>' + escape(description) + '</li>')
+    parts.append('</ol></details></figure>')
     return ''.join(parts)
 
 
@@ -155,6 +217,9 @@ def render_html(doc: dict, source: str, graphs: list[dict], *, output_format: st
             elif kind == 'flow':
                 key = f'{section["id"]}-{index}'
                 parts.append(graph_html(graph_map[key], f'{prefix}-{key}', zh))
+            elif kind == 'sequence':
+                key = f'{section["id"]}-{index}'
+                parts.append(sequence_html(block, f'{prefix}-{key}', zh))
             elif kind == 'progress': parts.append(progress_html(block, zh))
             else: raise CompilerError('unsupported_component', 'No renderer for ' + kind, component=kind)
         parts.append(f'</div></{tag}>')

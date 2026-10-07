@@ -3,9 +3,12 @@
 ## Status
 
 2026-10-07: #227 code and local engineering verification are implemented on
-`feat/explain-html-v2`. The four initial component families are callout, table, flow
-and progress/range. The remaining sequence/tree/timeline work in #229 still depends
-on the #228 benefit decision; neither V2.1 nor V3 has been started.
+`feat/explain-html-v2`. D1 initially shipped callout, table, flow and progress/range.
+After the #228 real comparison found a shared wide-flow display regression and the owner
+required visual parity with the original Explain demo, the focused display repair moves
+`sequence` into the current slice, fits diagrams to the default reading width, restores
+semantic blue/green/amber/red hierarchy, and keeps an actual-size toggle. Tree/timeline
+remain later #229 candidates; neither V2.1 nor V3 has been started.
 
 This is not an entire-V2 completion, merged-main, published-release, paired-model
 benefit or in-conversation HTML visibility claim.
@@ -18,7 +21,7 @@ benefit or in-conversation HTML visibility claim.
 - `skills/explain/resources/html-v2.md`: runnable draft examples, complete initial
   grammar, engine selection, export/recovery/patch and fidelity rules.
 - `skills/explain/resources/compiler-notices.md`: exact dependency provenance.
-- `tests/test_explain_compiler.py`: 42 behavior and packaging tests.
+- `tests/test_explain_compiler.py`: 43 behavior and packaging tests, including sequence preservation.
 - `tests/check_explain_browser.mjs`: optional actual-browser matrix.
 - `tests/fixtures/explain-v2/showcase.md`: clearly illustrative component gallery.
 
@@ -69,6 +72,23 @@ rerun, not a claim that the first or second full run was green. Original raw log
 hashes are retained in the evidence manifest; fixture output saying DELIVERED is from
 an offline fake transport, not new model calls.
 
+## D2 display repair R1
+
+The independent model batch remained unchanged. Its shared wide-flow display blocker was
+repaired from the same B drafts without new model calls. See
+[display repair result](evidence/d2/display-repair-r1/RESULT.md).
+
+- Compiler behavior on Python3.10: 43/43 pass.
+- Explain + contract + packaging + fidelity on Python3.12: 107 tests, 106 pass,
+  1 pre-existing skip, 0 failures.
+- Managed Skill lint: portable=true, 56 files, 0 errors, 0 warnings.
+- Final showcase browser matrix: 8/8 pass, including default graph fit and a real
+  actual-size ↔ fit toggle.
+- Original nine A pages plus rerendered nine B drafts: 108/108 browser checks pass.
+- Same-content V1/V2 visual review uses the repository's exact V1 sample rather than
+  a reconstructed screenshot. It records the remaining V1 compactness advantage instead
+  of claiming universal pixel-density superiority.
+
 ## Review scope
 
 Current-Agent phase-separated code and boundary review plus mechanical/browser tests.
@@ -81,14 +101,15 @@ No production TPlan state, original Jev checkout, main branch or release was cha
 
 The user has now authorized the 18 main generations and one independent review round.
 Use `evidence/d2/model-r1/registration.json`; old channel/budget discussion is archived
-in `archive/legacy-jev-channel-scope.md` and is not an active constraint. Keep the
-compiler frozen; deliver one clickable output per generation, including failures.
-Do not rerun accepted D1/engineering tests or promote #229 before D2 acceptance.
+in `archive/legacy-jev-channel-scope.md` and is not an active constraint. The original model batch remains immutable and no model generation is repeated. The
+post-review display repair is a separate implementation/evidence step: rerender the
+existing B drafts only, preserve the original 18 pages, and do not promote tree/timeline
+or broader #229 scope on the strength of a display fix.
 
 ## Local recovery
 
 Worktree: `/srv/agentdock/worktrees/Mindthus-explain-v2-design-20261007` (OCI).
-Branch: `feat/explain-html-v2`. AgentDock task: `tsk_a315ee4ca6dac6ab`.
+Branch: `feat/explain-html-v2`. Current display-repair AgentDock task: `tsk_e5a99c0f15aa5f83`.
 Developer evidence cache: `/srv/agentdock/.cache/mindthus-explain-v2-d1`.
 Original Jev checkout stays at `8e47cdacc63d3ad53c7fd0f64aa77d9a25e4ebd2`.
 Read the live issue comments and commit evidence before continuing; do not recreate

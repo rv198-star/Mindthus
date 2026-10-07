@@ -23,7 +23,7 @@ V1 = Delivery Surface；V2 = Presentation Compiler。D1 是完整 V2 的最小�
 | 模型负责表达什么，程序负责怎么画 | Source → Explain Draft → Presentation IR → Renderer → Host Adapter；D1 核心 |
 | 短 Markdown/组件稿，不让模型反复手写 HTML/CSS/SVG | D1 核心；内部 IR 由程序产生 |
 | 按信息形状选组件，sheet/doc 分别服务概览与线性阅读 | D1；布局选择服务理解，不强制所有回答卡片化 |
-| 七类组件：callout、flow、sequence、tree、timeline、table、progress/range | D1 先 callout/table/flow/progress-range；D2 验证后 D3 扩其余三类 |
+| 七类组件：callout、flow、sequence、tree、timeline、table、progress/range | D1 先 callout/table/flow/progress-range；D2 视觉修复因原技能能力退化将 sequence 前移；D3 仍只按收益考虑 tree/timeline |
 | 确定性自动布局、共享样式/主题与必要阅读交互 | D1；节点位置、箭头、换行由程序生成，不要求复制参考项目的全部主题 |
 | 同源内容适配对话内 HTML 与离线单文件 | D1；保持实际宿主适配，文件仅显式导出 |
 | 源稿可恢复，支持复现与局部更新 | D1 实现，D2 做恢复/定点更新验收；不能只留一句可选描述 |
@@ -84,11 +84,12 @@ Python 回退仍交付可用的 HTML、图形和必要阅读交互，不把请�
 
 保留普通 Markdown 的段落、标题、列表、表格、引用和代码表示；显式组件只用于普通表达难以呈现的信息关系。D1 冻结一个可跨后端执行的语法子集，不要求兼容参考项目的全部扩展语法。
 
-D1 第一批为 `callout`、`table`、`flow`、`progress/range`，搭配概览式 `sheet` 与线性阅读 `doc`。标题、布局、语言等元数据只保留实际需要的字段；首屏和分组仍由具体理解目标决定，不强制 3–8 个面板。
+D1 第一批为 `callout`、`table`、`flow`、`progress/range`；D2 显示修复为避免相对原 Explain 演示的表达能力退化，将 `sequence` 前移到当前切片。`tree/timeline` 仍留在后续。所有组件搭配概览式 `sheet` 与线性阅读 `doc`；标题、布局、语言等元数据只保留实际需要的字段，首屏和分组仍由具体理解目标决定，不强制 3–8 个面板。
 
 - `callout`：结论及其重要条件；状态样式不能创造验收结论。
 - `table`：已有比较维度；保留未知、部分覆盖与原始标识。
 - `flow`：输入明确节点、边、方向和标签；程序只布局，不推断依赖或因果。
+- `sequence`：输入明确参与者、消息顺序与标签；程序只按给定次序画生命线和消息，不把时序表示升级为业务授权或因果判断。
 - `progress/range`：只呈现源值、单位、依据、覆盖范围与上下界；没有百分比时显示阶段/未知，不从任务数捏造总体完成率。
 
 组件编号和 IR 引用是局部展示标识，不替代业务对象或证据 ID。D1 测试节点名重复、中文长标签、分支、合流、回边及含标点标签，不以删边解决排版困难。未知语法明确诊断，不默默忽略。

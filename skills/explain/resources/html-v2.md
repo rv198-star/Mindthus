@@ -76,6 +76,7 @@ Do not collapse conditions whose absence would make the first reading misleading
 | Conclusion and limitations | `callout info|ok|warn|error` fence: first line is its title, remaining lines are Markdown |
 | Comparison | Ordinary Markdown table |
 | Relationships | `flow LR|TB` fence: `A -> B: label`, `A --> B` for dashed edge, chains and `A -> B & C` for fan-out |
+| Ordered message exchange | `sequence` fence: one `A -> B: message` per step; `A --> B: message` renders a dashed return/error path |
 | Distinct objects sharing a display name | Declare `a[Same label]` and `b[Same label]`; later edges refer to `a` and `b` |
 | Node names containing punctuation/arrows | Use `[name: detail]` or a JSON-quoted node label |
 | Percent, interval, unit or unknown | `progress` (alias `range`) fence; each row is `label | value | unit | basis` |
@@ -101,8 +102,10 @@ Markdown supports paragraphs, lists, tables, headings, links, quotations and exa
 Raw HTML/SVG remains escaped content. Image syntax becomes an explicit link rather than
 an implicit asset request. External links may be unavailable offline, but the page remains
 readable. Unknown component/code-fence names are reported; `text` can display other syntax
-literally. Initial components are callout/table/flow/progress; sequence/tree/timeline
-belong to the later accepted V2 stage, not this first slice.
+literally. The current slice supports callout/table/flow/sequence/progress. Flow and
+sequence diagrams default to fitting the available reading width; with JavaScript enabled,
+the reader can switch to the diagram's actual size inside the scrollable container.
+Tree/timeline remain later candidates and are not implied by this support.
 
 ## Source recovery and local updates
 

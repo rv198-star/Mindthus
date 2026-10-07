@@ -31,7 +31,11 @@ try {
       clipped:[...document.querySelectorAll('svg text')].filter(t=>{
         const b=t.getBBox(),v=t.ownerSVGElement.viewBox.baseVal;
         return b.x < -2 || b.y < -2 || b.x+b.width>v.width+2 || b.y+b.height>v.height+2;
-      }).map(t=>t.textContent)
+      }).map(t=>t.textContent),
+      graphsFit:[...document.querySelectorAll('.ex-graph-scroll')].every(g=>{
+        const svg=g.querySelector('svg'); if(!svg) return false;
+        return svg.getBoundingClientRect().width <= g.clientWidth + 1;
+      })
     }));
     const basename=`showcase-${engine}-${width}-${js?'js':'nojs'}`;
     if(js) await page.screenshot({path:path.join(root,basename+'.png'),fullPage:true});
@@ -40,13 +44,18 @@ try {
     const opened=await page.locator('details.ex-panel').first().evaluate(el=>el.open);
     let controls=true;
     if(js) {
+      const graphSize=page.locator('[data-ex-graph-size]').first();
+      await graphSize.click();
+      controls &&= await page.locator('.ex-graph-scroll').first().evaluate(el=>el.classList.contains('ex-natural'));
+      await graphSize.click();
+      controls &&= await page.locator('.ex-graph-scroll').first().evaluate(el=>!el.classList.contains('ex-natural'));
       await page.locator('[data-ex-action="dark"]').click();
       controls &&= (await page.locator('.ex-root').getAttribute('data-mode'))==='dark';
       await page.locator('[data-ex-action="layout"]').click();
       controls &&= (await page.locator('.ex-root').getAttribute('data-layout'))==='doc';
       if(width===1440 && engine==='node') await page.screenshot({path:path.join(root,'showcase-node-dark-doc.png'),fullPage:true});
     }
-    const ok=!before.overflow && !before.clipped.length && before.panels===5 && before.tables===1 && before.graphs===1 && before.metrics===4 && before.unknown===1 && before.nodes===6 && before.edges===6 && opened && controls && !errors.length && !network.length;
+    const ok=!before.overflow && before.graphsFit && !before.clipped.length && before.panels===6 && before.tables===1 && before.graphs===2 && before.metrics===4 && before.unknown===1 && before.nodes===6 && before.edges===6 && opened && controls && !errors.length && !network.length;
     failed ||= !ok;
     results.push({engine,width,js,ok,...before,source:before.source?'embedded':'missing',opened,controls,errors,network});
     await context.close();

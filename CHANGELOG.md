@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Explain HTML V2 D1：新增短稿编译器、Node 优先/Python 回退的确定性图布局、共享离线 HTML 表达、可选写作提示、源稿恢复与按块更新。此为开发中能力；TPlan 专用 renderer 与状态/验收权不变。模型收益对照与完整 V2 验收另行记录，尚未发布。
+- Explain HTML V2 D1/D2 修正：新增短稿编译器、Node 优先/Python 回退的确定性图布局、共享离线 HTML 表达、可选写作提示、源稿恢复与按块更新；#228 真实对照后修正宽流程图默认视窗，默认适配全图并保留原尺寸切换，补入 sequence 时序图，收紧 sheet 密度并恢复蓝/绿/琥珀/红语义层级。原 18 次模型生成保持不变，修正只重渲染既有 B 短稿。此为开发中能力；TPlan 专用 renderer 与状态/验收权不变，tree/timeline 与完整 V2 发布仍另行验收。
 
 ## v1.12.0 — Explain 人向交付与 TPlan 进展视图
 

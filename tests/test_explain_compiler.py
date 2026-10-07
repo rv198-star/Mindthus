@@ -116,6 +116,18 @@ class SourceGrammarTests(unittest.TestCase):
         self.assertTrue(b['edges'][-1]['dashed'])
         self.assertEqual([e['label'] for e in b['edges']],['','','done','done','retry'])
 
+    def test_sequence_preserves_order_participants_and_retry(self):
+        s=draft('```sequence\nu[用户] -> v[验证器]: 提交请求\nv -> p[处理器]: 格式有效\np -> u: 返回结果\nv --> u: 格式无效\nu -> v: 修正后再提交\n```')
+        b=parse_source(s)['sections'][1]['blocks'][0]
+        self.assertEqual(b['kind'],'sequence')
+        self.assertEqual([p['label'] for p in b['participants']],['用户','验证器','处理器'])
+        self.assertEqual([m['label'] for m in b['messages']],['提交请求','格式有效','返回结果','格式无效','修正后再提交'])
+        self.assertTrue(b['messages'][3]['dashed'])
+        out=compile_source(s,engine='python')['html']
+        self.assertIn('data-component="sequence"',out)
+        self.assertIn('data-ex-graph-size',out)
+        self.assertIn('Read the sequence',out)
+
     def test_no_automatic_file_read_in_fence(self):
         with self.assertRaises(CompilerError):
             parse_source(draft('```python src=/etc/passwd\n```'))
@@ -194,14 +206,16 @@ class RecoveryTests(unittest.TestCase):
 
     def test_missing_duplicate_and_tampered_sources_fail(self):
         out=compile_source(SOURCE,engine='python',output_format='document')['html']
-        for bad in ('<html>No source</html>',out+out,out.replace('"source_sha256": "0556','"source_sha256": "0000')):
+        digest=hashlib.sha256(SOURCE.encode()).hexdigest()
+        tampered=out.replace(digest,'0'*64,1)
+        for bad in ('<html>No source</html>',out+out,tampered):
             with self.subTest(case=bad[:40]),self.assertRaises(CompilerError): recover_source(bad)
 
     def test_missing_and_ambiguous_patch_never_guess(self):
         with self.assertRaises(CompilerError): patch_source(SOURCE,'absent','new')
         with self.assertRaises(CompilerError): patch_source(SOURCE,'conclusion','## New section\nnew')
         with self.assertRaises(CompilerError): patch_source(SOURCE,'conclusion','```flow\n')
-        self.assertEqual(hashlib.sha256(SOURCE.encode()).hexdigest(),'0556b6061bda4878da4deb67bb3a003f3002748e85aeeea8c109795e8838151d')
+        self.assertEqual(hashlib.sha256(SOURCE.encode()).hexdigest(),'fd98f303f350434f7e7c69dda105a6544b4003e46866d7c3d1d38c555829f5e1')
 
     def test_patch_preserves_other_source_ranges_and_metadata(self):
         before=parse_source(SOURCE)

@@ -21,6 +21,16 @@
     details.forEach(d => { d.open = open; });
     button('expand').setAttribute('aria-pressed', String(open));
   });
+  root.querySelectorAll('[data-ex-graph-size]').forEach(control => {
+    control.addEventListener('click', () => {
+      const scroll = control.closest('.ex-graph-shell')?.querySelector('.ex-graph-scroll');
+      if (!scroll) return;
+      const natural = !scroll.classList.contains('ex-natural');
+      scroll.classList.toggle('ex-natural', natural);
+      control.setAttribute('aria-pressed', String(natural));
+      control.textContent = natural ? control.dataset.fitLabel : control.dataset.naturalLabel;
+    });
+  });
   const copy = button('copy');
   copy?.addEventListener('click', async () => {
     const data = root.querySelector('[data-explain-source="v2"]');
