@@ -1,0 +1,67 @@
+# Explain HTML V2 — 执行计划与恢复入口
+
+## 当前状态
+
+- 本轮范围：D0 设计与任务落地；不是 V2 工程实现或发布。
+- 总任务：[#226](https://github.com/rv198-star/Mindthus/issues/226)。
+- 设计：[design.md](design.md)。执行前同时读取项目 `AGENTS.md` 与正式 `skills/explain/SKILL.md`。
+- 下一项工作：D1 / #227。D2 等 D1；D3 等 D2 的明确收益判定。
+
+## 本地恢复点
+
+- 节点：OCI，通过 Nexus-Dock-US；执行用户为 agentdock。
+- 仓库：`/srv/agentdock/projects/Mindthus`，原 Jev 实验分支保留，不在这里开发 V2。
+- V2 worktree：`/srv/agentdock/worktrees/Mindthus-explain-v2-design-20261007`。
+- V2 分支：`docs/explain-html-v2-design`。
+- 本轮同步的 main：`9a40b151cad20cdda52697a605bc6038922126c7`。
+- 原实验 HEAD：`8e47cdacc63d3ad53c7fd0f64aa77d9a25e4ebd2`；本轮不切换、不重置、不清理实验。
+- AgentDock D0 任务：`tsk_caca38073d6ad5ae`。
+- 2026-10-07 本地实测：Python 3.10.12，Node 22.23.1；这是单个节点的环境观察，不代表用户群安装比例，不证明 V2 探测/回退代码已经存在。
+
+## 阶段与完成条件
+
+| 阶段 | 任务 | 前置 | 本阶段交付 |
+| --- | --- | --- | --- |
+| D0 | #226 的设计切片 | 用户确认方向 | 设计、分阶段任务、恢复入口与范围复核 |
+| D1 | [#227](https://github.com/rv198-star/Mindthus/issues/227) | 读取 D0、核对 live main | 最小编译器、Node/Python 双后端、部分写作 lint、工程/打包验证 |
+| D2 | [#228](https://github.com/rv198-star/Mindthus/issues/228) | D1 工程通过、固定 candidate | 同源保真、表面验收、真实成本与理解效果的配对证据 |
+| D3 | [#229](https://github.com/rv198-star/Mindthus/issues/229) | D2 明确通过 | 按收益扩组件、逐步复用 TPlan 展示层 |
+
+### D1 — 完整而小的第一版
+
+实现一个 Python 入口，单次解析/检查/lint 后选择 renderer；Node >=20 可用则优先，环境不满足走 Python。后端共享 IR、规则和静态资产。MVP 限于 callout/table/flow/progress-range 与 doc/sheet。
+
+验收关注：
+
+1. 环境选择矩阵，含 Node 缺失/旧版本/异常/超时和显式强制后端；损坏安装、稿件错误、renderer 缺陷与环境缺失分开。
+2. 双后端保留全部文本限定、引用、数值、单位、节点和有向边；Python 仍生成 HTML 图形与阅读交互。
+3. lint warn/off、无自动改写、无强制清零；代码/引用/术语/未知/约数等固定正反例。
+4. 离线、390px/1440px、键盘、无JS可读；五种发行布局；Explain/TPlan 原合同回归。
+
+完成 D1 只说明可用，不说明更快、更便宜或理解效果更好。
+
+### D2 — 同源对照，不拿短代替好
+
+先冻结技术流程、比较报告、TPlan进展三类源材料。工程层把相同稿件/IR分别交给Node/Python；模型层以同一模型和源材料对照 V1 直接HTML 与 V2短稿+renderer，每类先3次配对。
+
+登记所有输出、失败与修正；批次中不边跑边修。记录 input/cache/output token、工具轮次、渲染耗时、工具结果读取及最终交付（含HTML回传）。费用、宿主显示和独立理解效果缺失时明确未测，不让固定夹具或同Agent自查冒充。
+
+关键条件/否定/未知/关系不能丢；折叠后的第一印象也应准确。以固定理解问题核对读者能否读出结论、限制与下一步。两种后端与两类包装、实际宿主显示分别留证据。
+
+关键保真全过且交付无退步，并出现一致的可读性或完整交付效率收益后，才能进入D3。结果不充分则inconclusive；只少token不够。
+
+### D3 — 扩展必须有依据
+
+逐项加入 sequence/tree/timeline，各项同时定义Python回退并验证关系完整。TPlan继续是状态/计算/验收owner；只逐步复用表示组件，保留首屏、区间、未知、混单位、父子范围、标准执行报告与原判断边界。
+
+## 集中停止条件
+
+双语法/双词表分叉、Python变成丢内容的简版、语法错被回退掩盖、lint推动删风险或补数值、重写TPlan权责、为跑通增加运行时AI Review，均先回到已证根因；不通过继续堆组件解决。
+
+HTML默认全量生成、视频/配音、ask/页面回复、外部操作和新的付费模型渠道不在本批授权范围。设计、工程通过、宿主验收和合并发布是不同状态，按已有授权分别处理。
+
+## D0 核查口径
+
+本轮只新增这两份设计文档，并创建 #226–#229；检查相对链接、差异范围、空白格式、源码基线和旧工作区状态。未修改发布技能、renderer、TPlan状态或共享安装；不重跑未改代码的全量测试，不声称做过模型A/B或V2页面验收。
+
+后续恢复时先核对本文件与live issues/branch；按已完成证据继续，不重建任务、不回到旧Jev分支，也不把“方案已记录”当成“功能已实现”。
