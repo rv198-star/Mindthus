@@ -2,6 +2,12 @@
 
 ## 当前状态
 
+2026-10-08：Owner 已认可现有功能，要求重新设计为更紧凑、小一号、减少通用大卡片感的风格。本轮 **Compact Style R1 已实现，视觉风格待 Owner 确认**。基线为 `0b13845`，在原分支 `feat/explain-html-v2` 只更换共享 CSS、更新资产摘要/开发版本及说明；解析器、renderer、图布局、JS 与输入源稿保持不变。11份原稿 × Node/Python 的22组输出除 CSS/版本显示外完全一致；88组浏览器前后对照、7项主题/对比度/打印/窄屏检查通过。没有新增模型生成，没有合并或发布。见 [视觉重构证据](evidence/d2/compact-style-r1/README.md)。
+
+当前可恢复任务：`tsk_9fff52e20e6b14f0`；产物缓存：`/srv/agentdock/.cache/mindthus-explain-compact-r1`。后续先查看新版与同稿前后对照；不重开已认可功能，不把主观风格自行判定为用户已验收。原宿主 inline 回执仍是独立边界。
+
+### 上轮记录（历史，保留原证据）
+
 本轮最新结果：#228真实主生成18/18与独立匿名评审1轮保持原样、0重生成；评审指出的11B/12B默认全图显示共享缺口已完成 **Display Repair R1 PASS**。修正版默认适配全图并保留原始大小切换，前移 `sequence`、收紧信息密度并恢复蓝/绿/琥珀/红语义层级；原9个B短稿仅重渲染，D2浏览器检查108/108通过。见 [原真实批次结果](evidence/d2/model-r1/RESULT.md)、[显示修复结果](evidence/d2/display-repair-r1/RESULT.md) 与 [18份原始查看器](evidence/d2/model-r1/index.html)。ChatGPT宿主inline app-block真实回执仍未由本修复证明；#229 tree/timeline继续等待，不重复模型生成。以下状态段为历史记录。
 
 最新授权：用户批准完成#228的18次真实生成和独立评审；旧Jev渠道/额度约束已归档，不再参与当前任务。当前执行依据为 evidence/d2/model-r1/registration.json。用户交付要求是18份可点击产物及对照索引；以下旧阻塞文字仅为历史背景。

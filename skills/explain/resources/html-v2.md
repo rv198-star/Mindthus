@@ -107,6 +107,21 @@ sequence diagrams default to fitting the available reading width; with JavaScrip
 the reader can switch to the diagram's actual size inside the scrollable container.
 Tree/timeline remain later candidates and are not implied by this support.
 
+## Compact visual presentation
+
+The shared default is a compact editorial sheet: 24px desktop title, 15px section
+headings and 14px body text; a small utility rail, flat ruled sections, restrained
+warm-neutral color and semantic status accents. `blueprint` retains a cooler palette.
+Full-width metrics use two columns in sheet mode and return to one column on narrow
+screens; source order and declared section spans remain unchanged.
+
+Compactness comes primarily from removing nested card frames and excess chrome, not
+from clipping content, collapsing essential qualifications, transforming the whole page
+with zoom, or reducing the diagram label sizes. Diagram geometry, fit/actual-size,
+source recovery, dark mode and keyboard disclosure keep their existing contracts.
+Mobile controls retain larger hit areas. Use the same short-draft grammar; no extra
+style-selection step or model generation is required.
+
 ## Source recovery and local updates
 
 An explicitly exported document embeds only its delivery draft and digest. Copy the

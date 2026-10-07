@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 
 SCHEMA = 'explain.presentation.v2'
-VERSION = '2.0.0-dev.2'
+VERSION = '2.0.0-dev.3'
 MAX_SOURCE_BYTES = 1_000_000
 MAX_NODES = 120
 MAX_EDGES = 240

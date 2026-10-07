@@ -72,6 +72,22 @@ rerun, not a claim that the first or second full run was green. Original raw log
 hashes are retained in the evidence manifest; fixture output saying DELIVERED is from
 an offline fake transport, not new model calls.
 
+## Compact Style R1 — 2026-10-08
+
+After Owner accepted the functionality and requested a smaller, less generic visual
+style, the shared CSS was replaced with a compact editorial system. Parsing, renderer,
+geometry, JavaScript and the 11 comparison drafts remain unchanged. Titles become
+24px (from 37px), sections 15px (from 19px), body 14px (from 15px). Ruled sections replace
+nested cards; utilities sit beside the masthead; full-width metrics use a source-order
+two-column grid. The default paper palette is warm neutral/graphite with subdued moss
+emphasis; semantic warning/error colors remain explicit.
+
+Evidence: [compact style review](evidence/d2/compact-style-r1/README.md). 22 exact
+HTML comparisons preserve all markup beyond CSS/version; 88 paired browser checks
+(176 actual page inspections), 7 additional display checks and 107 focused tests
+(106 pass, one existing skip) completed. This is a checked implementation, not Owner
+acceptance of aesthetics, a new model-benefit trial, merge or release.
+
 ## D2 display repair R1
 
 The independent model batch remained unchanged. Its shared wide-flow display blocker was

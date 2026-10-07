@@ -1,0 +1,168 @@
+{
+  "baseline_commit": "0b138451558d55b63b6894086b27ffa36bb59673",
+  "cases": [
+    {
+      "id": "showcase",
+      "path": "tests/fixtures/explain-v2/showcase.md",
+      "source_sha256": "fd98f303f350434f7e7c69dda105a6544b4003e46866d7c3d1d38c555829f5e1",
+      "pages": {
+        "node": "bde75ff80933c5dd658be1124dab0f2cce89653e56183bdd2820e38164a1dd43",
+        "python": "69dbc100d9037b5c8e7fb0f8a54f0e96605208a8c6aab1239c387ef4d341ceb4"
+      }
+    },
+    {
+      "id": "report",
+      "path": "docs/internal/explain-v2/evidence/d2/display-repair-r1/same-content-v2.md",
+      "source_sha256": "734b08ebd3be84f626a5be729b7b0bb150220eb8c542584b7dce9719bcedf762",
+      "pages": {
+        "node": "e45630dadd3d648afc1906979762d0beed69f1f3531b4862782b36406aef975b",
+        "python": "e45630dadd3d648afc1906979762d0beed69f1f3531b4862782b36406aef975b"
+      }
+    },
+    {
+      "id": "11B",
+      "path": "docs/internal/explain-v2/evidence/d2/model-r1/runs/11B/generated.md",
+      "source_sha256": "0cd8e77604464ee4ab2d5c0025e64cbebf1c85227ea81ec5e8e44a40f6c1b219",
+      "pages": {
+        "node": "0a00ac200b76630c0a7e26f69c2aa21d30d91fed0eb298db2a9771106cfb7389",
+        "python": "6e63bf59fc7c2cbd11a3614c0327f58944b5db60b0e928c21960854ab7aa07a5"
+      }
+    },
+    {
+      "id": "12B",
+      "path": "docs/internal/explain-v2/evidence/d2/model-r1/runs/12B/generated.md",
+      "source_sha256": "76d49e82b0d0cef00364300c7991fd57f7dd84e345403c7ea18a54587dbd868d",
+      "pages": {
+        "node": "d68d3052a3a54a2c0d5df5e3377989f729baa2fd4dbb54e5cc8830dc973335a4",
+        "python": "9fcf2018e10e71a2df8335fd07574a0ebb7b4536816c3872da81dae933e8e941"
+      }
+    },
+    {
+      "id": "13B",
+      "path": "docs/internal/explain-v2/evidence/d2/model-r1/runs/13B/generated.md",
+      "source_sha256": "8118d805a86160b5045ea1992b1480f9d8217a48f1838c4a672d5466d0acaadf",
+      "pages": {
+        "node": "fcc915cbd7d0d69f4b3b40edc21909c9ceb8ee584aedf837f033d2b70082fd39",
+        "python": "03378c20f4a35eb7134b607564b916d94db8c626e9a9c609a3e316911113758f"
+      }
+    },
+    {
+      "id": "21B",
+      "path": "docs/internal/explain-v2/evidence/d2/model-r1/runs/21B/generated.md",
+      "source_sha256": "db80cbd676ac4565a393b1c15496153095d394076e26551f6938feb0658cc9b2",
+      "pages": {
+        "node": "6d71a4c8b2711b3165a4799d6aeb9b3394aa6547baad60521d371adb9770f87a",
+        "python": "6d71a4c8b2711b3165a4799d6aeb9b3394aa6547baad60521d371adb9770f87a"
+      }
+    },
+    {
+      "id": "22B",
+      "path": "docs/internal/explain-v2/evidence/d2/model-r1/runs/22B/generated.md",
+      "source_sha256": "e45b6f3b6c15ec4b7a17001158990b53676916a9be0221b4863eaace2822c49f",
+      "pages": {
+        "node": "89c719485924278eb8a25b2cd90cefa617f60a5d4b7a0d6d1a156551738589a6",
+        "python": "89c719485924278eb8a25b2cd90cefa617f60a5d4b7a0d6d1a156551738589a6"
+      }
+    },
+    {
+      "id": "23B",
+      "path": "docs/internal/explain-v2/evidence/d2/model-r1/runs/23B/generated.md",
+      "source_sha256": "9ee5a2dbad15997ff4d6c2ce3fbd694a0f4ea85ae185f74ee9bddea05de9df18",
+      "pages": {
+        "node": "128d9a6105c80ac62b519c7ad56df6b94fd696250730c95551b182489c00533c",
+        "python": "128d9a6105c80ac62b519c7ad56df6b94fd696250730c95551b182489c00533c"
+      }
+    },
+    {
+      "id": "31B",
+      "path": "docs/internal/explain-v2/evidence/d2/model-r1/runs/31B/generated.md",
+      "source_sha256": "2ce28cc85621463a60e4a7624a81d458f8b05323f3a82ace24cdae5f3d869f88",
+      "pages": {
+        "node": "70f84abea1a10e4f601ed5bc37b32e5d6dbe61316766719a1ff35e98f49a8e99",
+        "python": "70f84abea1a10e4f601ed5bc37b32e5d6dbe61316766719a1ff35e98f49a8e99"
+      }
+    },
+    {
+      "id": "32B",
+      "path": "docs/internal/explain-v2/evidence/d2/model-r1/runs/32B/generated.md",
+      "source_sha256": "d2d4ea17fd05ce5735767fe6baacd38102d9e8fa54af2e6b7ede9864a2ed9a19",
+      "pages": {
+        "node": "b7796a714718e1046c958c869286d6e9a8e34f898bd491c99c8f35d9fc33cee1",
+        "python": "b7796a714718e1046c958c869286d6e9a8e34f898bd491c99c8f35d9fc33cee1"
+      }
+    },
+    {
+      "id": "33B",
+      "path": "docs/internal/explain-v2/evidence/d2/model-r1/runs/33B/generated.md",
+      "source_sha256": "7dec2fec5803fd63e1b05e26338aada36f0bcc9f162d50a99c72f3c7b0c9adfa",
+      "pages": {
+        "node": "abe16e8b68a33fe9a64cf873fd951e20c5509f0132112b4c84c08b01df106425",
+        "python": "abe16e8b68a33fe9a64cf873fd951e20c5509f0132112b4c84c08b01df106425"
+      }
+    }
+  ],
+  "baseline_runtime": {
+    "skills/explain/SKILL.md": "39b850ad91f7cee3ecff8be98a3ec49370ab665d4ea4efe788a94de4c3287699",
+    "skills/explain/resources/compiler-notices.md": "b1213b05d4ae14cc4e98916dc1f7f24bea7506759f7af595b6580bd8a286ee52",
+    "skills/explain/resources/expression-modes.md": "2de277d9744f27f49482beba21a4d87e0c24d84aecd0cbd8c76d10013d2c9058",
+    "skills/explain/resources/html-v1.md": "9dcf27891818b5ffd896e9884585dec74bfda95dee2a0f67c36456ffe62d97bc",
+    "skills/explain/resources/html-v2.md": "bbb8fd5f49ce6c09eb5fafbef8148f8b81006955fcd9a053f23df2b06f943e6f",
+    "skills/explain/resources/presentation-contract.md": "4aeb23f1a7ac6f578a993ac4b29e69c5d7292b2e77107d171c2d237639a076c9",
+    "skills/explain/resources/tplan-progress.md": "e9da117e905844ec39c4c82601c4d0fd83151951df986939889318acc6364788",
+    "skills/explain/scripts/explain_compiler/__init__.py": "76eebfe205d6df0c0237578881ca2ff4956e4934309c9c0332096a634881ff10",
+    "skills/explain/scripts/explain_compiler/_vendor/DAGRE-LEGAL.txt": "9148bffb1e84382a8b6668eeb2b53c6a554341d714fba129856ea5eb350d35f3",
+    "skills/explain/scripts/explain_compiler/_vendor/DAGRE-LICENSE": "6a349742a6cb219d5a2fc8d0844f6d89a6efc62e20c664450d884fc7ff2d6015",
+    "skills/explain/scripts/explain_compiler/_vendor/GRAPHLIB-LICENSE": "6a349742a6cb219d5a2fc8d0844f6d89a6efc62e20c664450d884fc7ff2d6015",
+    "skills/explain/scripts/explain_compiler/_vendor/MISTUNE-LICENSE": "539013fd8e19f744f8bf0e27a532bbff54cd689ecef7a800f56ae5dc824be870",
+    "skills/explain/scripts/explain_compiler/_vendor/__init__.py": "6285c8ec6c6de28f9093a682925d477a6196c03960612d3c9adb76193cf95b5f",
+    "skills/explain/scripts/explain_compiler/_vendor/dagre.mjs": "15a26feccf7ba3903bd459aba8474f4b2d2fc36920d2a78572450e901d1b734a",
+    "skills/explain/scripts/explain_compiler/_vendor/manifest.json": "6c7a9820d5d796fe9593a4a1477642e8c529dbd4252ca47b9a8b1576f5250cd2",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/__init__.py": "492b874002bfbd9f261208872f54c4d9699e5fe975d8920782c1b7ebb7f58e72",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/__main__.py": "9e6ffdd02af2445c4a073ca2ceefdee10425f5ca7550fdc5523b89627d6f7ac8",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/block_parser.py": "c02421a482d4c8d255554b1c548bdc0d2750db96b81c6080866c60ec16fd35a9",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/core.py": "fc0f72950cbcfdb68e2af584da2321006da060b142dad7a2e82657e76f08def8",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/directives/__init__.py": "a93eed8287b31f6f19417b9f96664d97f3ad377e7592137c534c217c37ae0e4e",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/directives/_base.py": "a986228b127ce18c9b18b0ba2b43d5cfa66bdf34a4f38f1482054834d0f73f40",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/directives/_fenced.py": "47add31449b94bf9dc82fc3a4505cc8b5cc2ed72833370507aa1be1548768c0e",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/directives/_rst.py": "d12c69719f7aabb4142e76a915f231639def90452cb9857846a771b816500a9f",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/directives/admonition.py": "8e4476834798a4046427aa4f5ea2f5773ea420e64508790f52389ff79e515210",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/directives/image.py": "294a155fcfe832c7c14db9505d457a6127b86d99458de252879c13910a4afc24",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/directives/include.py": "bb8dc777c4e060f393a0cc31441c9efec754a714b1d9e95084fc3dede9d064f2",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/directives/toc.py": "c539149499aaf858f17496c218111b9e518e183f99394bcd55b6c05850d467d7",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/helpers.py": "eca7e3946cb827417b0c13a4d75c0ee7e98dc6ca51df561bb6625b2f3557ae84",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/inline_parser.py": "f4e8f84971ee79d84a44348b48337ef019eb028ebca07a3fe307a62d1a878338",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/list_parser.py": "06074e0beb0e00570dbc0cca60889488180e22f2399a09a07dd70cf6c680de28",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/markdown.py": "c06efb307d990643ba969c703b63026c85bfcac46a86ebce9e1b3d9a9ce911a1",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/plugins/__init__.py": "8472391c712bd89b164093a58f8133517ee990f0f0e20148b30ed1bf3842cdb8",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/plugins/abbr.py": "892e289909d19144053b0603301b44c820ab6f2af580f071b2be60885391dfd1",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/plugins/def_list.py": "8fa73f8f6274d5e8e5c022b05f6910b545505ad36289c519647929d349a2d0a5",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/plugins/footnotes.py": "d539915cc983a9b3fe55bba5e192cd2655e2ad29c0d9d362c707d18801f89244",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/plugins/formatting.py": "ccc6b5bec4ab26542f51bc272a89facd04a89449322c50b2c86b64e139decc6f",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/plugins/math.py": "f1b084c183cf654ea7afb39b7030173a111179c0f2174c6bd7c9bfce7a673db7",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/plugins/ruby.py": "ca309703bb9422574de393e6d9c9dfaed255d424978088c37259b46507298e75",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/plugins/speedup.py": "947c4f74630adc1d23cc5c62c91c33935df1c6339af8461ba7c8014cb0021505",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/plugins/spoiler.py": "7c01fa95e781bd5194b5c6a303ba9690cf889503b226101ea7ed393be63e5a23",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/plugins/table.py": "c68f3e8a80fbb51e0511718076afc85f824265cbf6759ea32a4d920e1da3f83c",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/plugins/task_lists.py": "e3cf6a459225363f5558a1a4a0228ed5a74d22947df358b39da194aa2475d6f3",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/plugins/url.py": "2227b17145917f95120c195cf3e1023620a296c31fd1fad2166cacf30cab7b3f",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/py.typed": "76eadfdc791e9dfa7de4830b629bfe19c0a76ca965c51639d437264d926ab01f",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/renderers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/renderers/_list.py": "eb9bf37e61c9b9c4dc838312b57c0118847a64e848f07f085b1f612f864ac2cd",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/renderers/html.py": "5d0a1a3803906ca3b3ed61fb3a867747e006320737cf1d399c3560fe8db730c8",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/renderers/markdown.py": "2add2a156fe93e54352f34840cb635c5e7f4ab83b57e2c5c6fcd04360ce74ab1",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/renderers/rst.py": "2a07318bcb439f0bc1eea6f91a0b4a3c1e6260e8a518cb66f6c14b7cb00013ad",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/toc.py": "53f42a1c0084f2a1212c2666521b628cb0b7e99bd246e0575cfe065d825765c7",
+    "skills/explain/scripts/explain_compiler/_vendor/mistune/util.py": "cd08174b2dd594d7768b3ab732ce18193cbcbb04434b316874f78ff2088e01c1",
+    "skills/explain/scripts/explain_compiler/assets.json": "63ab5b09ffa7fc5db040c82111cc50fee670b70ff4a00564e2dc02be9a6a368c",
+    "skills/explain/scripts/explain_compiler/layout.mjs": "9219f01cb996e1cf3bb13823ad0032a56835e6017fec4464ed2e567c96967cd2",
+    "skills/explain/scripts/explain_compiler/layout.py": "f5c1a44c226aad182fc468ad4422a1d3d92cb45e5b5aba57b77c8530ee0201d8",
+    "skills/explain/scripts/explain_compiler/lint.py": "8cd8750b10a371caba18a739e82c60934e4228e9f7a4aa536ceda97b4890a801",
+    "skills/explain/scripts/explain_compiler/model.py": "acad04ebd56c204158c99965e3e0004630e198ea622b443658247b813f2878fb",
+    "skills/explain/scripts/explain_compiler/page.css": "711cdfc180586ce0acd46839d072c3472fcf53b180beb4b06f12c6e931110530",
+    "skills/explain/scripts/explain_compiler/page.js": "5b277d3f81b33fc8cc12d39778a716429741f11c91c601ffab812db0902b255a",
+    "skills/explain/scripts/explain_compiler/parser.py": "76bea14a950bd969ccbbbdac56f566f07a4d85d07d08d3a1580a222ee93212c8",
+    "skills/explain/scripts/explain_compiler/render.py": "58ad370118bf216a2b4e8e694ca1dd02fbb0764d7a329c22e9514f1c5b85e2e2",
+    "skills/explain/scripts/prepare_html_delivery.py": "2b04f944e36cfd475324b815a48fefa6ba217dbca002d924d0e7dcdaa456ff8b",
+    "skills/explain/scripts/render_explanation.py": "49b6a45e00c527e0177a689a6d51a65d97696f123e68a42ce693695e6b35b43f"
+  }
+}
