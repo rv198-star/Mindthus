@@ -1,5 +1,9 @@
 # Inline container correction · 2026-10-08
 
+## Subsequent host/theme note (2026-10-08)
+
+The owner subsequently confirmed a hand-authored **native ChatGPT AppBlock** was visible and could switch between the four views. Its dark-mode screenshot exposed low-contrast hardcoded text colors. The shared Explain Skill now mandates Visualizations when available. This inline prototype defaults to system theme with an optional explicit `data-host-theme` adapter binding; the compiled HTML runtime has the same requirement. Read [host/theme R1](../../evidence/d2/host-theme-r1/RESULT.md). The rest of this document is preserved as the earlier development checkpoint; it predates that host screenshot and must not be misread as the current capability observation.
+
 ## Current decision
 
 The final destination is an HTML explanation embedded in a ChatGPT conversation, not a downloadable dashboard. The preceding standalone analysis pages were useful composition prototypes but their 1280/1440px full-window acceptance did not validate the actual delivery surface. This corrects a delivery assumption, not the owner's preference for compact, high-information-density layouts.

@@ -11,9 +11,15 @@
     layout.setAttribute('aria-pressed', String(!doc));
   });
   dark?.addEventListener('click', () => {
-    const enabled = root.dataset.mode !== 'dark';
-    root.dataset.mode = enabled ? 'dark' : 'light';
-    dark.setAttribute('aria-pressed', String(enabled));
+    const mode = root.dataset.mode || 'auto';
+    const hostTheme = root.dataset.hostTheme;
+    const autoDark = hostTheme === 'dark' || (hostTheme !== 'light' && !!window.matchMedia?.('(prefers-color-scheme: dark)').matches);
+    root.dataset.mode = mode === 'auto' ? (autoDark ? 'light' : 'dark') : 'auto';
+    dark.setAttribute('aria-pressed', String(root.dataset.mode !== 'auto'));
+    const labels = root.dataset.lang.startsWith('zh')
+      ? {auto: '主题：自动', light: '主题：浅色', dark: '主题：深色'}
+      : {auto: 'Theme: auto', light: 'Theme: light', dark: 'Theme: dark'};
+    dark.textContent = labels[root.dataset.mode];
   });
   button('expand')?.addEventListener('click', () => {
     const details = [...root.querySelectorAll('details.ex-panel')];

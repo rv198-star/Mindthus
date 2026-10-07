@@ -2,6 +2,9 @@
 
 ## 当前状态
 
+2026-10-08 交付与主题整改：ChatGPT 暴露 Visualizations 时，Explain 交互式 HTML 必须在当前对话直接通过宿主能力交付；Codex 按实际渲染能力，其他环境保真降级。编译器和内嵌原型默认跟随系统明暗并支持真实宿主主题覆盖，深色高对比色已修复。Python 109项（108通过/1既有skip），浏览器主题144/144、原展示8/8，Skill lint 57文件零错误。见 [R1证据](evidence/d2/host-theme-r1/RESULT.md)。这仍是开发分支实现，**编译器生成的HTML尚待真实宿主回执**，不把此前手工 AppBlock 的可见性追认给编译器。
+
+
 2026-10-08 最新纠正：Owner 明确 HTML 最终应直接在 ChatGPT 对话内显示，不能把独立宽屏 Dashboard 或 HTML 下载当作目标。已新增 **Inline Container 原型**：默认 stdout fragment／prepare-only app-block；按实际容器宽度重排，不复制网页外壳或写死 ChatGPT 宽度。1440px 浏览器内嵌 320/390/480/640/768/960px 容器，96/96 本地浏览器检查通过；原材料、共享 Skill/TPlan 和历史18次生成不变。真实 ChatGPT raw-HTML 展示入口本会话仍未取得，实际可见可操作回执保持未完成，不能用截图或文件链接替代。见 [内嵌纠正](prototypes/analysis-layout-r1/INLINE.md)。恢复任务 `tsk_c2e804d5d586cc9f`；证据 `/srv/agentdock/.cache/mindthus-explain-inline-r1/qa/`。
 
 ### 宽屏原型（历史，只作信息组合参考）

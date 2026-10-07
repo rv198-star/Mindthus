@@ -46,6 +46,7 @@ Keep essential conditions above the fold. Supporting references can go here.
 EXPLAIN
 ````
 
+In ChatGPT, route the HTML through actual **Visualizations / AppBlock** when exposed, as the mandatory primary in-conversation delivery. In Codex use a truly exposed native rendered surface (never infer one from Codex CLI); other hosts use their real rendering capabilities or graceful readable fallbacks.
 Consume the returned app-block payload only through a genuinely available host adapter.
 It has the existing `variant=inline`, `language=html` shape, not a rendering receipt.
 Use `--format fragment` for other inline HTML hosts. Both modes use stdout without files.
@@ -118,7 +119,7 @@ screens; source order and declared section spans remain unchanged.
 Compactness comes primarily from removing nested card frames and excess chrome, not
 from clipping content, collapsing essential qualifications, transforming the whole page
 with zoom, or reducing the diagram label sizes. Diagram geometry, fit/actual-size,
-source recovery, dark mode and keyboard disclosure keep their existing contracts.
+source recovery, automatic light/dark theme and keyboard disclosure keep their existing contracts. Theme is `auto` by default, driven by a host `data-host-theme` binding when known or `prefers-color-scheme` otherwise; a local user override remains optional.
 Mobile controls retain larger hit areas. Use the same short-draft grammar; no extra
 style-selection step or model generation is required.
 

@@ -179,8 +179,8 @@ def render_html(doc: dict, source: str, graphs: list[dict], *, output_format: st
     meta = doc['meta']; zh = meta['lang'].lower().startswith('zh')
     graph_map = {g['id']: g for g in graphs}
     prefix = 'ex-' + doc['source_sha256'][:12]
-    labels = ('线性阅读', '深色模式', '展开详情', '复制源稿', '本页交付稿') if zh else ('Linear reading', 'Dark mode', 'Expand details', 'Copy source', 'Page source')
-    parts = [f'<div class="ex-root" data-layout="{meta["layout"]}" data-theme="{meta["theme"]}" data-mode="light" data-lang="{escape(meta["lang"],quote=True)}">',
+    labels = ('线性阅读', '主题：自动', '展开详情', '复制源稿', '本页交付稿') if zh else ('Linear reading', 'Theme: auto', 'Expand details', 'Copy source', 'Page source')
+    parts = [f'<div class="ex-root" data-layout="{meta["layout"]}" data-theme="{meta["theme"]}" data-mode="auto" data-host-theme="auto" data-lang="{escape(meta["lang"],quote=True)}">',
              f'<style>{css}</style><header class="ex-hero"><div class="ex-eyebrow">MINDTHUS / EXPLAIN</div>',
              f'<h1>{escape(meta["title"])}</h1>']
     if meta['subtitle']: parts.append(f'<p class="ex-subtitle">{escape(meta["subtitle"])}</p>')

@@ -91,7 +91,7 @@ def fragment(case: str, engine: str = 'node', *, instance: str | None = None) ->
     css, js = [(HERE / f'inline.{ext}').read_text(encoding='utf-8') for ext in ('css', 'js')]
     metadata = json.dumps({'case': case, 'source_sha256': build.sha(source.encode()),
         'source_path': build.SOURCES[case], 'engine': engine, 'scope': 'prototype fragment, not host receipt'}, ensure_ascii=False).replace('<', '\\u003c')
-    return (f'<article class="ex-inline" id="{instance}" lang="zh-CN" data-case="{case}">'
+    return (f'<article class="ex-inline" id="{instance}" lang="zh-CN" data-ex-theme="auto" data-host-theme="auto" data-case="{case}">'
         f'<style>{css}</style><header class="inline-head"><h1>{escape(build.TITLES[case])}</h1>'
         '<span class="demo-mark">演示材料 · 非真实项目进度</span></header>'
         + ''.join(parser.parts)

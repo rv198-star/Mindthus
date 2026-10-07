@@ -2,6 +2,8 @@
 
 ## Status
 
+2026-10-08: Native Visualizations is the mandatory delivery choice for rich HTML in ChatGPT **when currently exposed**. Codex is capability-checked; other hosts degrade faithfully. Both compiler and authored inline fragments now auto-follow system theme, accept verified host theme binding and honor an optional user override. Detailed [host/theme R1 results](evidence/d2/host-theme-r1/RESULT.md); no claim that the compiler payload itself was displayed in ChatGPT.
+
 2026-10-07: #227 code and local engineering verification are implemented on
 `feat/explain-html-v2`. D1 initially shipped callout, table, flow and progress/range.
 After the #228 real comparison found a shared wide-flow display regression and the owner
