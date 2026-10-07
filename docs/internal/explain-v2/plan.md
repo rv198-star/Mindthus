@@ -2,6 +2,10 @@
 
 ## 当前状态
 
+2026-10-08 最新：按已确认的 Dashboard / Report 方向完成 **Analysis Layout R1 可操作原型**，先供 Owner 视觉确认，不覆盖共享运行时。四种样例为执行简报、进度分析、方案矩阵、组合图解；均绑定既有材料。48/48 浏览器检查、2/2 打印检查、24/24 新旧查看器检查通过；原 18 次生成、Skill/TPlan 功能和发布状态不变。见 [原型与来源说明](prototypes/analysis-layout-r1/README.md)。本轮恢复任务 `tsk_b4fe243f717e595e`，最终查看器 `/srv/agentdock/.cache/mindthus-explain-analysis-r1/final/index.html`。下一步按实际页面反馈决定是否提炼通用布局，不再仅作字号或配色微调。
+
+### Compact Style R1（历史，未被 Owner 认可为最终风格）
+
 2026-10-08：Owner 已认可现有功能，要求重新设计为更紧凑、小一号、减少通用大卡片感的风格。本轮 **Compact Style R1 已实现，视觉风格待 Owner 确认**。基线为 `0b13845`，在原分支 `feat/explain-html-v2` 只更换共享 CSS、更新资产摘要/开发版本及说明；解析器、renderer、图布局、JS 与输入源稿保持不变。11份原稿 × Node/Python 的22组输出除 CSS/版本显示外完全一致；88组浏览器前后对照、7项主题/对比度/打印/窄屏检查通过。没有新增模型生成，没有合并或发布。见 [视觉重构证据](evidence/d2/compact-style-r1/README.md)。
 
 当前可恢复任务：`tsk_9fff52e20e6b14f0`；产物缓存：`/srv/agentdock/.cache/mindthus-explain-compact-r1`。后续先查看新版与同稿前后对照；不重开已认可功能，不把主观风格自行判定为用户已验收。原宿主 inline 回执仍是独立边界。

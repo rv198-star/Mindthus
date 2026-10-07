@@ -1,0 +1,198 @@
+{
+  "schema": "explain.analysis-layout-r1.evidence",
+  "baseline": "ba40a9fd8494646be7b5aa24489adf9334b1aa4f",
+  "scope": "authored development prototype, not shared runtime rollout",
+  "browser_checks": {
+    "passed": 48,
+    "total": 48
+  },
+  "print_checks": [
+    {
+      "case": "report",
+      "check": "print-all-work-rows",
+      "pass": true,
+      "visible": 3
+    },
+    {
+      "case": "progress",
+      "check": "print-all-work-rows",
+      "pass": true,
+      "visible": 2
+    }
+  ],
+  "viewer_checks": {
+    "passed": 24,
+    "total": 24
+  },
+  "model_calls": 0,
+  "protected_diff": "",
+  "protected_paths": [
+    "skills",
+    "tests/fixtures/explain-v2",
+    "docs/internal/explain-v2/evidence/d2/model-r1",
+    "docs/internal/explain-v1/samples"
+  ],
+  "source_bindings": [
+    {
+      "id": "report",
+      "source_path": "docs/internal/explain-v1/samples/d-source.md",
+      "source_sha256": "10506803970dcaed88df9539d21a8c6abefd0771d335582c653e3bef2547e0de"
+    },
+    {
+      "id": "progress",
+      "source_path": "docs/internal/explain-v2/evidence/d2/model-r1/runs/31B/generated.md",
+      "source_sha256": "2ce28cc85621463a60e4a7624a81d458f8b05323f3a82ace24cdae5f3d869f88"
+    },
+    {
+      "id": "comparison",
+      "source_path": "docs/internal/explain-v2/evidence/d2/model-r1/runs/21B/generated.md",
+      "source_sha256": "db80cbd676ac4565a393b1c15496153095d394076e26551f6938feb0658cc9b2"
+    },
+    {
+      "id": "mechanism",
+      "source_path": "docs/internal/explain-v2/evidence/d2/model-r1/runs/11B/generated.md",
+      "source_sha256": "0cd8e77604464ee4ab2d5c0025e64cbebf1c85227ea81ec5e8e44a40f6c1b219"
+    }
+  ],
+  "artifacts_root": "/srv/agentdock/.cache/mindthus-explain-analysis-r1/final",
+  "raw_evidence": {
+    "manifest.json": "8e1d36fe884a19268450f57462830454ffef68400f86964df1ffdf012b73d286",
+    "qa/browser-results.json": "cb8afec1de9cfd4d431248947d6096fd2cb2153cb9a78aadd48b05711c67d27e",
+    "viewer-check.json": "9d37f17229d86d61ab331234eb5e2d3b3127a49ce28e393a0cda2b3204766b67",
+    "index.html": "7f2d9bbc207b8ca8b70948ab2652e72ade5c1cf020a3925cba1cc8bb5e276089"
+  },
+  "code_files": {
+    "build.py": "b0480450e9527fdfbd075c068281fc50518383d687b6d452688bd195bc725b51",
+    "build_review.py": "dcc360fbad219d57bc0c28b3cebef24c63808f8e0306cdd67ff6eaa92c341a03",
+    "check.mjs": "cba013cb5c2d216da72dada412cc380fc24157122e39f6298f93f90684ea90b5",
+    "workbench.css": "2f915d48ec1a78770d1cbb4a3b709cf6ee18c987bc3107423aa7ce40a85e19b9",
+    "workbench.js": "5f4cbe24a892af48dfab4e88a1519479b8b12ae76937af84423d0e3a516daa33"
+  },
+  "measurements": [
+    {
+      "case": "report",
+      "before_height": 1424,
+      "after_height": 907,
+      "key_region_boxes": {
+        "work": {
+          "x": 20,
+          "y": 221.0625,
+          "width": 1088,
+          "height": 341.34375,
+          "bottom": 562.40625
+        },
+        "blocker": {
+          "x": 1120,
+          "y": 221.0625,
+          "width": 300,
+          "height": 213.6875,
+          "bottom": 434.75
+        },
+        "next": {
+          "x": 1120,
+          "y": 446.75,
+          "width": 300,
+          "height": 205.171875,
+          "bottom": 651.921875
+        },
+        "evidence": {
+          "x": 20,
+          "y": 574.40625,
+          "width": 551.109375,
+          "height": 212,
+          "bottom": 786.40625
+        },
+        "relations": {
+          "x": 583.109375,
+          "y": 574.40625,
+          "width": 524.890625,
+          "height": 212,
+          "bottom": 786.40625
+        },
+        "composition": null,
+        "matrix": null,
+        "approval": null,
+        "overview": null
+      }
+    },
+    {
+      "case": "progress",
+      "before_height": 751,
+      "after_height": 748,
+      "key_region_boxes": {
+        "work": {
+          "x": 20,
+          "y": 221.0625,
+          "width": 1088,
+          "height": 241.03125,
+          "bottom": 462.09375
+        },
+        "blocker": null,
+        "next": null,
+        "evidence": null,
+        "relations": null,
+        "composition": {
+          "x": 20,
+          "y": 474.09375,
+          "width": 1088,
+          "height": 180.328125,
+          "bottom": 654.421875
+        },
+        "matrix": null,
+        "approval": null,
+        "overview": null
+      }
+    },
+    {
+      "case": "comparison",
+      "before_height": 606,
+      "after_height": 780,
+      "key_region_boxes": {
+        "work": null,
+        "blocker": null,
+        "next": null,
+        "evidence": null,
+        "relations": null,
+        "composition": null,
+        "matrix": {
+          "x": 20,
+          "y": 221.0625,
+          "width": 1088,
+          "height": 294.734375,
+          "bottom": 515.796875
+        },
+        "approval": {
+          "x": 1120,
+          "y": 392.4375,
+          "width": 300,
+          "height": 213.6875,
+          "bottom": 606.125
+        },
+        "overview": null
+      }
+    },
+    {
+      "case": "mechanism",
+      "before_height": 738,
+      "after_height": 1165,
+      "key_region_boxes": {
+        "work": null,
+        "blocker": null,
+        "next": null,
+        "evidence": null,
+        "relations": null,
+        "composition": null,
+        "matrix": null,
+        "approval": null,
+        "overview": {
+          "x": 20,
+          "y": 644.3125,
+          "width": 1400,
+          "height": 427.1875,
+          "bottom": 1071.5
+        }
+      }
+    }
+  ],
+  "visual_acceptance": "pending Owner; engineering tests are not aesthetic approval"
+}
