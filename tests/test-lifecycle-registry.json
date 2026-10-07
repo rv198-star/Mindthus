@@ -168,6 +168,21 @@
       "suite_role": "contract",
       "runtime_cost": "medium",
       "notes": "Structural and packaging checks; development source/output comparison separately assesses comprehension and semantic fidelity."
+    },
+    {
+      "test_id": "explain-html-v2-compiler",
+      "paths": [
+        "tests/test_explain_compiler.py"
+      ],
+      "owner": "runtime",
+      "protects": [
+        "single source/IR, dual layout fidelity, safe offline delivery, source recovery and local patching, advisory lint and deterministic failure classification"
+      ],
+      "introduced_by": "issue #227",
+      "lifecycle_status": "active_regression",
+      "suite_role": "mixed",
+      "runtime_cost": "medium",
+      "notes": "Node checks use a real installed runtime when available; the no-Node path is always checked. Optional browser evidence is produced by check_explain_browser.mjs and is not a model-benefit claim."
     }
   ],
   "review_candidates": [],

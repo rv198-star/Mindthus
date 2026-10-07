@@ -1,5 +1,9 @@
 # HTML V1 — Interactive Reading
 
+Generic HTML generation now uses the [HTML V2 compiler](html-v2.md). This resource
+continues to define the source, interaction, persistence and host-surface contract;
+TPlan keeps its existing dedicated renderer.
+
 Runtime support for `--html`. Build a portable explanation that is easier to read,
 navigate, and inspect. Choose the smallest useful set of interactions for the source.
 

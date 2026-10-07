@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Explain HTML V2 D1：新增短稿编译器、Node 优先/Python 回退的确定性图布局、共享离线 HTML 表达、可选写作提示、源稿恢复与按块更新。此为开发中能力；TPlan 专用 renderer 与状态/验收权不变。模型收益对照与完整 V2 验收另行记录，尚未发布。
+
 ## v1.12.0 — Explain 人向交付与 TPlan 进展视图
 
 发布日期：2026-10-06。完整说明：[v1.12.0](docs/releases/v1.12.0.md)。
