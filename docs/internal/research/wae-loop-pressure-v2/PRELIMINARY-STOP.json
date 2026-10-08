@@ -1,0 +1,19 @@
+{
+  "experiment": "mindthus-207-pressure-wave2-v1",
+  "code_revision": "d92ddb34dc8d584865421a69fe75fd0d03090cc2",
+  "manifest_sha256": "bd8c1cc0bf83ebdee26d380279c07ecf61e5261ba3e573fffb2e2ac2deb7e2f4",
+  "runtime_root": "/var/lib/devspace/runtime-artifacts/mindthus-207-pressure-wave2-20260907-1",
+  "status": "STOPPED_DUE_TO_FIXTURE_AMBIGUITY",
+  "calls": 4,
+  "client_seconds": 61.184695,
+  "output_charged": 2733,
+  "trial": "F-C",
+  "observed_actions": ["refine: read four sources", "handoff: complete projection code", "receiver: implements projection"],
+  "raw_behavior_score": {"published_read_only": "148/156", "current_any_view": "142/156"},
+  "withdrawn_claim": "The first progress update called the surface-dependent editable result a confirmed violation. Reinspection found the public API had not explicitly distinguished permission metadata from rendered edit controls. That inference is withdrawn.",
+  "finding": "Receiver and Owner both restrict editable to surface=detail. The original oracle required identical permission metadata across surfaces. Both interpretations were not adequately separated in the public API text. Do not attribute these failures to WAE or silently regrade them as successful.",
+  "correction": "Version v2 explicitly defines editable as permission metadata and requires identical returned fields across surfaces. Visual editing controls remain freely composed. Both previously authorized published-view edit policies remain accepted. K and S inputs are unchanged.",
+  "historical_evidence": "Original request/response/work observations are retained unchanged. v1 source remains retrievable from the frozen commit. No v1 model output is used as a scored v2 result or supplied to v2 actors.",
+  "budget": "v2 receives only remaining campaign budget: 36 requests, 1738.815305 client seconds, 247267 output tokens. Original campaign wall-clock origin is retained.",
+  "scope": "This is the second fixture interpretation correction, not proof of mechanism failure or success. It also illustrates that observing refine alone does not establish reliable handoff. The F Owner supplied a full implementation, so delegation versus Owner-completion must be separately reported."
+}

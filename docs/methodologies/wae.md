@@ -73,15 +73,15 @@ WAE 把这种情况称为 `Semantic Ownership Leakage / 语义所有权泄漏`�
 
 核心原则：
 
-> Ownership must extend to the last non-mechanical decision point.
+> Every result-changing remainder has an explicit authorized owner before delegation.
 >
 > Ownership follows semantic choice; Workflow follows deterministic consequence.
 
 检查时问：下游是否仍需要理解业务/领域语义、从多个合理结果中选择、解释 prose/隐含上下文，或者决定会改变状态、副作用、权限、失败语义和最终结果的行为？如果是，边界没有闭合，应把该选择交给明确 semantic owner，或把它显式化为结构化 contract。
 
-### Mechanical Boundary / 机械边界
+### 两种 Closure Boundary / 两种合法出口
 
-递归不是越深越好。一旦剩余工作同时满足这些条件，就必须停止：
+**Mechanical Boundary / 机械边界**：当下游是机械执行器时，一旦剩余工作同时满足这些条件，就必须停止：
 
 - 输入完整且结构化；
 - 对允许的输入，行为唯一确定；
@@ -100,6 +100,8 @@ return_fields:
 ```
 
 后续 schema validation、parameterized SQL、transaction、row mapping 可以很复杂，但如果行为已经由该 contract 唯一决定，它们仍然属于 Workflow / mechanical execution。
+
+**Agentic Handoff Boundary / Agentic 交接边界**：如果当前 Owner 已经完成自己负责的结果性选择，剩余选择明确属于下游 Agent，且下游拥有完成约定用途所需的材料、权限、能力基础和验证面，就可以直接交接。下游存在多种合法实现不是 ownership 泄漏，也不要求上游把工作继续做到机械唯一。
 
 所以 Ownership 追随的是**语义选择**，不是 implementation depth。
 
@@ -127,7 +129,17 @@ Ownership Closure 不是 `fix -> test -> fix` 的泛化 Loop。
 
 如果边界仍然不清，再使用 worksheet 或更完整的控制边界分析。WAE 的目标是减少控制混乱，不是给每个任务增加一层流程。
 
-只有在已经分配 semantic owner 后仍出现 delegation smell、下游多种合理行为、heuristic 语义推断，或 runtime evidence 暴露隐藏 semantic choice 时，才继续做 Ownership Closure。普通 WAE case 不需要多跑这一层。
+只有在已经分配 semantic owner 后仍出现 delegation smell、未授权的下游多义性、heuristic 语义推断，或 runtime evidence 暴露隐藏 semantic choice 时，才继续做 Ownership Closure。下游在自己权限内拥有多种合理方案属于正常 Agentic handoff。普通 WAE case 不需要多跑这一层。
+
+### 显式启用的 WAE Loop
+
+WAE Loop 是当前研究中的委派深度运行模式，**默认关闭**。只有用户、项目或授权宿主显式启用一个有边界的任务/阶段后，该作用域内每次责任交接才必须执行 WAE checkpoint，判断 `handoff / refine / need_input / stop`。这不是让 Agent 自己决定“想不想调用 WAE”；是否启用是显式控制事实，启用后交接检查属于当前作用域的运行合同。
+
+它不规定必须循环几轮：一次完成本层责任即可一次 handoff；真正存在本层交接障碍时才继续工作。`refine` 只打开一个绑定当前 Parent Artifact 的局部 Refinement Unit：先解决这一个结果性问题及其必要语义依赖，形成独立 Refine Result，再显式 Absorb 回 Parent；未完成 Result/Absorb 不能继续 handoff。局部性按语义依赖判断，不按文件行数判断。
+
+真实项目 Pilot 把 activation、checkpoint、Refinement Unit、work、Refine Result、Absorb 和 downstream outcome 记录到项目本地 `.mindthus/wae-loop/`。每个 Run 自动生成单文件 `wae-loop-run.json`，便于从 WFF / EKRI / Slidethus 等实际项目取回后离线分析。日志默认保存 artifact ref/hash、短的可观察原因、结果和可得成本，不保存私有思维链或整份产物正文。
+
+详见 [Delegation Loop resource](../../skills/wae/resources/delegation-loop.md)。
 
 ## 具体案例
 
@@ -173,7 +185,7 @@ WAE 也不负责定义问题本身。如果还不知道问题是什么，用 `3L
 
 当 evidence 不足时，WAE 不会替你补事实。它只会指出“这个 claim 还没有被约束”，然后要求补证据、降级结论或停止。
 
-Ownership Closure 也不是长任务 runtime：它不建立 Mission、任务树、checkpoint、recovery state 或持久化 refinement history。它只判断语义 ownership 是否已经闭合。
+Ownership Closure 本身不是长任务 runtime：它不建立 Mission、任务树、recovery state 或 continuation lifecycle。显式 WAE Loop Pilot 只持久化“这个作用域已启用”和可回放的交接判断/结果日志；这些 trace facts 不接管 TPlan 的 Mission/task state。
 
 ## 与其他方法的关系
 
@@ -195,3 +207,4 @@ WAE：这个语义决定由谁拥有、这个 ownership 是否已经闭合？
 - 返回 [README](../../README.md)
 - 查看 [WAE skill](../../skills/wae/SKILL.md)
 - 深入 [Ownership Closure resource](../../skills/wae/resources/ownership-closure.md)
+- 查看 [Explicit WAE Delegation Loop](../../skills/wae/resources/delegation-loop.md)

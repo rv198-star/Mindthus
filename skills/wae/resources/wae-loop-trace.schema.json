@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mindthus.wae-loop-trace.v0.3",
+  "title": "Mindthus WAE Loop Trace v0.3",
+  "description": "Observable activation, handoff checkpoint, bounded Refinement Unit, Refine Result, Parent absorption and downstream outcome facts for explicitly activated WAE Loop pilot scopes. This schema does not represent private reasoning or prove semantic sufficiency/locality by itself.",
+  "oneOf": [
+    {"$ref": "#/$defs/activation"},
+    {"$ref": "#/$defs/checkpoint"},
+    {"$ref": "#/$defs/work"},
+    {"$ref": "#/$defs/refineResult"},
+    {"$ref": "#/$defs/absorb"},
+    {"$ref": "#/$defs/outcome"},
+    {"$ref": "#/$defs/finish"}
+  ],
+  "$defs": {
+    "base": {
+      "type": "object",
+      "required": ["schema_version", "activation_id", "activation_sha256", "sequence", "logged_at", "prev_event_sha256", "event_sha256", "event_type"],
+      "properties": {
+        "schema_version": {"const": "mindthus.wae-loop-trace.v0.3"},
+        "activation_id": {"type": "string", "minLength": 1},
+        "activation_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "sequence": {"type": "integer", "minimum": 1},
+        "logged_at": {"type": "string", "minLength": 1},
+        "prev_event_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "event_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "event_type": {"enum": ["activation", "checkpoint", "work", "refine_result", "absorb", "outcome", "finish"]}
+      }
+    },
+    "cost": {
+      "type": "object",
+      "properties": {
+        "model_requests": {"type": "integer", "minimum": 0},
+        "input_tokens": {"type": "integer", "minimum": 0},
+        "output_tokens": {"type": "integer", "minimum": 0},
+        "tool_calls": {"type": "integer", "minimum": 0},
+        "source_reads": {"type": "integer", "minimum": 0},
+        "retry_count": {"type": "integer", "minimum": 0},
+        "elapsed_ms": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": ["object", "null"],
+      "properties": {
+        "ref": {"type": "string", "minLength": 1},
+        "sha256": {"type": ["string", "null"], "pattern": "^[0-9a-fA-F]{64}$"},
+        "bytes": {"type": ["integer", "null"], "minimum": 0},
+        "ref_kind": {"enum": ["project_file", "logical"]}
+      },
+      "required": ["ref", "sha256", "bytes", "ref_kind"],
+      "additionalProperties": false
+    },
+    "refinementUnit": {
+      "type": ["object", "null"],
+      "properties": {
+        "unit_id": {"type": "string", "pattern": "^RU-[0-9]{4}$"},
+        "unit_kind": {"enum": ["semantic_decision", "evidence_gap", "algorithm_boundary", "representation_boundary", "correction", "other"]},
+        "question": {"type": "string", "minLength": 1},
+        "scope_boundary": {"type": "string", "minLength": 1},
+        "completion_criterion": {"type": "string", "minLength": 1},
+        "parent_artifact": {"$ref": "#/$defs/artifact"}
+      },
+      "required": ["unit_id", "unit_kind", "question", "scope_boundary", "completion_criterion", "parent_artifact"],
+      "additionalProperties": false
+    },
+    "activation": {
+      "allOf": [
+        {"$ref": "#/$defs/base"},
+        {
+          "properties": {
+            "event_type": {"const": "activation"},
+            "scope_id": {"type": "string", "minLength": 1}
+          },
+          "required": ["scope_id"]
+        }
+      ]
+    },
+    "checkpoint": {
+      "allOf": [
+        {"$ref": "#/$defs/base"},
+        {
+          "properties": {
+            "event_type": {"const": "checkpoint"},
+            "decision": {"enum": ["handoff", "refine", "need_input", "stop"]},
+            "artifact": {"$ref": "#/$defs/artifact"},
+            "blocking_remainder": {"type": "array", "items": {"type": "string"}},
+            "owner_of_remainder": {"enum": ["current", "downstream", "upstream", "external", "none", "unknown"]},
+            "consequence_if_handoff_now": {"type": "string"},
+            "next_minimum_work": {"type": "string"},
+            "evidence_refs": {"type": "array", "items": {"type": "string"}},
+            "cost": {"$ref": "#/$defs/cost"},
+            "refinement_unit": {"$ref": "#/$defs/refinementUnit"}
+          },
+          "required": ["decision", "artifact", "blocking_remainder", "owner_of_remainder", "consequence_if_handoff_now", "next_minimum_work", "evidence_refs", "cost", "refinement_unit"]
+        }
+      ]
+    },
+    "work": {
+      "allOf": [
+        {"$ref": "#/$defs/base"},
+        {
+          "properties": {
+            "event_type": {"const": "work"},
+            "unit_id": {"type": "string", "pattern": "^RU-[0-9]{4}$"},
+            "work_kind": {"enum": ["design_decision", "evidence_acquisition", "algorithm", "reference_implementation", "representation", "correction", "other"]},
+            "changed_scope": {"type": "string", "minLength": 1},
+            "artifact_before": {"$ref": "#/$defs/artifact"},
+            "artifact_after": {"$ref": "#/$defs/artifact"},
+            "resolved_remainders": {"type": "array", "items": {"type": "string"}},
+            "introduced_remainders": {"type": "array", "items": {"type": "string"}},
+            "evidence_refs": {"type": "array", "items": {"type": "string"}},
+            "cost": {"$ref": "#/$defs/cost"}
+          },
+          "required": ["unit_id", "work_kind", "changed_scope", "artifact_before", "artifact_after", "resolved_remainders", "introduced_remainders", "evidence_refs", "cost"]
+        }
+      ]
+    },
+    "refineResult": {
+      "allOf": [
+        {"$ref": "#/$defs/base"},
+        {
+          "properties": {
+            "event_type": {"const": "refine_result"},
+            "unit_id": {"type": "string", "pattern": "^RU-[0-9]{4}$"},
+            "result_status": {"enum": ["resolved", "blocked"]},
+            "result_summary": {"type": "string", "minLength": 1, "maxLength": 4096},
+            "result_artifact": {"$ref": "#/$defs/artifact"},
+            "resolved_remainders": {"type": "array", "items": {"type": "string"}},
+            "introduced_remainders": {"type": "array", "items": {"type": "string"}},
+            "evidence_refs": {"type": "array", "items": {"type": "string"}},
+            "cost": {"$ref": "#/$defs/cost"}
+          },
+          "required": ["unit_id", "result_status", "result_summary", "result_artifact", "resolved_remainders", "introduced_remainders", "evidence_refs", "cost"]
+        }
+      ]
+    },
+    "absorb": {
+      "allOf": [
+        {"$ref": "#/$defs/base"},
+        {
+          "properties": {
+            "event_type": {"const": "absorb"},
+            "unit_id": {"type": "string", "pattern": "^RU-[0-9]{4}$"},
+            "result_sequence": {"type": "integer", "minimum": 1},
+            "absorb_mode": {"enum": ["update", "confirm"]},
+            "parent_before": {"$ref": "#/$defs/artifact"},
+            "parent_after": {"$ref": "#/$defs/artifact"},
+            "absorbed_scope": {"type": "string", "minLength": 1},
+            "cost": {"$ref": "#/$defs/cost"}
+          },
+          "required": ["unit_id", "result_sequence", "absorb_mode", "parent_before", "parent_after", "absorbed_scope", "cost"]
+        }
+      ]
+    },
+    "outcome": {
+      "allOf": [
+        {"$ref": "#/$defs/base"},
+        {
+          "properties": {
+            "event_type": {"const": "outcome"},
+            "handoff_result": {"enum": ["accepted", "returned_upstream", "downstream_completed", "downstream_failed", "unknown"]},
+            "downstream_invented_upstream_semantics": {"enum": ["yes", "no", "unknown"]},
+            "downstream_requested_missing_upstream_decision": {"enum": ["yes", "no", "unknown"]},
+            "downstream_overrode_handoff": {"enum": ["yes", "no", "unknown"]},
+            "rework_required": {"enum": ["yes", "no", "unknown"]},
+            "rework_owner": {"enum": ["current", "downstream", "upstream", "external", "none", "unknown"]},
+            "acceptance_result": {"enum": ["pass", "fail", "partial", "unknown"]},
+            "notes": {"type": "string"},
+            "telemetry_coverage": {
+              "type": "object",
+              "properties": {
+                "model_calls": {"enum": ["complete", "partial", "unknown"]},
+                "tool_calls": {"enum": ["complete", "partial", "unknown"]},
+                "artifact_changes": {"enum": ["complete", "partial", "unknown"]},
+                "downstream_outcome": {"enum": ["complete", "partial", "unknown"]}
+              },
+              "required": ["model_calls", "tool_calls", "artifact_changes", "downstream_outcome"],
+              "additionalProperties": false
+            },
+            "cost": {"$ref": "#/$defs/cost"}
+          },
+          "required": ["handoff_result", "downstream_invented_upstream_semantics", "downstream_requested_missing_upstream_decision", "downstream_overrode_handoff", "rework_required", "rework_owner", "acceptance_result", "notes", "telemetry_coverage", "cost"]
+        }
+      ]
+    },
+    "finish": {
+      "allOf": [
+        {"$ref": "#/$defs/base"},
+        {
+          "properties": {
+            "event_type": {"const": "finish"},
+            "status": {"enum": ["completed", "need_input", "stopped", "aborted"]},
+            "notes": {"type": "string"},
+            "cost": {"$ref": "#/$defs/cost"}
+          },
+          "required": ["status", "notes", "cost"]
+        }
+      ]
+    }
+  }
+}
