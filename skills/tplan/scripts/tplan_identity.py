@@ -44,9 +44,10 @@ def load_runtime_manifest(skill_root: Path | None = None) -> dict[str, Any]:
         "required_scripts",
         "fingerprint_files",
     }
-    if set(manifest) != required:
+    optional = {"compatible_build_hashes"}
+    if not required <= set(manifest) or set(manifest) - required - optional:
         missing = sorted(required - set(manifest))
-        extra = sorted(set(manifest) - required)
+        extra = sorted(set(manifest) - required - optional)
         details = []
         if missing:
             details.append("missing " + ", ".join(missing))
@@ -93,6 +94,11 @@ def load_runtime_manifest(skill_root: Path | None = None) -> dict[str, Any]:
             raise TplanError(
                 f"TPlan runtime manifest {field} paths must stay under the skill root"
             )
+    compatible = manifest.get("compatible_build_hashes", [])
+    if (not isinstance(compatible, list)
+        or not all(isinstance(value, str) and re.fullmatch(r"sha256:[0-9a-f]{64}", value) for value in compatible)
+        or len(compatible) != len(set(compatible))):
+        raise TplanError("compatible_build_hashes must be a unique SHA256 list")
     return manifest
 
 
@@ -210,6 +216,21 @@ def runtime_fingerprint_compatibility(
         if recorded[field] != current[field]
     }
     if differences:
+        # Source-owned exact compatibility admission, not a caller bypass.
+        # A fake fingerprint or changed capability/package is never admitted.
+        if set(differences) == {"build_hash"}:
+            try:
+                root = Path(current["skill_root"])
+                manifest = load_runtime_manifest(root)
+                if (recorded["build_hash"] in manifest.get("compatible_build_hashes", [])
+                    and runtime_fingerprint(root) == current):
+                    return {
+                        "status": "compatible_reviewed_build",
+                        "compatible": True,
+                        "differences": differences,
+                    }
+            except (OSError, TplanError):
+                pass
         return {
             "status": "incompatible",
             "compatible": False,
@@ -319,6 +340,12 @@ def runtime_provenance_report(
                 ),
             }
         )
+    elif compatibility["status"] == "compatible_reviewed_build":
+        severity = "warning"
+        diagnostics.append({
+            "code": "runtime_reviewed_compatible_build",
+            "message": "selected runtime explicitly admits the recorded build; original Mission provenance is preserved",
+        })
     elif not compatibility["compatible"]:
         severity = "error"
         diagnostics.append(

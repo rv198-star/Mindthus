@@ -144,5 +144,65 @@ class SupersededClosureTests(unittest.TestCase):
             self.assertEqual(sum(e['event_type'] == 'mission_status_changed' for e in trace), 1)
 
 
+class ReviewedBuildCompatibilityTests(unittest.TestCase):
+    def setUp(self):
+        from tplan_identity import runtime_fingerprint, runtime_fingerprint_compatibility, runtime_provenance_report
+        self.current = runtime_fingerprint()
+        self.previous = copy.deepcopy(self.current)
+        self.previous['build_hash'] = 'sha256:77c95fe8f3d7d3f503673e8b78f1f8f93ede4587913cb66a5893ed6902ada5c9'
+        self.compare = runtime_fingerprint_compatibility
+        self.report = runtime_provenance_report
+
+    def test_only_exact_declared_predecessor_is_compatible(self):
+        result = self.compare(self.previous, self.current)
+        self.assertTrue(result['compatible'])
+        self.assertEqual(result['status'], 'compatible_reviewed_build')
+        other = copy.deepcopy(self.previous); other['build_hash'] = 'sha256:' + '0' * 64
+        self.assertFalse(self.compare(other, self.current)['compatible'])
+
+    def test_capability_package_and_source_changes_still_block(self):
+        for field in ('package_version', 'source_id', 'capabilities', 'capability_versions'):
+            with self.subTest(field=field):
+                old = copy.deepcopy(self.previous)
+                if field == 'capabilities': old[field].append('unreviewed')
+                elif field == 'capability_versions': old[field]['mission'] = 'tplan.v99'
+                else: old[field] = 'unknown-version'
+                self.assertFalse(self.compare(old, self.current)['compatible'])
+
+    def test_forged_current_hash_is_not_source_admission(self):
+        current = copy.deepcopy(self.current); current['build_hash'] = 'sha256:' + 'a' * 64
+        self.assertFalse(self.compare(self.previous, current)['compatible'])
+
+    def test_provenance_is_preserved_with_visible_warning(self):
+        m = {'runtime_provenance': {'schema_version': 'tplan.runtime_provenance.v0.1',
+                                   'origin': 'native', 'fingerprint': self.previous}}
+        before = copy.deepcopy(m)
+        report = self.report(m, current=self.current)
+        self.assertEqual(report['severity'], 'warning')
+        self.assertEqual(report['diagnostics'][0]['code'], 'runtime_reviewed_compatible_build')
+        self.assertEqual(m, before)
+
+    def test_canonical_write_accepts_prior_build_without_rewriting_provenance(self):
+        from tplan_runtime import apply_decision
+        with tempfile.TemporaryDirectory(prefix='tplan-prior-build-') as raw:
+            d = Path(raw) / 'mission-prior-build'
+            def run(name, *args):
+                result = subprocess.run([sys.executable, str(SCRIPTS / name), *map(str, args)], capture_output=True, text=True, timeout=20)
+                self.assertEqual(result.returncode, 0, result.stderr)
+            run('init_lite.py', '--dir', d, '--mission-id', 'mission-prior-build', '--title', 'Prior build fixture', '--objective', 'Close accepted work', '--acceptance-evidence', 'AC_GOAL:Verified result', '--active-task-id', 'T0', '--active-task-title', 'Work', '--active-task-contribution', 'Deliver')
+            run('record_evidence.py', d, '--event-type', 'acceptance_passed', '--task-id', 'T0', '--summary', 'Accepted', '--payload-json', json.dumps({'acceptance_ids': ['AC_GOAL']}))
+            run('transition_task.py', d, '--task-id', 'T0', '--status', 'completed')
+            p = d / 'mission.json'; state = json.loads(p.read_text())
+            state['runtime_provenance']['fingerprint']['build_hash'] = self.previous['build_hash']
+            original = copy.deepcopy(state['runtime_provenance'])
+            p.write_text(json.dumps(state))  # Synthetic prior-build fixture, not a user Mission.
+            ev = [json.loads(x) for x in (d / 'evidence.jsonl').read_text().splitlines()]
+            request = decision(); request['evidence_links'] = [ev[-1]['id']]
+            self.assertEqual(apply_decision(d, request), 'applied_decision')
+            result = json.loads(p.read_text())
+            self.assertEqual(result['mission']['status'], 'completed')
+            self.assertEqual(result['runtime_provenance'], original)
+
+
 if __name__ == '__main__':
     unittest.main()
