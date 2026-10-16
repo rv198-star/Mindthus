@@ -3354,12 +3354,11 @@ def _mission_completion_findings(
 ) -> list[str]:
     """Check mechanical closure eligibility against one supplied evidence snapshot."""
     errors: list[str] = []
-    incomplete = sorted(
-        str(task["id"]) for task in mission["tasks"]
-        if task.get("role") == "success-critical" and task.get("status") != "completed"
-    )
-    if incomplete:
-        errors.append("Mission completion requires completed success-critical nodes: " + ", ".join(incomplete))
+    # Qualified acceptance is indexed by canonical Task identity below. A
+    # superseded critical Task may only be discharged by one later, completed,
+    # equally scoped Task with current qualified acceptance; never by a title
+    # match, an unrelated completed Task or a free-text claim of replacement.
+    task_acceptance: dict[tuple[str, str], str] = {}
     counts = Counter(
         event.get("id") for event in events
         if isinstance(event, dict) and isinstance(event.get("id"), str)
@@ -3377,6 +3376,35 @@ def _mission_completion_findings(
             continue  # Ambiguous historical IDs cannot provide a qualified observation.
         for acceptance_id in event["payload"]["acceptance_ids"]:
             latest[acceptance_id] = kind
+            task_acceptance[(event["task_id"], acceptance_id)] = kind
+
+    incomplete: list[str] = []
+    for index, task in enumerate(mission["tasks"]):
+        if task.get("role") != "success-critical" or task.get("status") == "completed":
+            continue
+        if task.get("status") == "superseded":
+            required = set(task.get("acceptance_evidence") or [])
+            # Canonical node order comes from append-only add_node. A successor
+            # must be newer and uniquely supported by qualified evidence.
+            successors = [
+                other for other in mission["tasks"][index + 1:]
+                if other.get("role") == "success-critical"
+                and other.get("status") == "completed"
+                and required
+                and required <= set(other.get("acceptance_evidence") or [])
+                and all(
+                    task_acceptance.get((other["id"], acceptance_id)) == "acceptance_passed"
+                    for acceptance_id in required
+                )
+            ]
+            if len(successors) == 1:
+                continue
+        incomplete.append(str(task["id"]))
+    if incomplete:
+        errors.append(
+            "Mission completion requires completed success-critical nodes: "
+            + ", ".join(sorted(incomplete))
+        )
     missing = sorted(
         acceptance_id for acceptance_id in acceptance_ids(mission)
         if latest.get(acceptance_id) not in {"acceptance", "acceptance_passed"}
