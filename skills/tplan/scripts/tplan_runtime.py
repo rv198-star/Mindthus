@@ -3354,10 +3354,6 @@ def _mission_completion_findings(
 ) -> list[str]:
     """Check mechanical closure eligibility against one supplied evidence snapshot."""
     errors: list[str] = []
-    # Qualified acceptance is indexed by canonical Task identity below. A
-    # superseded critical Task may only be discharged by one later, completed,
-    # equally scoped Task with current qualified acceptance; never by a title
-    # match, an unrelated completed Task or a free-text claim of replacement.
     task_acceptance: dict[tuple[str, str], str] = {}
     counts = Counter(
         event.get("id") for event in events
@@ -3378,33 +3374,47 @@ def _mission_completion_findings(
             latest[acceptance_id] = kind
             task_acceptance[(event["task_id"], acceptance_id)] = kind
 
-    incomplete: list[str] = []
-    for index, task in enumerate(mission["tasks"]):
+    # Replacement is an explicit assertion in THIS canonical close decision,
+    # not an inference from ordering, names or a shared broad acceptance ID.
+    # apply_decision stages its reserved evidence in the same transaction as
+    # the status write. A prior decision cannot silently authorize a new close.
+    closing = events[-1] if events and isinstance(events[-1], dict) else {}
+    decision = closing.get("payload", {}) if isinstance(closing, dict) else {}
+    replacements: dict[str, str] = {}
+    if (closing.get("event_type") == "decision_applied"
+        and counts.get(closing.get("id")) == 1
+        and not validate_evidence_event(mission, closing, compatibility=True, internal=True)
+        and isinstance(decision, dict)
+        and decision.get("recommendation") == "close"
+        and decision.get("requires_human") is False
+        and decision.get("proposed_mutations") == [{"type": "set_mission_status", "status": "completed"}]
+        and not _validate_task_replacements(decision)):
+        replacements = {
+            pair["task_id"]: pair["replacement_task_id"]
+            for pair in decision.get("task_replacements", [])
+        }
+    tasks = task_map(mission)
+    for old_id, new_id in replacements.items():
+        old, new = tasks.get(old_id), tasks.get(new_id)
+        if (not old or old.get("status") != "superseded"
+            or old.get("role") != "success-critical" or not new
+            or new.get("status") != "completed" or new.get("role") != "success-critical"):
+            errors.append(f"Mission close replacement is not a superseded critical Task and completed successor: {old_id} -> {new_id}")
+    incomplete = []
+    for task in mission["tasks"]:
         if task.get("role") != "success-critical" or task.get("status") == "completed":
             continue
-        if task.get("status") == "superseded":
-            required = set(task.get("acceptance_evidence") or [])
-            # Canonical node order comes from append-only add_node. A successor
-            # must be newer and uniquely supported by qualified evidence.
-            successors = [
-                other for other in mission["tasks"][index + 1:]
-                if other.get("role") == "success-critical"
-                and other.get("status") == "completed"
-                and required
-                and required <= set(other.get("acceptance_evidence") or [])
-                and all(
-                    task_acceptance.get((other["id"], acceptance_id)) == "acceptance_passed"
-                    for acceptance_id in required
-                )
-            ]
-            if len(successors) == 1:
-                continue
+        successor = tasks.get(replacements.get(task["id"], ""), {})
+        required = set(task.get("acceptance_evidence") or [])
+        if (task.get("status") == "superseded" and required
+            and successor.get("status") == "completed"
+            and successor.get("role") == "success-critical"
+            and required <= set(successor.get("acceptance_evidence") or [])
+            and all(task_acceptance.get((successor["id"], ac)) == "acceptance_passed" for ac in required)):
+            continue
         incomplete.append(str(task["id"]))
     if incomplete:
-        errors.append(
-            "Mission completion requires completed success-critical nodes: "
-            + ", ".join(sorted(incomplete))
-        )
+        errors.append("Mission completion requires completed success-critical nodes: " + ", ".join(sorted(incomplete)))
     missing = sorted(
         acceptance_id for acceptance_id in acceptance_ids(mission)
         if latest.get(acceptance_id) not in {"acceptance", "acceptance_passed"}
@@ -6312,6 +6322,27 @@ def _validate_decision_consequences(decision: dict[str, Any]) -> list[str]:
     return errors
 
 
+def _validate_task_replacements(decision: dict[str, Any]) -> list[str]:
+    """Validate only a close decision's explicit replacement declarations."""
+    if "task_replacements" not in decision:
+        return []
+    pairs = decision["task_replacements"]
+    if (decision.get("recommendation") != "close"
+        or decision.get("proposed_mutations") != [{"type": "set_mission_status", "status": "completed"}]):
+        return ["task_replacements is only permitted on a Mission-only close decision"]
+    if not isinstance(pairs, list):
+        return ["task_replacements must be a list"]
+    seen: set[str] = set()
+    for pair in pairs:
+        if (not isinstance(pair, dict) or set(pair) != {"task_id", "replacement_task_id"}
+            or not all(isinstance(v, str) and v.strip() for v in pair.values())):
+            return ["task_replacements requires exact task_id and replacement_task_id strings"]
+        if pair["task_id"] == pair["replacement_task_id"] or pair["task_id"] in seen:
+            return ["task_replacements cannot contain self-replacement or repeated source Tasks"]
+        seen.add(pair["task_id"])
+    return []
+
+
 def _validate_hook_output_messages(
     decision: Any,
     active_shared_risks: list[dict[str, Any]] | None = None,
@@ -6365,6 +6396,7 @@ def _validate_hook_output_messages(
         errors.extend(_validate_risk_assessment(decision, active_shared_risks))
         errors.extend(_validate_continuation_authorization(decision))
         errors.extend(_validate_decision_consequences(decision))
+        errors.extend(_validate_task_replacements(decision))
     return errors
 
 
