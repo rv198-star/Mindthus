@@ -193,6 +193,35 @@ class QueryRuntimeTests(unittest.TestCase):
         final = json.loads(self.cli().stdout)["data"]
         self.assertEqual(final["evidence_count"], 3)
 
+    def test_valid_json_but_invalid_evidence_or_trace_is_rejected(self):
+        for name, record in (("evidence.jsonl", []), ("evidence.jsonl", {}),
+                             ("execution_trace.jsonl", {})):
+            with self.subTest(name=name, record=record):
+                path = self.mission / name
+                original = path.read_bytes()
+                path.write_text(json.dumps(record) + "\n")
+                result = self.assert_readonly(self.cli)
+                self.assertEqual(result.returncode, 7, result.stdout)
+                self.assertEqual(json.loads(result.stdout)["code"], "invalid_state")
+                path.write_bytes(original)
+
+    def test_source_growth_after_preflight_is_rechecked_inside_lock(self):
+        import query_runtime
+        from tplan_runtime import append_event
+        preflight = query_runtime._mission_dir
+        calls = []
+        def check_then_commit(directory):
+            checked = preflight(directory)
+            calls.append(checked)
+            if len(calls) == 1:
+                # A real official writer commits between the initial stat and read.
+                append_event(checked, {"event_type": "observation", "summary": "growth",
+                                      "payload": {"text": "x" * MAX_SOURCE_BYTES}})
+            return checked
+        with patch("query_runtime._mission_dir", side_effect=check_then_commit):
+            result, status = query_runtime.query(self.mission, self.request)
+        self.assertEqual((status, result["code"]), (10, "snapshot_too_large"))
+
     def test_new_facade_does_not_change_legacy_runtime_fingerprint(self):
         manifest = json.loads((SCRIPTS.parent / "resources" / "runtime-manifest.json").read_text())
         self.assertNotIn("scripts/query_runtime.py", manifest["fingerprint_files"])

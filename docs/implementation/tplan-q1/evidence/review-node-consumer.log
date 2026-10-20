@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: actual CLI and Host consumer return the same snapshot without writes
+ok 1 - actual CLI and Host consumer return the same snapshot without writes
+  ---
+  duration_ms: 238.195962
+  type: 'test'
+  ...
+# Subtest: pending transaction is surfaced, never repaired by the query
+ok 2 - pending transaction is surfaced, never repaired by the query
+  ---
+  duration_ms: 154.467159
+  type: 'test'
+  ...
+# Subtest: missing result capability is not evidence of non-execution
+ok 3 - missing result capability is not evidence of non-execution
+  ---
+  duration_ms: 125.029664
+  type: 'test'
+  ...
+# Subtest: Host-pinned build mismatch is an explicit runtime error
+ok 4 - Host-pinned build mismatch is an explicit runtime error
+  ---
+  duration_ms: 151.084477
+  type: 'test'
+  ...
+# Subtest: path traversal and symlink Mission aliases cannot escape Host scope
+ok 5 - path traversal and symlink Mission aliases cannot escape Host scope
+  ---
+  duration_ms: 79.977961
+  type: 'test'
+  ...
+# Subtest: unknown protocol response is not treated as a successful query
+ok 6 - unknown protocol response is not treated as a successful query
+  ---
+  duration_ms: 96.61345
+  type: 'test'
+  ...
+# Subtest: timeout is a transport error, not a failed Mission or a retry instruction
+ok 7 - timeout is a transport error, not a failed Mission or a retry instruction
+  ---
+  duration_ms: 89.024045
+  type: 'test'
+  ...
+# Subtest: Host configuration must fix roots, interpreter and build
+ok 8 - Host configuration must fix roots, interpreter and build
+  ---
+  duration_ms: 0.666681
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1008.589957

@@ -58,3 +58,6 @@ Q1 command.get先做请求形状校验，直接报告unsupported_capability，�
 用临时合成Mission，不使用真实数据：正常/guard只读、pending transaction不恢复、legacy不认领、错身份/错build/未知protocol/额外字段/重复键/坏状态/缺能力/大小上限/目录越界；多进程查询与官方写入的完整快照；普通CLI与Node消费者结果一致；查询前后业务字节/mtime不变。只重跑与读取/指纹有关的既有测试，旧CLI文本仍可用。接口测试通过不是H1/Web/IM验收。
 
 本合同先提交，随后才写接口/测试。代码完成以PR和真实测试证据留档，暂不合并/发行/部署。#232/#233独立关闭修复与本片无关。
+
+## 审查补正
+源文件类型与大小在实际读取的同一内核短锁内复核；读取后的证据和trace逐项用原内核验证器检查，不把可解析JSON等同于合法记录。Q1的command.get只有unsupported_capability结果；未来成功DTO需通过新能力合同成对接入。

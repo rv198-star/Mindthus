@@ -131,12 +131,28 @@ def _snapshot(directory: Path, request: dict[str, Any]) -> dict[str, Any]:
     if request.get("expected_build_hash", current["build_hash"]) != current["build_hash"]:
         raise QueryError("runtime_mismatch", "Selected runtime differs from the Host-pinned build")
     try:
-        # This existing helper refuses pending transactions and never recovers.
-        snapshot = runtime.read_user_update_snapshot(directory)
-        mission = snapshot["mission"]
+        # Reuse the pinned runtime's no-recovery primitives under one lock.
+        # Size/type checks must follow a writer that held the lock before us.
+        with runtime.execution_trace_lock(directory):
+            _mission_dir(directory)
+            runtime._require_no_pending_mission_transaction_unlocked(directory, "querying a snapshot")
+            mission = runtime._read_mission_unlocked(directory)
+            events = runtime._read_events_unlocked(directory)
+            trace = runtime._read_execution_trace_unlocked(directory)
+            guard = runtime._interaction_guard_boundary_state_unlocked(directory)
+            snapshot = {"mission": mission, "events": events, "trace": trace,
+                        "interaction_guard_state": guard,
+                        "mission_digest": runtime.mission_control_digest(mission),
+                        "evidence_digest": runtime._evidence_boundary_digest_unlocked(directory),
+                        "interaction_guard_digest": runtime._sha256_digest(guard)}
         errors = runtime.validate_mission(mission)
         if errors:
             raise QueryError("invalid_state", "Canonical Mission structure is invalid")
+        if any(runtime.validate_evidence_event(mission, event, compatibility=True, internal=True)
+               for event in events):
+            raise QueryError("invalid_state", "Canonical evidence structure is invalid")
+        if any(runtime.validate_execution_trace_record(mission, record) for record in trace):
+            raise QueryError("invalid_state", "Canonical execution trace structure is invalid")
         if mission["mission"]["id"] != request["mission_id"]:
             raise QueryError("invalid_state", "Mission identity does not match the query")
         provenance = runtime.runtime_provenance_report(mission, current=current)
