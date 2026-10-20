@@ -66,6 +66,7 @@ def parse_args() -> argparse.Namespace:
         "--reentry-rationale",
         help="Required rationale when --reentry-disposition is supplied.",
     )
+    parser.add_argument("--command-results", action="store_true", help="Opt a new Mission into Q2 command results; never migrate existing state.")
     parser.add_argument("--human-in-loop", type=int, default=0)
     parser.add_argument("--risk-tolerance", type=int, default=50)
     parser.add_argument("--resource-sufficiency", type=int, default=50)
@@ -96,6 +97,7 @@ def main() -> int:
             resource_sufficiency=args.resource_sufficiency,
             tasks=load_task_json(Path(args.task_json) if args.task_json else None),
             work_plan=load_work_plan(Path(args.work_plan_json) if args.work_plan_json else None),
+            command_results_enabled=args.command_results,
         )
         reentry_preflight = None
         if args.project_root:

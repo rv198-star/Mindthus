@@ -1,0 +1,38 @@
+[
+  {
+    "suite": "test_command_runtime.py",
+    "exit": 0,
+    "count": 21,
+    "elapsed_seconds": 4.633
+  },
+  {
+    "suite": "test_query_runtime.py",
+    "exit": 0,
+    "count": 17,
+    "elapsed_seconds": 4.145
+  },
+  {
+    "suite": "test_runtime_provenance.py",
+    "exit": 1,
+    "count": 13,
+    "elapsed_seconds": 2.67
+  },
+  {
+    "suite": "test_runtime_persistence.py",
+    "exit": 0,
+    "count": 6,
+    "elapsed_seconds": 0.995
+  },
+  {
+    "suite": "test_authority_integrity.py",
+    "exit": 0,
+    "count": 30,
+    "elapsed_seconds": 1.937
+  },
+  {
+    "suite": "test_interaction_guard.py",
+    "exit": 0,
+    "count": 12,
+    "elapsed_seconds": 0.906
+  }
+]

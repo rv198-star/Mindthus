@@ -1,0 +1,17 @@
+test_authorized_change_recovery_rolls_mission_evidence_and_guard_forward_once (test_interaction_guard.InteractionGuardTests) ... ok
+test_expired_or_legacy_guard_never_auto_resumes (test_interaction_guard.InteractionGuardTests) ... ok
+test_first_turn_end_resolves_all_pending_messages_without_continuation (test_interaction_guard.InteractionGuardTests) ... ok
+test_guard_blocks_supported_state_and_evidence_writers_then_resumes (test_interaction_guard.InteractionGuardTests) ... ok
+test_guard_blocks_trace_and_log_artifact_writers (test_interaction_guard.InteractionGuardTests) ... ok
+test_nested_message_stale_resolve_cannot_close_guard (test_interaction_guard.InteractionGuardTests) ... ok
+test_orphaned_guard_keeps_writers_closed_but_operator_resume_is_recoverable (test_interaction_guard.InteractionGuardTests) ... ok
+test_receipt_binds_exact_mutation_and_cannot_replay (test_interaction_guard.InteractionGuardTests) ... ok
+test_receipt_rejects_a_pending_message_that_arrived_before_the_proposal (test_interaction_guard.InteractionGuardTests) ... ok
+test_resume_recovery_keeps_guard_fail_closed_until_transaction_rolls_forward (test_interaction_guard.InteractionGuardTests) ... ok
+test_stop_can_only_block_the_baseline_active_task (test_interaction_guard.InteractionGuardTests) ... ok
+test_stop_recovery_rolls_mission_evidence_and_guard_forward_once (test_interaction_guard.InteractionGuardTests) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.745s
+
+OK

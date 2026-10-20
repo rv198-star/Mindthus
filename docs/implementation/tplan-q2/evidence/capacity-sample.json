@@ -1,0 +1,41 @@
+{
+  "scope": "one disposable 64-command small-Mission sample; not a universal performance SLA",
+  "python": "3.10.12",
+  "architecture": "aarch64",
+  "commands": 64,
+  "commit_median_ms": 26.195,
+  "commit_max_ms": 31.949,
+  "lookup_ms": 4.0,
+  "replay_ms": 4.34,
+  "result_store_bytes": 26601,
+  "file_bytes": {
+    ".execution_trace.lock": 0,
+    "execution_trace.jsonl": 466,
+    "evidence.jsonl": 11904,
+    "mission.json": 34120,
+    "mission.md": 185
+  },
+  "host_free_bytes": 11515211776,
+  "limits": {
+    "result_records": 1024,
+    "result_bytes": 1048576,
+    "artifact_bytes": 4194304,
+    "min_free_bytes": 16777216
+  },
+  "existing_facts_retention": "no automatic deletion; explicit Owner archive only",
+  "observed_import_dependency_sha256": {
+    "skills/runtime_bootstrap.py": "819f5e3ed46e02069c5a9ceef88a837c4da4d7355e4460e933bf75f1185068bd",
+    "skills/_runtime/__init__.py": "ea82986dab21df4c50f6bbf6bca3dffa94f120b35f19278cb76a664a4f72e6a0",
+    "skills/_runtime/core/io.py": "7308395475c6fafadec3124794c7ccf58706c6a940f004e3537124b1604319e2",
+    "skills/_runtime/core/__init__.py": "790c4b203939378f7552bb5e63a0e466850214c1474167e87e89710fb7434289",
+    "skills/_runtime/core/report.py": "713ad6e09396d7e5f65e03b523a339fb1117ea6cac2b6b46410330a4c43f5644",
+    "skills/_runtime/core/shape.py": "4982ac76d178ccdaaf3241f6f55b7dcb8db9aeec35a5c274e5d0d89c626b5932",
+    "skills/tplan/scripts/tplan_errors.py": "47bbd41ea3ee4ecf9f3eeecdb4322d5a02adc7ebf5cd65a5a17237af0e7a1530",
+    "skills/tplan/scripts/tplan_commands.py": "66c3d8e4dd5eae938ff6edca7b7ba4cdfa03127aa3f00182736ab3cdeeb07891",
+    "skills/tplan/scripts/work_plan.py": "a2ba8824a9c2b0a7643cf359f9028ac7f76b0828331ae543325d557530a87703",
+    "skills/tplan/scripts/tplan_identity.py": "85e0f6d6a746af98930fbbd3b0f36b14c0d8c09cf3c4a43f9561a5451123de8e",
+    "skills/tplan/scripts/tplan_task_contract.py": "d63f45815efe4605b368715561f78dfdfac62746ecfb039cf4e6257ceb5299aa",
+    "skills/tplan/scripts/tplan_runtime.py": "d59aa8216ccd2a7508891111433ada50e93f5e16343cbdad8d81f91838ec6f7c",
+    "skills/tplan/scripts/query_runtime.py": "d72461ae10c41aa590e45489992580abe84b7e555b672a619366b6c1db65f7f1"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "scope": "isolated synthetic CLI/contract checks, not DSH/Owner/UI validation",
+  "suites": [
+    {
+      "suite": "test_command_runtime.py",
+      "count": 21,
+      "exit": 0,
+      "seconds": 4.426,
+      "sha256": "c76085bbc46b30743e093b351f9c8318451471e59439c761f7d63be4bcc42d31"
+    },
+    {
+      "suite": "test_query_runtime.py",
+      "count": 17,
+      "exit": 0,
+      "seconds": 3.866,
+      "sha256": "7ffbd5f4ac45743d5777d70747251332ef955da1ced823b05542a03d2cd35c4c"
+    },
+    {
+      "suite": "test_runtime_provenance.py",
+      "count": 13,
+      "exit": 0,
+      "seconds": 2.55,
+      "sha256": "72671077c180cee0f8cc8bc8fe1de1aee26bbc3a6e4e1b4a42d77dc26407fdcc"
+    },
+    {
+      "suite": "test_runtime_persistence.py",
+      "count": 6,
+      "exit": 0,
+      "seconds": 0.837,
+      "sha256": "cd83eaf7f13be3f62d4e441cf7e95059621c9a56b2fd6758e92c8aab82de6409"
+    },
+    {
+      "suite": "test_authority_integrity.py",
+      "count": 30,
+      "exit": 0,
+      "seconds": 1.77,
+      "sha256": "20702e913638eb52ec7bb5dfe689bb14096b00481dd81420f734993eab06a3a2"
+    },
+    {
+      "suite": "test_interaction_guard.py",
+      "count": 12,
+      "exit": 0,
+      "seconds": 0.745,
+      "sha256": "2de3f4f0be18b4cb693a93b22d9ee12acc44570f66ac95f32c64063b5a55606a"
+    },
+    {
+      "suite": "test_command_release_pack.py",
+      "count": 1,
+      "exit": 0,
+      "seconds": 5.207,
+      "sha256": "5caf4390505b2ae36d906bfe407f571ed0595fb2b5204f26eaa19fdc574e828c"
+    }
+  ],
+  "total_python_tests": 100,
+  "packaging_docs": {
+    "tests": 41,
+    "passed": 40,
+    "skipped": 1,
+    "exit": 0,
+    "log_sha256": "f20c99e6f78420cf8b60bd9b181986019fe95ca4e92a12450b2f966747ef4058"
+  },
+  "node_consumer": {
+    "tests": 11,
+    "passed": 11,
+    "exit": 0,
+    "paired_workspace": "aiwork-tplan-q2-20261021",
+    "log_sha256": "775c7c7359729a81123898928b23c582a530e31be642d1aa7d0c14180842ad62"
+  },
+  "code_sha256": {
+    "skills/tplan/scripts/tplan_runtime.py": "d59aa8216ccd2a7508891111433ada50e93f5e16343cbdad8d81f91838ec6f7c",
+    "skills/tplan/scripts/tplan_commands.py": "66c3d8e4dd5eae938ff6edca7b7ba4cdfa03127aa3f00182736ab3cdeeb07891",
+    "skills/tplan/scripts/command_runtime.py": "3a80f28b3ec976d223e152c9f5ec568aca75b52731cdb15320e6d3bac6f5b9a8",
+    "skills/tplan/scripts/query_runtime.py": "d72461ae10c41aa590e45489992580abe84b7e555b672a619366b6c1db65f7f1",
+    "skills/tplan/scripts/init_mission.py": "1fa734c60c2f3b643b9a08bc848379793c53a8abe51276ae2038ab18085c9692",
+    "skills/tplan/resources/runtime-manifest.json": "86d3a33dcddafba28d6761973199caea1c6fde1e1b421f84aa83eba9426dd040"
+  },
+  "not_verified": [
+    "H1 Owner authentication or claim",
+    "DSH model execution",
+    "browser/IM",
+    "actual product release or installed-package upgrade",
+    "production deployment"
+  ]
+}

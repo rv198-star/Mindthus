@@ -1,0 +1,51 @@
+test_check_mission_rejects_runtime_fingerprint_mismatch (test_runtime_provenance.RuntimeProvenanceTests) ... ok
+test_doctor_diagnoses_explicit_stale_v11_against_installed_v152 (test_runtime_provenance.RuntimeProvenanceTests) ... FAIL
+test_doctor_distinguishes_explicit_selection_from_ambiguous_discovery (test_runtime_provenance.RuntimeProvenanceTests) ... ok
+test_doctor_normalizes_checkout_and_skills_roots_to_tplan (test_runtime_provenance.RuntimeProvenanceTests) ... ok
+test_exact_build_at_relocated_path_is_compatible_with_warning (test_runtime_provenance.RuntimeProvenanceTests) ... ok
+test_extracted_implementations_are_required_and_fingerprinted (test_runtime_provenance.RuntimeProvenanceTests) ... ok
+test_incompatible_runtime_blocks_every_canonical_artifact_writer (test_runtime_provenance.RuntimeProvenanceTests) ... ok
+test_incompatible_runtime_blocks_supported_mutation_without_writes (test_runtime_provenance.RuntimeProvenanceTests) ... ok
+test_legacy_evidence_writer_adopts_runtime_before_appending (test_runtime_provenance.RuntimeProvenanceTests) ... ok
+test_legacy_mission_is_readable_then_adopted_by_first_supported_mutation (test_runtime_provenance.RuntimeProvenanceTests) ... FAIL
+test_new_mission_pins_current_runtime_fingerprint (test_runtime_provenance.RuntimeProvenanceTests) ... FAIL
+test_pending_transaction_cannot_roll_forward_incompatible_provenance (test_runtime_provenance.RuntimeProvenanceTests) ... ok
+test_terminal_handoff_fails_closed_before_replacing_artifacts (test_runtime_provenance.RuntimeProvenanceTests) ... ok
+
+======================================================================
+FAIL: test_doctor_diagnoses_explicit_stale_v11_against_installed_v152 (test_runtime_provenance.RuntimeProvenanceTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/tplan/test_runtime_provenance.py", line 412, in test_doctor_diagnoses_explicit_stale_v11_against_installed_v152
+    self.assertEqual(by_root[str(SKILL.resolve())]["package_version"], "1.5.4")
+AssertionError: '1.6.0-q2.1' != '1.5.4'
+- 1.6.0-q2.1
++ 1.5.4
+
+
+======================================================================
+FAIL: test_legacy_mission_is_readable_then_adopted_by_first_supported_mutation (test_runtime_provenance.RuntimeProvenanceTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/tplan/test_runtime_provenance.py", line 298, in test_legacy_mission_is_readable_then_adopted_by_first_supported_mutation
+    self.assertEqual(adopted["fingerprint"]["package_version"], "1.5.4")
+AssertionError: '1.6.0-q2.1' != '1.5.4'
+- 1.6.0-q2.1
++ 1.5.4
+
+
+======================================================================
+FAIL: test_new_mission_pins_current_runtime_fingerprint (test_runtime_provenance.RuntimeProvenanceTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/tplan/test_runtime_provenance.py", line 169, in test_new_mission_pins_current_runtime_fingerprint
+    self.assertEqual(fingerprint["package_version"], "1.5.4")
+AssertionError: '1.6.0-q2.1' != '1.5.4'
+- 1.6.0-q2.1
++ 1.5.4
+
+
+----------------------------------------------------------------------
+Ran 13 tests in 2.537s
+
+FAILED (failures=3)

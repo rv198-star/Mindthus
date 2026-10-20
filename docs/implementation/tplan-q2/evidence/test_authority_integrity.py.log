@@ -1,0 +1,35 @@
+test_create_and_activate_updates_cursor_and_events_in_one_commit (test_authority_integrity.ActivePathAtomicityTests) ... ok
+test_failed_create_and_activate_has_no_orphan_or_partial_cursor (test_authority_integrity.ActivePathAtomicityTests) ... ok
+test_pending_creation_preserves_selection_and_blocked_recovery_cursor (test_authority_integrity.ActivePathAtomicityTests) ... ok
+test_compatibility_writer_cannot_bypass_completion_gate (test_authority_integrity.AuthorityBoundaryReviewTests) ... ok
+test_compatible_existing_writer_produces_canonical_lifecycle (test_authority_integrity.AuthorityBoundaryReviewTests) ... ok
+test_concurrent_evidence_append_serializes_after_locked_closure (test_authority_integrity.AuthorityBoundaryReviewTests) ... ok
+test_guarded_valid_closure_commits_and_releases_guard (test_authority_integrity.AuthorityBoundaryReviewTests) ... ok
+test_historical_reference_and_closure_warnings_preserve_files (test_authority_integrity.AuthorityBoundaryReviewTests) ... ok
+test_interrupted_qualified_closure_recovers_once_from_prepared_contents (test_authority_integrity.AuthorityBoundaryReviewTests) ... ok
+test_standalone_trace_append_resolves_typed_evidence_ids (test_authority_integrity.AuthorityBoundaryReviewTests) ... ok
+test_consistent_continue_and_narrowing_dispositions_remain_usable (test_authority_integrity.ContinuationConsequenceTests) ... ok
+test_consistent_review_is_recordable_without_execution (test_authority_integrity.ContinuationConsequenceTests) ... ok
+test_real_guard_receipt_cannot_override_stop_contradiction (test_authority_integrity.ContinuationConsequenceTests) ... ok
+test_stop_and_review_ceiling_reject_execution_even_with_changed_recommendation (test_authority_integrity.ContinuationConsequenceTests) ... ok
+test_stop_cannot_authorize_continue_by_omitting_mutations (test_authority_integrity.ContinuationConsequenceTests) ... ok
+test_ambiguous_historical_id_blocks_only_new_uses_of_that_id (test_authority_integrity.EvidenceReferenceIntegrityTests) ... ok
+test_existing_and_same_transaction_evidence_are_resolvable (test_authority_integrity.EvidenceReferenceIntegrityTests) ... ok
+test_extra_lifecycle_records_cannot_bypass_reference_resolution (test_authority_integrity.EvidenceReferenceIntegrityTests) ... ok
+test_missing_path_and_cross_mission_ids_are_rejected_atomically (test_authority_integrity.EvidenceReferenceIntegrityTests) ... ok
+test_reference_rejection_discards_prepared_evidence_before_journal (test_authority_integrity.EvidenceReferenceIntegrityTests) ... ok
+test_adverse_evidence_arriving_after_candidate_build_blocks_close (test_authority_integrity.MissionCompletionIntegrityTests) ... ok
+test_advisory_closure_remains_a_recommendation (test_authority_integrity.MissionCompletionIntegrityTests) ... ok
+test_every_success_critical_status_other_than_completed_blocks_closure (test_authority_integrity.MissionCompletionIntegrityTests) ... ok
+test_guarded_closure_uses_the_same_completion_boundary (test_authority_integrity.MissionCompletionIntegrityTests) ... ok
+test_historical_completed_state_remains_readable_without_retroactive_acceptance (test_authority_integrity.MissionCompletionIntegrityTests) ... ok
+test_missing_acceptance_blocks_close_without_blocking_task_completion (test_authority_integrity.MissionCompletionIntegrityTests) ... ok
+test_same_transaction_can_complete_tasks_and_supply_acceptance (test_authority_integrity.MissionCompletionIntegrityTests) ... ok
+test_stream_order_controls_latest_qualified_acceptance (test_authority_integrity.MissionCompletionIntegrityTests) ... ok
+test_unfinished_supporting_work_is_not_a_mission_approval_gate (test_authority_integrity.MissionCompletionIntegrityTests) ... ok
+test_wrong_scope_incomplete_and_duplicate_acceptance_cannot_qualify (test_authority_integrity.MissionCompletionIntegrityTests) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 1.770s
+
+OK

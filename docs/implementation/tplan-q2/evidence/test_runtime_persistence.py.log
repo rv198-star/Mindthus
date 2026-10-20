@@ -1,0 +1,11 @@
+test_append_event_uses_unique_ids_under_concurrency (test_runtime_persistence.RuntimePersistenceTests) ... ok
+test_apply_decision_transaction_prepare_failure_leaves_no_ghost_event (test_runtime_persistence.RuntimePersistenceTests) ... ok
+test_record_risk_signal_transaction_prepare_failure_leaves_no_ghost_event (test_runtime_persistence.RuntimePersistenceTests) ... ok
+test_resolve_risk_signal_transaction_prepare_failure_leaves_no_ghost_event (test_runtime_persistence.RuntimePersistenceTests) ... ok
+test_stop_report_transaction_prepare_failure_leaves_no_ghost_event (test_runtime_persistence.RuntimePersistenceTests) ... ok
+test_write_json_keeps_existing_file_when_replace_fails (test_runtime_persistence.RuntimePersistenceTests) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.837s
+
+OK

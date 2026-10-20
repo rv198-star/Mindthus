@@ -1,0 +1,42 @@
+{
+  "scope": "local_candidate_pack_not_release",
+  "layouts": [
+    {
+      "layout": "claude-plugin",
+      "passed": true,
+      "runtime_build": "sha256:18e99c840d2493461a02b119e39de2dfafcaa7408ae406cb34e2011b979d35fe",
+      "required_files": 20,
+      "command_source_sha256": "66c3d8e4dd5eae938ff6edca7b7ba4cdfa03127aa3f00182736ab3cdeeb07891"
+    },
+    {
+      "layout": "codex-plugin",
+      "passed": true,
+      "runtime_build": "sha256:18e99c840d2493461a02b119e39de2dfafcaa7408ae406cb34e2011b979d35fe",
+      "required_files": 20,
+      "command_source_sha256": "66c3d8e4dd5eae938ff6edca7b7ba4cdfa03127aa3f00182736ab3cdeeb07891"
+    },
+    {
+      "layout": "claude-skills",
+      "passed": true,
+      "runtime_build": "sha256:18e99c840d2493461a02b119e39de2dfafcaa7408ae406cb34e2011b979d35fe",
+      "required_files": 20,
+      "command_source_sha256": "66c3d8e4dd5eae938ff6edca7b7ba4cdfa03127aa3f00182736ab3cdeeb07891"
+    },
+    {
+      "layout": "codex-skills",
+      "passed": true,
+      "runtime_build": "sha256:18e99c840d2493461a02b119e39de2dfafcaa7408ae406cb34e2011b979d35fe",
+      "required_files": 20,
+      "command_source_sha256": "66c3d8e4dd5eae938ff6edca7b7ba4cdfa03127aa3f00182736ab3cdeeb07891"
+    },
+    {
+      "layout": "opencode-skills",
+      "passed": true,
+      "runtime_build": "sha256:18e99c840d2493461a02b119e39de2dfafcaa7408ae406cb34e2011b979d35fe",
+      "required_files": 20,
+      "command_source_sha256": "66c3d8e4dd5eae938ff6edca7b7ba4cdfa03127aa3f00182736ab3cdeeb07891"
+    }
+  ],
+  "archive_sha256": "b37bfb0397fd54b008c040f1ab08f893cf236d9d2f45827368b3d9aadba01e48",
+  "archive_bytes": 4047962
+}

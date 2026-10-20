@@ -24,7 +24,7 @@ EXITS = {
     "invalid_request": 2, "unsupported_protocol": 2, "unsupported_action": 2,
     "unsupported_capability": 3, "recovery_required": 4,
     "runtime_mismatch": 5, "mission_unavailable": 6, "invalid_state": 7,
-    "runtime_unavailable": 8, "query_failed": 9, "snapshot_too_large": 10,
+    "runtime_unavailable": 8, "query_failed": 9, "snapshot_too_large": 10, "command_not_found": 11,
 }
 
 
@@ -158,6 +158,19 @@ def _snapshot(directory: Path, request: dict[str, Any]) -> dict[str, Any]:
         provenance = runtime.runtime_provenance_report(mission, current=current)
         if provenance["compatible"] is False:
             raise QueryError("runtime_mismatch", "Mission requires its original matching runtime")
+        store = mission.get("command_results")
+        if request["action"] == "command.get":
+            if store is None:
+                raise QueryError("unsupported_capability", "This Mission has no persistent result capability; absence does not prove non-execution")
+            result = store["records"].get(request["command_id"])
+            if result is None:
+                raise QueryError("command_not_found", "No local recorded result; do not infer external non-execution")
+            matching = [event for event in events if event["id"] == result["evidence_id"]]
+            from tplan_commands import digest as command_digest
+            if len(matching) != 1 or matching[0]["event_type"] != "observation" or command_digest(matching[0]) != result["evidence_digest"]:
+                raise QueryError("invalid_state", "Command result has no matching observation")
+            return {"schema": "tplan.command_result.v1", "authority": "historical_result_only",
+                    "command_id": request["command_id"], "runtime_build_hash": current["build_hash"], "result": result}
         data = {
             "schema": "tplan.snapshot.v1", "authority": "observation_only",
             "mission": {key: mission["mission"][key] for key in ("id", "title", "status")},
@@ -174,7 +187,8 @@ def _snapshot(directory: Path, request: dict[str, Any]) -> dict[str, Any]:
                           ("package_version", "source_id", "build_hash", "capability_versions", "capabilities")},
                         "compatibility": provenance["status"], "compatible": provenance["compatible"],
                         "origin": provenance["origin"]},
-            "query_capabilities": ["snapshot.get"], "command_result_store": False,
+            "query_capabilities": ["snapshot.get", "command.get"] if store is not None else ["snapshot.get"],
+            "command_result_store": store is not None,
         }
     except runtime.TplanError as exc:
         if str(exc).startswith("pending Mission transaction must be recovered"):
@@ -189,8 +203,6 @@ def query(mission_dir: Path, request: dict[str, Any]) -> tuple[dict[str, Any], i
     """Observe a trusted local Mission; only the runtime lock metadata may change."""
     try:
         validate_request(request)
-        if request["action"] == "command.get":
-            raise QueryError("unsupported_capability", "This Q1 runtime has no persistent command-result store; absence does not prove non-execution")
         directory = _mission_dir(mission_dir)
         result = _envelope(request, data=_snapshot(directory, request))
         if len(json.dumps(result, ensure_ascii=False, allow_nan=False).encode("utf-8")) > MAX_RESPONSE_BYTES:

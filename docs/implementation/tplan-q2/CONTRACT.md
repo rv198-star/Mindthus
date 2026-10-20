@@ -14,7 +14,7 @@ evidence.record精确请求字段：protocol、action、mission_id、command_id�
 
 新Mission通过 `init_mission.py --command-results` 显式启用，canonical mission.json新增可选 `command_results={schema_version:"tplan.command_results.v0.1",records:{...}}`。无flag保持原Mission形状，无记录时不自动认领旧任务。
 
-每条结果包含command_id、action、principal、request_digest、commit_id、evidence_id、committed_at。digest覆盖动作、Mission身份、调用来源、expected_build_hash及规范化载荷。同ID同digest返回replayed，异digest返回command_conflict。成功结果与observation在**同一个既有Mission持久事务**中提交并前滚恢复；不在Host另建去重账本。CommandResult是历史提交事实，不是当前业务决定，也不包含完整证据内容。
+每条结果包含command_id、action、principal、request_digest、commit_id、evidence_id、evidence_digest、committed_at。digest覆盖动作、Mission身份、调用来源、expected_build_hash及规范化载荷。同ID同digest返回replayed，异digest返回command_conflict。成功结果与observation在**同一个既有Mission持久事务**中提交并前滚恢复；不在Host另建去重账本。CommandResult是历史提交事实，不是当前业务决定，也不包含完整证据内容。
 
 所有持久检查与登记在既有短时锁内完成，先检查pending、目录身份、准确runtime与能力。新动作遇pending返回recovery_required，不自动恢复；显式runtime.recover核对当前及准备态的runtime来源后调用原恢复代码，不派工/不发送外部动作。回应丢失后原ID查询/重试，不生成新ID。提交过程出现I/O失败保守返回outcome_unknown，不能据退出码断言未写入。
 
@@ -26,7 +26,7 @@ evidence.record精确请求字段：protocol、action、mission_id、command_id�
 
 本片不做新组件化指纹schema，旧规则下新build与旧build不兼容是预期结果。旧任务使用原固定包，不回填schema/provenance。新命令只服务显式启用的新任务；不在已安装collection上热补丁。新build里默认旧CLI用法保持，运行时选择由Host明确控制。
 
-Q1 `snapshot.get`可在匹配新build上展示command_result_store；`command.get`仅已启用新能力时返回结构化历史结果，旧包/无能力返回unsupported_capability。新增查询DTO为 `schema=tplan.command_result.v1, authority=historical_result_only, command_id, result`；result包含上述持久字段，不能被UI解释为当前采用或当前执行。
+Q1 `snapshot.get`可在匹配新build上展示command_result_store；`command.get`仅已启用新能力时返回结构化历史结果，旧包/无能力返回unsupported_capability。新增查询DTO为 `schema=tplan.command_result.v1, authority=historical_result_only, command_id, runtime_build_hash, result`；result包含上述持久字段，不能被UI解释为当前采用或当前执行。
 
 ## 4. 返回和拒绝
 
@@ -49,3 +49,6 @@ status区分committed/replayed/read/recovered、rejected/conflict/recovery_requi
 6. 只重测相关事务/来源/普通证据/guard和新命令路径；不运行真实用户任务、模型调用、外发或H1审批。
 
 通过只代表Q2代码与这些范围的工程验证。#238据真实候选判断是否独立发行/版本类别；不自动发版，AIWork#124 HOLD不变，#236/H1另按规格推进。
+
+## 编码期一致性补充
+每条结果同时绑定observation内容摘要；读取/重放核对原引用内容，不将同ID但内容已变化的证据视为原提交成功。该补充在#235记录，不扩大为验收或Owner权限。

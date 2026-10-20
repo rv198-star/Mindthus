@@ -1,0 +1,22 @@
+test_command_get_unsupported_does_not_create_result_store (test_query_runtime.QueryRuntimeTests) ... ok
+test_guard_is_observed_without_removal_or_message_exposure (test_query_runtime.QueryRuntimeTests) ... ok
+test_host_expected_build_hash_is_checked (test_query_runtime.QueryRuntimeTests) ... ok
+test_invalid_request_shapes_and_duplicate_json_keys (test_query_runtime.QueryRuntimeTests) ... ok
+test_legacy_unpinned_remains_unpinned (test_query_runtime.QueryRuntimeTests) ... ok
+test_mismatched_id_and_corrupt_state_are_not_success (test_query_runtime.QueryRuntimeTests) ... ok
+test_missing_directory_is_not_created (test_query_runtime.QueryRuntimeTests) ... ok
+test_missing_mission_does_not_create_lock (test_query_runtime.QueryRuntimeTests) ... ok
+test_new_facade_does_not_change_legacy_runtime_fingerprint (test_query_runtime.QueryRuntimeTests) ... ok
+test_parallel_real_queries_and_official_evidence_writer (test_query_runtime.QueryRuntimeTests) ... ok
+test_pending_transaction_is_not_recovered_or_parsed (test_query_runtime.QueryRuntimeTests) ... ok
+test_real_cli_and_function_return_identical_observation (test_query_runtime.QueryRuntimeTests) ... ok
+test_response_and_source_bounds_return_explicit_error (test_query_runtime.QueryRuntimeTests) ... ok
+test_runtime_mismatch_refuses_without_repinning (test_query_runtime.QueryRuntimeTests) ... ok
+test_source_growth_after_preflight_is_rechecked_inside_lock (test_query_runtime.QueryRuntimeTests) ... ok
+test_symlink_mission_and_state_are_rejected (test_query_runtime.QueryRuntimeTests) ... ok
+test_valid_json_but_invalid_evidence_or_trace_is_rejected (test_query_runtime.QueryRuntimeTests) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 3.866s
+
+OK

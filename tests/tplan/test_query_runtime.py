@@ -226,7 +226,7 @@ class QueryRuntimeTests(unittest.TestCase):
         manifest = json.loads((SCRIPTS.parent / "resources" / "runtime-manifest.json").read_text())
         self.assertNotIn("scripts/query_runtime.py", manifest["fingerprint_files"])
         # Existing CLI and unchanged manifest remain the writer contract.
-        self.assertEqual(runtime_fingerprint()["package_version"], "1.5.4")
+        self.assertEqual(runtime_fingerprint()["package_version"], manifest["package_version"])
 
 
 if __name__ == "__main__":

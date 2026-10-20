@@ -1,0 +1,26 @@
+test_bad_trace_or_guard_is_invalid_state_not_runtime_missing (test_command_runtime.CommandRuntimeTests) ... ok
+test_capacity_and_low_space_refuse_new_writes_not_replays (test_command_runtime.CommandRuntimeTests) ... ok
+test_commit_and_read_command_share_same_canonical_result (test_command_runtime.CommandRuntimeTests) ... ok
+test_different_parallel_commands_keep_distinct_results (test_command_runtime.CommandRuntimeTests) ... ok
+test_exit_in_replay_recovers_without_duplicate_evidence (test_command_runtime.CommandRuntimeTests) ... ok
+test_expected_build_and_old_package_mismatch_reject_before_writes (test_command_runtime.CommandRuntimeTests) ... ok
+test_explicit_opt_in_is_required_without_state_adoption (test_command_runtime.CommandRuntimeTests) ... ok
+test_guard_blocks_new_write_but_not_historical_replay (test_command_runtime.CommandRuntimeTests) ... ok
+test_interrupted_explicit_recovery_can_be_retried (test_command_runtime.CommandRuntimeTests) ... ok
+test_invalid_json_and_unavailable_path_are_bounded (test_command_runtime.CommandRuntimeTests) ... ok
+test_lost_response_queries_original_commit_without_repeating (test_command_runtime.CommandRuntimeTests) ... ok
+test_multiple_processes_same_command_commit_only_once (test_command_runtime.CommandRuntimeTests) ... ok
+test_no_acceptance_authority_or_arbitrary_actions (test_command_runtime.CommandRuntimeTests) ... ok
+test_ordinary_commit_cannot_alter_or_remove_command_results (test_command_runtime.CommandRuntimeTests) ... ok
+test_process_exit_after_prepare_requires_explicit_recovery (test_command_runtime.CommandRuntimeTests) ... ok
+test_result_query_missing_and_pending_do_not_infer_non_execution (test_command_runtime.CommandRuntimeTests) ... ok
+test_result_without_matching_evidence_is_not_reported_success (test_command_runtime.CommandRuntimeTests) ... ok
+test_same_evidence_id_with_changed_content_is_not_original_result (test_command_runtime.CommandRuntimeTests) ... ok
+test_same_id_different_payload_or_caller_conflicts (test_command_runtime.CommandRuntimeTests) ... ok
+test_same_request_replays_without_any_business_write (test_command_runtime.CommandRuntimeTests) ... ok
+test_write_failure_before_durable_prepare_preserves_business_bytes (test_command_runtime.CommandRuntimeTests) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 4.426s
+
+OK
