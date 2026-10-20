@@ -1,0 +1,212 @@
+initialized_mission: /srv/agentdock/.agentdock/tmp/tmpz3r3q6m5/mission
+script_result: runtime files created; agentic Mission judgment is still required
+initialized_lite_mission: /srv/agentdock/.agentdock/tmp/tmp8lor3pwv/mission
+active_task_id: T1
+script_result: lite runtime files created; agentic Mission judgment is still required
+
+simulated late failure
+simulated late failure
+======================================================================
+ERROR: test_bound_successor_resumes_without_resend_and_rejects_copied_root (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_empty_answers_preserve_terminal_without_delivery_or_retry (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_existing_transport_stop_alone_prevents_dispatch (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_internal_recovery_stops_every_response_branch_and_restart (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_legacy_in_repository_batch_cannot_resume (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_old_34_calls_are_debited_not_restored (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_pending_prepare_cannot_claim_a_successor (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_pending_successor_authority_does_not_send_or_reset_budget (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_plan_and_input_separation (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_read_raw_terminal_import_and_cross_arm_cooldown (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_repository_ancestor_cannot_enter_transport_workspace (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_simulated_parent_cannot_supply_real_successor_receipt (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_simulation_cannot_dispatch_through_official_adapter (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_successor_claim_is_exclusive_even_for_concurrent_preparations (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_three_reads_stop_at_path_limit (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_unknown_stops_without_completion_or_second_call (test_slim_batch.SlimBatchTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_batch.py", line 46, in setUp
+    self.enterContext(patch.object(m, "BINARY", binary))
+AttributeError: 'SlimBatchTests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_read_binding_cooldown_and_resume_without_regeneration (test_slim_post_rc01.PostRC01Tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_post_rc01.py", line 19, in setUp
+    self.enterContext(patch.object(r.m, "BINARY", self.binary))
+AttributeError: 'PostRC01Tests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_scope_identity_budget_and_no_second_allowance (test_slim_post_rc01.PostRC01Tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_post_rc01.py", line 19, in setUp
+    self.enterContext(patch.object(r.m, "BINARY", self.binary))
+AttributeError: 'PostRC01Tests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_three_per_path_bounds_the_total_at_120 (test_slim_post_rc01.PostRC01Tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_post_rc01.py", line 19, in setUp
+    self.enterContext(patch.object(r.m, "BINARY", self.binary))
+AttributeError: 'PostRC01Tests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_unknown_still_stops_and_cannot_gain_new_allowance (test_slim_post_rc01.PostRC01Tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_post_rc01.py", line 19, in setUp
+    self.enterContext(patch.object(r.m, "BINARY", self.binary))
+AttributeError: 'PostRC01Tests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_exact_named_authority_remaining_budget_and_identity (test_slim_retry_000049.Retry000049Tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_retry_000049.py", line 23, in setUp
+    self.enterContext(patch.object(r.m, "BINARY", self.binary))
+AttributeError: 'Retry000049Tests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_fake_read_then_answer_and_remaining_paths_use_at_most14 (test_slim_retry_000049.Retry000049Tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_retry_000049.py", line 23, in setUp
+    self.enterContext(patch.object(r.m, "BINARY", self.binary))
+AttributeError: 'Retry000049Tests' object has no attribute 'enterContext'
+
+======================================================================
+ERROR: test_new_unknown_stops_without_second_retry (test_slim_retry_000049.Retry000049Tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_slim_retry_000049.py", line 23, in setUp
+    self.enterContext(patch.object(r.m, "BINARY", self.binary))
+AttributeError: 'Retry000049Tests' object has no attribute 'enterContext'
+
+======================================================================
+FAIL: test_current_release_preserves_stable_and_roi_beta_history (test_release_boundary_contract.ReleaseBoundaryContractTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/test_release_boundary_contract.py", line 75, in test_current_release_preserves_stable_and_roi_beta_history
+    self.assertIn('"package_version": "1.5.4"', tplan_manifest)
+AssertionError: '"package_version": "1.5.4"' not found in '{\n  "schema_version": "tplan.runtime_manifest.v0.1",\n  "package_version": "1.6.0-q2.1",\n  "source_id": "mindthus-tplan-q2-candidate",\n  "capability_versions": {\n    "mission": "tplan.v0.1",\n    "execution_trace": "tplan.execution_trace.v0.1",\n    "execution_cost_tree": "tplan.execution_cost_tree.v0.9",\n    "codex_telemetry_adapter": "tplan.codex_telemetry_adapter.v0.2",\n    "codex_telemetry_dispatcher": "tplan.codex_telemetry_dispatcher.v0.1",\n    "runtime_provenance": "tplan.runtime_provenance.v0.1",\n    "runtime_doctor": "tplan.runtime_doctor.v0.1",\n    "work_plan": "tplan.work_plan.v0.1",\n    "work_view": "tplan.work_view.v0.1",\n    "progress_view": "tplan.progress_view.v1",\n    "command_results": "tplan.command_results.v0.1"\n  },\n  "capabilities": [\n    "atomic_mission_mutation",\n    "codex_hook_activation_preflight",\n    "codex_hook_stable_dispatcher",\n    "codex_hook_telemetry",\n    "codex_otel_ingestion",\n    "execution_trace",\n    "runtime_provenance",\n    "runtime_doctor",\n    "standard_execution_timeline",\n    "terminal_completion_handoff",\n    "work_plan_metadata",\n    "read_only_work_view",\n    "read_only_progress_view",\n    "atomic_command_results"\n  ],\n  "required_scripts": [\n    "scripts/tplan_runtime.py",\n    "scripts/tplan_errors.py",\n    "scripts/tplan_identity.py",\n    "scripts/tplan_task_contract.py",\n    "scripts/execution_time_metrics.py",\n    "scripts/execution_cost_tree.py",\n    "scripts/execution_svg_renderer.py",\n    "scripts/execution_markdown_renderer.py",\n    "scripts/codex_telemetry_activation.py",\n    "scripts/codex_telemetry_adapter.py",\n    "scripts/codex_telemetry_dispatcher.py",\n    "scripts/generate_codex_telemetry_hooks.py",\n    "scripts/render_execution_cost_tree.py",\n    "scripts/runtime_doctor.py",\n    "scripts/work_plan.py",\n    "scripts/record_work_plan.py",\n    "scripts/render_progress_view.py",\n    "scripts/tplan_commands.py",\n    "scripts/query_runtime.py",\n    "scripts/command_runtime.py",\n    "scripts/init_mission.py"\n  ],\n  "fingerprint_files": [\n    "resources/runtime-manifest.json",\n    "scripts/tplan_runtime.py",\n    "scripts/tplan_errors.py",\n    "scripts/tplan_identity.py",\n    "scripts/tplan_task_contract.py",\n    "scripts/execution_time_metrics.py",\n    "scripts/execution_cost_tree.py",\n    "scripts/execution_svg_renderer.py",\n    "scripts/execution_markdown_renderer.py",\n    "scripts/codex_telemetry_activation.py",\n    "scripts/codex_telemetry_adapter.py",\n    "scripts/codex_telemetry_dispatcher.py",\n    "scripts/generate_codex_telemetry_hooks.py",\n    "scripts/render_execution_cost_tree.py",\n    "scripts/runtime_doctor.py",\n    "scripts/work_plan.py",\n    "scripts/record_work_plan.py",\n    "scripts/render_progress_view.py",\n    "scripts/tplan_commands.py",\n    "scripts/query_runtime.py",\n    "scripts/command_runtime.py",\n    "scripts/init_mission.py"\n  ]\n}\n'
+
+======================================================================
+FAIL: test_new_facade_does_not_change_legacy_runtime_fingerprint (tplan.test_query_runtime.QueryRuntimeTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q2-20261021/tests/tplan/test_query_runtime.py", line 227, in test_new_facade_does_not_change_legacy_runtime_fingerprint
+    if "atomic_command_results" in manifest["capabilities"]:
+AssertionError: 'scripts/query_runtime.py' unexpectedly found in ['resources/runtime-manifest.json', 'scripts/tplan_runtime.py', 'scripts/tplan_errors.py', 'scripts/tplan_identity.py', 'scripts/tplan_task_contract.py', 'scripts/execution_time_metrics.py', 'scripts/execution_cost_tree.py', 'scripts/execution_svg_renderer.py', 'scripts/execution_markdown_renderer.py', 'scripts/codex_telemetry_activation.py', 'scripts/codex_telemetry_adapter.py', 'scripts/codex_telemetry_dispatcher.py', 'scripts/generate_codex_telemetry_hooks.py', 'scripts/render_execution_cost_tree.py', 'scripts/runtime_doctor.py', 'scripts/work_plan.py', 'scripts/record_work_plan.py', 'scripts/render_progress_view.py', 'scripts/tplan_commands.py', 'scripts/query_runtime.py', 'scripts/command_runtime.py', 'scripts/init_mission.py']
+
+----------------------------------------------------------------------
+Ran 1249 tests in 175.654s
+
+FAILED (failures=2, errors=23, skipped=5)

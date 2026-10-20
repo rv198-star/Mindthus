@@ -222,11 +222,18 @@ class QueryRuntimeTests(unittest.TestCase):
             result, status = query_runtime.query(self.mission, self.request)
         self.assertEqual((status, result["code"]), (10, "snapshot_too_large"))
 
-    def test_new_facade_does_not_change_legacy_runtime_fingerprint(self):
+    def test_query_facade_fingerprint_is_version_scoped(self):
         manifest = json.loads((SCRIPTS.parent / "resources" / "runtime-manifest.json").read_text())
-        self.assertNotIn("scripts/query_runtime.py", manifest["fingerprint_files"])
-        # Existing CLI and unchanged manifest remain the writer contract.
-        self.assertEqual(runtime_fingerprint()["package_version"], "1.5.4")
+        if "atomic_command_results" in manifest["capabilities"]:
+            # New Q2 writers must fingerprint their upgraded command.get facade.
+            # Historical Q1 writers continue to use their exact old build.
+            self.assertIn("scripts/query_runtime.py", manifest["required_scripts"])
+            self.assertIn("scripts/query_runtime.py", manifest["fingerprint_files"])
+            self.assertNotEqual(runtime_fingerprint()["package_version"], "1.5.4")
+        else:
+            self.assertNotIn("scripts/query_runtime.py", manifest["fingerprint_files"])
+            self.assertEqual(runtime_fingerprint()["package_version"], "1.5.4")
+        self.assertEqual(runtime_fingerprint()["package_version"], manifest["package_version"])
 
 
 if __name__ == "__main__":

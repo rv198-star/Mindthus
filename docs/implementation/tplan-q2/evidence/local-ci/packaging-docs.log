@@ -1,0 +1,47 @@
+
+test_anti_spiral_methodology_resource_exists (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_built_helpers_self_locate_runtime_without_pythonpath (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_changelog_documents_v0_5_release_in_chinese (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_changelog_release_sections_are_chinese_and_not_duplicated (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_claude_install_script_skips_runtime_support_directory (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_claude_personal_skills_copy_layout_keeps_validator_runtime_imports_working (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_codex_install_doc_names_tplan (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_codex_install_script_defaults_to_home_codex_skills (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_codex_install_script_links_pack_under_codex_home (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_fidelity_asset_coverage_detects_each_missing_packaged_file (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_generated_plugin_carries_judgment_trace_and_case_export_tools (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_generated_plugin_runs_documented_atlas_label_and_selection_stages (tests.test_packaging_docs.PackagingDocsTests) ... skipped 'Pillow is required'
+test_generated_plugin_runtime_diagnostic_accepts_healthy_local_install (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_generated_portable_packs_runtime_diagnostic_accepts_namespaced_layouts (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_install_script_exists_and_has_valid_shell_syntax (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_internal_skill_design_patterns_are_not_user_facing (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_methodology_pages_exist_and_cover_their_core_claims (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_mindthus_skill_entrypoints_stay_within_size_budget (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_plugin_mode_docs_cover_codex_claude_and_opencode_boundaries (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_public_docs_sync_mpg_unreleased_positioning (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_readme_claude_personal_skills_mode_copies_runtime_support (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_readme_keeps_release_details_out_of_new_user_intro (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_readme_links_to_chinese_manual (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_readme_names_current_skill_pack_and_tplan (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_release_pack_builder_can_split_plugin_and_skills_packages (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_release_pack_builder_creates_claude_marketplace_root_layout (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_release_pack_includes_cinematic_profile_adapters_and_atlas_runtime (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_release_pack_rejects_repository_and_nested_output_paths (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_release_pack_runs_case_prep_across_supported_layouts (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_sela_methodology_names_the_overall_local_tradeoff (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_shared_primitives_is_an_index_not_an_extra_method_layer (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_skill_frontmatter_has_required_keys (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_skill_frontmatter_parser_rejects_unquoted_nested_colon (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_tplan_methodology_shows_execution_driven_adaptive_planning (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_using_mindthus_entrypoint_has_no_empty_markdown_headings (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_using_mindthus_entrypoint_limits_marker_chain_density (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_using_mindthus_entrypoint_stays_thin_enough_for_attention (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_using_mindthus_entrypoint_stays_within_word_attention_budget (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_using_mindthus_uses_progressive_disclosure_for_detail_contracts (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_v0_6_version_acceptance_records_single_model_scope (tests.test_packaging_docs.PackagingDocsTests) ... ok
+test_worktree_lifecycle_doc_classifies_cleanup_safely (tests.test_packaging_docs.PackagingDocsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 41 tests in 9.642s
+
+OK (skipped=1)

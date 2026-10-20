@@ -1,0 +1,90 @@
+{
+  "scope": "Local OCI verification as alternative to GitHub CI; Q2 feature candidate only",
+  "source_head_before_local_release_contract_adjustment": "47caf308220b2de537b2c9a8b03632336269b439",
+  "platform": "Linux-6.8.0-1057-oracle-aarch64-with-glibc2.35",
+  "machine": "aarch64",
+  "python312_path": "/srv/agentdock/.local/bin/python3.12",
+  "native_python": "3.10.12",
+  "node": "v22.23.1",
+  "python311_environment": "cached python:3.11-slim-bookworm isolated container, network disabled, source read-only",
+  "summary": {
+    "full_unittest_py312": {
+      "discovered": 1249,
+      "passed": 1242,
+      "skipped": 7,
+      "failed": 0
+    },
+    "py311_targeted": {
+      "cases": 41,
+      "failed": 0
+    },
+    "packaging_docs_native": {
+      "status": "pass"
+    },
+    "smoke_native": {
+      "status": "pass"
+    }
+  },
+  "historical_nonfinal_failures": [
+    "Initial native Python3.10 full unittest uses unsupported unittest.TestCase.enterContext (requires newer Python); not a code failure",
+    "Original v1.13.0-specific runtime-manifest assertions required revision in unpublished Q2 candidate; now reference released v1.13.0 and explicitly validate Q2 candidate identities",
+    "Initial Q2 tplan all 496 tests failed one obsolete Q1-only fingerprint assertion; version-scoped invariant now tested"
+  ],
+  "logs": {
+    "packaging-docs": {
+      "path": "docs/implementation/tplan-q2/evidence/local-ci/packaging-docs.log",
+      "bytes": 4768,
+      "sha256": "e2d59bc8a926dd6d43bf9448b8c8385020ee2cf36f3f8fd3afef45c2ecff03e8"
+    },
+    "tplan-all": {
+      "path": "docs/implementation/tplan-q2/evidence/local-ci/tplan-all.log",
+      "bytes": 60533,
+      "sha256": "9af348b66b5ab97ce2a92de15214527ca14a43f1fa36ab11db9f563e1c54a79e"
+    },
+    "smoke-fidelity": {
+      "path": "docs/implementation/tplan-q2/evidence/local-ci/smoke-fidelity.log",
+      "bytes": 113,
+      "sha256": "bab32308be5c70d61b24d6c4beb29b4cf7497794f4f06a28d772db334b793a5c"
+    },
+    "smoke-mindthus-runtime": {
+      "path": "docs/implementation/tplan-q2/evidence/local-ci/smoke-mindthus-runtime.log",
+      "bytes": 1078,
+      "sha256": "5db26d08db32e84ca84dee65d071ac17f849ef3778c492c827cf05376bf7936c"
+    },
+    "smoke-sela": {
+      "path": "docs/implementation/tplan-q2/evidence/local-ci/smoke-sela.log",
+      "bytes": 215,
+      "sha256": "e95041b43a0eb5d1e6e7d8da6511c4f6d0ae614a0062ba6087cee17ddd6e1802"
+    },
+    "smoke-mpg": {
+      "path": "docs/implementation/tplan-q2/evidence/local-ci/smoke-mpg.log",
+      "bytes": 212,
+      "sha256": "d0ff9d287069d08ba971802750f0589b4134d6733e56380d422430026f65bbb5"
+    },
+    "full-unittest": {
+      "path": "docs/implementation/tplan-q2/evidence/local-ci/full-unittest.log",
+      "bytes": 17147,
+      "sha256": "f64de69df95cefb78a055e957550897162741d751209f06838bb803757b350c5"
+    },
+    "full-unittest-final": {
+      "path": "docs/implementation/tplan-q2/evidence/local-ci/full-unittest-final.log",
+      "bytes": 15821,
+      "sha256": "5f4c8c1434fa01a85b66eed2d8c9f94a3569b0a8118da2c659492b61c4715b51"
+    },
+    "full-unittest-py312": {
+      "path": "docs/implementation/tplan-q2/evidence/local-ci/full-unittest-py312.log",
+      "bytes": 11117,
+      "sha256": "eb02cb84933d797a322a540647f6dbc296a55dbe5d9fc290dbdff8692dd92133"
+    },
+    "python311-core-final": {
+      "path": "docs/implementation/tplan-q2/evidence/local-ci/python311-core-final.log",
+      "bytes": 213,
+      "sha256": "4ab091ff5f80ec51d7b328b57bde1fa9a66be4f37e23b795b257b3de60fbadcd"
+    }
+  },
+  "known_limitations": [
+    "Full unittest host Python3.12 differs from GitHub-configured Python3.11; Q2 core+query 41 cases independently passed with real Python3.11",
+    "No true DSH/Owner/Web/IM or production runtime acceptance",
+    "No release package uploaded; five local layouts validated by packaged unit tests"
+  ]
+}

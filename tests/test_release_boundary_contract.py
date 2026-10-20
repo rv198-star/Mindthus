@@ -1,3 +1,4 @@
+import json
 import re
 import unittest
 from pathlib import Path
@@ -72,8 +73,19 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("v1.9.1-roi-beta", changelog)
         self.assertIn('VERSION = "1.13.0"', builder)
         self.assertIn('VERSION = "1.13.0"', runtime_logger)
-        self.assertIn('"package_version": "1.5.4"', tplan_manifest)
-        self.assertIn('"source_id": "mindthus-v1.5.4"', tplan_manifest)
+        # Published v1.13.0 remains historically pinned to TPlan 1.5.4.
+        # This checkout may contain an unpublished opt-in Q2 runtime candidate;
+        # its identity must be explicit rather than silently rewriting history.
+        self.assertIn("TPlan runtime generation 保持 `1.5.4`",
+                      (REPO / "docs" / "releases" / "v1.13.0.md").read_text(encoding="utf-8"))
+        runtime_manifest = json.loads(tplan_manifest)
+        if runtime_manifest["package_version"] == "1.5.4":
+            self.assertEqual(runtime_manifest["source_id"], "mindthus-v1.5.4")
+        else:
+            self.assertEqual(runtime_manifest["package_version"], "1.6.0-q2.1")
+            self.assertEqual(runtime_manifest["source_id"], "mindthus-tplan-q2-candidate")
+            self.assertIn("atomic_command_results", runtime_manifest["capabilities"])
+            self.assertIn("scripts/query_runtime.py", runtime_manifest["fingerprint_files"])
         for phrase in (
             "# Mindthus v1.8.0 发布说明",
             "发布日期：2026-08-21",
