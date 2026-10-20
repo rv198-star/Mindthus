@@ -1,0 +1,56 @@
+{
+  "scope": "H1-A scoped pending gate only; no Owner signer, dispatch or live DSH/IM E2E",
+  "frozen_source_commit": "dc7c9dc434dcf195a785aea95ba5da9ab1fba69f",
+  "repo": "rv198-star/Mindthus",
+  "runtime_candidate": "1.6.0-h1a.1",
+  "local_ci_equivalent": {
+    "python312_full": {
+      "discovered": 1265,
+      "passed": 1258,
+      "skipped": 7,
+      "failed": 0
+    },
+    "python311_h1a": {
+      "passed": 16,
+      "failed": 0
+    },
+    "aiwork_node_q2_compat": {
+      "passed": 12,
+      "failed": 0
+    }
+  },
+  "python312_executable": "/srv/agentdock/.local/bin/python3.12",
+  "python311_environment": "OCI cached python:3.11-slim-bookworm; network none; src readonly; isolated /tmp",
+  "source_tree_at_report_creation": "dc7c9dc434dcf195a785aea95ba5da9ab1fba69f",
+  "arch": "aarch64",
+  "logs": {
+    "h1a-full-python312.log": {
+      "sha256": "2452b0094658997c68588564ba1b5eda2383cef530a4bcd4c70cedcb49b4929a",
+      "bytes": 11117
+    },
+    "h1a-focused-python311.log": {
+      "sha256": "e7c5d4bebaf3f151dbe63b59d545feab1cac36975e37780d6278e36d9783bf08",
+      "bytes": 113
+    },
+    "h1a-aiwork-node12.log": {
+      "sha256": "e8a2e9943e2f7c9c6acfbdd95f9457a81953db4cca2cab9eb90d5e83cc717435",
+      "bytes": 2573
+    },
+    "h1a-initial-red.log": {
+      "sha256": "c812e432df30ae2e0e2a02849ee0bf24e119d1e5ad0207b8f2a094d2fecdfb09",
+      "bytes": 7639
+    }
+  },
+  "review": {
+    "independent_acp_session": "acps_a74145b1645698200376d065",
+    "last_run": "acpr_4a8a50c3760edb8a99429af0",
+    "scope": "H1-A code security and correctness, no actual Host identity test",
+    "result": "GO after final type guards"
+  },
+  "limitations": [
+    "No public H1 open/apply API, synthetic fixture uses internal test-only marker",
+    "Candidate bytes, owner receipt, nonce/cas, adoption/slot and DSH Host are unimplemented",
+    "Historical provenance-less Mission may retain previous TPlan auto-adoption path, but never auto H1 opt-in",
+    "No release or deployment and #124 in-flight cancellation HOLD unchanged"
+  ]
+}

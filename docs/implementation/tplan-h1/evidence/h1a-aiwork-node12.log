@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: actual CLI and Host consumer return the same snapshot without writes
+ok 1 - actual CLI and Host consumer return the same snapshot without writes
+  ---
+  duration_ms: 433.829071
+  type: 'test'
+  ...
+# Subtest: pending transaction is surfaced, never repaired by the query
+ok 2 - pending transaction is surfaced, never repaired by the query
+  ---
+  duration_ms: 290.329407
+  type: 'test'
+  ...
+# Subtest: missing result capability is not evidence of non-execution
+ok 3 - missing result capability is not evidence of non-execution
+  ---
+  duration_ms: 285.614167
+  type: 'test'
+  ...
+# Subtest: Host-pinned build mismatch is an explicit runtime error
+ok 4 - Host-pinned build mismatch is an explicit runtime error
+  ---
+  duration_ms: 285.640087
+  type: 'test'
+  ...
+# Subtest: path traversal and symlink Mission aliases cannot escape Host scope
+ok 5 - path traversal and symlink Mission aliases cannot escape Host scope
+  ---
+  duration_ms: 147.454584
+  type: 'test'
+  ...
+# Subtest: unknown protocol response is not treated as a successful query
+ok 6 - unknown protocol response is not treated as a successful query
+  ---
+  duration_ms: 180.595749
+  type: 'test'
+  ...
+# Subtest: timeout is a transport error, not a failed Mission or a retry instruction
+ok 7 - timeout is a transport error, not a failed Mission or a retry instruction
+  ---
+  duration_ms: 157.783346
+  type: 'test'
+  ...
+# Subtest: Host configuration must fix roots, interpreter and build
+ok 8 - Host configuration must fix roots, interpreter and build
+  ---
+  duration_ms: 0.71252
+  type: 'test'
+  ...
+# Subtest: snapshot refuses impossible command_not_found even if process exit matches
+ok 9 - snapshot refuses impossible command_not_found even if process exit matches
+  ---
+  duration_ms: 188.199831
+  type: 'test'
+  ...
+# Subtest: Q2 command lookup returns the actual historical result without writes
+ok 10 - Q2 command lookup returns the actual historical result without writes
+  ---
+  duration_ms: 583.471496
+  type: 'test'
+  ...
+# Subtest: Q2 missing local result is not a transport error or proof of non-execution
+ok 11 - Q2 missing local result is not a transport error or proof of non-execution
+  ---
+  duration_ms: 287.963287
+  type: 'test'
+  ...
+# Subtest: success must use the historical result schema and exact command binding
+ok 12 - success must use the historical result schema and exact command binding
+  ---
+  duration_ms: 174.107869
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3093.337427

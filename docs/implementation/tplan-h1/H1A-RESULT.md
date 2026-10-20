@@ -21,3 +21,13 @@ RED：最初六项测试中五项因 --human-control 和 H1 状态不存在而�
 ## 后续切片
 
 候选实际字节保存、Host 可信 scoped receipt、nonce/revision 防重放、有效撤回并采用旧稿、唯一 execution.claim、原生 DSH 回执与晚到结果、Web/IM 均属于后续 H1-B/H1-C/AIWork #158/#159，不在本片。Core/运营工作树、已安装 Skill、真实 Mission 与生产运行不改，#124 HOLD 不变。
+
+## 冻结提交本地验收（后补证据，非运行时代码变更）
+
+- 源码冻结：dc7c9dc434dcf195a785aea95ba5da9ab1fba69f。测试期间工作树干净、HEAD不变。
+- OCI Python3.12 全仓 unittest discover 1,265 项：1,258 PASS、7 原条件 SKIP、0 FAIL；用时 267.042 秒。
+- OCI 已缓存 Python3.11 离线/只读源码容器：H1-A 16/16 PASS；另有此前 Q2 核心+查询组合已 PASS。
+- AIWork Q2真实 Node→Python 历史查询兼容 12/12 PASS，未将历史命令结果充当当前批准。
+- 独立 ACP 只读代码审查最后确认 H1-A P1/P2 均关闭，但它未做落盘/真实Host验收。
+- 初始 RED、完整 Python3.12、Python3.11、Node 12 原始日志和 sha256 清单位于 evidence/H1A-VERIFICATION.json。
+- 该验收限于合成 H1-A 内核和受影响历史使用方式；Q2发布和H1-B可信权限仍有独立工单。
