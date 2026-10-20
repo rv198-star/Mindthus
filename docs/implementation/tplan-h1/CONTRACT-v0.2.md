@@ -82,7 +82,7 @@ Host 从已认证 Web 事件或原主会话（包括 IM）验证：`owner_subjec
 | `receipt.record` | 绑定原 Host dispatch 的受信回执 | 记录 sent/unknown/accepted/delivered，重复幂等；无权造新 slot |
 | `adoption.apply` | 受信 Coordinator/Host | 依据当前决定和候选身份采用，拒绝旧 attempt 最后返回即覆盖 |
 | `snapshot.get` | 原受控查询入口 | 只读展示待人事项摘要、当前采用与阻塞原因，不暴露 Owner 原始消息 |
- 
+
 默认旧 `record_evidence.py`、`set_task_status`、`set_mission_status` 等仍可做**无关的合法操作**；但对 H1 控制的 B 或 Mission 完成，不能通过普通 `acceptance_passed`、自行 `completed`、直接替换成果引用、旧 Host admission 或模型提到“用户已经批准”来绕开。需要在**原 `_commit_mission_state_unlocked`、受影响 evidence writer、Mission-close 路径和 Host dispatch admission** 的共同权威边界上交叉检查。无关 C 的进度与观察记录必须可继续；不能为了拒绝 B 而禁掉所有写操作。
 
 **写入口矩阵必须在编码前列出**：TPlan `append_event`、`record_evidence.py`、`commit_mission_state`、普通任务状态、Mission-close、所有已允许的 Host direct mutation；AIWork `coordinator-tplan-ops/gate/admission/dispatch/round`。对于首次能力切片，无法验证防绕过的入口必须 fail-closed 而非假装已被 gate 保护。H1 内核通过之前，AIWork 不开启任何生产 H1 Mission。
