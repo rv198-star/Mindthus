@@ -1,7 +1,7 @@
 {
   "schema_version": "tplan.runtime_manifest.v0.1",
-  "package_version": "1.6.0-q2.1",
-  "source_id": "mindthus-tplan-q2-candidate",
+  "package_version": "1.6.0-h1a.1",
+  "source_id": "mindthus-tplan-h1a-candidate",
   "capability_versions": {
     "mission": "tplan.v0.1",
     "execution_trace": "tplan.execution_trace.v0.1",
@@ -13,7 +13,8 @@
     "work_plan": "tplan.work_plan.v0.1",
     "work_view": "tplan.work_view.v0.1",
     "progress_view": "tplan.progress_view.v1",
-    "command_results": "tplan.command_results.v0.1"
+    "command_results": "tplan.command_results.v0.1",
+    "human_control": "tplan.h1.v0.1"
   },
   "capabilities": [
     "atomic_mission_mutation",
@@ -29,7 +30,8 @@
     "work_plan_metadata",
     "read_only_work_view",
     "read_only_progress_view",
-    "atomic_command_results"
+    "atomic_command_results",
+    "task_scoped_owner_gate"
   ],
   "required_scripts": [
     "scripts/tplan_runtime.py",
@@ -49,6 +51,7 @@
     "scripts/work_plan.py",
     "scripts/record_work_plan.py",
     "scripts/render_progress_view.py",
+    "scripts/tplan_h1.py",
     "scripts/tplan_commands.py",
     "scripts/query_runtime.py",
     "scripts/command_runtime.py",
@@ -73,6 +76,7 @@
     "scripts/work_plan.py",
     "scripts/record_work_plan.py",
     "scripts/render_progress_view.py",
+    "scripts/tplan_h1.py",
     "scripts/tplan_commands.py",
     "scripts/query_runtime.py",
     "scripts/command_runtime.py",
