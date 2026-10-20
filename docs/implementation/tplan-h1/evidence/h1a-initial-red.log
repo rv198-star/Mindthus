@@ -1,0 +1,114 @@
+======================================================================
+FAIL: test_explicit_new_mission_opt_in_only (test_h1_kernel_gate.H1KernelGateTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1-20261021/tests/tplan/test_h1_kernel_gate.py", line 64, in test_explicit_new_mission_opt_in_only
+    state = self.create()
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1-20261021/tests/tplan/test_h1_kernel_gate.py", line 44, in create
+    self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+AssertionError: 2 != 0 : usage: init_mission.py [-h] --dir DIR --mission-id MISSION_ID --title TITLE
+                       --objective OBJECTIVE
+                       [--acceptance-evidence ACCEPTANCE_EVIDENCE]
+                       [--task-json TASK_JSON] [--project-root PROJECT_ROOT]
+                       [--source-context SOURCE_CONTEXT]
+                       [--reentry-disposition {create_new_from_context,ignore_candidate,requires_human,resume_existing}]
+                       [--reentry-rationale REENTRY_RATIONALE]
+                       [--command-results] [--human-in-loop HUMAN_IN_LOOP]
+                       [--risk-tolerance RISK_TOLERANCE]
+                       [--resource-sufficiency RESOURCE_SUFFICIENCY]
+                       [--work-plan-json WORK_PLAN_JSON]
+init_mission.py: error: unrecognized arguments: --human-control
+
+
+======================================================================
+FAIL: test_legacy_task_approval_and_mission_complete_stay_blocked (test_h1_kernel_gate.H1KernelGateTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1-20261021/tests/tplan/test_h1_kernel_gate.py", line 111, in test_legacy_task_approval_and_mission_complete_stay_blocked
+    self.create(); self.put_pending()
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1-20261021/tests/tplan/test_h1_kernel_gate.py", line 44, in create
+    self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+AssertionError: 2 != 0 : usage: init_mission.py [-h] --dir DIR --mission-id MISSION_ID --title TITLE
+                       --objective OBJECTIVE
+                       [--acceptance-evidence ACCEPTANCE_EVIDENCE]
+                       [--task-json TASK_JSON] [--project-root PROJECT_ROOT]
+                       [--source-context SOURCE_CONTEXT]
+                       [--reentry-disposition {create_new_from_context,ignore_candidate,requires_human,resume_existing}]
+                       [--reentry-rationale REENTRY_RATIONALE]
+                       [--command-results] [--human-in-loop HUMAN_IN_LOOP]
+                       [--risk-tolerance RISK_TOLERANCE]
+                       [--resource-sufficiency RESOURCE_SUFFICIENCY]
+                       [--work-plan-json WORK_PLAN_JSON]
+init_mission.py: error: unrecognized arguments: --human-control
+
+
+======================================================================
+FAIL: test_pending_blocks_B_but_C_status_and_observation_continue (test_h1_kernel_gate.H1KernelGateTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1-20261021/tests/tplan/test_h1_kernel_gate.py", line 76, in test_pending_blocks_B_but_C_status_and_observation_continue
+    self.create(); self.put_pending()
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1-20261021/tests/tplan/test_h1_kernel_gate.py", line 44, in create
+    self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+AssertionError: 2 != 0 : usage: init_mission.py [-h] --dir DIR --mission-id MISSION_ID --title TITLE
+                       --objective OBJECTIVE
+                       [--acceptance-evidence ACCEPTANCE_EVIDENCE]
+                       [--task-json TASK_JSON] [--project-root PROJECT_ROOT]
+                       [--source-context SOURCE_CONTEXT]
+                       [--reentry-disposition {create_new_from_context,ignore_candidate,requires_human,resume_existing}]
+                       [--reentry-rationale REENTRY_RATIONALE]
+                       [--command-results] [--human-in-loop HUMAN_IN_LOOP]
+                       [--risk-tolerance RISK_TOLERANCE]
+                       [--resource-sufficiency RESOURCE_SUFFICIENCY]
+                       [--work-plan-json WORK_PLAN_JSON]
+init_mission.py: error: unrecognized arguments: --human-control
+
+
+======================================================================
+FAIL: test_untrusted_qualified_acceptance_cannot_approve_B (test_h1_kernel_gate.H1KernelGateTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1-20261021/tests/tplan/test_h1_kernel_gate.py", line 103, in test_untrusted_qualified_acceptance_cannot_approve_B
+    self.create();self.put_pending()
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1-20261021/tests/tplan/test_h1_kernel_gate.py", line 44, in create
+    self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+AssertionError: 2 != 0 : usage: init_mission.py [-h] --dir DIR --mission-id MISSION_ID --title TITLE
+                       --objective OBJECTIVE
+                       [--acceptance-evidence ACCEPTANCE_EVIDENCE]
+                       [--task-json TASK_JSON] [--project-root PROJECT_ROOT]
+                       [--source-context SOURCE_CONTEXT]
+                       [--reentry-disposition {create_new_from_context,ignore_candidate,requires_human,resume_existing}]
+                       [--reentry-rationale REENTRY_RATIONALE]
+                       [--command-results] [--human-in-loop HUMAN_IN_LOOP]
+                       [--risk-tolerance RISK_TOLERANCE]
+                       [--resource-sufficiency RESOURCE_SUFFICIENCY]
+                       [--work-plan-json WORK_PLAN_JSON]
+init_mission.py: error: unrecognized arguments: --human-control
+
+
+======================================================================
+FAIL: test_untrusted_writer_cannot_remove_or_change_h1_objects (test_h1_kernel_gate.H1KernelGateTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1-20261021/tests/tplan/test_h1_kernel_gate.py", line 86, in test_untrusted_writer_cannot_remove_or_change_h1_objects
+    self.create(); self.put_pending()
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1-20261021/tests/tplan/test_h1_kernel_gate.py", line 44, in create
+    self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+AssertionError: 2 != 0 : usage: init_mission.py [-h] --dir DIR --mission-id MISSION_ID --title TITLE
+                       --objective OBJECTIVE
+                       [--acceptance-evidence ACCEPTANCE_EVIDENCE]
+                       [--task-json TASK_JSON] [--project-root PROJECT_ROOT]
+                       [--source-context SOURCE_CONTEXT]
+                       [--reentry-disposition {create_new_from_context,ignore_candidate,requires_human,resume_existing}]
+                       [--reentry-rationale REENTRY_RATIONALE]
+                       [--command-results] [--human-in-loop HUMAN_IN_LOOP]
+                       [--risk-tolerance RISK_TOLERANCE]
+                       [--resource-sufficiency RESOURCE_SUFFICIENCY]
+                       [--work-plan-json WORK_PLAN_JSON]
+init_mission.py: error: unrecognized arguments: --human-control
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.774s
+
+FAILED (failures=5)

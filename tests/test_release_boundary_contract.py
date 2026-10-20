@@ -81,11 +81,15 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         runtime_manifest = json.loads(tplan_manifest)
         if runtime_manifest["package_version"] == "1.5.4":
             self.assertEqual(runtime_manifest["source_id"], "mindthus-v1.5.4")
-        else:
-            self.assertEqual(runtime_manifest["package_version"], "1.6.0-q2.1")
+        elif runtime_manifest["package_version"] == "1.6.0-q2.1":
             self.assertEqual(runtime_manifest["source_id"], "mindthus-tplan-q2-candidate")
             self.assertIn("atomic_command_results", runtime_manifest["capabilities"])
             self.assertIn("scripts/query_runtime.py", runtime_manifest["fingerprint_files"])
+        else:
+            self.assertEqual(runtime_manifest["package_version"], "1.6.0-h1a.1")
+            self.assertEqual(runtime_manifest["source_id"], "mindthus-tplan-h1a-candidate")
+            self.assertIn("task_scoped_owner_gate", runtime_manifest["capabilities"])
+            self.assertIn("scripts/tplan_h1.py", runtime_manifest["fingerprint_files"])
         for phrase in (
             "# Mindthus v1.8.0 发布说明",
             "发布日期：2026-08-21",

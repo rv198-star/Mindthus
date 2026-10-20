@@ -42,6 +42,11 @@ from _runtime.core.io import load_json
 from _runtime.core.report import Finding
 from _runtime.core.shape import findings_from_messages
 from tplan_errors import TplanError
+from tplan_h1 import (SCHEMA as H1_SCHEMA, CAPABILITY as H1_CAPABILITY,
+                     empty_state as h1_empty_state, validate_control as validate_h1_control,
+                     pending_blocked_task_ids as pending_h1_task_ids,
+                     validate_transition as validate_h1_transition,
+                     validate_evidence as validate_h1_evidence)
 from tplan_commands import STORE_SCHEMA as COMMAND_RESULTS_SCHEMA, validate_store as validate_command_results
 from work_plan import WORK_PLAN_SCHEMA_VERSION, validate_work_plan
 from tplan_identity import (
@@ -72,6 +77,7 @@ MISSION_REENTRY_PREFLIGHT_SCHEMA_VERSION = "tplan.mission_reentry_preflight.v0.1
 MISSION_REENTRY_RECEIPT_SCHEMA_VERSION = "tplan.mission_reentry_receipt.v0.1"
 RESERVED_EVIDENCE_EVENT_TYPES = {"decision_applied", "planning_metadata_updated"}
 _COMMAND_RESULT_AUTHORITY = object()
+_H1_CONTROL_AUTHORITY = object()
 _RESERVED_EVIDENCE_AUTHORITY = object()
 _RESERVED_EVIDENCE_CONTEXT = threading.local()
 QUALIFIED_ACCEPTANCE_EVENT_TYPES = {"acceptance_passed", "acceptance_failed"}
@@ -1826,6 +1832,8 @@ def validate_mission(state: Any) -> list[str]:
         errors.extend(validate_work_plan(state, state["work_plan"]))
     if "command_results" in state:
         errors.extend(validate_command_results(state["command_results"]))
+    if "human_control" in state:
+        errors.extend(validate_h1_control(state))
     return errors
 
 
@@ -1864,6 +1872,7 @@ def build_mission(
     tasks: list[dict[str, Any]],
     work_plan: dict[str, Any] | None = None,
     command_results_enabled: bool = False,
+    human_control_enabled: bool = False,
 ) -> dict[str, Any]:
     mission = {
         "schema_version": SCHEMA_VERSION,
@@ -1886,6 +1895,10 @@ def build_mission(
     }
     if command_results_enabled:
         mission["command_results"] = {"schema_version": COMMAND_RESULTS_SCHEMA, "records": {}}
+    if human_control_enabled:
+        if not command_results_enabled:
+            raise TplanError("H1 requires an explicit Q2 command-results Mission")
+        mission["human_control"] = h1_empty_state()
     if work_plan is not None:
         errors = validate_work_plan(mission, work_plan)
         if errors:
@@ -3292,6 +3305,8 @@ def validate_evidence_event(
                     + ", ".join(uncovered)
                 )
         errors.extend(acceptance_errors)
+    if not compatibility:
+        errors.extend(validate_h1_evidence(mission, event))
     return errors
 
 
@@ -3393,6 +3408,10 @@ def _mission_completion_findings(
             "Mission completion requires positive qualified acceptance: "
             + ", ".join(f"{item} ({latest.get(item, 'missing')})" for item in missing)
         )
+    if "human_control" in mission and validate_h1_control(mission):
+        errors.append("H1 control structure is invalid; Mission cannot be completed")
+    elif pending_h1_task_ids(mission):
+        errors.append("H1 pending Owner decision prevents Mission completion")
     return errors
 
 
@@ -4079,6 +4098,7 @@ def _commit_mission_state_unlocked(
     reserved_evidence_authority: object | None = None,
     allow_prepared_legacy_adoption: bool = False,
     command_result_authority: object | None = None,
+    h1_control_authority: object | None = None,
 ) -> list[dict[str, Any]]:
     old_results, new_results = before.get("command_results"), after.get("command_results")
     if old_results != new_results:
@@ -4088,6 +4108,9 @@ def _commit_mission_state_unlocked(
             raise TplanError("command_results require an explicitly enabled valid Mission")
         if any(new_results["records"].get(k) != v for k, v in old_results["records"].items()):
             raise TplanError("committed command results cannot be rewritten or removed")
+    h1_errors = validate_h1_transition(before, after, authorized=h1_control_authority is _H1_CONTROL_AUTHORITY)
+    if h1_errors:
+        raise TplanError("; ".join(h1_errors))
     current = _read_mission_unlocked(mission_dir)
     if current != before:
         raise TplanError("Mission state changed concurrently; reload and retry the mutation")
