@@ -71,6 +71,22 @@ class CommandRuntimeTests(unittest.TestCase):
             'request_id':'read-1','mission_id':self.request['mission_id'],'command_id':'request-1',
             'expected_build_hash':self.request['expected_build_hash']})
 
+    def test_q2_build_fingerprints_query_facade(self):
+        manifest = json.loads((SCRIPTS.parent / 'resources/runtime-manifest.json').read_text())
+        for key in ('required_scripts', 'fingerprint_files'):
+            self.assertIn('scripts/query_runtime.py', manifest[key])
+
+    def test_renamed_mission_rejects_write_replay_query_and_recovery(self):
+        import shutil
+        renamed = self.root / 'copied-other-mission'
+        shutil.copytree(self.mission, renamed)
+        before = snapshot(renamed)
+        for action in ('evidence.record', 'command.get', 'runtime.recover'):
+            request = self.request if action == 'evidence.record' else self.result_query(action)
+            response, code = commands.execute(renamed, request, principal=self.principal)
+            self.assertEqual((code, response['code']), (7, 'invalid_state'), response)
+            self.assertEqual(before, snapshot(renamed))
+
     def test_commit_and_read_command_share_same_canonical_result(self):
         result, code = self.run_command()
         self.assertEqual(code,0,result)

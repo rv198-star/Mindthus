@@ -155,6 +155,8 @@ def _load(runtime, directory: Path, request: dict) -> dict:
     state = runtime._read_mission_unlocked(directory)
     if runtime.validate_mission(state) or state["mission"]["id"] != request["mission_id"]:
         raise CommandError("invalid_state", "Mission shape or identity is invalid")
+    if runtime.validate_mission_directory_identity(state, directory):
+        raise CommandError("invalid_state", "Mission directory does not match its canonical identity")
     current = runtime.runtime_fingerprint()
     if current["build_hash"] != request["expected_build_hash"]:
         raise CommandError("runtime_mismatch", "Selected runtime differs from the requested build")
