@@ -1,0 +1,40 @@
+{
+  "scope": "Q1 isolated synthetic CLI/Node tests; not DSH model, UI, IM or deployment acceptance",
+  "upstream_base": "c034b01be4d60558c9426acb6fa1a2dc34447913",
+  "aiwork_base": "de83344ac8a546becd605aa18f465902ed578fa9",
+  "spec_commit": "f12d4f73557d906dcffa3c31cf634bf35c5cc9b2",
+  "suites": [
+    {
+      "suite": "python-query",
+      "passed": 15,
+      "failed": 0,
+      "log_sha256": "288204538b90935228acd29b0b8ee23292296828e72a021d5bb7fc0b882da24e"
+    },
+    {
+      "suite": "legacy-provenance",
+      "passed": 13,
+      "failed": 0,
+      "log_sha256": "c3516f4c322d3639cb1141bcb08be36df72b781f583935f3f9033a83c428d55f"
+    },
+    {
+      "suite": "legacy-readonly-update",
+      "passed": 12,
+      "failed": 0,
+      "log_sha256": "47e72445da1cb045feb3e6a7774ce8aa9560628f808b5d62a5074999d191c2bf"
+    },
+    {
+      "suite": "node-consumer",
+      "passed": 8,
+      "failed": 0,
+      "log_sha256": "d206015e6f1c374f027724196bfdb7d7b0643b5ff23b0192638ac97b198927c2"
+    }
+  ],
+  "total_passed": 48,
+  "unchanged_runtime_fingerprint_files": 18,
+  "implementation_files": {
+    "skills/tplan/scripts/query_runtime.py": "b6399031b652b700210a9b3d85b273aa2c7a303c109c2a0bb8fa54d46cad87fd",
+    "tests/tplan/test_query_runtime.py": "8d5e3256df4c5414fdddcb484a6cb689d76bdc1d6d05c26c8964a520ce810e22",
+    "plugins/workbench/coordinator-tplan-query.js": "76cb685b810def0512d23831d7df52a18b546915922a6538a2901fd126f617bb",
+    "scripts/test_tplan_query_client.mjs": "5593b7e5fc84589a3ea055d6dce7d64cafe9576562c7672115907eb15b1e184c"
+  }
+}
