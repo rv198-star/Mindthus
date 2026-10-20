@@ -1,0 +1,17 @@
+test_automatic_delivery_is_quiet_twice_then_emits_a_heartbeat (test_render_user_update.RenderUserUpdateTests) ... ok
+test_constraints_and_facts_are_not_rendered_as_countable_progress (test_render_user_update.RenderUserUpdateTests) ... ok
+test_evidence_or_mission_change_resets_automatic_quiet_streak (test_render_user_update.RenderUserUpdateTests) ... ok
+test_explicit_delivery_answers_even_when_snapshot_is_unchanged (test_render_user_update.RenderUserUpdateTests) ... ok
+test_interaction_guard_open_and_close_cannot_be_silenced (test_render_user_update.RenderUserUpdateTests) ... ok
+test_invalid_or_cross_mission_cursor_never_becomes_quiet (test_render_user_update.RenderUserUpdateTests) ... ok
+test_mission_state_change_cannot_be_silenced (test_render_user_update.RenderUserUpdateTests) ... ok
+test_renderer_refuses_pending_transaction_without_recovering_or_writing (test_render_user_update.RenderUserUpdateTests) ... ok
+test_stop_blocker_and_requires_human_state_cannot_be_silenced (test_render_user_update.RenderUserUpdateTests) ... ok
+test_task_local_log_does_not_claim_a_user_visible_delta (test_render_user_update.RenderUserUpdateTests) ... ok
+test_user_update_can_include_internal_refs_as_secondary_debug_block (test_render_user_update.RenderUserUpdateTests) ... ok
+test_user_update_leads_with_meaning_not_internal_ids (test_render_user_update.RenderUserUpdateTests) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 4.896s
+
+OK

@@ -1,0 +1,63 @@
+test_command_get_unsupported_does_not_create_result_store (test_query_runtime.QueryRuntimeTests) ... ok
+test_guard_is_observed_without_removal_or_message_exposure (test_query_runtime.QueryRuntimeTests) ... ok
+test_host_expected_build_hash_is_checked (test_query_runtime.QueryRuntimeTests) ... ok
+test_invalid_request_shapes_and_duplicate_json_keys (test_query_runtime.QueryRuntimeTests) ... ok
+test_legacy_unpinned_remains_unpinned (test_query_runtime.QueryRuntimeTests) ... ok
+test_mismatched_id_and_corrupt_state_are_not_success (test_query_runtime.QueryRuntimeTests) ... ok
+test_missing_directory_is_not_created (test_query_runtime.QueryRuntimeTests) ... ok
+test_missing_mission_does_not_create_lock (test_query_runtime.QueryRuntimeTests) ... ok
+test_new_facade_does_not_change_legacy_runtime_fingerprint (test_query_runtime.QueryRuntimeTests) ... ok
+test_parallel_real_queries_and_official_evidence_writer (test_query_runtime.QueryRuntimeTests) ... ok
+test_pending_transaction_is_not_recovered_or_parsed (test_query_runtime.QueryRuntimeTests) ... ok
+test_real_cli_and_function_return_identical_observation (test_query_runtime.QueryRuntimeTests) ... ok
+test_response_and_source_bounds_return_explicit_error (test_query_runtime.QueryRuntimeTests) ... ok
+test_runtime_mismatch_refuses_without_repinning (test_query_runtime.QueryRuntimeTests) ... ok
+test_source_growth_after_preflight_is_rechecked_inside_lock (test_query_runtime.QueryRuntimeTests) ... FAIL
+test_symlink_mission_and_state_are_rejected (test_query_runtime.QueryRuntimeTests) ... ok
+test_valid_json_but_invalid_evidence_or_trace_is_rejected (test_query_runtime.QueryRuntimeTests) ... 
+======================================================================
+FAIL: test_source_growth_after_preflight_is_rechecked_inside_lock (test_query_runtime.QueryRuntimeTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q1-20261021/tests/tplan/test_query_runtime.py", line 223, in test_source_growth_after_preflight_is_rechecked_inside_lock
+    self.assertEqual((status, result["code"]), (10, "snapshot_too_large"))
+AssertionError: Tuples differ: (0, None) != (10, 'snapshot_too_large')
+
+First differing element 0:
+0
+10
+
+- (0, None)
++ (10, 'snapshot_too_large')
+
+======================================================================
+FAIL: test_valid_json_but_invalid_evidence_or_trace_is_rejected (test_query_runtime.QueryRuntimeTests) (name='evidence.jsonl', record=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q1-20261021/tests/tplan/test_query_runtime.py", line 204, in test_valid_json_but_invalid_evidence_or_trace_is_rejected
+    self.assertEqual(result.returncode, 7, result.stdout)
+AssertionError: 0 != 7 : {"protocol":"tplan.query.v1","request_id":"query-1","action":"snapshot.get","mission_id":"q1-fixture","ok":true,"status":"read","code":null,"message":"Read-only snapshot; not an execution authorization","data":{"schema":"tplan.snapshot.v1","authority":"observation_only","mission":{"id":"q1-fixture","title":"Synthetic Q1","status":"active"},"focus_task_id":null,"tasks":[{"id":"T1","title":"Observe fixture","status":"pending","role":"success-critical","acceptance_evidence":["A1"]}],"work_plan":null,"evidence_count":1,"trace_count":1,"interaction_guard":{"present":false},"revision":{"mission":"sha256:26f36770a6b6bc9a4a80105dd4f1d84ce7422c9f22e6cb1d64322af0cdfcc3b4","evidence":"sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570","guard":"sha256:398b676e47d03a29016ee92fe378b8b4f1b3e965390c4c64ce78d27f79df74d1"},"runtime":{"package_version":"1.5.4","source_id":"mindthus-v1.5.4","build_hash":"sha256:77c95fe8f3d7d3f503673e8b78f1f8f93ede4587913cb66a5893ed6902ada5c9","capability_versions":{"codex_telemetry_adapter":"tplan.codex_telemetry_adapter.v0.2","codex_telemetry_dispatcher":"tplan.codex_telemetry_dispatcher.v0.1","execution_cost_tree":"tplan.execution_cost_tree.v0.9","execution_trace":"tplan.execution_trace.v0.1","mission":"tplan.v0.1","progress_view":"tplan.progress_view.v1","runtime_doctor":"tplan.runtime_doctor.v0.1","runtime_provenance":"tplan.runtime_provenance.v0.1","work_plan":"tplan.work_plan.v0.1","work_view":"tplan.work_view.v0.1"},"capabilities":["atomic_mission_mutation","codex_hook_activation_preflight","codex_hook_stable_dispatcher","codex_hook_telemetry","codex_otel_ingestion","execution_trace","read_only_progress_view","read_only_work_view","runtime_doctor","runtime_provenance","standard_execution_timeline","terminal_completion_handoff","work_plan_metadata"],"compatibility":"exact","compatible":true,"origin":"native"},"query_capabilities":["snapshot.get"],"command_result_store":false}}
+
+
+======================================================================
+FAIL: test_valid_json_but_invalid_evidence_or_trace_is_rejected (test_query_runtime.QueryRuntimeTests) (name='evidence.jsonl', record={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q1-20261021/tests/tplan/test_query_runtime.py", line 204, in test_valid_json_but_invalid_evidence_or_trace_is_rejected
+    self.assertEqual(result.returncode, 7, result.stdout)
+AssertionError: 0 != 7 : {"protocol":"tplan.query.v1","request_id":"query-1","action":"snapshot.get","mission_id":"q1-fixture","ok":true,"status":"read","code":null,"message":"Read-only snapshot; not an execution authorization","data":{"schema":"tplan.snapshot.v1","authority":"observation_only","mission":{"id":"q1-fixture","title":"Synthetic Q1","status":"active"},"focus_task_id":null,"tasks":[{"id":"T1","title":"Observe fixture","status":"pending","role":"success-critical","acceptance_evidence":["A1"]}],"work_plan":null,"evidence_count":1,"trace_count":1,"interaction_guard":{"present":false},"revision":{"mission":"sha256:26f36770a6b6bc9a4a80105dd4f1d84ce7422c9f22e6cb1d64322af0cdfcc3b4","evidence":"sha256:ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356","guard":"sha256:398b676e47d03a29016ee92fe378b8b4f1b3e965390c4c64ce78d27f79df74d1"},"runtime":{"package_version":"1.5.4","source_id":"mindthus-v1.5.4","build_hash":"sha256:77c95fe8f3d7d3f503673e8b78f1f8f93ede4587913cb66a5893ed6902ada5c9","capability_versions":{"codex_telemetry_adapter":"tplan.codex_telemetry_adapter.v0.2","codex_telemetry_dispatcher":"tplan.codex_telemetry_dispatcher.v0.1","execution_cost_tree":"tplan.execution_cost_tree.v0.9","execution_trace":"tplan.execution_trace.v0.1","mission":"tplan.v0.1","progress_view":"tplan.progress_view.v1","runtime_doctor":"tplan.runtime_doctor.v0.1","runtime_provenance":"tplan.runtime_provenance.v0.1","work_plan":"tplan.work_plan.v0.1","work_view":"tplan.work_view.v0.1"},"capabilities":["atomic_mission_mutation","codex_hook_activation_preflight","codex_hook_stable_dispatcher","codex_hook_telemetry","codex_otel_ingestion","execution_trace","read_only_progress_view","read_only_work_view","runtime_doctor","runtime_provenance","standard_execution_timeline","terminal_completion_handoff","work_plan_metadata"],"compatibility":"exact","compatible":true,"origin":"native"},"query_capabilities":["snapshot.get"],"command_result_store":false}}
+
+
+======================================================================
+FAIL: test_valid_json_but_invalid_evidence_or_trace_is_rejected (test_query_runtime.QueryRuntimeTests) (name='execution_trace.jsonl', record={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-q1-20261021/tests/tplan/test_query_runtime.py", line 204, in test_valid_json_but_invalid_evidence_or_trace_is_rejected
+    self.assertEqual(result.returncode, 7, result.stdout)
+AssertionError: 0 != 7 : {"protocol":"tplan.query.v1","request_id":"query-1","action":"snapshot.get","mission_id":"q1-fixture","ok":true,"status":"read","code":null,"message":"Read-only snapshot; not an execution authorization","data":{"schema":"tplan.snapshot.v1","authority":"observation_only","mission":{"id":"q1-fixture","title":"Synthetic Q1","status":"active"},"focus_task_id":null,"tasks":[{"id":"T1","title":"Observe fixture","status":"pending","role":"success-critical","acceptance_evidence":["A1"]}],"work_plan":null,"evidence_count":1,"trace_count":1,"interaction_guard":{"present":false},"revision":{"mission":"sha256:26f36770a6b6bc9a4a80105dd4f1d84ce7422c9f22e6cb1d64322af0cdfcc3b4","evidence":"sha256:ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356","guard":"sha256:398b676e47d03a29016ee92fe378b8b4f1b3e965390c4c64ce78d27f79df74d1"},"runtime":{"package_version":"1.5.4","source_id":"mindthus-v1.5.4","build_hash":"sha256:77c95fe8f3d7d3f503673e8b78f1f8f93ede4587913cb66a5893ed6902ada5c9","capability_versions":{"codex_telemetry_adapter":"tplan.codex_telemetry_adapter.v0.2","codex_telemetry_dispatcher":"tplan.codex_telemetry_dispatcher.v0.1","execution_cost_tree":"tplan.execution_cost_tree.v0.9","execution_trace":"tplan.execution_trace.v0.1","mission":"tplan.v0.1","progress_view":"tplan.progress_view.v1","runtime_doctor":"tplan.runtime_doctor.v0.1","runtime_provenance":"tplan.runtime_provenance.v0.1","work_plan":"tplan.work_plan.v0.1","work_view":"tplan.work_view.v0.1"},"capabilities":["atomic_mission_mutation","codex_hook_activation_preflight","codex_hook_stable_dispatcher","codex_hook_telemetry","codex_otel_ingestion","execution_trace","read_only_progress_view","read_only_work_view","runtime_doctor","runtime_provenance","standard_execution_timeline","terminal_completion_handoff","work_plan_metadata"],"compatibility":"exact","compatible":true,"origin":"native"},"query_capabilities":["snapshot.get"],"command_result_store":false}}
+
+
+----------------------------------------------------------------------
+Ran 17 tests in 2.360s
+
+FAILED (failures=4)
