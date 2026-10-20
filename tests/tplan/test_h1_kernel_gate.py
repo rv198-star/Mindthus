@@ -186,6 +186,21 @@ class H1KernelGateTests(unittest.TestCase):
                         source={"kind":"runtime_script","name":"malformed-snapshot"})
         self.assertEqual(runtime.read_mission(self.mission), before)
 
+    def test_malformed_h1_task_or_evidence_ids_fail_closed(self):
+        self.create(); self.put_pending()
+        before = runtime.read_mission(self.mission)
+        after = copy.deepcopy(before)
+        after["tasks"][2]["id"] = []
+        with self.assertRaises(runtime.TplanError):
+            runtime.commit_mission_state(self.mission, before, after,
+                source={"kind":"runtime_script","name":"bad-C-id"})
+        prior = (self.mission / "evidence.jsonl").read_bytes()
+        with self.assertRaises(runtime.TplanError):
+            runtime.append_event(self.mission, {
+                "event_type":"acceptance_passed", "task_id":[],
+                "summary":"Malformed acceptance", "payload":{"acceptance_ids":["A1"]}})
+        self.assertEqual(prior, (self.mission / "evidence.jsonl").read_bytes())
+
     def test_malformed_h1_request_is_invalid_without_crashing(self):
         self.create(); self.put_pending()
         base = runtime.read_mission(self.mission)

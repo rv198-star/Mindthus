@@ -57,7 +57,8 @@ def validate_control(state: dict[str, Any]) -> list[str]:
             errors.append(f"H1 {field} must be a mapping")
     if errors:
         return errors
-    tasks = {t.get("id") for t in state.get("tasks", []) if isinstance(t, dict)}
+    tasks = {t["id"] for t in state.get("tasks", [])
+             if isinstance(t, dict) and isinstance(t.get("id"), str)}
     for key, req in value["requests"].items():
         if not isinstance(key, str) or not key or not isinstance(req, dict) or set(req) != {
             "business_task_id", "blocked_task_ids", "status", "revision", "required_actor",
@@ -137,6 +138,7 @@ def validate_transition(before: dict[str, Any], after: dict[str, Any], *,
 
 def validate_evidence(state: dict[str, Any], event: dict[str, Any]) -> list[str]:
     if event.get("event_type") in {"acceptance", "acceptance_passed"}:
-        if event.get("task_id") in pending_blocked_task_ids(state):
+        task_id = event.get("task_id")
+        if isinstance(task_id, str) and task_id in pending_blocked_task_ids(state):
             return ["H1 pending Owner decision cannot be replaced by acceptance evidence"]
     return []
