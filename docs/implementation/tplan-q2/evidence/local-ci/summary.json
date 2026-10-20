@@ -1,0 +1,72 @@
+{
+  "scope": "Local OCI CI-equivalent run; not GitHub CI and not a production deployment",
+  "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+  "arch": "aarch64",
+  "git_head": "6f826a121f8b9bb1668499e590373e3b337d5f2d",
+  "working_tree_has_uncommitted_review_fixes": true,
+  "cases": [
+    {
+      "name": "packaging-docs",
+      "command": "python3 -m unittest tests.test_packaging_docs -v",
+      "status": 0,
+      "duration_s": 9.71,
+      "log": "docs/implementation/tplan-q2/evidence/local-ci/packaging-docs.log",
+      "sha256": "e2d59bc8a926dd6d43bf9448b8c8385020ee2cf36f3f8fd3afef45c2ecff03e8",
+      "tail": "test_worktree_lifecycle_doc_classifies_cleanup_safely (tests.test_packaging_docs.PackagingDocsTests) ... ok\n\n----------------------------------------------------------------------\nRan 41 tests in 9.642s\n\nOK (skipped=1)"
+    },
+    {
+      "name": "tplan-all",
+      "command": "python3 -m unittest discover -s tests/tplan -v",
+      "status": 1,
+      "duration_s": 139.78,
+      "log": "docs/implementation/tplan-q2/evidence/local-ci/tplan-all.log",
+      "sha256": "9af348b66b5ab97ce2a92de15214527ca14a43f1fa36ab11db9f563e1c54a79e",
+      "tail": "AssertionError: 'scripts/query_runtime.py' unexpectedly found in ['resources/runtime-manifest.json', 'scripts/tplan_runtime.py', 'scripts/tplan_errors.py', 'scripts/tplan_identity.py', 'scripts/tplan_task_contract.py', 'scripts/execution_time_metrics.py', 'scripts/execution_cost_tree.py', 'scripts/execution_svg_renderer.py', 'scripts/execution_markdown_renderer.py', 'scripts/codex_telemetry_activation.py', 'scripts/codex_telemetry_adapter.py', 'scripts/codex_telemetry_dispatcher.py', 'scripts/generate_codex_telemetry_hooks.py', 'scripts/render_execution_cost_tree.py', 'scripts/runtime_doctor.py', 'scripts/work_plan.py', 'scripts/record_work_plan.py', 'scripts/render_progress_view.py', 'scripts/tplan_commands.py', 'scripts/query_runtime.py', 'scripts/command_runtime.py', 'scripts/init_mission.py']\n\n----------------------------------------------------------------------\nRan 496 tests in 139.419s\n\nFAILED (failures=1)"
+    },
+    {
+      "name": "smoke-fidelity",
+      "command": "python3 scripts/log-fidelity-usage.py --validate --log data/fidelity-usage-log.jsonl",
+      "status": 0,
+      "duration_s": 0.05,
+      "log": "docs/implementation/tplan-q2/evidence/local-ci/smoke-fidelity.log",
+      "sha256": "bab32308be5c70d61b24d6c4beb29b4cf7497794f4f06a28d772db334b793a5c",
+      "tail": "Fidelity Usage Log Report\nLog file: data/fidelity-usage-log.jsonl\nRecords: 1\nNo usage-log shape risks detected.\n"
+    },
+    {
+      "name": "smoke-mindthus-runtime",
+      "command": "python3 scripts/log-mindthus-runtime.py --help",
+      "status": 0,
+      "duration_s": 0.05,
+      "log": "docs/implementation/tplan-q2/evidence/local-ci/smoke-mindthus-runtime.log",
+      "sha256": "5db26d08db32e84ca84dee65d071ac17f849ef3778c492c827cf05376bf7936c",
+      "tail": "                        hash mismatch.\n\nRuntime boundary: status=ok verifies installed files, hashes, and marker\npresence only. It does not prove model behavior, semantic judgment quality, or\nruntime activation correctness.\n"
+    },
+    {
+      "name": "smoke-sela",
+      "command": "python3 skills/sela/scripts/validate_sela_output.py skills/sela/fixtures/fidelity-smoke-pass.json",
+      "status": 0,
+      "duration_s": 0.05,
+      "log": "docs/implementation/tplan-q2/evidence/local-ci/smoke-sela.log",
+      "sha256": "e95041b43a0eb5d1e6e7d8da6511c4f6d0ae614a0062ba6087cee17ddd6e1802",
+      "tail": "Path: skills/sela/fixtures/fidelity-smoke-pass.json\n\nNo shape or evidence risks detected.\n\nReminder: agentic audit remains required; this report does not validate strategic truth.\n"
+    },
+    {
+      "name": "smoke-mpg",
+      "command": "python3 skills/mpg/scripts/validate_mpg_output.py skills/mpg/fixtures/fidelity-smoke-pass.json",
+      "status": 0,
+      "duration_s": 0.05,
+      "log": "docs/implementation/tplan-q2/evidence/local-ci/smoke-mpg.log",
+      "sha256": "d0ff9d287069d08ba971802750f0589b4134d6733e56380d422430026f65bbb5",
+      "tail": "Path: skills/mpg/fixtures/fidelity-smoke-pass.json\n\nNo shape or evidence risks detected.\n\nReminder: agentic audit remains required; this report does not validate mainline truth.\n"
+    },
+    {
+      "name": "full-unittest",
+      "command": "python3 -m unittest discover -s tests -q",
+      "status": 1,
+      "duration_s": 176.48,
+      "log": "docs/implementation/tplan-q2/evidence/local-ci/full-unittest.log",
+      "sha256": "f64de69df95cefb78a055e957550897162741d751209f06838bb803757b350c5",
+      "tail": "AssertionError: 'scripts/query_runtime.py' unexpectedly found in ['resources/runtime-manifest.json', 'scripts/tplan_runtime.py', 'scripts/tplan_errors.py', 'scripts/tplan_identity.py', 'scripts/tplan_task_contract.py', 'scripts/execution_time_metrics.py', 'scripts/execution_cost_tree.py', 'scripts/execution_svg_renderer.py', 'scripts/execution_markdown_renderer.py', 'scripts/codex_telemetry_activation.py', 'scripts/codex_telemetry_adapter.py', 'scripts/codex_telemetry_dispatcher.py', 'scripts/generate_codex_telemetry_hooks.py', 'scripts/render_execution_cost_tree.py', 'scripts/runtime_doctor.py', 'scripts/work_plan.py', 'scripts/record_work_plan.py', 'scripts/render_progress_view.py', 'scripts/tplan_commands.py', 'scripts/query_runtime.py', 'scripts/command_runtime.py', 'scripts/init_mission.py']\n\n----------------------------------------------------------------------\nRan 1249 tests in 175.654s\n\nFAILED (failures=2, errors=23, skipped=5)"
+    }
+  ]
+}
