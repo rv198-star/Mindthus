@@ -16,6 +16,7 @@ import shutil
 import stat
 import time
 import uuid
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
@@ -27,6 +28,10 @@ PROTOCOL = "tplan.h1.command.v1"
 CAPABILITY = "scoped_owner_execution_core"
 MAX_CONTENT = 256 * 1024
 MAX_CANDIDATES = 64
+_FD_CONTENT_SUPPORTED = (
+    all(hasattr(os, name) for name in ("O_DIRECTORY", "O_NOFOLLOW", "O_NONBLOCK"))
+    and all(function in os.supports_dir_fd for function in (os.open, os.mkdir, os.link, os.unlink))
+    and os.link in os.supports_follow_symlinks)
 ACTIONS = {"candidate.submit", "decision.open", "request.revise", "decision.apply", "adoption.apply",
            "execution.claim", "receipt.record", "result.record", "task.complete", "execution.get", "command.get"}
 OWNER_FIELDS = {"schema_version", "issuer_id", "key_id", "owner_subject_ref", "origin_binding_ref",
@@ -103,57 +108,90 @@ def _request(request):
         _fail("invalid_request", "Invalid or oversized H1 request")
 
 
-def _content_path(directory, sha, *, create=False):
+def _content_path(directory, sha):
+    """Describe the immutable layout only; a checked path is not an IO boundary."""
     _hash(sha)
-    parent = directory
-    for part in ("artifacts", "h1"):
-        parent = parent / part
-        if create and not parent.exists():
-            parent.mkdir(mode=0o700)
-            _fsync_dir(parent.parent)
-        if parent.is_symlink() or not parent.is_dir():
-            _fail("candidate_unavailable", "Candidate store is unavailable")
-    return parent / sha.removeprefix("sha256:")
+    return Path(directory) / "artifacts" / "h1" / sha.removeprefix("sha256:")
 
 
-def _fsync_dir(directory):
-    fd = os.open(directory, os.O_RDONLY | os.O_DIRECTORY)
+@contextmanager
+def _content_store(directory, sha, *, create=False):
+    """Pin every ancestor before file IO; never follow a replacement pathname.
+
+    The Host must still protect these directories from Member writes. Pinning
+    confines this operation; it cannot preserve the pathname after a later move.
+    """
+    path = _content_path(directory, sha).absolute()
+    if not _FD_CONTENT_SUPPORTED or ".." in path.parts:
+        _fail("candidate_unavailable", "Secure descriptor-relative candidate IO is unavailable")
+    flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    fd = os.open(path.anchor, flags)
     try:
-        os.fsync(fd)
+        parts = path.parent.parts[1:]
+        for index, part in enumerate(parts):
+            # Only the two candidate-store directories may be created. The
+            # selected Mission and every ancestor must already be ordinary dirs.
+            if create and index >= len(parts) - 2:
+                try:
+                    os.mkdir(part, mode=0o700, dir_fd=fd)
+                except FileExistsError:
+                    pass
+                else:
+                    os.fsync(fd)
+            child = os.open(part, flags, dir_fd=fd)
+            os.close(fd)
+            fd = child
+        yield fd, path.name
     finally:
         os.close(fd)
 
 
-def _read_content(directory, sha):
-    path = _content_path(directory, sha)
-    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+def _read_content_at(store_fd, name, sha):
+    fd = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=store_fd)
     with os.fdopen(fd, "rb") as source:
         info = os.fstat(source.fileno())
-        if not stat.S_ISREG(info.st_mode) or info.st_size > MAX_CONTENT:
-            _fail("candidate_unavailable", "Candidate bytes are not a bounded regular file")
+        if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1 or not 0 < info.st_size <= MAX_CONTENT:
+            _fail("candidate_unavailable", "Candidate bytes are not a bounded unaliased regular file")
         content = source.read(MAX_CONTENT + 1)
-    if "sha256:" + hashlib.sha256(content).hexdigest() != sha:
+        after = os.fstat(source.fileno())
+    if (not 0 < len(content) <= MAX_CONTENT or after.st_nlink != 1 or after.st_size != len(content)
+        or "sha256:" + hashlib.sha256(content).hexdigest() != sha):
         _fail("candidate_unavailable", "Candidate bytes no longer match their immutable identity")
     return content
 
 
+def _read_content(directory, sha):
+    with _content_store(directory, sha) as (store_fd, name):
+        return _read_content_at(store_fd, name, sha)
+
+
 def _store_content(directory, sha, content):
-    path = _content_path(directory, sha, create=True)
-    temporary = path.parent / (".prepare-" + uuid.uuid4().hex)
-    fd = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o400)
-    try:
-        with os.fdopen(fd, "wb") as output:
-            output.write(content)
-            output.flush()
-            os.fsync(output.fileno())
+    if not 0 < len(content) <= MAX_CONTENT or "sha256:" + hashlib.sha256(content).hexdigest() != sha:
+        _fail("candidate_unavailable", "Candidate content must match its bounded immutable identity")
+    with _content_store(directory, sha, create=True) as (store_fd, name):
+        temporary = ".prepare-" + uuid.uuid4().hex
+        fd = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                     0o400, dir_fd=store_fd)
         try:
-            os.link(temporary, path, follow_symlinks=False)
-        except FileExistsError:
-            pass  # Verify existing bytes; never replace a file with this identity.
-        _fsync_dir(path.parent)
-        _read_content(directory, sha)
-    finally:
-        temporary.unlink(missing_ok=True)
+            with os.fdopen(fd, "wb") as output:
+                output.write(content)
+                output.flush()
+                os.fsync(output.fileno())
+            try:
+                os.link(temporary, name, src_dir_fd=store_fd, dst_dir_fd=store_fd,
+                        follow_symlinks=False)
+            except FileExistsError:
+                pass  # Verify existing bytes; never replace an immutable identity.
+            # Publication temporarily has two names. Remove the staging link
+            # before checking the permanent file's single-link requirement.
+            os.unlink(temporary, dir_fd=store_fd)
+            os.fsync(store_fd)
+            _read_content_at(store_fd, name, sha)
+        finally:
+            try:
+                os.unlink(temporary, dir_fd=store_fd)
+            except FileNotFoundError:
+                pass
 
 
 def _candidate(hc, candidate_id):
