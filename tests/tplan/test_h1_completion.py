@@ -358,6 +358,20 @@ class H1CompletionTests(core.H1CoreTests):
         current = self.call('execution.get', {'slot_id':slot['slot_id']})
         self.assertNotIn('completion',current)
 
+    def test_completion_20_source_projection_preserves_unrelated_shared_AC_failure(self):
+        before = runtime.read_mission(self.mission); after = copy.deepcopy(before)
+        runtime.find_task(after,'C')['acceptance_evidence'].append('A1')
+        runtime.commit_mission_state(self.mission,before,after,
+            source={'kind':'runtime_script','name':'synthetic-shared-source-C-criterion'})
+        v2 = self.completed_business_with_late_source()
+        self.accept_candidate(v2)
+        runtime.append_event(self.mission, {'event_type':'acceptance_failed','task_id':'C',
+            'summary':'Independent C failed its shared A1 criterion',
+            'payload':{'acceptance_ids':['A1']}})
+        state = runtime.read_mission(self.mission)
+        self.assertIsNone(self.api._source_failure(self.mission,state,self.source,runtime))
+        self.assertTrue(runtime._mission_completion_findings(state,runtime.read_events(self.mission)))
+
 
 for _name in dir(core.H1CoreTests):
     if _name.startswith('test_'):

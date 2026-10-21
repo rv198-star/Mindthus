@@ -145,6 +145,48 @@ def protected_contract_task_ids(state: dict[str, Any]) -> set[str]:
             return protected
 
 
+def source_acceptance(state, candidate, events):
+    """Shared version-scoped acceptance for adoption, claim and Mission-close."""
+    import tplan_runtime as runtime
+    from tplan_commands import CommandError, HASH, valid_id
+    source_id = candidate["task_id"]
+    required = runtime._acceptance_coverage_for_task(state, source_id)
+    failure_scope = {task["id"] for task in runtime.parent_chain(state, source_id)}
+    latest = {}
+    seen = set()
+    for event in events:
+        if event.get("id") in seen:
+            raise CommandError("invalid_state", "Ambiguous evidence cannot prove a dependency")
+        seen.add(event.get("id"))
+        kind = event.get("event_type")
+        if kind not in {"acceptance_passed", "acceptance_failed"}:
+            continue
+        if event.get("task_id") not in failure_scope:
+            continue
+        if kind == "acceptance_passed" and event["task_id"] != source_id:
+            continue  # Parent success alone is not delivery of A's candidate.
+        if runtime.validate_evidence_event(state, event, compatibility=True, internal=True):
+            raise CommandError("invalid_state", "Source acceptance is not a qualified native record")
+        payload = event["payload"]
+        version = {"candidate_sha256":candidate["content_sha256"],"attempt_ref":candidate["attempt_ref"]}
+        supplied = {key:payload[key] for key in version if key in payload}
+        if kind == "acceptance_failed":
+            # SHA-only and attempt-only failures are sufficient. Missing or
+            # contradictory scope blocks conservatively; clearly other valid
+            # versions do not invalidate the retained candidate.
+            malformed = any(not (isinstance(value,str) and HASH.fullmatch(value))
+                            if key == "candidate_sha256" else not valid_id(value)
+                            for key,value in supplied.items())
+            relevant = (not supplied or malformed or
+                        any(value == version[key] for key,value in supplied.items()))
+        else:
+            relevant = all(payload.get(key) == value for key,value in version.items())
+        if relevant:
+            for ac in payload["acceptance_ids"]:
+                latest[ac] = event
+    return required, latest
+
+
 def completion_findings(state: dict[str, Any], events=None) -> list[str]:
     control = state.get("human_control")
     if not isinstance(control, dict):

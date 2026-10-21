@@ -21,7 +21,7 @@ from typing import Any
 
 from tplan_commands import (CommandError, _check_paths, _load, canonical, digest,
                             valid_id, HASH, _existing_evidence, MAX_ARTIFACT, MAX_STORE, MAX_RECORDS, MIN_FREE)
-from tplan_h1 import CHOICES, controlled_task_ids
+from tplan_h1 import CHOICES, controlled_task_ids, source_acceptance
 
 PROTOCOL = "tplan.h1.command.v1"
 CAPABILITY = "scoped_owner_execution_core"
@@ -189,43 +189,7 @@ def _decision_ready(directory, state, request_id, runtime):
 
 
 def _source_acceptance(directory, state, candidate, runtime):
-    """One version-scoped native acceptance projection for adoption and claim."""
-    source_id = candidate["task_id"]
-    required = runtime._acceptance_coverage_for_task(state, source_id)
-    failure_scope = {task["id"] for task in runtime.parent_chain(state, source_id)}
-    latest = {}
-    seen = set()
-    for event in runtime._read_events_unlocked(directory):
-        if event.get("id") in seen:
-            _fail("invalid_state", "Ambiguous evidence cannot prove a dependency")
-        seen.add(event.get("id"))
-        kind = event.get("event_type")
-        if kind not in {"acceptance_passed", "acceptance_failed"}:
-            continue
-        if event.get("task_id") not in failure_scope:
-            continue
-        if kind == "acceptance_passed" and event["task_id"] != source_id:
-            continue  # Parent success alone is not delivery of A's candidate.
-        if runtime.validate_evidence_event(state, event, compatibility=True, internal=True):
-            _fail("invalid_state", "Source acceptance is not a qualified native record")
-        payload = event["payload"]
-        version = {"candidate_sha256":candidate["content_sha256"],"attempt_ref":candidate["attempt_ref"]}
-        supplied = {key:payload[key] for key in version if key in payload}
-        if kind == "acceptance_failed":
-            # SHA-only and attempt-only failures are sufficient. Missing or
-            # contradictory scope blocks conservatively; clearly other valid
-            # versions do not invalidate the retained candidate.
-            malformed = any(not (isinstance(value,str) and HASH.fullmatch(value))
-                            if key == "candidate_sha256" else not valid_id(value)
-                            for key,value in supplied.items())
-            relevant = (not supplied or malformed or
-                        any(value == version[key] for key,value in supplied.items()))
-        else:
-            relevant = all(payload.get(key) == value for key,value in version.items())
-        if relevant:
-            for ac in payload["acceptance_ids"]:
-                latest[ac] = event
-    return required, latest
+    return source_acceptance(state, candidate, runtime._read_events_unlocked(directory))
 
 
 def _source_failure(directory, state, candidate, runtime):
@@ -618,7 +582,7 @@ def execute(directory: Path, request: Any) -> tuple[dict, int]:
             mission_bytes = len(json.dumps(after, ensure_ascii=False, indent=2).encode()) + 1
             evidence_bytes = sum(len(json.dumps(e, ensure_ascii=False).encode()) + 1 for e in events + prepared_events)
             trace_bytes = runtime.mission_paths(directory)["trace"].stat().st_size
-            if (len(canonical(updated).encode()) > MAX_STORE or mission_bytes > MAX_ARTIFACT
+            if (len(canonical(updated).encode()) > MAX_STORE or max(mission_bytes, evidence_bytes) > MAX_ARTIFACT
                 or shutil.disk_usage(directory).free < max(MIN_FREE, 2*(mission_bytes+evidence_bytes+trace_bytes))):
                 _fail("capacity_exceeded", "H1 canonical state/headroom budget exhausted; no facts removed")
             # Existing transaction is the only mutable state authority, including nonces/results.
