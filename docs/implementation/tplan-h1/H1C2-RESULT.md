@@ -58,7 +58,16 @@ independent approval.
 | Additional C shared-AC guard RED | 1 expected failure on provisional local aggregation; approach replaced |
 | Directed P1/P2 + C guard GREEN | 4 passed |
 | Python 3.12 affected regression | **165 passed, 0 failed, 0 skipped**, including 20 C2 cases |
+| Python 3.11.17 isolated C2 module at the same frozen repair source | **20 passed, 0 failed**, 11.000 s; previously completed run, no rerun |
 | Five extracted package layouts in affected regression | Same current build; synthetic signer absent; live Host disabled |
+
+The existing Python 3.11 log was copied byte-for-byte from OCI-local
+`/tmp/mindthus-h1c2-fixed-py311.log` into [the archived log](evidence/h1c2-review-python311.log).
+It records Python 3.11.17, 20 tests and OK. Owner supplied the run context:
+frozen `d6f2847`, `tests.tplan.test_h1_completion`, OCI-cached
+`python:3.11-slim-bookworm`, `--network none`, `--read-only` and a read-only source
+mount. This supplements the Python 3.12 regression; it is not a full-suite or remote
+CI certification. No tests were rerun for this archival update.
 
 The unchanged full repository suite was not repeated in this repair. The following
 results describe the earlier pre-review source only and do not certify the repair:
@@ -75,7 +84,9 @@ results describe the earlier pre-review source only and do not certify the repai
 Historical commands, counts, skip reasons, pre-review build fingerprint and log hashes are in
 [evidence/H1C2-VERIFICATION.json](evidence/H1C2-VERIFICATION.json). The final full
 suite uses `TMPDIR=/var/tmp`, preserving the pre-existing host `/tmp/.git` marker.
-The environment has Python 3.12; Python 3.11 CI is not claimed as locally verified.
+That historical full run used Python 3.12. The added Python 3.11 evidence above
+covers only the isolated 20-case module; no full Python 3.11 suite or remote CI
+result is claimed.
 Seven unrelated dependency skips require jsonschema/Pillow; they are reported,
 not presented as passes.
 

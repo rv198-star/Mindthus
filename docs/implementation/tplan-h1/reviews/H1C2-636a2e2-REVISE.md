@@ -73,7 +73,14 @@ before runtime source changes.
 - Directed GREEN: 4 passed. Affected regression: **165 passed, 0 failed, 0 skipped**,
   including 20 C2 cases and all five clean extracted package layouts. No full suite
   repeat, AIWork/workbench operation, deployment, real Mission or merge.
-- Exact commands, module counts and log hashes:
+- Additional previously completed validation at the same frozen `d6f2847` source:
+  Python 3.11.17, `tests.tplan.test_h1_completion`, **20 passed, 0 failed** in
+  11.000 s. Owner reports OCI-cached `python:3.11-slim-bookworm`, `--network none`,
+  `--read-only` and a read-only source mount. The existing OCI-local
+  `/tmp/mindthus-h1c2-fixed-py311.log` was copied byte-for-byte into
+  [the archive](../evidence/h1c2-review-python311.log); its contents confirm Python
+  version/count/OK. No rerun or independent review approval is implied.
+- Exact commands, module counts, provenance and log hashes:
   [H1C2-REVIEW-VERIFICATION.json](../evidence/H1C2-REVIEW-VERIFICATION.json).
 
 Gate probe: these local fixes satisfy the reproduced P1/P2 counterexamples and C

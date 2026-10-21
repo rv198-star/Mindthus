@@ -93,6 +93,28 @@
     "h1c2-review-regression.log": {
       "sha256": "888721e0224060af51b1c76c529b358151512065ffc2c0ae10dc5cae011aa03e",
       "bytes": 30467
+    },
+    "h1c2-review-python311.log": {
+      "sha256": "94dfac04b97337402ab32efed545283fedd86400114219860c34c6c99240c969",
+      "bytes": 114
     }
+  },
+  "python311_isolated_completion": {
+    "frozen_source_commit": "d6f284733aed7fa1c9c900bf71e208560c12aff1",
+    "python": "3.11.17",
+    "module": "tests.tplan.test_h1_completion",
+    "run": 20,
+    "passed": 20,
+    "failed": 0,
+    "seconds": 11.0,
+    "container_image": "python:3.11-slim-bookworm",
+    "image_source": "OCI local cache",
+    "network": "none",
+    "container_root_filesystem": "read-only",
+    "source_mount": "read-only",
+    "original_log": "/tmp/mindthus-h1c2-fixed-py311.log",
+    "log": "h1c2-review-python311.log",
+    "execution": "Previously completed run; existing log archived without rerunning tests",
+    "provenance": "Existing log directly records Python version, 20 tests, elapsed time and OK. Owner supplied the frozen source, module, cached image and isolation/mount context. This is a bounded isolated-module validation, not full-suite or remote CI certification."
   }
 }
