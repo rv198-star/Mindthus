@@ -1,0 +1,19 @@
+test_bound_successor_resumes_without_resend_and_rejects_copied_root (test_slim_batch.SlimBatchTests.test_bound_successor_resumes_without_resend_and_rejects_copied_root) ... ERROR
+
+======================================================================
+ERROR: test_bound_successor_resumes_without_resend_and_rejects_copied_root (test_slim_batch.SlimBatchTests.test_bound_successor_resumes_without_resend_and_rejects_copied_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/test_slim_batch.py", line 231, in test_bound_successor_resumes_without_resend_and_rejects_copied_root
+    m.drive(root,adapter=fake,clock=clock.now,monotonic=clock.now,sleep=clock.sleep)
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/docs/internal/optimization/sol61-slim-v0/run_batch.py", line 306, in drive
+    transport_dir=external_transport_directory(batch,req,config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/docs/internal/optimization/sol61-slim-v0/run_batch.py", line 396, in external_transport_directory
+    raise ValueError('workspace_has_project_ancestor')
+ValueError: workspace_has_project_ancestor
+
+----------------------------------------------------------------------
+Ran 1 test in 2.222s
+
+FAILED (errors=1)

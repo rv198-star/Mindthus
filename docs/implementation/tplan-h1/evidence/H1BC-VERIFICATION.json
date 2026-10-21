@@ -1,0 +1,143 @@
+{
+  "scope": "H1-B/C bounded synthetic core only; live Host DISABLED; full H1-C business completion NOT delivered",
+  "source_commit": "5eff0f98136832a374b9b1eee8d719cd2bff46a1",
+  "baseline_commit": "fe9fc239",
+  "branch": "feat/tplan-h1bc-20261021",
+  "runtime_candidate": "1.6.0-h1bc.1",
+  "build_hash": "sha256:558a9dac551bd5084a7d3f1bda23d1461b29755f939d079bab29db0788448101",
+  "local_ci": {
+    "python312_full": {
+      "run": 1297,
+      "passed": 1290,
+      "skipped": 7,
+      "failed": 0,
+      "seconds": 174.427,
+      "command": "TMPDIR=/var/tmp python3.12 -m unittest discover -s tests -v"
+    },
+    "python312_focused": {
+      "run": 119,
+      "passed": 119,
+      "failed": 0,
+      "new_core_tests": 32
+    },
+    "aiwork_node_q1_q2_and_legacy_admission": {
+      "run": 17,
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0
+    },
+    "five_clean_candidate_layouts": "PASS; module present, synthetic signer absent, Host commands disabled",
+    "primitive_smokes": "PASS"
+  },
+  "skipped": [
+    {
+      "test": "test_case_prep.CasePrepTests.test_collection_manifest_matches_published_json_schema",
+      "reason": "jsonschema is required"
+    },
+    {
+      "test": "test_case_prep.CasePrepTests.test_tplan_manifest_matches_published_json_schema",
+      "reason": "jsonschema is required"
+    },
+    {
+      "test": "test_packaging_docs.PackagingDocsTests.test_generated_plugin_runs_documented_atlas_label_and_selection_stages",
+      "reason": "Pillow is required"
+    },
+    {
+      "test": "test_tvg_contract.TvgContractTests.test_generic_atlas_labeler_adds_round_ids_and_visible_lineage",
+      "reason": "Pillow is required for atlas tests"
+    },
+    {
+      "test": "test_tvg_contract.TvgContractTests.test_generic_atlas_selection_board_crops_only_supplied_ids",
+      "reason": "Pillow is required for atlas tests"
+    },
+    {
+      "test": "test_tvg_contract.TvgContractTests.test_generic_atlas_selection_rejects_labels_from_wrong_same_size_image",
+      "reason": "Pillow is required for atlas tests"
+    },
+    {
+      "test": "test_tvg_contract.TvgContractTests.test_generic_atlas_selection_rejects_reordered_or_out_of_bounds_regions",
+      "reason": "Pillow is required for atlas tests"
+    }
+  ],
+  "not_run": [
+    "Exact GitHub CI Python 3.11 interpreter unavailable locally; Python 3.12 used",
+    "Real Host/Web/IM authentication and isolated issuer/verifier provisioning",
+    "Live TeamSessionStore/sessionController/native DSH dispatch",
+    "Controlled B business acceptance/Task completion (not implemented)"
+  ],
+  "red_to_green": [
+    "dependency admission: pending/active A, completed without qualified acceptance, unknown native inputs",
+    "request.revise: v1 -> changes -> v2 -> fresh Owner choice; retained v1 withdrawal",
+    "canonical native session-UUID/request UUID retention through unknown/replay",
+    "SHA-only/attempt-only failed acceptance; inherited ancestor and Mission acceptance protection; adoption_blocked"
+  ],
+  "environment_diagnostic": {
+    "first_attempt": "Interrupted with environment errors: pre-existing /tmp/.git triggers workspace_has_project_ancestor",
+    "corrected": "No host files removed or changed; TMPDIR=/var/tmp; affected 16-test group and final full suite PASS",
+    "superseded_runs": "Earlier full runs interrupted on user-requested source corrections are not counted as PASS"
+  },
+  "aiwork_source_review": {
+    "commit": "90d507309e39857d33a10db38bb5625654f01f45",
+    "files": [
+      "coordinator-admission.js",
+      "coordinator-tplan-gate.js",
+      "team-session-store.js"
+    ],
+    "scope": "read-only; Node Q1/Q2 consumer tests use temporary synthetic Missions; no AIWork edits"
+  },
+  "boundaries": [
+    "No production credentials accessed or copied",
+    "No real Mission migration",
+    "No installed Skill update, deployment, release, main merge or OCI operational tree change",
+    "#124 HOLD",
+    "No Agent-selected key/secret path or runtime signer; private trust root remains None",
+    "Claimed/unknown slots never released; this core disallows all second physical claims for a claimed task"
+  ],
+  "followup": "../H1C2-COMPLETION-PLAN.md",
+  "logs": {
+    "h1bc-aiwork-node.log": {
+      "sha256": "343afd1aefa2c89fa423a45b75b89bf9143c3235e808bc5154c85a95089cece7",
+      "bytes": 3636
+    },
+    "h1bc-environment-corrected.log": {
+      "sha256": "e21c8f51a2a92ac252973ca038f48ee8c8c6f9d84a0d50d0efec1f11d5a58d37",
+      "bytes": 3186
+    },
+    "h1bc-environment-diagnostic.log": {
+      "sha256": "0f820b4e6cf58b8baf32a42e096487a03ed1575218095aca43bf0870661aa000",
+      "bytes": 1425
+    },
+    "h1bc-focused-python312.log": {
+      "sha256": "848d4ff2226f8ca18653735357c0b49b59baf8183b30e1ca3ae7ef000ad1b1c5",
+      "bytes": 403
+    },
+    "h1bc-full-python312.log": {
+      "sha256": "c07d9b1998ba454bcb9574f0f80924c533b492ef49cd6665f65b5f13460b1825",
+      "bytes": 242417
+    },
+    "h1bc-initial-red.log": {
+      "sha256": "aabe35bf8a8c46086a46b532ce7750da1ff86d4445217a085c03f9199d77479b",
+      "bytes": 3486
+    },
+    "h1bc-primitives-smoke.log": {
+      "sha256": "48d2d8dc62f7cf75c0b572f8f8e4021dd7aaf156255879dcbed32807359002f1",
+      "bytes": 1614
+    },
+    "h1bc-review-p1-p2-red.log": {
+      "sha256": "ae0f4c553535d6714ca75d4dd6718e6bfbde9d918de735dc2e2676fd2dbcae13",
+      "bytes": 6555
+    },
+    "h1b-revise-red.log": {
+      "sha256": "46d7c7ec3907752ab473a57a06601596d7aa88cc27c586b02fff772b667855d7",
+      "bytes": 2210
+    },
+    "h1c-dependency-red.log": {
+      "sha256": "f900750db59ee43924c29fe07eab51fe83dfe88da640bd6895d2046bef1e1b6b",
+      "bytes": 3414
+    },
+    "h1c-native-ids-red.log": {
+      "sha256": "31d7ac475c6c0a0dd508d53bf2f1283fc85e28f2a206ed1e2603071f428b9912",
+      "bytes": 1604
+    }
+  }
+}

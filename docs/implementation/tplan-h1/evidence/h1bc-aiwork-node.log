@@ -1,0 +1,112 @@
+TAP version 13
+# Subtest: B stays paused after repair task created, independent C is eligible
+ok 1 - B stays paused after repair task created, independent C is eligible
+  ---
+  duration_ms: 1.634602
+  type: 'test'
+  ...
+# Subtest: business predecessor acceptance is not inferred from status=completed
+ok 2 - business predecessor acceptance is not inferred from status=completed
+  ---
+  duration_ms: 0.928881
+  type: 'test'
+  ...
+# Subtest: fail closed for unknown dependency, unknown inputs or stale revision
+ok 3 - fail closed for unknown dependency, unknown inputs or stale revision
+  ---
+  duration_ms: 0.84896
+  type: 'test'
+  ...
+# Subtest: active task cannot launch duplicate attempt but known attempt can resume
+ok 4 - active task cannot launch duplicate attempt but known attempt can resume
+  ---
+  duration_ms: 0.352641
+  type: 'test'
+  ...
+# Subtest: continuation handoff uses explicit adopted revision and invalidates old A prime
+ok 5 - continuation handoff uses explicit adopted revision and invalidates old A prime
+  ---
+  duration_ms: 0.83176
+  type: 'test'
+  ...
+# Subtest: actual CLI and Host consumer return the same snapshot without writes
+ok 6 - actual CLI and Host consumer return the same snapshot without writes
+  ---
+  duration_ms: 245.219384
+  type: 'test'
+  ...
+# Subtest: pending transaction is surfaced, never repaired by the query
+ok 7 - pending transaction is surfaced, never repaired by the query
+  ---
+  duration_ms: 154.702196
+  type: 'test'
+  ...
+# Subtest: missing result capability is not evidence of non-execution
+ok 8 - missing result capability is not evidence of non-execution
+  ---
+  duration_ms: 155.556437
+  type: 'test'
+  ...
+# Subtest: Host-pinned build mismatch is an explicit runtime error
+ok 9 - Host-pinned build mismatch is an explicit runtime error
+  ---
+  duration_ms: 144.408068
+  type: 'test'
+  ...
+# Subtest: path traversal and symlink Mission aliases cannot escape Host scope
+ok 10 - path traversal and symlink Mission aliases cannot escape Host scope
+  ---
+  duration_ms: 79.435939
+  type: 'test'
+  ...
+# Subtest: unknown protocol response is not treated as a successful query
+ok 11 - unknown protocol response is not treated as a successful query
+  ---
+  duration_ms: 88.956867
+  type: 'test'
+  ...
+# Subtest: timeout is a transport error, not a failed Mission or a retry instruction
+ok 12 - timeout is a transport error, not a failed Mission or a retry instruction
+  ---
+  duration_ms: 87.926186
+  type: 'test'
+  ...
+# Subtest: Host configuration must fix roots, interpreter and build
+ok 13 - Host configuration must fix roots, interpreter and build
+  ---
+  duration_ms: 0.61172
+  type: 'test'
+  ...
+# Subtest: snapshot refuses impossible command_not_found even if process exit matches
+ok 14 - snapshot refuses impossible command_not_found even if process exit matches
+  ---
+  duration_ms: 103.616397
+  type: 'test'
+  ...
+# Subtest: Q2 command lookup returns the actual historical result without writes
+ok 15 - Q2 command lookup returns the actual historical result without writes
+  ---
+  duration_ms: 333.33437
+  type: 'test'
+  ...
+# Subtest: Q2 missing local result is not a transport error or proof of non-execution
+ok 16 - Q2 missing local result is not a transport error or proof of non-execution
+  ---
+  duration_ms: 150.410273
+  type: 'test'
+  ...
+# Subtest: success must use the historical result schema and exact command binding
+ok 17 - success must use the historical result schema and exact command binding
+  ---
+  duration_ms: 106.20688
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1730.856138
