@@ -4,7 +4,8 @@
     "session": "acps_6db8078d74195cc673b8bb43",
     "conclusion": "REVISE",
     "source": "Owner-forwarded findings preserved verbatim in reviews/H1C2-636a2e2-REVISE.md; full session transcript unavailable in current tools",
-    "re_review": "pending; green tests are not independent approval"
+    "re_review": "GO on unchanged frozen source d6f284733aed7fa1c9c900bf71e208560c12aff1; reviewer session acps_6db8078d74195cc673b8bb43; full original text reviews/H1C2-d6f2847-GO.md; code merge only",
+    "re_review_scope": "Read-only source and memory probe. Existing tests inspected but not rerun by reviewer; live Owner/Web/IM/DSH and Host storage isolation unverified."
   },
   "red_commit": "02162fc",
   "frozen_fix_source_commit": "d6f284733aed7fa1c9c900bf71e208560c12aff1",

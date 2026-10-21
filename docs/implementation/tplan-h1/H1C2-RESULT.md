@@ -9,7 +9,8 @@ Current build: `sha256:7fff3db886a8b3f1cb10c874a9258206966d2f7f5f6b4e8492ed6ee9d
 Runtime candidate: `1.6.0-h1c2.1`, capability
 `scoped_task_completion`. Independent read-only review of HEAD `636a2e2` returned
 **REVISE** (session `acps_6db8078d74195cc673b8bb43`). P1/P2 are now repaired with
-local regression evidence; independent re-review remains pending. This is an
+local regression evidence; independent re-review confirmed **GO for code merge**.
+See [the frozen independent GO](reviews/H1C2-d6f2847-GO.md); original REVISE remains preserved. This is an
 unpublished Draft PR candidate, not an enabled Host deployment. The historical
 review and forwarded findings remain in [the review record](reviews/H1C2-636a2e2-REVISE.md).
 
@@ -98,7 +99,7 @@ verification does not establish real reviewer identity, native delivery authenti
 or Agent-inaccessible storage. Those live admission requirements remain with AIWork
 #158/#167. No real DSH/Web/IM E2E, production authentication or real Mission business
 acceptance has passed here. Bounded synthetic kernel closure is the demonstrated
-result. Independent re-review of the repaired frozen source is still required before merge.
+result. Independent rereview on the unchanged repaired source returned **GO for kernel code merge**; this is not permission to enable Host, DSH or Web/IM.
 
 No deployment, installed Skill edit, production key use, real Mission run, release
 or merge was performed. #124 remains HOLD. No second completion state machine,
@@ -107,3 +108,7 @@ queue, database, new dispatch or slot-release mechanism was introduced.
 Freeze probe: the artifact is a synthetic kernel implementation and evidence package;
 its next consumer is the independent reviewer. Green tests authorize review of this
 candidate, not live Host enablement or external business acceptance.
+
+## Post-repair independent rereview
+
+The original reviewer verified frozen source `d6f284733aed7fa1c9c900bf71e208560c12aff1` and archive commit `02734d7316d10a70a160bcb0e6abf2948ea8aec7` without changing source files. The review **GO** applies only to a synthetic-kernel merge, not real Owner/Host/DSH admission. The full verbatim review is in [H1C2-d6f2847-GO.md](reviews/H1C2-d6f2847-GO.md). Two production blockers remain: Host-isolated signing/identity and candidate ancestor path TOCTOU. No production deployment, installed Skill modification or #124 status change.
