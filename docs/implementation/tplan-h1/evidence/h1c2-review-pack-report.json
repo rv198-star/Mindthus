@@ -1,0 +1,42 @@
+{
+  "scope": "local_candidate_pack_not_release",
+  "layouts": [
+    {
+      "layout": "claude-plugin",
+      "passed": true,
+      "runtime_build": "sha256:7fff3db886a8b3f1cb10c874a9258206966d2f7f5f6b4e8492ed6ee9d122b259",
+      "required_files": 23,
+      "command_source_sha256": "750891281c133abc5ebd64e482c4572d64c6c97b309f02a1cc392cf177ad3bc7"
+    },
+    {
+      "layout": "codex-plugin",
+      "passed": true,
+      "runtime_build": "sha256:7fff3db886a8b3f1cb10c874a9258206966d2f7f5f6b4e8492ed6ee9d122b259",
+      "required_files": 23,
+      "command_source_sha256": "750891281c133abc5ebd64e482c4572d64c6c97b309f02a1cc392cf177ad3bc7"
+    },
+    {
+      "layout": "claude-skills",
+      "passed": true,
+      "runtime_build": "sha256:7fff3db886a8b3f1cb10c874a9258206966d2f7f5f6b4e8492ed6ee9d122b259",
+      "required_files": 23,
+      "command_source_sha256": "750891281c133abc5ebd64e482c4572d64c6c97b309f02a1cc392cf177ad3bc7"
+    },
+    {
+      "layout": "codex-skills",
+      "passed": true,
+      "runtime_build": "sha256:7fff3db886a8b3f1cb10c874a9258206966d2f7f5f6b4e8492ed6ee9d122b259",
+      "required_files": 23,
+      "command_source_sha256": "750891281c133abc5ebd64e482c4572d64c6c97b309f02a1cc392cf177ad3bc7"
+    },
+    {
+      "layout": "opencode-skills",
+      "passed": true,
+      "runtime_build": "sha256:7fff3db886a8b3f1cb10c874a9258206966d2f7f5f6b4e8492ed6ee9d122b259",
+      "required_files": 23,
+      "command_source_sha256": "750891281c133abc5ebd64e482c4572d64c6c97b309f02a1cc392cf177ad3bc7"
+    }
+  ],
+  "archive_sha256": "c55b99d37734ce12b744069814764b521f381bf764e7516323e2996e2dce004e",
+  "archive_bytes": 4123707
+}

@@ -86,8 +86,8 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
             self.assertIn("atomic_command_results", runtime_manifest["capabilities"])
             self.assertIn("scripts/query_runtime.py", runtime_manifest["fingerprint_files"])
         else:
-            self.assertEqual(runtime_manifest["package_version"], "1.6.0-h1bc.1")
-            self.assertEqual(runtime_manifest["source_id"], "mindthus-tplan-h1bc-candidate")
+            self.assertEqual(runtime_manifest["package_version"], "1.6.0-h1c2.1")
+            self.assertEqual(runtime_manifest["source_id"], "mindthus-tplan-h1c2-candidate")
             self.assertIn("task_scoped_owner_gate", runtime_manifest["capabilities"])
             self.assertIn("scripts/tplan_h1.py", runtime_manifest["fingerprint_files"])
         for phrase in (

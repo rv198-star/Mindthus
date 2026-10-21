@@ -1,0 +1,24 @@
+test_completion_01_delivered_is_not_accepted_and_C_continues (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_01_delivered_is_not_accepted_and_C_continues) ... ok
+test_completion_02_real_bytes_review_and_original_mission_close (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_02_real_bytes_review_and_original_mission_close) ... ok
+test_completion_03_replay_and_different_command_conflict (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_03_replay_and_different_command_conflict) ... ok
+test_completion_04_wrong_native_result_binding (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_04_wrong_native_result_binding) ... ok
+test_completion_05_signed_wrong_scope_actor_criteria_and_evidence (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_05_signed_wrong_scope_actor_criteria_and_evidence) ... ok
+test_completion_06_missing_or_tampered_result_bytes (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_06_missing_or_tampered_result_bytes) ... ok
+test_completion_07_owner_revision_invalidates_old_slot_not_delivery (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_07_owner_revision_invalidates_old_slot_not_delivery) ... ok
+test_completion_08_source_failure_blocks_acceptance (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_08_source_failure_blocks_acceptance) ... ok
+test_completion_09_terminal_late_result_only (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_09_terminal_late_result_only) ... ok
+test_completion_10_prepared_crash_interrupted_recovery_and_response_loss (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_10_prepared_crash_interrupted_recovery_and_response_loss) ... ok
+test_completion_11_legacy_and_reserved_evidence_cannot_bypass (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_11_legacy_and_reserved_evidence_cannot_bypass) ... ok
+test_completion_12_shipped_host_remains_disabled (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_12_shipped_host_remains_disabled) ... ok
+test_completion_13_failed_B_acceptance_blocks_mission_close (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_13_failed_B_acceptance_blocks_mission_close) ... ok
+test_completion_14_current_adoption_and_fixed_actor_required (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_14_current_adoption_and_fixed_actor_required) ... ok
+test_completion_15_consumed_review_event_or_nonce_cannot_be_reused (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_15_consumed_review_event_or_nonce_cannot_be_reused) ... ok
+test_completion_16_completion_evidence_integrity_at_original_close (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_16_completion_evidence_integrity_at_original_close) ... ok
+test_five_clean_packaged_layouts_can_commit_read_and_replay (tests.tplan.test_command_release_pack.CommandReleasePackTests.test_five_clean_packaged_layouts_can_commit_read_and_replay) ... /srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_command_release_pack.py:47: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.
+  source.extractall(extracted)
+ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 12.666s
+
+OK

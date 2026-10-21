@@ -41,3 +41,33 @@ def owner_receipt(mission, revision=1, choice='approve_current', candidate_sha25
 
 def isolated_test_host():
     return patch('tplan_h1_commands._trust_config', return_value=copy.deepcopy(TEST_TRUST))
+
+# Fixed test-only acceptance scope. Shipped Host remains unconfigured.
+TEST_TRUST['acceptance_actors'] = {'B': {
+    'actor_subject_ref': 'test-reviewer', 'origin_binding_ref': 'review-binding',
+    'origin_session_ref': 'review-session'}}
+
+
+def acceptance_receipt(state, slot, **changes):
+    """Synthetic authenticated review event AFTER the committed native result."""
+    import tplan_runtime as runtime
+    now = int(time.time())
+    candidate = state['human_control']['candidates'][slot['result']['candidate_id']]
+    ids = sorted(runtime._acceptance_coverage_for_task(state, slot['task_id']))
+    criteria = sorted([a for a in state['mission']['acceptance_evidence'] if a['id'] in ids],
+                      key=lambda a: a['id'])
+    value = {'schema_version': 'tplan.acceptance_receipt.v0.1', 'issuer_id': 'test-host',
+        'key_id': 'test-key', 'mission_id': state['mission']['id'], 'task_id': slot['task_id'],
+        'slot_id': slot['slot_id'], 'session_id': slot['session_id'],
+        'native_request_id': slot['native_request_id'], 'attempt_ref': slot['intent_id'],
+        'candidate_id': candidate['candidate_id'], 'result_sha256': candidate['content_sha256'],
+        'request_id': slot['request_id'], 'expected_revision': slot['expected_revision'],
+        'decision_id': slot['decision_id'], 'adopted_candidate_id': slot['candidate_id'],
+        'input_digest': slot['input_digest'], 'dependency_digest': slot['dependency_digest'],
+        'delivery_digest': digest(slot['result']), 'acceptance_ids': ids,
+        'acceptance_contract_digest': digest(criteria), **TEST_TRUST['acceptance_actors']['B'],
+        'origin_event_ref': 'review-event-1', 'evidence_refs': ['review-report-1'],
+        'summary': 'Synthetic reviewer verified actual B bytes against all declared criteria',
+        'issued_at': now, 'expires_at': now + 120, 'nonce': 'acceptance-1'}
+    value.update(changes)
+    return signed(value)

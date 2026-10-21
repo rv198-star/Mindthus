@@ -47,6 +47,7 @@ from tplan_h1 import (SCHEMA as H1_SCHEMA, CAPABILITY as H1_CAPABILITY,
                      pending_blocked_task_ids as pending_h1_task_ids,
                      validate_transition as validate_h1_transition,
                      validate_evidence as validate_h1_evidence,
+                     source_acceptance as h1_source_acceptance,
                      completion_findings as h1_completion_findings)
 from tplan_commands import STORE_SCHEMA as COMMAND_RESULTS_SCHEMA, validate_store as validate_command_results
 from work_plan import WORK_PLAN_SCHEMA_VERSION, validate_work_plan
@@ -3235,6 +3236,7 @@ def validate_evidence_event(
     *,
     compatibility: bool = False,
     internal: bool = False,
+    h1_control_authority: object | None = None,
 ) -> list[str]:
     """Validate evidence shape and mechanical references, never semantic truth.
 
@@ -3307,7 +3309,8 @@ def validate_evidence_event(
                 )
         errors.extend(acceptance_errors)
     if not compatibility:
-        errors.extend(validate_h1_evidence(mission, event))
+        errors.extend(validate_h1_evidence(mission, event,
+            authorized=internal and h1_control_authority is _H1_CONTROL_AUTHORITY))
     return errors
 
 
@@ -3388,6 +3391,37 @@ def _mission_completion_findings(
         if isinstance(event, dict) and isinstance(event.get("id"), str)
     )
     latest: dict[str, str] = {}
+    # Project only controlled sources; keep unrelated events in native AC order.
+    source_events: dict[tuple[str, str], set[str]] = {}
+    if "human_control" in mission and not validate_h1_control(mission):
+        from tplan_commands import CommandError
+        control = mission["human_control"]
+        for request_id, req in control["requests"].items():
+            adoption = control["adoptions"].get(request_id, {})
+            decision = control["decisions"].get(req["current_decision_id"], {})
+            candidate = control["candidates"].get(adoption.get("candidate_id"))
+            if (candidate is None or candidate["task_id"] != req["business_task_id"]
+                or candidate["candidate_id"] != decision.get("candidate_id")
+                or candidate["content_sha256"] != decision.get("candidate_sha256")
+                or adoption != {"request_id":request_id, "candidate_id":candidate["candidate_id"],
+                    "decision_id":req["current_decision_id"], "content_sha256":candidate["content_sha256"]}):
+                errors.append("H1 current adopted source candidate required for Mission completion")
+                continue
+            try:
+                required, scoped = h1_source_acceptance(mission, candidate, events)
+            except CommandError as exc:
+                errors.append(str(exc))
+                continue
+            if not required:
+                errors.append("H1 current adopted source requires declared acceptance coverage")
+            if any(scoped.get(ac, {}).get("event_type") != "acceptance_passed" for ac in required):
+                errors.append("H1 current adopted source requires positive version-bound acceptance")
+            failure_scope = {task["id"] for task in parent_chain(mission, candidate["task_id"])}
+            for task_id in failure_scope:
+                for acceptance_id in required:
+                    allowed = source_events.setdefault((task_id, acceptance_id), set())
+                    if acceptance_id in scoped:
+                        allowed.add(scoped[acceptance_id]["id"])
     for event in events:
         if not isinstance(event, dict):
             continue
@@ -3399,6 +3433,9 @@ def _mission_completion_findings(
         if counts[event["id"]] != 1:
             continue  # Ambiguous historical IDs cannot provide a qualified observation.
         for acceptance_id in event["payload"]["acceptance_ids"]:
+            scope = (event["task_id"], acceptance_id)
+            if scope in source_events and event["id"] not in source_events[scope]:
+                continue  # Other source versions cannot override the current adoption.
             latest[acceptance_id] = kind
     missing = sorted(
         acceptance_id for acceptance_id in acceptance_ids(mission)
@@ -3412,7 +3449,7 @@ def _mission_completion_findings(
     if "human_control" in mission and validate_h1_control(mission):
         errors.append("H1 control structure is invalid; Mission cannot be completed")
     elif "human_control" in mission:
-        errors.extend(h1_completion_findings(mission))
+        errors.extend(h1_completion_findings(mission, events))
     return errors
 
 
@@ -4137,6 +4174,7 @@ def _commit_mission_state_unlocked(
             after,
             event,
             internal=reserved_evidence_authority is _RESERVED_EVIDENCE_AUTHORITY,
+            h1_control_authority=h1_control_authority,
         )
         if errors:
             raise TplanError("; ".join(errors))

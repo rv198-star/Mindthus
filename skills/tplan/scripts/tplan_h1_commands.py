@@ -21,18 +21,24 @@ from typing import Any
 
 from tplan_commands import (CommandError, _check_paths, _load, canonical, digest,
                             valid_id, HASH, _existing_evidence, MAX_ARTIFACT, MAX_STORE, MAX_RECORDS, MIN_FREE)
-from tplan_h1 import CHOICES, controlled_task_ids
+from tplan_h1 import CHOICES, controlled_task_ids, source_acceptance
 
 PROTOCOL = "tplan.h1.command.v1"
 CAPABILITY = "scoped_owner_execution_core"
 MAX_CONTENT = 256 * 1024
 MAX_CANDIDATES = 64
 ACTIONS = {"candidate.submit", "decision.open", "request.revise", "decision.apply", "adoption.apply",
-           "execution.claim", "receipt.record", "execution.get", "command.get"}
+           "execution.claim", "receipt.record", "result.record", "task.complete", "execution.get", "command.get"}
 OWNER_FIELDS = {"schema_version", "issuer_id", "key_id", "owner_subject_ref", "origin_binding_ref",
                 "mission_id", "request_id", "expected_revision", "choice", "candidate_sha256",
                 "origin_session_ref", "origin_event_ref", "issued_at", "expires_at", "nonce", "signature"}
 HOST_FIELDS = {"issuer_id", "key_id", "issued_at", "expires_at", "nonce", "request_digest", "signature"}
+ACCEPTANCE_FIELDS = {"schema_version", "issuer_id", "key_id", "mission_id", "task_id", "slot_id",
+    "session_id", "native_request_id", "attempt_ref", "candidate_id", "result_sha256", "request_id",
+    "expected_revision", "decision_id", "adopted_candidate_id", "input_digest", "dependency_digest",
+    "delivery_digest", "acceptance_ids", "acceptance_contract_digest", "actor_subject_ref",
+    "origin_binding_ref", "origin_session_ref", "origin_event_ref", "evidence_refs", "summary",
+    "issued_at", "expires_at", "nonce", "signature"}
 
 
 def _trust_config():
@@ -183,43 +189,7 @@ def _decision_ready(directory, state, request_id, runtime):
 
 
 def _source_acceptance(directory, state, candidate, runtime):
-    """One version-scoped native acceptance projection for adoption and claim."""
-    source_id = candidate["task_id"]
-    required = runtime._acceptance_coverage_for_task(state, source_id)
-    failure_scope = {task["id"] for task in runtime.parent_chain(state, source_id)}
-    latest = {}
-    seen = set()
-    for event in runtime._read_events_unlocked(directory):
-        if event.get("id") in seen:
-            _fail("invalid_state", "Ambiguous evidence cannot prove a dependency")
-        seen.add(event.get("id"))
-        kind = event.get("event_type")
-        if kind not in {"acceptance_passed", "acceptance_failed"}:
-            continue
-        if event.get("task_id") not in failure_scope:
-            continue
-        if kind == "acceptance_passed" and event["task_id"] != source_id:
-            continue  # Parent success alone is not delivery of A's candidate.
-        if runtime.validate_evidence_event(state, event, compatibility=True, internal=True):
-            _fail("invalid_state", "Source acceptance is not a qualified native record")
-        payload = event["payload"]
-        version = {"candidate_sha256":candidate["content_sha256"],"attempt_ref":candidate["attempt_ref"]}
-        supplied = {key:payload[key] for key in version if key in payload}
-        if kind == "acceptance_failed":
-            # SHA-only and attempt-only failures are sufficient. Missing or
-            # contradictory scope blocks conservatively; clearly other valid
-            # versions do not invalidate the retained candidate.
-            malformed = any(not (isinstance(value,str) and HASH.fullmatch(value))
-                            if key == "candidate_sha256" else not valid_id(value)
-                            for key,value in supplied.items())
-            relevant = (not supplied or malformed or
-                        any(value == version[key] for key,value in supplied.items()))
-        else:
-            relevant = all(payload.get(key) == value for key,value in version.items())
-        if relevant:
-            for ac in payload["acceptance_ids"]:
-                latest[ac] = event
-    return required, latest
+    return source_acceptance(state, candidate, runtime._read_events_unlocked(directory))
 
 
 def _source_failure(directory, state, candidate, runtime):
@@ -269,35 +239,153 @@ def _dependency_projection(directory, state, req, candidate, task_id, runtime):
             "qualified_acceptance":accepted}
 
 
-def _apply(directory, state, request, trust, runtime):
+def _submit_candidate(directory, state, payload):
+    hc = state["human_control"]
+    _fields(payload, {"task_id", "attempt_ref", "content_b64"})
+    task_id = _id(payload["task_id"]); _id(payload["attempt_ref"])
+    import tplan_runtime as runtime
+    runtime.find_task(state, task_id)
+    try:
+        content = base64.b64decode(payload["content_b64"], validate=True)
+    except (ValueError, TypeError, binascii.Error):
+        _fail("invalid_request", "Candidate content must be strict base64")
+    if not content or len(content) > MAX_CONTENT:
+        _fail("capacity_exceeded", "Candidate bytes exceed the bounded content budget")
+    sha = "sha256:" + hashlib.sha256(content).hexdigest()
+    candidate_id = "CA" + digest({"task":task_id,"attempt":payload["attempt_ref"],"sha":sha})[7:]
+    candidate = {"candidate_id":candidate_id,"task_id":task_id,"attempt_ref":payload["attempt_ref"],
+                 "content_sha256":sha,"bytes_ref":"artifacts/h1/"+sha[7:],"validity":"eligible"}
+    if candidate_id not in hc["candidates"] and len(hc["candidates"]) >= MAX_CANDIDATES:
+        _fail("capacity_exceeded", "Candidate retention budget exhausted")
+    # One attempt cannot silently replace its byte identity.
+    if any(c["task_id"] == task_id and c["attempt_ref"] == payload["attempt_ref"]
+           and c != candidate for c in hc["candidates"].values()):
+        _fail("command_conflict", "Attempt already has different immutable content")
+    _store_content(directory, sha, content)
+    hc["candidates"][candidate_id] = candidate
+    return candidate
+
+
+def _result_record(directory, state, payload, trust, runtime):
+    _fields(payload, {"slot_id", "session_id", "native_request_id", "attempt_ref", "receipt_ref", "content_b64"})
+    slot = state["human_control"]["execution_slots"].get(_id(payload["slot_id"]))
+    _id(payload["receipt_ref"])
+    if (slot is None or slot["host_ref"] != trust["issuer_id"]
+        or payload["session_id"] != slot["session_id"]
+        or payload["native_request_id"] != slot["native_request_id"]
+        or payload["attempt_ref"] != slot["intent_id"]):
+        _fail("unauthorized", "Delivered bytes must bind the original native attempt")
+    if "result" in slot:
+        _fail("command_conflict", "This slot already has an immutable delivered result")
+    if any(f["receipt_ref"] == payload["receipt_ref"] for f in slot["receipts"]):
+        _fail("command_conflict", "Result requires its own immutable native delivery fact")
+    candidate = _submit_candidate(directory, state, {"task_id":slot["task_id"],
+        "attempt_ref":payload["attempt_ref"], "content_b64":payload["content_b64"]})
+    timestamp = runtime.now_iso()
+    slot["result"] = {"candidate_id":candidate["candidate_id"], "receipt_ref":payload["receipt_ref"],
+                      "committed_at":timestamp}
+    slot["receipts"].append({"status":"delivered", "receipt_ref":payload["receipt_ref"],
+                             "committed_at":timestamp})
+    return {"slot_id":slot["slot_id"], **slot["result"], "result_sha256":candidate["content_sha256"],
+            "delivery_digest":digest(slot["result"])}
+
+
+def _complete(directory, state, request, trust, runtime, prepared_events):
+    _fields(request["payload"], {"receipt"})
+    receipt = request["payload"]["receipt"]
+    _verify(receipt, ACCEPTANCE_FIELDS, trust)
+    hc = state["human_control"]
+    slot = hc["execution_slots"].get(_id(receipt["slot_id"]))
+    if slot is None or slot["host_ref"] != trust["issuer_id"]:
+        _fail("unauthorized", "Acceptance requires the original Host slot")
+    if "completion" in slot:
+        _fail("command_conflict", "Slot completion is immutable; query the original command")
+    actor = trust.get("acceptance_actors", {}).get(slot["task_id"])
+    if (not isinstance(actor, dict) or set(actor) != {
+        "actor_subject_ref", "origin_binding_ref", "origin_session_ref"}
+        or any(receipt[k] != actor[k] for k in actor)):
+        _fail("unauthorized", "Acceptance actor is outside the fixed Host task scope")
+    _id(receipt["origin_event_ref"])
+    if receipt["schema_version"] != "tplan.acceptance_receipt.v0.1" or receipt["mission_id"] != request["mission_id"]:
+        _fail("unauthorized", "Invalid business acceptance schema or Mission")
+    if "result" not in slot:
+        _fail("waiting", "Business acceptance requires previously committed delivered bytes")
+    candidate = _candidate(hc, slot["result"]["candidate_id"])
+    scope = {"task_id":slot["task_id"], "session_id":slot["session_id"],
+        "native_request_id":slot["native_request_id"], "attempt_ref":slot["intent_id"],
+        "candidate_id":candidate["candidate_id"], "result_sha256":candidate["content_sha256"],
+        "request_id":slot["request_id"], "decision_id":slot["decision_id"],
+        "adopted_candidate_id":slot["candidate_id"], "input_digest":slot["input_digest"],
+        "dependency_digest":slot["dependency_digest"], "delivery_digest":digest(slot["result"])}
+    if any(receipt[k] != v for k,v in scope.items()):
+        _fail("unauthorized", "Acceptance must bind the exact native result and adopted input")
+    req = hc["requests"][slot["request_id"]]
+    if (type(receipt["expected_revision"]) is not int
+        or receipt["expected_revision"] != req["revision"]
+        or receipt["expected_revision"] != slot["expected_revision"]
+        or req["current_decision_id"] != slot["decision_id"]):
+        _fail("stale_revision", "Acceptance requires the current Owner revision and original decision")
+    req, decision, source = _decision_ready(directory, state, slot["request_id"], runtime)
+    adoption = hc["adoptions"].get(slot["request_id"])
+    if (adoption != {"request_id":slot["request_id"], "candidate_id":source["candidate_id"],
+                     "decision_id":decision["decision_id"], "content_sha256":source["content_sha256"]}
+        or source["candidate_id"] != slot["candidate_id"]
+        or source["content_sha256"] != slot["candidate_sha256"]):
+        _fail("waiting", "Current adopted input no longer matches the claimed slot")
+    for other_id, other in hc["requests"].items():
+        if slot["task_id"] in other["blocked_task_ids"]:
+            _decision_ready(directory, state, other_id, runtime)
+    projection = _dependency_projection(directory, state, req, source, slot["task_id"], runtime)
+    if digest(projection) != slot["dependency_digest"]:
+        _fail("dependency_unverified", "Native dependencies changed since the original claim")
+    if _eligibility(directory, candidate):
+        _fail("candidate_unavailable", "Delivered result bytes are missing or changed")
+    task = runtime.find_task(state, slot["task_id"])
+    if state["mission"]["status"] != "active" or task["status"] not in {"pending", "active"}:
+        _fail("waiting", "Completion requires an active Mission and incomplete Task")
+    required = sorted(runtime._acceptance_coverage_for_task(state, slot["task_id"]))
+    criteria = sorted([a for a in state["mission"]["acceptance_evidence"] if a["id"] in required],
+                      key=lambda a:a["id"])
+    if (not required or receipt["acceptance_ids"] != required
+        or receipt["acceptance_contract_digest"] != digest(criteria)):
+        _fail("unauthorized", "Review must cover B's exact current native acceptance contract")
+    refs, summary = receipt["evidence_refs"], receipt["summary"]
+    if (not isinstance(refs, list) or not refs or not all(valid_id(ref) for ref in refs)
+        or len(refs) != len(set(refs)) or not isinstance(summary, str) or not summary.strip()
+        or "\n" in summary or "\r" in summary):
+        _fail("invalid_request", "Business review requires qualified evidence references and a conclusion")
+    nonce = _nonce_key(receipt, "acceptance")
+    event_key = digest({"kind":"acceptance_event", "issuer":receipt["issuer_id"],
+                        "event":receipt["origin_event_ref"]})
+    if nonce in hc["used_nonces"] or event_key in hc["used_nonces"]:
+        _fail("replay", "Acceptance nonce or authenticated event is already consumed")
+    event = runtime.prepare_event(directory, {"id":receipt["origin_event_ref"],
+        "event_type":"acceptance_passed", "task_id":slot["task_id"], "summary":summary,
+        "payload":{k:v for k,v in receipt.items() if k not in {"signature", "nonce", "issued_at", "expires_at", "summary"}}})
+    event["payload"]["receipt_digest"] = digest(receipt)
+    prepared_events.append(event)
+    runtime.set_task_status(state, slot["task_id"], "completed")
+    completion = {"command_id":request["command_id"], "evidence_id":event["id"],
+                  "candidate_id":candidate["candidate_id"], "receipt_digest":digest(receipt),
+                  "evidence_digest":digest(event)}
+    slot["completion"] = completion
+    hc["used_nonces"][nonce] = request["command_id"]
+    hc["used_nonces"][event_key] = request["command_id"]
+    return {"slot_id":slot["slot_id"], "task_id":slot["task_id"], "status":"completed", **completion}
+
+
+def _apply(directory, state, request, trust, runtime, prepared_events):
     hc = state["human_control"]
     action, payload = request["action"], request["payload"]
     terminal = state["mission"]["status"] in {"completed", "abandoned", "superseded"}
-    if terminal and action not in {"candidate.submit", "receipt.record"}:
+    if terminal and action not in {"candidate.submit", "receipt.record", "result.record"}:
         _fail("terminal", "Terminal Missions accept late facts without reopening authority")
     if action == "candidate.submit":
-        _fields(payload, {"task_id", "attempt_ref", "content_b64"})
-        task_id = _id(payload["task_id"]); _id(payload["attempt_ref"])
-        runtime.find_task(state, task_id)
-        try:
-            content = base64.b64decode(payload["content_b64"], validate=True)
-        except (ValueError, TypeError, binascii.Error):
-            _fail("invalid_request", "Candidate content must be strict base64")
-        if not content or len(content) > MAX_CONTENT:
-            _fail("capacity_exceeded", "Candidate bytes exceed the bounded content budget")
-        sha = "sha256:" + hashlib.sha256(content).hexdigest()
-        candidate_id = "CA" + digest({"task":task_id,"attempt":payload["attempt_ref"],"sha":sha})[7:]
-        candidate = {"candidate_id":candidate_id,"task_id":task_id,"attempt_ref":payload["attempt_ref"],
-                     "content_sha256":sha,"bytes_ref":"artifacts/h1/"+sha[7:],"validity":"eligible"}
-        if candidate_id not in hc["candidates"] and len(hc["candidates"]) >= MAX_CANDIDATES:
-            _fail("capacity_exceeded", "Candidate retention budget exhausted")
-        # One attempt cannot silently replace its byte identity.
-        if any(c["task_id"] == task_id and c["attempt_ref"] == payload["attempt_ref"]
-               and c != candidate for c in hc["candidates"].values()):
-            _fail("command_conflict", "Attempt already has different immutable content")
-        _store_content(directory, sha, content)
-        hc["candidates"][candidate_id] = candidate
-        return candidate
+        return _submit_candidate(directory, state, payload)
+    if action == "result.record":
+        return _result_record(directory, state, payload, trust, runtime)
+    if action == "task.complete":
+        return _complete(directory, state, request, trust, runtime, prepared_events)
     if action == "decision.open":
         _fields(payload, {"request_id", "business_task_id", "blocked_task_ids", "candidate_id"})
         request_id = _id(payload["request_id"])
@@ -451,6 +539,9 @@ def execute(directory: Path, request: Any) -> tuple[dict, int]:
             state = _load(runtime, directory, request)
             if "human_control" not in state or CAPABILITY not in runtime.runtime_fingerprint()["capabilities"]:
                 _fail("unsupported_capability", "New opt-in H1 Mission required")
+            if (request["action"] in {"result.record", "task.complete"}
+                and "scoped_task_completion" not in runtime.runtime_fingerprint()["capabilities"]):
+                _fail("unsupported_capability", "H1-C2 completion capability required")
             if runtime._read_interaction_guard_unlocked(directory) is not None:
                 _fail("guard_open", "Resolve the existing interaction guard")
             if trust["mission_id"] != state["mission"]["id"]:
@@ -481,22 +572,26 @@ def execute(directory: Path, request: Any) -> tuple[dict, int]:
             if len(hc["commands"]) >= MAX_RECORDS or shutil.disk_usage(directory).free < MIN_FREE:
                 _fail("capacity_exceeded", "H1 retention/transaction headroom exhausted")
             after = copy.deepcopy(state)
-            result = _apply(directory,after,request,trust,runtime)
+            prepared_events = []
+            result = _apply(directory,after,request,trust,runtime,prepared_events)
             updated = after["human_control"]
             updated["used_nonces"][nonce_key] = request["command_id"]
             updated["commands"][request["command_id"]] = {"command_id":request["command_id"],"action":request["action"],
                 "request_digest":request_digest,"committed_at":runtime.now_iso(),"result":copy.deepcopy(result)}
             import json
             mission_bytes = len(json.dumps(after, ensure_ascii=False, indent=2).encode()) + 1
-            evidence_bytes = sum(len(json.dumps(e, ensure_ascii=False).encode()) + 1 for e in events)
+            evidence_bytes = sum(len(json.dumps(e, ensure_ascii=False).encode()) + 1 for e in events + prepared_events)
             trace_bytes = runtime.mission_paths(directory)["trace"].stat().st_size
-            if (len(canonical(updated).encode()) > MAX_STORE or mission_bytes > MAX_ARTIFACT
+            if (len(canonical(updated).encode()) > MAX_STORE or max(mission_bytes, evidence_bytes) > MAX_ARTIFACT
                 or shutil.disk_usage(directory).free < max(MIN_FREE, 2*(mission_bytes+evidence_bytes+trace_bytes))):
                 _fail("capacity_exceeded", "H1 canonical state/headroom budget exhausted; no facts removed")
             # Existing transaction is the only mutable state authority, including nonces/results.
             commit_started = True
             runtime._commit_mission_state_unlocked(directory,state,after,
                 source={"kind":"runtime_script","name":"tplan_h1_commands"},
+                prepared_evidence_events=prepared_events,
+                refs={"evidence_ids":[event["id"] for event in prepared_events]},
+                reserved_evidence_authority=runtime._RESERVED_EVIDENCE_AUTHORITY,
                 h1_control_authority=runtime._H1_CONTROL_AUTHORITY)
             return response("committed",data=result),0
     except CommandError as exc:

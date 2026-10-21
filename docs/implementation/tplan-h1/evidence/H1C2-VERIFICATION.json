@@ -1,0 +1,114 @@
+{
+  "scope": "H1-C2 synthetic kernel business acceptance and atomic completion; live Host disabled; no real DSH/Web/IM E2E",
+  "baseline_commit": "ccb05ba8c3a8f5fac6bec1c47de069b24132ff60",
+  "contract_red_commit": "fc4e815",
+  "implementation_commit": "78dd0f8f32de5f3287d4a7c494d4a22dd78c5ea7",
+  "branch": "feat/tplan-h1c2-20261021",
+  "runtime_candidate": "1.6.0-h1c2.1",
+  "build_hash": "sha256:6cd8017008a6c914964b895d154020ab0a2f7461fa3dd9214879d0a98a775512",
+  "tests": {
+    "red": {
+      "command": "python3.12 -m unittest tests.tplan.test_h1_completion -v",
+      "run": 13,
+      "expected_failures": 12,
+      "passed": 1
+    },
+    "completion_and_pack": {
+      "command": "TMPDIR=/var/tmp TPLAN_Q2_PACK_REPORT=/tmp/h1c2-pack-report.json python3.12 -m unittest tests.tplan.test_h1_completion tests.tplan.test_command_release_pack -v",
+      "run": 17,
+      "passed": 17,
+      "failed": 0,
+      "new_completion_cases": 16,
+      "extracted_layouts": 5
+    },
+    "full_python312": {
+      "command": "TMPDIR=/var/tmp python3.12 -m unittest discover -s tests -v",
+      "run": 1313,
+      "passed": 1306,
+      "skipped": 7,
+      "failed": 0,
+      "seconds": 156.345
+    },
+    "aiwork_node_q1_q2_admission": {
+      "run": 17,
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0,
+      "command": "MINDTHUS_ROOT=/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021 TPLAN_QUERY_PYTHON=/srv/agentdock/.local/bin/python3.12 node --test /srv/agentdock/projects/aiwork-h1c-20261021/scripts/test_coordinator_admission.mjs /srv/agentdock/projects/aiwork-h1c-20261021/scripts/test_tplan_query_client.mjs",
+      "aiwork_source_commit": "77c8f3e902ddcd62ac4a838e4302cb1937f00de7",
+      "scope": "read-only source tests against temporary synthetic Missions; no AIWork edits or service calls"
+    },
+    "smoke": {
+      "passed": true,
+      "commands": [
+        "python3.12 scripts/log-fidelity-usage.py --validate --log data/fidelity-usage-log.jsonl",
+        "python3.12 skills/sela/scripts/validate_sela_output.py skills/sela/fixtures/fidelity-smoke-pass.json",
+        "python3.12 skills/mpg/scripts/validate_mpg_output.py skills/mpg/fixtures/fidelity-smoke-pass.json"
+      ]
+    }
+  },
+  "skipped": [
+    {
+      "test": "test_collection_manifest_matches_published_json_schema (test_case_prep.CasePrepTests.test_collection_manifest_matches_published_json_schema)",
+      "reason": "jsonschema is required"
+    },
+    {
+      "test": "test_tplan_manifest_matches_published_json_schema (test_case_prep.CasePrepTests.test_tplan_manifest_matches_published_json_schema)",
+      "reason": "jsonschema is required"
+    },
+    {
+      "test": "test_generated_plugin_runs_documented_atlas_label_and_selection_stages (test_packaging_docs.PackagingDocsTests.test_generated_plugin_runs_documented_atlas_label_and_selection_stages)",
+      "reason": "Pillow is required"
+    },
+    {
+      "test": "test_generic_atlas_labeler_adds_round_ids_and_visible_lineage (test_tvg_contract.TvgContractTests.test_generic_atlas_labeler_adds_round_ids_and_visible_lineage)",
+      "reason": "Pillow is required for atlas tests"
+    },
+    {
+      "test": "test_generic_atlas_selection_board_crops_only_supplied_ids (test_tvg_contract.TvgContractTests.test_generic_atlas_selection_board_crops_only_supplied_ids)",
+      "reason": "Pillow is required for atlas tests"
+    },
+    {
+      "test": "test_generic_atlas_selection_rejects_labels_from_wrong_same_size_image (test_tvg_contract.TvgContractTests.test_generic_atlas_selection_rejects_labels_from_wrong_same_size_image)",
+      "reason": "Pillow is required for atlas tests"
+    },
+    {
+      "test": "test_generic_atlas_selection_rejects_reordered_or_out_of_bounds_regions (test_tvg_contract.TvgContractTests.test_generic_atlas_selection_rejects_reordered_or_out_of_bounds_regions)",
+      "reason": "Pillow is required for atlas tests"
+    }
+  ],
+  "unverified": [
+    "Python 3.11 CI not run locally",
+    "Independent PR review pending",
+    "Real protected Host authentication and native DSH/Web/IM E2E not demonstrated"
+  ],
+  "boundaries": [
+    "Shipped _trust_config() is None; live default deny",
+    "Synthetic signer only under tests; absent from five extracted packages",
+    "No Agent-selected secret or key path",
+    "No deployed/installed Skill changes, production credentials, real Mission, merge or release",
+    "#124 HOLD"
+  ],
+  "logs": {
+    "h1c2-aiwork-node.log": {
+      "sha256": "b9d0b507edf9d06ec85178e417b64d610101ffeb99e6c2d9011d083c248c0f93",
+      "bytes": 3637
+    },
+    "h1c2-completion-pack.log": {
+      "sha256": "939872e2d71c07868d60711401e8f1c9b6e40f3a8bc4fce9bde36cbe94b5e367",
+      "bytes": 3424
+    },
+    "h1c2-full-python312.log": {
+      "sha256": "9f1e8978841f962fcb844207a602371c825d6dd8525d046cda994d524f2e2c0e",
+      "bytes": 245151
+    },
+    "h1c2-pack-report.json": {
+      "sha256": "b26f9fed89cb0c92dd83dd3ce90c0559c1dd766033806651e79be74dad1f598e",
+      "bytes": 1645
+    },
+    "h1c2-red.log": {
+      "sha256": "421cd0df03be8f7eb819ce481d2847fdb75afd34fd3d03833554707d7d1ad205",
+      "bytes": 15926
+    }
+  }
+}

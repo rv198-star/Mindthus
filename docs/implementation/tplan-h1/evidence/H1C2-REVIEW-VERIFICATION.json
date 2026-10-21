@@ -1,0 +1,121 @@
+{
+  "reviewed_head": "636a2e24e6c7e76249ea6a18ec69f20cd66d7f53",
+  "independent_review": {
+    "session": "acps_6db8078d74195cc673b8bb43",
+    "conclusion": "REVISE",
+    "source": "Owner-forwarded findings preserved verbatim in reviews/H1C2-636a2e2-REVISE.md; full session transcript unavailable in current tools",
+    "re_review": "GO on unchanged frozen source d6f284733aed7fa1c9c900bf71e208560c12aff1; reviewer session acps_6db8078d74195cc673b8bb43; full original text reviews/H1C2-d6f2847-GO.md; code merge only",
+    "re_review_scope": "Read-only source and memory probe. Existing tests inspected but not rerun by reviewer; live Owner/Web/IM/DSH and Host storage isolation unverified."
+  },
+  "red_commit": "02162fc",
+  "frozen_fix_source_commit": "d6f284733aed7fa1c9c900bf71e208560c12aff1",
+  "runtime_candidate": "1.6.0-h1c2.1",
+  "build_hash": "sha256:7fff3db886a8b3f1cb10c874a9258206966d2f7f5f6b4e8492ed6ee9d122b259",
+  "red": {
+    "baseline": "636a2e2",
+    "run": 3,
+    "failed_as_expected": 3,
+    "log": "h1c2-review-red.log",
+    "cases": [
+      "adopted v1 failure hidden by v2 pass",
+      "unadopted v2 failure invalidates v1",
+      "over-limit evidence committed"
+    ]
+  },
+  "additional_guard_red": {
+    "run": 1,
+    "failed_as_expected": 1,
+    "scope": "provisional uncommitted source-outcome aggregation during repair; not the independently reviewed HEAD",
+    "log": "h1c2-review-C-shared-red.log",
+    "resolution": "filter only controlled source versions in native event order; preserve unrelated shared-AC C failure"
+  },
+  "directed_green": {
+    "run": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "log": "h1c2-review-green.log"
+  },
+  "affected_regression": {
+    "run": 165,
+    "passed": 165,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 33.854,
+    "command": "TMPDIR=/var/tmp TPLAN_Q2_PACK_REPORT=<worktree>/docs/implementation/tplan-h1/evidence/h1c2-review-pack-report.json python3.12 -m unittest tests.tplan.test_h1_completion tests.tplan.test_h1_core tests.tplan.test_h1_kernel_gate tests.tplan.test_evidence_and_transition tests.tplan.test_authority_integrity tests.tplan.test_command_runtime tests.tplan.test_query_runtime tests.tplan.test_runtime_persistence tests.tplan.test_runtime_provenance tests.tplan.test_command_release_pack -v",
+    "modules": {
+      "tests.tplan.test_h1_completion": 20,
+      "tests.tplan.test_h1_core": 32,
+      "tests.tplan.test_h1_kernel_gate": 16,
+      "tests.tplan.test_evidence_and_transition": 7,
+      "tests.tplan.test_authority_integrity": 30,
+      "tests.tplan.test_command_runtime": 23,
+      "tests.tplan.test_query_runtime": 17,
+      "tests.tplan.test_runtime_persistence": 6,
+      "tests.tplan.test_runtime_provenance": 13,
+      "tests.tplan.test_command_release_pack": 1
+    },
+    "log": "h1c2-review-regression.log"
+  },
+  "capacity_regression": {
+    "file_size_before": 4194303,
+    "MAX_ARTIFACT": 4194304,
+    "result": "capacity_exceeded before prepare; mission/evidence/trace unchanged including nonces and commands; no transaction; original Q2 recovery and H1 reads remain usable"
+  },
+  "full_repository_suite": "Not repeated in this repair. The earlier 1313-run result belongs to the pre-review source and is historical only.",
+  "scope": [
+    "Only original Mindthus worktree/branch changed",
+    "No AIWork/workbench source or service operation",
+    "No installed Skill edits, production credentials, real Mission, deployment, merge or release",
+    "Shipped _trust_config() remains None; #124 HOLD"
+  ],
+  "source_sha256": {
+    "skills/tplan/scripts/tplan_runtime.py": "8553b3d5fcbc6d47d5d1c0e0273e86ef712194e51c7848612bc984e2772b72e1",
+    "skills/tplan/scripts/tplan_h1.py": "613f408ed993e4ea9eefe1da81ca210f87056158b6adbc20812d68f38d8fb585",
+    "skills/tplan/scripts/tplan_h1_commands.py": "1500967f1fec1c3035235a4aca3460ab3e5ffdccb6eccda083e4ebdf5242fc9d"
+  },
+  "logs": {
+    "h1c2-review-C-shared-red.log": {
+      "sha256": "e21e1fca8de5ebb6b39c6b010e6a4ae5e3892a300869aa07ce29233fd6aa5f37",
+      "bytes": 1025
+    },
+    "h1c2-review-green.log": {
+      "sha256": "6efcae09118a17e2c9934558633851494c8375be8fbac7cd3aceda7371b0ec15",
+      "bytes": 924
+    },
+    "h1c2-review-pack-report.json": {
+      "sha256": "72808ae172096a17f0114d8208d4f10e492f15d1f9e3ce3987ae85bc637708ce",
+      "bytes": 1645
+    },
+    "h1c2-review-red.log": {
+      "sha256": "08d77c382aa497d111f7eeebbe52aad6df79c9cbcf8a51377ce3cfc4f312980f",
+      "bytes": 3519
+    },
+    "h1c2-review-regression.log": {
+      "sha256": "888721e0224060af51b1c76c529b358151512065ffc2c0ae10dc5cae011aa03e",
+      "bytes": 30467
+    },
+    "h1c2-review-python311.log": {
+      "sha256": "94dfac04b97337402ab32efed545283fedd86400114219860c34c6c99240c969",
+      "bytes": 114
+    }
+  },
+  "python311_isolated_completion": {
+    "frozen_source_commit": "d6f284733aed7fa1c9c900bf71e208560c12aff1",
+    "python": "3.11.17",
+    "module": "tests.tplan.test_h1_completion",
+    "run": 20,
+    "passed": 20,
+    "failed": 0,
+    "seconds": 11.0,
+    "container_image": "python:3.11-slim-bookworm",
+    "image_source": "OCI local cache",
+    "network": "none",
+    "container_root_filesystem": "read-only",
+    "source_mount": "read-only",
+    "original_log": "/tmp/mindthus-h1c2-fixed-py311.log",
+    "log": "h1c2-review-python311.log",
+    "execution": "Previously completed run; existing log archived without rerunning tests",
+    "provenance": "Existing log directly records Python version, 20 tests, elapsed time and OK. Owner supplied the frozen source, module, cached image and isolation/mount context. This is a bounded isolated-module validation, not full-suite or remote CI certification."
+  }
+}

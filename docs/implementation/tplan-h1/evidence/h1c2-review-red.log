@@ -1,0 +1,32 @@
+test_completion_17_adopted_source_failure_not_hidden_by_other_version_pass (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_17_adopted_source_failure_not_hidden_by_other_version_pass) ... FAIL
+test_completion_18_other_source_version_failure_does_not_invalidate_adoption (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_18_other_source_version_failure_does_not_invalidate_adoption) ... FAIL
+test_completion_19_evidence_limit_rejects_without_consuming_authority (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_19_evidence_limit_rejects_without_consuming_authority) ... FAIL
+
+======================================================================
+FAIL: test_completion_17_adopted_source_failure_not_hidden_by_other_version_pass (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_17_adopted_source_failure_not_hidden_by_other_version_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 305, in test_completion_17_adopted_source_failure_not_hidden_by_other_version_pass
+    self.assertTrue(runtime._mission_completion_findings(before,runtime.read_events(self.mission)))
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_completion_18_other_source_version_failure_does_not_invalidate_adoption (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_18_other_source_version_failure_does_not_invalidate_adoption)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 324, in test_completion_18_other_source_version_failure_does_not_invalidate_adoption
+    self.assertFalse(runtime._mission_completion_findings(before,runtime.read_events(self.mission)))
+AssertionError: ['Mission completion requires positive qualified acceptance: A1 (acceptance_failed)'] is not false
+
+======================================================================
+FAIL: test_completion_19_evidence_limit_rejects_without_consuming_authority (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_19_evidence_limit_rejects_without_consuming_authority)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 348, in test_completion_19_evidence_limit_rejects_without_consuming_authority
+    self.assertEqual(result['code'],'capacity_exceeded',result)
+AssertionError: None != 'capacity_exceeded' : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-8', 'action': 'task.complete', 'ok': True, 'status': 'committed', 'code': None, 'data': {'slot_id': 'HS10363836d594aec51dfc69d47ff732c1990ba377211592bce6418b3bf2def128', 'task_id': 'B', 'status': 'completed', 'command_id': 'cmd-8', 'evidence_id': 'review-event-1', 'candidate_id': 'CAd01f3f8a70f9fee72b7de1a21290766a12fbe0301cc6c4436ee7bbd1c0d2f94c', 'receipt_digest': 'sha256:272252998ad2d46a03eae658b46e25354915c89cb9f88e57b39d6867bf6ff7a5', 'evidence_digest': 'sha256:89d28bc5015533990267b6a1595c357045173de5e30183109100ed9b82864588'}}
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.313s
+
+FAILED (failures=3)

@@ -1,9 +1,11 @@
 # H1-C2 follow-up: controlled B acceptance and Task completion
 
-**Status: NOT IMPLEMENTED; follow-up plan under Mindthus #236. No new issue has
-been filed. H1-C full business delivery is incomplete.** Current receipt.record is
-only a dispatch fact. Generic B acceptance/status writes remain rejected, including
-after delivered, so this slice cannot close a real controlled B or its Mission.
+**Status: H1-C2 synthetic kernel implemented under Mindthus #241; live Host
+remains disabled.** See [the frozen exact contract](H1C2-CONTRACT.md) and
+[implementation/verification result](H1C2-RESULT.md). `receipt.record` remains only
+a dispatch fact; generic B acceptance/status writes remain rejected. The scoped
+completion path requires native result bytes and a separately authenticated
+business review event. No deployed or real DSH/Web/IM business closure is claimed.
 
 ## Core
 
@@ -27,8 +29,8 @@ Owner approval of A, and model prose must not stand in for B acceptance.
    delivered receipt alone cannot close B. Stale decision/result/slot cannot close
    B or overwrite current adoption. Generic legacy completion remains protected.
 
-The exact command schema and acceptance authority are intentionally not specified
-as deployed API yet. They require their own contract + failure fixtures before code.
+The exact command schema and acceptance authority were frozen with failure fixtures
+before runtime edits in `fc4e815`; they are not an enabled deployed API.
 No new dispatch, slot release, cancellation, replan or multi-version system is needed.
 
 ## Runtime support / required acceptance evidence

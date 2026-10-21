@@ -1,7 +1,7 @@
 {
   "schema_version": "tplan.runtime_manifest.v0.1",
-  "package_version": "1.6.0-h1bc.1",
-  "source_id": "mindthus-tplan-h1bc-candidate",
+  "package_version": "1.6.0-h1c2.1",
+  "source_id": "mindthus-tplan-h1c2-candidate",
   "capability_versions": {
     "mission": "tplan.v0.1",
     "execution_trace": "tplan.execution_trace.v0.1",
@@ -32,7 +32,8 @@
     "read_only_progress_view",
     "atomic_command_results",
     "task_scoped_owner_gate",
-    "scoped_owner_execution_core"
+    "scoped_owner_execution_core",
+    "scoped_task_completion"
   ],
   "required_scripts": [
     "scripts/tplan_runtime.py",

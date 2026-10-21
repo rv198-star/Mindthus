@@ -1,0 +1,173 @@
+test_completion_01_delivered_is_not_accepted_and_C_continues (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_01_delivered_is_not_accepted_and_C_continues) ... ok
+test_completion_02_real_bytes_review_and_original_mission_close (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_02_real_bytes_review_and_original_mission_close) ... FAIL
+test_completion_03_replay_and_different_command_conflict (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_03_replay_and_different_command_conflict) ... FAIL
+test_completion_04_wrong_native_result_binding (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_04_wrong_native_result_binding) ... FAIL
+test_completion_05_signed_wrong_scope_actor_criteria_and_evidence (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_05_signed_wrong_scope_actor_criteria_and_evidence) ... FAIL
+test_completion_06_missing_or_tampered_result_bytes (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_06_missing_or_tampered_result_bytes) ... FAIL
+test_completion_07_owner_revision_invalidates_old_slot_not_delivery (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_07_owner_revision_invalidates_old_slot_not_delivery) ... FAIL
+test_completion_08_source_failure_blocks_acceptance (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_08_source_failure_blocks_acceptance) ... FAIL
+test_completion_09_terminal_late_result_only (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_09_terminal_late_result_only) ... FAIL
+test_completion_10_prepared_crash_interrupted_recovery_and_response_loss (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_10_prepared_crash_interrupted_recovery_and_response_loss) ... FAIL
+test_completion_11_legacy_and_reserved_evidence_cannot_bypass (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_11_legacy_and_reserved_evidence_cannot_bypass) ... FAIL
+test_completion_12_shipped_host_remains_disabled (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_12_shipped_host_remains_disabled) ... FAIL
+test_completion_13_failed_B_acceptance_blocks_mission_close (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_13_failed_B_acceptance_blocks_mission_close) ... FAIL
+
+======================================================================
+FAIL: test_completion_02_real_bytes_review_and_original_mission_close (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_02_real_bytes_review_and_original_mission_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 58, in test_completion_02_real_bytes_review_and_original_mission_close
+    slot = self.deliver()
+           ^^^^^^^^^^^^^^
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 27, in deliver
+    self.call('result.record', self.result_payload(slot))
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-6', 'action': 'result.record', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+======================================================================
+FAIL: test_completion_03_replay_and_different_command_conflict (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_03_replay_and_different_command_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 76, in test_completion_03_replay_and_different_command_conflict
+    slot = self.deliver()
+           ^^^^^^^^^^^^^^
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 27, in deliver
+    self.call('result.record', self.result_payload(slot))
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-6', 'action': 'result.record', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+======================================================================
+FAIL: test_completion_04_wrong_native_result_binding (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_04_wrong_native_result_binding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 98, in test_completion_04_wrong_native_result_binding
+    self.deliver(slot)
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 27, in deliver
+    self.call('result.record', self.result_payload(slot))
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-12', 'action': 'result.record', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+======================================================================
+FAIL: test_completion_05_signed_wrong_scope_actor_criteria_and_evidence (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_05_signed_wrong_scope_actor_criteria_and_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 104, in test_completion_05_signed_wrong_scope_actor_criteria_and_evidence
+    slot = self.deliver()
+           ^^^^^^^^^^^^^^
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 27, in deliver
+    self.call('result.record', self.result_payload(slot))
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-6', 'action': 'result.record', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+======================================================================
+FAIL: test_completion_06_missing_or_tampered_result_bytes (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_06_missing_or_tampered_result_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 134, in test_completion_06_missing_or_tampered_result_bytes
+    slot = self.deliver()
+           ^^^^^^^^^^^^^^
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 27, in deliver
+    self.call('result.record', self.result_payload(slot))
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-6', 'action': 'result.record', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+======================================================================
+FAIL: test_completion_07_owner_revision_invalidates_old_slot_not_delivery (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_07_owner_revision_invalidates_old_slot_not_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 145, in test_completion_07_owner_revision_invalidates_old_slot_not_delivery
+    slot = self.deliver(); receipt = self.review(slot)
+           ^^^^^^^^^^^^^^
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 27, in deliver
+    self.call('result.record', self.result_payload(slot))
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-6', 'action': 'result.record', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+======================================================================
+FAIL: test_completion_08_source_failure_blocks_acceptance (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_08_source_failure_blocks_acceptance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 153, in test_completion_08_source_failure_blocks_acceptance
+    slot = self.deliver(); receipt = self.review(slot)
+           ^^^^^^^^^^^^^^
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 27, in deliver
+    self.call('result.record', self.result_payload(slot))
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-6', 'action': 'result.record', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+======================================================================
+FAIL: test_completion_09_terminal_late_result_only (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_09_terminal_late_result_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 165, in test_completion_09_terminal_late_result_only
+    slot = self.deliver(slot)
+           ^^^^^^^^^^^^^^^^^^
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 27, in deliver
+    self.call('result.record', self.result_payload(slot))
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-6', 'action': 'result.record', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+======================================================================
+FAIL: test_completion_10_prepared_crash_interrupted_recovery_and_response_loss (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_10_prepared_crash_interrupted_recovery_and_response_loss)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 172, in test_completion_10_prepared_crash_interrupted_recovery_and_response_loss
+    slot = self.deliver(); request = self.request('task.complete', {'receipt':self.review(slot)})
+           ^^^^^^^^^^^^^^
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 27, in deliver
+    self.call('result.record', self.result_payload(slot))
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-6', 'action': 'result.record', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+======================================================================
+FAIL: test_completion_11_legacy_and_reserved_evidence_cannot_bypass (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_11_legacy_and_reserved_evidence_cannot_bypass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 195, in test_completion_11_legacy_and_reserved_evidence_cannot_bypass
+    slot = self.deliver()
+           ^^^^^^^^^^^^^^
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 27, in deliver
+    self.call('result.record', self.result_payload(slot))
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-6', 'action': 'result.record', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+======================================================================
+FAIL: test_completion_12_shipped_host_remains_disabled (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_12_shipped_host_remains_disabled)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 211, in test_completion_12_shipped_host_remains_disabled
+    slot = self.deliver(); request = self.request('task.complete', {'receipt':self.review(slot)})
+           ^^^^^^^^^^^^^^
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 27, in deliver
+    self.call('result.record', self.result_payload(slot))
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-6', 'action': 'result.record', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+======================================================================
+FAIL: test_completion_13_failed_B_acceptance_blocks_mission_close (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_13_failed_B_acceptance_blocks_mission_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 217, in test_completion_13_failed_B_acceptance_blocks_mission_close
+    slot = self.deliver(); self.call('task.complete', {'receipt':self.review(slot)})
+           ^^^^^^^^^^^^^^
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 27, in deliver
+    self.call('result.record', self.result_payload(slot))
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-6', 'action': 'result.record', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+----------------------------------------------------------------------
+Ran 13 tests in 3.447s
+
+FAILED (failures=12)
