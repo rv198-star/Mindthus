@@ -460,6 +460,26 @@ process.stdout.write(crypto.createHmac('sha256',Buffer.from(process.argv[2],'hex
             self.assertEqual(code,0,result);self.assertEqual(first['data'],result['data'])
         self.assertEqual(runtime.read_mission(self.mission)['human_control']['requests']['HR1']['status'],'pending')
 
+    def test_core_25_slot_ids_are_native_dsh_ids_and_never_replaced(self):
+        import uuid
+        self.ready()
+        request = self.request('execution.claim',self.claim_payload())
+        with isolated_test_host():
+            result,code = self.api.execute(self.mission,request)
+        self.assertEqual(code,0,result)
+        slot = result['data']
+        self.assertTrue(slot['session_id'].startswith('session-'),slot)
+        self.assertEqual(str(uuid.UUID(slot['session_id'][8:])),slot['session_id'][8:])
+        self.assertEqual(str(uuid.UUID(slot['native_request_id'])),slot['native_request_id'])
+        self.call('receipt.record',{'slot_id':slot['slot_id'],'status':'unknown','receipt_ref':'native-timeout'})
+        with isolated_test_host():
+            replay,code = self.api.execute(self.mission,request)
+        self.assertEqual(code,0,replay)
+        current = self.call('execution.get',{'slot_id':slot['slot_id']})
+        for field in ('slot_id','intent_id','session_id','native_request_id'):
+            self.assertEqual(slot[field],replay['data'][field])
+            self.assertEqual(slot[field],current[field])
+
 # Avoid inheriting the baseline test_* methods (which create their own Missions).
 for _name in dir(fixtures.H1KernelGateTests):
     if _name.startswith('test_'):

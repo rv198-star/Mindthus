@@ -131,3 +131,15 @@ for approve_current/request_changes it names the displayed current candidate. Ol
 bytes/history remain. A missing/invalid fallback still records withdrawal plus blocked
 adoption. Only an exact command replay can reuse the old result. No version manager,
 second approval table or retry dispatcher is introduced.
+
+## Runtime support / native identity correction
+
+Read-only source review of AIWork team-session-store.js:83–115 confirms native
+explicit sessions use `session-<UUID>` and require the supported managed delegation
+binding. sessionController.prompt request IDs use standard UUID. The slot now owns
+pre-generated `session-` + canonical lowercase UUID and a canonical lowercase UUID
+native_request_id. Host must pass them through exactly, never translate HSession /
+HRequest aliases or regenerate after timeout/restart. Runtime schema checks these
+formats; a dedicated RED→GREEN regression checks unknown/replay identity retention.
+This establishes wire-format compatibility only; real TeamSessionStore startup,
+delegation binding and prompt delivery still require Host integration acceptance.
