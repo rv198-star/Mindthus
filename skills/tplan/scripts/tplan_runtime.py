@@ -46,7 +46,8 @@ from tplan_h1 import (SCHEMA as H1_SCHEMA, CAPABILITY as H1_CAPABILITY,
                      empty_state as h1_empty_state, validate_control as validate_h1_control,
                      pending_blocked_task_ids as pending_h1_task_ids,
                      validate_transition as validate_h1_transition,
-                     validate_evidence as validate_h1_evidence)
+                     validate_evidence as validate_h1_evidence,
+                     completion_findings as h1_completion_findings)
 from tplan_commands import STORE_SCHEMA as COMMAND_RESULTS_SCHEMA, validate_store as validate_command_results
 from work_plan import WORK_PLAN_SCHEMA_VERSION, validate_work_plan
 from tplan_identity import (
@@ -3410,8 +3411,8 @@ def _mission_completion_findings(
         )
     if "human_control" in mission and validate_h1_control(mission):
         errors.append("H1 control structure is invalid; Mission cannot be completed")
-    elif pending_h1_task_ids(mission):
-        errors.append("H1 pending Owner decision prevents Mission completion")
+    elif "human_control" in mission:
+        errors.extend(h1_completion_findings(mission))
     return errors
 
 
@@ -4108,6 +4109,9 @@ def _commit_mission_state_unlocked(
             raise TplanError("command_results require an explicitly enabled valid Mission")
         if any(new_results["records"].get(k) != v for k, v in old_results["records"].items()):
             raise TplanError("committed command results cannot be rewritten or removed")
+    h1_shape_errors = validate_h1_control(after)
+    if h1_shape_errors:
+        raise TplanError("; ".join(h1_shape_errors))
     h1_errors = validate_h1_transition(before, after, authorized=h1_control_authority is _H1_CONTROL_AUTHORITY)
     if h1_errors:
         raise TplanError("; ".join(h1_errors))

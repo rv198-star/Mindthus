@@ -1,0 +1,23 @@
+test_core_14_owner_approval_cannot_replace_pending_source_delivery (tests.tplan.test_h1_core.H1CoreTests) ... FAIL
+test_core_15_completed_without_qualified_source_acceptance_is_not_ready (tests.tplan.test_h1_core.H1CoreTests) ... FAIL
+
+======================================================================
+FAIL: test_core_14_owner_approval_cannot_replace_pending_source_delivery (tests.tplan.test_h1_core.H1CoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 324, in test_core_14_owner_approval_cannot_replace_pending_source_delivery
+    self.assertNotEqual(code,0,result)
+AssertionError: 0 == 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-5', 'action': 'execution.claim', 'ok': True, 'status': 'committed', 'code': None, 'data': {'slot_id': 'HS10363836d594aec51dfc69d47ff732c1990ba377211592bce6418b3bf2def128', 'mission_id': 'h1-case', 'task_id': 'B', 'authorization_round': 1, 'request_id': 'HR1', 'expected_revision': 2, 'candidate_id': 'CAdc53c520c6278c66334eeaa26a7e4238cb3ceee5a59c271235331092d56bad5b', 'candidate_sha256': 'sha256:56b0b7c5faaec6911a167ae94740ec7f6876a86c66f2d30da89e50c3d966e24d', 'decision_id': 'HDc400507f810f461dbbf2ce5ea1e4c023', 'dependency_digest': 'sha256:9d2992b9dd5ca3feb089dddbd06b3cf937ffcdd3deb04b6d5af0148706dd350d', 'input_digest': 'sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'host_ref': 'test-host', 'intent_id': 'HI045b52ff6c364a0eaad09584a035ec5c', 'session_id': 'HSession19dbab06859c4936bd4a9cd3e3d62a49', 'native_request_id': 'HRequest86c2ffc252cb4f42bc6a398462cf0461', 'receipts': []}}
+
+======================================================================
+FAIL: test_core_15_completed_without_qualified_source_acceptance_is_not_ready (tests.tplan.test_h1_core.H1CoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 333, in test_core_15_completed_without_qualified_source_acceptance_is_not_ready
+    self.assertNotEqual(code,0,result)
+AssertionError: 0 == 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-5', 'action': 'execution.claim', 'ok': True, 'status': 'committed', 'code': None, 'data': {'slot_id': 'HS10363836d594aec51dfc69d47ff732c1990ba377211592bce6418b3bf2def128', 'mission_id': 'h1-case', 'task_id': 'B', 'authorization_round': 1, 'request_id': 'HR1', 'expected_revision': 2, 'candidate_id': 'CAdc53c520c6278c66334eeaa26a7e4238cb3ceee5a59c271235331092d56bad5b', 'candidate_sha256': 'sha256:56b0b7c5faaec6911a167ae94740ec7f6876a86c66f2d30da89e50c3d966e24d', 'decision_id': 'HD9b6539d3866d41f99d844d3a2ef7a0ce', 'dependency_digest': 'sha256:59d5c6067fe267c4d896a3acf5a3a151021609d77ae8111ebcd76f7d9d681273', 'input_digest': 'sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'host_ref': 'test-host', 'intent_id': 'HIe9fff16343654ee0aae6f96a4339c371', 'session_id': 'HSession4481775f089b4a67b6d1c5b6e7a24f0e', 'native_request_id': 'HRequestca867be81bc4424faa147f996c68d546', 'receipts': []}}
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.425s
+
+FAILED (failures=2)

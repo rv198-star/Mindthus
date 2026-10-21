@@ -1,0 +1,60 @@
+======================================================================
+ERROR: test_core_01_unconfigured_runtime_is_disabled_even_with_signed_fixture (tests.tplan.test_h1_core.H1CoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 21, in setUp
+    import tplan_h1_commands
+ModuleNotFoundError: No module named 'tplan_h1_commands'
+
+======================================================================
+ERROR: test_core_02_local_wait_and_immutable_candidate_and_late_result (tests.tplan.test_h1_core.H1CoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 21, in setUp
+    import tplan_h1_commands
+ModuleNotFoundError: No module named 'tplan_h1_commands'
+
+======================================================================
+ERROR: test_core_03_bad_signature_revision_and_nonce_do_not_mutate (tests.tplan.test_h1_core.H1CoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 21, in setUp
+    import tplan_h1_commands
+ModuleNotFoundError: No module named 'tplan_h1_commands'
+
+======================================================================
+ERROR: test_core_04_unique_claim_unknown_and_withdrawal_never_release (tests.tplan.test_h1_core.H1CoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 21, in setUp
+    import tplan_h1_commands
+ModuleNotFoundError: No module named 'tplan_h1_commands'
+
+======================================================================
+ERROR: test_core_05_signed_wrong_scope_time_and_self_selected_keys (tests.tplan.test_h1_core.H1CoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 21, in setUp
+    import tplan_h1_commands
+ModuleNotFoundError: No module named 'tplan_h1_commands'
+
+======================================================================
+ERROR: test_core_06_withdrawal_commits_even_if_bytes_are_unavailable (tests.tplan.test_h1_core.H1CoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 21, in setUp
+    import tplan_h1_commands
+ModuleNotFoundError: No module named 'tplan_h1_commands'
+
+======================================================================
+ERROR: test_core_07_legacy_protection_remains_after_approval (tests.tplan.test_h1_core.H1CoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 21, in setUp
+    import tplan_h1_commands
+ModuleNotFoundError: No module named 'tplan_h1_commands'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.521s
+
+FAILED (errors=7)

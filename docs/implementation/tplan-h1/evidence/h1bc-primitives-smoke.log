@@ -1,0 +1,40 @@
+Fidelity Usage Log Report
+Log file: data/fidelity-usage-log.jsonl
+Records: 1
+No usage-log shape risks detected.
+usage: log-mindthus-runtime.py [-h] [--repo-root REPO_ROOT]
+                               [--marketplace-root MARKETPLACE_ROOT]
+                               [--cache-root CACHE_ROOT]
+                               [--codex-home CODEX_HOME] [--json] [--strict]
+
+Log Mindthus repo, marketplace, and Codex cache runtime fingerprints.
+
+options:
+  -h, --help            show this help message and exit
+  --repo-root REPO_ROOT
+                        Mindthus repository root.
+  --marketplace-root MARKETPLACE_ROOT
+                        Installed local marketplace plugin root.
+  --cache-root CACHE_ROOT
+                        Codex plugin cache root.
+  --codex-home CODEX_HOME
+                        Codex home directory.
+  --json                Emit machine-readable JSON.
+  --strict              Exit 1 on missing tracked files, missing markers, or
+                        hash mismatch.
+
+Runtime boundary: status=ok verifies installed files, hashes, and marker
+presence only. It does not prove model behavior, semantic judgment quality, or
+runtime activation correctness.
+SELA Shape & Evidence Risk Report
+Path: skills/sela/fixtures/fidelity-smoke-pass.json
+
+No shape or evidence risks detected.
+
+Reminder: agentic audit remains required; this report does not validate strategic truth.
+MPG Shape & Evidence Risk Report
+Path: skills/mpg/fixtures/fidelity-smoke-pass.json
+
+No shape or evidence risks detected.
+
+Reminder: agentic audit remains required; this report does not validate mainline truth.

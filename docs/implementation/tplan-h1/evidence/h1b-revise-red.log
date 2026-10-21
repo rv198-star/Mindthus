@@ -1,0 +1,27 @@
+test_core_16_revision_v2_needs_fresh_owner_choice_and_qualified_input (tests.tplan.test_h1_core.H1CoreTests) ... FAIL
+test_core_17_revised_pending_v2_can_withdraw_to_v1_without_v2_completion (tests.tplan.test_h1_core.H1CoreTests) ... FAIL
+
+======================================================================
+FAIL: test_core_16_revision_v2_needs_fresh_owner_choice_and_qualified_input (tests.tplan.test_h1_core.H1CoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 355, in test_core_16_revision_v2_needs_fresh_owner_choice_and_qualified_input
+    revision = self.call('request.revise',{'request_id':'HR1','expected_revision':2,
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-5', 'action': 'request.revise', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+======================================================================
+FAIL: test_core_17_revised_pending_v2_can_withdraw_to_v1_without_v2_completion (tests.tplan.test_h1_core.H1CoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 375, in test_core_17_revised_pending_v2_can_withdraw_to_v1_without_v2_completion
+    self.call('request.revise',{'request_id':'HR1','expected_revision':2,'candidate_id':v2['candidate_id']})
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 37, in call
+    self.assertEqual(code, 0, result)
+AssertionError: 2 != 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-6', 'action': 'request.revise', 'ok': False, 'status': 'rejected', 'code': 'invalid_request', 'data': None}
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.458s
+
+FAILED (failures=2)

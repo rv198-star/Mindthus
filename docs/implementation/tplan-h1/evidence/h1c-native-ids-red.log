@@ -1,0 +1,14 @@
+test_core_25_slot_ids_are_native_dsh_ids_and_never_replaced (tests.tplan.test_h1_core.H1CoreTests) ... FAIL
+
+======================================================================
+FAIL: test_core_25_slot_ids_are_native_dsh_ids_and_never_replaced (tests.tplan.test_h1_core.H1CoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 471, in test_core_25_slot_ids_are_native_dsh_ids_and_never_replaced
+    self.assertTrue(slot['session_id'].startswith('session-'),slot)
+AssertionError: False is not true : {'slot_id': 'HS10363836d594aec51dfc69d47ff732c1990ba377211592bce6418b3bf2def128', 'mission_id': 'h1-case', 'task_id': 'B', 'authorization_round': 1, 'request_id': 'HR1', 'expected_revision': 2, 'candidate_id': 'CAdc53c520c6278c66334eeaa26a7e4238cb3ceee5a59c271235331092d56bad5b', 'candidate_sha256': 'sha256:56b0b7c5faaec6911a167ae94740ec7f6876a86c66f2d30da89e50c3d966e24d', 'decision_id': 'HD1a57a5efdd3d496fb028140235c7cc97', 'dependency_digest': 'sha256:c4484ebc99fcb3111d145efac43c1048a0efaafe7a39c03af7fb1dfc019947e4', 'input_digest': 'sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'host_ref': 'test-host', 'intent_id': 'HIaa8bbf53d49a4c5da3dec96ed641eb50', 'session_id': 'HSession04ff2c826f5a4a47af7c9ea3f9c1f649', 'native_request_id': 'HRequest8802c84efc604da98ca2c57690ac8ac9', 'receipts': []}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.265s
+
+FAILED (failures=1)
