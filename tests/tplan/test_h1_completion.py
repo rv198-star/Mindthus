@@ -1,6 +1,7 @@
 """H1-C2 failure-first synthetic Host tests. No real DSH/Web/IM authentication."""
 import base64
 import copy
+import json
 import unittest
 from unittest.mock import patch
 from tests.tplan import test_h1_core as core
@@ -282,6 +283,80 @@ class H1CompletionTests(core.H1CoreTests):
         self.assertTrue(runtime._mission_completion_findings(state,tampered))
         duplicate = events + [next(e for e in events if e['id']==result['evidence_id'])]
         self.assertTrue(runtime._mission_completion_findings(state,duplicate))
+
+    def completed_business_with_late_source(self):
+        slot = self.deliver()
+        self.call('task.complete', {'receipt':self.review(slot)})
+        runtime.transition_task_status(self.mission,'C','completed')
+        runtime.append_event(self.mission, {'event_type':'acceptance_passed','task_id':'C',
+            'summary':'Independent C meets its own criterion','payload':{'acceptance_ids':['A3']}})
+        return self.call('candidate.submit', {'task_id':'A','attempt_ref':'A-2',
+            'content_b64':base64.b64encode(b'late unadopted A v2').decode()})
+
+    def test_completion_17_adopted_source_failure_not_hidden_by_other_version_pass(self):
+        v2 = self.completed_business_with_late_source()
+        runtime.append_event(self.mission, {'event_type':'acceptance_failed','task_id':'A',
+            'summary':'Adopted A v1 failed after B completed',
+            'payload':{'acceptance_ids':['A1'],'candidate_sha256':self.source['content_sha256'],
+                       'attempt_ref':self.source['attempt_ref']}})
+        self.accept_candidate(v2)
+        before = runtime.read_mission(self.mission)
+        self.assertTrue(self.api._source_failure(self.mission,before,self.source,runtime))
+        self.assertTrue(runtime._mission_completion_findings(before,runtime.read_events(self.mission)))
+        after = copy.deepcopy(before); after['mission']['status'] = 'completed'
+        with self.assertRaises(runtime.TplanError):
+            runtime.commit_mission_state(self.mission,before,after,
+                source={'kind':'runtime_script','name':'close-rejected-adopted-v1'})
+        self.assertEqual(runtime.read_mission(self.mission),before)
+        runtime.append_event(self.mission, {'event_type':'observation','task_id':'C',
+            'summary':'C remains independently writable after rejected close'})
+        self.assertEqual(runtime.find_task(runtime.read_mission(self.mission),'C')['status'],'completed')
+
+    def test_completion_18_other_source_version_failure_does_not_invalidate_adoption(self):
+        v2 = self.completed_business_with_late_source()
+        self.accept_candidate(v2)
+        runtime.append_event(self.mission, {'event_type':'acceptance_failed','task_id':'A',
+            'summary':'Only unadopted A v2 failed after B completed',
+            'payload':{'acceptance_ids':['A1'],'candidate_sha256':v2['content_sha256'],
+                       'attempt_ref':v2['attempt_ref']}})
+        before = runtime.read_mission(self.mission)
+        self.assertIsNone(self.api._source_failure(self.mission,before,self.source,runtime))
+        self.assertFalse(runtime._mission_completion_findings(before,runtime.read_events(self.mission)))
+        after = copy.deepcopy(before); after['mission']['status'] = 'completed'
+        runtime.commit_mission_state(self.mission,before,after,
+            source={'kind':'runtime_script','name':'close-still-qualified-adopted-v1'})
+        state = runtime.read_mission(self.mission)
+        self.assertEqual(state['mission']['status'],'completed')
+        self.assertEqual(state['human_control']['adoptions']['HR1']['candidate_id'],self.source['candidate_id'])
+        self.assertEqual(runtime.find_task(state,'C')['status'],'completed')
+
+    def test_completion_19_evidence_limit_rejects_without_consuming_authority(self):
+        slot = self.deliver()
+        request = self.request('task.complete', {'receipt':self.review(slot)})
+        evidence_path = self.mission/'evidence.jsonl'
+        padding = runtime.prepare_event(self.mission, {'id':'near-evidence-limit',
+            'event_type':'observation','task_id':'C','summary':'Synthetic bounded capacity fixture',
+            'payload':{'padding':''}})
+        base_bytes = len(json.dumps(padding,ensure_ascii=False).encode()) + 1
+        padding['payload']['padding'] = 'x' * (self.api.MAX_ARTIFACT - 1 - evidence_path.stat().st_size - base_bytes)
+        runtime.append_event(self.mission,padding)
+        self.assertEqual(evidence_path.stat().st_size,self.api.MAX_ARTIFACT - 1)
+        before = {name:(self.mission/name).read_bytes()
+                  for name in ('mission.json','evidence.jsonl','execution_trace.jsonl')}
+        with isolated_test_host():
+            result,code = self.api.execute(self.mission,request)
+        self.assertEqual(result['code'],'capacity_exceeded',result)
+        self.assertNotEqual(code,0,result)
+        self.assertEqual({name:(self.mission/name).read_bytes() for name in before},before)
+        state = json.loads(before['mission.json'])
+        self.assertEqual(runtime.read_mission(self.mission),state)
+        self.assertNotIn(request['command_id'],state['human_control']['commands'])
+        for kind,receipt in [('host',request['host_receipt']),('acceptance',request['payload']['receipt'])]:
+            self.assertNotIn(self.api._nonce_key(receipt,kind),state['human_control']['used_nonces'])
+        self.assertFalse((self.mission/'.mission-transaction.json').exists())
+        self.assertEqual(self.recover('capacity-recovery-check')[1],0)
+        current = self.call('execution.get', {'slot_id':slot['slot_id']})
+        self.assertNotIn('completion',current)
 
 
 for _name in dir(core.H1CoreTests):
