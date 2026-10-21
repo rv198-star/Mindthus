@@ -56,3 +56,26 @@ already at `MAX_ARTIFACT - 1` before adding the acceptance event. Full traceback
 are retained in [the RED log](../evidence/h1c2-review-red.log). These are temporary
 synthetic Missions only. This review record, fixtures and RED log are committed
 before runtime source changes.
+
+## Runtime support / repair result and frozen handoff
+
+- RED contract/fixtures commit: `02162fc`; all three findings reproduced before
+  runtime edits. Original independent review stays **REVISE**.
+- An additional shared-AC C fixture rejected a provisional local aggregation that
+  would have overwritten C failure. Its [RED log](../evidence/h1c2-review-C-shared-red.log)
+  describes that uncommitted repair attempt, not the independently reviewed HEAD.
+  The final repair filters only controlled source-version events in native order.
+- The existing source-version projection moved intact into a shared helper; claim,
+  adoption and close now use the same qualification semantics. Non-H1 close retains
+  its original AC stream semantics. Prepared evidence obeys the existing 4 MiB cap.
+- Frozen repair source: `d6f284733aed7fa1c9c900bf71e208560c12aff1`.
+- Current runtime build: `sha256:7fff3db886a8b3f1cb10c874a9258206966d2f7f5f6b4e8492ed6ee9d122b259`.
+- Directed GREEN: 4 passed. Affected regression: **165 passed, 0 failed, 0 skipped**,
+  including 20 C2 cases and all five clean extracted package layouts. No full suite
+  repeat, AIWork/workbench operation, deployment, real Mission or merge.
+- Exact commands, module counts and log hashes:
+  [H1C2-REVIEW-VERIFICATION.json](../evidence/H1C2-REVIEW-VERIFICATION.json).
+
+Gate probe: these local fixes satisfy the reproduced P1/P2 counterexamples and C
+regression; the next authority is independent re-review. No independent GO or live
+Host acceptance is claimed. Draft PR #243 must remain unmerged.

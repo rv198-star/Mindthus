@@ -3,11 +3,15 @@
 Implemented for [Mindthus #241](https://github.com/rv198-star/Mindthus/issues/241),
 on `feat/tplan-h1c2-20261021`, baseline
 `ccb05ba8c3a8f5fac6bec1c47de069b24132ff60`. Contract and RED fixtures were committed
-first in `fc4e815`. Implementation: `78dd0f8f32de5f3287d4a7c494d4a22dd78c5ea7`.
-Build: `sha256:6cd8017008a6c914964b895d154020ab0a2f7461fa3dd9214879d0a98a775512`.
+first in `fc4e815`. Original implementation: `78dd0f8`.
+Current frozen repair source: `d6f284733aed7fa1c9c900bf71e208560c12aff1`.
+Current build: `sha256:7fff3db886a8b3f1cb10c874a9258206966d2f7f5f6b4e8492ed6ee9d122b259`.
 Runtime candidate: `1.6.0-h1c2.1`, capability
-`scoped_task_completion`. This is an unpublished candidate awaiting independent
-Draft PR review, not an enabled Host deployment.
+`scoped_task_completion`. Independent read-only review of HEAD `636a2e2` returned
+**REVISE** (session `acps_6db8078d74195cc673b8bb43`). P1/P2 are now repaired with
+local regression evidence; independent re-review remains pending. This is an
+unpublished Draft PR candidate, not an enabled Host deployment. The historical
+review and forwarded findings remain in [the review record](reviews/H1C2-636a2e2-REVISE.md).
 
 ## Core / resulting behavior
 
@@ -30,22 +34,45 @@ A→Owner→B→accepted B Mission after independent C also meets its own criter
   scoped H1 capabilities. Old writers cannot create B acceptance or completion.
   Mission closure also requires the exact committed completion evidence and refuses
   later B failure even after unrelated positive evidence.
+- Mission-close now shares adoption/claim's source-version acceptance projection.
+  It requires the current adopted A candidate/SHA/attempt to remain qualified;
+  unadopted v2 passes cannot hide v1 failure, and v2 failure cannot invalidate v1.
+  Only source-version events are filtered; unrelated C keeps native AC ordering,
+  including failures on an AC shared with A. Non-H1 close is unchanged.
+- H1 rejects prospective evidence above the existing 4 MiB artifact limit before
+  preparing a transaction. Rejection leaves Mission/evidence/trace, command results
+  and nonces unchanged; data is retained and the original readers/recovery work.
 - Same command replay returns history. A different completion command conflicts.
   Prepared recovery rolls forward the original event/state/result without a second
   review. Terminal late native results remain facts and cannot reopen authority.
 
 ## Runtime support / validation
 
+Repair evidence: [H1C2-REVIEW-VERIFICATION.json](evidence/H1C2-REVIEW-VERIFICATION.json).
+The original review stays REVISE; these are local repair results, not a new
+independent approval.
+
+| Repair check | Result |
+|---|---|
+| Frozen RED at `02162fc` | 3 tests, 3 expected failures on reviewed source |
+| Additional C shared-AC guard RED | 1 expected failure on provisional local aggregation; approach replaced |
+| Directed P1/P2 + C guard GREEN | 4 passed |
+| Python 3.12 affected regression | **165 passed, 0 failed, 0 skipped**, including 20 C2 cases |
+| Five extracted package layouts in affected regression | Same current build; synthetic signer absent; live Host disabled |
+
+The unchanged full repository suite was not repeated in this repair. The following
+results describe the earlier pre-review source only and do not certify the repair:
+
 | Check | Result |
 |---|---|
-| Frozen failure baseline | 13 tests: 12 expected failures, 1 pass before runtime edits |
-| Final C2 tests + clean package test | 17 passed (16 C2 cases plus five-layout packaging case) |
-| Python 3.12 full repository regression | 1313 run: 1306 passed, 7 skipped, 0 failed |
-| AIWork existing Node admission and Q1/Q2 consumers | 17 passed; synthetic temporary Missions only |
+| Original pre-review failure baseline | 13 tests: 12 expected failures, 1 pass before runtime edits |
+| Original pre-review C2 + clean package test | 17 passed (16 C2 cases plus five-layout packaging case) |
+| Historical pre-review Python 3.12 full suite | 1313 run: 1306 passed, 7 skipped, 0 failed |
+| Historical pre-review AIWork Node consumers | 17 passed; synthetic temporary Missions only |
 | Five extracted package layouts | Same build fingerprint; no test signer; new actions live-disabled |
-| Fidelity/SELA/MPG primitive smoke checks | Passed |
+| Historical pre-review primitive smoke checks | Passed |
 
-Exact commands, counts, skip reasons, build fingerprint and log hashes are in
+Historical commands, counts, skip reasons, pre-review build fingerprint and log hashes are in
 [evidence/H1C2-VERIFICATION.json](evidence/H1C2-VERIFICATION.json). The final full
 suite uses `TMPDIR=/var/tmp`, preserving the pre-existing host `/tmp/.git` marker.
 The environment has Python 3.12; Python 3.11 CI is not claimed as locally verified.
@@ -60,7 +87,7 @@ verification does not establish real reviewer identity, native delivery authenti
 or Agent-inaccessible storage. Those live admission requirements remain with AIWork
 #158/#167. No real DSH/Web/IM E2E, production authentication or real Mission business
 acceptance has passed here. Bounded synthetic kernel closure is the demonstrated
-result. Independent review is still required before merge.
+result. Independent re-review of the repaired frozen source is still required before merge.
 
 No deployment, installed Skill edit, production key use, real Mission run, release
 or merge was performed. #124 remains HOLD. No second completion state machine,

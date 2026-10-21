@@ -1,0 +1,14 @@
+test_completion_20_source_projection_preserves_unrelated_shared_AC_failure (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_20_source_projection_preserves_unrelated_shared_AC_failure) ... FAIL
+
+======================================================================
+FAIL: test_completion_20_source_projection_preserves_unrelated_shared_AC_failure (tests.tplan.test_h1_completion.H1CompletionTests.test_completion_20_source_projection_preserves_unrelated_shared_AC_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1c2-20261021/tests/tplan/test_h1_completion.py", line 373, in test_completion_20_source_projection_preserves_unrelated_shared_AC_failure
+    self.assertTrue(runtime._mission_completion_findings(state,runtime.read_events(self.mission)))
+AssertionError: [] is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.438s
+
+FAILED (failures=1)
