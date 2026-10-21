@@ -94,8 +94,9 @@ remain authoritative. No native side effect is performed by this Mindthus module
 
 The first core does not retry a previously claimed task, even after delivered. It
 also rejects generic replanning and ordinary controlled task completion; telemetry
-and receipts are facts, not acceptance. A full controlled-task completion protocol,
-repeated B execution require later explicit contracts. Bounded request.revise supports
+and receipts are facts, not acceptance. H1-C2 adds the separately scoped
+[result and acceptance contract](H1C2-CONTRACT.md); repeated B execution remains
+out of scope. Bounded request.revise supports
 same-request v2 review: pending-after-request_changes + expected_revision + recorded
 same-source/new-attempt candidate; it advances revision and never approves. A retained
 fallback_candidate_id permits immediate withdrawal to v1. For withdraw_change the
@@ -126,8 +127,15 @@ managed delegation binding; keep it tied to the same slot/intent in the Host led
 A Host-side ID substitution or a replay interpreted as a new send violates this
 contract. Native integration is still disabled and unproven.
 
-Full H1-C business completion is NOT delivered: B's qualified acceptance/completed
-transition has no supported scoped command yet. See
-[H1C2-COMPLETION-PLAN.md](H1C2-COMPLETION-PLAN.md) for the bounded follow-up and tests;
-this is a local plan under #236, not an invented filed issue. The current slice ends
-at current adoption, unique claim and receipt/result facts.
+H1-C2 (#241) extends the synthetic kernel with `result.record` and `task.complete`.
+A protected Host must record the original slot's actual native delivered bytes,
+then authenticate the fixed designated reviewer's explicit business acceptance.
+The separate acceptance receipt binds the committed delivery digest, B candidate
+and result SHA, native identities, current Owner revision/adopted input, native
+criteria, actor, originating event and qualified evidence references. Only then
+may one original Mission transaction save evidence, B completed and command result.
+See [the exact frozen contract](H1C2-CONTRACT.md) and
+[the implementation result](H1C2-RESULT.md). Synthetic kernel success does not
+establish live Host authentication or native DSH/Web/IM E2E. `_trust_config()`
+remains None; no caller may select a secret or key path. Existing deployments and
+installed Skills are unchanged. #124 remains HOLD.
