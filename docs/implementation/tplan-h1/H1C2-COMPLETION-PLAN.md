@@ -1,7 +1,8 @@
 # H1-C2 follow-up: controlled B acceptance and Task completion
 
-**Status: NOT IMPLEMENTED; follow-up plan under Mindthus #236. No new issue has
-been filed. H1-C full business delivery is incomplete.** Current receipt.record is
+**Status: implementation authorized under Mindthus #241; exact contract and RED
+fixtures are frozen before runtime changes. See [H1C2-CONTRACT.md](H1C2-CONTRACT.md).
+H1-C full business delivery remains incomplete until this slice passes.** Current receipt.record is
 only a dispatch fact. Generic B acceptance/status writes remain rejected, including
 after delivered, so this slice cannot close a real controlled B or its Mission.
 
