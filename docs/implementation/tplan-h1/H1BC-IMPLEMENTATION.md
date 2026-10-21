@@ -101,3 +101,32 @@ C success; immutable bytes/tamper/later candidate; withdrawal with unavailable b
 prepared crash, recovery interruption, response loss, duplicate command; concurrent
 claims and stable unknown slot; slow preparation races; final claim before first send
 then withdrawal; late and terminal facts; manifest/pack/pinned writer compatibility.
+
+## Mainline correction / dependency admission and bounded candidate revision
+
+Source audit against AIWork coordinator-admission.js/coordinator-tplan-gate.js at
+90d507309e39857d33a10db38bb5625654f01f45 confirms: unknown native depends_on rejects,
+predecessors must be completed and qualified-accepted, and inputs must be adopted.
+The existing AIWork legacy admission already rejects human_control Missions; it is
+not an H1 integration PASS. Owner approval never replaces these independent checks.
+
+Final H1 claim requires active Mission, pending B, native work_plan block for B with
+explicit known depends_on, and completed A with current qualified acceptance_passed
+for its declared acceptance IDs. Evidence must bind the adopted candidate SHA and
+attempt_ref; legacy acceptance, another task's acceptance, missing acceptance, latest
+failure, wrong version, missing plan or unknown depends_on fail closed. This bounded
+slice supports only the H1 source A as B's native prerequisite; additional native
+inputs fail closed pending their own adoption contract. No scheduler is added.
+The slot dependency digest covers these scoped plan/task/evidence/input facts, not C.
+Legacy writers preserve A/B dependency declarations as well as the task graph.
+
+`request.revise` payload request_id/expected_revision/candidate_id requires authenticated
+Host, pending request after request_changes, and a recorded same-source candidate with
+a different legal attempt. It advances revision and stays pending; candidate submission
+and revise cannot approve or adopt. `fallback_candidate_id` retains v1 across revisions,
+then advances only on Owner approve_current. For withdraw_change the receipt digest
+must name that retained fallback, and the request switches back to it immediately;
+for approve_current/request_changes it names the displayed current candidate. Old
+bytes/history remain. A missing/invalid fallback still records withdrawal plus blocked
+adoption. Only an exact command replay can reuse the old result. No version manager,
+second approval table or retry dispatcher is introduced.
