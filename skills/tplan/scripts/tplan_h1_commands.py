@@ -378,7 +378,7 @@ def _apply(directory, state, request, trust, runtime):
                 "candidate_id":candidate["candidate_id"],"candidate_sha256":candidate["content_sha256"],
                 "decision_id":decision["decision_id"],"dependency_digest":digest(projection),
                 "input_digest":payload["input_digest"],"host_ref":trust["issuer_id"],"intent_id":"HI"+uuid.uuid4().hex,
-                "session_id":"HSession"+uuid.uuid4().hex,"native_request_id":"HRequest"+uuid.uuid4().hex,"receipts":[]}
+                "session_id":"session-"+str(uuid.uuid4()),"native_request_id":str(uuid.uuid4()),"receipts":[]}
         hc["execution_slots"][slot_id] = slot
         return copy.deepcopy(slot)
     if action == "receipt.record":

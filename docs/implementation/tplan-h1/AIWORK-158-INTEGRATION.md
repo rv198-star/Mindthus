@@ -118,3 +118,16 @@ Read-only source audit: AIWork checkout commit
 coordinator-tplan-gate.js. Existing admission checks completed/accepted predecessors,
 known native dependencies and adopted inputs, and rejects H1 legacy admission.
 No AIWork source was edited; this is source review, not live integration evidence.
+
+Native ID correction: slot.session_id is exactly `session-<canonical UUID>` and
+slot.native_request_id is exactly a canonical UUID. Pass both to TeamSessionStore /
+sessionController unchanged. Explicit Team sessions require the existing supported
+managed delegation binding; keep it tied to the same slot/intent in the Host ledger.
+A Host-side ID substitution or a replay interpreted as a new send violates this
+contract. Native integration is still disabled and unproven.
+
+Full H1-C business completion is NOT delivered: B's qualified acceptance/completed
+transition has no supported scoped command yet. See
+[H1C2-COMPLETION-PLAN.md](H1C2-COMPLETION-PLAN.md) for the bounded follow-up and tests;
+this is a local plan under #236, not an invented filed issue. The current slice ends
+at current adoption, unique claim and receipt/result facts.

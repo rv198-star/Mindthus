@@ -199,6 +199,15 @@ def _validate_records(state):
                     or record["candidate_id"] not in hc["candidates"] or not isinstance(record["receipts"], list)):
                     errors.append("H1 execution slot binding invalid")
                 else:
+                    import uuid
+                    try:
+                        session_uuid = record["session_id"].removeprefix("session-")
+                        if (not record["session_id"].startswith("session-")
+                            or str(uuid.UUID(session_uuid)) != session_uuid
+                            or str(uuid.UUID(record["native_request_id"])) != record["native_request_id"]):
+                            raise ValueError("Noncanonical native identity")
+                    except ValueError:
+                        errors.append("H1 slot requires native session-UUID and request UUID")
                     for fact in record["receipts"]:
                         if (not isinstance(fact, dict) or set(fact) != {"status", "receipt_ref", "committed_at"}
                             or not isinstance(fact["status"], str)
