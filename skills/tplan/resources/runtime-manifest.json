@@ -1,7 +1,7 @@
 {
   "schema_version": "tplan.runtime_manifest.v0.1",
-  "package_version": "1.6.0-h1a.1",
-  "source_id": "mindthus-tplan-h1a-candidate",
+  "package_version": "1.6.0-h1bc.1",
+  "source_id": "mindthus-tplan-h1bc-candidate",
   "capability_versions": {
     "mission": "tplan.v0.1",
     "execution_trace": "tplan.execution_trace.v0.1",
@@ -31,7 +31,8 @@
     "read_only_work_view",
     "read_only_progress_view",
     "atomic_command_results",
-    "task_scoped_owner_gate"
+    "task_scoped_owner_gate",
+    "scoped_owner_execution_core"
   ],
   "required_scripts": [
     "scripts/tplan_runtime.py",
@@ -55,7 +56,8 @@
     "scripts/tplan_commands.py",
     "scripts/query_runtime.py",
     "scripts/command_runtime.py",
-    "scripts/init_mission.py"
+    "scripts/init_mission.py",
+    "scripts/tplan_h1_commands.py"
   ],
   "fingerprint_files": [
     "resources/runtime-manifest.json",
@@ -80,6 +82,7 @@
     "scripts/tplan_commands.py",
     "scripts/query_runtime.py",
     "scripts/command_runtime.py",
-    "scripts/init_mission.py"
+    "scripts/init_mission.py",
+    "scripts/tplan_h1_commands.py"
   ]
 }

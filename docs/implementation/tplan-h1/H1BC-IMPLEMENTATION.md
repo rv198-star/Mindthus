@@ -41,7 +41,8 @@ bytes_ref is kernel-derived, never caller-selected. Local read-only files are no
 proved Host-private store: every use rechecks SHA, deployment storage admission remains
 open. Orphan bytes after crash are retained and safely reused, never adopted by scan.
 `decision.open`: request_id/business_task_id/blocked_task_ids/candidate_id; revision=1,
-no active/completed B, fixed graph; reopening/replanning unsupported in this slice.
+no active/completed B, fixed graph; bounded request.revise is defined below; graph
+replanning is unsupported in this slice.
 `decision.apply`: payload receipt; approve_current/request_changes/withdraw_change.
 Revision, nonce, decision and result commit together. request_changes leaves B waiting;
 withdraw_change records intent immediately even if bytes invalid; adoption_blocked
@@ -111,10 +112,10 @@ The existing AIWork legacy admission already rejects human_control Missions; it 
 not an H1 integration PASS. Owner approval never replaces these independent checks.
 
 Final H1 claim requires active Mission, pending B, native work_plan block for B with
-explicit known depends_on, and completed A with current qualified acceptance_passed
+explicit known depends_on, and completed A with candidate-scoped qualified acceptance_passed
 for its declared acceptance IDs. Evidence must bind the adopted candidate SHA and
 attempt_ref; legacy acceptance, another task's acceptance, missing acceptance, latest
-failure, wrong version, missing plan or unknown depends_on fail closed. This bounded
+same-candidate/global failure, wrong version, missing plan or unknown depends_on fail closed. This bounded
 slice supports only the H1 source A as B's native prerequisite; additional native
 inputs fail closed pending their own adoption contract. No scheduler is added.
 The slot dependency digest covers these scoped plan/task/evidence/input facts, not C.

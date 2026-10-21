@@ -392,6 +392,74 @@ raise SystemExit(code)
             result,code = self.api.execute(self.mission,self.request('execution.claim',self.claim_payload()))
         self.assertNotEqual(code,0,result)
 
+    def test_core_19_additional_native_input_needs_its_own_proof(self):
+        v1 = self.pending(dependencies=('A','C'));self.approve(v1)
+        self.call('adoption.apply',{'request_id':'HR1','candidate_id':v1['candidate_id']})
+        with isolated_test_host():
+            result,code = self.api.execute(self.mission,self.request('execution.claim',self.claim_payload()))
+        self.assertNotEqual(code,0,result)
+        self.assertEqual(result['code'],'dependency_unverified')
+
+    def test_core_20_active_source_is_not_completed_delivery(self):
+        v1 = self.pending(source_state='active');self.approve(v1)
+        self.call('adoption.apply',{'request_id':'HR1','candidate_id':v1['candidate_id']})
+        with isolated_test_host():
+            result,code = self.api.execute(self.mission,self.request('execution.claim',self.claim_payload()))
+        self.assertNotEqual(code,0,result)
+
+    def test_core_21_accepted_unapproved_v2_does_not_invalidate_retained_v1(self):
+        v1 = self.pending();self.approve(v1,choice='request_changes')
+        v2 = self.call('candidate.submit',{'task_id':'A','attempt_ref':'A-2',
+            'content_b64':base64.b64encode(b'qualified but unapproved v2').decode()})
+        self.accept_candidate(v2)
+        self.call('request.revise',{'request_id':'HR1','expected_revision':2,'candidate_id':v2['candidate_id']})
+        self.approve(v1,revision=3,choice='withdraw_change',nonce='retain-v1')
+        self.call('adoption.apply',{'request_id':'HR1','candidate_id':v1['candidate_id']})
+        self.assertEqual(self.call('execution.claim',self.claim_payload(4))['candidate_id'],v1['candidate_id'])
+
+    def test_core_22_new_source_failure_and_plan_bypass_are_rejected(self):
+        v1 = self.ready()
+        plan = copy.deepcopy(runtime.read_mission(self.mission)['work_plan'])
+        plan['blocks'][1]['depends_on']=[]
+        with self.assertRaises(runtime.TplanError):
+            runtime.record_work_plan(self.mission,plan)
+        runtime.append_event(self.mission,{'event_type':'acceptance_failed','task_id':'A',
+            'summary':'Reviewer invalidated v1 before final claim',
+            'payload':{'acceptance_ids':['A1'],'candidate_sha256':v1['content_sha256'],'attempt_ref':'A-1'}})
+        with isolated_test_host():
+            result,code = self.api.execute(self.mission,self.request('execution.claim',self.claim_payload()))
+        self.assertNotEqual(code,0,result)
+
+    def test_core_23_node_and_python_canonical_receipt_hmac_agree(self):
+        import shutil
+        if not shutil.which('node'):self.skipTest('Node unavailable for cross-language synthetic MAC vector')
+        from tests.tplan.h1_test_host import signed, TEST_KEY
+        body = {'z':'中文','a':{'choice':'withdraw_change','revision':2},'b':[1,'utf-8']}
+        program = """const crypto=require('node:crypto');
+const sort=v=>Array.isArray(v)?v.map(sort):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,sort(v[k])])):v;
+const body=JSON.parse(process.argv[1]);
+process.stdout.write(crypto.createHmac('sha256',Buffer.from(process.argv[2],'hex')).update(JSON.stringify(sort(body)),'utf8').digest('hex'));
+"""
+        result = subprocess.run(['node','-e',program,json.dumps(body),TEST_KEY.hex()],
+            capture_output=True,text=True,timeout=10)
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertEqual(result.stdout,signed(body)['signature'])
+
+    def test_core_24_same_id_with_changed_scope_conflicts_and_revise_replay_is_historical(self):
+        v1 = self.pending();self.approve(v1,choice='request_changes')
+        v2 = self.call('candidate.submit',{'task_id':'A','attempt_ref':'A-2',
+            'content_b64':base64.b64encode(b'v2 replay input').decode()})
+        request = self.request('request.revise',{'request_id':'HR1','expected_revision':2,'candidate_id':v2['candidate_id']})
+        with isolated_test_host():
+            first,code = self.api.execute(self.mission,request)
+            self.assertEqual(code,0,first)
+            altered = copy.deepcopy(request);altered['payload']['expected_revision']=3
+            result,code = self.api.execute(self.mission,altered)
+            self.assertEqual(result['code'],'command_conflict')
+            result,code = self.api.execute(self.mission,request)
+            self.assertEqual(code,0,result);self.assertEqual(first['data'],result['data'])
+        self.assertEqual(runtime.read_mission(self.mission)['human_control']['requests']['HR1']['status'],'pending')
+
 # Avoid inheriting the baseline test_* methods (which create their own Missions).
 for _name in dir(fixtures.H1KernelGateTests):
     if _name.startswith('test_'):

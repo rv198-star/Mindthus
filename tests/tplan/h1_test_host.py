@@ -7,7 +7,7 @@ from unittest.mock import patch
 from tplan_commands import canonical, digest
 
 TEST_KEY = b'NONDEPLOYABLE synthetic H1 test fixture ONLY'
-TEST_TRUST = {'issuer_id': 'test-host', 'key_id': 'test-key', 'key': TEST_KEY,
+TEST_TRUST = {'mission_id':'h1-case', 'issuer_id': 'test-host', 'key_id': 'test-key', 'key': TEST_KEY,
               'owner_subject_ref': 'test-owner', 'origin_binding_ref': 'test-origin',
               'origin_session_ref': 'test-session'}
 

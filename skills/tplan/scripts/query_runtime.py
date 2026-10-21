@@ -190,6 +190,17 @@ def _snapshot(directory: Path, request: dict[str, Any]) -> dict[str, Any]:
             "query_capabilities": ["snapshot.get", "command.get"] if store is not None else ["snapshot.get"],
             "command_result_store": store is not None,
         }
+        if "human_control" in mission:
+            from tplan_h1 import completion_findings
+            hc = mission["human_control"]
+            data["human_control"] = {
+                "authority": "observation_only", "owner_host_integration": "disabled_pending_isolation",
+                "requests": {key: {field: req[field] for field in
+                    ("business_task_id", "blocked_task_ids", "status", "revision", "current_candidate_id", "fallback_candidate_id", "current_decision_id")}
+                    for key, req in hc["requests"].items()},
+                "adoptions": hc["adoptions"], "execution_slots": hc["execution_slots"],
+                "completion_blockers": completion_findings(mission),
+            }
     except runtime.TplanError as exc:
         if str(exc).startswith("pending Mission transaction must be recovered"):
             raise QueryError("recovery_required", "Recover with the original writer; this query made no recovery changes") from exc

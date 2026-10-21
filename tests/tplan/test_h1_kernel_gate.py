@@ -51,7 +51,7 @@ class H1KernelGateTests(unittest.TestCase):
             "business_task_id": "A", "blocked_task_ids": ["B"], "status": "pending",
             "revision": 1, "required_actor": "owner",
             "allowed_choices": ["approve_current", "request_changes", "withdraw_change"],
-            "current_candidate_id": None, "current_decision_id": None}
+            "current_candidate_id": None, "fallback_candidate_id": None, "current_decision_id": None}
         # Internal test-only capability; no CLI/Worker/Host signing API in H1-A.
         with runtime.execution_trace_lock(self.mission):
             runtime._commit_mission_state_unlocked(
@@ -75,7 +75,7 @@ class H1KernelGateTests(unittest.TestCase):
 
     def test_h1_module_is_in_required_runtime_fingerprint(self):
         manifest = json.loads((SCRIPTS.parent / "resources/runtime-manifest.json").read_text())
-        self.assertEqual(manifest["source_id"], "mindthus-tplan-h1a-candidate")
+        self.assertEqual(manifest["source_id"], "mindthus-tplan-h1bc-candidate")
         self.assertIn("task_scoped_owner_gate", manifest["capabilities"])
         for field in ("required_scripts", "fingerprint_files"):
             self.assertIn("scripts/tplan_h1.py", manifest[field])
