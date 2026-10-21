@@ -1,8 +1,10 @@
 """Bounded H1 Host protocol over the existing canonical Mission transaction.
 
-Deployment is DISABLED: no isolated Host trust provisioning exists in this package.
-There is deliberately no signer, CLI secret/key argument, env trust or public factory.
-Tests patch the private disabled seam; that is not a real authentication boundary.
+The ordinary execute/CLI entry remains DISABLED. An isolated Host bootstrap may
+bind one immutable trust configuration and Mission through bind_host_writer.
+That binding is not an authentication or same-uid security boundary: deployments
+must protect the process, code, configuration, IPC and every Mission ancestor
+from Member access. There is no signer, CLI key argument or environment trust.
 """
 from __future__ import annotations
 
@@ -17,7 +19,9 @@ import stat
 import time
 import uuid
 from contextlib import contextmanager
+from collections.abc import Mapping
 from pathlib import Path
+from types import MappingProxyType
 from typing import Any
 
 from tplan_commands import (CommandError, _check_paths, _load, canonical, digest,
@@ -47,12 +51,69 @@ ACCEPTANCE_FIELDS = {"schema_version", "issuer_id", "key_id", "mission_id", "tas
 
 
 def _trust_config():
-    """Fixed disabled root. Only a future isolated Host build may provision trust.
+    """The ordinary entry stays disabled, including after a Host is bound.
 
     Never resolve trust from this call's arguments, filesystem, environment, or
     Mission. Same-uid Python monkeypatching cannot establish a security boundary.
     """
     return None
+
+
+def bind_host_writer(directory: Path, config: dict):
+    """Bind one existing opt-in Mission at protected-process startup.
+
+    Configuration is copied and frozen once, never resolved from command input,
+    environment or Mission content. The returned callable accepts only a request.
+    Only an OS-isolated Host may hold it; Python object privacy and the directory
+    identity check cannot prevent same-uid code execution or ancestor TOCTOU.
+    This API neither authenticates an Owner nor signs a receipt.
+    """
+    fields = {"mission_id", "issuer_id", "key_id", "key", "owner_subject_ref",
+              "origin_binding_ref", "origin_session_ref", "acceptance_actors"}
+    actor_fields = {"actor_subject_ref", "origin_binding_ref", "origin_session_ref"}
+
+    def ref(value):
+        return (type(value) is str and 0 < len(value) <= 2048 and bool(value.strip())
+                and not any(ord(c) < 32 or 0xD800 <= ord(c) <= 0xDFFF for c in value))
+
+    if (type(config) is not dict or set(config) != fields
+        or not valid_id(config["mission_id"])
+        or type(config["key"]) is not bytes or not 32 <= len(config["key"]) <= 128
+        or any(not ref(config[k]) for k in fields - {"mission_id", "key", "acceptance_actors"})
+        or type(config["acceptance_actors"]) is not dict
+        or len(config["acceptance_actors"]) > MAX_RECORDS):
+        raise ValueError("Invalid isolated Host bootstrap configuration")
+    actors = {}
+    for task_id, actor in config["acceptance_actors"].items():
+        if (not valid_id(task_id) or type(actor) is not dict or set(actor) != actor_fields
+            or any(not ref(actor[k]) for k in actor_fields)):
+            raise ValueError("Invalid isolated Host acceptance scope")
+        actors[task_id] = MappingProxyType(dict(actor))
+    trust = MappingProxyType({**config, "acceptance_actors": MappingProxyType(actors)})
+    import tplan_runtime as runtime
+    try:
+        supplied = Path(directory)
+        if not supplied.is_absolute() or ".." in supplied.parts:
+            raise ValueError("Absolute canonical Mission path required")
+        fixed = _check_paths(supplied)
+        if fixed != supplied:
+            raise ValueError("Mission path must not contain symbolic links")
+        with runtime.execution_trace_lock(fixed):
+            state = _load(runtime, fixed, {"mission_id": trust["mission_id"],
+                "expected_build_hash": runtime.runtime_fingerprint()["build_hash"]})
+            if ("human_control" not in state
+                or CAPABILITY not in runtime.runtime_fingerprint()["capabilities"]
+                or not set(actors).issubset({task["id"] for task in state["tasks"]})):
+                raise ValueError("Opt-in Mission and existing acceptance Tasks required")
+            info = fixed.stat()
+            identity = (info.st_dev, info.st_ino)
+    except (CommandError, OSError, TypeError, ValueError, runtime.TplanError):
+        raise ValueError("Invalid isolated Host Mission binding") from None
+
+    def bound(request: Any) -> tuple[dict, int]:
+        return _execute(fixed, request, trust, directory_identity=identity)
+
+    return bound
 
 
 def _fail(code, message):
@@ -339,7 +400,7 @@ def _complete(directory, state, request, trust, runtime, prepared_events):
     if "completion" in slot:
         _fail("command_conflict", "Slot completion is immutable; query the original command")
     actor = trust.get("acceptance_actors", {}).get(slot["task_id"])
-    if (not isinstance(actor, dict) or set(actor) != {
+    if (not isinstance(actor, Mapping) or set(actor) != {
         "actor_subject_ref", "origin_binding_ref", "origin_session_ref"}
         or any(receipt[k] != actor[k] for k in actor)):
         _fail("unauthorized", "Acceptance actor is outside the fixed Host task scope")
@@ -558,7 +619,12 @@ def _apply(directory, state, request, trust, runtime, prepared_events):
 
 
 def execute(directory: Path, request: Any) -> tuple[dict, int]:
-    """Future protected Host seam. Caller-supplied keys/principals are never accepted."""
+    """Ordinary entry; binding another Host never enables this disabled root."""
+    return _execute(directory, request, _trust_config())
+
+
+def _execute(directory: Path, request: Any, trust, *, directory_identity=None) -> tuple[dict, int]:
+    """Shared canonical transaction; trust is selected by the entry point only."""
     commit_started = False
     def response(status, code=None, data=None):
         req = request if isinstance(request, dict) else {}
@@ -566,9 +632,19 @@ def execute(directory: Path, request: Any) -> tuple[dict, int]:
                 "action":req.get("action"),"ok":code is None,"status":status,"code":code,"data":data}
     try:
         _request(request)
-        trust = _trust_config()
         if trust is None:
             _fail("host_disabled", "Isolated Host trust has not been provisioned")
+        if directory_identity is not None:
+            if request["mission_id"] != trust["mission_id"]:
+                _fail("unauthorized", "Command is outside the fixed Host Mission")
+            try:
+                info = directory.lstat()
+                unchanged = (stat.S_ISDIR(info.st_mode)
+                             and (info.st_dev, info.st_ino) == directory_identity)
+            except OSError:
+                unchanged = False
+            if not unchanged:
+                _fail("mission_unavailable", "Bound Mission directory was replaced or removed")
         import tplan_runtime as runtime
         directory = _check_paths(Path(directory))
         with runtime.execution_trace_lock(directory):
