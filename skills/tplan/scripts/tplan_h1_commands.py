@@ -165,7 +165,8 @@ def _eligibility(directory, candidate):
         return "candidate_bytes_unavailable_or_changed"
 
 
-def _decision_ready(directory, hc, request_id):
+def _decision_ready(directory, state, request_id, runtime):
+    hc = state["human_control"]
     req = hc["requests"].get(_id(request_id))
     if req is None:
         _fail("invalid_request", "Request is not recorded")
@@ -176,7 +177,56 @@ def _decision_ready(directory, hc, request_id):
     candidate = _candidate(hc, decision["candidate_id"])
     if _eligibility(directory, candidate):
         _fail("candidate_unavailable", "Current candidate bytes cannot be adopted")
+    if _source_failure(directory,state,candidate,runtime):
+        _fail("adoption_blocked", "Current input has qualified failed acceptance")
     return req, decision, candidate
+
+
+def _source_acceptance(directory, state, candidate, runtime):
+    """One version-scoped native acceptance projection for adoption and claim."""
+    source_id = candidate["task_id"]
+    required = runtime._acceptance_coverage_for_task(state, source_id)
+    failure_scope = {task["id"] for task in runtime.parent_chain(state, source_id)}
+    latest = {}
+    seen = set()
+    for event in runtime._read_events_unlocked(directory):
+        if event.get("id") in seen:
+            _fail("invalid_state", "Ambiguous evidence cannot prove a dependency")
+        seen.add(event.get("id"))
+        kind = event.get("event_type")
+        if kind not in {"acceptance_passed", "acceptance_failed"}:
+            continue
+        if event.get("task_id") not in failure_scope:
+            continue
+        if kind == "acceptance_passed" and event["task_id"] != source_id:
+            continue  # Parent success alone is not delivery of A's candidate.
+        if runtime.validate_evidence_event(state, event, compatibility=True, internal=True):
+            _fail("invalid_state", "Source acceptance is not a qualified native record")
+        payload = event["payload"]
+        version = {"candidate_sha256":candidate["content_sha256"],"attempt_ref":candidate["attempt_ref"]}
+        supplied = {key:payload[key] for key in version if key in payload}
+        if kind == "acceptance_failed":
+            # SHA-only and attempt-only failures are sufficient. Missing or
+            # contradictory scope blocks conservatively; clearly other valid
+            # versions do not invalidate the retained candidate.
+            malformed = any(not (isinstance(value,str) and HASH.fullmatch(value))
+                            if key == "candidate_sha256" else not valid_id(value)
+                            for key,value in supplied.items())
+            relevant = (not supplied or malformed or
+                        any(value == version[key] for key,value in supplied.items()))
+        else:
+            relevant = all(payload.get(key) == value for key,value in version.items())
+        if relevant:
+            for ac in payload["acceptance_ids"]:
+                latest[ac] = event
+    return required, latest
+
+
+def _source_failure(directory, state, candidate, runtime):
+    required, latest = _source_acceptance(directory,state,candidate,runtime)
+    if any(latest.get(ac, {}).get("event_type") == "acceptance_failed" for ac in required):
+        return "qualified_source_acceptance_failed"
+    return None
 
 
 def _dependency_projection(directory, state, req, candidate, task_id, runtime):
@@ -202,28 +252,9 @@ def _dependency_projection(directory, state, req, candidate, task_id, runtime):
         if (blocker.get("status", "active") == "active" and
             (not blocker.get("task_ids") or {source_id,task_id}.intersection(blocker["task_ids"]))):
             _fail("waiting", "An active native plan blocker affects this execution")
-    required = runtime._acceptance_coverage_for_task(state, source_id)
+    required, latest = _source_acceptance(directory,state,candidate,runtime)
     if not required:
         _fail("dependency_unverified", "Source has no declared acceptance coverage")
-    latest = {}
-    events = runtime._read_events_unlocked(directory)
-    seen = set()
-    for event in events:
-        if event.get("id") in seen:
-            _fail("invalid_state", "Ambiguous evidence cannot prove a dependency")
-        seen.add(event.get("id"))
-        if event.get("task_id") != source_id or event.get("event_type") not in {"acceptance_passed", "acceptance_failed"}:
-            continue
-        if runtime.validate_evidence_event(state, event, compatibility=True, internal=True):
-            _fail("invalid_state", "Source acceptance is not a qualified native record")
-        payload = event["payload"]
-        bound = (payload.get("candidate_sha256") == candidate["content_sha256"]
-                 and payload.get("attempt_ref") == candidate["attempt_ref"])
-        global_failure = (event["event_type"] == "acceptance_failed"
-                          and "candidate_sha256" not in payload and "attempt_ref" not in payload)
-        if bound or global_failure:
-            for ac in payload["acceptance_ids"]:
-                latest[ac] = event
     accepted = {}
     for ac in sorted(required):
         event = latest.get(ac)
@@ -322,7 +353,8 @@ def _apply(directory, state, request, trust, runtime):
         nonce = _nonce_key(receipt, "owner")
         if nonce in hc["used_nonces"]:
             _fail("replay", "Owner nonce has already been consumed")
-        blocked = "changes_requested" if receipt["choice"] == "request_changes" else _eligibility(directory, candidate)
+        blocked = ("changes_requested" if receipt["choice"] == "request_changes" else
+                   _eligibility(directory, candidate) or _source_failure(directory,state,candidate,runtime))
         decision_id = "HD" + uuid.uuid4().hex
         decision = {k:receipt[k] for k in ("request_id","expected_revision","choice","candidate_sha256",
             "owner_subject_ref","origin_binding_ref","origin_session_ref","origin_event_ref","issuer_id","key_id")}
@@ -344,7 +376,7 @@ def _apply(directory, state, request, trust, runtime):
                 "revision":req["revision"],"choice":receipt["choice"],"adoption_blocked":blocked}
     if action == "adoption.apply":
         _fields(payload, {"request_id", "candidate_id"})
-        req, decision, candidate = _decision_ready(directory, hc, payload["request_id"])
+        req, decision, candidate = _decision_ready(directory, state, payload["request_id"], runtime)
         if payload["candidate_id"] != candidate["candidate_id"]:
             _fail("unauthorized", "Late candidate is not the currently decided candidate")
         adoption = {"request_id":payload["request_id"],"candidate_id":candidate["candidate_id"],
@@ -354,7 +386,7 @@ def _apply(directory, state, request, trust, runtime):
     if action == "execution.claim":
         _fields(payload, {"task_id", "request_id", "expected_revision", "input_digest"})
         task_id = _id(payload["task_id"]); _hash(payload["input_digest"])
-        req, decision, candidate = _decision_ready(directory, hc, payload["request_id"])
+        req, decision, candidate = _decision_ready(directory, state, payload["request_id"], runtime)
         if (task_id not in req["blocked_task_ids"] or type(payload["expected_revision"]) is not int
             or payload["expected_revision"] != req["revision"]):
             _fail("stale_revision", "Final claim must match the current scoped decision")
@@ -366,7 +398,7 @@ def _apply(directory, state, request, trust, runtime):
         # All controlling requests must permit this task, including ancestor gates.
         for other_id, other_req in hc["requests"].items():
             if task_id in other_req["blocked_task_ids"]:
-                _decision_ready(directory, hc, other_id)
+                _decision_ready(directory, state, other_id, runtime)
         task = runtime.find_task(state, task_id)
         if state["mission"]["status"] != "active" or task["status"] != "pending":
             _fail("waiting", "Final claim requires an active Mission and an unstarted task")

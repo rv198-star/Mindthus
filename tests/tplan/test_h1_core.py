@@ -543,6 +543,25 @@ process.stdout.write(crypto.createHmac('sha256',Buffer.from(process.argv[2],'hex
         self.assertNotEqual(code,0,result)
         self.assertEqual(result['code'],'adoption_blocked')
 
+    def test_core_31_other_candidate_partial_failure_does_not_block_retained_input(self):
+        v1 = self.ready()
+        v2 = self.call('candidate.submit',{'task_id':'A','attempt_ref':'A-2',
+            'content_b64':base64.b64encode(b'failed other version').decode()})
+        runtime.append_event(self.mission,{'event_type':'acceptance_failed','task_id':'A',
+            'summary':'Only v2 failed; retained v1 is still accepted',
+            'payload':{'acceptance_ids':['A1'],'candidate_sha256':v2['content_sha256']}})
+        self.assertEqual(self.call('execution.claim',self.claim_payload())['candidate_id'],v1['candidate_id'])
+
+    def test_core_32_legacy_cannot_lower_referenced_mission_acceptance_definition(self):
+        self.ready()
+        before = runtime.read_mission(self.mission);after=copy.deepcopy(before)
+        after['mission']['acceptance_evidence'][0]['description']='Silently weakened requirement'
+        self.assertEqual(runtime.validate_mission(after),[])
+        with self.assertRaises(runtime.TplanError):
+            runtime.commit_mission_state(self.mission,before,after,
+                source={'kind':'runtime_script','name':'downgrade-acceptance-definition'})
+        runtime.transition_task_status(self.mission,'C','active')
+
 # Avoid inheriting the baseline test_* methods (which create their own Missions).
 for _name in dir(fixtures.H1KernelGateTests):
     if _name.startswith('test_'):

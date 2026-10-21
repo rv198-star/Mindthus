@@ -122,6 +122,29 @@ def controlled_task_ids(state: dict[str, Any], *, include_source=False) -> set[s
     return ids
 
 
+def protected_contract_task_ids(state: dict[str, Any]) -> set[str]:
+    """Close the scoped writer contract over ancestors and declared prerequisites."""
+    protected = controlled_task_ids(state, include_source=True)
+    tasks = {t["id"]:t for t in state.get("tasks", [])
+             if isinstance(t,dict) and isinstance(t.get("id"),str)}
+    plan = state.get("work_plan", {})
+    blocks = plan.get("blocks", []) if isinstance(plan,dict) else []
+    blocks = blocks if isinstance(blocks,list) else []
+    while True:
+        previous = set(protected)
+        for task_id in list(protected):
+            parent = tasks.get(task_id, {}).get("parent_id")
+            if isinstance(parent,str):
+                protected.add(parent)
+        for block in blocks:
+            if isinstance(block,dict) and isinstance(block.get("task_id"),str) and block["task_id"] in protected:
+                dependencies = block.get("depends_on")
+                if isinstance(dependencies,list):
+                    protected.update(t for t in dependencies if isinstance(t,str))
+        if protected == previous:
+            return protected
+
+
 def completion_findings(state: dict[str, Any]) -> list[str]:
     control = state.get("human_control")
     if not isinstance(control, dict):
@@ -237,7 +260,7 @@ def validate_transition(before: dict[str, Any], after: dict[str, Any], *,
     if old != new and not authorized:
         errors.append("H1 human_control is owned by the scoped authority")
     if not authorized:
-        protected = controlled_task_ids(before, include_source=True) | controlled_task_ids(after, include_source=True)
+        protected = protected_contract_task_ids(before) | protected_contract_task_ids(after)
         old_tasks = {t["id"]: t for t in before.get("tasks", []) if isinstance(t,dict) and isinstance(t.get("id"), str)}
         new_tasks = {t["id"]: t for t in after.get("tasks", []) if isinstance(t,dict) and isinstance(t.get("id"), str)}
         for task_id in protected:
@@ -251,6 +274,22 @@ def validate_transition(before: dict[str, Any], after: dict[str, Any], *,
                     for b in plan.get("blocks", []) if isinstance(b,dict) and b.get("task_id") in protected}
         if dependencies(before) != dependencies(after):
             errors.append("H1 native dependency declarations require scoped authority")
+        relevant_acceptance = {ac for task_id in protected for tasks in (old_tasks,new_tasks)
+                               for ac in tasks.get(task_id, {}).get("acceptance_evidence", [])
+                               if isinstance(ac,str)}
+        def acceptance_contract(state):
+            return {a["id"]:a for a in state.get("mission", {}).get("acceptance_evidence", [])
+                    if isinstance(a,dict) and isinstance(a.get("id"),str) and a["id"] in relevant_acceptance}
+        if acceptance_contract(before) != acceptance_contract(after):
+            errors.append("H1 inherited Mission acceptance contract requires scoped authority")
+        def scoped_blockers(state):
+            plan = state.get("work_plan", {})
+            if not isinstance(plan,dict) or not isinstance(plan.get("blockers", []),list):
+                return None
+            return [b for b in plan.get("blockers", []) if isinstance(b,dict) and
+                    (not b.get("task_ids") or any(t in protected for t in b.get("task_ids", []) if isinstance(t,str)))]
+        if scoped_blockers(before) != scoped_blockers(after):
+            errors.append("H1 scoped native blockers require scoped authority")
         if isinstance(after.get("active_task_id"), str) and after["active_task_id"] in controlled_task_ids(before):
             errors.append("H1 controlled task focus requires scoped authority")
     # Include both graphs. Re-parenting a pending child's parent in 'after'
