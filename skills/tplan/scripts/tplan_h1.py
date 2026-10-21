@@ -145,7 +145,7 @@ def protected_contract_task_ids(state: dict[str, Any]) -> set[str]:
             return protected
 
 
-def completion_findings(state: dict[str, Any]) -> list[str]:
+def completion_findings(state: dict[str, Any], events=None) -> list[str]:
     control = state.get("human_control")
     if not isinstance(control, dict):
         return []
@@ -156,9 +156,32 @@ def completion_findings(state: dict[str, Any]) -> list[str]:
             or adoption.get("decision_id") != req["current_decision_id"]):
             return ["H1 current Owner decision and adoption required for Mission completion"]
         for task_id in req["blocked_task_ids"]:
-            if not any(slot["task_id"] == task_id and slot["decision_id"] == req["current_decision_id"]
-                       for slot in control["execution_slots"].values()):
-                return ["H1 current execution claim required for Mission completion"]
+            slots = [slot for slot in control["execution_slots"].values()
+                     if slot["task_id"] == task_id and slot["decision_id"] == req["current_decision_id"]
+                     and slot["expected_revision"] == req["revision"]]
+            if len(slots) != 1 or "completion" not in slots[0]:
+                return ["H1 current accepted execution result required for Mission completion"]
+            slot = slots[0]
+            if events is not None:
+                from tplan_commands import digest
+                import tplan_runtime as runtime
+                completion = slot["completion"]
+                matches = [e for e in events if e.get("id") == completion["evidence_id"]]
+                if (len(matches) != 1 or digest(matches[0]) != completion["evidence_digest"]
+                    or matches[0].get("event_type") != "acceptance_passed"
+                    or matches[0].get("task_id") != task_id):
+                    return ["H1 qualified completion evidence is missing or changed"]
+                latest = {}
+                for event in events:
+                    if (event.get("task_id") == task_id
+                        and event.get("event_type") in {"acceptance_passed", "acceptance_failed"}):
+                        if runtime.validate_evidence_event(state,event,compatibility=True,internal=True):
+                            return ["H1 completion has malformed later acceptance evidence"]
+                        for ac in event["payload"]["acceptance_ids"]:
+                            latest[ac] = event
+                if any(latest.get(ac) != matches[0]
+                       for ac in runtime._acceptance_coverage_for_task(state,task_id)):
+                    return ["H1 current qualified B acceptance required for Mission completion"]
     return []
 
 
@@ -176,6 +199,36 @@ RECORD_FIELDS = {
 }
 
 
+def _validate_slot_result(hc, slot):
+    """Optional result/completion facts extend the original immutable slot."""
+    from tplan_commands import HASH, valid_id
+    if "result" not in slot:
+        return ["H1 completion requires a delivered result"] if "completion" in slot else []
+    result = slot["result"]
+    if (not isinstance(result, dict) or set(result) != {"candidate_id", "receipt_ref", "committed_at"}
+        or not all(isinstance(v, str) and v for v in result.values())
+        or not valid_id(result["candidate_id"]) or not valid_id(result["receipt_ref"])):
+        return ["H1 result fields invalid"]
+    candidate = hc["candidates"].get(result["candidate_id"], {})
+    if (candidate.get("task_id") != slot["task_id"] or candidate.get("attempt_ref") != slot["intent_id"]
+        or sum(f.get("receipt_ref") == result["receipt_ref"] and f.get("status") == "delivered"
+               and f.get("committed_at") == result["committed_at"]
+               for f in slot["receipts"] if isinstance(f,dict)) != 1):
+        return ["H1 delivered result must bind the original native slot attempt"]
+    if "completion" in slot:
+        completion = slot["completion"]
+        if (not isinstance(completion,dict) or set(completion) != {
+            "command_id", "evidence_id", "candidate_id", "receipt_digest", "evidence_digest"}
+            or not all(isinstance(v,str) and v for v in completion.values())
+            or completion["candidate_id"] != result["candidate_id"]
+            or not valid_id(completion["evidence_id"])
+            or not HASH.fullmatch(completion["receipt_digest"])
+            or not HASH.fullmatch(completion["evidence_digest"])
+            or hc["commands"].get(completion["command_id"],{}).get("action") != "task.complete"):
+            return ["H1 completion binding invalid"]
+    return []
+
+
 def _validate_records(state):
     from tplan_commands import HASH, valid_id
     hc = state["human_control"]
@@ -184,7 +237,9 @@ def _validate_records(state):
              if isinstance(t, dict) and isinstance(t.get("id"), str)}
     for table, fields in RECORD_FIELDS.items():
         for key, record in hc[table].items():
-            if not valid_id(key) or not isinstance(record, dict) or set(record) != fields:
+            optional = {"result", "completion"} if table == "execution_slots" else set()
+            if (not valid_id(key) or not isinstance(record, dict)
+                or set(record) - optional != fields):
                 errors.append(f"H1 {table} record fields invalid")
                 continue
             previous_errors = len(errors)
@@ -195,7 +250,7 @@ def _validate_records(state):
                 elif field in {"authorization_round", "expected_revision"}:
                     if type(value) is not int or value < 1:
                         errors.append(f"H1 {table} revision/round invalid")
-                elif field not in {"result", "receipts", "adoption_blocked"}:
+                elif field not in {"result", "completion", "receipts", "adoption_blocked"}:
                     if not isinstance(value, str) or not value:
                         errors.append(f"H1 {table} reference invalid")
             if len(errors) != previous_errors:
@@ -237,6 +292,7 @@ def _validate_records(state):
                             or fact["status"] not in {"sent", "unknown", "accepted", "delivered"}
                             or not valid_id(fact["receipt_ref"])):
                             errors.append("H1 dispatch receipt invalid")
+                    errors.extend(_validate_slot_result(hc, record))
             if table == "commands" and (record["command_id"] != key or not isinstance(record["result"], dict)):
                 errors.append("H1 command result invalid")
     for nonce, command_id in hc["used_nonces"].items():
@@ -316,9 +372,11 @@ def validate_transition(before: dict[str, Any], after: dict[str, Any], *,
     return errors
 
 
-def validate_evidence(state: dict[str, Any], event: dict[str, Any]) -> list[str]:
+def validate_evidence(state: dict[str, Any], event: dict[str, Any], *, authorized=False) -> list[str]:
     if event.get("event_type") in {"acceptance", "acceptance_passed"}:
         task_id = event.get("task_id")
         if isinstance(task_id, str) and task_id in controlled_task_ids(state):
+            if authorized and event["event_type"] == "acceptance_passed":
+                return []
             return ["H1 Owner authority cannot be replaced by acceptance evidence"]
     return []

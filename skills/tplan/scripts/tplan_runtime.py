@@ -3235,6 +3235,7 @@ def validate_evidence_event(
     *,
     compatibility: bool = False,
     internal: bool = False,
+    h1_control_authority: object | None = None,
 ) -> list[str]:
     """Validate evidence shape and mechanical references, never semantic truth.
 
@@ -3307,7 +3308,8 @@ def validate_evidence_event(
                 )
         errors.extend(acceptance_errors)
     if not compatibility:
-        errors.extend(validate_h1_evidence(mission, event))
+        errors.extend(validate_h1_evidence(mission, event,
+            authorized=internal and h1_control_authority is _H1_CONTROL_AUTHORITY))
     return errors
 
 
@@ -3412,7 +3414,7 @@ def _mission_completion_findings(
     if "human_control" in mission and validate_h1_control(mission):
         errors.append("H1 control structure is invalid; Mission cannot be completed")
     elif "human_control" in mission:
-        errors.extend(h1_completion_findings(mission))
+        errors.extend(h1_completion_findings(mission, events))
     return errors
 
 
@@ -4137,6 +4139,7 @@ def _commit_mission_state_unlocked(
             after,
             event,
             internal=reserved_evidence_authority is _RESERVED_EVIDENCE_AUTHORITY,
+            h1_control_authority=h1_control_authority,
         )
         if errors:
             raise TplanError("; ".join(errors))

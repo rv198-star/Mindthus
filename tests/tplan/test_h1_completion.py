@@ -4,12 +4,23 @@ import copy
 import unittest
 from unittest.mock import patch
 from tests.tplan import test_h1_core as core
-from tests.tplan.h1_test_host import acceptance_receipt, isolated_test_host, signed, host_request
-from tests.tplan import test_h1_kernel_gate as fixtures
+from tests.tplan.h1_test_host import acceptance_receipt, isolated_test_host
 import tplan_runtime as runtime
 
 
 class H1CompletionTests(core.H1CoreTests):
+    def setUp(self):
+        super().setUp()
+        before = runtime.read_mission(self.mission); after = copy.deepcopy(before)
+        after['mission']['acceptance_evidence'] = [
+            {'id':'A1','description':'Source A bytes verified'},
+            {'id':'A2','description':'B delivers the required business result'},
+            {'id':'A3','description':'Independent C is complete'}]
+        for task_id, ac in [('A','A1'),('B','A2'),('C','A3')]:
+            runtime.find_task(after,task_id)['acceptance_evidence'] = [ac]
+        runtime.commit_mission_state(self.mission,before,after,
+            source={'kind':'runtime_script','name':'synthetic-distinct-business-criteria'})
+
     def claim(self):
         self.source = self.ready()
         return self.call('execution.claim', self.claim_payload())
@@ -63,9 +74,11 @@ class H1CompletionTests(core.H1CoreTests):
         self.assertEqual(runtime.find_task(state, 'C')['status'], 'pending')
         event = next(e for e in runtime.read_events(self.mission) if e['id'] == result['evidence_id'])
         self.assertEqual(event['event_type'], 'acceptance_passed')
-        self.assertEqual(event['payload']['result_sha256'], slot['result_sha256'] if 'result_sha256' in slot else
-                         state['human_control']['candidates'][slot['result']['candidate_id']]['content_sha256'])
+        self.assertEqual(event['payload']['result_sha256'], state['human_control']['candidates'][slot['result']['candidate_id']]['content_sha256'])
+        self.assertEqual(event['payload']['acceptance_ids'], ['A2'])
         runtime.transition_task_status(self.mission, 'C', 'completed')
+        runtime.append_event(self.mission, {'event_type':'acceptance_passed','task_id':'C',
+            'summary':'Independent C meets its own criterion','payload':{'acceptance_ids':['A3']}})
         before = runtime.read_mission(self.mission); after = copy.deepcopy(before)
         after['mission']['status'] = 'completed'
         runtime.commit_mission_state(self.mission, before, after,
@@ -109,7 +122,7 @@ class H1CompletionTests(core.H1CoreTests):
                dict(input_digest='sha256:'+'1'*64), dict(dependency_digest='sha256:'+'1'*64),
                dict(delivery_digest='sha256:'+'1'*64), dict(actor_subject_ref='model'),
                dict(origin_binding_ref='wrong'), dict(origin_session_ref='wrong'), dict(origin_event_ref=''),
-               dict(acceptance_ids=[]), dict(acceptance_ids=['unknown']), dict(acceptance_ids=['A1','A1']),
+               dict(acceptance_ids=[]), dict(acceptance_ids=['unknown']), dict(acceptance_ids=['A2','A2']),
                dict(acceptance_contract_digest='sha256:'+'0'*64), dict(evidence_refs=[]),
                dict(evidence_refs=['x','x']), dict(summary=''), dict(summary='review\nforged'),
                dict(issued_at=1, expires_at=2), dict(secret='chosen'), dict(key_path='/tmp/key'),
@@ -194,7 +207,7 @@ class H1CompletionTests(core.H1CoreTests):
     def test_completion_11_legacy_and_reserved_evidence_cannot_bypass(self):
         slot = self.deliver()
         event = runtime.prepare_event(self.mission, {'event_type':'acceptance_passed','task_id':'B',
-            'summary':'Model claims reviewer accepted','payload':{'acceptance_ids':['A1']}})
+            'summary':'Model claims reviewer accepted','payload':{'acceptance_ids':['A2']}})
         before = runtime.read_mission(self.mission)
         for authority in (None, runtime._RESERVED_EVIDENCE_AUTHORITY):
             with self.subTest(authority=authority):
@@ -216,13 +229,59 @@ class H1CompletionTests(core.H1CoreTests):
     def test_completion_13_failed_B_acceptance_blocks_mission_close(self):
         slot = self.deliver(); self.call('task.complete', {'receipt':self.review(slot)})
         runtime.append_event(self.mission, {'event_type':'acceptance_failed','task_id':'B',
-            'summary':'Reviewer later invalidated B','payload':{'acceptance_ids':['A1']}})
+            'summary':'Reviewer later invalidated B','payload':{'acceptance_ids':['A2']}})
         runtime.transition_task_status(self.mission,'C','completed')
-        # Unrelated pass cannot hide B failure even when it shares the Mission AC.
+        # Unrelated pass cannot hide B failure.
         runtime.append_event(self.mission, {'event_type':'acceptance_passed','task_id':'C',
-            'summary':'Independent C passes','payload':{'acceptance_ids':['A1']}})
+            'summary':'Independent C passes','payload':{'acceptance_ids':['A3']}})
         state = runtime.read_mission(self.mission)
         self.assertTrue(runtime._mission_completion_findings(state,runtime.read_events(self.mission)))
+
+    def test_completion_14_current_adoption_and_fixed_actor_required(self):
+        slot = self.deliver(); receipt = self.review(slot)
+        from tests.tplan.h1_test_host import TEST_TRUST
+        trust = copy.deepcopy(TEST_TRUST); trust.pop('acceptance_actors')
+        with patch.object(self.api,'_trust_config',return_value=trust):
+            result,code = self.api.execute(self.mission,self.request('task.complete',{'receipt':receipt}))
+        self.assertNotEqual(code,0,result); self.assertEqual(result['code'],'unauthorized')
+        before = runtime.read_mission(self.mission); after = copy.deepcopy(before)
+        after['human_control']['adoptions'].clear()
+        with runtime.execution_trace_lock(self.mission):
+            runtime._commit_mission_state_unlocked(self.mission,before,after,
+                source={'kind':'runtime_script','name':'synthetic-current-adoption-removed'},
+                h1_control_authority=runtime._H1_CONTROL_AUTHORITY)
+        self.reject('task.complete', {'receipt':receipt}, 'waiting')
+
+    def test_completion_15_consumed_review_event_or_nonce_cannot_be_reused(self):
+        from tplan_commands import digest
+        slot = self.deliver(); receipt = self.review(slot)
+        before = runtime.read_mission(self.mission)
+        for key in (self.api._nonce_key(receipt,'acceptance'),
+                    digest({'kind':'acceptance_event','issuer':receipt['issuer_id'],
+                            'event':receipt['origin_event_ref']})):
+            after = copy.deepcopy(before)
+            after['human_control']['used_nonces'][key] = 'cmd-1'
+            current = runtime.read_mission(self.mission)
+            with runtime.execution_trace_lock(self.mission):
+                runtime._commit_mission_state_unlocked(self.mission,current,after,
+                    source={'kind':'runtime_script','name':'synthetic-previous-review-event'},
+                    h1_control_authority=runtime._H1_CONTROL_AUTHORITY)
+            self.reject('task.complete', {'receipt':receipt}, 'replay')
+
+    def test_completion_16_completion_evidence_integrity_at_original_close(self):
+        slot = self.deliver(); result = self.call('task.complete', {'receipt':self.review(slot)})
+        runtime.transition_task_status(self.mission,'C','completed')
+        runtime.append_event(self.mission, {'event_type':'acceptance_passed','task_id':'C',
+            'summary':'C passes','payload':{'acceptance_ids':['A3']}})
+        state = runtime.read_mission(self.mission); events = runtime.read_events(self.mission)
+        self.assertFalse(runtime._mission_completion_findings(state,events))
+        missing = [e for e in events if e['id'] != result['evidence_id']]
+        self.assertTrue(runtime._mission_completion_findings(state,missing))
+        tampered = copy.deepcopy(events)
+        next(e for e in tampered if e['id']==result['evidence_id'])['payload']['evidence_refs']=['forged']
+        self.assertTrue(runtime._mission_completion_findings(state,tampered))
+        duplicate = events + [next(e for e in events if e['id']==result['evidence_id'])]
+        self.assertTrue(runtime._mission_completion_findings(state,duplicate))
 
 
 for _name in dir(core.H1CoreTests):

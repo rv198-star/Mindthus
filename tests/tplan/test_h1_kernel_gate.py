@@ -75,7 +75,7 @@ class H1KernelGateTests(unittest.TestCase):
 
     def test_h1_module_is_in_required_runtime_fingerprint(self):
         manifest = json.loads((SCRIPTS.parent / "resources/runtime-manifest.json").read_text())
-        self.assertEqual(manifest["source_id"], "mindthus-tplan-h1bc-candidate")
+        self.assertEqual(manifest["source_id"], "mindthus-tplan-h1c2-candidate")
         self.assertIn("task_scoped_owner_gate", manifest["capabilities"])
         for field in ("required_scripts", "fingerprint_files"):
             self.assertIn("scripts/tplan_h1.py", manifest[field])

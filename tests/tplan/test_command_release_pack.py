@@ -56,12 +56,14 @@ class CommandReleasePackTests(unittest.TestCase):
                     probe = subprocess.run([sys.executable, "-B", "-I", "-c",
                         "import sys;sys.path.insert(0,sys.argv[1]);import tplan_h1_commands as h;"
                         "from pathlib import Path;assert h._trust_config() is None;"
-                        "r,c=h.execute(Path('/nonexistent'),{'protocol':h.PROTOCOL,'action':'execution.claim',"
+                        "\nfor action in ('execution.claim','result.record','task.complete'):\n"
+                        " r,c=h.execute(Path('/nonexistent'),{'protocol':h.PROTOCOL,'action':action,"
                         "'mission_id':'synthetic','command_id':'probe','expected_build_hash':'sha256:'+'0'*64,"
                         "'payload':{},'host_receipt':{}});assert c!=0 and r['code']=='host_disabled'",
                         str(scripts)], env=env, text=True, capture_output=True, timeout=20)
                     self.assertEqual(probe.returncode, 0, probe.stderr)
                     manifest = json.loads((skill / "resources/runtime-manifest.json").read_text())
+                    self.assertIn("scoped_task_completion", manifest["capabilities"])
                     for required in manifest["required_scripts"]:
                         self.assertTrue((skill / required).is_file(), required)
                     self.assertTrue((skill.parent / "runtime_bootstrap.py").is_file())
