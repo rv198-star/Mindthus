@@ -1,0 +1,51 @@
+test_core_26_sha_only_failure_blocks_current_input (tests.tplan.test_h1_core.H1CoreTests.test_core_26_sha_only_failure_blocks_current_input) ... FAIL
+test_core_27_attempt_only_failure_blocks_current_input (tests.tplan.test_h1_core.H1CoreTests.test_core_27_attempt_only_failure_blocks_current_input) ... FAIL
+test_core_28_legacy_cannot_remove_source_ancestor_acceptance_contract (tests.tplan.test_h1_core.H1CoreTests.test_core_28_legacy_cannot_remove_source_ancestor_acceptance_contract) ... FAIL
+test_core_29_owner_decision_records_failed_candidate_as_adoption_blocked (tests.tplan.test_h1_core.H1CoreTests.test_core_29_owner_decision_records_failed_candidate_as_adoption_blocked) ... FAIL
+test_core_30_failure_after_approval_blocks_adoption_itself (tests.tplan.test_h1_core.H1CoreTests.test_core_30_failure_after_approval_blocks_adoption_itself) ... FAIL
+
+======================================================================
+FAIL: test_core_26_sha_only_failure_blocks_current_input (tests.tplan.test_h1_core.H1CoreTests.test_core_26_sha_only_failure_blocks_current_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 490, in test_core_26_sha_only_failure_blocks_current_input
+    self.assertNotEqual(code,0,result)
+AssertionError: 0 == 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-5', 'action': 'execution.claim', 'ok': True, 'status': 'committed', 'code': None, 'data': {'slot_id': 'HS10363836d594aec51dfc69d47ff732c1990ba377211592bce6418b3bf2def128', 'mission_id': 'h1-case', 'task_id': 'B', 'authorization_round': 1, 'request_id': 'HR1', 'expected_revision': 2, 'candidate_id': 'CAdc53c520c6278c66334eeaa26a7e4238cb3ceee5a59c271235331092d56bad5b', 'candidate_sha256': 'sha256:56b0b7c5faaec6911a167ae94740ec7f6876a86c66f2d30da89e50c3d966e24d', 'decision_id': 'HD29c8b769d42b4cb8974a89eb022aed63', 'dependency_digest': 'sha256:41e0bfe6b5974a4413e5bbbfb6b17157b43eb9635bd1c63f723c90963bdb0231', 'input_digest': 'sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'host_ref': 'test-host', 'intent_id': 'HI83f92fed8fd74494b36bb5d2f724722f', 'session_id': 'session-c83c8f5f-76bd-4610-aa93-ca989b7f8d7c', 'native_request_id': 'd0268f6e-ac9f-4f16-b1b5-a9b55b4cc854', 'receipts': []}}
+
+======================================================================
+FAIL: test_core_27_attempt_only_failure_blocks_current_input (tests.tplan.test_h1_core.H1CoreTests.test_core_27_attempt_only_failure_blocks_current_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 499, in test_core_27_attempt_only_failure_blocks_current_input
+    self.assertNotEqual(code,0,result)
+AssertionError: 0 == 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-5', 'action': 'execution.claim', 'ok': True, 'status': 'committed', 'code': None, 'data': {'slot_id': 'HS10363836d594aec51dfc69d47ff732c1990ba377211592bce6418b3bf2def128', 'mission_id': 'h1-case', 'task_id': 'B', 'authorization_round': 1, 'request_id': 'HR1', 'expected_revision': 2, 'candidate_id': 'CAdc53c520c6278c66334eeaa26a7e4238cb3ceee5a59c271235331092d56bad5b', 'candidate_sha256': 'sha256:56b0b7c5faaec6911a167ae94740ec7f6876a86c66f2d30da89e50c3d966e24d', 'decision_id': 'HD4a018f28cb8b42c2b7e01c978b1c2eda', 'dependency_digest': 'sha256:53a4746cf601a4f5e48da73fbf7594b0a2f22ea5cba19d79c463d359cd5b1708', 'input_digest': 'sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'host_ref': 'test-host', 'intent_id': 'HIc3539c6a7ab641aabca312f94c4fadfa', 'session_id': 'session-53cd30cd-aa67-4cdc-a1f6-9562aea91f6c', 'native_request_id': '39abd921-3f68-4bd9-8d88-facffaed9d96', 'receipts': []}}
+
+======================================================================
+FAIL: test_core_28_legacy_cannot_remove_source_ancestor_acceptance_contract (tests.tplan.test_h1_core.H1CoreTests.test_core_28_legacy_cannot_remove_source_ancestor_acceptance_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 521, in test_core_28_legacy_cannot_remove_source_ancestor_acceptance_contract
+    with self.assertRaises(runtime.TplanError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TplanError not raised
+
+======================================================================
+FAIL: test_core_29_owner_decision_records_failed_candidate_as_adoption_blocked (tests.tplan.test_h1_core.H1CoreTests.test_core_29_owner_decision_records_failed_candidate_as_adoption_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 533, in test_core_29_owner_decision_records_failed_candidate_as_adoption_blocked
+    self.assertTrue(result['adoption_blocked'],result)
+AssertionError: None is not true : {'owner_decision_committed': True, 'decision_id': 'HDbe754cd72bfe4d6c9dd28c4f05641851', 'request_id': 'HR1', 'revision': 2, 'choice': 'approve_current', 'adoption_blocked': None}
+
+======================================================================
+FAIL: test_core_30_failure_after_approval_blocks_adoption_itself (tests.tplan.test_h1_core.H1CoreTests.test_core_30_failure_after_approval_blocks_adoption_itself)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/agentdock/worktrees/Mindthus-tplan-h1bc-20261021/tests/tplan/test_h1_core.py", line 543, in test_core_30_failure_after_approval_blocks_adoption_itself
+    self.assertNotEqual(code,0,result)
+AssertionError: 0 == 0 : {'protocol': 'tplan.h1.command.v1', 'mission_id': 'h1-case', 'command_id': 'cmd-4', 'action': 'adoption.apply', 'ok': True, 'status': 'committed', 'code': None, 'data': {'request_id': 'HR1', 'candidate_id': 'CAdc53c520c6278c66334eeaa26a7e4238cb3ceee5a59c271235331092d56bad5b', 'decision_id': 'HDf3bcdeb3e677458999e0a05454602183', 'content_sha256': 'sha256:56b0b7c5faaec6911a167ae94740ec7f6876a86c66f2d30da89e50c3d966e24d'}}
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.194s
+
+FAILED (failures=5)

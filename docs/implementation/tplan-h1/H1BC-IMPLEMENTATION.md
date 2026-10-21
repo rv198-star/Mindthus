@@ -143,3 +143,23 @@ HRequest aliases or regenerate after timeout/restart. Runtime schema checks thes
 formats; a dedicated RED→GREEN regression checks unknown/replay identity retention.
 This establishes wire-format compatibility only; real TeamSessionStore startup,
 delegation binding and prompt delivery still require Host integration acceptance.
+
+## Guardrail correction / partial failure binding and inherited contracts
+
+This protects the claim mainline from two observed legacy bypasses, without changing
+acceptance authority. A qualified source acceptance_failed with SHA-only, attempt-only,
+both matching, or no version qualifiers blocks the affected adopted input. A clearly
+other candidate's failure does not invalidate the retained input; contradictory or
+malformed qualifiers fail conservatively. Positive acceptance still needs both exact
+SHA and attempt. Owner decisions do not rehabilitate failed acceptance. The same
+candidate-scoped acceptance parser serves adoption and claim; a known current failure
+returns adoption_blocked before a UI can present it as usable adopted input.
+
+Ordinary writers preserve the before-state contract closure: controlled sources and
+targets, their ancestor acceptance providers, and declared native prerequisite contract
+owners. Preserve their roles, parent/acceptance fields and native dependency declarations,
+as well as referenced Mission acceptance definitions. Moving an ancestor criterion to
+unrelated C cannot remove A's inherited requirement. This guardrail does not grant
+permission from ancestor completion, change C's independent progress, or replace native
+admission with another scheduler. Changes to this protected contract need a future
+explicit replan capability; they are unsupported by this slice.

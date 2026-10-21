@@ -480,6 +480,69 @@ process.stdout.write(crypto.createHmac('sha256',Buffer.from(process.argv[2],'hex
             self.assertEqual(slot[field],replay['data'][field])
             self.assertEqual(slot[field],current[field])
 
+    def test_core_26_sha_only_failure_blocks_current_input(self):
+        v1 = self.ready()
+        runtime.append_event(self.mission,{'event_type':'acceptance_failed','task_id':'A',
+            'summary':'Reviewer rejected this exact SHA',
+            'payload':{'acceptance_ids':['A1'],'candidate_sha256':v1['content_sha256']}})
+        with isolated_test_host():
+            result,code = self.api.execute(self.mission,self.request('execution.claim',self.claim_payload()))
+        self.assertNotEqual(code,0,result)
+
+    def test_core_27_attempt_only_failure_blocks_current_input(self):
+        self.ready()
+        runtime.append_event(self.mission,{'event_type':'acceptance_failed','task_id':'A',
+            'summary':'Reviewer rejected this exact attempt',
+            'payload':{'acceptance_ids':['A1'],'attempt_ref':'A-1'}})
+        with isolated_test_host():
+            result,code = self.api.execute(self.mission,self.request('execution.claim',self.claim_payload()))
+        self.assertNotEqual(code,0,result)
+
+    def test_core_28_legacy_cannot_remove_source_ancestor_acceptance_contract(self):
+        before = runtime.read_mission(self.mission);after=copy.deepcopy(before)
+        after['mission']['acceptance_evidence'].append({'id':'A2','description':'Inherited source acceptance'})
+        parent = runtime.normalize_task_for_mission(after,{'id':'P','title':'Source parent',
+            'role':'success-critical','mission_contribution':'Parent governs A delivery',
+            'acceptance_evidence':['A2']})
+        after['tasks'].append(parent)
+        runtime.find_task(after,'A').update(parent_id='P',kind='subtask',level=2,
+            parent_contribution='Source delivery',parent_acceptance='Parent checks A2',mission_trace='via P')
+        runtime.commit_mission_state(self.mission,before,after,source={'kind':'runtime_script','name':'ancestor-fixture'})
+        v1 = self.ready()
+        with isolated_test_host():
+            result,code = self.api.execute(self.mission,self.request('execution.claim',self.claim_payload()))
+        self.assertNotEqual(code,0,result)
+        before = runtime.read_mission(self.mission);after=copy.deepcopy(before)
+        runtime.find_task(after,'P')['acceptance_evidence']=['A1']
+        # Preserve ordinary schema coverage: move A2 to unrelated C. This must
+        # not remove A's inherited requirement at the canonical writer boundary.
+        runtime.find_task(after,'C')['acceptance_evidence'].append('A2')
+        self.assertEqual(runtime.validate_mission(after),[])
+        with self.assertRaises(runtime.TplanError):
+            runtime.commit_mission_state(self.mission,before,after,source={'kind':'runtime_script','name':'downgrade-ancestor'})
+        with isolated_test_host():
+            result,code = self.api.execute(self.mission,self.request('execution.claim',self.claim_payload()))
+        self.assertNotEqual(code,0,result)
+
+    def test_core_29_owner_decision_records_failed_candidate_as_adoption_blocked(self):
+        v1 = self.pending()
+        runtime.append_event(self.mission,{'event_type':'acceptance_failed','task_id':'A',
+            'summary':'Explicit same candidate failure before Owner decision',
+            'payload':{'acceptance_ids':['A1'],'candidate_sha256':v1['content_sha256']}})
+        result = self.approve(v1)
+        self.assertTrue(result['adoption_blocked'],result)
+
+    def test_core_30_failure_after_approval_blocks_adoption_itself(self):
+        v1 = self.pending();self.approve(v1)
+        runtime.append_event(self.mission,{'event_type':'acceptance_failed','task_id':'A',
+            'summary':'Explicit same attempt failure before adoption',
+            'payload':{'acceptance_ids':['A1'],'attempt_ref':'A-1'}})
+        with isolated_test_host():
+            result,code = self.api.execute(self.mission,self.request('adoption.apply',
+                {'request_id':'HR1','candidate_id':v1['candidate_id']}))
+        self.assertNotEqual(code,0,result)
+        self.assertEqual(result['code'],'adoption_blocked')
+
 # Avoid inheriting the baseline test_* methods (which create their own Missions).
 for _name in dir(fixtures.H1KernelGateTests):
     if _name.startswith('test_'):
