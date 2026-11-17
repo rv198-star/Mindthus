@@ -1,0 +1,909 @@
+{
+  "schema_version": "tplan.v0.1",
+  "runtime_provenance": {
+    "schema_version": "tplan.runtime_provenance.v0.1",
+    "origin": "native",
+    "fingerprint": {
+      "schema_version": "tplan.runtime_fingerprint.v0.1",
+      "package_version": "1.6.0-h1c2.1",
+      "source_id": "mindthus-tplan-h1c2-candidate",
+      "skill_root": "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan",
+      "script_root": "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan/scripts",
+      "build_hash": "sha256:d5c2045a58026ac229a2922677bfc820c7eaea8c58027fbaa84fe4396db94841",
+      "capability_versions": {
+        "codex_telemetry_adapter": "tplan.codex_telemetry_adapter.v0.2",
+        "codex_telemetry_dispatcher": "tplan.codex_telemetry_dispatcher.v0.1",
+        "collaboration": "tplan.collaboration.v0.1",
+        "command_results": "tplan.command_results.v0.1",
+        "execution_cost_tree": "tplan.execution_cost_tree.v0.9",
+        "execution_trace": "tplan.execution_trace.v0.1",
+        "human_control": "tplan.h1.v0.1",
+        "mission": "tplan.v0.1",
+        "progress_view": "tplan.progress_view.v1",
+        "runtime_doctor": "tplan.runtime_doctor.v0.1",
+        "runtime_provenance": "tplan.runtime_provenance.v0.1",
+        "work_plan": "tplan.work_plan.v0.1",
+        "work_view": "tplan.work_view.v0.1"
+      },
+      "capabilities": [
+        "atomic_command_results",
+        "atomic_mission_mutation",
+        "codex_hook_activation_preflight",
+        "codex_hook_stable_dispatcher",
+        "codex_hook_telemetry",
+        "codex_otel_ingestion",
+        "execution_trace",
+        "read_only_progress_view",
+        "read_only_work_view",
+        "runtime_doctor",
+        "runtime_provenance",
+        "scoped_owner_execution_core",
+        "scoped_task_completion",
+        "standard_execution_timeline",
+        "task_scoped_owner_gate",
+        "terminal_completion_handoff",
+        "tplan.collaboration.v0.1",
+        "work_plan_metadata"
+      ]
+    }
+  },
+  "mission": {
+    "id": "collaboration-mission",
+    "title": "Collaboration mission",
+    "objective": "Deliver a verified collaboration runtime",
+    "status": "active",
+    "human_in_loop": 0,
+    "risk_tolerance": 50,
+    "resource_sufficiency": 50,
+    "acceptance_evidence": [
+      {
+        "id": "A1",
+        "description": "Verified collaboration runtime"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T1",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "Implement the result",
+      "status": "active",
+      "role": "success-critical",
+      "evidence_links": [],
+      "mission_contribution": "Delivers A1",
+      "acceptance_evidence": [
+        "A1"
+      ]
+    },
+    {
+      "id": "T2",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "Protect the mainline",
+      "status": "pending",
+      "role": "supporting",
+      "evidence_links": [],
+      "mission_contribution": "Maintains acceptance coherence",
+      "acceptance_evidence": []
+    }
+  ],
+  "active_task_id": "T2",
+  "collaboration": {
+    "schema_version": "tplan.collaboration.v0.1",
+    "enabled_at": "2026-11-17T11:39:06.451654+00:00",
+    "coordinator": {
+      "thread_ref": "thread-a",
+      "host_ref": "local",
+      "responsibility": "Own the user objective, scope, and acceptance",
+      "communication_authorization_refs": [
+        "user-turn-1"
+      ],
+      "generation": 1
+    },
+    "participants": {
+      "B": {
+        "thread_ref": "thread-b",
+        "host_ref": "local",
+        "responsibility": "Implement and report bounded work",
+        "communication_authorization_refs": [
+          "user-turn-1"
+        ]
+      },
+      "C": {
+        "thread_ref": "thread-c",
+        "host_ref": "local",
+        "responsibility": "Review current artifacts",
+        "communication_authorization_refs": [
+          "user-turn-1"
+        ]
+      }
+    },
+    "policy": {
+      "max_pending_feedback": 128,
+      "processing_deadline_seconds": 900
+    },
+    "delegations": {
+      "D1": {
+        "delegation_id": "D1",
+        "task_id": "T1",
+        "round": 1,
+        "assignee_id": "B",
+        "write_scope": "workspace/T1",
+        "contract_version": "contract-r1",
+        "instruction_summary": "Complete bounded work for T1",
+        "input_refs": [
+          "artifact://T1/input"
+        ],
+        "dependency_versions": {
+          "design": "v1"
+        },
+        "required_review": {
+          "required": true,
+          "reviewer_id": "C",
+          "scope_refs": [
+            "scope://T1"
+          ]
+        },
+        "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+        "intent_id": "I1",
+        "status": "executed",
+        "created_at": "2026-11-17T11:39:06.460165+00:00",
+        "disposition": "evidence_requested"
+      }
+    },
+    "intents": {
+      "I1": {
+        "intent_id": "I1",
+        "target_participant_id": "B",
+        "target_thread_ref": "thread-b",
+        "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+        "send_state": "confirmed",
+        "execution_state": "completed",
+        "stop_requested": false,
+        "native_refs": [
+          "thread://b/message/I1"
+        ],
+        "observed_at": "2026-11-17T01:00:00+00:00",
+        "reason": "Observed host dispatch fact",
+        "created_at": "2026-11-17T11:39:06.460165+00:00"
+      }
+    },
+    "feedback": {
+      "F5663ccc50b2b56e4": {
+        "feedback_id": "F5663ccc50b2b56e4",
+        "kind": "progress",
+        "source_event_ref": "progress-0",
+        "source_thread_ref": "thread-b",
+        "source_host_ref": "local",
+        "source_role_id": "B",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": null,
+        "artifact_digest": null,
+        "summary": "Routine progress 0: no changed contract or artifact.",
+        "original_ref": "controlled-peer-fixture://T28/progress-0",
+        "attachment_refs": [],
+        "content_digest": "sha256:a423a310a3f5f2c9d77587cc968cea59603f3b101fc23a4692169edf0dcdea02",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:39:06.580258+00:00",
+        "resolution": {
+          "disposition": "answered",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "本批普通进展没有改变合同或当前成果，合并登记，不扩范围、不改变焦点。"
+          },
+          "evidence_refs": [],
+          "resolved_at": "2026-11-17T11:40:30.982190+00:00"
+        }
+      },
+      "Ff3cc28e325c0363e": {
+        "feedback_id": "Ff3cc28e325c0363e",
+        "kind": "progress",
+        "source_event_ref": "progress-1",
+        "source_thread_ref": "thread-b",
+        "source_host_ref": "local",
+        "source_role_id": "B",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": null,
+        "artifact_digest": null,
+        "summary": "Routine progress 1: no changed contract or artifact.",
+        "original_ref": "controlled-peer-fixture://T28/progress-1",
+        "attachment_refs": [],
+        "content_digest": "sha256:50e17d410e9b8123b24dd9a39239f719e283c6f2113c13a71b64a97d88056a5f",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:39:06.588218+00:00",
+        "resolution": {
+          "disposition": "answered",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "本批普通进展没有改变合同或当前成果，合并登记，不扩范围、不改变焦点。"
+          },
+          "evidence_refs": [],
+          "resolved_at": "2026-11-17T11:40:30.991370+00:00"
+        }
+      },
+      "F5441afd02998bce3": {
+        "feedback_id": "F5441afd02998bce3",
+        "kind": "progress",
+        "source_event_ref": "progress-2",
+        "source_thread_ref": "thread-b",
+        "source_host_ref": "local",
+        "source_role_id": "B",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": null,
+        "artifact_digest": null,
+        "summary": "Routine progress 2: no changed contract or artifact.",
+        "original_ref": "controlled-peer-fixture://T28/progress-2",
+        "attachment_refs": [],
+        "content_digest": "sha256:7c950b4ca22d06139608bebe75906a67acbd1b48a7f9d7c2410b89a137c5d8b5",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:39:06.596589+00:00",
+        "resolution": {
+          "disposition": "answered",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "本批普通进展没有改变合同或当前成果，合并登记，不扩范围、不改变焦点。"
+          },
+          "evidence_refs": [],
+          "resolved_at": "2026-11-17T11:40:31.000578+00:00"
+        }
+      },
+      "F9a05bde83d332eb0": {
+        "feedback_id": "F9a05bde83d332eb0",
+        "kind": "progress",
+        "source_event_ref": "progress-3",
+        "source_thread_ref": "thread-b",
+        "source_host_ref": "local",
+        "source_role_id": "B",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": null,
+        "artifact_digest": null,
+        "summary": "Routine progress 3: no changed contract or artifact.",
+        "original_ref": "controlled-peer-fixture://T28/progress-3",
+        "attachment_refs": [],
+        "content_digest": "sha256:83f74f27e256ee2a4ba3ca4277ee780b5ad018cbdfa4ecc3be247b95b35b3807",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:39:06.605166+00:00",
+        "resolution": {
+          "disposition": "answered",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "本批普通进展没有改变合同或当前成果，合并登记，不扩范围、不改变焦点。"
+          },
+          "evidence_refs": [],
+          "resolved_at": "2026-11-17T11:40:31.010047+00:00"
+        }
+      },
+      "Fc9e35bc2ea2c1be8": {
+        "feedback_id": "Fc9e35bc2ea2c1be8",
+        "kind": "progress",
+        "source_event_ref": "progress-4",
+        "source_thread_ref": "thread-b",
+        "source_host_ref": "local",
+        "source_role_id": "B",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": null,
+        "artifact_digest": null,
+        "summary": "Routine progress 4: no changed contract or artifact.",
+        "original_ref": "controlled-peer-fixture://T28/progress-4",
+        "attachment_refs": [],
+        "content_digest": "sha256:22016aa930c6a76f5184aabb3b7a0ab196cd5094db898fed00ff8d083fea2a4c",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:39:06.613671+00:00",
+        "resolution": {
+          "disposition": "answered",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "本批普通进展没有改变合同或当前成果，合并登记，不扩范围、不改变焦点。"
+          },
+          "evidence_refs": [],
+          "resolved_at": "2026-11-17T11:40:31.019591+00:00"
+        }
+      },
+      "Fe94b69a7dc9fdb01": {
+        "feedback_id": "Fe94b69a7dc9fdb01",
+        "kind": "review",
+        "source_event_ref": "concern-0",
+        "source_thread_ref": "thread-c",
+        "source_host_ref": "local",
+        "source_role_id": "C",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": "artifact://h1",
+        "artifact_digest": "sha256:7399985e5dc83141cd5e5e9c9ed1985de2d72c7211a6715d53b3e908654a0279",
+        "summary": "Same review concern: retry behavior still needs consolidated evidence.",
+        "original_ref": "controlled-peer-fixture://T28/concern-0",
+        "attachment_refs": [],
+        "content_digest": "sha256:9f0b2d4e2b994c65813d24734639e459764f9f4c90261505eade30b67375dc31",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:39:06.622300+00:00",
+        "resolution": {
+          "disposition": "evidence_requested",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "同一 h1 的重复审查疑点合并处理，请 C 返回覆盖既定范围的证据与结论；当前缺口保留，不把疑点改写为 PASS。"
+          },
+          "evidence_refs": [],
+          "resolved_at": "2026-11-17T11:40:31.029455+00:00"
+        }
+      },
+      "F73197ba114077c1e": {
+        "feedback_id": "F73197ba114077c1e",
+        "kind": "review",
+        "source_event_ref": "concern-1",
+        "source_thread_ref": "thread-c",
+        "source_host_ref": "local",
+        "source_role_id": "C",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": "artifact://h1",
+        "artifact_digest": "sha256:7399985e5dc83141cd5e5e9c9ed1985de2d72c7211a6715d53b3e908654a0279",
+        "summary": "Same review concern: retry behavior still needs consolidated evidence.",
+        "original_ref": "controlled-peer-fixture://T28/concern-1",
+        "attachment_refs": [],
+        "content_digest": "sha256:3e3ec7650ca499d5c4925640293da8be53107cbe7ff2857c832f156d10acfe72",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:39:06.631176+00:00",
+        "resolution": {
+          "disposition": "evidence_requested",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "同一 h1 的重复审查疑点合并处理，请 C 返回覆盖既定范围的证据与结论；当前缺口保留，不把疑点改写为 PASS。"
+          },
+          "evidence_refs": [],
+          "resolved_at": "2026-11-17T11:40:31.039409+00:00"
+        }
+      },
+      "Ffc0ee02a3f950ee5": {
+        "feedback_id": "Ffc0ee02a3f950ee5",
+        "kind": "review",
+        "source_event_ref": "concern-2",
+        "source_thread_ref": "thread-c",
+        "source_host_ref": "local",
+        "source_role_id": "C",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": "artifact://h1",
+        "artifact_digest": "sha256:7399985e5dc83141cd5e5e9c9ed1985de2d72c7211a6715d53b3e908654a0279",
+        "summary": "Same review concern: retry behavior still needs consolidated evidence.",
+        "original_ref": "controlled-peer-fixture://T28/concern-2",
+        "attachment_refs": [],
+        "content_digest": "sha256:598ef3a92fbb2a7d0dcdac50d606d9a413ddabb02b72e5c84406c6a9337fd70b",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:39:06.640610+00:00",
+        "resolution": {
+          "disposition": "evidence_requested",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "同一 h1 的重复审查疑点合并处理，请 C 返回覆盖既定范围的证据与结论；当前缺口保留，不把疑点改写为 PASS。"
+          },
+          "evidence_refs": [],
+          "resolved_at": "2026-11-17T11:40:31.049610+00:00"
+        }
+      },
+      "Faa421bf2d8ab16d1": {
+        "feedback_id": "Faa421bf2d8ab16d1",
+        "kind": "review",
+        "source_event_ref": "consolidated-current-review",
+        "source_thread_ref": "thread-c",
+        "source_host_ref": "local",
+        "source_role_id": "C",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": "artifact://h1",
+        "artifact_digest": "sha256:7399985e5dc83141cd5e5e9c9ed1985de2d72c7211a6715d53b3e908654a0279",
+        "summary": "Consolidated C review: PASS for D1 round 1, contract-r1, artifact h1 and complete required scope scope://T1. Retry evidence is now supplied.",
+        "original_ref": "controlled-peer-fixture://T28/consolidated-current-review",
+        "attachment_refs": [],
+        "content_digest": "sha256:30d127fada98698ac89ea6c2d6ad521030a7eda89aa7fdadaee0bc0aa07963aa",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:42:00.767117+00:00",
+        "resolution": {
+          "disposition": "evidence_requested",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "将 C 对指定 h1/轮次/范围的合并审查意见归档；当前缺少可直接核对的成果及运行证据引用，先补该缺项，A 继续原合同审计，不完成 T1。"
+          },
+          "evidence_refs": [],
+          "resolved_at": "2026-11-17T11:43:36.660091+00:00"
+        }
+      }
+    },
+    "adoptions": {},
+    "reviews": {
+      "R0d76093638b3b29d": {
+        "review_id": "R0d76093638b3b29d",
+        "feedback_id": "Faa421bf2d8ab16d1",
+        "source_event_ref": "consolidated-current-review",
+        "reviewer_id": "C",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": "artifact://h1",
+        "artifact_digest": "sha256:7399985e5dc83141cd5e5e9c9ed1985de2d72c7211a6715d53b3e908654a0279",
+        "scope_refs": [
+          "scope://T1"
+        ],
+        "verdict": "PASS",
+        "rationale": "将 C 对指定 h1/轮次/范围的合并审查意见归档；当前缺少可直接核对的成果及运行证据引用，先补该缺项，A 继续原合同审计，不完成 T1。",
+        "recorded_at": "2026-11-17T11:43:36.660091+00:00"
+      }
+    },
+    "repair_obligations": {},
+    "coordination": {
+      "state": "working",
+      "focus_task_id": "T2",
+      "gap_summary": "Need current outcome evidence for A1",
+      "next_action": "Continue T2 acceptance review; obtain the referenced h1 artifact/evidence before adoption",
+      "resume_basis": [
+        "T2"
+      ],
+      "waiting_on": [],
+      "updated_at": "2026-11-17T11:43:36.660091+00:00"
+    },
+    "commands": {
+      "command-1": {
+        "command_id": "command-1",
+        "action": "enable",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:749ff0c6fa57ebb1e3f6c0ee478980fa7ef8bf1815117e4f0f041704b3f3e16d",
+        "commit_id": "CCf57ce148e927",
+        "committed_at": "2026-11-17T11:39:06.451654+00:00",
+        "data": {
+          "enabled": true,
+          "coordinator_generation": 1
+        }
+      },
+      "command-2": {
+        "command_id": "command-2",
+        "action": "delegation.prepare",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:7735884ca5674843d35009c9d54023cc26691c48c1a322d1323842c9a9a9615b",
+        "commit_id": "CC615290936612",
+        "committed_at": "2026-11-17T11:39:06.460165+00:00",
+        "data": {
+          "delegation_id": "D1",
+          "intent_id": "I1"
+        }
+      },
+      "command-3": {
+        "command_id": "command-3",
+        "action": "dispatch.record",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:4b2a45c9db0abef142c55e256bd9c806f59238e17466ab58a9b55af55370362d",
+        "commit_id": "CC312ce35324ed",
+        "committed_at": "2026-11-17T11:39:06.469430+00:00",
+        "data": {
+          "intent_id": "I1",
+          "send_state": "confirmed",
+          "execution_state": "completed",
+          "status": "executed"
+        }
+      },
+      "command-4": {
+        "command_id": "command-4",
+        "action": "coordination.checkpoint",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:1d113d4d3a9a6b3ba25a57eaabc763288d9b57cd9af5eea718324cb220c4240e",
+        "commit_id": "CC786751854cfb",
+        "committed_at": "2026-11-17T11:39:06.478463+00:00",
+        "data": {
+          "state": "working",
+          "focus_task_id": "T2",
+          "next_action": "Review the approved contract and verify the remaining A1 evidence",
+          "rationale": "Keep action aligned to the user objective"
+        }
+      },
+      "source-T28-2": {
+        "command_id": "source-T28-2",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:f2b299c2aa1fab3fa297a90312b536f3a2b4ccec4ba92f9f4f23ca3e54aa1776",
+        "commit_id": "CCe37753186671",
+        "committed_at": "2026-11-17T11:39:06.580258+00:00",
+        "data": {
+          "feedback_id": "F5663ccc50b2b56e4",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T28-3": {
+        "command_id": "source-T28-3",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:ebb058f03dd253c6b9cde059fd0d8fc147b583d3281ec7c0562f03eb3ed95cf3",
+        "commit_id": "CC7e592fc0d4dc",
+        "committed_at": "2026-11-17T11:39:06.588218+00:00",
+        "data": {
+          "feedback_id": "Ff3cc28e325c0363e",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T28-4": {
+        "command_id": "source-T28-4",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:e2379a3ce7780399c8b02f73ce31d3aa7e48dda534967e7cb6ba45fcfd2d7afd",
+        "commit_id": "CC1d7a0bfe9d63",
+        "committed_at": "2026-11-17T11:39:06.596589+00:00",
+        "data": {
+          "feedback_id": "F5441afd02998bce3",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T28-5": {
+        "command_id": "source-T28-5",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:083abdc31260daa463d490128b3c5f7049d13d7f454c566bbf72310037afbe1d",
+        "commit_id": "CCdd883adc5a73",
+        "committed_at": "2026-11-17T11:39:06.605166+00:00",
+        "data": {
+          "feedback_id": "F9a05bde83d332eb0",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T28-6": {
+        "command_id": "source-T28-6",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:89cb874c8a117b67fef2e41a0f789db69e6798f24243d1c010aadf79638aabb3",
+        "commit_id": "CC7dda28d60267",
+        "committed_at": "2026-11-17T11:39:06.613671+00:00",
+        "data": {
+          "feedback_id": "Fc9e35bc2ea2c1be8",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T28-7": {
+        "command_id": "source-T28-7",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:6f45e8bd17e722a9a186891f811ca43fcf8755094d995f3ccd9fed05d32205e0",
+        "commit_id": "CC67500ac7b172",
+        "committed_at": "2026-11-17T11:39:06.622300+00:00",
+        "data": {
+          "feedback_id": "Fe94b69a7dc9fdb01",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T28-8": {
+        "command_id": "source-T28-8",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:3140199ceb4105cef287594eb4b2f47e4bff21161b7c020a0e99af6b5ad8a14f",
+        "commit_id": "CCd6a3d5cc2968",
+        "committed_at": "2026-11-17T11:39:06.631176+00:00",
+        "data": {
+          "feedback_id": "F73197ba114077c1e",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T28-9": {
+        "command_id": "source-T28-9",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:0303d886205dedf152fe6f8f001ccbaaf89b4f442803d006ac6e0a04a4f74b90",
+        "commit_id": "CCc1bf2bbdad26",
+        "committed_at": "2026-11-17T11:39:06.640610+00:00",
+        "data": {
+          "feedback_id": "Ffc0ee02a3f950ee5",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T28-17": {
+        "command_id": "source-T28-17",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:3b5f52907f486c4e2c8fdcb7acc51b060e9ab4657aad29d7eed86236e53ec3b3",
+        "commit_id": "CCae3ec4bbc364",
+        "committed_at": "2026-11-17T11:40:30.982190+00:00",
+        "data": {
+          "feedback_id": "F5663ccc50b2b56e4",
+          "disposition": "answered",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Continue T2 contract checks; await one consolidated C review for h1",
+            "rationale": "本批普通进展没有改变合同或当前成果，合并登记，不扩范围、不改变焦点。"
+          }
+        }
+      },
+      "source-T28-18": {
+        "command_id": "source-T28-18",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:69e4bc4ffb65a87e932cdb1428f38abd0a4ff0c4f1e23014f29b491a8fb61c67",
+        "commit_id": "CCddbf199b5f98",
+        "committed_at": "2026-11-17T11:40:30.991370+00:00",
+        "data": {
+          "feedback_id": "Ff3cc28e325c0363e",
+          "disposition": "answered",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Continue T2 contract checks; await one consolidated C review for h1",
+            "rationale": "本批普通进展没有改变合同或当前成果，合并登记，不扩范围、不改变焦点。"
+          }
+        }
+      },
+      "source-T28-19": {
+        "command_id": "source-T28-19",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:1e4b70d8a60a1cc1b5cdd947639b1da8eb19c744338a0d2a5a103d32f66bcefb",
+        "commit_id": "CC6fb6b08169e6",
+        "committed_at": "2026-11-17T11:40:31.000578+00:00",
+        "data": {
+          "feedback_id": "F5441afd02998bce3",
+          "disposition": "answered",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Continue T2 contract checks; await one consolidated C review for h1",
+            "rationale": "本批普通进展没有改变合同或当前成果，合并登记，不扩范围、不改变焦点。"
+          }
+        }
+      },
+      "source-T28-20": {
+        "command_id": "source-T28-20",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:035f322b1a273d5ce1996b0cd670bb4c1d285ca7da721b416542cecee9cbba45",
+        "commit_id": "CC86a7c5ea439c",
+        "committed_at": "2026-11-17T11:40:31.010047+00:00",
+        "data": {
+          "feedback_id": "F9a05bde83d332eb0",
+          "disposition": "answered",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Continue T2 contract checks; await one consolidated C review for h1",
+            "rationale": "本批普通进展没有改变合同或当前成果，合并登记，不扩范围、不改变焦点。"
+          }
+        }
+      },
+      "source-T28-21": {
+        "command_id": "source-T28-21",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:9125a10922b4de171b833c4661fc4fc0c6c13c32a92f889d1012f647880fff63",
+        "commit_id": "CC319ca16d1fde",
+        "committed_at": "2026-11-17T11:40:31.019591+00:00",
+        "data": {
+          "feedback_id": "Fc9e35bc2ea2c1be8",
+          "disposition": "answered",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Continue T2 contract checks; await one consolidated C review for h1",
+            "rationale": "本批普通进展没有改变合同或当前成果，合并登记，不扩范围、不改变焦点。"
+          }
+        }
+      },
+      "source-T28-22": {
+        "command_id": "source-T28-22",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:a7ce0fe66d9fc12dbb36289233f4fda0b24bf1cee37b1b6aca4e690adc084282",
+        "commit_id": "CCd2ee252f490e",
+        "committed_at": "2026-11-17T11:40:31.029455+00:00",
+        "data": {
+          "feedback_id": "Fe94b69a7dc9fdb01",
+          "disposition": "evidence_requested",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Continue T2 contract checks; await one consolidated C review for h1",
+            "rationale": "同一 h1 的重复审查疑点合并处理，请 C 返回覆盖既定范围的证据与结论；当前缺口保留，不把疑点改写为 PASS。"
+          }
+        }
+      },
+      "source-T28-23": {
+        "command_id": "source-T28-23",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:6974e79416f65032c0d675a06d7e366d0313b810b24f490d84e15c4f4f6a25b7",
+        "commit_id": "CC1c261d324a4c",
+        "committed_at": "2026-11-17T11:40:31.039409+00:00",
+        "data": {
+          "feedback_id": "F73197ba114077c1e",
+          "disposition": "evidence_requested",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Continue T2 contract checks; await one consolidated C review for h1",
+            "rationale": "同一 h1 的重复审查疑点合并处理，请 C 返回覆盖既定范围的证据与结论；当前缺口保留，不把疑点改写为 PASS。"
+          }
+        }
+      },
+      "source-T28-24": {
+        "command_id": "source-T28-24",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:bb4fd85d9daccd9309f02823edf15e4fc54a9032b1fbc53dae904fe336f68ebb",
+        "commit_id": "CCd7bf571080a6",
+        "committed_at": "2026-11-17T11:40:31.049610+00:00",
+        "data": {
+          "feedback_id": "Ffc0ee02a3f950ee5",
+          "disposition": "evidence_requested",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Continue T2 contract checks; await one consolidated C review for h1",
+            "rationale": "同一 h1 的重复审查疑点合并处理，请 C 返回覆盖既定范围的证据与结论；当前缺口保留，不把疑点改写为 PASS。"
+          }
+        }
+      },
+      "source-T28-30": {
+        "command_id": "source-T28-30",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:41cef154c0b688050ffbfa464727fd2229f7141ee041af43bf21689646759c76",
+        "commit_id": "CC6c3fabb61ddb",
+        "committed_at": "2026-11-17T11:42:00.767117+00:00",
+        "data": {
+          "feedback_id": "Faa421bf2d8ab16d1",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T28-32": {
+        "command_id": "source-T28-32",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:3d91d92ee0a8cf749f1a609a74fe915a357951e63ddad11249e33a215cd7866b",
+        "commit_id": "CC9ce99c5b674c",
+        "committed_at": "2026-11-17T11:43:36.660091+00:00",
+        "data": {
+          "feedback_id": "Faa421bf2d8ab16d1",
+          "disposition": "evidence_requested",
+          "adoption": null,
+          "review": {
+            "review_id": "R0d76093638b3b29d",
+            "feedback_id": "Faa421bf2d8ab16d1",
+            "source_event_ref": "consolidated-current-review",
+            "reviewer_id": "C",
+            "delegation_id": "D1",
+            "round": 1,
+            "contract_version": "contract-r1",
+            "artifact_ref": "artifact://h1",
+            "artifact_digest": "sha256:7399985e5dc83141cd5e5e9c9ed1985de2d72c7211a6715d53b3e908654a0279",
+            "scope_refs": [
+              "scope://T1"
+            ],
+            "verdict": "PASS",
+            "rationale": "将 C 对指定 h1/轮次/范围的合并审查意见归档；当前缺少可直接核对的成果及运行证据引用，先补该缺项，A 继续原合同审计，不完成 T1。",
+            "recorded_at": "2026-11-17T11:43:36.660091+00:00"
+          },
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Continue T2 acceptance review; obtain the referenced h1 artifact/evidence before adoption",
+            "rationale": "将 C 对指定 h1/轮次/范围的合并审查意见归档；当前缺少可直接核对的成果及运行证据引用，先补该缺项，A 继续原合同审计，不完成 T1。"
+          }
+        }
+      }
+    }
+  }
+}

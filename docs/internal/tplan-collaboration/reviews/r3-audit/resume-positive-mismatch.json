@@ -1,0 +1,17 @@
+{
+  "case": "valid_local_repair_completion_vs_resume",
+  "completion_findings": [],
+  "resume_acceptance_gaps": [
+    {
+      "task_id": "T3",
+      "status": "completed",
+      "acceptance_ids": [
+        "A1"
+      ],
+      "title": "Repair current result",
+      "collaboration_gap": [
+        "repair obligation OB9126081cc56cde71 for task T3 requires fresh acceptance/re-review"
+      ]
+    }
+  ]
+}

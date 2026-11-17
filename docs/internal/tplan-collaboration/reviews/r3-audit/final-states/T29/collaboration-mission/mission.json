@@ -1,0 +1,436 @@
+{
+  "schema_version": "tplan.v0.1",
+  "runtime_provenance": {
+    "schema_version": "tplan.runtime_provenance.v0.1",
+    "origin": "native",
+    "fingerprint": {
+      "schema_version": "tplan.runtime_fingerprint.v0.1",
+      "package_version": "1.6.0-h1c2.1",
+      "source_id": "mindthus-tplan-h1c2-candidate",
+      "skill_root": "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan",
+      "script_root": "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan/scripts",
+      "build_hash": "sha256:d5c2045a58026ac229a2922677bfc820c7eaea8c58027fbaa84fe4396db94841",
+      "capability_versions": {
+        "codex_telemetry_adapter": "tplan.codex_telemetry_adapter.v0.2",
+        "codex_telemetry_dispatcher": "tplan.codex_telemetry_dispatcher.v0.1",
+        "collaboration": "tplan.collaboration.v0.1",
+        "command_results": "tplan.command_results.v0.1",
+        "execution_cost_tree": "tplan.execution_cost_tree.v0.9",
+        "execution_trace": "tplan.execution_trace.v0.1",
+        "human_control": "tplan.h1.v0.1",
+        "mission": "tplan.v0.1",
+        "progress_view": "tplan.progress_view.v1",
+        "runtime_doctor": "tplan.runtime_doctor.v0.1",
+        "runtime_provenance": "tplan.runtime_provenance.v0.1",
+        "work_plan": "tplan.work_plan.v0.1",
+        "work_view": "tplan.work_view.v0.1"
+      },
+      "capabilities": [
+        "atomic_command_results",
+        "atomic_mission_mutation",
+        "codex_hook_activation_preflight",
+        "codex_hook_stable_dispatcher",
+        "codex_hook_telemetry",
+        "codex_otel_ingestion",
+        "execution_trace",
+        "read_only_progress_view",
+        "read_only_work_view",
+        "runtime_doctor",
+        "runtime_provenance",
+        "scoped_owner_execution_core",
+        "scoped_task_completion",
+        "standard_execution_timeline",
+        "task_scoped_owner_gate",
+        "terminal_completion_handoff",
+        "tplan.collaboration.v0.1",
+        "work_plan_metadata"
+      ]
+    }
+  },
+  "mission": {
+    "id": "collaboration-mission",
+    "title": "Collaboration mission",
+    "objective": "Deliver a verified collaboration runtime",
+    "status": "superseded",
+    "human_in_loop": 0,
+    "risk_tolerance": 50,
+    "resource_sufficiency": 50,
+    "acceptance_evidence": [
+      {
+        "id": "A1",
+        "description": "Verified collaboration runtime"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T1",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "Implement the result",
+      "status": "paused",
+      "role": "success-critical",
+      "evidence_links": [],
+      "mission_contribution": "Delivers A1",
+      "acceptance_evidence": [
+        "A1"
+      ]
+    },
+    {
+      "id": "T2",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "Protect the mainline",
+      "status": "pending",
+      "role": "supporting",
+      "evidence_links": [],
+      "mission_contribution": "Maintains acceptance coherence",
+      "acceptance_evidence": []
+    }
+  ],
+  "active_task_id": "T2",
+  "collaboration": {
+    "schema_version": "tplan.collaboration.v0.1",
+    "enabled_at": "2026-11-17T11:39:06.525462+00:00",
+    "coordinator": {
+      "thread_ref": "thread-a",
+      "host_ref": "local",
+      "responsibility": "Own the user objective, scope, and acceptance",
+      "communication_authorization_refs": [
+        "user-turn-1"
+      ],
+      "generation": 1
+    },
+    "participants": {
+      "B": {
+        "thread_ref": "thread-b",
+        "host_ref": "local",
+        "responsibility": "Implement and report bounded work",
+        "communication_authorization_refs": [
+          "user-turn-1"
+        ]
+      },
+      "C": {
+        "thread_ref": "thread-c",
+        "host_ref": "local",
+        "responsibility": "Review current artifacts",
+        "communication_authorization_refs": [
+          "user-turn-1"
+        ]
+      }
+    },
+    "policy": {
+      "max_pending_feedback": 128,
+      "processing_deadline_seconds": 900
+    },
+    "delegations": {
+      "D1": {
+        "delegation_id": "D1",
+        "task_id": "T1",
+        "round": 1,
+        "assignee_id": "B",
+        "write_scope": "workspace/T1",
+        "contract_version": "contract-r1",
+        "instruction_summary": "Complete bounded work for T1",
+        "input_refs": [
+          "artifact://T1/input"
+        ],
+        "dependency_versions": {
+          "design": "v1"
+        },
+        "required_review": {
+          "required": true,
+          "reviewer_id": "C",
+          "scope_refs": [
+            "scope://T1"
+          ]
+        },
+        "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+        "intent_id": "I1",
+        "status": "stopped",
+        "created_at": "2026-11-17T11:39:06.534823+00:00",
+        "disposition": "path_adjusted"
+      },
+      "D2": {
+        "delegation_id": "D2",
+        "task_id": "T1",
+        "round": 2,
+        "assignee_id": "B",
+        "write_scope": "workspace/T1",
+        "contract_version": "atomic-journal-v2",
+        "instruction_summary": "Replace the demonstrated non-atomic strategy with a journal-backed replayable transaction; preserve the original A1 acceptance",
+        "input_refs": [
+          "source-agent-premise-check",
+          "controlled-spec://atomic-journal-v2"
+        ],
+        "dependency_versions": {
+          "design": "atomic-journal-v2"
+        },
+        "required_review": {
+          "required": true,
+          "reviewer_id": "C",
+          "scope_refs": [
+            "scope://T1"
+          ]
+        },
+        "instruction_digest": "sha256:66868b4c23c990c972d010e6b8755f5bfb02e6245203935c8b9e27e3f7fe4842",
+        "intent_id": "I2",
+        "status": "not_sent",
+        "created_at": "2026-11-17T11:43:36.688824+00:00",
+        "disposition": null
+      }
+    },
+    "intents": {
+      "I1": {
+        "intent_id": "I1",
+        "target_participant_id": "B",
+        "target_thread_ref": "thread-b",
+        "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+        "send_state": "confirmed",
+        "execution_state": "stopped",
+        "stop_requested": true,
+        "native_refs": [
+          "thread://b/message/I1",
+          "controlled-host://D1/stop-confirmed"
+        ],
+        "observed_at": "2026-11-17T11:43:36.668766+00:00",
+        "reason": "Controlled host provider reports the original writer stopped",
+        "created_at": "2026-11-17T11:39:06.534823+00:00"
+      },
+      "I2": {
+        "intent_id": "I2",
+        "target_participant_id": "B",
+        "target_thread_ref": "thread-b",
+        "instruction_digest": "sha256:66868b4c23c990c972d010e6b8755f5bfb02e6245203935c8b9e27e3f7fe4842",
+        "send_state": "not_sent",
+        "execution_state": "not_started",
+        "stop_requested": false,
+        "native_refs": [
+          "controlled-owner://T29/scope-change-1"
+        ],
+        "observed_at": "2026-11-17T11:48:23.285485+00:00",
+        "reason": "The controlled owner event narrows this test to a local compatibility assessment; withdraw the prepared, unstarted replacement",
+        "created_at": "2026-11-17T11:43:36.688824+00:00"
+      }
+    },
+    "feedback": {
+      "F8769d462ac4b4fae": {
+        "feedback_id": "F8769d462ac4b4fae",
+        "kind": "blocker",
+        "source_event_ref": "atomic-path-blocker",
+        "source_thread_ref": "thread-c",
+        "source_host_ref": "local",
+        "source_role_id": "C",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": null,
+        "artifact_digest": null,
+        "summary": "Controlled fault injection: first file changed and second stayed old after failure; the proposed non-atomic strategy cannot meet the replay criterion.",
+        "original_ref": "controlled-peer-fixture://T29/atomic-path-blocker",
+        "attachment_refs": [],
+        "content_digest": "sha256:67f214ee93e0402df54e9196f3b9651deb1785788e071849dc984b6121d10e40",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:39:06.649716+00:00",
+        "resolution": {
+          "disposition": "path_adjusted",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "已复现该方案失败时出现两个文件版本不一致；A1 原子恢复目标保持，暂停原实施路径并设计 journal 方案，先对账/停止原写入再启新轮次。"
+          },
+          "evidence_refs": [
+            "Efce220af"
+          ],
+          "resolved_at": "2026-11-17T11:42:00.748562+00:00"
+        }
+      }
+    },
+    "adoptions": {},
+    "reviews": {},
+    "repair_obligations": {},
+    "coordination": {
+      "state": "working",
+      "focus_task_id": "T2",
+      "gap_summary": "A1 still requires an adopted, reviewed atomic replay result",
+      "next_action": "Finalize the revised contract in T2 before any replacement dispatch",
+      "resume_basis": [
+        "T2",
+        "D2",
+        "source-agent-premise-check"
+      ],
+      "waiting_on": [],
+      "updated_at": "2026-11-17T11:43:36.703270+00:00"
+    },
+    "commands": {
+      "command-1": {
+        "command_id": "command-1",
+        "action": "enable",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:749ff0c6fa57ebb1e3f6c0ee478980fa7ef8bf1815117e4f0f041704b3f3e16d",
+        "commit_id": "CCf57ce148e927",
+        "committed_at": "2026-11-17T11:39:06.525462+00:00",
+        "data": {
+          "enabled": true,
+          "coordinator_generation": 1
+        }
+      },
+      "command-2": {
+        "command_id": "command-2",
+        "action": "delegation.prepare",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:16ba151b77d0f2918bab2e759531df45da003beac9302f37b7c69e6235d2cce0",
+        "commit_id": "CC3b63a20c7c0f",
+        "committed_at": "2026-11-17T11:39:06.534823+00:00",
+        "data": {
+          "delegation_id": "D1",
+          "intent_id": "I1"
+        }
+      },
+      "command-3": {
+        "command_id": "command-3",
+        "action": "dispatch.record",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:b0d3d622cb3c318480d6b2482974a72cb6729c66c224a6ec1288485eb17e202e",
+        "commit_id": "CC25a535c23ad8",
+        "committed_at": "2026-11-17T11:39:06.544493+00:00",
+        "data": {
+          "intent_id": "I1",
+          "send_state": "confirmed",
+          "execution_state": "running",
+          "status": "running"
+        }
+      },
+      "command-4": {
+        "command_id": "command-4",
+        "action": "coordination.checkpoint",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:462dea40f5e7a04ed248616637db7e5218ccf68cece78a7bb65dd28e94e0724d",
+        "commit_id": "CC47ebff85bd31",
+        "committed_at": "2026-11-17T11:39:06.553731+00:00",
+        "data": {
+          "state": "working",
+          "focus_task_id": "T2",
+          "next_action": "Review the approved contract and verify the remaining A1 evidence",
+          "rationale": "Keep action aligned to the user objective"
+        }
+      },
+      "source-T29-10": {
+        "command_id": "source-T29-10",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:d825882e494162b1c190bcacbdaac6bdd722b8bc897f73c84aef639d7da00144",
+        "commit_id": "CC17e2f83fa306",
+        "committed_at": "2026-11-17T11:39:06.649716+00:00",
+        "data": {
+          "feedback_id": "F8769d462ac4b4fae",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T29-28": {
+        "command_id": "source-T29-28",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:ac0ca0ab640a648fa72d59b78aa375fe11b36bfb3c4017ab8317a7647f271940",
+        "commit_id": "CCc374da583e44",
+        "committed_at": "2026-11-17T11:42:00.748562+00:00",
+        "data": {
+          "feedback_id": "F8769d462ac4b4fae",
+          "disposition": "path_adjusted",
+          "adoption": null,
+          "review": null,
+          "task_changes": [
+            {
+              "task_id": "T1",
+              "status": "paused"
+            }
+          ],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Design the atomic replacement contract in T2; await confirmed stop before replacing D1",
+            "rationale": "已复现该方案失败时出现两个文件版本不一致；A1 原子恢复目标保持，暂停原实施路径并设计 journal 方案，先对账/停止原写入再启新轮次。"
+          }
+        }
+      },
+      "source-T29-29": {
+        "command_id": "source-T29-29",
+        "action": "dispatch.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:35cf0da4fdbf65efd345f2742ffacd2121dc5af327d02f0674262e17653c9a05",
+        "commit_id": "CC3607c066dd65",
+        "committed_at": "2026-11-17T11:42:00.757211+00:00",
+        "data": {
+          "intent_id": "I1",
+          "send_state": "confirmed",
+          "execution_state": "running",
+          "status": "stop_requested"
+        }
+      },
+      "source-T29-33": {
+        "command_id": "source-T29-33",
+        "action": "dispatch.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:e7a4cd4ffcf557f230f364fa805100cb8bcb7ec28b72c77ec34ebc4f9028c019",
+        "commit_id": "CC784a8dfd6133",
+        "committed_at": "2026-11-17T11:43:36.674926+00:00",
+        "data": {
+          "intent_id": "I1",
+          "send_state": "confirmed",
+          "execution_state": "stopped",
+          "status": "stopped"
+        }
+      },
+      "source-T29-34": {
+        "command_id": "source-T29-34",
+        "action": "delegation.prepare",
+        "principal": "source-auditor",
+        "request_digest": "sha256:d13541c179356a28de727f1ba4126ecebf0ced7e309bbaf9902b404a444b35aa",
+        "commit_id": "CC4ad1a2c41c9a",
+        "committed_at": "2026-11-17T11:43:36.688824+00:00",
+        "data": {
+          "delegation_id": "D2",
+          "intent_id": "I2"
+        }
+      },
+      "source-T29-35": {
+        "command_id": "source-T29-35",
+        "action": "coordination.checkpoint",
+        "principal": "source-auditor",
+        "request_digest": "sha256:4d2781b781485f6d6632e46afef4c2c144ba4ef3142bb1a552e7f38537774fa5",
+        "commit_id": "CC0c804d2dddc2",
+        "committed_at": "2026-11-17T11:43:36.703270+00:00",
+        "data": {
+          "state": "working",
+          "focus_task_id": "T2",
+          "next_action": "Finalize the revised contract in T2 before any replacement dispatch",
+          "rationale": "Evidence changes the path while preserving the approved objective and reviewer scope"
+        }
+      },
+      "source-T29-37": {
+        "command_id": "source-T29-37",
+        "action": "dispatch.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:a33ae5852c378523e35636b8ae9abf04b5dce107c5d5684a3ff536d1131bcc7d",
+        "commit_id": "CCfa3b39176e3f",
+        "committed_at": "2026-11-17T11:48:23.296682+00:00",
+        "data": {
+          "intent_id": "I2",
+          "send_state": "not_sent",
+          "execution_state": "not_started",
+          "status": "not_sent"
+        }
+      }
+    }
+  }
+}

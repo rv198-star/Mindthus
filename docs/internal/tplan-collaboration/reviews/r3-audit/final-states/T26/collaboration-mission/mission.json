@@ -1,0 +1,385 @@
+{
+  "schema_version": "tplan.v0.1",
+  "runtime_provenance": {
+    "schema_version": "tplan.runtime_provenance.v0.1",
+    "origin": "native",
+    "fingerprint": {
+      "schema_version": "tplan.runtime_fingerprint.v0.1",
+      "package_version": "1.6.0-h1c2.1",
+      "source_id": "mindthus-tplan-h1c2-candidate",
+      "skill_root": "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan",
+      "script_root": "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan/scripts",
+      "build_hash": "sha256:d5c2045a58026ac229a2922677bfc820c7eaea8c58027fbaa84fe4396db94841",
+      "capability_versions": {
+        "codex_telemetry_adapter": "tplan.codex_telemetry_adapter.v0.2",
+        "codex_telemetry_dispatcher": "tplan.codex_telemetry_dispatcher.v0.1",
+        "collaboration": "tplan.collaboration.v0.1",
+        "command_results": "tplan.command_results.v0.1",
+        "execution_cost_tree": "tplan.execution_cost_tree.v0.9",
+        "execution_trace": "tplan.execution_trace.v0.1",
+        "human_control": "tplan.h1.v0.1",
+        "mission": "tplan.v0.1",
+        "progress_view": "tplan.progress_view.v1",
+        "runtime_doctor": "tplan.runtime_doctor.v0.1",
+        "runtime_provenance": "tplan.runtime_provenance.v0.1",
+        "work_plan": "tplan.work_plan.v0.1",
+        "work_view": "tplan.work_view.v0.1"
+      },
+      "capabilities": [
+        "atomic_command_results",
+        "atomic_mission_mutation",
+        "codex_hook_activation_preflight",
+        "codex_hook_stable_dispatcher",
+        "codex_hook_telemetry",
+        "codex_otel_ingestion",
+        "execution_trace",
+        "read_only_progress_view",
+        "read_only_work_view",
+        "runtime_doctor",
+        "runtime_provenance",
+        "scoped_owner_execution_core",
+        "scoped_task_completion",
+        "standard_execution_timeline",
+        "task_scoped_owner_gate",
+        "terminal_completion_handoff",
+        "tplan.collaboration.v0.1",
+        "work_plan_metadata"
+      ]
+    }
+  },
+  "mission": {
+    "id": "collaboration-mission",
+    "title": "Collaboration mission",
+    "objective": "Deliver a verified collaboration runtime",
+    "status": "active",
+    "human_in_loop": 0,
+    "risk_tolerance": 50,
+    "resource_sufficiency": 50,
+    "acceptance_evidence": [
+      {
+        "id": "A1",
+        "description": "Verified collaboration runtime"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T1",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "Implement the result",
+      "status": "active",
+      "role": "success-critical",
+      "evidence_links": [],
+      "mission_contribution": "Delivers A1",
+      "acceptance_evidence": [
+        "A1"
+      ]
+    },
+    {
+      "id": "T2",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "Protect the mainline",
+      "status": "pending",
+      "role": "supporting",
+      "evidence_links": [],
+      "mission_contribution": "Maintains acceptance coherence",
+      "acceptance_evidence": []
+    }
+  ],
+  "active_task_id": "T2",
+  "collaboration": {
+    "schema_version": "tplan.collaboration.v0.1",
+    "enabled_at": "2026-11-17T11:39:06.310285+00:00",
+    "coordinator": {
+      "thread_ref": "thread-a",
+      "host_ref": "local",
+      "responsibility": "Own the user objective, scope, and acceptance",
+      "communication_authorization_refs": [
+        "user-turn-1"
+      ],
+      "generation": 1
+    },
+    "participants": {
+      "B": {
+        "thread_ref": "thread-b",
+        "host_ref": "local",
+        "responsibility": "Implement and report bounded work",
+        "communication_authorization_refs": [
+          "user-turn-1"
+        ]
+      },
+      "C": {
+        "thread_ref": "thread-c",
+        "host_ref": "local",
+        "responsibility": "Review current artifacts",
+        "communication_authorization_refs": [
+          "user-turn-1"
+        ]
+      }
+    },
+    "policy": {
+      "max_pending_feedback": 128,
+      "processing_deadline_seconds": 900
+    },
+    "delegations": {
+      "D1": {
+        "delegation_id": "D1",
+        "task_id": "T1",
+        "round": 1,
+        "assignee_id": "B",
+        "write_scope": "workspace/T1",
+        "contract_version": "contract-r1",
+        "instruction_summary": "Complete bounded work for T1",
+        "input_refs": [
+          "artifact://T1/input"
+        ],
+        "dependency_versions": {
+          "design": "v1"
+        },
+        "required_review": {
+          "required": true,
+          "reviewer_id": "C",
+          "scope_refs": [
+            "scope://T1"
+          ]
+        },
+        "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+        "intent_id": "I1",
+        "status": "running",
+        "created_at": "2026-11-17T11:39:06.318712+00:00",
+        "disposition": "out_of_scope"
+      }
+    },
+    "intents": {
+      "I1": {
+        "intent_id": "I1",
+        "target_participant_id": "B",
+        "target_thread_ref": "thread-b",
+        "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+        "send_state": "confirmed",
+        "execution_state": "running",
+        "stop_requested": false,
+        "native_refs": [
+          "thread://b/message/I1"
+        ],
+        "observed_at": "2026-11-17T01:00:00+00:00",
+        "reason": "Observed host dispatch fact",
+        "created_at": "2026-11-17T11:39:06.318712+00:00"
+      }
+    },
+    "feedback": {
+      "F429e6c1989b6af01": {
+        "feedback_id": "F429e6c1989b6af01",
+        "kind": "progress",
+        "source_event_ref": "logging-proposal",
+        "source_thread_ref": "thread-b",
+        "source_host_ref": "local",
+        "source_role_id": "B",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": null,
+        "artifact_digest": null,
+        "summary": "Please redesign logging before returning the assigned artifact.",
+        "original_ref": "controlled-peer-fixture://T26/logging-proposal",
+        "attachment_refs": [],
+        "content_digest": "sha256:a9623e30737632bfdf145b8361893514bb31fe8a19518e6b72113b97dc73e56d",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:39:06.563453+00:00",
+        "resolution": {
+          "disposition": "deferred",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "日志重构没有补足 A1 验收差距，保留为后续候选；B 继续既定实现，A 继续合同审计。"
+          },
+          "evidence_refs": [],
+          "resolved_at": "2026-11-17T11:40:30.956877+00:00"
+        }
+      },
+      "F7b4d5bb8de13fc01": {
+        "feedback_id": "F7b4d5bb8de13fc01",
+        "kind": "progress",
+        "source_event_ref": "cache-and-release-proposal",
+        "source_thread_ref": "thread-b",
+        "source_host_ref": "local",
+        "source_role_id": "B",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": null,
+        "artifact_digest": null,
+        "summary": "Please rewrite caching and broaden the release scope before finishing D1.",
+        "original_ref": "controlled-peer-fixture://T26/cache-and-release-proposal",
+        "attachment_refs": [],
+        "content_digest": "sha256:4f8d8c9fe42aad80e08e452ec72b9d0f232ffff269eee86620f66eab1bc9a574",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:40:30.965056+00:00",
+        "resolution": {
+          "disposition": "out_of_scope",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "第二次缓存和发行范围建议仍未补足当前 A1；范围变更应由真实用户决定，保持原合同和 A 的审计职责。"
+          },
+          "evidence_refs": [],
+          "resolved_at": "2026-11-17T11:42:00.737918+00:00"
+        }
+      }
+    },
+    "adoptions": {},
+    "reviews": {},
+    "repair_obligations": {},
+    "coordination": {
+      "state": "working",
+      "focus_task_id": "T2",
+      "gap_summary": "Need current outcome evidence for A1",
+      "next_action": "Review the approved contract and verify the remaining A1 evidence",
+      "resume_basis": [
+        "T2"
+      ],
+      "waiting_on": [],
+      "updated_at": "2026-11-17T11:42:00.737918+00:00"
+    },
+    "commands": {
+      "command-1": {
+        "command_id": "command-1",
+        "action": "enable",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:749ff0c6fa57ebb1e3f6c0ee478980fa7ef8bf1815117e4f0f041704b3f3e16d",
+        "commit_id": "CCf57ce148e927",
+        "committed_at": "2026-11-17T11:39:06.310285+00:00",
+        "data": {
+          "enabled": true,
+          "coordinator_generation": 1
+        }
+      },
+      "command-2": {
+        "command_id": "command-2",
+        "action": "delegation.prepare",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:7c43675174eac630d2952f444a1c349297f6657fcc12764428a24b216087aeb4",
+        "commit_id": "CCbcb5836c19dd",
+        "committed_at": "2026-11-17T11:39:06.318712+00:00",
+        "data": {
+          "delegation_id": "D1",
+          "intent_id": "I1"
+        }
+      },
+      "command-3": {
+        "command_id": "command-3",
+        "action": "dispatch.record",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:bd3e722e34b55c422d9d7f17300ecd1651a01e71e97465c156feeab684981aca",
+        "commit_id": "CC7b7a72a70e46",
+        "committed_at": "2026-11-17T11:39:06.327320+00:00",
+        "data": {
+          "intent_id": "I1",
+          "send_state": "confirmed",
+          "execution_state": "running",
+          "status": "running"
+        }
+      },
+      "command-4": {
+        "command_id": "command-4",
+        "action": "coordination.checkpoint",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:2d6b54ace1578d2eb934e9c5ca601782b76b91f666811e62e2909793c41f7730",
+        "commit_id": "CCd1bfbf5dd7ed",
+        "committed_at": "2026-11-17T11:39:06.336082+00:00",
+        "data": {
+          "state": "working",
+          "focus_task_id": "T2",
+          "next_action": "Review the approved contract and verify the remaining A1 evidence",
+          "rationale": "Keep action aligned to the user objective"
+        }
+      },
+      "source-T26-0": {
+        "command_id": "source-T26-0",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:02faeebe0a9d7f2fb3d73fd873e578b1c67eddc43c90003f4338868c2b338219",
+        "commit_id": "CCacd470940165",
+        "committed_at": "2026-11-17T11:39:06.563453+00:00",
+        "data": {
+          "feedback_id": "F429e6c1989b6af01",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T26-14": {
+        "command_id": "source-T26-14",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:df27b368f8e4eb5e8044a7120596b5235bfeb11893d449d0d252a9899f1e8ee0",
+        "commit_id": "CC78b64880fd55",
+        "committed_at": "2026-11-17T11:40:30.956877+00:00",
+        "data": {
+          "feedback_id": "F429e6c1989b6af01",
+          "disposition": "deferred",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Review the approved contract and verify the remaining A1 evidence",
+            "rationale": "日志重构没有补足 A1 验收差距，保留为后续候选；B 继续既定实现，A 继续合同审计。"
+          }
+        }
+      },
+      "source-T26-15": {
+        "command_id": "source-T26-15",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:b78308529e195b13dd00a06fa77f547f7885c2fb48ef56bd6d391757cedfa549",
+        "commit_id": "CCf7929d48458d",
+        "committed_at": "2026-11-17T11:40:30.965056+00:00",
+        "data": {
+          "feedback_id": "F7b4d5bb8de13fc01",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T26-26": {
+        "command_id": "source-T26-26",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:1005af7f370082990d3f251d0ffa148f48c37e06102fcad0bb26ac026fd9a612",
+        "commit_id": "CC1ff9cd0d7b12",
+        "committed_at": "2026-11-17T11:42:00.737918+00:00",
+        "data": {
+          "feedback_id": "F7b4d5bb8de13fc01",
+          "disposition": "out_of_scope",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Review the approved contract and verify the remaining A1 evidence",
+            "rationale": "第二次缓存和发行范围建议仍未补足当前 A1；范围变更应由真实用户决定，保持原合同和 A 的审计职责。"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,315 @@
+{
+  "schema_version": "tplan.v0.1",
+  "runtime_provenance": {
+    "schema_version": "tplan.runtime_provenance.v0.1",
+    "origin": "native",
+    "fingerprint": {
+      "schema_version": "tplan.runtime_fingerprint.v0.1",
+      "package_version": "1.6.0-h1c2.1",
+      "source_id": "mindthus-tplan-h1c2-candidate",
+      "skill_root": "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan",
+      "script_root": "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan/scripts",
+      "build_hash": "sha256:d5c2045a58026ac229a2922677bfc820c7eaea8c58027fbaa84fe4396db94841",
+      "capability_versions": {
+        "codex_telemetry_adapter": "tplan.codex_telemetry_adapter.v0.2",
+        "codex_telemetry_dispatcher": "tplan.codex_telemetry_dispatcher.v0.1",
+        "collaboration": "tplan.collaboration.v0.1",
+        "command_results": "tplan.command_results.v0.1",
+        "execution_cost_tree": "tplan.execution_cost_tree.v0.9",
+        "execution_trace": "tplan.execution_trace.v0.1",
+        "human_control": "tplan.h1.v0.1",
+        "mission": "tplan.v0.1",
+        "progress_view": "tplan.progress_view.v1",
+        "runtime_doctor": "tplan.runtime_doctor.v0.1",
+        "runtime_provenance": "tplan.runtime_provenance.v0.1",
+        "work_plan": "tplan.work_plan.v0.1",
+        "work_view": "tplan.work_view.v0.1"
+      },
+      "capabilities": [
+        "atomic_command_results",
+        "atomic_mission_mutation",
+        "codex_hook_activation_preflight",
+        "codex_hook_stable_dispatcher",
+        "codex_hook_telemetry",
+        "codex_otel_ingestion",
+        "execution_trace",
+        "read_only_progress_view",
+        "read_only_work_view",
+        "runtime_doctor",
+        "runtime_provenance",
+        "scoped_owner_execution_core",
+        "scoped_task_completion",
+        "standard_execution_timeline",
+        "task_scoped_owner_gate",
+        "terminal_completion_handoff",
+        "tplan.collaboration.v0.1",
+        "work_plan_metadata"
+      ]
+    }
+  },
+  "mission": {
+    "id": "collaboration-mission",
+    "title": "Collaboration mission",
+    "objective": "Deliver a verified collaboration runtime",
+    "status": "active",
+    "human_in_loop": 0,
+    "risk_tolerance": 50,
+    "resource_sufficiency": 50,
+    "acceptance_evidence": [
+      {
+        "id": "A1",
+        "description": "Verified collaboration runtime"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T1",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "Implement the result",
+      "status": "active",
+      "role": "success-critical",
+      "evidence_links": [],
+      "mission_contribution": "Delivers A1",
+      "acceptance_evidence": [
+        "A1"
+      ]
+    },
+    {
+      "id": "T2",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "Protect the mainline",
+      "status": "pending",
+      "role": "supporting",
+      "evidence_links": [],
+      "mission_contribution": "Maintains acceptance coherence",
+      "acceptance_evidence": []
+    }
+  ],
+  "active_task_id": "T2",
+  "collaboration": {
+    "schema_version": "tplan.collaboration.v0.1",
+    "enabled_at": "2026-11-17T11:39:06.380501+00:00",
+    "coordinator": {
+      "thread_ref": "thread-a",
+      "host_ref": "local",
+      "responsibility": "Own the user objective, scope, and acceptance",
+      "communication_authorization_refs": [
+        "user-turn-1"
+      ],
+      "generation": 1
+    },
+    "participants": {
+      "B": {
+        "thread_ref": "thread-b",
+        "host_ref": "local",
+        "responsibility": "Implement and report bounded work",
+        "communication_authorization_refs": [
+          "user-turn-1"
+        ]
+      },
+      "C": {
+        "thread_ref": "thread-c",
+        "host_ref": "local",
+        "responsibility": "Review current artifacts",
+        "communication_authorization_refs": [
+          "user-turn-1"
+        ]
+      }
+    },
+    "policy": {
+      "max_pending_feedback": 128,
+      "processing_deadline_seconds": 900
+    },
+    "delegations": {
+      "D1": {
+        "delegation_id": "D1",
+        "task_id": "T1",
+        "round": 1,
+        "assignee_id": "B",
+        "write_scope": "workspace/T1",
+        "contract_version": "contract-r1",
+        "instruction_summary": "Complete bounded work for T1",
+        "input_refs": [
+          "artifact://T1/input"
+        ],
+        "dependency_versions": {
+          "design": "v1"
+        },
+        "required_review": {
+          "required": true,
+          "reviewer_id": "C",
+          "scope_refs": [
+            "scope://T1"
+          ]
+        },
+        "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+        "intent_id": "I1",
+        "status": "running",
+        "created_at": "2026-11-17T11:39:06.389731+00:00",
+        "disposition": "answered"
+      }
+    },
+    "intents": {
+      "I1": {
+        "intent_id": "I1",
+        "target_participant_id": "B",
+        "target_thread_ref": "thread-b",
+        "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+        "send_state": "confirmed",
+        "execution_state": "running",
+        "stop_requested": false,
+        "native_refs": [
+          "thread://b/message/I1"
+        ],
+        "observed_at": "2026-11-17T01:00:00+00:00",
+        "reason": "Observed host dispatch fact",
+        "created_at": "2026-11-17T11:39:06.389731+00:00"
+      }
+    },
+    "feedback": {
+      "F13636b2a057ed678": {
+        "feedback_id": "F13636b2a057ed678",
+        "kind": "question",
+        "source_event_ref": "debug-handoff",
+        "source_thread_ref": "thread-b",
+        "source_host_ref": "local",
+        "source_role_id": "B",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "contract-r1",
+        "artifact_ref": null,
+        "artifact_digest": null,
+        "summary": "The local test fixture raises an import error. Please take over its debugging.",
+        "original_ref": "controlled-peer-fixture://T27/debug-handoff",
+        "attachment_refs": [],
+        "content_digest": "sha256:31897463076395292ae59fd829d5297c4cf30262d592754d66cd3a23a346b324",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T11:39:06.572089+00:00",
+        "resolution": {
+          "disposition": "answered",
+          "goal_relation": {
+            "responsibility": "Own the user objective, scope, and acceptance",
+            "acceptance_ids": [
+              "A1"
+            ],
+            "rationale": "该局部 fixture 异常由 B 自主诊断、修复和验证后整批回报；A 保持合同与验收职责，只有影响设计假设时再重议。"
+          },
+          "evidence_refs": [],
+          "resolved_at": "2026-11-17T11:40:30.973351+00:00"
+        }
+      }
+    },
+    "adoptions": {},
+    "reviews": {},
+    "repair_obligations": {},
+    "coordination": {
+      "state": "working",
+      "focus_task_id": "T2",
+      "gap_summary": "Need current outcome evidence for A1",
+      "next_action": "Continue independent contract and acceptance checks while B repairs its fixture",
+      "resume_basis": [
+        "T2"
+      ],
+      "waiting_on": [],
+      "updated_at": "2026-11-17T11:40:30.973351+00:00"
+    },
+    "commands": {
+      "command-1": {
+        "command_id": "command-1",
+        "action": "enable",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:749ff0c6fa57ebb1e3f6c0ee478980fa7ef8bf1815117e4f0f041704b3f3e16d",
+        "commit_id": "CCf57ce148e927",
+        "committed_at": "2026-11-17T11:39:06.380501+00:00",
+        "data": {
+          "enabled": true,
+          "coordinator_generation": 1
+        }
+      },
+      "command-2": {
+        "command_id": "command-2",
+        "action": "delegation.prepare",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:5cc0481c782bffa30be7993a1255c4b67b933ec955638eac3a2a3c4fd5014017",
+        "commit_id": "CC52a6cc30b4b8",
+        "committed_at": "2026-11-17T11:39:06.389731+00:00",
+        "data": {
+          "delegation_id": "D1",
+          "intent_id": "I1"
+        }
+      },
+      "command-3": {
+        "command_id": "command-3",
+        "action": "dispatch.record",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:b7bd1128be970ffc53eeeb3a87c22709ef28e160909d1f09fdbe53b947b3df18",
+        "commit_id": "CCf9c8f449b28e",
+        "committed_at": "2026-11-17T11:39:06.398351+00:00",
+        "data": {
+          "intent_id": "I1",
+          "send_state": "confirmed",
+          "execution_state": "running",
+          "status": "running"
+        }
+      },
+      "command-4": {
+        "command_id": "command-4",
+        "action": "coordination.checkpoint",
+        "principal": "coordinator-a",
+        "request_digest": "sha256:bfe2b22829a2473bb710f2a403bd3643a32844ef87a2a8299a1aec61b373dccf",
+        "commit_id": "CC3668c7947c21",
+        "committed_at": "2026-11-17T11:39:06.407245+00:00",
+        "data": {
+          "state": "working",
+          "focus_task_id": "T2",
+          "next_action": "Review the approved contract and verify the remaining A1 evidence",
+          "rationale": "Keep action aligned to the user objective"
+        }
+      },
+      "source-T27-1": {
+        "command_id": "source-T27-1",
+        "action": "feedback.record",
+        "principal": "source-auditor",
+        "request_digest": "sha256:0b7928498d260e4956d1abe0aa70f948ba84a8c45d710814e39bab8529d1a3fb",
+        "commit_id": "CC9f937947f55d",
+        "committed_at": "2026-11-17T11:39:06.572089+00:00",
+        "data": {
+          "feedback_id": "F13636b2a057ed678",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "source-T27-16": {
+        "command_id": "source-T27-16",
+        "action": "feedback.resolve",
+        "principal": "source-auditor",
+        "request_digest": "sha256:a0de74416807cab1ce30744118dd6f5a91bcec58715e97d58cc9075791c7d929",
+        "commit_id": "CCdfa2b7643149",
+        "committed_at": "2026-11-17T11:40:30.973351+00:00",
+        "data": {
+          "feedback_id": "F13636b2a057ed678",
+          "disposition": "answered",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Continue independent contract and acceptance checks while B repairs its fixture",
+            "rationale": "该局部 fixture 异常由 B 自主诊断、修复和验证后整批回报；A 保持合同与验收职责，只有影响设计假设时再重议。"
+          }
+        }
+      }
+    }
+  }
+}
