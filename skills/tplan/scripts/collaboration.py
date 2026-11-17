@@ -107,6 +107,7 @@ EXITS = {
     "execution_in_flight": 19,
     "review_required": 20,
     "repair_scope_required": 21,
+    "mission_closed": 22,
 }
 
 
@@ -353,6 +354,7 @@ def _new_state(payload: dict[str, Any], now: str) -> dict[str, Any]:
         "feedback": {},
         "adoptions": {},
         "reviews": {},
+        "repair_obligations": {},
         "coordination": {
             "state": "working",
             "focus_task_id": None,
@@ -475,6 +477,16 @@ def _prepare_delegation(
     if participant is None:
         raise CollaborationError("invalid_request", "Delegation assignee is not configured")
     round_no = _positive_int(payload["round"], "round", maximum=100000)
+    prior_rounds = [
+        existing["round"]
+        for existing in collab["delegations"].values()
+        if existing.get("task_id") == payload["task_id"]
+    ]
+    if prior_rounds and round_no <= max(prior_rounds):
+        raise CollaborationError(
+            "invalid_request",
+            "A new delegation round must strictly succeed prior rounds for the task (monotonic succession)",
+        )
     write_scope = _text(payload["write_scope"], "write_scope", limit=1000, one_line=True)
     contract_version = _text(payload["contract_version"], "contract_version", limit=1000, one_line=True)
     summary = _text(payload["instruction_summary"], "instruction_summary", limit=MAX_SUMMARY, one_line=True)
@@ -994,6 +1006,7 @@ def _resolve_feedback(
             "contract_version": artifact_record["contract_version"],
             "artifact_ref": artifact_record["artifact_ref"],
             "artifact_digest": artifact_record["artifact_digest"],
+            "invalidated": False,
             "adopted_at": now,
         }
         delegation["status"] = "accepted"
@@ -1028,14 +1041,31 @@ def _resolve_feedback(
         delegation = collab["delegations"][feedback["delegation_id"]]
         task = _tasks(mission).get(delegation["task_id"])
         if task is not None and task.get("status") == "completed":
-            if not any(
-                item.get("kind") == "task" and item.get("role") == "success-critical"
-                for item in normalized_new_tasks
-            ):
+            repair_tasks_new = [
+                item for item in normalized_new_tasks
+                if item.get("kind") == "task" and item.get("role") == "success-critical"
+            ]
+            if not repair_tasks_new:
                 raise CollaborationError(
                     "repair_scope_required",
                     "Repairing a completed task requires a bounded success-critical repair task",
                 )
+            adoption = collab["adoptions"].get(feedback["delegation_id"])
+            if adoption is not None:
+                adoption["invalidated"] = True
+            repair_task = repair_tasks_new[0]
+            obligation_id = "OB" + hashlib.sha256(
+                (feedback["feedback_id"] + "\0" + repair_task["id"]).encode("utf-8")
+            ).hexdigest()[:16]
+            collab["repair_obligations"][obligation_id] = {
+                "obligation_id": obligation_id,
+                "source_task_id": delegation["task_id"],
+                "source_delegation_id": feedback["delegation_id"],
+                "repair_task_id": repair_task["id"],
+                "acceptance_ids": list(repair_task.get("acceptance_evidence", [])),
+                "invalidated_adoption_ref": adoption["artifact_ref"] if adoption is not None else None,
+                "created_at": now,
+            }
         delegation["status"] = "repair_required"
         delegation["disposition"] = "repair"
     next_delegation = payload["next_delegation"]
@@ -1201,6 +1231,20 @@ def build_resume_view(mission: dict[str, Any]) -> dict[str, Any]:
                 "title": task.get("title"),
             }
         )
+    for task_id, task in tasks.items():
+        if task.get("status") != "completed":
+            continue
+        gap_findings = _task_acceptance_findings(collab, mission, task_id, None)
+        if gap_findings:
+            acceptance_gaps.append(
+                {
+                    "task_id": task_id,
+                    "status": "completed",
+                    "acceptance_ids": list(task.get("acceptance_evidence", [])),
+                    "title": task.get("title"),
+                    "collaboration_gap": gap_findings,
+                }
+            )
     pending_feedback = []
     for item in sorted(collab["feedback"].values(), key=lambda row: row["recorded_at"]):
         if item.get("status") != "pending":
@@ -1257,6 +1301,11 @@ def _required_review_findings(collab: dict[str, Any], delegation: dict[str, Any]
     adoption = collab["adoptions"].get(delegation_id)
     if adoption is None:
         return [f"delegation {delegation_id} requires a current adopted artifact"]
+    if adoption.get("invalidated"):
+        return [
+            f"delegation {delegation_id} current adoption was invalidated by a blocking repair; "
+            "fresh acceptance/re-review through the repair obligation is required"
+        ]
     required = delegation["required_review"]
     if not required["required"]:
         return []
@@ -1281,7 +1330,59 @@ def _required_review_findings(collab: dict[str, Any], delegation: dict[str, Any]
     return []
 
 
-def completion_findings(mission: dict[str, Any]) -> list[str]:
+def _task_has_delegation_history(collab: dict[str, Any], task_id: str) -> bool:
+    return any(d.get("task_id") == task_id for d in collab.get("delegations", {}).values())
+
+
+def _repair_obligation_satisfied(
+    collab: dict[str, Any], mission: dict[str, Any], obligation: dict[str, Any], events: list[dict[str, Any]] | None
+) -> bool:
+    repair_task_id = obligation["repair_task_id"]
+    acceptance_ids = set(obligation.get("acceptance_ids", []))
+    current = _task_current_delegation(collab, repair_task_id)
+    if current is not None and not _required_review_findings(collab, current):
+        adoption = collab["adoptions"].get(current["delegation_id"])
+        if adoption is not None and not adoption.get("invalidated"):
+            return True
+    for event in events or []:
+        if (
+            event.get("event_type") == "acceptance_passed"
+            and event.get("task_id") == repair_task_id
+            and acceptance_ids & set(event.get("payload", {}).get("acceptance_ids", []))
+        ):
+            return True
+    return False
+
+
+def _task_acceptance_findings(
+    collab: dict[str, Any], mission: dict[str, Any], task_id: str, events: list[dict[str, Any]] | None
+) -> list[str]:
+    """Shared current-responsibility projection for one task (Task completion and Mission close)."""
+    obligations = collab.get("repair_obligations", {})
+    incoming = [ob for ob in obligations.values() if ob.get("repair_task_id") == task_id]
+    outgoing = [ob for ob in obligations.values() if ob.get("source_task_id") == task_id]
+    if incoming:
+        findings = []
+        for ob in incoming:
+            if not _repair_obligation_satisfied(collab, mission, ob, events):
+                findings.append(
+                    f"repair obligation {ob['obligation_id']} for task {task_id} requires fresh acceptance/re-review"
+                )
+        return findings
+    if outgoing:
+        return []
+    if not _task_has_delegation_history(collab, task_id):
+        return []
+    current = _task_current_delegation(collab, task_id)
+    if current is None:
+        return [
+            f"task {task_id} has collaboration history but no current valid delegation/artifact; "
+            "the acceptance obligation persists until a legal successor or explicit disposition"
+        ]
+    return _required_review_findings(collab, current)
+
+
+def completion_findings(mission: dict[str, Any], events: list[dict[str, Any]] | None = None) -> list[str]:
     collab = mission.get("collaboration")
     if not isinstance(collab, dict):
         return []
@@ -1291,17 +1392,21 @@ def completion_findings(mission: dict[str, Any]) -> list[str]:
     )
     if pending:
         findings.append("Mission completion requires pending collaboration feedback to be resolved: " + ", ".join(pending))
+    for ob in collab.get("repair_obligations", {}).values():
+        if not _repair_obligation_satisfied(collab, mission, ob, events):
+            findings.append(
+                f"repair obligation {ob['obligation_id']} (task {ob['repair_task_id']}) requires fresh acceptance/re-review before closure"
+            )
     tasks = _tasks(mission)
     for task_id, task in tasks.items():
         if task.get("status") != "completed":
             continue
-        current = _task_current_delegation(collab, task_id)
-        if current is None:
-            continue
-        findings.extend(_required_review_findings(collab, current))
+        findings.extend(_task_acceptance_findings(collab, mission, task_id, events))
     return findings
 
-def task_completion_findings(before: dict[str, Any], after: dict[str, Any]) -> list[str]:
+def task_completion_findings(
+    before: dict[str, Any], after: dict[str, Any], events: list[dict[str, Any]] | None = None
+) -> list[str]:
     collab = after.get("collaboration")
     if not isinstance(collab, dict):
         return []
@@ -1320,9 +1425,7 @@ def task_completion_findings(before: dict[str, Any], after: dict[str, Any]) -> l
         ]
         if pending:
             findings.append(f"task {task_id} completion requires pending feedback resolution: " + ", ".join(sorted(pending)))
-        current = _task_current_delegation(collab, task_id)
-        if current is not None:
-            findings.extend(_required_review_findings(collab, current))
+        findings.extend(_task_acceptance_findings(collab, after, task_id, events))
     return findings
 
 
@@ -1336,7 +1439,7 @@ def validate_transition(before: dict[str, Any], after: dict[str, Any]) -> list[s
     if new is None:
         return ["collaboration cannot be removed by this transition"]
     findings: list[str] = []
-    for collection in ("feedback", "reviews", "commands"):
+    for collection in ("feedback", "reviews", "commands", "repair_obligations"):
         for key, value in old[collection].items():
             if key not in new[collection]:
                 findings.append(f"collaboration {collection} history cannot be removed: {key}")
@@ -1400,6 +1503,7 @@ def validate_state(mission: Any) -> list[str]:
         "feedback",
         "adoptions",
         "reviews",
+        "repair_obligations",
         "coordination",
         "commands",
     }
@@ -1552,10 +1656,12 @@ def validate_state(mission: Any) -> list[str]:
     for delegation_id, adoption in adoptions.items():
         if set(adoption) != {
             "delegation_id", "feedback_id", "round", "contract_version", "artifact_ref",
-            "artifact_digest", "adopted_at",
+            "artifact_digest", "invalidated", "adopted_at",
         }:
             findings.append(f"adoption {delegation_id} fields are invalid")
             continue
+        if not isinstance(adoption.get("invalidated"), bool):
+            findings.append(f"adoption {delegation_id} invalidated flag is invalid")
         if delegation_id not in delegations:
             findings.append(f"adoption {delegation_id} delegation does not exist")
         delegation = delegations.get(delegation_id, {})
@@ -1618,6 +1724,27 @@ def validate_state(mission: Any) -> list[str]:
             findings.append(f"collaboration review {review_id} does not match its source contract")
         if not _valid_hash(review.get("artifact_digest")):
             findings.append(f"collaboration review {review_id} artifact digest is invalid")
+    repair_obligations = collab.get("repair_obligations")
+    if not isinstance(repair_obligations, dict):
+        findings.append("collaboration repair_obligations must be an object")
+        repair_obligations = {}
+    for obligation_id, obligation in repair_obligations.items():
+        if set(obligation) != {
+            "obligation_id", "source_task_id", "source_delegation_id", "repair_task_id",
+            "acceptance_ids", "invalidated_adoption_ref", "created_at",
+        }:
+            findings.append(f"repair obligation {obligation_id} fields are invalid")
+            continue
+        if obligation.get("obligation_id") != obligation_id:
+            findings.append(f"repair obligation key mismatch: {obligation_id}")
+        if obligation.get("source_delegation_id") not in delegations:
+            findings.append(f"repair obligation {obligation_id} source delegation does not exist")
+        if obligation.get("repair_task_id") not in tasks:
+            findings.append(f"repair obligation {obligation_id} repair task does not exist")
+        if not isinstance(obligation.get("acceptance_ids"), list):
+            findings.append(f"repair obligation {obligation_id} acceptance_ids is invalid")
+        if not _valid_time(obligation.get("created_at")):
+            findings.append(f"repair obligation {obligation_id} created_at is invalid")
     coordination = collab.get("coordination")
     if not isinstance(coordination, dict) or set(coordination) != {
         "state", "focus_task_id", "gap_summary", "next_action", "resume_basis", "waiting_on", "updated_at"

@@ -67,6 +67,7 @@ Payload fields are exact: `coordinator_generation`, `delegation_id`, `intent_id`
 - `required_review` is `{required, reviewer_id, scope_refs}`. A required review names a configured participant and non-empty scope references.
 - The instruction summary is one line of at most 2048 characters; the input/dependency references are bounded strings.
 - A new execution is rejected while the same task or write scope has a physically in-flight execution (intent prepared/confirmed/unknown and not stopped/completed/failed). Business adoption or repair does not release a still-running scope; reconcile or stop the original execution first.
+- A new delegation round must strictly succeed prior rounds for the same task (monotonic succession); lower or equal rounds are rejected. The current effective delegation is the latest legitimate successor, never an older round chosen by numeric max alone.
 - The command creates one `prepared` intent and leaves the A focus unchanged. It does not send a message.
 
 ### `dispatch.record`
@@ -166,3 +167,17 @@ The new coordinator has the same fields as `enable.coordinator`. The command inc
 | T29 | Evidence-backed path revision or explicit user goal change updates affected delegation and next action. | agent behavior replay plus path-adjust runtime test |
 
 T26-T29 replay is agent behavior evidence, not a real three-session E2E. Real peer source, wake-up, host deduplication, cancellation, and protected handoff remain host acceptance items and must be reported as such.
+
+## Current acceptance responsibility (A1 convergence)
+
+Retiring an attempt releases physical write-scope occupancy, but the task/contract acceptance obligation persists along explicit succession, repair, or an authorized scope change. One shared projection (`_task_acceptance_findings`) is used by public Task completion, Mission close, and the resume gap view:
+
+- A task with no collaboration delegation history keeps the ordinary path.
+- A task with delegation history must have a current valid adopted artifact and the latest required reviewer PASS. If every attempt is retired (not_sent/stopped/failed) and no legal successor exists, the obligation remains open and completion is blocked; it is not skipped as an ordinary task.
+- The current delegation is the latest non-retired successor under monotonic rounds. A later FAIL on the current adopted artifact blocks completion until a bounded repair/re-review PASS.
+- Each adoption carries an `invalidated` flag. A blocking `repair` on an already accepted current artifact sets `invalidated=true` (history preserved) and creates a `repair_obligations` record linking the source task/delegation to a bounded success-critical repair task and its acceptance IDs.
+- A repair obligation is satisfied only by fresh acceptance on the repair task: a current valid adoption + required review PASS on the repair task, or a qualified `acceptance_passed` event scoped to the repair task for the carried acceptance IDs. Completing the repair task through the ordinary entry with no new artifact/review/acceptance does not satisfy it. The source task's old adoption cannot close the Mission while the obligation is open.
+
+## Closed-Mission business write boundary (A2)
+
+When the Mission status is not `active` (completed or any other terminal/closed state), its business results and acceptance keep their completion-time boundary. New collaboration mutations (`enable`, `delegation.prepare`, `dispatch.record`, `feedback.record`, `feedback.resolve`, `coordination.checkpoint`, `coordinator.handoff`) are rejected with `mission_closed`; late facts must be carried by a follow-up Mission or a legal continuation. Read-only `snapshot.get`/`command.get`, historical command replay, and original prepared-transaction recovery remain available and do not change the current adoption or start new business execution.

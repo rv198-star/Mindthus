@@ -67,13 +67,13 @@ These replay records are `source_audit=pending`; the source session must review 
 | T20 | PASS, mechanical/replay | Normal-language return is stored with source and normalized association/evidence. |
 | T21 | PASS, mechanical | Missing task/round/contract association stays `needs_association`; no task or acceptance is guessed. |
 | T22 | PASS, mechanical | First authorized division enables collaboration without a mode phrase and preserves objective, acceptance, tasks, and focus. |
-| T23 | Executed behavior evidence; source semantic audit pending | Real runtime execution creates no delegation from reference-only input (behavior-execution.jsonl). |
+| T23 | Scripted runtime scenario (mechanical); actual agent behavior acceptance pending source session | Real runtime execution creates no delegation from reference-only input (behavior-execution.jsonl). |
 | T24 | PASS, mechanical | `snapshot.get` reconstructs unresolved responsibility, feedback, external work, waiting, and next action. |
-| T25 | Executed behavior evidence; source semantic audit pending | Real runtime execution keeps only the existing delegation under current-session scope. |
-| T26 | Executed behavior evidence; source semantic audit pending | Real runtime execution defers unrelated suggestions; no new tasks/delegations. |
-| T27 | Executed behavior evidence; source semantic audit pending | Real runtime execution routes debug to B; A keeps acceptance responsibility. |
-| T28 | Executed behavior evidence; source semantic audit pending | Real runtime execution batches feedback; pending cleared; one adoption. |
-| T29 | Executed behavior evidence; source semantic audit pending | Real runtime execution creates replacement delegation, preserves history, records goal change. |
+| T25 | Scripted runtime scenario (mechanical); actual agent behavior acceptance pending source session | Real runtime execution keeps only the existing delegation under current-session scope. |
+| T26 | Scripted runtime scenario (mechanical); actual agent behavior acceptance pending source session | Real runtime execution defers unrelated suggestions; no new tasks/delegations. |
+| T27 | Scripted runtime scenario (mechanical); actual agent behavior acceptance pending source session | Real runtime execution routes debug to B; A keeps acceptance responsibility. |
+| T28 | Scripted runtime scenario (mechanical); actual agent behavior acceptance pending source session | Real runtime execution batches feedback; pending cleared; one adoption. |
+| T29 | Scripted runtime scenario (mechanical); actual agent behavior acceptance pending source session | Real runtime execution creates replacement delegation, preserves history, records goal change. |
 
 ## Verification
 
@@ -136,3 +136,24 @@ Updated verification (CPython 3.11.11): collaboration 37 passed; behavior execut
 passed; TPlan discover 628 passed / 1 skipped; packaging docs 41 passed / 1 skipped;
 full repository discover 1381 passed / 8 skipped. Real three-session host E2E and
 source semantic review of the executed decisions remain pending source acceptance.
+
+## R3 Repair Batch (2026-11-17)
+
+The R2 independent audit (REVISE, two P1 root causes A1/A2 + R02 classification) was
+repaired by root cause in the same branch. See [REPAIR-R3.md](REPAIR-R3.md).
+
+- A1: converged current-acceptance-responsibility projection (monotonic succession,
+  adoption `invalidated` flag, repair obligations carried by a bounded repair task with
+  fresh acceptance/re-review). Shared by Task completion, Mission close, and resume gaps.
+  Retired attempts no longer erase the obligation; older-round PASS cannot mask a newer FAIL.
+- A2: non-active Mission rejects new collaboration business writes (`mission_closed`);
+  reads, historical replay, and prepared-transaction recovery remain available.
+- R02: driver evidence reclassified `scripted_runtime_scenario` (preset dispositions, not
+  autonomous agent trade-offs); T29 second step is a coordination-summary update only;
+  T23 covers no-new-delegation after enable, not entry-not-enabled. Actual agent behavior
+  acceptance for T23/T25/T26-T29 is the source session's responsibility.
+
+R2's four probes re-run against the fixed code are all correctly rejected
+(`reviews/r3/probe-results-after.jsonl`). New A1/A2 regressions include the three failure
+paths and positive full chains. Real three-session host E2E and source semantic review of
+actual agent decisions remain pending source acceptance.

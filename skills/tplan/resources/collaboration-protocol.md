@@ -60,6 +60,9 @@ generation (shown in `snapshot.get`).
 - A new execution is rejected while the same task or write scope has a physically
   in-flight execution (intent prepared/confirmed/unknown and not stopped/completed/failed).
   Business adoption or repair does not release a still-running scope.
+- A new delegation round must strictly succeed prior rounds for the same task (monotonic
+  succession); lower/equal rounds are rejected. Current responsibility follows the latest
+  legitimate successor, not an older round picked by numeric max.
 - Creates one `prepared` intent; does not send; preserves A focus.
 
 ### dispatch.record
@@ -153,3 +156,22 @@ Minimal `enable` payload example:
   content or principal conflicts.
 - An open Interaction Guard blocks writes; import a held peer result once after the
   authorized guard resolution.
+
+## Current acceptance responsibility and closed-Mission boundary
+
+Retiring an attempt releases physical occupancy, but the acceptance obligation persists
+along explicit succession/repair/authorized scope change. One shared projection checks
+Task completion, Mission close, and resume gaps:
+
+- A task with delegation history needs a current valid adopted artifact + latest required
+  reviewer PASS. If all attempts are retired with no legal successor, the obligation stays
+  open (completion blocked), not skipped.
+- Each adoption has an `invalidated` flag. A blocking `repair` on an accepted current
+  artifact invalidates it (history kept) and creates a repair obligation linking a bounded
+  success-critical repair task. The obligation is satisfied only by fresh acceptance on the
+  repair task (current valid adoption + review PASS, or a qualified acceptance event scoped
+  to the repair task). Ordinary completion of the repair task with no new artifact/review/
+  acceptance does not close the obligation.
+- When the Mission is not `active`, new collaboration mutations are rejected with
+  `mission_closed`; late facts need a follow-up Mission or legal continuation. Reads,
+  historical replay, and prepared-transaction recovery remain available.

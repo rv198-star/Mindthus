@@ -95,11 +95,12 @@ class Recorder:
     def record(self, outcome):
         return {
             "case": self.case,
-            "evidence_class": "agent_behavior_execution",
+            "evidence_class": "scripted_runtime_scenario",
             "real_host_e2e": False,
             "source_audit": "pending",
             "objective": self.objective,
-            "executed_by": "Issue #246 development session (actual runtime collaboration entry)",
+            "executed_by": "Issue #246 development session via the real collaboration runtime",
+            "classification_note": "Scripted runtime scenario: disposition/rationale/next_action are preset Python constants, not autonomous agent feedback trade-offs. Actual agent goal-preservation behavior is accepted by the source session separately.",
             "source": "tests/tplan/collaboration_behavior_driver.py",
             "steps": self.steps,
             "outcome": outcome,
@@ -108,7 +109,7 @@ class Recorder:
 
 def case_t23():
     c = fresh()
-    rec = Recorder("T23", "Deliver the runtime; reference material alone creates no delegation")
+    rec = Recorder("T23", "After enable, reference-only input creates no new delegation (does not verify entry-not-enabled)")
     try:
         c.enable()
         c.mutate("coordination.checkpoint", {"coordinator_generation": 1, **c.coordination(focus="T1", next_action="Continue T1 implementation")})
@@ -231,7 +232,7 @@ def case_t28():
 
 def case_t29():
     c = fresh()
-    rec = Recorder("T29", "Evidence-backed path revision and explicit user goal change update the affected path")
+    rec = Recorder("T29", "Evidence-backed path revision; second step is a coordination-summary update only (canonical objective/acceptance unchanged)")
     try:
         c.enable(); c.prepare(); c.dispatch(execution_state="running")
         before = state_view(c)
@@ -248,15 +249,15 @@ def case_t29():
         resp, code = c.mutate("feedback.resolve", path_payload)
         after = rec.step(c, "Evidence invalidates current storage path", "path_adjusted; pause T1; new D2; focus T2", "feedback.resolve", resp, code, before)
         before2 = state_view(c)
-        f2 = c.feedback(source="user-goal-change", kind="question", summary="User narrows target to the current-session deliverable")
+        f2 = c.feedback(source="coordination-summary-input", kind="question", summary="Scripted coordination-summary input (not a canonical user goal change)")
         r2, k2 = c.mutate("coordination.checkpoint", {"coordinator_generation": 1, "state": "working", "focus_task_id": "T2",
-                       "gap_summary": "Updated acceptance: current-session deliverable", "next_action": "Verify the current-session deliverable against the updated acceptance",
-                       "resume_basis": ["T2", "D2"], "waiting_on": [], "rationale": "Explicit user goal change recorded through the authorized coordination path"})
-        after2 = rec.step(c, "User explicitly narrows the target", "record goal change; update next action; no new external dispatch",
+                       "gap_summary": "Coordination summary: current-session deliverable", "next_action": "Verify the current-session deliverable against the updated acceptance",
+                       "resume_basis": ["T2", "D2"], "waiting_on": [], "rationale": "Coordination summary update only; canonical Mission objective/acceptance are not changed by this command"})
+        after2 = rec.step(c, "Scripted coordination-summary input", "coordination summary only; canonical objective/acceptance unchanged; no new external dispatch",
                           "coordination.checkpoint", r2, k2, before2)
         outcome = {"replacement_delegation_created": "D2" in after["delegations"], "history_preserved": "D1" in after["delegations"],
                    "focus_moved_to_revised_path": after["focus_task_id"] == "T2",
-                   "goal_change_next_action": after2["next_action"] == "Verify the current-session deliverable against the updated acceptance",
+                   "coordination_summary_updated": after2["next_action"] == "Verify the current-session deliverable against the updated acceptance",
                    "path_resolve_ok": code == 0, "checkpoint_ok": k2 == 0}
         return rec.record(outcome)
     finally:

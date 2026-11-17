@@ -241,6 +241,11 @@ def execute(directory: Path, request: Any, *, principal: str) -> tuple[dict[str,
                     data=replay_data,
                     message="Original committed result; no new business effect",
                 ), 0
+            if state.get("mission", {}).get("status") != "active":
+                raise collaboration.CollaborationError(
+                    "mission_closed",
+                    "Mission is not active; its completed business boundary is preserved. Late facts require a follow-up Mission or legal continuation; reads, replay, and recovery remain available.",
+                )
             if runtime._read_interaction_guard_unlocked(directory) is not None:
                 raise collaboration.CollaborationError(
                     "guard_open", "Resolve the existing interaction guard through its authorized path"
@@ -279,7 +284,7 @@ def execute(directory: Path, request: Any, *, principal: str) -> tuple[dict[str,
             mission_findings = runtime.validate_mission(after)
             if mission_findings:
                 raise collaboration.CollaborationError("invalid_state", "; ".join(mission_findings))
-            completion_findings = collaboration.task_completion_findings(state, after)
+            completion_findings = collaboration.task_completion_findings(state, after, events)
             if completion_findings:
                 raise collaboration.CollaborationError("review_required", "; ".join(completion_findings))
             _capacity_check(runtime, directory, state, after, events)

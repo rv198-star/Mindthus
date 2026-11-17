@@ -3464,7 +3464,7 @@ def _mission_completion_findings(
     elif "human_control" in mission:
         errors.extend(h1_completion_findings(mission, events))
     if "collaboration" in mission:
-        errors.extend(collaboration_completion_findings(mission))
+        errors.extend(collaboration_completion_findings(mission, events))
     return errors
 
 
@@ -4229,7 +4229,7 @@ def _commit_mission_state_unlocked(
         completion_errors = _mission_completion_findings(after, evidence_snapshot)
         if completion_errors:
             raise TplanError("; ".join(completion_errors))
-    task_completion_errors = collaboration_task_completion_findings(before, after)
+    task_completion_errors = collaboration_task_completion_findings(before, after, evidence_snapshot)
     if task_completion_errors:
         raise TplanError("; ".join(task_completion_errors))
 

@@ -42,6 +42,7 @@ class CollaborationContractTests(unittest.TestCase):
             "feedback": {},
             "adoptions": {},
             "reviews": {},
+            "repair_obligations": {},
             "coordination": {
                 "state": "working",
                 "focus_task_id": "T1",

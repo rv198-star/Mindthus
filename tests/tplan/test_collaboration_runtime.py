@@ -236,7 +236,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
         self.enable()
         self.prepare()
         self.dispatch(send_state="unknown", execution_state="unknown")
-        response, code = self.mutate("delegation.prepare", self.delegation_payload(delegation_id="D2", intent_id="I2"))
+        response, code = self.mutate("delegation.prepare", self.delegation_payload(delegation_id="D2", intent_id="I2", round_no=2))
         self.assertEqual((code, response["code"]), (collaboration.EXITS["execution_in_flight"], "execution_in_flight"))
         reconciled, code = self.mutate("dispatch.record", {
             "coordinator_generation": 1, "intent_id": "I1", "send_state": "confirmed",
@@ -244,7 +244,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
             "observed_at": "2026-11-17T01:01:00+00:00", "reason": "Original send found; stop requested but still running",
         })
         self.assertEqual(code, 0, reconciled)
-        response, code = self.mutate("delegation.prepare", self.delegation_payload(delegation_id="D2", intent_id="I2"))
+        response, code = self.mutate("delegation.prepare", self.delegation_payload(delegation_id="D2", intent_id="I2", round_no=2))
         self.assertEqual(code, collaboration.EXITS["execution_in_flight"], response)
         stopped, code = self.mutate("dispatch.record", {
             "coordinator_generation": 1, "intent_id": "I1", "send_state": "confirmed",
@@ -252,7 +252,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
             "observed_at": "2026-11-17T01:02:00+00:00", "reason": "Original worker confirmed stopped",
         })
         self.assertEqual(code, 0, stopped)
-        self.prepare(delegation_id="D2", intent_id="I2")
+        self.prepare(delegation_id="D2", intent_id="I2", round_no=2)
 
     def test_feedback_replay_conflict_and_pulse_cover_non_active_task(self):
         self.enable()
@@ -787,6 +787,128 @@ class CollaborationRuntimeTests(unittest.TestCase):
             "command_id": "post-capacity", "expected_build_hash": runtime.runtime_fingerprint()["build_hash"],
             "expected_snapshot": None, "payload": {}}, principal=self.principal)
         self.assertEqual(read_code, 0, read)
+
+    def _close_mission(self, status="completed"):
+        state = runtime.read_mission(self.mission)
+        state["mission"]["status"] = status
+        runtime.write_mission(self.mission, state)
+
+    def _reviewed_t1(self):
+        self.enable(); self.prepare(); self.dispatch(execution_state="completed")
+        f = self.feedback(source="initial-pass", source_role="C", kind="review")
+        r, k = self.mutate("feedback.resolve", self.resolution(f["data"]["feedback_id"], complete=True))
+        self.assertEqual(k, 0, r)
+        runtime.append_event(self.mission, {"event_type": "acceptance_passed", "summary": "A1", "task_id": "T1", "payload": {"acceptance_ids": ["A1"]}})
+
+    def test_a1_failed_only_attempt_keeps_obligation_then_successor_completes(self):
+        self.enable(); self.prepare(); self.dispatch(execution_state="failed")
+        with self.assertRaises(runtime.TplanError):
+            runtime.transition_task_status(self.mission, "T1", "completed")
+        state = runtime.read_mission(self.mission)
+        self.assertTrue(collaboration._task_acceptance_findings(state["collaboration"], state, "T1", None))
+        self.prepare(delegation_id="D2", intent_id="I2", round_no=2)
+        self.dispatch(intent_id="I2", execution_state="completed")
+        f = self.feedback(source="successor-pass", delegation_id="D2", artifact="h2", source_role="C", round_no=2)
+        r, k = self.mutate("feedback.resolve", self.resolution(f["data"]["feedback_id"], delegation="D2", round_no=2, artifact="h2", complete=True))
+        self.assertEqual(k, 0, r)
+        self.assertEqual(runtime.find_task(runtime.read_mission(self.mission), "T1")["status"], "completed")
+
+    def test_a1_monotonic_succession_rejects_lower_or_equal_round(self):
+        self.enable(); self.prepare(round_no=2); self.dispatch(execution_state="completed")
+        f = self.feedback(source="round2-pass", source_role="C", round_no=2)
+        r, k = self.mutate("feedback.resolve", self.resolution(f["data"]["feedback_id"], round_no=2, complete=False))
+        self.assertEqual(k, 0, r)
+        for bad_round in (1, 2):
+            resp, code = self.mutate("delegation.prepare", self.delegation_payload(delegation_id=f"DX{bad_round}", intent_id=f"IX{bad_round}", round_no=bad_round))
+            self.assertEqual((code, resp["code"]), (collaboration.EXITS["invalid_request"], "invalid_request"))
+        self.prepare(delegation_id="D3", intent_id="I3", round_no=3)
+
+    def test_a1_current_follows_latest_successor_not_older_pass(self):
+        self.enable(); self.prepare(); self.dispatch(execution_state="completed")
+        f = self.feedback(source="round1-pass", source_role="C")
+        r, k = self.mutate("feedback.resolve", self.resolution(f["data"]["feedback_id"], complete=False))
+        self.assertEqual(k, 0, r)
+        runtime.append_event(self.mission, {"event_type": "acceptance_passed", "summary": "A1", "task_id": "T1", "payload": {"acceptance_ids": ["A1"]}})
+        self.prepare(delegation_id="D2", intent_id="I2", round_no=2)
+        self.dispatch(intent_id="I2", execution_state="completed")
+        f = self.feedback(source="round2-fail", delegation_id="D2", artifact="h2", source_role="C", round_no=2, kind="review")
+        r, k = self.mutate("feedback.resolve", self.resolution(f["data"]["feedback_id"], delegation="D2", round_no=2, artifact="h2", verdict="FAIL", complete=False))
+        self.assertEqual(k, 0, r)
+        current = collaboration._task_current_delegation(runtime.read_mission(self.mission)["collaboration"], "T1")
+        self.assertEqual(current["delegation_id"], "D2")
+        with self.assertRaises(runtime.TplanError):
+            runtime.transition_task_status(self.mission, "T1", "completed")
+        state = runtime.read_mission(self.mission)
+        self.assertTrue(collaboration._task_acceptance_findings(state["collaboration"], state, "T1", None))
+
+    def test_a1_repair_invalidates_current_and_requires_fresh_acceptance(self):
+        self._reviewed_t1()
+        f = self.feedback(source="current-defect", source_role="B", kind="blocker")
+        repair_task = {"id": "T3", "title": "Repair", "role": "success-critical",
+                       "mission_contribution": "Restores A1", "acceptance_evidence": ["A1"], "status": "pending"}
+        r, k = self.mutate("feedback.resolve", self.resolution(f["data"]["feedback_id"], disposition="repair", verdict=None, new_tasks=[repair_task], focus="T3"))
+        self.assertEqual(k, 0, r)
+        state = runtime.read_mission(self.mission)
+        self.assertTrue(state["collaboration"]["adoptions"]["D1"]["invalidated"])
+        self.assertEqual(state["collaboration"]["adoptions"]["D1"]["artifact_ref"], "artifact://h1")
+        self.assertTrue(state["collaboration"]["repair_obligations"])
+        with self.assertRaises(runtime.TplanError):
+            runtime.transition_task_status(self.mission, "T3", "completed")
+        self.assertTrue(collaboration.completion_findings(runtime.read_mission(self.mission)))
+        self.prepare(task_id="T3", delegation_id="D3", intent_id="I3", round_no=1)
+        self.dispatch(intent_id="I3", execution_state="completed")
+        f = self.feedback(source="repair-pass", delegation_id="D3", artifact="h3", source_role="C", kind="review")
+        r, k = self.mutate("feedback.resolve", self.resolution(f["data"]["feedback_id"], delegation="D3", round_no=1, artifact="h3", complete=True, review_task="T3", focus=None))
+        self.assertEqual(k, 0, r)
+        runtime.append_event(self.mission, {"event_type": "acceptance_passed", "summary": "A1 repaired", "task_id": "T3", "payload": {"acceptance_ids": ["A1"]}})
+        state = runtime.read_mission(self.mission)
+        self.assertEqual(collaboration.completion_findings(state, runtime._read_events_unlocked(self.mission)), [])
+        self._close_mission()
+        self.assertEqual(runtime.read_mission(self.mission)["mission"]["status"], "completed")
+
+    def test_a2_closed_mission_rejects_late_business_writes_but_keeps_reads(self):
+        self._reviewed_t1()
+        self._close_mission()
+        for action, payload in (
+            ("feedback.record", {"coordinator_generation": 1, "kind": "result", "source_event_ref": "late", "source_thread_ref": "thread-b",
+                                 "source_host_ref": "local", "source_role_id": "B", "delegation_id": "D1", "round": 1,
+                                 "contract_version": "contract-r1", "artifact_ref": "artifact://h2",
+                                 "artifact_digest": collaboration.digest({"artifact": "h2"}), "summary": "late", "original_ref": "thread://late", "attachment_refs": []}),
+            ("delegation.prepare", self.delegation_payload(delegation_id="D2", intent_id="I2", round_no=2)),
+            ("coordination.checkpoint", {"coordinator_generation": 1, **self.coordination()}),
+        ):
+            resp, code = self.mutate(action, payload)
+            self.assertEqual((code, resp["code"]), (collaboration.EXITS["mission_closed"], "mission_closed"), action)
+        state = runtime.read_mission(self.mission)
+        self.assertEqual(state["collaboration"]["adoptions"]["D1"]["artifact_ref"], "artifact://h1")
+        self.assertEqual(collaboration.completion_findings(state), [])
+        snap = self.snapshot()
+        self.assertEqual(snap["data"]["collaboration"]["adoptions"]["D1"]["artifact_ref"], "artifact://h1")
+
+    def test_a2_closed_mission_replay_and_recovery_available(self):
+        self._reviewed_t1()
+        resolve_command = "command-4"
+        self._close_mission()
+        hist, code = collaboration_runtime.execute(self.mission, {
+            "protocol": collaboration.PROTOCOL, "action": "command.get", "mission_id": "collaboration-mission",
+            "command_id": resolve_command, "expected_build_hash": runtime.runtime_fingerprint()["build_hash"],
+            "expected_snapshot": None, "payload": {}}, principal=self.principal)
+        self.assertEqual(code, 0, hist)
+        rec, code = collaboration_runtime.execute(self.mission, {
+            "protocol": collaboration.PROTOCOL, "action": "runtime.recover", "mission_id": "collaboration-mission",
+            "command_id": resolve_command, "expected_build_hash": runtime.runtime_fingerprint()["build_hash"],
+            "expected_snapshot": None, "payload": {}}, principal=self.principal)
+        self.assertEqual(code, 0, rec)
+        self.assertFalse(rec["data"]["recovered"])
+
+    def test_a2_other_terminal_status_blocks_business_writes(self):
+        self._reviewed_t1()
+        self._close_mission(status="abandoned")
+        resp, code = self.mutate("feedback.record", {"coordinator_generation": 1, "kind": "result", "source_event_ref": "late",
+                          "source_thread_ref": "thread-b", "source_host_ref": "local", "source_role_id": "B", "delegation_id": "D1",
+                          "round": 1, "contract_version": "contract-r1", "artifact_ref": "artifact://h2",
+                          "artifact_digest": collaboration.digest({"artifact": "h2"}), "summary": "late", "original_ref": "thread://late", "attachment_refs": []})
+        self.assertEqual((code, resp["code"]), (collaboration.EXITS["mission_closed"], "mission_closed"))
 
 
 if __name__ == "__main__":
