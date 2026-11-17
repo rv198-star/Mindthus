@@ -145,14 +145,14 @@ class CollaborationRuntimeTests(unittest.TestCase):
         self.assertEqual(code, 0, response)
         return response
 
-    def feedback(self, source="msg-1", delegation_id="D1", artifact="h1", summary="Result ready", assert_ok=True):
+    def feedback(self, source="msg-1", delegation_id="D1", artifact="h1", summary="Result ready", assert_ok=True, source_role="B"):
         digest = collaboration.digest({"source": source, "summary": summary})
         response, code = self.mutate("feedback.record", {
             "coordinator_generation": 1,
             "source_event_ref": source,
-            "source_thread_ref": "thread-b" if delegation_id else "thread-unknown",
+            "source_thread_ref": ("thread-c" if source_role == "C" else "thread-b") if delegation_id else "thread-unknown",
             "source_host_ref": "local",
-            "source_role_id": "B" if delegation_id else None,
+            "source_role_id": source_role if delegation_id else None,
             "delegation_id": delegation_id,
             "round": 1 if delegation_id else None,
             "contract_version": "contract-r1" if delegation_id else None,
@@ -166,7 +166,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
             self.assertEqual(code, 0, response)
         return response
 
-    def coordination(self, focus="T1", state="working", next_action="Continue T1"):
+    def coordination(self, focus="T2", state="working", next_action="Continue the next objective-relevant task"):
         return {
             "state": state,
             "focus_task_id": focus,
@@ -177,7 +177,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
             "rationale": "Keep action aligned to the user objective",
         }
 
-    def resolve(self, feedback_id="F1", disposition="adopted", artifact="h1", review=True, new_tasks=None):
+    def resolve(self, feedback_id="F1", disposition="adopted", artifact="h1", review=True, new_tasks=None, complete=True):
         payload = {
             "coordinator_generation": 1,
             "feedback_id": feedback_id,
@@ -199,7 +199,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
                 "scope_refs": ["scope://T1"], "verdict": "PASS",
                 "rationale": "Current artifact and scope were reviewed",
             } if review else None,
-            "task_changes": [{"task_id": "T1", "status": "completed"}] if disposition == "adopted" else [],
+            "task_changes": [{"task_id": "T1", "status": "completed"}] if disposition == "adopted" and complete else [],
             "new_tasks": new_tasks or [],
             "next_delegation": None,
             "coordination": self.coordination(),
@@ -224,6 +224,8 @@ class CollaborationRuntimeTests(unittest.TestCase):
             runtime.commit_mission_state(self.mission, before, bad, source={"kind": "runtime_script", "name": "fixture"})
         self.enable()
         before = runtime.read_mission(self.mission)
+        with self.assertRaisesRegex(runtime.TplanError, "collaboration"):
+            runtime.write_mission(self.root / "preloaded-collaboration", before)
         bad = copy.deepcopy(before)
         bad["collaboration"]["coordinator"]["responsibility"] = "Public rewrite"
         with self.assertRaisesRegex(runtime.TplanError, "collaboration"):
@@ -254,6 +256,12 @@ class CollaborationRuntimeTests(unittest.TestCase):
     def test_feedback_replay_conflict_and_pulse_cover_non_active_task(self):
         self.enable()
         self.prepare()
+        checkpoint, code = self.mutate("coordination.checkpoint", {
+            "coordinator_generation": 1, "state": "working", "focus_task_id": "T2",
+            "gap_summary": "A remains on the objective-relevant task", "next_action": "Continue T2",
+            "resume_basis": ["T2"], "waiting_on": [], "rationale": "A deliberately switched focus before T1 feedback arrived",
+        })
+        self.assertEqual(code, 0, checkpoint)
         first = self.feedback(source="msg-1", summary="T1 result")
         replay = self.feedback(source="msg-1", summary="T1 result")
         self.assertEqual(first["data"]["feedback_id"], replay["data"]["feedback_id"])
@@ -270,7 +278,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
         pulse = runtime.build_mission_pulse(self.mission, trigger="manual")
         self.assertEqual(pulse["winning_candidate"]["signal"], "user_feedback")
         self.assertIn(first["data"]["feedback_id"], pulse["winning_candidate"]["source_ids"])
-        self.assertEqual(runtime.read_mission(self.mission)["active_task_id"], "T1")
+        self.assertEqual(runtime.read_mission(self.mission)["active_task_id"], "T2")
 
     def test_unassociated_natural_language_feedback_waits_for_targeted_question(self):
         self.enable()
@@ -287,26 +295,27 @@ class CollaborationRuntimeTests(unittest.TestCase):
         self.enable()
         self.prepare()
         self.dispatch()
-        self.feedback()
-        missing_review, code = self.resolve(review=False)
+        feedback = self.feedback(source_role="C")
+        missing_review, code = self.resolve(feedback_id=feedback["data"]["feedback_id"], review=False)
         self.assertEqual((code, missing_review["code"]), (collaboration.EXITS["review_required"], "review_required"))
-        accepted, code = self.resolve(review=True)
+        accepted, code = self.resolve(feedback_id=feedback["data"]["feedback_id"], review=True)
         self.assertEqual(code, 0, accepted)
         state = runtime.read_mission(self.mission)
         self.assertEqual(state["tasks"][0]["status"], "completed")
-        self.assertEqual(state["active_task_id"], "T1")
+        self.assertEqual(state["active_task_id"], "T2")
         self.assertEqual(state["collaboration"]["adoptions"]["D1"]["artifact_ref"], "artifact://h1")
 
     def test_late_review_of_old_artifact_does_not_replace_current_adoption(self):
         self.enable()
         self.prepare()
         self.dispatch()
-        old = self.feedback(source="msg-h1", artifact="h1", summary="Old result")
-        current = self.feedback(source="msg-h2", artifact="h2", summary="Current result")
-        accepted, code = self.resolve(feedback_id=current["data"]["feedback_id"], artifact="h2", review=True)
+        old = self.feedback(source="msg-h1", artifact="h1", summary="Old result", source_role="C")
+        current = self.feedback(source="msg-h2", artifact="h2", summary="Current result", source_role="C")
+        accepted, code = self.resolve(feedback_id=current["data"]["feedback_id"], artifact="h2", review=True, complete=False)
         self.assertEqual(code, 0, accepted)
         late, code = self.resolve(feedback_id=old["data"]["feedback_id"], disposition="answered", artifact="h1", review=True)
         self.assertEqual(code, 0, late)
+        runtime.transition_task_status(self.mission, "T1", "completed")
         adoption = runtime.read_mission(self.mission)["collaboration"]["adoptions"]["D1"]
         self.assertEqual(adoption["artifact_ref"], "artifact://h2")
         self.assertGreaterEqual(len(runtime.read_mission(self.mission)["collaboration"]["reviews"]), 2)
@@ -315,15 +324,16 @@ class CollaborationRuntimeTests(unittest.TestCase):
         self.enable()
         stale = self.snapshot()["data"]["expected_snapshot"]
         self.prepare()
-        response, code = self.mutate("feedback.record", {
+        guard_feedback = {
             "coordinator_generation": 1, "source_event_ref": "msg-guard", "source_thread_ref": "thread-b",
             "source_host_ref": "local", "source_role_id": "B", "delegation_id": "D1", "round": 1,
             "contract_version": "contract-r1", "artifact_ref": "artifact://h1",
             "artifact_digest": collaboration.digest({"artifact": "h1"}), "summary": "Guard input",
             "original_ref": "thread://source/msg-guard", "attachment_refs": [],
-        }, expected_snapshot=stale)
+        }
+        response, code = self.mutate("feedback.record", guard_feedback, expected_snapshot=stale)
         self.assertEqual((code, response["code"]), (collaboration.EXITS["stale_snapshot"], "stale_snapshot"))
-        runtime.begin_interaction_guard(self.mission, platform="codex", message_ref="private")
+        runtime.begin_interaction_guard(self.mission, platform="codex", binding_id="S1", message_ref="private")
         before = (self.mission / "mission.json").read_bytes()
         response, code = self.mutate("coordination.checkpoint", {
             "coordinator_generation": 1, "state": "waiting_external", "focus_task_id": "T1",
@@ -333,6 +343,13 @@ class CollaborationRuntimeTests(unittest.TestCase):
         })
         self.assertEqual((code, response["code"]), (collaboration.EXITS["guard_open"], "guard_open"))
         self.assertEqual(before, (self.mission / "mission.json").read_bytes())
+        resolved = runtime.resolve_guard_at_turn_end(self.mission, platform="codex", binding_id="S1")
+        self.assertEqual(resolved["disposition"], "resume_original")
+        imported, code = self.mutate("feedback.record", guard_feedback)
+        self.assertEqual((code, imported["status"]), (0, "committed"))
+        duplicate, code = self.mutate("feedback.record", guard_feedback)
+        self.assertEqual((code, duplicate["status"]), (0, "no_change"))
+        self.assertEqual(imported["data"]["feedback_id"], duplicate["data"]["feedback_id"])
 
     def test_checkpoint_wait_resume_and_coordinator_handoff(self):
         self.enable()
@@ -369,7 +386,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
         self.enable()
         self.prepare()
         self.dispatch()
-        first = self.feedback(source="msg-1", artifact="h1", summary="Initial result")
+        first = self.feedback(source="msg-1", artifact="h1", summary="Initial result", source_role="C")
         accepted, code = self.resolve(feedback_id=first["data"]["feedback_id"], artifact="h1", review=True)
         self.assertEqual(code, 0, accepted)
         failure = self.feedback(source="msg-2", artifact="h2", summary="Current result has a defect")
@@ -379,7 +396,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
                               "rationale": "The defect blocks the current acceptance claim"},
             "evidence_refs": [], "artifact_ref": None, "review": None,
             "task_changes": [], "new_tasks": [], "next_delegation": None,
-            "coordination": self.coordination(next_action="Create a bounded repair task"),
+            "coordination": self.coordination(focus="T2", next_action="Create a bounded repair task"),
         }
         missing, code = self.mutate("feedback.resolve", payload)
         self.assertEqual((code, missing["code"]), (collaboration.EXITS["repair_scope_required"], "repair_scope_required"))
@@ -387,6 +404,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
             "id": "T3", "title": "Repair current result", "role": "success-critical",
             "mission_contribution": "Restores A1", "acceptance_evidence": ["A1"], "status": "pending",
         }]
+        payload["coordination"] = self.coordination(focus="T3", next_action="Execute the bounded repair task")
         repaired, code = self.mutate("feedback.resolve", payload)
         self.assertEqual(code, 0, repaired)
         state = runtime.read_mission(self.mission)
@@ -414,6 +432,152 @@ class CollaborationRuntimeTests(unittest.TestCase):
         skill = (SCRIPTS.parent / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn("collaboration_runtime.py", skill)
         self.assertIn("B/C", skill)
+
+    def test_command_replay_query_and_conflict(self):
+        self.enable()
+        snapshot = self.snapshot()["data"]["expected_snapshot"]
+        request = {
+            "protocol": collaboration.PROTOCOL,
+            "action": "delegation.prepare",
+            "mission_id": "collaboration-mission",
+            "command_id": "stable-prepare",
+            "expected_build_hash": runtime.runtime_fingerprint()["build_hash"],
+            "expected_snapshot": snapshot,
+            "payload": self.delegation_payload(),
+        }
+        first, code = collaboration_runtime.execute(self.mission, request, principal=self.principal)
+        self.assertEqual((code, first["status"]), (0, "committed"), first)
+        before = runtime.read_mission(self.mission)
+        replay, code = collaboration_runtime.execute(self.mission, request, principal=self.principal)
+        self.assertEqual((code, replay["status"]), (0, "replayed"), replay)
+        self.assertEqual(before, runtime.read_mission(self.mission))
+        changed = copy.deepcopy(request)
+        changed["payload"]["instruction_summary"] = "Different content under the same command"
+        conflict, code = collaboration_runtime.execute(self.mission, changed, principal=self.principal)
+        self.assertEqual((code, conflict["code"]), (collaboration.EXITS["command_conflict"], "command_conflict"))
+        read_request = {
+            **{key: request[key] for key in ("protocol", "mission_id", "command_id", "expected_build_hash")},
+            "action": "command.get",
+            "expected_snapshot": None,
+            "payload": {},
+        }
+        historical, code = collaboration_runtime.execute(self.mission, read_request, principal=self.principal)
+        self.assertEqual(code, 0, historical)
+        self.assertEqual(historical["data"]["request_digest"], first["data"].get("request_digest", historical["data"]["request_digest"]))
+        self.assertEqual(historical["data"]["data"]["delegation_id"], "D1")
+
+    def test_explicit_recovery_rolls_forward_once(self):
+        self.enable()
+        snapshot = self.snapshot()["data"]["expected_snapshot"]
+        request = {
+            "protocol": collaboration.PROTOCOL,
+            "action": "delegation.prepare",
+            "mission_id": "collaboration-mission",
+            "command_id": "crash-prepare",
+            "expected_build_hash": runtime.runtime_fingerprint()["build_hash"],
+            "expected_snapshot": snapshot,
+            "payload": self.delegation_payload(),
+        }
+        script = '''import json, os, sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nimport tplan_runtime as runtime\nimport collaboration_runtime as collab\nruntime._recover_pending_mission_transaction_unlocked=lambda *a,**k: os._exit(91)\nrequest=json.loads(sys.argv[2])\ncollab.execute(Path(sys.argv[3]), request, principal="coordinator-a")\n'''
+        crashed = subprocess.run(
+            [sys.executable, "-B", "-c", script, str(SCRIPTS), json.dumps(request), str(self.mission)],
+            text=True,
+            capture_output=True,
+            timeout=20,
+        )
+        self.assertEqual(crashed.returncode, 91, crashed.stdout + crashed.stderr)
+        self.assertTrue((self.mission / ".mission-transaction.json").exists())
+        blocked, code = collaboration_runtime.execute(
+            self.mission,
+            {
+                "protocol": collaboration.PROTOCOL, "action": "snapshot.get",
+                "mission_id": "collaboration-mission", "command_id": "read-pending",
+                "expected_build_hash": runtime.runtime_fingerprint()["build_hash"],
+                "expected_snapshot": None, "payload": {},
+            },
+            principal=self.principal,
+        )
+        self.assertEqual((code, blocked["code"]), (collaboration.EXITS["recovery_required"], "recovery_required"))
+        recovery = {**request, "action": "runtime.recover", "command_id": "crash-prepare", "expected_snapshot": None, "payload": {}}
+        recovered, code = collaboration_runtime.execute(self.mission, recovery, principal=self.principal)
+        self.assertEqual(code, 0, recovered)
+        self.assertTrue(recovered["data"]["recovered"])
+        self.assertEqual(recovered["data"]["result"]["data"]["delegation_id"], "D1")
+        replay, code = collaboration_runtime.execute(self.mission, request, principal=self.principal)
+        self.assertEqual((code, replay["status"]), (0, "replayed"))
+        state = runtime.read_mission(self.mission)
+        self.assertIn("D1", state["collaboration"]["delegations"])
+        self.assertEqual(len(state["collaboration"]["delegations"]), 1)
+
+    def test_review_identity_must_match_required_reviewer(self):
+        self.enable()
+        self.prepare()
+        feedback = self.feedback()
+        response, code = self.mutate("feedback.resolve", {
+            "coordinator_generation": 1, "feedback_id": feedback["data"]["feedback_id"],
+            "disposition": "adopted",
+            "goal_relation": {"responsibility": "Own acceptance", "acceptance_ids": ["A1"],
+                              "rationale": "The artifact is relevant"},
+            "evidence_refs": [],
+            "artifact_ref": {"ref": "artifact://h1", "digest": collaboration.digest({"artifact": "h1"}),
+                             "contract_version": "contract-r1", "round": 1},
+            "review": {"reviewer_id": "B", "delegation_id": "D1", "round": 1,
+                       "contract_version": "contract-r1", "artifact_ref": "artifact://h1",
+                       "artifact_digest": collaboration.digest({"artifact": "h1"}),
+                       "scope_refs": ["scope://T1"], "verdict": "PASS", "rationale": "Self-review"},
+            "task_changes": [{"task_id": "T1", "status": "completed"}],
+            "new_tasks": [], "next_delegation": None, "coordination": self.coordination(),
+        })
+        self.assertEqual((code, response["code"]), (collaboration.EXITS["review_required"], "review_required"))
+        self.assertEqual(runtime.read_mission(self.mission)["collaboration"]["adoptions"], {})
+
+    def test_path_adjustment_and_next_delegation_commit_together(self):
+        self.enable()
+        self.prepare()
+        feedback = self.feedback(artifact=None, summary="The current path cannot meet the acceptance contract")
+        next_delegation = self.delegation_payload(task_id="T2", delegation_id="D2", intent_id="I2", round_no=2)
+        next_delegation.pop("coordinator_generation")
+        response, code = self.mutate("feedback.resolve", {
+            "coordinator_generation": 1, "feedback_id": feedback["data"]["feedback_id"],
+            "disposition": "path_adjusted",
+            "goal_relation": {"responsibility": "Own the user outcome", "acceptance_ids": ["A1"],
+                              "rationale": "The evidence invalidates the current implementation path"},
+            "evidence_refs": [], "artifact_ref": None, "review": None,
+            "task_changes": [{"task_id": "T1", "status": "paused"}],
+            "new_tasks": [], "next_delegation": next_delegation,
+            "coordination": self.coordination(focus="T2", next_action="Run the revised T2 path"),
+        })
+        self.assertEqual(code, 0, response)
+        state = runtime.read_mission(self.mission)
+        self.assertEqual(state["collaboration"]["feedback"][feedback["data"]["feedback_id"]]["status"], "resolved")
+        self.assertIn("D2", state["collaboration"]["delegations"])
+        self.assertIn("I2", state["collaboration"]["intents"])
+        self.assertEqual(state["active_task_id"], "T2")
+
+    def test_high_frequency_feedback_is_one_pulse_candidate(self):
+        self.enable()
+        self.prepare()
+        first = self.feedback(source="msg-a", summary="Progress A")
+        second = self.feedback(source="msg-b", summary="Progress B")
+        third = self.feedback(source="msg-c", summary="Repeated review note")
+        pulse = runtime.build_mission_pulse(self.mission, trigger="manual")
+        candidates = [item for item in pulse["review_trigger_candidates"] if item["context"].get("source") == "collaboration"]
+        self.assertEqual(len(candidates), 1)
+        self.assertEqual(
+            set(candidates[0]["source_ids"]),
+            {first["data"]["feedback_id"], second["data"]["feedback_id"], third["data"]["feedback_id"]},
+        )
+
+    def test_goal_preservation_behavior_replay_is_reproducible_and_not_claimed_as_e2e(self):
+        path = Path(__file__).with_name("collaboration_behavior_replay.jsonl")
+        records = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        self.assertEqual({item["case"] for item in records}, {"T26", "T27", "T28", "T29"})
+        for item in records:
+            self.assertEqual(item["evidence_class"], "agent_behavior_replay")
+            self.assertFalse(item["real_host_e2e"])
+            self.assertEqual(item["source_audit"], "pending")
+            self.assertTrue(item["turns"])
+            self.assertTrue(all(turn.get("a_decision") and turn.get("next_action") for turn in item["turns"]))
 
 
 if __name__ == "__main__":

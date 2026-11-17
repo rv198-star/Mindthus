@@ -58,9 +58,11 @@ unknown recovery or same-path continuation triggers require survey,
 `scripts/make_decision_packet.py` and a routed hook. Apply only validated decisions;
 stop in Chinese when continuation is unsafe.
 
-Lite Quickstart Recipe: Prefer these recipes over script-help exploration:
-`python3 skills/tplan/scripts/init_lite.py --dir ...`, then `scripts/checkpoint.py`.
-Use evidence, packet, hook and `scripts/apply_decision.py` when the triggers above apply.
+Lite Quickstart Recipe: Prefer these recipes over script-help exploration. `scripts/init_lite.py --dir`; `scripts/checkpoint.py`.
+
+### Optional Collaboration
+
+`scripts/collaboration_runtime.py` keeps A state; B/C ordinary. See `resources/collaboration.md`.
 
 ### Shared Risk Context
 

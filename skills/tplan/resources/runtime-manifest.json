@@ -14,7 +14,8 @@
     "work_view": "tplan.work_view.v0.1",
     "progress_view": "tplan.progress_view.v1",
     "command_results": "tplan.command_results.v0.1",
-    "human_control": "tplan.h1.v0.1"
+    "human_control": "tplan.h1.v0.1",
+    "collaboration": "tplan.collaboration.v0.1"
   },
   "capabilities": [
     "atomic_mission_mutation",
@@ -33,7 +34,8 @@
     "atomic_command_results",
     "task_scoped_owner_gate",
     "scoped_owner_execution_core",
-    "scoped_task_completion"
+    "scoped_task_completion",
+    "tplan.collaboration.v0.1"
   ],
   "required_scripts": [
     "scripts/tplan_runtime.py",
@@ -58,7 +60,9 @@
     "scripts/query_runtime.py",
     "scripts/command_runtime.py",
     "scripts/init_mission.py",
-    "scripts/tplan_h1_commands.py"
+    "scripts/tplan_h1_commands.py",
+    "scripts/collaboration.py",
+    "scripts/collaboration_runtime.py"
   ],
   "fingerprint_files": [
     "resources/runtime-manifest.json",
@@ -84,6 +88,8 @@
     "scripts/query_runtime.py",
     "scripts/command_runtime.py",
     "scripts/init_mission.py",
-    "scripts/tplan_h1_commands.py"
+    "scripts/tplan_h1_commands.py",
+    "scripts/collaboration.py",
+    "scripts/collaboration_runtime.py"
   ]
 }

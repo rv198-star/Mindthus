@@ -27,7 +27,7 @@ Every request is one JSON object with exactly these fields:
 }
 ```
 
-`snapshot.get` and `command.get` use `expected_snapshot: null`. All other actions require the exact snapshot returned by `snapshot.get`. The CLI also requires a bounded principal string. Principal is an audit identity, never an authorization claim. Unknown fields, duplicate keys, non-finite numbers, invalid IDs, requests over 16 KiB, and action-specific shape errors are rejected before mutation.
+`snapshot.get`, `command.get`, and `runtime.recover` use `expected_snapshot: null`. Other actions require the exact snapshot returned by `snapshot.get`. The CLI also requires a bounded principal string. Principal is an audit identity, never an authorization claim. Unknown fields, duplicate keys, non-finite numbers, invalid IDs, requests over 16 KiB, and action-specific shape errors are rejected before mutation.
 
 ## Canonical State
 
@@ -120,6 +120,7 @@ The new coordinator has the same fields as `enable.coordinator`. The command inc
 
 - `snapshot.get` returns the existing Mission survey plus collaboration state, a short resume projection, and current `expected_snapshot`.
 - `command.get` returns the historical committed command result. A missing result proves only that this store has no such command identity.
+- `runtime.recover` is the explicit original-writer recovery route for an interrupted canonical transaction. It rolls forward only the already-prepared Mission, trace, evidence, Guard, and transaction contents, then reports the matching command result when present.
 
 ## Atomicity, Replay, Recovery, And Capacity
 

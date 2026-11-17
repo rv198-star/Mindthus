@@ -119,6 +119,27 @@ started before the guard, and specialized tool paths may bypass the normal local
 path. Generated hooks alone therefore do not satisfy the prevention claim unless the
 host also terminates/isolates pre-existing mutable executions and protects hook state.
 
+## Ordinary Multi-Session Collaboration
+
+Only the coordinator session A runs TPlan. Participants B/C may be ordinary Codex
+threads with no TPlan installation or total-Mission access. A reads the Mission's
+collaboration snapshot, prepares a bounded intent, sends a normal work instruction with
+the existing thread tool, records the returned thread/message reference, and later reads
+normal replies into `feedback.record`.
+
+When a send result is unknown, keep the original intent and query/read that same target
+session. Do not create a second execution for the same task or write scope. A host that
+automatically redelivers must provide real deduplication evidence; otherwise A records
+the limitation and waits for reconciliation. The runtime does not inspect Codex files or
+send messages itself.
+
+Use the collaboration snapshot as the short recovery view after interruption or
+compaction. It carries the original objective, A's responsibility, acceptance gaps,
+current focus, pending feedback, unresolved external work, waiting conditions, and next
+action. Handoff to another A session increments the coordinator generation; ordinary
+local configuration records the required writer generation while the host must provide
+the actual session isolation.
+
 Official hook reference: https://learn.chatgpt.com/docs/hooks
 
 ## Optional Execution Telemetry

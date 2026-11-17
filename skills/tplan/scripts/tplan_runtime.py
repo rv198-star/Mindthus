@@ -50,6 +50,12 @@ from tplan_h1 import (SCHEMA as H1_SCHEMA, CAPABILITY as H1_CAPABILITY,
                      source_acceptance as h1_source_acceptance,
                      completion_findings as h1_completion_findings)
 from tplan_commands import STORE_SCHEMA as COMMAND_RESULTS_SCHEMA, validate_store as validate_command_results
+from collaboration import (
+    build_resume_view as build_collaboration_resume_view,
+    completion_findings as collaboration_completion_findings,
+    task_completion_findings as collaboration_task_completion_findings,
+    validate_state as validate_collaboration_state,
+)
 from work_plan import WORK_PLAN_SCHEMA_VERSION, validate_work_plan
 from tplan_identity import (
     RUNTIME_MANIFEST_SCHEMA_VERSION, RUNTIME_FINGERPRINT_SCHEMA_VERSION,
@@ -80,6 +86,7 @@ MISSION_REENTRY_RECEIPT_SCHEMA_VERSION = "tplan.mission_reentry_receipt.v0.1"
 RESERVED_EVIDENCE_EVENT_TYPES = {"decision_applied", "planning_metadata_updated"}
 _COMMAND_RESULT_AUTHORITY = object()
 _H1_CONTROL_AUTHORITY = object()
+_COLLABORATION_CONTROL_AUTHORITY = object()
 _RESERVED_EVIDENCE_AUTHORITY = object()
 _RESERVED_EVIDENCE_CONTEXT = threading.local()
 QUALIFIED_ACCEPTANCE_EVENT_TYPES = {"acceptance_passed", "acceptance_failed"}
@@ -856,6 +863,8 @@ def write_mission(mission_dir: Path, data: dict[str, Any], *, latest_state: str 
     """
 
     paths = mission_paths(mission_dir)
+    if not paths["mission"].exists() and "collaboration" in data:
+        raise TplanError("collaboration must be enabled through the explicit collaboration transaction")
     if paths["mission"].exists():
         with execution_trace_lock(mission_dir):
             _recover_pending_mission_transaction_unlocked(mission_dir)
@@ -1836,6 +1845,8 @@ def validate_mission(state: Any) -> list[str]:
         errors.extend(validate_command_results(state["command_results"]))
     if "human_control" in state:
         errors.extend(validate_h1_control(state))
+    if "collaboration" in state:
+        errors.extend(validate_collaboration_state(state))
     return errors
 
 
@@ -3450,6 +3461,8 @@ def _mission_completion_findings(
         errors.append("H1 control structure is invalid; Mission cannot be completed")
     elif "human_control" in mission:
         errors.extend(h1_completion_findings(mission, events))
+    if "collaboration" in mission:
+        errors.extend(collaboration_completion_findings(mission))
     return errors
 
 
@@ -4137,6 +4150,7 @@ def _commit_mission_state_unlocked(
     allow_prepared_legacy_adoption: bool = False,
     command_result_authority: object | None = None,
     h1_control_authority: object | None = None,
+    collaboration_control_authority: object | None = None,
 ) -> list[dict[str, Any]]:
     old_results, new_results = before.get("command_results"), after.get("command_results")
     if old_results != new_results:
@@ -4146,6 +4160,9 @@ def _commit_mission_state_unlocked(
             raise TplanError("command_results require an explicitly enabled valid Mission")
         if any(new_results["records"].get(k) != v for k, v in old_results["records"].items()):
             raise TplanError("committed command results cannot be rewritten or removed")
+    if before.get("collaboration") != after.get("collaboration"):
+        if collaboration_control_authority is not _COLLABORATION_CONTROL_AUTHORITY:
+            raise TplanError("collaboration is owned by the explicit collaboration transaction")
     h1_shape_errors = validate_h1_control(after)
     if h1_shape_errors:
         raise TplanError("; ".join(h1_shape_errors))
@@ -4210,6 +4227,9 @@ def _commit_mission_state_unlocked(
         completion_errors = _mission_completion_findings(after, evidence_snapshot)
         if completion_errors:
             raise TplanError("; ".join(completion_errors))
+    task_completion_errors = collaboration_task_completion_findings(before, after)
+    if task_completion_errors:
+        raise TplanError("; ".join(task_completion_errors))
 
     paths = mission_paths(mission_dir)
     previous_trace = paths["trace"].read_text(encoding="utf-8") if paths["trace"].exists() else ""
@@ -5126,6 +5146,15 @@ def set_task_status(mission: dict[str, Any], task_id: str, status: str) -> dict[
     return mission
 
 
+def set_task_status_preserving_focus(mission: dict[str, Any], task_id: str, status: str) -> dict[str, Any]:
+    """Apply a delegated task transition without moving the coordinator cursor."""
+
+    focus = mission.get("active_task_id")
+    set_task_status(mission, task_id, status)
+    mission["active_task_id"] = focus
+    return mission
+
+
 def parent_chain(mission: dict[str, Any], task_id: str | None) -> list[dict[str, Any]]:
     if task_id is None:
         return []
@@ -5162,7 +5191,7 @@ def active_task(mission: dict[str, Any]) -> dict[str, Any] | None:
 
 def build_survey_from_state(mission: dict[str, Any], events: list[dict[str, Any]]) -> dict[str, Any]:
     active = active_task(mission)
-    return {
+    survey = {
         "mission": mission["mission"],
         "active_task": active,
         "active_parent_chain": parent_chain(mission, active.get("id") if active else None),
@@ -5171,6 +5200,9 @@ def build_survey_from_state(mission: dict[str, Any], events: list[dict[str, Any]
         "shared_context": shared_context_summary(mission),
         "event_count": len(events),
     }
+    if "collaboration" in mission:
+        survey["collaboration_resume"] = build_collaboration_resume_view(mission)
+    return survey
 
 
 def build_survey(mission_dir: Path) -> dict[str, Any]:
@@ -5599,6 +5631,60 @@ def _event_is_on_current_path(
     return active is not None and task_id == active.get("id")
 
 
+def _collect_collaboration_feedback_candidates(mission: dict[str, Any]) -> list[dict[str, Any]]:
+    collaboration = mission.get("collaboration")
+    if not isinstance(collaboration, dict):
+        return []
+    feedback = collaboration.get("feedback")
+    if not isinstance(feedback, dict):
+        return []
+    pending = [
+        item
+        for item in feedback.values()
+        if isinstance(item, dict) and item.get("status") == "pending"
+    ]
+    if not pending:
+        return []
+    pending.sort(key=lambda item: str(item.get("recorded_at", "")))
+    associations = sorted(
+        {
+            str(item.get("association_status"))
+            for item in pending
+            if isinstance(item.get("association_status"), str)
+        }
+    )
+    task_ids = sorted(
+        {
+            str(delegation.get("task_id"))
+            for item in pending
+            for delegation_id in [item.get("delegation_id")]
+            for delegation in [collaboration.get("delegations", {}).get(delegation_id)]
+            if isinstance(delegation, dict) and isinstance(delegation.get("task_id"), str)
+        }
+    )
+    return [
+        _pulse_candidate(
+            signal="user_feedback",
+            candidate_next_gate="loopback",
+            scope="mission",
+            source_kind="derived",
+            source_ids=[str(item.get("feedback_id")) for item in pending[:32]],
+            priority_class="current_blocker_or_feedback",
+            severity="high",
+            freshness="current_state",
+            reason="Collaboration has pending feedback across all relevant delegations, including non-active and completed tasks.",
+            context={
+                "source": "collaboration",
+                "pending_count": len(pending),
+                "association_states": associations,
+                "task_ids": task_ids,
+            },
+            signals=["collaboration_feedback", "user_feedback"],
+            rationale="A must judge relevance, responsibility, and current-version effect before the next relevant side effect or closure.",
+        )
+    ]
+
+
 def _collect_feedback_or_blocker_candidates(
     mission: dict[str, Any],
     active: dict[str, Any] | None,
@@ -5829,6 +5915,7 @@ def _collect_pulse_candidates(
     candidates.extend(_collect_mission_boundary_candidates(trigger))
     candidates.extend(_collect_no_active_path_candidates(trigger, active))
     candidates.extend(_collect_shared_risk_candidates(active_risks))
+    candidates.extend(_collect_collaboration_feedback_candidates(mission))
     candidates.extend(_collect_feedback_or_blocker_candidates(mission, active, events, trigger))
     candidates.extend(_collect_anti_spiral_candidates(active, active_logs))
     candidates.extend(_collect_checkpoint_batch_candidates(active, active_logs, events, trigger))

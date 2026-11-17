@@ -81,6 +81,7 @@ class CollaborationContractTests(unittest.TestCase):
             "assignee_id": "missing",
             "write_scope": "src/a",
             "contract_version": "contract-1",
+            "instruction_summary": "Exercise a missing task",
             "instruction_digest": "sha256:" + "1" * 64,
             "input_refs": [],
             "dependency_versions": {},
@@ -113,6 +114,7 @@ class CollaborationContractTests(unittest.TestCase):
             "original_ref": "thread://b/message/1",
             "attachment_refs": [],
             "association_status": "needs_association",
+            "association_gap": "task/delegation round and contract version are required",
             "status": "pending",
             "recorded_at": "2026-11-17T00:00:00+00:00",
             "resolution": None,
@@ -132,7 +134,7 @@ class CollaborationContractTests(unittest.TestCase):
             "round": 1, "contract_version": "contract-1", "artifact_ref": "artifact://h1",
             "artifact_digest": "sha256:" + "2" * 64, "content_digest": "sha256:" + "3" * 64,
             "summary": "A current failure", "original_ref": "thread://b/message/1", "attachment_refs": [],
-            "association_status": "linked", "status": "pending",
+            "association_status": "linked", "association_gap": None, "status": "pending",
             "recorded_at": "2026-11-17T00:00:00+00:00", "resolution": None,
         }
         findings = collaboration.completion_findings(state)

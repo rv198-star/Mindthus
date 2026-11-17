@@ -239,6 +239,36 @@ Trace coverage is `exact`, `partial`, or `snapshot_only`. Exact lifecycle covera
 not imply that every platform cost was observable. See `execution-trace.md` for the
 span, attribution, privacy, and renderer contracts.
 
+## Optional Collaboration State
+
+`mission.json.collaboration` is optional and uses
+`tplan.collaboration.v0.1`. It is owned by
+`scripts/collaboration_runtime.py`; ordinary `write_mission` and
+`commit_mission_state` callers preserve it and cannot create, remove, or modify it.
+The state stores the coordinator generation, ordinary participant references,
+delegations, send/execution intents, pending or resolved feedback, current adoptions,
+review history, the short coordination/resume record, and bounded command results.
+
+The extension references the existing task tree and does not duplicate Task status,
+Mission objective, acceptance evidence, H1 control, or Q2 command results. Participant
+role text is provenance, not host authentication. A send intent is prepared before the
+host action; only a native observation may mark it confirmed. Unknown delivery remains
+unknown and blocks another execution in the same task or write scope until the original
+intent is reconciled.
+
+Feedback source identity and content are immutable. Repeating the same source and
+content has no second business effect; different content under the same source
+conflicts. Unassociated natural-language returns remain pending with
+`association_status=needs_association`. Resolution stores A's goal relation,
+disposition, evidence references, current artifact/contract/round, review facts, task
+changes, optional next intent, and next action in one canonical transaction.
+
+Required review binds the reviewer, delegation, round, contract, artifact digest, and
+scope. A PASS for an older artifact remains historical evidence and does not satisfy a
+newer current adoption. Completion rejects pending feedback and missing or stale review.
+The exact action payloads, capacity limits, replay rules, and T01-T29 evidence map are
+in `docs/internal/tplan-collaboration/CONTRACT.md`.
+
 ## Interaction Guard Sidecar
 
 When a host can observe an interrupting user message, it opens
