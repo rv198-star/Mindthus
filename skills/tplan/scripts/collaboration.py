@@ -1246,7 +1246,6 @@ def completion_findings(mission: dict[str, Any]) -> list[str]:
             findings.append(f"delegation {delegation['delegation_id']} is not currently accepted")
     return findings
 
-
 def task_completion_findings(before: dict[str, Any], after: dict[str, Any]) -> list[str]:
     collab = after.get("collaboration")
     if not isinstance(collab, dict):

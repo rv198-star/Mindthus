@@ -166,4 +166,3 @@ The new coordinator has the same fields as `enable.coordinator`. The command inc
 | T29 | Evidence-backed path revision or explicit user goal change updates affected delegation and next action. | agent behavior replay plus path-adjust runtime test |
 
 T26-T29 replay is agent behavior evidence, not a real three-session E2E. Real peer source, wake-up, host deduplication, cancellation, and protected handoff remain host acceptance items and must be reported as such.
-

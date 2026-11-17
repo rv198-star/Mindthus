@@ -121,4 +121,3 @@ The system Python 3.9 run is not the CI environment. It reports 26 unrelated bas
 ## Reproduction And Rollback
 
 Use the branch and isolated checkout above. Re-run the five commands with Python 3.11 and `TMPDIR=/private/var/tmp`. The RED commit `db0f1375a` shows the original failing contract tests; the implementation commits turn those tests green. Rollback is a normal branch revert to source base `520376990`; no external state was migrated or deployed.
-
