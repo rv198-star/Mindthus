@@ -1,0 +1,26 @@
+Code head under independent audit: d57d6816ebf27ca30441a68d5cd526341cee315d
+Source/audit chat: 01a1e806-292f-76d0-af7e-f4786d70b3e1; local
+CPython 3.11.11; TMPDIR=/private/tmp; python -B
+
+Independent targeted rerun:
+python -B -m unittest tests.tplan.test_collaboration tests.tplan.test_collaboration_runtime tests.tplan.test_collaboration_behavior -q
+----------------------------------------------------------------------
+Ran 58 tests in 9.811s
+
+OK
+
+Independent related qualification/H1 rerun:
+python -B -m unittest tests.tplan.test_evidence_and_transition tests.tplan.test_h1_core tests.tplan.test_h1_completion tests.tplan.test_h1_kernel_gate -q
+----------------------------------------------------------------------
+Ran 75 tests in 10.222s
+
+OK
+
+R4 developer's 8 mechanical probes independently rerun: all assertions passed.
+Exact-head remote PR head verified; draft=true, state=OPEN.
+CI https://github.com/rv198-star/Mindthus/actions/runs/44095939409/job/134082940406
+unittest-smoke	Package and README validation	2026-11-17T13:45:51.1257298Z Ran 41 tests in 7.274s
+unittest-smoke	Package and README validation	2026-11-17T13:45:51.1257572Z OK (skipped=1)
+unittest-smoke	tplan runtime validation	2026-11-17T13:47:24.0809683Z Ran 646 tests in 92.264s
+unittest-smoke	Full unittest suite	2026-11-17T13:49:56.1256861Z Ran 1399 tests in 151.489s
+unittest-smoke	Full unittest suite	2026-11-17T13:49:56.1257108Z OK (skipped=7)
