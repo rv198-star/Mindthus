@@ -934,6 +934,7 @@ def _resolve_feedback(
     payload: dict[str, Any],
     *,
     before_mission: dict[str, Any],
+    events: list[dict[str, Any]] | None,
     normalized_new_tasks: list[dict[str, Any]],
     now: str,
 ) -> dict[str, Any]:
@@ -1086,7 +1087,7 @@ def _resolve_feedback(
     }
     if disposition not in {"adopted", "repair"} and feedback.get("delegation_id") in collab["delegations"]:
         collab["delegations"][feedback["delegation_id"]]["disposition"] = disposition
-    completion = task_completion_findings(before_mission, mission)
+    completion = task_completion_findings(before_mission, mission, events)
     if completion:
         raise CollaborationError("review_required", "; ".join(completion))
     return {
@@ -1139,6 +1140,7 @@ def apply_command(
     request_digest: str,
     now: str,
     normalized_new_tasks: list[dict[str, Any]] | None = None,
+    events: list[dict[str, Any]] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any], str]:
     after = copy.deepcopy(mission)
     if action == "enable":
@@ -1164,6 +1166,7 @@ def apply_command(
                 after,
                 payload,
                 before_mission=mission,
+                events=events,
                 normalized_new_tasks=normalized_new_tasks or [],
                 now=now,
             )
@@ -1205,7 +1208,7 @@ def apply_command(
     return after, data, command_status
 
 
-def build_resume_view(mission: dict[str, Any]) -> dict[str, Any]:
+def build_resume_view(mission: dict[str, Any], events: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     collab = mission.get("collaboration")
     if not isinstance(collab, dict):
         return {
@@ -1234,7 +1237,7 @@ def build_resume_view(mission: dict[str, Any]) -> dict[str, Any]:
     for task_id, task in tasks.items():
         if task.get("status") != "completed":
             continue
-        gap_findings = _task_acceptance_findings(collab, mission, task_id, None)
+        gap_findings = _task_acceptance_findings(collab, mission, task_id, events)
         if gap_findings:
             acceptance_gaps.append(
                 {
@@ -1339,19 +1342,23 @@ def _repair_obligation_satisfied(
 ) -> bool:
     repair_task_id = obligation["repair_task_id"]
     acceptance_ids = set(obligation.get("acceptance_ids", []))
-    current = _task_current_delegation(collab, repair_task_id)
-    if current is not None and not _required_review_findings(collab, current):
-        adoption = collab["adoptions"].get(current["delegation_id"])
-        if adoption is not None and not adoption.get("invalidated"):
-            return True
-    for event in events or []:
-        if (
-            event.get("event_type") == "acceptance_passed"
-            and event.get("task_id") == repair_task_id
-            and acceptance_ids & set(event.get("payload", {}).get("acceptance_ids", []))
-        ):
-            return True
-    return False
+    # A delegated repair retains its current acceptance responsibility even when
+    # attempts are retired. Native evidence supplements adoption/review, rather
+    # than providing a fallback around a missing or failed required review.
+    if _task_has_delegation_history(collab, repair_task_id):
+        current = _task_current_delegation(collab, repair_task_id)
+        if current is None or _required_review_findings(collab, current):
+            return False
+    from tplan_runtime import _qualified_acceptance_observations
+
+    errors, observations = _qualified_acceptance_observations(mission, events or [], task_id=repair_task_id)
+    if errors or not acceptance_ids:
+        return False
+    latest = {}
+    for event, acceptance_id in observations:
+        if event["task_id"] == repair_task_id and acceptance_id in acceptance_ids:
+            latest[acceptance_id] = event["event_type"]
+    return all(latest.get(acceptance_id) == "acceptance_passed" for acceptance_id in acceptance_ids)
 
 
 def _task_acceptance_findings(

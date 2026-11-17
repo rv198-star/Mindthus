@@ -3388,28 +3388,30 @@ def _validate_trace_evidence_references(
     ]
 
 
-def _mission_completion_findings(
-    mission: dict[str, Any], events: list[dict[str, Any]]
-) -> list[str]:
-    """Check mechanical closure eligibility against one supplied evidence snapshot."""
+def _qualified_acceptance_observations(
+    mission: dict[str, Any], events: list[dict[str, Any]], *, task_id: str | None = None
+) -> tuple[list[str], list[tuple[dict[str, Any], str]]]:
+    """Reuse native qualification, unique references and current H1 source versions.
+
+    Observations retain evidence-log order so callers can select the latest result
+    within their own acceptance scope without borrowing another task's PASS.
+    """
     errors: list[str] = []
-    incomplete = sorted(
-        str(task["id"]) for task in mission["tasks"]
-        if task.get("role") == "success-critical" and task.get("status") != "completed"
-    )
-    if incomplete:
-        errors.append("Mission completion requires completed success-critical nodes: " + ", ".join(incomplete))
     counts = Counter(
         event.get("id") for event in events
         if isinstance(event, dict) and isinstance(event.get("id"), str)
     )
-    latest: dict[str, str] = {}
+    observations: list[tuple[dict[str, Any], str]] = []
     # Project only controlled sources; keep unrelated events in native AC order.
     source_events: dict[tuple[str, str], set[str]] = {}
     if "human_control" in mission and not validate_h1_control(mission):
         from tplan_commands import CommandError
         control = mission["human_control"]
         for request_id, req in control["requests"].items():
+            if task_id is not None and task_id not in {
+                task["id"] for task in parent_chain(mission, req["business_task_id"])
+            }:
+                continue
             adoption = control["adoptions"].get(request_id, {})
             decision = control["decisions"].get(req["current_decision_id"], {})
             candidate = control["candidates"].get(adoption.get("candidate_id"))
@@ -3430,13 +3432,15 @@ def _mission_completion_findings(
             if any(scoped.get(ac, {}).get("event_type") != "acceptance_passed" for ac in required):
                 errors.append("H1 current adopted source requires positive version-bound acceptance")
             failure_scope = {task["id"] for task in parent_chain(mission, candidate["task_id"])}
-            for task_id in failure_scope:
+            for source_task_id in failure_scope:
                 for acceptance_id in required:
-                    allowed = source_events.setdefault((task_id, acceptance_id), set())
+                    allowed = source_events.setdefault((source_task_id, acceptance_id), set())
                     if acceptance_id in scoped:
                         allowed.add(scoped[acceptance_id]["id"])
     for event in events:
         if not isinstance(event, dict):
+            continue
+        if task_id is not None and event.get("task_id") != task_id:
             continue
         kind = event.get("event_type")
         if not isinstance(kind, str) or kind not in {"acceptance", "acceptance_passed", "acceptance_failed"}:
@@ -3449,7 +3453,28 @@ def _mission_completion_findings(
             scope = (event["task_id"], acceptance_id)
             if scope in source_events and event["id"] not in source_events[scope]:
                 continue  # Other source versions cannot override the current adoption.
-            latest[acceptance_id] = kind
+            observations.append((event, acceptance_id))
+    if "human_control" in mission and validate_h1_control(mission):
+        errors.append("H1 control structure is invalid; Mission cannot be completed")
+    return errors, observations
+
+
+def _mission_completion_findings(
+    mission: dict[str, Any], events: list[dict[str, Any]]
+) -> list[str]:
+    """Check mechanical closure eligibility against one supplied evidence snapshot."""
+    errors: list[str] = []
+    incomplete = sorted(
+        str(task["id"]) for task in mission["tasks"]
+        if task.get("role") == "success-critical" and task.get("status") != "completed"
+    )
+    if incomplete:
+        errors.append("Mission completion requires completed success-critical nodes: " + ", ".join(incomplete))
+    qualification_errors, observations = _qualified_acceptance_observations(mission, events)
+    errors.extend(qualification_errors)
+    latest: dict[str, str] = {}
+    for event, acceptance_id in observations:
+        latest[acceptance_id] = event["event_type"]
     missing = sorted(
         acceptance_id for acceptance_id in acceptance_ids(mission)
         if latest.get(acceptance_id) not in {"acceptance", "acceptance_passed"}
@@ -3459,9 +3484,7 @@ def _mission_completion_findings(
             "Mission completion requires positive qualified acceptance: "
             + ", ".join(f"{item} ({latest.get(item, 'missing')})" for item in missing)
         )
-    if "human_control" in mission and validate_h1_control(mission):
-        errors.append("H1 control structure is invalid; Mission cannot be completed")
-    elif "human_control" in mission:
+    if "human_control" in mission and not validate_h1_control(mission):
         errors.extend(h1_completion_findings(mission, events))
     if "collaboration" in mission:
         errors.extend(collaboration_completion_findings(mission, events))
@@ -5203,7 +5226,7 @@ def build_survey_from_state(mission: dict[str, Any], events: list[dict[str, Any]
         "event_count": len(events),
     }
     if "collaboration" in mission:
-        survey["collaboration_resume"] = build_collaboration_resume_view(mission)
+        survey["collaboration_resume"] = build_collaboration_resume_view(mission, events)
     return survey
 
 

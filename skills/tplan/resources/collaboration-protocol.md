@@ -168,10 +168,18 @@ Task completion, Mission close, and resume gaps:
   open (completion blocked), not skipped.
 - Each adoption has an `invalidated` flag. A blocking `repair` on an accepted current
   artifact invalidates it (history kept) and creates a repair obligation linking a bounded
-  success-critical repair task. The obligation is satisfied only by fresh acceptance on the
-  repair task (current valid adoption + review PASS, or a qualified acceptance event scoped
-  to the repair task). Ordinary completion of the repair task with no new artifact/review/
-  acceptance does not close the obligation.
+  success-critical repair task. Every carried AC needs `acceptance_passed` as its latest
+  qualified observation in that repair task's own scope. Native evidence validation,
+  unique event references, declared task/ancestor AC coverage and applicable H1 current-source
+  versions are shared with Mission closure; evidence-log order determines the latest result.
+  A repair task with delegation history also needs a legal current adopted artifact and latest
+  required reviewer PASS bound to its artifact/round/contract/scope. Retired attempts retain
+  the responsibility until legal succession or explicit disposition. Ordinary evidence cannot
+  replace a missing or failed required review; this protects the delegated acceptance path.
+  A local repair without delegation history uses scoped native observations directly.
+  Task completion (including `feedback.resolve`), Mission close, snapshot resume and survey
+  resume consume the same evidence snapshot and shared projection. Partial coverage, latest
+  FAIL, ambiguous references or another task's PASS leave the obligation open.
 - When the Mission is not `active`, new collaboration mutations are rejected with
   `mission_closed`; late facts need a follow-up Mission or legal continuation. Reads,
   historical replay, and prepared-transaction recovery remain available.

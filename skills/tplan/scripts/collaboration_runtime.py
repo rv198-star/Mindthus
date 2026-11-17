@@ -164,7 +164,7 @@ def _snapshot_data(runtime: Any, directory: Path, state: dict[str, Any], events:
         "mission_id": state["mission"]["id"],
         "survey": runtime.build_survey_from_state(state, events),
         "collaboration": copy.deepcopy(state.get("collaboration")),
-        "resume": collaboration.build_resume_view(state),
+        "resume": collaboration.build_resume_view(state, events),
         "expected_snapshot": expected_snapshot(runtime, directory, state),
         "capability": collaboration.CAPABILITY,
     }
@@ -274,6 +274,7 @@ def execute(directory: Path, request: Any, *, principal: str) -> tuple[dict[str,
                 request_digest=request_digest,
                 now=runtime.now_iso(),
                 normalized_new_tasks=normalized_tasks,
+                events=events,
             )
             transition_findings = collaboration.validate_transition(state, after)
             if transition_findings:

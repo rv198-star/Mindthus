@@ -644,7 +644,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
         r, k = self.mutate("feedback.resolve", self.resolution(f["data"]["feedback_id"], disposition="answered", verdict="PASS"))
         self.assertEqual(k, 0, r)
         state = runtime.read_mission(self.mission)
-        self.assertEqual(collaboration.completion_findings(state), [])
+        self.assertEqual(collaboration.completion_findings(state, runtime._read_events_unlocked(self.mission)), [])
         state["mission"]["status"] = "completed"
         runtime.write_mission(self.mission, state)
         self.assertEqual(runtime.read_mission(self.mission)["mission"]["status"], "completed")
@@ -721,12 +721,12 @@ class CollaborationRuntimeTests(unittest.TestCase):
         self.assertEqual(k, 0, r)
         self.prepare(task_id="T3", delegation_id="D3", intent_id="I3", round_no=1)
         self.dispatch(intent_id="I3", execution_state="completed")
+        runtime.append_event(self.mission, {"event_type": "acceptance_passed", "summary": "A1 repaired", "task_id": "T3", "payload": {"acceptance_ids": ["A1"]}})
         f = self.feedback(source="repair-reviewed", delegation_id="D3", artifact="h3", source_role="C")
         r, k = self.mutate("feedback.resolve", self.resolution(f["data"]["feedback_id"], delegation="D3", round_no=1, artifact="h3", complete=True, review_task="T3", focus=None))
         self.assertEqual(k, 0, r)
-        runtime.append_event(self.mission, {"event_type": "acceptance_passed", "summary": "A1 repaired", "task_id": "T3", "payload": {"acceptance_ids": ["A1"]}})
         state = runtime.read_mission(self.mission)
-        self.assertEqual(collaboration.completion_findings(state), [])
+        self.assertEqual(collaboration.completion_findings(state, runtime._read_events_unlocked(self.mission)), [])
         state["mission"]["status"] = "completed"
         runtime.write_mission(self.mission, state)
         self.assertEqual(runtime.read_mission(self.mission)["mission"]["status"], "completed")
@@ -857,14 +857,203 @@ class CollaborationRuntimeTests(unittest.TestCase):
         self.assertTrue(collaboration.completion_findings(runtime.read_mission(self.mission)))
         self.prepare(task_id="T3", delegation_id="D3", intent_id="I3", round_no=1)
         self.dispatch(intent_id="I3", execution_state="completed")
+        runtime.append_event(self.mission, {"event_type": "acceptance_passed", "summary": "A1 repaired", "task_id": "T3", "payload": {"acceptance_ids": ["A1"]}})
         f = self.feedback(source="repair-pass", delegation_id="D3", artifact="h3", source_role="C", kind="review")
         r, k = self.mutate("feedback.resolve", self.resolution(f["data"]["feedback_id"], delegation="D3", round_no=1, artifact="h3", complete=True, review_task="T3", focus=None))
         self.assertEqual(k, 0, r)
-        runtime.append_event(self.mission, {"event_type": "acceptance_passed", "summary": "A1 repaired", "task_id": "T3", "payload": {"acceptance_ids": ["A1"]}})
         state = runtime.read_mission(self.mission)
         self.assertEqual(collaboration.completion_findings(state, runtime._read_events_unlocked(self.mission)), [])
         self._close_mission()
         self.assertEqual(runtime.read_mission(self.mission)["mission"]["status"], "completed")
+
+    def _b1_repair(self, acceptance_ids=("A1",)):
+        if len(acceptance_ids) > 1:
+            state = runtime.read_mission(self.mission)
+            state["mission"]["acceptance_evidence"].extend(
+                {"id": ac, "description": f"{ac} required"} for ac in acceptance_ids if ac != "A1"
+            )
+            runtime.find_task(state, "T1")["acceptance_evidence"] = list(acceptance_ids)
+            runtime.write_mission(self.mission, state)
+        self._reviewed_t1()
+        if len(acceptance_ids) > 1:
+            self._b1_accept(task_id="T1", acceptance_ids=acceptance_ids)
+        f = self.feedback(source="b1-current-defect", source_role="B", kind="blocker")
+        task = {"id": "T3", "title": "Repair current result", "role": "success-critical",
+                "mission_contribution": "Restores required acceptance",
+                "acceptance_evidence": list(acceptance_ids), "status": "pending"}
+        response, code = self.mutate("feedback.resolve", self.resolution(
+            f["data"]["feedback_id"], disposition="repair", verdict=None, new_tasks=[task], focus="T3"))
+        self.assertEqual(code, 0, response)
+
+    def _b1_accept(self, *, task_id="T3", acceptance_ids=("A1",), kind="acceptance_passed"):
+        runtime.append_event(self.mission, {"event_type": kind, "summary": "Repair observation",
+                             "task_id": task_id, "payload": {"acceptance_ids": list(acceptance_ids)}})
+
+    def _b1_adopt_repair(self, verdict="PASS"):
+        self.prepare(task_id="T3", delegation_id="D3", intent_id="I3", round_no=1)
+        self.dispatch(intent_id="I3", execution_state="completed")
+        f = self.feedback(source="b1-repair-review", delegation_id="D3", artifact="h3",
+                          source_role="C" if verdict else "B", kind="review" if verdict else "result")
+        response, code = self.mutate("feedback.resolve", self.resolution(
+            f["data"]["feedback_id"], delegation="D3", artifact="h3", verdict=verdict,
+            review_task="T3", focus="T3"))
+        self.assertEqual(code, 0, response)
+
+    def _b1_assert_blocked(self, events=None):
+        state = runtime.read_mission(self.mission)
+        if events is None:
+            events = runtime._read_events_unlocked(self.mission)
+        self.assertTrue(collaboration._task_acceptance_findings(state["collaboration"], state, "T3", events))
+        self.assertTrue(collaboration.completion_findings(state, events))
+        proposed = copy.deepcopy(state)
+        runtime.find_task(proposed, "T3")["status"] = "completed"
+        self.assertTrue(collaboration.task_completion_findings(state, proposed, events))
+        self.assertTrue(any("repair obligation" in error for error in runtime._mission_completion_findings(proposed, events)))
+        gaps = collaboration.build_resume_view(proposed, events)["acceptance_gaps"]
+        self.assertTrue(any(gap["task_id"] == "T3" and gap.get("collaboration_gap") for gap in gaps))
+        # Public completion and closure must refuse without persisting a partial change.
+        before = (self.mission / "mission.json").read_bytes()
+        with self.assertRaisesRegex(runtime.TplanError, "repair obligation"):
+            runtime.transition_task_status(self.mission, "T3", "completed")
+        proposed["mission"]["status"] = "completed"
+        with self.assertRaisesRegex(runtime.TplanError, "repair obligation"):
+            runtime.write_mission(self.mission, proposed)
+        self.assertEqual((self.mission / "mission.json").read_bytes(), before)
+
+    def _b1_assert_complete(self):
+        runtime.transition_task_status(self.mission, "T3", "completed")
+        state = runtime.read_mission(self.mission)
+        events = runtime._read_events_unlocked(self.mission)
+        self.assertEqual(collaboration.completion_findings(state, events), [])
+        self.assertEqual(runtime._mission_completion_findings(state, events), [])
+        snap = self.snapshot()["data"]
+        self.assertEqual(snap["resume"]["acceptance_gaps"], [])
+        self.assertEqual(snap["resume"], snap["survey"]["collaboration_resume"])
+        self.assertEqual(runtime.build_survey(self.mission)["collaboration_resume"], snap["resume"])
+        self._close_mission()
+        self.assertEqual(self.snapshot()["data"]["resume"]["acceptance_gaps"], [])
+
+    def test_b1_native_pass_preserves_required_reviewer_fail(self):
+        self._b1_repair()
+        self._b1_adopt_repair(verdict="FAIL")
+        self._b1_accept()
+        self._b1_assert_blocked()
+
+    def test_b1_native_pass_preserves_missing_required_review(self):
+        self._b1_repair()
+        self._b1_adopt_repair(verdict=None)
+        self._b1_accept()
+        self._b1_assert_blocked()
+
+    def test_b1_native_pass_preserves_retired_delegation_responsibility(self):
+        self._b1_repair()
+        self.prepare(task_id="T3", delegation_id="D3", intent_id="I3", round_no=1)
+        self.dispatch(intent_id="I3", execution_state="stopped", stop_requested=True)
+        self._b1_accept()
+        self._b1_assert_blocked()
+
+    def test_b1_local_partial_coverage_preserves_each_required_ac(self):
+        self._b1_repair(("A1", "A2"))
+        self._b1_accept()
+        self._b1_assert_blocked()
+        self._b1_accept(acceptance_ids=("A2",))
+        self._b1_assert_complete()
+
+    def test_b1_latest_local_fail_overrides_older_pass_and_other_task_pass(self):
+        self._b1_repair()
+        self._b1_accept()
+        self._b1_accept(kind="acceptance_failed")
+        self._b1_accept(task_id="T1")
+        self._b1_assert_blocked()
+        self._b1_accept()
+        self._b1_assert_complete()
+
+    def test_b1_unrelated_task_pass_does_not_satisfy_repair(self):
+        self._b1_repair()
+        self._b1_accept(task_id="T1")
+        self._b1_assert_blocked()
+
+    def test_b1_local_full_coverage_task_mission_resume_agree(self):
+        self._b1_repair(("A1", "A2"))
+        self._b1_accept(acceptance_ids=("A1", "A2"))
+        self._b1_assert_complete()
+
+    def test_b1_delegated_full_coverage_task_mission_resume_agree(self):
+        self._b1_repair(("A1", "A2"))
+        self._b1_adopt_repair()
+        self._b1_assert_blocked()
+        self._b1_accept()
+        self._b1_assert_blocked()
+        self._b1_accept(acceptance_ids=("A2",))
+        self._b1_assert_complete()
+
+    def test_b1_current_review_pass_preserves_latest_native_fail(self):
+        self._b1_repair()
+        self._b1_adopt_repair()
+        self._b1_accept()
+        self._b1_accept(kind="acceptance_failed")
+        self._b1_assert_blocked()
+
+    def test_b1_qualification_rejects_ambiguous_or_invalid_observations(self):
+        self._b1_repair()
+        state = runtime.read_mission(self.mission)
+        events = runtime._read_events_unlocked(self.mission)
+        observation = {"id": "repair-observation", "timestamp": runtime.now_iso(),
+                       "event_type": "acceptance_passed", "summary": "Repair accepted", "task_id": "T3",
+                       "payload": {"acceptance_ids": ["A1"]}}
+        obligation = next(iter(state["collaboration"]["repair_obligations"].values()))
+        for invalid in (
+            [observation, copy.deepcopy(observation)],
+            [{**observation, "timestamp": "invalid"}],
+            [{**observation, "task_id": "missing-task"}],
+            [{**observation, "payload": {"acceptance_ids": ["A1", "unknown-ac"]}}],
+            [{**observation, "payload": {"acceptance_ids": ["A1", "A1"]}}],
+            [{**observation, "event_type": "acceptance"}],
+        ):
+            with self.subTest(invalid=invalid):
+                supplied = events + invalid
+                self.assertFalse(collaboration._repair_obligation_satisfied(state["collaboration"], state, obligation, supplied))
+                proposed = copy.deepcopy(state)
+                runtime.find_task(proposed, "T3")["status"] = "completed"
+                self.assertTrue(collaboration.task_completion_findings(state, proposed, supplied))
+                self.assertTrue(collaboration.completion_findings(proposed, supplied))
+                self.assertTrue(collaboration.build_resume_view(proposed, supplied)["acceptance_gaps"])
+        self.assertTrue(collaboration._repair_obligation_satisfied(state["collaboration"], state, obligation, events + [observation]))
+
+    def test_b1_native_qualification_preserves_h1_current_source_versions_and_scope(self):
+        from tests.tplan.test_h1_core import H1CoreTests
+        fixture = H1CoreTests()
+        fixture.setUp()
+        self.addCleanup(fixture.doCleanups)
+        candidate = fixture.ready()
+        state = runtime.read_mission(fixture.mission)
+        events = runtime.read_events(fixture.mission)
+        collab = {"delegations": {}}
+        obligation = {"repair_task_id": "A", "acceptance_ids": ["A1"]}
+        def satisfied(supplied, required=obligation):
+            return collaboration._repair_obligation_satisfied(collab, state, required, supplied)
+        self.assertTrue(satisfied(events))
+        old_source = copy.deepcopy(events)
+        for event in old_source:
+            if event["event_type"] == "acceptance_passed" and event["task_id"] == "A":
+                event["payload"]["candidate_sha256"] = "sha256:" + "0" * 64
+                event["payload"]["attempt_ref"] = "old-attempt"
+        self.assertFalse(satisfied(old_source))
+        failure = {"id": "current-failure", "timestamp": runtime.now_iso(), "event_type": "acceptance_failed",
+                   "task_id": "A", "summary": "Current source failed",
+                   "payload": {"acceptance_ids": ["A1"], "candidate_sha256": candidate["content_sha256"]}}
+        self.assertFalse(satisfied(events + [failure]))
+        other_version_failure = copy.deepcopy(failure)
+        other_version_failure["payload"]["candidate_sha256"] = "sha256:" + "0" * 64
+        self.assertTrue(satisfied(events + [other_version_failure]))
+        # An independent local repair keeps its own Task scope while the H1 source
+        # is still incomplete; Mission closure retains the global H1 requirement.
+        runtime.find_task(state, "C")["acceptance_evidence"] = ["A1"]
+        independent = {"id": "independent-pass", "timestamp": runtime.now_iso(),
+                       "event_type": "acceptance_passed", "summary": "Independent repair accepted",
+                       "task_id": "C", "payload": {"acceptance_ids": ["A1"]}}
+        self.assertTrue(satisfied(old_source + [independent], {"repair_task_id": "C", "acceptance_ids": ["A1"]}))
+        self.assertTrue(runtime._mission_completion_findings(state, old_source + [independent]))
 
     def test_a2_closed_mission_rejects_late_business_writes_but_keeps_reads(self):
         self._reviewed_t1()

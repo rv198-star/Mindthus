@@ -1,6 +1,6 @@
 # Issue #246 Development Results
 
-Date: 2026-11-17. Development status: implementation and development self-audit complete; independent source-session audit pending.
+Date: 2026-11-17. Development status: R4 B1 repair and regression verification complete; exact-head independent re-audit pending. Source-Agent controlled goal-preservation acceptance is recorded in REVIEW-R3; real host E2E remains pending.
 
 ## Source And Environment
 
@@ -11,9 +11,9 @@ Date: 2026-11-17. Development status: implementation and development self-audit 
 - Isolated checkout: `/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus`
 - Required RED commit: `db0f1375a` (`test(tplan): define collaboration runtime contract and RED cases`)
 - Implementation commit: `72570e5d3` (`feat(tplan): add goal-preserving collaboration runtime`)
-- Model/reasoning configuration supplied to this session: DeepSeek V4.1 Flash, `xhigh`. The local tool runtime does not expose a separate model-attestation field.
+- Model/reasoning configuration recorded for the initial development session: DeepSeek V4.1 Flash, `xhigh`. The local tool runtime does not expose a separate model-attestation field.
 - CI-compatible isolated runtime: CPython 3.11.11 at `/private/var/tmp/mindthus-246-py311`.
-- Test `TMPDIR`: `/private/var/tmp`, avoiding the macOS `/var` to `/private/var` alias in H1 canonical-directory fixtures.
+- Final R4 test `TMPDIR`: `/private/tmp`, a writable canonical path for this sandbox. Earlier batches used `/private/var/tmp`. Explicit bytecode compilation uses an isolated temporary cache.
 
 ## Delivered Runtime
 
@@ -32,14 +32,16 @@ Date: 2026-11-17. Development status: implementation and development self-audit 
 
 ## Goal-Preservation Evidence
 
-The reproducible agent behavior replay is in `tests/tplan/collaboration_behavior_replay.jsonl`. It records four multi-turn decisions and next actions, not a real three-session host run.
+Actual source-Agent goal-preservation decisions for T23/T25/T26–T29 were executed and
+accepted in [REVIEW-R3.md](REVIEW-R3.md). Inputs, Agent actions, tool results and state
+are recorded in `reviews/r3-audit/source-actions.jsonl` and `final-states/`, classified
+`controlled_source_agent_exercise`.
 
-- T26: unrelated logging/cache suggestions remain deferred; no task or delegation is created from the suggestion alone.
-- T27: B-owned debugging detail is routed back to B while A retains contract and acceptance responsibility.
-- T28: high-frequency progress and repeated review text are batched; A records a target-relevant next result.
-- T29: evidence-backed path revision and an explicit user scope change update the affected path/delegation while preserving history and authority.
-
-These replay records are `source_audit=pending`; the source session must review the actual decisions and next actions. The replay is not presented as host E2E.
+The original `tests/tplan/collaboration_behavior_replay.jsonl` is preserved as
+`scenario_expectation`; the R2 driver and its runtime outputs are
+`scripted_runtime_scenario`. These historical mechanical fixtures and the accepted
+controlled source-Agent exercise have separate evidence roles. Real A/B/C host E2E
+remains in the host acceptance list below.
 
 ## T01-T29 Status
 
@@ -67,15 +69,15 @@ These replay records are `source_audit=pending`; the source session must review 
 | T20 | PASS, mechanical/replay | Normal-language return is stored with source and normalized association/evidence. |
 | T21 | PASS, mechanical | Missing task/round/contract association stays `needs_association`; no task or acceptance is guessed. |
 | T22 | PASS, mechanical | First authorized division enables collaboration without a mode phrase and preserves objective, acceptance, tasks, and focus. |
-| T23 | Scripted runtime scenario (mechanical); actual agent behavior acceptance pending source session | Real runtime execution creates no delegation from reference-only input (behavior-execution.jsonl). |
+| T23 | PASS, controlled source-Agent exercise; scripted runtime scenario retained separately | Source Agent kept reference-only input on the ordinary path without enabling collaboration (REVIEW-R3 / source-actions.jsonl). |
 | T24 | PASS, mechanical | `snapshot.get` reconstructs unresolved responsibility, feedback, external work, waiting, and next action. |
-| T25 | Scripted runtime scenario (mechanical); actual agent behavior acceptance pending source session | Real runtime execution keeps only the existing delegation under current-session scope. |
-| T26 | Scripted runtime scenario (mechanical); actual agent behavior acceptance pending source session | Real runtime execution defers unrelated suggestions; no new tasks/delegations. |
-| T27 | Scripted runtime scenario (mechanical); actual agent behavior acceptance pending source session | Real runtime execution routes debug to B; A keeps acceptance responsibility. |
-| T28 | Scripted runtime scenario (mechanical); actual agent behavior acceptance pending source session | Real runtime execution batches feedback; pending cleared; one adoption. |
-| T29 | Scripted runtime scenario (mechanical); actual agent behavior acceptance pending source session | Real runtime execution creates replacement delegation, preserves history, records goal change. |
+| T25 | PASS, controlled source-Agent exercise; scripted runtime scenario retained separately | Source Agent requested stop of the existing delegation, retained the running fact and continued A’s T2 responsibility (REVIEW-R3). |
+| T26 | PASS, controlled source-Agent exercise; scripted runtime scenario retained separately | Source Agent deferred/rejected scope expansion and returned to the original acceptance gap (REVIEW-R3). |
+| T27 | PASS, controlled source-Agent exercise; scripted runtime scenario retained separately | Source Agent returned fixture diagnosis/repair/self-test to B and retained A’s design/acceptance responsibility (REVIEW-R3). |
+| T28 | PASS, controlled source-Agent exercise; scripted runtime scenario retained separately | Source Agent batched repeated input, recorded current C PASS and requested missing artifact/run evidence before adoption (REVIEW-R3). |
+| T29 | PASS, controlled source-Agent exercise; scripted runtime scenario retained separately | Source Agent paused the failed path, retained responsibility, then superseded the old Mission and created canonical objective/acceptance under explicit user goal change (REVIEW-R3). |
 
-## Verification
+## Initial Verification (historical)
 
 All final checks used the isolated Python 3.11.11 environment.
 
@@ -115,14 +117,14 @@ The system Python 3.9 run is not the CI environment. It reports 26 unrelated bas
 - A real three-session A/B/C E2E with ordinary B/C conversations and no participant TPlan access.
 - Real Codex peer-source identity, cross-session wake-up behavior, message redelivery deduplication, and cancellation/stop observability.
 - Host enforcement of A-to-A writer binding beyond the runtime generation check.
-- Source-session semantic audit of T04-T05 and T23-T29 decisions and next actions.
+- Exact-head source-session re-audit of R4. Actual source-Agent T23/T25/T26–T29 controlled exercise is accepted in REVIEW-R3.
 - Any merge, release, deployment, production Host activation, installed-Skill update, or ROI Beta action remains outside this development authorization.
 
 ## Reproduction And Rollback
 
-Use the branch and isolated checkout above. Re-run the five commands with Python 3.11 and `TMPDIR=/private/var/tmp`. The RED commit `db0f1375a` shows the original failing contract tests; the implementation commits turn those tests green. Rollback is a normal branch revert to source base `520376990`; no external state was migrated or deployed.
+Use the branch and isolated checkout above. Re-run the commands in `reviews/r4/verification.txt` with Python 3.11, `TMPDIR=/private/tmp`, and the recorded temporary bytecode cache. The RED commit `db0f1375a` shows the original failing contract tests; the implementation commits turn those tests green. Rollback is a normal branch revert to source base `520376990`; no external state was migrated or deployed.
 
-## R2 Repair Batch (2026-11-17)
+## R2 Repair Batch (historical, 2026-11-17)
 
 The R1 independent audit (REVISE, 7 P1 + 3 P2) was repaired by root cause in the same
 branch. See [REPAIR-R2.md](REPAIR-R2.md) for the R01-R10 mapping, before/after probe
@@ -137,7 +139,7 @@ passed; TPlan discover 628 passed / 1 skipped; packaging docs 41 passed / 1 skip
 full repository discover 1381 passed / 8 skipped. Real three-session host E2E and
 source semantic review of the executed decisions remain pending source acceptance.
 
-## R3 Repair Batch (2026-11-17)
+## R3 Repair Batch (historical, 2026-11-17)
 
 The R2 independent audit (REVISE, two P1 root causes A1/A2 + R02 classification) was
 repaired by root cause in the same branch. See [REPAIR-R3.md](REPAIR-R3.md).
@@ -157,3 +159,27 @@ R2's four probes re-run against the fixed code are all correctly rejected
 (`reviews/r3/probe-results-after.jsonl`). New A1/A2 regressions include the three failure
 paths and positive full chains. Real three-session host E2E and source semantic review of
 actual agent decisions remain pending source acceptance.
+
+## R4 Repair Batch (2026-11-17, current)
+
+R3 found one remaining P1 root cause, B1: repair acceptance fell back to any historical
+PASS with an AC intersection, bypassing required review and complete/latest coverage.
+[REPAIR-R4.md](REPAIR-R4.md) records the replacement rule, regression mapping and probes.
+
+- Every repair AC now requires its latest qualified PASS in the repair task scope.
+  Current delegation/adoption and mandatory review constraints remain effective.
+- Native qualification, unique references, task/ancestor coverage and H1 source-version
+  rules are shared with Mission closure. Independent Task acceptance retains its own scope.
+- Public completion, collaboration feedback completion, Mission close, snapshot resume and
+  survey resume consume the same supplied evidence snapshot.
+- Eleven added regressions cover required FAIL/missing/retired review, partial coverage,
+  latest FAIL, unrelated PASS, ambiguous/invalid/legacy records, valid local/delegated
+  full chains, and H1 current-source versions plus independent Task scope.
+- R3 source-Agent controlled exercise remains accepted; R2 driver is still
+  `scripted_runtime_scenario`. No additional ideal-answer driver was added.
+
+Final local verification: targeted Ran 58; TPlan Ran 646 / skipped 1; packaging docs Ran 41 / skipped 1; full repository Ran 1399 / skipped 8. All results OK. Commands and unittest summaries: [verification.txt](reviews/r4/verification.txt).
+R4 independent mechanical probes: [probe-results-after.jsonl](reviews/r4/probe-results-after.jsonl).
+Local full-suite skip count and source/CI platform counts are reported separately.
+Exact-head re-audit and real host acceptance remain the next handoff; PR stays draft,
+Issue open, with the original merge/release/deploy/installed-Skill/production boundary.

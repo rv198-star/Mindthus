@@ -158,15 +158,15 @@ The new coordinator has the same fields as `enable.coordinator`. The command inc
 | T20 | Natural-language return is stored with source and normalized evidence/scope; runtime fields are optional at source. | feedback tests and replay |
 | T21 | Unassociated return remains pending and asks for task/version. | feedback tests |
 | T22 | First authorized division enables collaboration without a user mode phrase and preserves state. | enable tests |
-| T23 | Reference material alone creates no collaboration record. | behavior replay; no-send boundary |
+| T23 | Reference material alone creates no collaboration record. | controlled source-Agent exercise, REVIEW-R3 |
 | T24 | `snapshot.get` reconstructs unresolved responsibilities and next action. | resume projection test |
-| T25 | Current-session-only scope creates no delegation; existing facts remain readable. | behavior replay and no-send boundary |
-| T26 | Multi-turn unrelated advice is deferred; A continues the objective-relevant task. | agent behavior replay; source audit required |
-| T27 | Debug detail is routed back to B; A retains acceptance-level responsibility. | agent behavior replay; source audit required |
-| T28 | Repeated progress/audit input is consolidated and A records a target-relevant next result. | agent behavior replay; source audit required |
-| T29 | Evidence-backed path revision or explicit user goal change updates affected delegation and next action. | agent behavior replay plus path-adjust runtime test |
+| T25 | Current-session-only scope creates no delegation; existing facts remain readable. | controlled source-Agent exercise, REVIEW-R3 |
+| T26 | Multi-turn unrelated advice is deferred; A continues the objective-relevant task. | controlled source-Agent exercise, REVIEW-R3 |
+| T27 | Debug detail is routed back to B; A retains acceptance-level responsibility. | controlled source-Agent exercise, REVIEW-R3 |
+| T28 | Repeated progress/audit input is consolidated and A records a target-relevant next result. | controlled source-Agent exercise, REVIEW-R3 |
+| T29 | Evidence-backed path revision or explicit user goal change updates affected delegation and next action. | controlled source-Agent exercise, REVIEW-R3; path-adjust runtime test |
 
-T26-T29 replay is agent behavior evidence, not a real three-session E2E. Real peer source, wake-up, host deduplication, cancellation, and protected handoff remain host acceptance items and must be reported as such.
+T23/T25/T26–T29 have actual source-Agent decisions, tool results and before/after state from the controlled exercise accepted in [REVIEW-R3.md](REVIEW-R3.md) (`controlled_source_agent_exercise`). The R2 preset driver remains `scripted_runtime_scenario`; its earlier ideal-answer replay is `scenario_expectation`. Real peer source, wake-up, host deduplication, cancellation, and protected handoff remain host acceptance items.
 
 ## Current acceptance responsibility (A1 convergence)
 
@@ -176,7 +176,9 @@ Retiring an attempt releases physical write-scope occupancy, but the task/contra
 - A task with delegation history must have a current valid adopted artifact and the latest required reviewer PASS. If every attempt is retired (not_sent/stopped/failed) and no legal successor exists, the obligation remains open and completion is blocked; it is not skipped as an ordinary task.
 - The current delegation is the latest non-retired successor under monotonic rounds. A later FAIL on the current adopted artifact blocks completion until a bounded repair/re-review PASS.
 - Each adoption carries an `invalidated` flag. A blocking `repair` on an already accepted current artifact sets `invalidated=true` (history preserved) and creates a `repair_obligations` record linking the source task/delegation to a bounded success-critical repair task and its acceptance IDs.
-- A repair obligation is satisfied only by fresh acceptance on the repair task: a current valid adoption + required review PASS on the repair task, or a qualified `acceptance_passed` event scoped to the repair task for the carried acceptance IDs. Completing the repair task through the ordinary entry with no new artifact/review/acceptance does not satisfy it. The source task's old adoption cannot close the Mission while the obligation is open.
+- A repair obligation is satisfied when **every carried acceptance ID** has `acceptance_passed` as its latest qualified observation in the repair task's own scope. Native evidence validation, globally unique event references, declared task/ancestor AC coverage, and applicable H1 current-source version checks are shared with Mission closure. Evidence-log order determines the latest observation per AC.
+- A repair task with delegation history additionally satisfies its current acceptance responsibility: a legal current adopted artifact, an effective adoption, and the latest required reviewer PASS bound to that artifact/round/contract/scope. Retired attempts keep this responsibility until a legal successor or explicit disposition. This review constraint protects the delegated acceptance path; ordinary evidence cannot replace a missing or failed required review. A local repair without delegation history uses the scoped native observations directly.
+- Public Task completion, `feedback.resolve` completion, Mission close, `snapshot.get.resume`, and survey resume consume the same evidence snapshot and shared repair projection. Partial AC coverage, a later qualified FAIL, ambiguous references, an unrelated task's PASS, and the source task's old adoption leave the repair obligation open.
 
 ## Closed-Mission business write boundary (A2)
 
