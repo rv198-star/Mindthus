@@ -1,6 +1,6 @@
 # Issue #246 Development Results
 
-Date: 2026-11-17. Development status: R5 C1 repair and regression verification complete; exact-head independent re-audit pending. R4 B1 paths were independently accepted in REVIEW-R4. Source-Agent controlled goal-preservation acceptance is recorded in REVIEW-R3; real host E2E remains pending.
+Date: 2026-11-18 (Asia/Shanghai). **Product acceptance PASS**: R5 independent engineering audit, source-Agent controlled goal-preservation cases and ordinary live A/B/C host acceptance are complete. The final Issue-to-evidence reconciliation is in [FINAL-ACCEPTANCE.md](FINAL-ACCEPTANCE.md). The user has authorized merge and Stable release after final acceptance.
 
 ## Source And Environment
 
@@ -40,8 +40,7 @@ are recorded in `reviews/r3-audit/source-actions.jsonl` and `final-states/`, cla
 The original `tests/tplan/collaboration_behavior_replay.jsonl` is preserved as
 `scenario_expectation`; the R2 driver and its runtime outputs are
 `scripted_runtime_scenario`. These historical mechanical fixtures and the accepted
-controlled source-Agent exercise have separate evidence roles. Real A/B/C host E2E
-remains in the host acceptance list below.
+controlled source-Agent exercise have separate evidence roles. Real A/B/C host E2E is accepted in [HOST-ACCEPTANCE.md](HOST-ACCEPTANCE.md); capability levels are recorded there.
 
 ## T01-T29 Status
 
@@ -65,7 +64,7 @@ remains in the host acceptance list below.
 | T16 | PASS, mechanical/replay | Multiple pending updates produce one Pulse candidate; replay batches and resumes the mainline. |
 | T17 | PASS, mechanical | Repeated repairs carry declared AC responsibility to completed current endpoints; partial or failed successor responsibility stays open. |
 | T18 | PASS, mechanical | Duplicate intent conflicts; unknown delivery is queried before replacement; no participant-side dedup service is required. |
-| T19 | PASS for contract/package; host E2E pending | Five packaged A-only layouts execute snapshot/enable; B/C need no runtime in the protocol. Real B/C host isolation remains acceptance. |
+| T19 | PASS, package and live ordinary-host loop | Five extracted layouts execute the A-only protocol; real ordinary B/C delivery/review/repair passed. Participant commands are archived; physical isolation is a host responsibility. |
 | T20 | PASS, mechanical/replay | Normal-language return is stored with source and normalized association/evidence. |
 | T21 | PASS, mechanical | Missing task/round/contract association stays `needs_association`; no task or acceptance is guessed. |
 | T22 | PASS, mechanical | First authorized division enables collaboration without a mode phrase and preserves objective, acceptance, tasks, and focus. |
@@ -112,13 +111,13 @@ The system Python 3.9 run is not the CI environment. It reports 26 unrelated bas
 - Existing H1, Q1, and Q2 authority paths remain intact; ordinary TPlan and packaged layouts pass.
 - No production Mission, installed Skill, hook, release, tag, deployment, or ROI Beta state was changed.
 
-## Remaining Host And Human Acceptance
+## Final Acceptance And Release Handoff
 
-- A real three-session A/B/C E2E with ordinary B/C conversations and no participant TPlan access.
-- Real Codex peer-source identity, cross-session wake-up behavior, message redelivery deduplication, and cancellation/stop observability.
-- Host enforcement of A-to-A writer binding beyond the runtime generation check.
-- Exact-head source-session re-audit of R4. Actual source-Agent T23/T25/T26–T29 controlled exercise is accepted in REVIEW-R3.
-- Any merge, release, deployment, production Host activation, installed-Skill update, or ROI Beta action remains outside this development authorization.
+- R5 fixed-code engineering audit: **PASS**, [REVIEW-R5.md](REVIEW-R5.md).
+- Source-Agent controlled goal-preservation cases: **PASS**, [REVIEW-R3.md](REVIEW-R3.md).
+- Ordinary real A/B/C delivery, review, repair and closure: **PASS**, [HOST-ACCEPTANCE.md](HOST-ACCEPTANCE.md).
+- Native source, wake-up, querying and one-effect import were observed; native cancellation and physical per-thread isolation retain the recorded host requirements.
+- The latest user instruction authorizes final acceptance, merge and a new Stable release. Publication identity and asset verification will be recorded with that release.
 
 ## Reproduction And Rollback
 
@@ -184,7 +183,7 @@ Local full-suite skip count and source/CI platform counts are reported separatel
 Exact-head re-audit and real host acceptance remain the next handoff; PR stays draft,
 Issue open, with the original merge/release/deploy/installed-Skill/production boundary.
 
-## R5 Repair Batch (2026-11-17, current)
+## R5 Repair Batch (2026-11-17, accepted)
 
 R4 independently accepted the reported B1 paths and found C1: a completed repair task
 could not transfer its acceptance responsibility through a further explicit repair.
@@ -215,4 +214,4 @@ independent FAIL, autonomous full repair, and current independent PASS; C ran 44
 cases successfully and A closed the TPlan Mission with no pending feedback or gaps.
 The original objective/acceptance and R1 failure history were preserved. Actual host
 capability levels, per-turn models and model-failure recovery are recorded in the report.
-PR remains draft and Issue open; release permissions retain the existing boundary.
+Final product acceptance is recorded in FINAL-ACCEPTANCE.md; merge and release follow the user’s 2026-11-18 authorization.

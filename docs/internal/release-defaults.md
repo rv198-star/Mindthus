@@ -1,25 +1,25 @@
 # Release Defaults / 发布默认规则
 
-## Stable 为默认发行
+## Stable 发行
 
-2026-10-03 Owner明确取消每次Stable必须同步发布ROI Beta的要求。
-此后Stable发布不再要求同步ROI Beta；默认提供：
+2026-10-03 Owner 明确：Stable发布不再要求同步ROI Beta。
+本轮 Owner 进一步确认：**ROI Beta 已停止维护及后续发布**。以后仅维护 Stable；
+历史 Beta 标签、资产、源码和资格记录保留。
+
+Stable 默认提供：
 
 - source tag `vX.Y.Z`；
-- Stable plugins/skills两份白名单归档；
-- 覆盖实际发布归档的 `SHA256SUMS`。
+- plugins、skills 两份白名单归档；
+- 覆盖实际归档的 `SHA256SUMS`。
 
-ROI Beta仅在明确需要时单独安排，不因Stable发布自动产生构建、资格验证或发布任务。
-`v1.11.0` 是规则调整后的首个 Stable；`v1.12.0` 和本次 `v1.13.0` 均按默认规则不发布 ROI Beta。
-既有Beta tag、资产、源码与历史资格记录保留，不删除、不自动迁移，也不把 Stable
-功能/质量结论外推成 Beta 资格结论。
-
-若未来另行发布Beta，仍保持独立package/marketplace/cache/skill namespace，
-通过精确shared-core ref继承Stable；overlay不复制共享实现，发布时核验相应来源与资产。
+`v1.11.0`、`v1.12.0`、`v1.13.0` 按当时规则仅发布 Stable。
+`v1.14.0` 延续两资产发行，并明确 ROI Beta 维护结束。
 
 ## Verification
 
-发布完成必须验证Stable tag/source、实际提供的归档下载可用、最终SHA256SUMS校验通过，
-并保留release verification记录。README、CHANGELOG和发布说明必须与实际assets一致。
+发布前核对精确 PR head、main 合并提交和 CI；正式 tag 指向已验证的合并提交。
+发布完成验证 tag/source、实际归档下载和最终 SHA256SUMS，保留发布验证记录。
+README、CHANGELOG 与发布说明须覆盖自上次 Stable 以来的实际发行范围和资产。
 
-此前版本的Stable/Beta同步记录是历史事实；这次规则调整向前生效，不改写旧记录。
+产品包版本和 TPlan runtime generation 分别记录。旧 Mission 保留原固定 writer，
+新运行时身份、能力及脚本指纹必须一致，不通过覆写 provenance 迁移历史任务。
