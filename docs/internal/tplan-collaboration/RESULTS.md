@@ -10,6 +10,7 @@ Date: 2026-11-17. Development status: implementation and development self-audit 
 - Branch: `codex/issue-246-tplan-collaboration`
 - Isolated checkout: `/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus`
 - Required RED commit: `db0f1375a` (`test(tplan): define collaboration runtime contract and RED cases`)
+- Implementation commit: `72570e5d3` (`feat(tplan): add goal-preserving collaboration runtime`)
 - Model/reasoning configuration supplied to this session: DeepSeek V4.1 Flash, `xhigh`. The local tool runtime does not expose a separate model-attestation field.
 - CI-compatible isolated runtime: CPython 3.11.11 at `/private/var/tmp/mindthus-246-py311`.
 - Test `TMPDIR`: `/private/var/tmp`, avoiding the macOS `/var` to `/private/var` alias in H1 canonical-directory fixtures.
