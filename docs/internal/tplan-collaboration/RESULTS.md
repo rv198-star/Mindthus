@@ -1,6 +1,6 @@
 # Issue #246 Development Results
 
-Date: 2026-11-17. Development status: R4 B1 repair and regression verification complete; exact-head independent re-audit pending. Source-Agent controlled goal-preservation acceptance is recorded in REVIEW-R3; real host E2E remains pending.
+Date: 2026-11-17. Development status: R5 C1 repair and regression verification complete; exact-head independent re-audit pending. R4 B1 paths were independently accepted in REVIEW-R4. Source-Agent controlled goal-preservation acceptance is recorded in REVIEW-R3; real host E2E remains pending.
 
 ## Source And Environment
 
@@ -63,7 +63,7 @@ remains in the host acceptance list below.
 | T14 | PASS, mechanical | Stop-requested running work keeps the scope protected until a native stopped fact is recorded. |
 | T15 | PASS, mechanical | Handoff increments generation; stale writer generation is rejected before persistence. |
 | T16 | PASS, mechanical/replay | Multiple pending updates produce one Pulse candidate; replay batches and resumes the mainline. |
-| T17 | PASS, mechanical | A defect after task completion blocks current acceptance until a success-critical repair task and later adoption/review. |
+| T17 | PASS, mechanical | Repeated repairs carry declared AC responsibility to completed current endpoints; partial or failed successor responsibility stays open. |
 | T18 | PASS, mechanical | Duplicate intent conflicts; unknown delivery is queried before replacement; no participant-side dedup service is required. |
 | T19 | PASS for contract/package; host E2E pending | Five packaged A-only layouts execute snapshot/enable; B/C need no runtime in the protocol. Real B/C host isolation remains acceptance. |
 | T20 | PASS, mechanical/replay | Normal-language return is stored with source and normalized association/evidence. |
@@ -160,7 +160,7 @@ R2's four probes re-run against the fixed code are all correctly rejected
 paths and positive full chains. Real three-session host E2E and source semantic review of
 actual agent decisions remain pending source acceptance.
 
-## R4 Repair Batch (2026-11-17, current)
+## R4 Repair Batch (historical, 2026-11-17)
 
 R3 found one remaining P1 root cause, B1: repair acceptance fell back to any historical
 PASS with an AC intersection, bypassing required review and complete/latest coverage.
@@ -183,3 +183,26 @@ R4 independent mechanical probes: [probe-results-after.jsonl](reviews/r4/probe-r
 Local full-suite skip count and source/CI platform counts are reported separately.
 Exact-head re-audit and real host acceptance remain the next handoff; PR stays draft,
 Issue open, with the original merge/release/deploy/installed-Skill/production boundary.
+
+## R5 Repair Batch (2026-11-17, current)
+
+R4 independently accepted the reported B1 paths and found C1: a completed repair task
+could not transfer its acceptance responsibility through a further explicit repair.
+[REPAIR-R5.md](REPAIR-R5.md) records the replacement rule and test mapping.
+
+The existing responsibility edges now project each affected task's ACs through all
+applicable declared successors. Effective endpoints satisfy completion, latest qualified
+per-AC acceptance and mandatory current review. Uncovered ACs stay with their source;
+intermediate completed tasks, invalidated adoptions and feedback remain historical.
+Task, Mission and both resume views use this same projection and supplied events.
+
+Thirteen added C1 regressions cover two/three-layer local/delegated closure, preserved
+history, partial/split AC transfer, uncovered original ACs, terminal FAIL/missing review/
+incomplete/partial/latest-failed acceptance, separate branch PASS and an internal cycle.
+Existing B1 regressions and source-Agent controlled behavior acceptance remain in place.
+
+Original independent C1 probes re-run: [probe-results-after.jsonl](reviews/r5/probe-results-after.jsonl).
+Original B1 probes re-run: [b1-probe-rerun.jsonl](reviews/r5/b1-probe-rerun.jsonl).
+Local verification: targeted Ran 71; evidence/H1 Ran 75; TPlan Ran 659 / skipped 1; packaging Ran 41 / skipped 1; full repository Ran 1412 / skipped 8. All OK. Commands and actual summaries: [verification.txt](reviews/r5/verification.txt).
+The next handoff is exact-head independent re-audit. PR remains draft and Issue open;
+real host acceptance and release permissions retain the existing boundary.

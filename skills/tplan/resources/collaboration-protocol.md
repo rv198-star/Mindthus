@@ -163,23 +163,27 @@ Retiring an attempt releases physical occupancy, but the acceptance obligation p
 along explicit succession/repair/authorized scope change. One shared projection checks
 Task completion, Mission close, and resume gaps:
 
-- A task with delegation history needs a current valid adopted artifact + latest required
-  reviewer PASS. If all attempts are retired with no legal successor, the obligation stays
-  open (completion blocked), not skipped.
-- Each adoption has an `invalidated` flag. A blocking `repair` on an accepted current
-  artifact invalidates it (history kept) and creates a repair obligation linking a bounded
-  success-critical repair task. Every carried AC needs `acceptance_passed` as its latest
-  qualified observation in that repair task's own scope. Native evidence validation,
-  unique event references, declared task/ancestor AC coverage and applicable H1 current-source
-  versions are shared with Mission closure; evidence-log order determines the latest result.
-  A repair task with delegation history also needs a legal current adopted artifact and latest
-  required reviewer PASS bound to its artifact/round/contract/scope. Retired attempts retain
-  the responsibility until legal succession or explicit disposition. Ordinary evidence cannot
-  replace a missing or failed required review; this protects the delegated acceptance path.
-  A local repair without delegation history uses scoped native observations directly.
-  Task completion (including `feedback.resolve`), Mission close, snapshot resume and survey
-  resume consume the same evidence snapshot and shared projection. Partial coverage, latest
-  FAIL, ambiguous references or another task's PASS leave the obligation open.
+- Delegation history retains acceptance responsibility. Current effective endpoints
+  need a valid adopted artifact + latest required reviewer PASS; explicit repair successors
+  carry that responsibility per AC below. Retired attempts without a legal successor stay open.
+- Each adoption has an `invalidated` flag. A blocking repair preserves history and creates
+  an explicit `repair_obligations` edge to a bounded success-critical successor task.
+  Current responsibility follows those edges per AC, including repeated repairs of
+  completed repair tasks. Each task retains its own ACs and incoming/outgoing obligations.
+  A successor carries its declared ACs; uncovered ACs stay with the source task.
+- Every applicable successor branch satisfies its whole acceptance contract. Current
+  endpoints are completed, with latest qualified `acceptance_passed` for every scoped AC,
+  and current adoption plus required reviewer PASS when delegation history exists.
+  Native qualification, unique references, task/ancestor coverage and applicable H1
+  current-source versions remain shared with Mission closure. Local endpoints use
+  scoped native evidence. Intermediate completed/invalidated/feedback records remain history.
+- Explicit successors that cover all applicable ACs discharge corresponding upstream
+  responsibility. Uncovered ACs, incomplete endpoints, missing/FAIL required review,
+  latest qualified FAIL, ambiguous references and another branch's PASS keep it open.
+  Every overlapping applicable branch remains required; an internal cyclic path is unresolved.
+  This protects declared responsibility continuity and retains ordinary Task scope.
+- Task completion (including `feedback.resolve`), Mission close and snapshot/survey resume
+  use the same event snapshot and shared current responsibility projection.
 - When the Mission is not `active`, new collaboration mutations are rejected with
   `mission_closed`; late facts need a follow-up Mission or legal continuation. Reads,
   historical replay, and prepared-transaction recovery remain available.

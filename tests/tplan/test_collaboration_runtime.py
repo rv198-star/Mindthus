@@ -1018,6 +1018,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
                 self.assertTrue(collaboration.task_completion_findings(state, proposed, supplied))
                 self.assertTrue(collaboration.completion_findings(proposed, supplied))
                 self.assertTrue(collaboration.build_resume_view(proposed, supplied)["acceptance_gaps"])
+        runtime.find_task(state, "T3")["status"] = "completed"
         self.assertTrue(collaboration._repair_obligation_satisfied(state["collaboration"], state, obligation, events + [observation]))
 
     def test_b1_native_qualification_preserves_h1_current_source_versions_and_scope(self):
@@ -1049,11 +1050,183 @@ class CollaborationRuntimeTests(unittest.TestCase):
         # An independent local repair keeps its own Task scope while the H1 source
         # is still incomplete; Mission closure retains the global H1 requirement.
         runtime.find_task(state, "C")["acceptance_evidence"] = ["A1"]
+        runtime.find_task(state, "C")["status"] = "completed"
         independent = {"id": "independent-pass", "timestamp": runtime.now_iso(),
                        "event_type": "acceptance_passed", "summary": "Independent repair accepted",
                        "task_id": "C", "payload": {"acceptance_ids": ["A1"]}}
         self.assertTrue(satisfied(old_source + [independent], {"repair_task_id": "C", "acceptance_ids": ["A1"]}))
         self.assertTrue(runtime._mission_completion_findings(state, old_source + [independent]))
+
+    def _c1_successor(self, source, target, acceptance_ids=("A1",)):
+        delegation = "D" + source[1:]
+        artifact = "h" + source[1:]
+        feedback = self.feedback(source=f"c1-defect-{source}-{target}", delegation_id=delegation,
+                                 artifact=artifact, source_role="B", kind="blocker")
+        task = {"id": target, "title": f"Repair {source}", "role": "success-critical",
+                "mission_contribution": "Restores explicitly carried acceptance",
+                "acceptance_evidence": list(acceptance_ids), "status": "pending"}
+        result, code = self.mutate("feedback.resolve", self.resolution(
+            feedback["data"]["feedback_id"], delegation=delegation, artifact=artifact,
+            disposition="repair", verdict=None, new_tasks=[task], focus=target))
+        self.assertEqual(code, 0, result)
+
+    def _c1_accept(self, task_id, acceptance_ids=("A1",), mode="delegated", verdict="PASS", complete=True):
+        if mode == "delegated":
+            delegation = "D" + task_id[1:]
+            artifact = "h" + task_id[1:]
+            self.prepare(task_id=task_id, delegation_id=delegation, intent_id="I" + task_id[1:], round_no=1)
+            self.dispatch(intent_id="I" + task_id[1:], execution_state="completed")
+        self._b1_accept(task_id=task_id, acceptance_ids=acceptance_ids)
+        if mode == "delegated":
+            feedback = self.feedback(source=f"c1-result-{task_id}", delegation_id=delegation, artifact=artifact,
+                                     source_role="C" if verdict else "B", kind="review" if verdict else "result")
+            result, code = self.mutate("feedback.resolve", self.resolution(
+                feedback["data"]["feedback_id"], delegation=delegation, artifact=artifact,
+                verdict=verdict, complete=complete, review_task=task_id, focus="T2"))
+            self.assertEqual(code, 0, result)
+        elif complete:
+            runtime.transition_task_status(self.mission, task_id, "completed")
+
+    def _c1_chain(self, depth=2, acceptance_ids=("A1",)):
+        self._b1_repair(acceptance_ids)
+        source = "T3"
+        for successor_no in range(4, depth + 3):
+            self._c1_accept(source, acceptance_ids)
+            target = f"T{successor_no}"
+            self._c1_successor(source, target, acceptance_ids)
+            source = target
+        return source
+
+    def _c1_assert_projection(self, satisfied, upstream_satisfied=None):
+        state = runtime.read_mission(self.mission)
+        events = runtime.read_events(self.mission)
+        obligations = state["collaboration"]["repair_obligations"].values()
+        upstream = next(iter(obligations))
+        self.assertEqual(collaboration._repair_obligation_satisfied(state["collaboration"], state, upstream, events),
+                         satisfied if upstream_satisfied is None else upstream_satisfied)
+        self.assertEqual(not collaboration.completion_findings(state, events), satisfied)
+        snapshot = self.snapshot()["data"]
+        self.assertEqual(snapshot["resume"], snapshot["survey"]["collaboration_resume"])
+        self.assertEqual(runtime.build_survey(self.mission)["collaboration_resume"], snapshot["resume"])
+        self.assertEqual(not snapshot["resume"]["acceptance_gaps"], satisfied)
+        before = (self.mission / "mission.json").read_bytes()
+        proposal = copy.deepcopy(state)
+        proposal["mission"]["status"] = "completed"
+        if satisfied:
+            self.assertEqual(runtime._mission_completion_findings(state, events), [])
+            runtime.write_mission(self.mission, proposal)
+            self.assertEqual(self.snapshot()["data"]["resume"]["acceptance_gaps"], [])
+            self.assertEqual(runtime.read_mission(self.mission)["mission"]["status"], "completed")
+        else:
+            self.assertTrue(runtime._mission_completion_findings(state, events))
+            with self.assertRaises(runtime.TplanError):
+                runtime.write_mission(self.mission, proposal)
+            self.assertEqual((self.mission / "mission.json").read_bytes(), before)
+
+    def _c1_positive(self, depth, mode):
+        leaf = self._c1_chain(depth, ("A1", "A2"))
+        history = copy.deepcopy(runtime.read_mission(self.mission)["collaboration"])
+        self._c1_accept(leaf, ("A1", "A2"), mode=mode)
+        state = runtime.read_mission(self.mission)
+        self.assertEqual(state["collaboration"]["repair_obligations"], history["repair_obligations"])
+        for delegation_id, adoption in history["adoptions"].items():
+            self.assertEqual(state["collaboration"]["adoptions"][delegation_id], adoption)
+            self.assertTrue(adoption["invalidated"])
+        for feedback_id, feedback in history["feedback"].items():
+            self.assertEqual(state["collaboration"]["feedback"][feedback_id], feedback)
+        self.assertTrue(all(task["status"] == "completed" for task in state["tasks"] if task["role"] == "success-critical"))
+        self._c1_assert_projection(True)
+
+    def test_c1_two_layer_local_successor_closes_and_preserves_history(self):
+        self._c1_positive(2, "local")
+
+    def test_c1_two_layer_delegated_successor_closes_and_preserves_history(self):
+        self._c1_positive(2, "delegated")
+
+    def test_c1_three_layer_local_successor_closes_and_preserves_history(self):
+        self._c1_positive(3, "local")
+
+    def test_c1_three_layer_delegated_successor_closes_and_preserves_history(self):
+        self._c1_positive(3, "delegated")
+
+    def test_c1_partial_ac_succession_leaves_uncovered_ac_open(self):
+        self._b1_repair(("A1", "A2"))
+        self._c1_accept("T3", ("A1", "A2"))
+        self._c1_successor("T3", "T4", ("A1",))
+        self._c1_accept("T4", mode="local")
+        self._c1_assert_projection(False)
+        # Explicitly carry the remaining AC, then both branches can close together.
+        self._c1_successor("T3", "T5", ("A2",))
+        self._c1_accept("T5", ("A2",), mode="local")
+        self._c1_assert_projection(True)
+
+    def test_c1_partial_original_ac_transfer_preserves_original_responsibility(self):
+        state = runtime.read_mission(self.mission)
+        state["mission"]["acceptance_evidence"].append({"id": "A2", "description": "A2 required"})
+        runtime.find_task(state, "T1")["acceptance_evidence"] = ["A1", "A2"]
+        runtime.write_mission(self.mission, state)
+        self._reviewed_t1()
+        self._b1_accept(task_id="T1", acceptance_ids=("A2",))
+        self._c1_successor("T1", "T3", ("A1",))
+        self._c1_accept("T3", mode="local")
+        # T3 satisfied the carried A1; original T1 still owns its uncovered A2.
+        self._c1_assert_projection(False, upstream_satisfied=True)
+
+    def test_c1_terminal_required_fail_blocks_task_mission_and_resume(self):
+        leaf = self._c1_chain(3)
+        self._c1_accept(leaf, verdict="FAIL", complete=False)
+        with self.assertRaisesRegex(runtime.TplanError, "repair obligation"):
+            runtime.transition_task_status(self.mission, leaf, "completed")
+        self._c1_assert_projection(False)
+
+    def test_c1_terminal_missing_review_blocks_task_mission_and_resume(self):
+        leaf = self._c1_chain(3)
+        self._c1_accept(leaf, verdict=None, complete=False)
+        with self.assertRaisesRegex(runtime.TplanError, "repair obligation"):
+            runtime.transition_task_status(self.mission, leaf, "completed")
+        self._c1_assert_projection(False)
+
+    def test_c1_terminal_positive_evidence_requires_completed_successor(self):
+        leaf = self._c1_chain(3)
+        self._c1_accept(leaf, complete=False)
+        state = runtime.read_mission(self.mission)
+        last = list(state["collaboration"]["repair_obligations"].values())[-1]
+        self.assertFalse(collaboration._repair_obligation_satisfied(
+            state["collaboration"], state, last, runtime.read_events(self.mission)))
+        self._c1_assert_projection(False)
+        runtime.transition_task_status(self.mission, leaf, "completed")
+        self._c1_assert_projection(True)
+
+    def test_c1_terminal_partial_evidence_blocks_task_mission_and_resume(self):
+        leaf = self._c1_chain(3, ("A1", "A2"))
+        self._c1_accept(leaf, ("A1",), complete=False)
+        with self.assertRaisesRegex(runtime.TplanError, "repair obligation"):
+            runtime.transition_task_status(self.mission, leaf, "completed")
+        self._c1_assert_projection(False)
+
+    def test_c1_terminal_latest_fail_invalidates_upstream_completed_history(self):
+        leaf = self._c1_chain(3)
+        self._c1_accept(leaf, mode="local")
+        self._b1_accept(task_id=leaf, kind="acceptance_failed")
+        self._b1_accept(task_id="T1")
+        self._c1_assert_projection(False)
+
+    def test_c1_separate_branch_pass_does_not_cancel_failed_branch(self):
+        leaf = self._c1_chain(2)
+        self._c1_accept(leaf, verdict="FAIL", complete=False)
+        self._c1_successor("T3", "T6")
+        self._c1_accept("T6", mode="local")
+        self._c1_assert_projection(False)
+
+    def test_c1_internal_cycle_cannot_satisfy_current_responsibility(self):
+        leaf = self._c1_chain(2)
+        self._c1_accept(leaf, mode="local")
+        state = runtime.read_mission(self.mission)
+        events = runtime.read_events(self.mission)
+        obligation = next(iter(state["collaboration"]["repair_obligations"].values()))
+        cycle = {**obligation, "obligation_id": "cycle-fixture", "source_task_id": leaf, "repair_task_id": "T3"}
+        state["collaboration"]["repair_obligations"]["cycle-fixture"] = cycle
+        self.assertFalse(collaboration._repair_obligation_satisfied(state["collaboration"], state, obligation, events))
 
     def test_a2_closed_mission_rejects_late_business_writes_but_keeps_reads(self):
         self._reviewed_t1()

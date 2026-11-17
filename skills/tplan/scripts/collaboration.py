@@ -1337,47 +1337,78 @@ def _task_has_delegation_history(collab: dict[str, Any], task_id: str) -> bool:
     return any(d.get("task_id") == task_id for d in collab.get("delegations", {}).values())
 
 
-def _repair_obligation_satisfied(
-    collab: dict[str, Any], mission: dict[str, Any], obligation: dict[str, Any], events: list[dict[str, Any]] | None
+def _current_repair_acceptance_satisfied(
+    collab: dict[str, Any], mission: dict[str, Any], task_id: str,
+    acceptance_ids: set[str], events: list[dict[str, Any]] | None,
+    path: frozenset[str] = frozenset(),
 ) -> bool:
-    repair_task_id = obligation["repair_task_id"]
-    acceptance_ids = set(obligation.get("acceptance_ids", []))
-    # A delegated repair retains its current acceptance responsibility even when
-    # attempts are retired. Native evidence supplements adoption/review, rather
-    # than providing a fallback around a missing or failed required review.
-    if _task_has_delegation_history(collab, repair_task_id):
-        current = _task_current_delegation(collab, repair_task_id)
+    """Project declared AC responsibility through explicit repair successors.
+
+    Each successor carries its whole contract. Remaining ACs stay with this task;
+    effective endpoints use native qualification and current required review.
+    """
+    task = _tasks(mission).get(task_id)
+    if task is None or task.get("status") != "completed" or task_id in path:
+        return False
+    required = acceptance_ids | set(task.get("acceptance_evidence", []))
+    if not required:
+        return False
+    successors = [
+        ob for ob in collab.get("repair_obligations", {}).values()
+        if ob.get("source_task_id") == task_id and required & set(ob.get("acceptance_ids", []))
+    ]
+    carried: set[str] = set()
+    for successor in successors:
+        successor_ids = set(successor.get("acceptance_ids", []))
+        if not _current_repair_acceptance_satisfied(
+            collab, mission, successor["repair_task_id"], successor_ids, events, path | {task_id}
+        ):
+            return False
+        carried.update(successor_ids)
+    remaining = required - carried
+    if not remaining:
+        return True
+    # Untransferred ACs retain this task's own adoption/review responsibility.
+    if _task_has_delegation_history(collab, task_id):
+        current = _task_current_delegation(collab, task_id)
         if current is None or _required_review_findings(collab, current):
             return False
     from tplan_runtime import _qualified_acceptance_observations
 
-    errors, observations = _qualified_acceptance_observations(mission, events or [], task_id=repair_task_id)
-    if errors or not acceptance_ids:
+    errors, observations = _qualified_acceptance_observations(mission, events or [], task_id=task_id)
+    if errors:
         return False
     latest = {}
     for event, acceptance_id in observations:
-        if event["task_id"] == repair_task_id and acceptance_id in acceptance_ids:
+        if acceptance_id in remaining:
             latest[acceptance_id] = event["event_type"]
-    return all(latest.get(acceptance_id) == "acceptance_passed" for acceptance_id in acceptance_ids)
+    return all(latest.get(acceptance_id) == "acceptance_passed" for acceptance_id in remaining)
+
+
+def _repair_obligation_satisfied(
+    collab: dict[str, Any], mission: dict[str, Any], obligation: dict[str, Any], events: list[dict[str, Any]] | None
+) -> bool:
+    return _current_repair_acceptance_satisfied(
+        collab, mission, obligation["repair_task_id"], set(obligation.get("acceptance_ids", [])), events
+    )
 
 
 def _task_acceptance_findings(
     collab: dict[str, Any], mission: dict[str, Any], task_id: str, events: list[dict[str, Any]] | None
 ) -> list[str]:
-    """Shared current-responsibility projection for one task (Task completion and Mission close)."""
-    obligations = collab.get("repair_obligations", {})
-    incoming = [ob for ob in obligations.values() if ob.get("repair_task_id") == task_id]
-    outgoing = [ob for ob in obligations.values() if ob.get("source_task_id") == task_id]
-    if incoming:
-        findings = []
-        for ob in incoming:
-            if not _repair_obligation_satisfied(collab, mission, ob, events):
-                findings.append(
-                    f"repair obligation {ob['obligation_id']} for task {task_id} requires fresh acceptance/re-review"
-                )
-        return findings
-    if outgoing:
-        return []
+    """Shared current-responsibility projection for Task, Mission and resume."""
+    related = [
+        ob for ob in collab.get("repair_obligations", {}).values()
+        if task_id in {ob.get("repair_task_id"), ob.get("source_task_id")}
+    ]
+    if related:
+        required = set().union(*(set(ob.get("acceptance_ids", [])) for ob in related))
+        if _current_repair_acceptance_satisfied(collab, mission, task_id, required, events):
+            return []
+        return [
+            f"task {task_id} repair obligation requires completed current acceptance/re-review "
+            "through its declared AC successors"
+        ]
     if not _task_has_delegation_history(collab, task_id):
         return []
     current = _task_current_delegation(collab, task_id)
