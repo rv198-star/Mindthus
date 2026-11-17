@@ -1,0 +1,95 @@
+{
+  "status": "FAIL",
+  "delegation": "D1",
+  "round": 1,
+  "contract_version": "host-normalizer-v1",
+  "required_scope": [
+    "contract://host-normalizer-v1/all"
+  ],
+  "artifact_root": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r1",
+  "artifact_digest": "sha256:03bc9a0581d509c7f233d27946d643a291c3d5fef6f6243aea519596b90a91cb",
+  "file_digests": {
+    "README.md": "65c645eec58f8678df51ba2a0f4fc74190a47ef21a9f49c97cdbf8fb90d17006",
+    "normalize_record.py": "906680d0c86a018477710b9373053797d3e41e14a46e3dd232115b4f33ecc194",
+    "test_normalize_record_smoke.py": "cfec0211546470fca46db7647a569787a5c4d48389dcb1ed78dbfb88a73f244e"
+  },
+  "contract_sha256": "b8f43873cf091c40e1231dfb56b27df07cf34be67098bafd6ba78d3df7b7afcb",
+  "manifest_sha256": "81eb348d47b63afe6c5c2d51660ca3aa09151df60afb67ee6d5ee62d30906bf7",
+  "integrity": "PASS: exact file set, every file digest, compact sorted JSON aggregate, unchanged after checks",
+  "static_dependency_check": {
+    "imports": [],
+    "call_targets": [
+      "ValueError",
+      "any",
+      "isinstance",
+      "value.get"
+    ]
+  },
+  "runtime_io_events": [],
+  "total": 337,
+  "passed": 186,
+  "failed": 151,
+  "groups": {
+    "invalid-container": {
+      "total": 13,
+      "pass": 13,
+      "fail": 0
+    },
+    "invalid-enabled": {
+      "total": 16,
+      "pass": 7,
+      "fail": 9
+    },
+    "invalid-extra": {
+      "total": 4,
+      "pass": 0,
+      "fail": 4
+    },
+    "invalid-id": {
+      "total": 14,
+      "pass": 4,
+      "fail": 10
+    },
+    "invalid-label": {
+      "total": 14,
+      "pass": 4,
+      "fail": 10
+    },
+    "invalid-missing": {
+      "total": 15,
+      "pass": 15,
+      "fail": 0
+    },
+    "invalid-weight": {
+      "total": 22,
+      "pass": 6,
+      "fail": 16
+    },
+    "valid-dict-subclass": {
+      "total": 1,
+      "pass": 1,
+      "fail": 0
+    },
+    "valid-domain": {
+      "total": 202,
+      "pass": 100,
+      "fail": 102
+    },
+    "valid-order": {
+      "total": 24,
+      "pass": 24,
+      "fail": 0
+    },
+    "valid-strings": {
+      "total": 12,
+      "pass": 12,
+      "fail": 0
+    }
+  }
+}
+REPRO {"group": "invalid-enabled", "name": "1", "input": "{'id': 'record-1', 'label': 'Sample', 'enabled': 1, 'weight': 7}", "expected": "ValueError", "actual": "{'id': 'record-1', 'label': 'Sample', 'enabled': 1, 'weight': 7}", "pass": false, "violations": ["invalid input accepted: {'id': 'record-1', 'label': 'Sample', 'enabled': 1, 'weight': 7}"]}
+REPRO {"group": "invalid-extra", "name": "None", "input": "{'id': 'record-1', 'label': 'Sample', 'enabled': True, 'weight': 7, 'extra': None}", "expected": "ValueError", "actual": "{'id': 'record-1', 'label': 'Sample', 'enabled': True, 'weight': 7}", "pass": false, "violations": ["invalid input accepted: {'id': 'record-1', 'label': 'Sample', 'enabled': True, 'weight': 7}"]}
+REPRO {"group": "invalid-id", "name": "' '", "input": "{'id': ' ', 'label': 'Sample', 'enabled': True, 'weight': 7}", "expected": "ValueError", "actual": "{'id': ' ', 'label': 'Sample', 'enabled': True, 'weight': 7}", "pass": false, "violations": ["invalid input accepted: {'id': ' ', 'label': 'Sample', 'enabled': True, 'weight': 7}"]}
+REPRO {"group": "invalid-label", "name": "' '", "input": "{'id': 'record-1', 'label': ' ', 'enabled': True, 'weight': 7}", "expected": "ValueError", "actual": "{'id': 'record-1', 'label': ' ', 'enabled': True, 'weight': 7}", "pass": false, "violations": ["invalid input accepted: {'id': 'record-1', 'label': ' ', 'enabled': True, 'weight': 7}"]}
+REPRO {"group": "invalid-weight", "name": "True:bool", "input": "{'id': 'record-1', 'label': 'Sample', 'enabled': True, 'weight': True}", "expected": "ValueError", "actual": "{'id': 'record-1', 'label': 'Sample', 'enabled': True, 'weight': True}", "pass": false, "violations": ["invalid input accepted: {'id': 'record-1', 'label': 'Sample', 'enabled': True, 'weight': True}"]}
+REPRO {"group": "valid-domain", "name": "enabled=False,weight=0", "input": "{'id': 'record-1', 'label': 'Sample', 'enabled': False, 'weight': 0}", "expected": "accept-preserve-fresh-ordered", "actual": "ValueError: missing field", "pass": false, "violations": ["valid input rejected: ValueError: missing field"]}

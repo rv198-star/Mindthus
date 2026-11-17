@@ -1,0 +1,30 @@
+{
+  "hook": "mission_review",
+  "recommendation": "close",
+  "rationale": "The actual ordinary A/B/C loop delivered a fixed canary, independent FAIL, one autonomous complete B repair, independent current R2 PASS and A final host/evidence qualification. ART, HOST and FOCUS are satisfied with unchanged objective/acceptance and no pending peer feedback. Close this bounded Mission and hand off the factual report.",
+  "confidence": 95,
+  "evidence_links": [
+    "Ee68a65f6",
+    "E34ad3637"
+  ],
+  "proposed_mutations": [
+    {
+      "type": "set_mission_status",
+      "status": "completed"
+    }
+  ],
+  "requires_human": false,
+  "mission_alignment": "Closes exactly the approved live host acceptance scope after current artifact and source goal/role evidence have been qualified; no release, installation or production mutation is part of this close.",
+  "mission_review": {
+    "objective_alignment": "A remained the owner of design, evidence, disposition and acceptance across real peer feedback, model substitution and repair; ordinary B/C supplied actual work and review without a TPlan dependency.",
+    "acceptance_gap": "ART: fixed D2/R2 accepted after 443 independent cases. HOST: actual send, origin, query, return and deduplicated import facts plus host capability ceilings recorded. FOCUS: original objective and acceptance stayed unchanged; A explicitly advanced from its T2 preflight to its T3 final acceptance. No declared acceptance gap remains.",
+    "task_contribution": "T1 delivered/reviewed/repaired artifact; T2 completed A contract/evidence work; T3 completed A host and goal-alignment acceptance. All are completed.",
+    "roi_effect": "advance",
+    "non_action_risk": "Keeping this already-qualified bounded run active would invite duplicate dispatch or redundant local verification instead of the authorized evidence handoff."
+  },
+  "path_assessment": {
+    "marginal_roi": "positive",
+    "path_role": "dominant_path",
+    "evidence_delta": "no_new_evidence_expected"
+  }
+}

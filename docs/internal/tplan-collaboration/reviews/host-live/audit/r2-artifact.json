@@ -1,0 +1,25 @@
+{
+  "artifact": {
+    "ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r2",
+    "digest": "sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14",
+    "files": {
+      "README.md": "43c436fdfbcfcd90fbef788c988856a1b950382e0f8e8b9faae828fc42e88d5d",
+      "normalize_record.py": "6e797e4e95d545e178b863b29d29a62ff0bd04e1eec15a79778e54de38d0d66c",
+      "self-review.json": "754db4e22ab52f9d2a362a1ff43613f9cc1d55e2783f5e6756b3ef73fd3c6d2b",
+      "test-results.txt": "60793ba38c477f3d88c7e625728a000ceaf03783dd14e6d3aab2f125f60c11b0",
+      "test_normalize_record.py": "e29810cdde2097c4f3e9c585e9afdadc34be1b2622c9f19356ae7b34bd08aee3",
+      "verify_contract.py": "1e02d32152657d7285512244596941e3b1a32aa522a7c27460258fae0b3da69b"
+    }
+  },
+  "delegation": "D2",
+  "round": 2,
+  "contract_version": "host-normalizer-v1",
+  "required_scope": [
+    "contract://host-normalizer-v1/all"
+  ],
+  "contract_sha256": "b8f43873cf091c40e1231dfb56b27df07cf34be67098bafd6ba78d3df7b7afcb",
+  "source_B_return_ref": "codex://threads/01a1e873-14df-76b0-bead-411483962104?turnId=01a1ea33-e336-7382-a7a5-0087b23ab1e4",
+  "source_B_native_return_id": "exec-e44c82f2-af98-4b7c-b65a-ef67779a564e",
+  "B_report_hashes_verified": true,
+  "source_independent_test_check_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/r2-source-hash-test-check.json"
+}

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/private/var/tmp/mindthus-246-py311/bin/python",
+    "-B",
+    "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan/scripts/render_execution_cost_tree.py",
+    "/private/tmp/mindthus246-live-host-qtgzbf0z/mission",
+    "--completion-handoff"
+  ],
+  "stdout": "rendered_execution_cost_tree: /private/tmp/mindthus246-live-host-qtgzbf0z/mission/reports/execution-cost-tree.md\nrendered_execution_cost_tree_svg: /private/tmp/mindthus246-live-host-qtgzbf0z/mission/reports/execution-cost-tree.svg\nTPlan terminal handoff links (include both in the final user response):\n- [TPlan 执行报告](</private/tmp/mindthus246-live-host-qtgzbf0z/mission/reports/execution-cost-tree.md>)\n- [TPlan 执行过程图](</private/tmp/mindthus246-live-host-qtgzbf0z/mission/reports/execution-cost-tree.svg>)\n",
+  "stderr": "",
+  "exit_code": 0
+}

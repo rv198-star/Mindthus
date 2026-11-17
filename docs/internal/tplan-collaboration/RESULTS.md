@@ -209,5 +209,10 @@ Source independent re-audit: **PASS** for code head
 The source reran 71 targeted tests, both original C1 probes and all eight B1 probes,
 and added two independent checks for late current review FAIL and mixed split-AC
 successors. Exact-head CI ran 1412 tests, skipped 7, and succeeded.
-The next stage is the already-listed real host acceptance. PR remains draft and Issue
-open; release permissions retain the existing boundary.
+The ordinary live A/B/C host acceptance is now **PASS** (2026-11-18, Asia/Shanghai);
+see [HOST-ACCEPTANCE.md](HOST-ACCEPTANCE.md). Real B/C chats completed delivery,
+independent FAIL, autonomous full repair, and current independent PASS; C ran 443
+cases successfully and A closed the TPlan Mission with no pending feedback or gaps.
+The original objective/acceptance and R1 failure history were preserved. Actual host
+capability levels, per-turn models and model-failure recovery are recorded in the report.
+PR remains draft and Issue open; release permissions retain the existing boundary.

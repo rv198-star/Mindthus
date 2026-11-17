@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/private/var/tmp/mindthus-246-py311/bin/python",
+    "-B",
+    "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan/scripts/check_mission.py",
+    "/private/tmp/mindthus246-live-host-qtgzbf0z/mission"
+  ],
+  "stdout": "mission_check: ok\nscript_result: no runtime schema violations detected; agentic judgment is still required\n",
+  "stderr": "",
+  "exit_code": 0
+}

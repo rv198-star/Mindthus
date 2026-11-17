@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/private/var/tmp/mindthus-246-py311/bin/python",
+    "-B",
+    "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan/scripts/mission_pulse.py",
+    "/private/tmp/mindthus246-live-host-qtgzbf0z/mission",
+    "--trigger",
+    "host_acceptance_closeout",
+    "--json"
+  ],
+  "stdout": "",
+  "stderr": "unsupported pulse trigger: host_acceptance_closeout; expected one of: active_switch_candidate, before_continue, before_freeze, before_handoff, before_stop, blocker, branch_cleanup, checkpoint_batch, feedback, manual, shared_risk\n",
+  "exit_code": 1
+}

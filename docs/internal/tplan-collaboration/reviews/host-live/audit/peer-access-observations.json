@@ -1,0 +1,70 @@
+{
+  "observation_scope": "Visible native host commands for the four actual B/C artifact/review turns; instruction-scoped compliance, not a physical access-control test",
+  "turns": [
+    {
+      "source_record": "native-b-r1-complete.json",
+      "thread_id": "01a1e873-14df-76b0-bead-411483962104",
+      "turn_id": "01a1ea14-da95-7ba0-ba8b-b7d80b914bff",
+      "turn_status": "completed",
+      "native_commands_checked": 5,
+      "direct_Mission_or_TPlan_API_commands": 0,
+      "mcp_tools": [
+        {
+          "id": "exec-053e0e12-b439-4a10-a06c-5741a21fdde0",
+          "tool": "read_thread",
+          "status": "completed"
+        },
+        {
+          "id": "exec-06cb248f-603d-4158-87b9-f16c5ed6f204",
+          "tool": "send_message_to_thread",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "source_record": "native-b-r2-complete.json",
+      "thread_id": "01a1e873-14df-76b0-bead-411483962104",
+      "turn_id": "01a1ea33-e336-7382-a7a5-0087b23ab1e4",
+      "turn_status": "completed",
+      "native_commands_checked": 13,
+      "direct_Mission_or_TPlan_API_commands": 0,
+      "mcp_tools": [
+        {
+          "id": "exec-e44c82f2-af98-4b7c-b65a-ef67779a564e",
+          "tool": "send_message_to_thread",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "source_record": "native-c-r1-complete.json",
+      "thread_id": "01a1ea10-30b5-7af3-8f00-0c6b4dca2daa",
+      "turn_id": "01a1ea2c-af0e-7441-a0b8-58fe2b8bdff2",
+      "turn_status": "completed",
+      "native_commands_checked": 12,
+      "direct_Mission_or_TPlan_API_commands": 0,
+      "mcp_tools": [
+        {
+          "id": "exec-a1939012-d37b-401b-90c9-bd5d1f8b0513",
+          "tool": "send_message_to_thread",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "source_record": "native-c-r2-complete.json",
+      "thread_id": "01a1ea10-30b5-7af3-8f00-0c6b4dca2daa",
+      "turn_id": "01a1ea44-7954-7bd1-b354-3a5fc6749569",
+      "turn_status": "completed",
+      "native_commands_checked": 11,
+      "direct_Mission_or_TPlan_API_commands": 0,
+      "mcp_tools": [
+        {
+          "id": "exec-0a995021-c7ea-4d78-b2a1-02cd49076046",
+          "tool": "send_message_to_thread",
+          "status": "completed"
+        }
+      ]
+    }
+  ]
+}

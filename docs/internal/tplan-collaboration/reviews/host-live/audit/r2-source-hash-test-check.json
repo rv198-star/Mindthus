@@ -1,0 +1,25 @@
+{
+  "artifact": {
+    "ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/b/r2",
+    "digest": "sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14",
+    "files": {
+      "README.md": "43c436fdfbcfcd90fbef788c988856a1b950382e0f8e8b9faae828fc42e88d5d",
+      "normalize_record.py": "6e797e4e95d545e178b863b29d29a62ff0bd04e1eec15a79778e54de38d0d66c",
+      "self-review.json": "754db4e22ab52f9d2a362a1ff43613f9cc1d55e2783f5e6756b3ef73fd3c6d2b",
+      "test-results.txt": "60793ba38c477f3d88c7e625728a000ceaf03783dd14e6d3aab2f125f60c11b0",
+      "test_normalize_record.py": "e29810cdde2097c4f3e9c585e9afdadc34be1b2622c9f19356ae7b34bd08aee3",
+      "verify_contract.py": "1e02d32152657d7285512244596941e3b1a32aa522a7c27460258fae0b3da69b"
+    }
+  },
+  "command": [
+    "/private/var/tmp/mindthus-246-py311/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "test_normalize_record",
+    "-q"
+  ],
+  "stdout": "",
+  "stderr": "----------------------------------------------------------------------\nRan 381 tests in 0.007s\n\nOK\n",
+  "exit_code": 0
+}

@@ -1,0 +1,25 @@
+Live host evidence delivery verification / 2026-11-18 Asia/Shanghai
+Unchanged engineering code: 223b7d2b99969c6a6ee9549730d2b8a2271d2401.
+
+Actual independent C review: R1 Ran 337, 186 PASS / 151 FAIL (faulted canary).
+Actual independent C R2 review: Ran 443, 443 PASS / 0 FAIL; original 337 cases preserved.
+B packaged R2 tests: Ran 381, OK; A independently reran 381, OK; C reran 381, OK.
+These overlapping suites are recorded separately.
+
+Source TPlan normal Mission Review close: applied_decision, status completed.
+Final check_mission: OK; all 3 tasks completed; no pending feedback or resume gaps.
+Original objective/acceptance preserved; R1 FAIL and current R2 PASS both retained.
+Offline archive recheck: 443 PASS; archive hashes unchanged; no native messages.
+Archive JSON/JSONL and main report links: PASS.
+
+Local packaging check:
+TMPDIR=/private/tmp PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/private/tmp/mindthus246-host-pycache python -B -m unittest tests.test_packaging_docs -q
+----------------------------------------------------------------------
+Ran 41 tests in 18.046s
+
+OK (skipped=1)
+
+An earlier packaging attempt without an isolated cache hit a system Python 3.9
+py_compile cache write permission error. The final command above redirects the cache
+to the allowed temporary directory and succeeds; no global configuration changed.
+Full engineering exact-head CI was already successful: Ran 1412 / skipped 7.

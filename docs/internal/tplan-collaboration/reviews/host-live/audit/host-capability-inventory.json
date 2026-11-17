@@ -1,0 +1,8 @@
+{
+  "scope": "Enabled native tools for this source task",
+  "observed_peer_source": "Target read_thread provides thread id, native turn id and host-injected source_thread_id wrapper",
+  "send_deduplication": "send_message_to_thread has no exposed idempotency key; A therefore retains its intent and queries the actual target before any retry",
+  "native_cancel_api_exposed": false,
+  "physical_A_to_A_storage_isolation": "Not established by ordinary collaboration metadata; current local chats use the same host account. Generation checking is a cooperative runtime mechanism.",
+  "B_and_C_TPlan_policy": "Ordinary chats, no Mission/API access required; actual tools will be reviewed for compliance"
+}

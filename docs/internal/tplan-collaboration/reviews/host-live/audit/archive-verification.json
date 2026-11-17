@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/private/var/tmp/mindthus-246-py311/bin/python",
+    "-B",
+    "docs/internal/tplan-collaboration/reviews/host-live/replay_contract.py"
+  ],
+  "stdout": "{\"evidence_class\": \"mechanical_archive_recheck\", \"status\": \"PASS\", \"total\": 443, \"passed\": 443, \"failed\": 0, \"artifact_digest\": \"sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14\", \"archive_mutated\": false, \"new_native_messages\": 0}\n",
+  "stderr": "",
+  "exit_code": 0,
+  "archive_files_before": 70,
+  "archive_bytes_unchanged_after_replay": true,
+  "replay_kind": "mechanical offline recheck, no native messages"
+}
