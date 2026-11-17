@@ -56,6 +56,12 @@ python3 skills/tplan/scripts/collaboration_runtime.py \
   --request-file /tmp/collaboration-request.json
 ```
 
-The request and state schema, capacity limits, replay rules, and action payloads are in
-`docs/internal/tplan-collaboration/CONTRACT.md`. Codex-specific host behavior is in
-`resources/platforms/codex.md`.
+The exact request envelope, action payloads, capacity/replay/recovery rules, and a
+worked cold-start example are in the packaged [collaboration-protocol.md](collaboration-protocol.md).
+Run the packaged closed loop with only installed files:
+
+```bash
+python3 skills/tplan/scripts/collaboration_example.py --work-dir /tmp/tplan-collab-demo
+```
+
+Codex-specific host behavior is in [platforms/codex.md](platforms/codex.md).

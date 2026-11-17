@@ -100,6 +100,7 @@ class CollaborationContractTests(unittest.TestCase):
         state = self.mission()
         state["collaboration"]["feedback"]["F1"] = {
             "feedback_id": "F1",
+            "kind": "result",
             "source_event_ref": "msg-1",
             "source_thread_ref": "thread-b",
             "source_host_ref": "local",
@@ -124,12 +125,13 @@ class CollaborationContractTests(unittest.TestCase):
         self.assertEqual(view["coordinator_responsibility"], "Own the user outcome and acceptance")
         self.assertEqual(view["focus_task_id"], "T1")
         self.assertEqual(view["pending_feedback"][0]["association_status"], "needs_association")
-        self.assertIn("association", view["next_action"].lower())
+        self.assertEqual(view["needs_association_count"], 1)
+        self.assertEqual(view["next_action"], "Continue T1")
 
     def test_completion_findings_block_pending_feedback_and_required_review(self):
         state = self.mission()
         state["collaboration"]["feedback"]["F1"] = {
-            "feedback_id": "F1", "source_event_ref": "msg-1", "source_thread_ref": "thread-b",
+            "feedback_id": "F1", "kind": "blocker", "source_event_ref": "msg-1", "source_thread_ref": "thread-b",
             "source_host_ref": "local", "source_role_id": "B", "delegation_id": "D1",
             "round": 1, "contract_version": "contract-1", "artifact_ref": "artifact://h1",
             "artifact_digest": "sha256:" + "2" * 64, "content_digest": "sha256:" + "3" * 64,

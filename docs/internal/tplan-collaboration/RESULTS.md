@@ -67,13 +67,13 @@ These replay records are `source_audit=pending`; the source session must review 
 | T20 | PASS, mechanical/replay | Normal-language return is stored with source and normalized association/evidence. |
 | T21 | PASS, mechanical | Missing task/round/contract association stays `needs_association`; no task or acceptance is guessed. |
 | T22 | PASS, mechanical | First authorized division enables collaboration without a mode phrase and preserves objective, acceptance, tasks, and focus. |
-| T23 | READY for source audit | Behavior replay keeps reference-only work on the ordinary path and creates no delegation. |
+| T23 | Executed behavior evidence; source semantic audit pending | Real runtime execution creates no delegation from reference-only input (behavior-execution.jsonl). |
 | T24 | PASS, mechanical | `snapshot.get` reconstructs unresolved responsibility, feedback, external work, waiting, and next action. |
-| T25 | READY for source audit | Behavior replay records a current-session-only scope, no new delegation, and preserved history. |
-| T26 | READY for source audit | Agent behavior replay only; formal source-session review pending. |
-| T27 | READY for source audit | Agent behavior replay only; formal source-session review pending. |
-| T28 | READY for source audit | Agent behavior replay only; formal source-session review pending. |
-| T29 | READY for source audit | Agent behavior replay plus mechanical path-adjustment test; formal source-session review pending. |
+| T25 | Executed behavior evidence; source semantic audit pending | Real runtime execution keeps only the existing delegation under current-session scope. |
+| T26 | Executed behavior evidence; source semantic audit pending | Real runtime execution defers unrelated suggestions; no new tasks/delegations. |
+| T27 | Executed behavior evidence; source semantic audit pending | Real runtime execution routes debug to B; A keeps acceptance responsibility. |
+| T28 | Executed behavior evidence; source semantic audit pending | Real runtime execution batches feedback; pending cleared; one adoption. |
+| T29 | Executed behavior evidence; source semantic audit pending | Real runtime execution creates replacement delegation, preserves history, records goal change. |
 
 ## Verification
 
@@ -121,3 +121,18 @@ The system Python 3.9 run is not the CI environment. It reports 26 unrelated bas
 ## Reproduction And Rollback
 
 Use the branch and isolated checkout above. Re-run the five commands with Python 3.11 and `TMPDIR=/private/var/tmp`. The RED commit `db0f1375a` shows the original failing contract tests; the implementation commits turn those tests green. Rollback is a normal branch revert to source base `520376990`; no external state was migrated or deployed.
+
+## R2 Repair Batch (2026-11-17)
+
+The R1 independent audit (REVISE, 7 P1 + 3 P2) was repaired by root cause in the same
+branch. See [REPAIR-R2.md](REPAIR-R2.md) for the R01-R10 mapping, before/after probe
+evidence (`reviews/r2/probe-results-after.jsonl`), and executed goal-preservation
+behavior evidence (`reviews/r2/behavior-execution.jsonl` + transcript). The former
+ideal-answer replay file is now `scenario_expectation`; T23/T25/T26-T29 have real
+runtime execution evidence. Packaged protocol + cold-start closed loop ship with the
+Skill and pass from all five clean extracted layouts.
+
+Updated verification (CPython 3.11.11): collaboration 37 passed; behavior execution 3
+passed; TPlan discover 628 passed / 1 skipped; packaging docs 41 passed / 1 skipped;
+full repository discover 1381 passed / 8 skipped. Real three-session host E2E and
+source semantic review of the executed decisions remain pending source acceptance.

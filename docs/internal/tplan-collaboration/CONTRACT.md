@@ -66,7 +66,7 @@ Payload fields are exact: `coordinator_generation`, `delegation_id`, `intent_id`
 - The task must exist and not be terminal. The assignee must be a configured participant.
 - `required_review` is `{required, reviewer_id, scope_refs}`. A required review names a configured participant and non-empty scope references.
 - The instruction summary is one line of at most 2048 characters; the input/dependency references are bounded strings.
-- A new execution is rejected while another unresolved delegation has the same task or write scope and is prepared, sent, unknown, running, or stop-requested.
+- A new execution is rejected while the same task or write scope has a physically in-flight execution (intent prepared/confirmed/unknown and not stopped/completed/failed). Business adoption or repair does not release a still-running scope; reconcile or stop the original execution first.
 - The command creates one `prepared` intent and leaves the A focus unchanged. It does not send a message.
 
 ### `dispatch.record`
@@ -80,7 +80,7 @@ Payload fields are exact: `coordinator_generation`, `intent_id`, `send_state`, `
 
 ### `feedback.record`
 
-Payload fields are exact: `coordinator_generation`, `source_event_ref`, `source_thread_ref`, `source_host_ref`, `source_role_id`, `delegation_id`, `round`, `contract_version`, `artifact_ref`, `artifact_digest`, `summary`, `original_ref`, `attachment_refs`.
+Payload fields are exact: `coordinator_generation`, `source_event_ref`, `source_thread_ref`, `source_host_ref`, `source_role_id`, `delegation_id`, `round`, `contract_version`, `artifact_ref`, `artifact_digest`, `summary`, `original_ref`, `attachment_refs`, plus optional `kind` (`progress/result/review/blocker/question`, default `progress`). `kind` only controls Pulse visibility/routing; ordinary progress does not redirect the mainline and it never decides adoption.
 
 - `source_event_ref` is unique. Re-recording the same source with the same content digest is a no-effect replay; the same source with different content conflicts.
 - A missing delegation/round/contract association produces `needs_association`; A must ask a targeted question and may continue independent work. The runtime never guesses the task.
@@ -94,7 +94,7 @@ Payload fields are exact: `coordinator_generation`, `feedback_id`, `disposition`
 - `disposition` is `answered/adopted/repair/deferred/evidence_requested/path_adjusted/out_of_scope`.
 - `goal_relation` is `{responsibility, acceptance_ids, rationale}` and records A's judgment about how the input relates to the current objective and duty. It never rewrites Mission objective or acceptance.
 - `artifact_ref` is optional `{ref,digest,contract_version,round}`. Adoption requires it and a linked delegation whose current round and contract match. A later artifact replaces only the current adoption; earlier feedback and reviews remain history.
-- `review` is optional and uses the current feedback source plus `reviewer_id`, `delegation_id`, `round`, `contract_version`, `artifact_ref`, `artifact_digest`, `scope_refs`, `verdict`, `rationale`. A review never adopts an artifact by itself.
+- `review` is optional and uses the current feedback source plus `reviewer_id`, `delegation_id`, `round`, `contract_version`, `artifact_ref`, `artifact_digest`, `scope_refs`, `verdict`, `rationale`. The review must match the source feedback own delegation/round/contract/artifact and the configured reviewer binding; it cannot be transplanted to another delegation. A review never adopts an artifact by itself. The latest effective review for the current adopted artifact governs completion; a later FAIL blocks until a bounded repair/re-review PASS or explicit disposition.
 - `task_changes` may transition existing tasks through the existing status rules using a focus-preserving helper. `new_tasks` are normalized by the existing task contract before this transaction. A repair of an already completed task requires at least one bounded success-critical repair task.
 - `next_delegation` has the same shape as `delegation.prepare` minus `coordinator_generation`. It is committed in the same transaction.
 - `coordination` has the checkpoint shape below and is required so A records the next valid action after resolution.

@@ -127,10 +127,20 @@ class CommandReleasePackTests(unittest.TestCase):
                         "--mission-dir", str(state_dir), "--principal", "pack-test",
                         "--request-file", str(enable_file), isolated=True).stdout)
                     self.assertEqual(enabled["status"], "committed")
+                    self.assertTrue((skill / "resources" / "collaboration-protocol.md").is_file())
+                    self.assertTrue((scripts / "collaboration_example.py").is_file())
+                    protocol_text = (skill / "resources" / "collaboration-protocol.md").read_text(encoding="utf-8")
+                    self.assertIn("collaboration_example.py", protocol_text)
+                    self.assertNotIn("docs/internal/tplan-collaboration/CONTRACT.md", protocol_text)
+                    example = run("collaboration_example.py", "--work-dir", str(root / (label + "-example")), isolated=True)
+                    example_summary = json.loads(example.stdout)
+                    self.assertEqual(example_summary["closed_loop"], "ok")
+                    self.assertEqual(example_summary["adoption"], "D1")
                     report["layouts"].append({"layout": label, "passed": True, "runtime_build": build,
                         "required_files": len(manifest["required_scripts"]),
                         "command_source_sha256": hashlib.sha256((scripts / "tplan_commands.py").read_bytes()).hexdigest(),
-                        "collaboration_source_sha256": hashlib.sha256((scripts / "collaboration_runtime.py").read_bytes()).hexdigest()})
+                        "collaboration_source_sha256": hashlib.sha256((scripts / "collaboration_runtime.py").read_bytes()).hexdigest(),
+                        "example_closed_loop": example_summary["closed_loop"]})
             self.assertEqual(len({x["runtime_build"] for x in report["layouts"]}), 1)
             self.assertFalse(list(candidate.rglob("*.pyc")))
         target = os.environ.get("TPLAN_Q2_PACK_REPORT")

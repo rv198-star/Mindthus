@@ -51,6 +51,8 @@ DISPOSITIONS = {
     "path_adjusted",
     "out_of_scope",
 }
+FEEDBACK_KINDS = {"progress", "result", "review", "blocker", "question"}
+FEEDBACK_KIND_RANK = {"progress": 0, "question": 0, "result": 1, "review": 1, "blocker": 2}
 DELEGATION_STATUSES = {
     "prepared",
     "dispatched",
@@ -396,6 +398,40 @@ def _instruction_digest(payload: dict[str, Any]) -> str:
     )
 
 
+def _delegation_physically_in_flight(collab: dict[str, Any], delegation: dict[str, Any]) -> bool:
+    """Physical write-scope occupancy from intent facts, independent of business disposition."""
+    intent = collab.get("intents", {}).get(delegation.get("intent_id"), {})
+    if intent.get("send_state") == "not_sent":
+        return False
+    if intent.get("execution_state") in {"stopped", "completed", "failed"}:
+        return False
+    return True
+
+
+def _delegation_retired(collab: dict[str, Any], delegation: dict[str, Any]) -> bool:
+    """A safely retired attempt carries no current completion responsibility."""
+    intent = collab.get("intents", {}).get(delegation.get("intent_id"), {})
+    if intent.get("send_state") == "not_sent":
+        return True
+    if intent.get("execution_state") in {"stopped", "failed"}:
+        return True
+    if delegation.get("status") in {"not_sent", "stopped", "failed", "superseded"}:
+        return True
+    return False
+
+
+def _task_current_delegation(collab: dict[str, Any], task_id: str) -> dict[str, Any] | None:
+    """The current effective delegation for a task; retired history is excluded."""
+    candidates = [
+        delegation
+        for delegation in collab.get("delegations", {}).values()
+        if delegation.get("task_id") == task_id and not _delegation_retired(collab, delegation)
+    ]
+    if not candidates:
+        return None
+    return max(candidates, key=lambda item: (item.get("round", 0), item.get("created_at", "")))
+
+
 def _prepare_delegation(
     mission: dict[str, Any],
     payload: dict[str, Any],
@@ -462,10 +498,13 @@ def _prepare_delegation(
     elif reviewer_id is not None or scope_refs:
         raise CollaborationError("invalid_request", "Optional review must use reviewer_id=null and empty scope_refs")
     for existing in collab["delegations"].values():
-        if existing.get("status") not in UNRESOLVED_DELEGATION_STATUSES:
+        if existing.get("task_id") != payload["task_id"] and existing.get("write_scope") != write_scope:
             continue
-        if existing.get("task_id") == payload["task_id"] or existing.get("write_scope") == write_scope:
-            raise CollaborationError("execution_in_flight", "The same task or write scope already has unresolved execution")
+        if _delegation_physically_in_flight(collab, existing):
+            raise CollaborationError(
+                "execution_in_flight",
+                "The same task or write scope still has a physically in-flight execution; reconcile or stop it before a new dispatch",
+            )
     normalized = {
         "task_id": payload["task_id"],
         "round": round_no,
@@ -621,28 +660,34 @@ def _feedback_content_digest(payload: dict[str, Any]) -> str:
 
 
 def _record_feedback(mission: dict[str, Any], payload: dict[str, Any], now: str) -> tuple[dict[str, Any], str]:
-    _exact_fields(
-        payload,
-        {
-            "coordinator_generation",
-            "source_event_ref",
-            "source_thread_ref",
-            "source_host_ref",
-            "source_role_id",
-            "delegation_id",
-            "round",
-            "contract_version",
-            "artifact_ref",
-            "artifact_digest",
-            "summary",
-            "original_ref",
-            "attachment_refs",
-        },
-        "feedback payload",
-    )
+    required_fields = {
+        "coordinator_generation",
+        "source_event_ref",
+        "source_thread_ref",
+        "source_host_ref",
+        "source_role_id",
+        "delegation_id",
+        "round",
+        "contract_version",
+        "artifact_ref",
+        "artifact_digest",
+        "summary",
+        "original_ref",
+        "attachment_refs",
+    }
+    if not isinstance(payload, dict):
+        raise CollaborationError("invalid_request", "feedback payload must be an object")
+    missing = required_fields - set(payload)
+    unknown = set(payload) - required_fields - {"kind"}
+    if missing or unknown:
+        raise CollaborationError("invalid_request", "feedback payload fields are invalid")
+    kind = payload.get("kind", "progress")
+    if kind not in FEEDBACK_KINDS:
+        raise CollaborationError("invalid_request", "feedback kind is unsupported")
     collab = mission["collaboration"]
     _require_generation(collab, payload)
     normalized = {
+        "kind": kind,
         "source_event_ref": _ref(payload["source_event_ref"], "source_event_ref"),
         "source_thread_ref": _ref(payload["source_thread_ref"], "source_thread_ref"),
         "source_host_ref": _ref(payload["source_host_ref"], "source_host_ref"),
@@ -831,6 +876,12 @@ def _validate_review(
     contract_version = _text(review["contract_version"], "review contract_version", limit=1000, one_line=True)
     if round_no != delegation["round"] or contract_version != delegation["contract_version"]:
         raise CollaborationError("review_required", "Review is not for the current delegation contract and round")
+    if feedback.get("delegation_id") != delegation_id:
+        raise CollaborationError("review_required", "Review delegation must match the source feedback delegation")
+    if feedback.get("round") != round_no:
+        raise CollaborationError("review_required", "Review round must match the source feedback round")
+    if feedback.get("contract_version") != contract_version:
+        raise CollaborationError("review_required", "Review contract must match the source feedback contract")
     artifact_ref = _ref(review["artifact_ref"], "review artifact_ref")
     artifact_digest = review["artifact_digest"]
     if not _valid_hash(artifact_digest):
@@ -985,7 +1036,6 @@ def _resolve_feedback(
                     "repair_scope_required",
                     "Repairing a completed task requires a bounded success-critical repair task",
                 )
-            collab["adoptions"].pop(feedback["delegation_id"], None)
         delegation["status"] = "repair_required"
         delegation["disposition"] = "repair"
     next_delegation = payload["next_delegation"]
@@ -1165,11 +1215,12 @@ def build_resume_view(mission: dict[str, Any]) -> dict[str, Any]:
                 "association_gap": item.get("association_gap"),
                 "summary": item["summary"],
                 "artifact_ref": item.get("artifact_ref"),
+                "kind": item.get("kind", "progress"),
             }
         )
     external_pending = []
     for delegation in collab["delegations"].values():
-        if delegation.get("status") not in UNRESOLVED_DELEGATION_STATUSES:
+        if not _delegation_physically_in_flight(collab, delegation):
             continue
         intent = collab["intents"].get(delegation["intent_id"], {})
         external_pending.append(
@@ -1183,10 +1234,7 @@ def build_resume_view(mission: dict[str, Any]) -> dict[str, Any]:
             }
         )
     next_action = collab["coordination"]["next_action"]
-    if any(item["association_status"] == "needs_association" for item in pending_feedback):
-        next_action = "Ask the source participant for the task/delegation, round, and contract association before adoption; continue independent work."
-    elif pending_feedback:
-        next_action = "Process the pending collaboration feedback against the current objective, responsibility, and acceptance before the next relevant side effect or closure."
+    needs_association = sum(1 for item in pending_feedback if item["association_status"] == "needs_association")
     return {
         "objective": mission.get("mission", {}).get("objective"),
         "coordinator_responsibility": collab["coordinator"]["responsibility"],
@@ -1194,6 +1242,8 @@ def build_resume_view(mission: dict[str, Any]) -> dict[str, Any]:
         "focus_task_id": mission.get("active_task_id"),
         "acceptance_gaps": acceptance_gaps,
         "pending_feedback": pending_feedback,
+        "pending_feedback_count": len(pending_feedback),
+        "needs_association_count": needs_association,
         "external_pending": external_pending,
         "coordination_state": collab["coordination"]["state"],
         "waiting_on": copy.deepcopy(collab["coordination"]["waiting_on"]),
@@ -1219,10 +1269,15 @@ def _required_review_findings(collab: dict[str, Any], delegation: dict[str, Any]
         and review.get("artifact_ref") == adoption["artifact_ref"]
         and review.get("artifact_digest") == adoption["artifact_digest"]
         and review.get("reviewer_id") == required["reviewer_id"]
-        and review.get("verdict") == "PASS"
     ]
     if not matching:
         return [f"delegation {delegation_id} requires current reviewer PASS for the adopted artifact"]
+    latest = matching[-1]
+    if latest.get("verdict") != "PASS":
+        return [
+            f"delegation {delegation_id} current review for the adopted artifact is {latest.get('verdict')}; "
+            "a later bounded repair/re-review PASS or explicit disposition is required before completion"
+        ]
     return []
 
 
@@ -1237,13 +1292,13 @@ def completion_findings(mission: dict[str, Any]) -> list[str]:
     if pending:
         findings.append("Mission completion requires pending collaboration feedback to be resolved: " + ", ".join(pending))
     tasks = _tasks(mission)
-    for delegation in collab["delegations"].values():
-        task = tasks.get(delegation["task_id"])
-        if task is None or task.get("status") != "completed":
+    for task_id, task in tasks.items():
+        if task.get("status") != "completed":
             continue
-        findings.extend(_required_review_findings(collab, delegation))
-        if delegation.get("status") != "accepted":
-            findings.append(f"delegation {delegation['delegation_id']} is not currently accepted")
+        current = _task_current_delegation(collab, task_id)
+        if current is None:
+            continue
+        findings.extend(_required_review_findings(collab, current))
     return findings
 
 def task_completion_findings(before: dict[str, Any], after: dict[str, Any]) -> list[str]:
@@ -1265,12 +1320,9 @@ def task_completion_findings(before: dict[str, Any], after: dict[str, Any]) -> l
         ]
         if pending:
             findings.append(f"task {task_id} completion requires pending feedback resolution: " + ", ".join(sorted(pending)))
-        for delegation in collab["delegations"].values():
-            if delegation.get("task_id") != task_id:
-                continue
-            findings.extend(_required_review_findings(collab, delegation))
-            if delegation.get("status") != "accepted":
-                findings.append(f"task {task_id} completion requires delegation {delegation['delegation_id']} to be accepted")
+        current = _task_current_delegation(collab, task_id)
+        if current is not None:
+            findings.extend(_required_review_findings(collab, current))
     return findings
 
 
@@ -1447,7 +1499,7 @@ def validate_state(mission: Any) -> list[str]:
     source_refs: set[str] = set()
     for feedback_id, item in feedback.items():
         if set(item) != {
-            "feedback_id", "source_event_ref", "source_thread_ref", "source_host_ref", "source_role_id",
+            "feedback_id", "kind", "source_event_ref", "source_thread_ref", "source_host_ref", "source_role_id",
             "delegation_id", "round", "contract_version", "artifact_ref", "artifact_digest",
             "content_digest", "summary", "original_ref", "attachment_refs", "association_status",
             "association_gap", "status", "recorded_at", "resolution",
@@ -1559,6 +1611,9 @@ def validate_state(mission: Any) -> list[str]:
             or review.get("source_event_ref") != source_feedback.get("source_event_ref")
             or review.get("artifact_ref") != source_feedback.get("artifact_ref")
             or review.get("artifact_digest") != source_feedback.get("artifact_digest")
+            or review.get("delegation_id") != source_feedback.get("delegation_id")
+            or review.get("round") != source_feedback.get("round")
+            or review.get("contract_version") != source_feedback.get("contract_version")
         ):
             findings.append(f"collaboration review {review_id} does not match its source contract")
         if not _valid_hash(review.get("artifact_digest")):

@@ -335,6 +335,7 @@ MISSION_PULSE_SIGNAL_TIE_BREAK_ORDER = {
     "checkpoint_batch_without_acceptance_evidence": 8,
     "branch_cleanup_candidate": 9,
     "same_path_continuation": 10,
+    "collaboration_feedback": 11,
 }
 MISSION_PULSE_CANDIDATE_SEVERITIES = {"low", "medium", "high", "critical"}
 MISSION_PULSE_SEVERITY_ORDER = {"low": 1, "medium": 2, "high": 3, "critical": 4}
@@ -378,6 +379,7 @@ MISSION_PULSE_CONSUMABLE_SIGNALS = {
     "third_touch",
     "checkpoint_batch_without_acceptance_evidence",
     "branch_cleanup_candidate",
+    "collaboration_feedback",
 }
 MISSION_PULSE_STICKY_SIGNALS = {
     "active_shared_risk",
@@ -5662,25 +5664,41 @@ def _collect_collaboration_feedback_candidates(mission: dict[str, Any]) -> list[
             if isinstance(delegation, dict) and isinstance(delegation.get("task_id"), str)
         }
     )
+    kinds = [str(item.get("kind", "progress")) for item in pending]
+    rank = {"progress": 0, "question": 0, "result": 1, "review": 1, "blocker": 2}
+    strongest = max((rank.get(kind, 0) for kind in kinds), default=0)
+    if strongest >= 2:
+        priority_class = "current_blocker_or_feedback"
+        next_gate = "mission_review"
+        severity = "high"
+    elif strongest == 1:
+        priority_class = "current_blocker_or_feedback"
+        next_gate = "continuation_authorization"
+        severity = "medium"
+    else:
+        priority_class = "same_path_continuation"
+        next_gate = "continuation_authorization"
+        severity = "low"
     return [
         _pulse_candidate(
-            signal="user_feedback",
-            candidate_next_gate="loopback",
+            signal="collaboration_feedback",
+            candidate_next_gate=next_gate,
             scope="mission",
             source_kind="derived",
             source_ids=[str(item.get("feedback_id")) for item in pending[:32]],
-            priority_class="current_blocker_or_feedback",
-            severity="high",
+            priority_class=priority_class,
+            severity=severity,
             freshness="current_state",
-            reason="Collaboration has pending feedback across all relevant delegations, including non-active and completed tasks.",
+            reason="Pending participant input awaits A's goal-relevance judgment; ordinary progress does not redirect the mainline.",
             context={
                 "source": "collaboration",
                 "pending_count": len(pending),
                 "association_states": associations,
                 "task_ids": task_ids,
+                "kinds": sorted(set(kinds)),
             },
-            signals=["collaboration_feedback", "user_feedback"],
-            rationale="A must judge relevance, responsibility, and current-version effect before the next relevant side effect or closure.",
+            signals=["collaboration_feedback"],
+            rationale="A judges relevance, responsibility, and current-version effect; key feedback is handled before the relevant side effect or closure.",
         )
     ]
 

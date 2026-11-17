@@ -108,15 +108,53 @@ def _reject_h1_task_mutation(runtime: Any, state: dict[str, Any], payload: dict[
         )
 
 
-def _capacity_check(runtime: Any, directory: Path, after: dict[str, Any], events: list[dict[str, Any]]) -> None:
+def _validate_recovery_request(runtime: Any, directory: Path, request: dict[str, Any]) -> None:
+    """Verify request identity/build and prepared-state compatibility before any roll-forward write."""
+    _check_paths(directory)
+    state = runtime._read_mission_unlocked(directory)
+    if not isinstance(state.get("mission"), dict) or state["mission"].get("id") != request["mission_id"]:
+        raise collaboration.CollaborationError("invalid_state", "Recovery request mission_id does not match the Mission")
+    if runtime.validate_mission_directory_identity(state, directory):
+        raise collaboration.CollaborationError("invalid_state", "Mission directory does not match its identity")
+    current = runtime.runtime_fingerprint()
+    if current["build_hash"] != request["expected_build_hash"]:
+        raise collaboration.CollaborationError("runtime_mismatch", "Recovery request build differs from the selected runtime")
+    if runtime.runtime_provenance_report(state, current=current).get("compatible") is not True:
+        raise collaboration.CollaborationError("runtime_mismatch", "Recovery requires the Mission's recorded compatible runtime")
+    if collaboration.CAPABILITY not in current.get("capabilities", []):
+        raise collaboration.CollaborationError("unsupported_capability", "This runtime lacks collaboration support")
+    transaction_path = runtime.mission_paths(directory)["transaction"]
+    if transaction_path.exists():
+        transaction = runtime.read_json(transaction_path)
+        prepared = transaction.get("mission")
+        if not isinstance(prepared, dict) or prepared.get("mission", {}).get("id") != request["mission_id"]:
+            raise collaboration.CollaborationError("invalid_state", "Prepared transaction belongs to a different Mission")
+        if runtime.validate_mission(prepared):
+            raise collaboration.CollaborationError("invalid_state", "Prepared transaction Mission shape is invalid")
+        if runtime.runtime_provenance_report(prepared, current=current).get("compatible") is not True:
+            raise collaboration.CollaborationError("runtime_mismatch", "Prepared transaction runtime differs from the selected build")
+
+
+def _capacity_check(
+    runtime: Any,
+    directory: Path,
+    before: dict[str, Any],
+    after: dict[str, Any],
+    events: list[dict[str, Any]],
+) -> None:
     mission_bytes = len(json.dumps(after, ensure_ascii=False, indent=2).encode("utf-8")) + 1
     evidence_bytes = sum(len(json.dumps(event, ensure_ascii=False).encode("utf-8")) + 1 for event in events)
     trace = runtime.mission_paths(directory)["trace"]
     trace_size = trace.stat().st_size if trace.exists() else 0
-    if max(mission_bytes, evidence_bytes, trace_size) > collaboration.MAX_ARTIFACT:
+    new_records = runtime._state_change_trace_records(
+        before, after, source={"kind": "runtime_script", "name": "collaboration_runtime"}
+    )
+    appended_trace = sum(len(json.dumps(record, ensure_ascii=False).encode("utf-8")) + 1 for record in new_records)
+    prospective_trace = trace_size + appended_trace
+    if max(mission_bytes, evidence_bytes, prospective_trace) > collaboration.MAX_ARTIFACT:
         raise collaboration.CollaborationError("capacity_exceeded", "Prospective canonical artifacts exceed 4 MiB")
     if shutil.disk_usage(directory).free < max(
-        collaboration.MIN_FREE, 2 * (mission_bytes + evidence_bytes + trace_size)
+        collaboration.MIN_FREE, 2 * (mission_bytes + evidence_bytes + prospective_trace)
     ):
         raise collaboration.CollaborationError("capacity_exceeded", "Insufficient transaction headroom")
 
@@ -145,6 +183,7 @@ def execute(directory: Path, request: Any, *, principal: str) -> tuple[dict[str,
         with runtime.execution_trace_lock(directory):
             pending = runtime.mission_paths(directory)["transaction"].exists()
             if request["action"] == "runtime.recover":
+                _validate_recovery_request(runtime, directory, request)
                 commit_started = pending
                 recovered = runtime._recover_pending_mission_transaction_unlocked(directory)
                 state = _load(runtime, directory, request)
@@ -194,10 +233,12 @@ def execute(directory: Path, request: Any, *, principal: str) -> tuple[dict[str,
                     raise collaboration.CollaborationError(
                         "command_conflict", "Command identity was already used with different content or principal"
                     )
+                replay_data = copy.deepcopy(existing_record["data"])
+                replay_data["expected_snapshot"] = expected_snapshot(runtime, directory, state)
                 return collaboration.envelope(
                     request,
                     status="replayed",
-                    data=copy.deepcopy(existing_record["data"]),
+                    data=replay_data,
                     message="Original committed result; no new business effect",
                 ), 0
             if runtime._read_interaction_guard_unlocked(directory) is not None:
@@ -241,9 +282,7 @@ def execute(directory: Path, request: Any, *, principal: str) -> tuple[dict[str,
             completion_findings = collaboration.task_completion_findings(state, after)
             if completion_findings:
                 raise collaboration.CollaborationError("review_required", "; ".join(completion_findings))
-            data["expected_snapshot"] = expected_snapshot(runtime, directory, after)
-            after["collaboration"]["commands"][request["command_id"]]["data"] = copy.deepcopy(data)
-            _capacity_check(runtime, directory, after, events)
+            _capacity_check(runtime, directory, state, after, events)
             commit_started = True
             runtime._commit_mission_state_unlocked(
                 directory,
@@ -253,10 +292,13 @@ def execute(directory: Path, request: Any, *, principal: str) -> tuple[dict[str,
                 latest_state=f"Collaboration {request['action']} committed.",
                 collaboration_control_authority=runtime._COLLABORATION_CONTROL_AUTHORITY,
             )
+            final_state = runtime._read_mission_unlocked(directory)
+            response_data = copy.deepcopy(data)
+            response_data["expected_snapshot"] = expected_snapshot(runtime, directory, final_state)
             return collaboration.envelope(
                 request,
                 status=command_status,
-                data=data,
+                data=response_data,
                 message="Collaboration facts committed atomically",
             ), 0
     except collaboration.CollaborationError as exc:
