@@ -1,0 +1,9 @@
+2026-11-18 Asia/Shanghai
+CPython 3.11.11
+
+TMPDIR=/private/tmp PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/private/tmp/mindthus246-release-pycache python -B -m unittest tests.test_release_boundary_contract tests.test_packaging_docs tests.test_log_mindthus_runtime tests.test_v1_0_1_usage_log tests.tplan.test_command_release_pack tests.tplan.test_h1_kernel_gate tests.tplan.test_runtime_provenance -q
+
+----------------------------------------------------------------------
+Ran 103 tests in 58.097s
+
+OK (skipped=1)

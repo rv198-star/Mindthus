@@ -1,0 +1,27 @@
+{
+  "mission": {
+    "id": "mindthus246-live-host",
+    "title": "Mindthus 246 live A/B/C host acceptance",
+    "objective": "Verify that A preserves its user-assigned goal, responsibility and acceptance while real ordinary B/C chats deliver, review and repair a bounded artifact",
+    "status": "active",
+    "human_in_loop": 0,
+    "risk_tolerance": 50,
+    "resource_sufficiency": 50,
+    "acceptance_evidence": [
+      {
+        "id": "ART",
+        "description": "Real B artifact repaired and independently reviewed against the fixed contract"
+      },
+      {
+        "id": "HOST",
+        "description": "Real host send, observed origin, return and deduplicated import facts are recorded with capability limits"
+      },
+      {
+        "id": "FOCUS",
+        "description": "A decisions and next actions remain attached to its goal and acceptance across peer turns"
+      }
+    ]
+  },
+  "focus": "T2",
+  "A_responsibility": "A preserves its user-assigned goal and owns design, evidence and final acceptance"
+}

@@ -1,0 +1,934 @@
+{
+  "schema_version": "tplan.v0.1",
+  "runtime_provenance": {
+    "schema_version": "tplan.runtime_provenance.v0.1",
+    "origin": "native",
+    "fingerprint": {
+      "schema_version": "tplan.runtime_fingerprint.v0.1",
+      "package_version": "1.6.0-h1c2.1",
+      "source_id": "mindthus-tplan-h1c2-candidate",
+      "skill_root": "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan",
+      "script_root": "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan/scripts",
+      "build_hash": "sha256:25987212cc087e9702b80357dc6a41472a70ca21fc9946d1a702ccccc1f1313d",
+      "capability_versions": {
+        "codex_telemetry_adapter": "tplan.codex_telemetry_adapter.v0.2",
+        "codex_telemetry_dispatcher": "tplan.codex_telemetry_dispatcher.v0.1",
+        "collaboration": "tplan.collaboration.v0.1",
+        "command_results": "tplan.command_results.v0.1",
+        "execution_cost_tree": "tplan.execution_cost_tree.v0.9",
+        "execution_trace": "tplan.execution_trace.v0.1",
+        "human_control": "tplan.h1.v0.1",
+        "mission": "tplan.v0.1",
+        "progress_view": "tplan.progress_view.v1",
+        "runtime_doctor": "tplan.runtime_doctor.v0.1",
+        "runtime_provenance": "tplan.runtime_provenance.v0.1",
+        "work_plan": "tplan.work_plan.v0.1",
+        "work_view": "tplan.work_view.v0.1"
+      },
+      "capabilities": [
+        "atomic_command_results",
+        "atomic_mission_mutation",
+        "codex_hook_activation_preflight",
+        "codex_hook_stable_dispatcher",
+        "codex_hook_telemetry",
+        "codex_otel_ingestion",
+        "execution_trace",
+        "read_only_progress_view",
+        "read_only_work_view",
+        "runtime_doctor",
+        "runtime_provenance",
+        "scoped_owner_execution_core",
+        "scoped_task_completion",
+        "standard_execution_timeline",
+        "task_scoped_owner_gate",
+        "terminal_completion_handoff",
+        "tplan.collaboration.v0.1",
+        "work_plan_metadata"
+      ]
+    }
+  },
+  "mission": {
+    "id": "mindthus246-live-host",
+    "title": "Mindthus 246 live A/B/C host acceptance",
+    "objective": "Verify that A preserves its user-assigned goal, responsibility and acceptance while real ordinary B/C chats deliver, review and repair a bounded artifact",
+    "status": "completed",
+    "human_in_loop": 0,
+    "risk_tolerance": 50,
+    "resource_sufficiency": 50,
+    "acceptance_evidence": [
+      {
+        "id": "ART",
+        "description": "Real B artifact repaired and independently reviewed against the fixed contract"
+      },
+      {
+        "id": "HOST",
+        "description": "Real host send, observed origin, return and deduplicated import facts are recorded with capability limits"
+      },
+      {
+        "id": "FOCUS",
+        "description": "A decisions and next actions remain attached to its goal and acceptance across peer turns"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T1",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "Deliver and independently review the bounded artifact through ordinary B/C chats",
+      "status": "completed",
+      "role": "success-critical",
+      "evidence_links": [],
+      "mission_contribution": "Proves the real implementation-review-repair loop",
+      "acceptance_evidence": [
+        "ART"
+      ]
+    },
+    {
+      "id": "T2",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "Keep A on design, evidence and acceptance while peers work",
+      "status": "completed",
+      "role": "supporting",
+      "evidence_links": [],
+      "mission_contribution": "Preserves A responsibility and valid continuation",
+      "acceptance_evidence": []
+    },
+    {
+      "id": "T3",
+      "parent_id": null,
+      "kind": "task",
+      "level": 1,
+      "title": "Verify observed host capabilities and final goal alignment",
+      "status": "completed",
+      "role": "success-critical",
+      "evidence_links": [],
+      "mission_contribution": "Qualifies actual transport evidence and A goal retention",
+      "acceptance_evidence": [
+        "HOST",
+        "FOCUS"
+      ]
+    }
+  ],
+  "active_task_id": null,
+  "collaboration": {
+    "schema_version": "tplan.collaboration.v0.1",
+    "enabled_at": "2026-11-17T15:15:16.213418+00:00",
+    "coordinator": {
+      "thread_ref": "01a1e806-292f-76d0-af7e-f4786d70b3e1",
+      "host_ref": "local",
+      "responsibility": "A preserves its user-assigned goal and owns design, evidence and final acceptance",
+      "communication_authorization_refs": [
+        "source-user-approval-after-R5-2026-11-17"
+      ],
+      "generation": 1
+    },
+    "participants": {
+      "B": {
+        "thread_ref": "01a1e873-14df-76b0-bead-411483962104",
+        "host_ref": "local",
+        "responsibility": "Implement, self-test and repair only the bounded artifact; ordinary chat, no TPlan",
+        "communication_authorization_refs": [
+          "source-user-approval-after-R5-2026-11-17"
+        ]
+      },
+      "C": {
+        "thread_ref": "01a1ea10-30b5-7af3-8f00-0c6b4dca2daa",
+        "host_ref": "local",
+        "responsibility": "Independently review fixed artifact scope; ordinary chat, no TPlan",
+        "communication_authorization_refs": [
+          "source-user-approval-after-R5-2026-11-17"
+        ]
+      }
+    },
+    "policy": {
+      "max_pending_feedback": 128,
+      "processing_deadline_seconds": 900
+    },
+    "delegations": {
+      "D1": {
+        "delegation_id": "D1",
+        "task_id": "T1",
+        "round": 1,
+        "assignee_id": "B",
+        "write_scope": "host-artifact-normalizer",
+        "contract_version": "host-normalizer-v1",
+        "instruction_summary": "Package the supplied fault-injected round-one canary unchanged, with a smoke check and clear canary label; return one bounded artifact batch for independent C review",
+        "input_refs": [
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/input/CONTRACT.md",
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/input/normalize_record.py"
+        ],
+        "dependency_versions": {
+          "contract": "host-normalizer-v1",
+          "runtime": "223b7d2b9"
+        },
+        "required_review": {
+          "required": true,
+          "reviewer_id": "C",
+          "scope_refs": [
+            "contract://host-normalizer-v1/all"
+          ]
+        },
+        "instruction_digest": "sha256:9652c05cb1b9fb0bee51967e21fb09cf616b028936eae132a1229a75eeca1bac",
+        "intent_id": "I1",
+        "status": "repair_required",
+        "created_at": "2026-11-17T15:15:16.263257+00:00",
+        "disposition": "repair"
+      },
+      "D2": {
+        "delegation_id": "D2",
+        "task_id": "T1",
+        "round": 2,
+        "assignee_id": "B",
+        "write_scope": "host-artifact-normalizer",
+        "contract_version": "host-normalizer-v1",
+        "instruction_summary": "Autonomously replace the canary validation root with a complete pure normalizer matching host-normalizer-v1; cover all six actual C findings and the full contract, self-test, return only one complete r2 batch",
+        "input_refs": [
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/input/CONTRACT.md",
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/c-out/r1/HOST_REVIEW_R1.md",
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/c-out/r1/results.json",
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r1"
+        ],
+        "dependency_versions": {
+          "contract": "host-normalizer-v1",
+          "runtime": "223b7d2b9"
+        },
+        "required_review": {
+          "required": true,
+          "reviewer_id": "C",
+          "scope_refs": [
+            "contract://host-normalizer-v1/all"
+          ]
+        },
+        "instruction_digest": "sha256:ecbff75dd3b06347a7058d7c559ffdebfd28329a904d90539d3c064bc1122a3b",
+        "intent_id": "I2",
+        "status": "accepted",
+        "created_at": "2026-11-17T15:48:43.903751+00:00",
+        "disposition": "adopted"
+      }
+    },
+    "intents": {
+      "I1": {
+        "intent_id": "I1",
+        "target_participant_id": "B",
+        "target_thread_ref": "01a1e873-14df-76b0-bead-411483962104",
+        "instruction_digest": "sha256:9652c05cb1b9fb0bee51967e21fb09cf616b028936eae132a1229a75eeca1bac",
+        "send_state": "confirmed",
+        "execution_state": "completed",
+        "stop_requested": false,
+        "native_refs": [
+          "codex://threads/01a1e873-14df-76b0-bead-411483962104?turnId=01a1ea14-da95-7ba0-ba8b-b7d80b914bff",
+          "codex-message://01a1e873-14df-76b0-bead-411483962104/fco_01a1ea14-da98-7c52-99a7-440b098684de",
+          "codex://threads/01a1e873-14df-76b0-bead-411483962104?turnId=01a1ea14-da95-7ba0-ba8b-b7d80b914bff",
+          "codex-message://01a1e873-14df-76b0-bead-411483962104/exec-06cb248f-603d-4158-87b9-f16c5ed6f204"
+        ],
+        "observed_at": "2026-11-17T15:24:58.821602+00:00",
+        "reason": "B actual native turn completed; return and fixed bytes independently observed",
+        "created_at": "2026-11-17T15:15:16.263257+00:00"
+      },
+      "I2": {
+        "intent_id": "I2",
+        "target_participant_id": "B",
+        "target_thread_ref": "01a1e873-14df-76b0-bead-411483962104",
+        "instruction_digest": "sha256:ecbff75dd3b06347a7058d7c559ffdebfd28329a904d90539d3c064bc1122a3b",
+        "send_state": "confirmed",
+        "execution_state": "completed",
+        "stop_requested": false,
+        "native_refs": [
+          "codex://threads/01a1e873-14df-76b0-bead-411483962104?turnId=01a1ea33-e336-7382-a7a5-0087b23ab1e4",
+          "codex-message://01a1e873-14df-76b0-bead-411483962104/fco_01a1ea33-e33a-7f52-81ae-d466b69d401b",
+          "codex://threads/01a1e873-14df-76b0-bead-411483962104?turnId=01a1ea33-e336-7382-a7a5-0087b23ab1e4",
+          "codex-message://01a1e873-14df-76b0-bead-411483962104/exec-e44c82f2-af98-4b7c-b65a-ef67779a564e"
+        ],
+        "observed_at": "2026-11-17T16:08:25.564151+00:00",
+        "reason": "B actual R2 turn completed; six reported files and 381-test source rerun independently verified",
+        "created_at": "2026-11-17T15:48:43.903751+00:00"
+      }
+    },
+    "feedback": {
+      "F6f2fda25c17f93e8": {
+        "feedback_id": "F6f2fda25c17f93e8",
+        "kind": "result",
+        "source_event_ref": "native-return://01a1e873-14df-76b0-bead-411483962104/exec-06cb248f-603d-4158-87b9-f16c5ed6f204",
+        "source_thread_ref": "01a1e873-14df-76b0-bead-411483962104",
+        "source_host_ref": "local",
+        "source_role_id": "B",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "host-normalizer-v1",
+        "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r1",
+        "artifact_digest": "sha256:03bc9a0581d509c7f233d27946d643a291c3d5fef6f6243aea519596b90a91cb",
+        "summary": "B delivered unchanged legacy canary plus one passing normal-input smoke; full contract remains pending independent C review",
+        "original_ref": "codex://threads/01a1e873-14df-76b0-bead-411483962104?turnId=01a1ea14-da95-7ba0-ba8b-b7d80b914bff",
+        "attachment_refs": [
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/r1-artifact.json"
+        ],
+        "content_digest": "sha256:c7b4e8a84f7915564052042ac21da89b815a389990b1887906256d7a43be150e",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T15:24:58.877418+00:00",
+        "resolution": {
+          "disposition": "answered",
+          "goal_relation": {
+            "responsibility": "A owns user goal, contract, evidence qualification and acceptance; B implements and C independently reviews",
+            "acceptance_ids": [
+              "ART",
+              "HOST",
+              "FOCUS"
+            ],
+            "rationale": "B completed bounded canary packaging. A verified and froze actual bytes and requested C independent review; full artifact acceptance remains open"
+          },
+          "evidence_refs": [
+            "E1b3e0479"
+          ],
+          "resolved_at": "2026-11-17T15:26:02.256459+00:00"
+        }
+      },
+      "F7e984a9163bea8d8": {
+        "feedback_id": "F7e984a9163bea8d8",
+        "kind": "review",
+        "source_event_ref": "native-return://01a1ea10-30b5-7af3-8f00-0c6b4dca2daa/exec-a1939012-d37b-401b-90c9-bd5d1f8b0513",
+        "source_thread_ref": "01a1ea10-30b5-7af3-8f00-0c6b4dca2daa",
+        "source_host_ref": "local",
+        "source_role_id": "C",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "host-normalizer-v1",
+        "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r1",
+        "artifact_digest": "sha256:03bc9a0581d509c7f233d27946d643a291c3d5fef6f6243aea519596b90a91cb",
+        "summary": "C independently tested fixed r1: 337 cases, 186 passed, 151 failed; full contract FAIL with six reproducible findings",
+        "original_ref": "codex://threads/01a1ea10-30b5-7af3-8f00-0c6b4dca2daa?turnId=01a1ea2c-af0e-7441-a0b8-58fe2b8bdff2",
+        "attachment_refs": [
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/c-out/r1/HOST_REVIEW_R1.md",
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/c-out/r1/results.json"
+        ],
+        "content_digest": "sha256:a2fb64b21febaf175739eaefb7d422854a928df9426594e61deb510d48e4900d",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T15:48:43.870835+00:00",
+        "resolution": {
+          "disposition": "repair",
+          "goal_relation": {
+            "responsibility": "A owns user goal, contract, evidence qualification and acceptance; B implements and C independently reviews",
+            "acceptance_ids": [
+              "ART",
+              "HOST",
+              "FOCUS"
+            ],
+            "rationale": "C actual findings affect ART acceptance. B retains autonomous implementation diagnosis, repair and full self-test; A keeps the same goal, full contract and acceptance responsibility"
+          },
+          "evidence_refs": [
+            "E7a4ba736"
+          ],
+          "resolved_at": "2026-11-17T15:48:43.890276+00:00"
+        }
+      },
+      "Fde650f1c629ae7eb": {
+        "feedback_id": "Fde650f1c629ae7eb",
+        "kind": "result",
+        "source_event_ref": "native-return://01a1e873-14df-76b0-bead-411483962104/exec-e44c82f2-af98-4b7c-b65a-ef67779a564e",
+        "source_thread_ref": "01a1e873-14df-76b0-bead-411483962104",
+        "source_host_ref": "local",
+        "source_role_id": "B",
+        "delegation_id": "D2",
+        "round": 2,
+        "contract_version": "host-normalizer-v1",
+        "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r2",
+        "artifact_digest": "sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14",
+        "summary": "B returned a complete repaired R2 artifact; source verified six file hashes, fixed overall digest and 381 passing tests; independent C re-review remains pending",
+        "original_ref": "codex://threads/01a1e873-14df-76b0-bead-411483962104?turnId=01a1ea33-e336-7382-a7a5-0087b23ab1e4",
+        "attachment_refs": [
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/r2-artifact.json",
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r2/self-review.json"
+        ],
+        "content_digest": "sha256:475a0ea5a89077dcb42c2c2edd55b81f27a1443dda9aae200f3773d81d75ee0a",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T16:08:25.606683+00:00",
+        "resolution": {
+          "disposition": "answered",
+          "goal_relation": {
+            "responsibility": "A owns user goal, contract, evidence qualification and acceptance; B implements and C independently reviews",
+            "acceptance_ids": [
+              "ART",
+              "HOST",
+              "FOCUS"
+            ],
+            "rationale": "B completed the autonomous full repair batch and source checks match its return. A retains final acceptance and sends only the new fixed artifact to independent C"
+          },
+          "evidence_refs": [
+            "Eccff616b"
+          ],
+          "resolved_at": "2026-11-17T16:08:25.624311+00:00"
+        }
+      },
+      "Fe98db77c4f9baf72": {
+        "feedback_id": "Fe98db77c4f9baf72",
+        "kind": "review",
+        "source_event_ref": "native-return://01a1ea10-30b5-7af3-8f00-0c6b4dca2daa/exec-0a995021-c7ea-4d78-b2a1-02cd49076046",
+        "source_thread_ref": "01a1ea10-30b5-7af3-8f00-0c6b4dca2daa",
+        "source_host_ref": "local",
+        "source_role_id": "C",
+        "delegation_id": "D2",
+        "round": 2,
+        "contract_version": "host-normalizer-v1",
+        "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r2",
+        "artifact_digest": "sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14",
+        "summary": "C independently verified fixed D2/R2: 443/443 behavior cases passed, all original R1 cases preserved, no open contract defects; six-file integrity unchanged",
+        "original_ref": "codex://threads/01a1ea10-30b5-7af3-8f00-0c6b4dca2daa?turnId=01a1ea44-7954-7bd1-b354-3a5fc6749569",
+        "attachment_refs": [
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/c-out/r2/HOST_REVIEW_R2.md",
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/c-out/r2/results.json",
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/c-out/r2/final-integrity.json"
+        ],
+        "content_digest": "sha256:e5f4a8037ac543ce99243bedfb198c2cfef08b0a6a14f26b8a6f6fbc226abd0c",
+        "association_status": "linked",
+        "association_gap": null,
+        "status": "resolved",
+        "recorded_at": "2026-11-17T16:16:03.065934+00:00",
+        "resolution": {
+          "disposition": "adopted",
+          "goal_relation": {
+            "responsibility": "A owns user goal, contract, evidence qualification and acceptance; B implements and C independently reviews",
+            "acceptance_ids": [
+              "ART",
+              "HOST",
+              "FOCUS"
+            ],
+            "rationale": "A qualified the actual C current-version evidence, exact artifact and complete contract coverage. Adopt only fixed D2/R2, preserve R1 FAIL history, and finish A own host/goal acceptance"
+          },
+          "evidence_refs": [
+            "Ee68a65f6"
+          ],
+          "resolved_at": "2026-11-17T16:16:03.106819+00:00"
+        }
+      }
+    },
+    "adoptions": {
+      "D2": {
+        "delegation_id": "D2",
+        "feedback_id": "Fe98db77c4f9baf72",
+        "round": 2,
+        "contract_version": "host-normalizer-v1",
+        "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r2",
+        "artifact_digest": "sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14",
+        "invalidated": false,
+        "adopted_at": "2026-11-17T16:16:03.106819+00:00"
+      }
+    },
+    "reviews": {
+      "Ra8791e2b7ca1e966": {
+        "review_id": "Ra8791e2b7ca1e966",
+        "feedback_id": "F7e984a9163bea8d8",
+        "source_event_ref": "native-return://01a1ea10-30b5-7af3-8f00-0c6b4dca2daa/exec-a1939012-d37b-401b-90c9-bd5d1f8b0513",
+        "reviewer_id": "C",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "host-normalizer-v1",
+        "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r1",
+        "artifact_digest": "sha256:03bc9a0581d509c7f233d27946d643a291c3d5fef6f6243aea519596b90a91cb",
+        "scope_refs": [
+          "contract://host-normalizer-v1/all"
+        ],
+        "verdict": "FAIL",
+        "rationale": "C actual full-contract run: 337 cases; 151 failures covering false/zero, exact keys, string validity, exact bool and exact integer/range",
+        "recorded_at": "2026-11-17T15:48:43.890276+00:00"
+      },
+      "R281bc460e9867f3d": {
+        "review_id": "R281bc460e9867f3d",
+        "feedback_id": "Fe98db77c4f9baf72",
+        "source_event_ref": "native-return://01a1ea10-30b5-7af3-8f00-0c6b4dca2daa/exec-0a995021-c7ea-4d78-b2a1-02cd49076046",
+        "reviewer_id": "C",
+        "delegation_id": "D2",
+        "round": 2,
+        "contract_version": "host-normalizer-v1",
+        "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r2",
+        "artifact_digest": "sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14",
+        "scope_refs": [
+          "contract://host-normalizer-v1/all"
+        ],
+        "verdict": "PASS",
+        "rationale": "Actual independent full-contract review: 443 passed, including all original 337 cases and 106 new boundaries; integrity and unchanged fixed files verified",
+        "recorded_at": "2026-11-17T16:16:03.106819+00:00"
+      }
+    },
+    "repair_obligations": {},
+    "coordination": {
+      "state": "working",
+      "focus_task_id": null,
+      "gap_summary": "ART, HOST and FOCUS are satisfied; current R2 accepted, original R1 failure history preserved, no pending peer feedback",
+      "next_action": "Close the accepted live host Mission through its normal gate and deliver the factual host report/evidence to the existing Issue/PR",
+      "resume_basis": [
+        "D2",
+        "E34ad3637"
+      ],
+      "waiting_on": [],
+      "updated_at": "2026-11-17T16:19:42.966729+00:00"
+    },
+    "commands": {
+      "host-0-enable": {
+        "command_id": "host-0-enable",
+        "action": "enable",
+        "principal": "host-a",
+        "request_digest": "sha256:35c4b5f549dd7b886be5e745b026050a19a9d7d45c4f5315c8f3ad3260d2b84b",
+        "commit_id": "CCdcd4a64ac575",
+        "committed_at": "2026-11-17T15:15:16.213418+00:00",
+        "data": {
+          "enabled": true,
+          "coordinator_generation": 1
+        }
+      },
+      "host-1-delegation-prepare": {
+        "command_id": "host-1-delegation-prepare",
+        "action": "delegation.prepare",
+        "principal": "host-a",
+        "request_digest": "sha256:6b67d36743137083326cdb4772119e26285cd3f173ec42bd4c92edf8c60bcc9b",
+        "commit_id": "CCb30400f268c7",
+        "committed_at": "2026-11-17T15:15:16.263257+00:00",
+        "data": {
+          "delegation_id": "D1",
+          "intent_id": "I1"
+        }
+      },
+      "host-2-coordination-checkpoint": {
+        "command_id": "host-2-coordination-checkpoint",
+        "action": "coordination.checkpoint",
+        "principal": "host-a",
+        "request_digest": "sha256:94b030a10e258b312e701d72a14492dbc036860274993b1de25bd01c629b1393",
+        "commit_id": "CC82020f9f35d7",
+        "committed_at": "2026-11-17T15:16:26.183063+00:00",
+        "data": {
+          "state": "working",
+          "focus_task_id": "T2",
+          "next_action": "A validates the host contract and evidence boundaries while B packages the bounded canary",
+          "rationale": "A retains design, evidence and acceptance responsibility during ordinary B/C work"
+        }
+      },
+      "host-4-dispatch-record": {
+        "command_id": "host-4-dispatch-record",
+        "action": "dispatch.record",
+        "principal": "host-a",
+        "request_digest": "sha256:e67af7130e4220e5ed3d5886a2b53b0b313fa8cd8886a3650e3c4ff905af2922",
+        "commit_id": "CC967ed51fd160",
+        "committed_at": "2026-11-17T15:16:57.905968+00:00",
+        "data": {
+          "intent_id": "I1",
+          "send_state": "unknown",
+          "execution_state": "unknown",
+          "status": "dispatch_unknown"
+        }
+      },
+      "host-6-dispatch-record": {
+        "command_id": "host-6-dispatch-record",
+        "action": "dispatch.record",
+        "principal": "host-a",
+        "request_digest": "sha256:f706a483812563fe9e441dac907cbe8253042f5d2497beab0bb2b7144e9e1f45",
+        "commit_id": "CC2afe6bb86c4c",
+        "committed_at": "2026-11-17T15:17:39.962537+00:00",
+        "data": {
+          "intent_id": "I1",
+          "send_state": "confirmed",
+          "execution_state": "running",
+          "status": "running"
+        }
+      },
+      "host-8-coordination-checkpoint": {
+        "command_id": "host-8-coordination-checkpoint",
+        "action": "coordination.checkpoint",
+        "principal": "host-a",
+        "request_digest": "sha256:c278977fd47bf8d5f4c88544da8dcc00374e905df2b9f036ec37f42144b09fae",
+        "commit_id": "CC46c71e8739dd",
+        "committed_at": "2026-11-17T15:20:08.345771+00:00",
+        "data": {
+          "state": "waiting_external",
+          "focus_task_id": "T2",
+          "next_action": "On B complete return, freeze its current files and send that digest to C; then use the actual C findings for one autonomous B repair batch",
+          "rationale": "A has completed independent contract/evidence preflight and waits for a concrete external result while retaining design and acceptance responsibility"
+        }
+      },
+      "host-10-dispatch-record": {
+        "command_id": "host-10-dispatch-record",
+        "action": "dispatch.record",
+        "principal": "host-a",
+        "request_digest": "sha256:5bb3c95d2a7bdda3a29323210dcec9670fb832b1ad823f58fc9885c316d8d616",
+        "commit_id": "CCccdb5bb8b223",
+        "committed_at": "2026-11-17T15:24:58.849665+00:00",
+        "data": {
+          "intent_id": "I1",
+          "send_state": "confirmed",
+          "execution_state": "completed",
+          "status": "executed"
+        }
+      },
+      "host-11-feedback-record": {
+        "command_id": "host-11-feedback-record",
+        "action": "feedback.record",
+        "principal": "host-a",
+        "request_digest": "sha256:37cf34112743120bfd58dafd7a495484988edd6ef4b7591de5e5dee24581e1af",
+        "commit_id": "CCd4848dd97741",
+        "committed_at": "2026-11-17T15:24:58.877418+00:00",
+        "data": {
+          "feedback_id": "F6f2fda25c17f93e8",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "host-12-feedback-record": {
+        "command_id": "host-12-feedback-record",
+        "action": "feedback.record",
+        "principal": "host-a",
+        "request_digest": "sha256:55ef6edb5781dce189fe88caae75b583722d89a7c487602d799c537414a25372",
+        "commit_id": "CCf2bb1eee1af3",
+        "committed_at": "2026-11-17T15:24:58.895700+00:00",
+        "data": {
+          "feedback_id": "F6f2fda25c17f93e8",
+          "status": "pending"
+        }
+      },
+      "host-15-feedback-resolve": {
+        "command_id": "host-15-feedback-resolve",
+        "action": "feedback.resolve",
+        "principal": "host-a",
+        "request_digest": "sha256:1125e26b2e75995e991dfaf3dbe735d67e3cbad5cfa1453778556353329c1b40",
+        "commit_id": "CC9e52b3eabb87",
+        "committed_at": "2026-11-17T15:26:02.256459+00:00",
+        "data": {
+          "feedback_id": "F6f2fda25c17f93e8",
+          "disposition": "answered",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Read C independent review of the fixed r1 digest and return one complete repair batch to B",
+            "rationale": "B completed bounded canary packaging. A verified and froze actual bytes and requested C independent review; full artifact acceptance remains open"
+          }
+        }
+      },
+      "host-17-coordination-checkpoint": {
+        "command_id": "host-17-coordination-checkpoint",
+        "action": "coordination.checkpoint",
+        "principal": "host-a",
+        "request_digest": "sha256:99fff330ce638942e10d14fbf1c4869d791e3367685ec50428dccf2ce2803b46",
+        "commit_id": "CCd68af428008b",
+        "committed_at": "2026-11-17T15:26:02.271620+00:00",
+        "data": {
+          "state": "waiting_external",
+          "focus_task_id": "T2",
+          "next_action": "On C complete review, qualify its evidence against the fixed r1 digest and issue one bounded autonomous B repair batch if required",
+          "rationale": "A retains design/evidence/acceptance work while the ordinary reviewer executes"
+        }
+      },
+      "host-19-coordination-checkpoint": {
+        "command_id": "host-19-coordination-checkpoint",
+        "action": "coordination.checkpoint",
+        "principal": "host-a",
+        "request_digest": "sha256:c1162c7bc44ebbba74fd1f987a386fd986ca50e351d07314d29f7abad5fa28fd",
+        "commit_id": "CC754b3fffca12",
+        "committed_at": "2026-11-17T15:30:23.401666+00:00",
+        "data": {
+          "state": "awaiting_owner",
+          "focus_task_id": "T2",
+          "next_action": "After the old C turn stops or the Sol review starts, reconcile C native state and continue the existing fixed-artifact review request",
+          "rationale": "A has no exposed native stop API and Computer Use rejects Codex access; the approved goal, contract, artifact and peer responsibilities remain stable"
+        }
+      },
+      "host-21-coordination-checkpoint": {
+        "command_id": "host-21-coordination-checkpoint",
+        "action": "coordination.checkpoint",
+        "principal": "host-a",
+        "request_digest": "sha256:1eb9cdfa5c4f42685393d7c9275736088b77a65df8fdd87c0a6cfa58e74fca02",
+        "commit_id": "CC06681c927994",
+        "committed_at": "2026-11-17T15:31:40.364278+00:00",
+        "data": {
+          "state": "waiting_external",
+          "focus_task_id": "T2",
+          "next_action": "Import the actual C review bound to r1; qualify findings and send one complete repair batch to B when required",
+          "rationale": "The host model substitution recovered; A continues the approved objective, contract and same peer responsibilities"
+        }
+      },
+      "host-24-feedback-record": {
+        "command_id": "host-24-feedback-record",
+        "action": "feedback.record",
+        "principal": "host-a",
+        "request_digest": "sha256:3c50e51a7fdd99958aeedc543889bddf971d2485e172a435af6fbd2a20bf4a92",
+        "commit_id": "CCd07e1fada574",
+        "committed_at": "2026-11-17T15:48:43.870835+00:00",
+        "data": {
+          "feedback_id": "F7e984a9163bea8d8",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "host-25-feedback-resolve": {
+        "command_id": "host-25-feedback-resolve",
+        "action": "feedback.resolve",
+        "principal": "host-a",
+        "request_digest": "sha256:1f0624ef3102107878e415d4ef99db19e3b437f5d1cec9ce52da4f85ca0995d1",
+        "commit_id": "CCdd1050e37de6",
+        "committed_at": "2026-11-17T15:48:43.890276+00:00",
+        "data": {
+          "feedback_id": "F7e984a9163bea8d8",
+          "disposition": "repair",
+          "adoption": null,
+          "review": {
+            "review_id": "Ra8791e2b7ca1e966",
+            "feedback_id": "F7e984a9163bea8d8",
+            "source_event_ref": "native-return://01a1ea10-30b5-7af3-8f00-0c6b4dca2daa/exec-a1939012-d37b-401b-90c9-bd5d1f8b0513",
+            "reviewer_id": "C",
+            "delegation_id": "D1",
+            "round": 1,
+            "contract_version": "host-normalizer-v1",
+            "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r1",
+            "artifact_digest": "sha256:03bc9a0581d509c7f233d27946d643a291c3d5fef6f6243aea519596b90a91cb",
+            "scope_refs": [
+              "contract://host-normalizer-v1/all"
+            ],
+            "verdict": "FAIL",
+            "rationale": "C actual full-contract run: 337 cases; 151 failures covering false/zero, exact keys, string validity, exact bool and exact integer/range",
+            "recorded_at": "2026-11-17T15:48:43.890276+00:00"
+          },
+          "task_changes": [
+            {
+              "task_id": "T1",
+              "status": "pending"
+            }
+          ],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Dispatch one complete round-two repair to B using the full unchanged contract and actual C report",
+            "rationale": "C actual findings affect ART acceptance. B retains autonomous implementation diagnosis, repair and full self-test; A keeps the same goal, full contract and acceptance responsibility"
+          }
+        }
+      },
+      "host-26-delegation-prepare": {
+        "command_id": "host-26-delegation-prepare",
+        "action": "delegation.prepare",
+        "principal": "host-a",
+        "request_digest": "sha256:a81a95f6db1ede9efc7ae9e9dbb9fd48e86630e89e4a2acef6a374a587740c57",
+        "commit_id": "CCfff3cf9005c0",
+        "committed_at": "2026-11-17T15:48:43.903751+00:00",
+        "data": {
+          "delegation_id": "D2",
+          "intent_id": "I2"
+        }
+      },
+      "host-27-dispatch-record": {
+        "command_id": "host-27-dispatch-record",
+        "action": "dispatch.record",
+        "principal": "host-a",
+        "request_digest": "sha256:0f9562e2c83468670bc623a98a59a1add225dfbb90c1fdf8c56c08f626c43336",
+        "commit_id": "CC50b45f71c3a4",
+        "committed_at": "2026-11-17T15:51:09.333175+00:00",
+        "data": {
+          "intent_id": "I2",
+          "send_state": "unknown",
+          "execution_state": "unknown",
+          "status": "dispatch_unknown"
+        }
+      },
+      "host-29-dispatch-record": {
+        "command_id": "host-29-dispatch-record",
+        "action": "dispatch.record",
+        "principal": "host-a",
+        "request_digest": "sha256:054803649fa450de32446b45e9d71e00e259c1787dfb12fa5586883f8dd77589",
+        "commit_id": "CC8dfd9158ebbd",
+        "committed_at": "2026-11-17T15:52:03.352344+00:00",
+        "data": {
+          "intent_id": "I2",
+          "send_state": "confirmed",
+          "execution_state": "running",
+          "status": "running"
+        }
+      },
+      "host-30-coordination-checkpoint": {
+        "command_id": "host-30-coordination-checkpoint",
+        "action": "coordination.checkpoint",
+        "principal": "host-a",
+        "request_digest": "sha256:f865aba57d3091bd4b9b8d97e6164ad7d8735c3a3b1fe0def26da9f927d3fe6b",
+        "commit_id": "CCb96ceedf68ea",
+        "committed_at": "2026-11-17T15:52:03.374026+00:00",
+        "data": {
+          "state": "waiting_external",
+          "focus_task_id": "T2",
+          "next_action": "When B returns the complete R2 batch, verify and freeze its actual bytes, then send that current digest to C with explicit Sol/high for independent re-review",
+          "rationale": "A retains design, full contract and acceptance; implementation repair and ordinary exception handling remain B responsibility"
+        }
+      },
+      "host-32-dispatch-record": {
+        "command_id": "host-32-dispatch-record",
+        "action": "dispatch.record",
+        "principal": "host-a",
+        "request_digest": "sha256:1b6e78511d387b778d69e441c7d606c668a7e38c17f124b887a2768434b5cab1",
+        "commit_id": "CCc833de9e80f0",
+        "committed_at": "2026-11-17T16:08:25.579309+00:00",
+        "data": {
+          "intent_id": "I2",
+          "send_state": "confirmed",
+          "execution_state": "completed",
+          "status": "executed"
+        }
+      },
+      "host-33-feedback-record": {
+        "command_id": "host-33-feedback-record",
+        "action": "feedback.record",
+        "principal": "host-a",
+        "request_digest": "sha256:b7398cbbdbef5cc0d06c83a73fe0ca34788baef644b0e370cafc720b338e7183",
+        "commit_id": "CC6d628c7196de",
+        "committed_at": "2026-11-17T16:08:25.606683+00:00",
+        "data": {
+          "feedback_id": "Fde650f1c629ae7eb",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "host-34-feedback-resolve": {
+        "command_id": "host-34-feedback-resolve",
+        "action": "feedback.resolve",
+        "principal": "host-a",
+        "request_digest": "sha256:ccb2eef5a24b37ba332726edfcdadb97ce82a8c45b70d2d0466e467e57ce0791",
+        "commit_id": "CCad90cf60588c",
+        "committed_at": "2026-11-17T16:08:25.624311+00:00",
+        "data": {
+          "feedback_id": "Fde650f1c629ae7eb",
+          "disposition": "answered",
+          "adoption": null,
+          "review": null,
+          "task_changes": [],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T2",
+            "next_action": "Send fixed R2/current digest to C with explicit Sol/high; keep ART unaccepted until actual independent re-review",
+            "rationale": "B completed the autonomous full repair batch and source checks match its return. A retains final acceptance and sends only the new fixed artifact to independent C"
+          }
+        }
+      },
+      "host-37-coordination-checkpoint": {
+        "command_id": "host-37-coordination-checkpoint",
+        "action": "coordination.checkpoint",
+        "principal": "host-a",
+        "request_digest": "sha256:f95ce2ecf2c6e50a292e394faeef9bb90d1de80c0075f08a39d73fafacead1e5",
+        "commit_id": "CC6227143373af",
+        "committed_at": "2026-11-17T16:08:38.968049+00:00",
+        "data": {
+          "state": "waiting_external",
+          "focus_task_id": "T2",
+          "next_action": "Qualify C current D2/R2 result and evidence, then adopt only that version and complete the host capability and goal-alignment acceptance",
+          "rationale": "A keeps the same goal, scope and acceptance; C retains independent review and B completed its bounded autonomous repair"
+        }
+      },
+      "host-38-coordination-checkpoint": {
+        "command_id": "host-38-coordination-checkpoint",
+        "action": "coordination.checkpoint",
+        "principal": "host-a",
+        "request_digest": "sha256:429cbd77bdf1aabd79c1ebe45c66dcba48f01fd4f168d73eaa877a781aec9d5d",
+        "commit_id": "CC3fea3f69f269",
+        "committed_at": "2026-11-17T16:11:22.877526+00:00",
+        "data": {
+          "state": "working",
+          "focus_task_id": "T3",
+          "next_action": "Finalize the factual host capability matrix, then qualify C current-version return and close only after all acceptance evidence is satisfied",
+          "rationale": "A explicitly advances from completed design/evidence preflight to its own final host acceptance; B repair is complete and C remains independent"
+        }
+      },
+      "host-41-feedback-record": {
+        "command_id": "host-41-feedback-record",
+        "action": "feedback.record",
+        "principal": "host-a",
+        "request_digest": "sha256:961c67e3b37d49595d2691e523c9134255337cc1b5bd00ba51e5b19f3783c349",
+        "commit_id": "CC05c9af73c5a9",
+        "committed_at": "2026-11-17T16:16:03.065934+00:00",
+        "data": {
+          "feedback_id": "Fe98db77c4f9baf72",
+          "association_status": "linked",
+          "association_gap": null,
+          "status": "pending"
+        }
+      },
+      "host-42-feedback-resolve": {
+        "command_id": "host-42-feedback-resolve",
+        "action": "feedback.resolve",
+        "principal": "host-a",
+        "request_digest": "sha256:5ecd10568657a66e2317418fd50594c003d615549a48c72f5de10e9734338a81",
+        "commit_id": "CC57d41737ed91",
+        "committed_at": "2026-11-17T16:16:03.106819+00:00",
+        "data": {
+          "feedback_id": "Fe98db77c4f9baf72",
+          "disposition": "adopted",
+          "adoption": {
+            "delegation_id": "D2",
+            "feedback_id": "Fe98db77c4f9baf72",
+            "round": 2,
+            "contract_version": "host-normalizer-v1",
+            "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r2",
+            "artifact_digest": "sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14",
+            "invalidated": false,
+            "adopted_at": "2026-11-17T16:16:03.106819+00:00"
+          },
+          "review": {
+            "review_id": "R281bc460e9867f3d",
+            "feedback_id": "Fe98db77c4f9baf72",
+            "source_event_ref": "native-return://01a1ea10-30b5-7af3-8f00-0c6b4dca2daa/exec-0a995021-c7ea-4d78-b2a1-02cd49076046",
+            "reviewer_id": "C",
+            "delegation_id": "D2",
+            "round": 2,
+            "contract_version": "host-normalizer-v1",
+            "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r2",
+            "artifact_digest": "sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14",
+            "scope_refs": [
+              "contract://host-normalizer-v1/all"
+            ],
+            "verdict": "PASS",
+            "rationale": "Actual independent full-contract review: 443 passed, including all original 337 cases and 106 new boundaries; integrity and unchanged fixed files verified",
+            "recorded_at": "2026-11-17T16:16:03.106819+00:00"
+          },
+          "task_changes": [
+            {
+              "task_id": "T1",
+              "status": "completed"
+            }
+          ],
+          "new_task_ids": [],
+          "next_delegation": null,
+          "coordination": {
+            "state": "working",
+            "focus_task_id": "T3",
+            "next_action": "Complete A factual host capability and goal-alignment acceptance, then close the Mission through the ordinary runtime gate",
+            "rationale": "A qualified the actual C current-version evidence, exact artifact and complete contract coverage. Adopt only fixed D2/R2, preserve R1 FAIL history, and finish A own host/goal acceptance"
+          }
+        }
+      },
+      "host-44-coordination-checkpoint": {
+        "command_id": "host-44-coordination-checkpoint",
+        "action": "coordination.checkpoint",
+        "principal": "host-a",
+        "request_digest": "sha256:45d07d9924b3e486dd4536c55b9e16a192f12e62e66ec7c834f5d232cf08a046",
+        "commit_id": "CC59387235d033",
+        "committed_at": "2026-11-17T16:19:42.966729+00:00",
+        "data": {
+          "state": "working",
+          "focus_task_id": null,
+          "next_action": "Close the accepted live host Mission through its normal gate and deliver the factual host report/evidence to the existing Issue/PR",
+          "rationale": "A has finished its host and goal-alignment acceptance, all critical tasks are complete, and the next action is the authorized report handoff"
+        }
+      }
+    }
+  }
+}

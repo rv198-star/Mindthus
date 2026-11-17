@@ -1,0 +1,32 @@
+{
+  "artifact": {
+    "ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r1",
+    "digest": "sha256:03bc9a0581d509c7f233d27946d643a291c3d5fef6f6243aea519596b90a91cb",
+    "files": {
+      "README.md": "65c645eec58f8678df51ba2a0f4fc74190a47ef21a9f49c97cdbf8fb90d17006",
+      "normalize_record.py": "906680d0c86a018477710b9373053797d3e41e14a46e3dd232115b4f33ecc194",
+      "test_normalize_record_smoke.py": "cfec0211546470fca46db7647a569787a5c4d48389dcb1ed78dbfb88a73f244e"
+    }
+  },
+  "delegation": "D1",
+  "round": 1,
+  "contract_version": "host-normalizer-v1",
+  "required_scope": [
+    "contract://host-normalizer-v1/all"
+  ],
+  "B_report_sha_verified": true,
+  "seed_bytes_unchanged": true,
+  "independent_smoke": {
+    "command": [
+      "/private/var/tmp/mindthus-246-py311/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "test_normalize_record_smoke",
+      "-v"
+    ],
+    "stdout": "",
+    "stderr": "test_normal_record (test_normalize_record_smoke.LegacyCanarySmokeTest.test_normal_record) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n",
+    "exit_code": 0
+  }
+}

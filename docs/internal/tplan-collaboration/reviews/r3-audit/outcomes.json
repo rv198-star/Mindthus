@@ -1,0 +1,572 @@
+{
+  "audited_head": "2753470fcd32ef2482e2af6126354e59aca57dcc",
+  "source_thread_id": "01a1e806-292f-76d0-af7e-f4786d70b3e1",
+  "evidence_class": "controlled_source_agent_exercise",
+  "real_peer_host_e2e": false,
+  "log_entries": 40,
+  "source_call_ids": [
+    "source-agent-01",
+    "source-agent-02",
+    "source-agent-03",
+    "source-agent-04",
+    "source-agent-05",
+    "source-agent-06",
+    "source-agent-07",
+    "source-agent-08",
+    "source-agent-09",
+    "source-agent-10",
+    "source-agent-premise-check"
+  ],
+  "case_outcomes": [
+    {
+      "case": "T23",
+      "status": "PASS in controlled inputs",
+      "final": {
+        "mission_id": "collaboration-mission",
+        "objective": "Deliver a verified collaboration runtime",
+        "acceptance": [
+          {
+            "id": "A1",
+            "description": "Verified collaboration runtime"
+          }
+        ],
+        "mission_status": "active",
+        "focus": "T1",
+        "tasks": {
+          "T1": {
+            "title": "Implement the result",
+            "status": "active"
+          },
+          "T2": {
+            "title": "Protect the mainline",
+            "status": "pending"
+          }
+        },
+        "collaboration_enabled": false,
+        "delegations": {},
+        "intents": {},
+        "pending": [],
+        "adoptions": {},
+        "coordination": null
+      }
+    },
+    {
+      "case": "T25",
+      "status": "PASS in controlled inputs",
+      "final": {
+        "mission_id": "collaboration-mission",
+        "objective": "Deliver a verified collaboration runtime",
+        "acceptance": [
+          {
+            "id": "A1",
+            "description": "Verified collaboration runtime"
+          }
+        ],
+        "mission_status": "active",
+        "focus": "T2",
+        "tasks": {
+          "T1": {
+            "title": "Implement the result",
+            "status": "active"
+          },
+          "T2": {
+            "title": "Protect the mainline",
+            "status": "pending"
+          }
+        },
+        "collaboration_enabled": true,
+        "delegations": {
+          "D1": {
+            "delegation_id": "D1",
+            "task_id": "T1",
+            "round": 1,
+            "assignee_id": "B",
+            "write_scope": "workspace/T1",
+            "contract_version": "contract-r1",
+            "instruction_summary": "Complete bounded work for T1",
+            "input_refs": [
+              "artifact://T1/input"
+            ],
+            "dependency_versions": {
+              "design": "v1"
+            },
+            "required_review": {
+              "required": true,
+              "reviewer_id": "C",
+              "scope_refs": [
+                "scope://T1"
+              ]
+            },
+            "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+            "intent_id": "I1",
+            "status": "stop_requested",
+            "created_at": "2026-11-17T11:39:06.248583+00:00",
+            "disposition": null
+          }
+        },
+        "intents": {
+          "I1": {
+            "intent_id": "I1",
+            "target_participant_id": "B",
+            "target_thread_ref": "thread-b",
+            "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+            "send_state": "confirmed",
+            "execution_state": "running",
+            "stop_requested": true,
+            "native_refs": [
+              "thread://b/message/I1"
+            ],
+            "observed_at": "2026-11-17T11:40:30.935178+00:00",
+            "reason": "Controlled owner event narrows work to this session; stop requested, actual stop is not yet observed",
+            "created_at": "2026-11-17T11:39:06.248583+00:00"
+          }
+        },
+        "pending": [],
+        "adoptions": {},
+        "coordination": {
+          "state": "working",
+          "focus_task_id": "T2",
+          "gap_summary": "A1 still needs verified results; external D1 stop is unconfirmed",
+          "next_action": "Continue local contract review; do not dispatch new external work",
+          "resume_basis": [
+            "T2",
+            "D1"
+          ],
+          "waiting_on": [
+            {
+              "kind": "delegation",
+              "ref": "D1",
+              "condition": "Original execution is confirmed stopped or completed"
+            }
+          ],
+          "updated_at": "2026-11-17T11:40:30.948814+00:00"
+        }
+      }
+    },
+    {
+      "case": "T26",
+      "status": "PASS in controlled inputs",
+      "final": {
+        "mission_id": "collaboration-mission",
+        "objective": "Deliver a verified collaboration runtime",
+        "acceptance": [
+          {
+            "id": "A1",
+            "description": "Verified collaboration runtime"
+          }
+        ],
+        "mission_status": "active",
+        "focus": "T2",
+        "tasks": {
+          "T1": {
+            "title": "Implement the result",
+            "status": "active"
+          },
+          "T2": {
+            "title": "Protect the mainline",
+            "status": "pending"
+          }
+        },
+        "collaboration_enabled": true,
+        "delegations": {
+          "D1": {
+            "delegation_id": "D1",
+            "task_id": "T1",
+            "round": 1,
+            "assignee_id": "B",
+            "write_scope": "workspace/T1",
+            "contract_version": "contract-r1",
+            "instruction_summary": "Complete bounded work for T1",
+            "input_refs": [
+              "artifact://T1/input"
+            ],
+            "dependency_versions": {
+              "design": "v1"
+            },
+            "required_review": {
+              "required": true,
+              "reviewer_id": "C",
+              "scope_refs": [
+                "scope://T1"
+              ]
+            },
+            "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+            "intent_id": "I1",
+            "status": "running",
+            "created_at": "2026-11-17T11:39:06.318712+00:00",
+            "disposition": "out_of_scope"
+          }
+        },
+        "intents": {
+          "I1": {
+            "intent_id": "I1",
+            "target_participant_id": "B",
+            "target_thread_ref": "thread-b",
+            "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+            "send_state": "confirmed",
+            "execution_state": "running",
+            "stop_requested": false,
+            "native_refs": [
+              "thread://b/message/I1"
+            ],
+            "observed_at": "2026-11-17T01:00:00+00:00",
+            "reason": "Observed host dispatch fact",
+            "created_at": "2026-11-17T11:39:06.318712+00:00"
+          }
+        },
+        "pending": [],
+        "adoptions": {},
+        "coordination": {
+          "state": "working",
+          "focus_task_id": "T2",
+          "gap_summary": "Need current outcome evidence for A1",
+          "next_action": "Review the approved contract and verify the remaining A1 evidence",
+          "resume_basis": [
+            "T2"
+          ],
+          "waiting_on": [],
+          "updated_at": "2026-11-17T11:42:00.737918+00:00"
+        }
+      }
+    },
+    {
+      "case": "T27",
+      "status": "PASS in controlled inputs",
+      "final": {
+        "mission_id": "collaboration-mission",
+        "objective": "Deliver a verified collaboration runtime",
+        "acceptance": [
+          {
+            "id": "A1",
+            "description": "Verified collaboration runtime"
+          }
+        ],
+        "mission_status": "active",
+        "focus": "T2",
+        "tasks": {
+          "T1": {
+            "title": "Implement the result",
+            "status": "active"
+          },
+          "T2": {
+            "title": "Protect the mainline",
+            "status": "pending"
+          }
+        },
+        "collaboration_enabled": true,
+        "delegations": {
+          "D1": {
+            "delegation_id": "D1",
+            "task_id": "T1",
+            "round": 1,
+            "assignee_id": "B",
+            "write_scope": "workspace/T1",
+            "contract_version": "contract-r1",
+            "instruction_summary": "Complete bounded work for T1",
+            "input_refs": [
+              "artifact://T1/input"
+            ],
+            "dependency_versions": {
+              "design": "v1"
+            },
+            "required_review": {
+              "required": true,
+              "reviewer_id": "C",
+              "scope_refs": [
+                "scope://T1"
+              ]
+            },
+            "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+            "intent_id": "I1",
+            "status": "running",
+            "created_at": "2026-11-17T11:39:06.389731+00:00",
+            "disposition": "answered"
+          }
+        },
+        "intents": {
+          "I1": {
+            "intent_id": "I1",
+            "target_participant_id": "B",
+            "target_thread_ref": "thread-b",
+            "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+            "send_state": "confirmed",
+            "execution_state": "running",
+            "stop_requested": false,
+            "native_refs": [
+              "thread://b/message/I1"
+            ],
+            "observed_at": "2026-11-17T01:00:00+00:00",
+            "reason": "Observed host dispatch fact",
+            "created_at": "2026-11-17T11:39:06.389731+00:00"
+          }
+        },
+        "pending": [],
+        "adoptions": {},
+        "coordination": {
+          "state": "working",
+          "focus_task_id": "T2",
+          "gap_summary": "Need current outcome evidence for A1",
+          "next_action": "Continue independent contract and acceptance checks while B repairs its fixture",
+          "resume_basis": [
+            "T2"
+          ],
+          "waiting_on": [],
+          "updated_at": "2026-11-17T11:40:30.973351+00:00"
+        }
+      }
+    },
+    {
+      "case": "T28",
+      "status": "PASS in controlled inputs",
+      "final": {
+        "mission_id": "collaboration-mission",
+        "objective": "Deliver a verified collaboration runtime",
+        "acceptance": [
+          {
+            "id": "A1",
+            "description": "Verified collaboration runtime"
+          }
+        ],
+        "mission_status": "active",
+        "focus": "T2",
+        "tasks": {
+          "T1": {
+            "title": "Implement the result",
+            "status": "active"
+          },
+          "T2": {
+            "title": "Protect the mainline",
+            "status": "pending"
+          }
+        },
+        "collaboration_enabled": true,
+        "delegations": {
+          "D1": {
+            "delegation_id": "D1",
+            "task_id": "T1",
+            "round": 1,
+            "assignee_id": "B",
+            "write_scope": "workspace/T1",
+            "contract_version": "contract-r1",
+            "instruction_summary": "Complete bounded work for T1",
+            "input_refs": [
+              "artifact://T1/input"
+            ],
+            "dependency_versions": {
+              "design": "v1"
+            },
+            "required_review": {
+              "required": true,
+              "reviewer_id": "C",
+              "scope_refs": [
+                "scope://T1"
+              ]
+            },
+            "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+            "intent_id": "I1",
+            "status": "executed",
+            "created_at": "2026-11-17T11:39:06.460165+00:00",
+            "disposition": "evidence_requested"
+          }
+        },
+        "intents": {
+          "I1": {
+            "intent_id": "I1",
+            "target_participant_id": "B",
+            "target_thread_ref": "thread-b",
+            "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+            "send_state": "confirmed",
+            "execution_state": "completed",
+            "stop_requested": false,
+            "native_refs": [
+              "thread://b/message/I1"
+            ],
+            "observed_at": "2026-11-17T01:00:00+00:00",
+            "reason": "Observed host dispatch fact",
+            "created_at": "2026-11-17T11:39:06.460165+00:00"
+          }
+        },
+        "pending": [],
+        "adoptions": {},
+        "coordination": {
+          "state": "working",
+          "focus_task_id": "T2",
+          "gap_summary": "Need current outcome evidence for A1",
+          "next_action": "Continue T2 acceptance review; obtain the referenced h1 artifact/evidence before adoption",
+          "resume_basis": [
+            "T2"
+          ],
+          "waiting_on": [],
+          "updated_at": "2026-11-17T11:43:36.660091+00:00"
+        }
+      }
+    },
+    {
+      "case": "T29",
+      "status": "PASS in controlled inputs",
+      "final": {
+        "mission_id": "collaboration-mission",
+        "objective": "Deliver a verified collaboration runtime",
+        "acceptance": [
+          {
+            "id": "A1",
+            "description": "Verified collaboration runtime"
+          }
+        ],
+        "mission_status": "superseded",
+        "focus": "T2",
+        "tasks": {
+          "T1": {
+            "title": "Implement the result",
+            "status": "paused"
+          },
+          "T2": {
+            "title": "Protect the mainline",
+            "status": "pending"
+          }
+        },
+        "collaboration_enabled": true,
+        "delegations": {
+          "D1": {
+            "delegation_id": "D1",
+            "task_id": "T1",
+            "round": 1,
+            "assignee_id": "B",
+            "write_scope": "workspace/T1",
+            "contract_version": "contract-r1",
+            "instruction_summary": "Complete bounded work for T1",
+            "input_refs": [
+              "artifact://T1/input"
+            ],
+            "dependency_versions": {
+              "design": "v1"
+            },
+            "required_review": {
+              "required": true,
+              "reviewer_id": "C",
+              "scope_refs": [
+                "scope://T1"
+              ]
+            },
+            "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+            "intent_id": "I1",
+            "status": "stopped",
+            "created_at": "2026-11-17T11:39:06.534823+00:00",
+            "disposition": "path_adjusted"
+          },
+          "D2": {
+            "delegation_id": "D2",
+            "task_id": "T1",
+            "round": 2,
+            "assignee_id": "B",
+            "write_scope": "workspace/T1",
+            "contract_version": "atomic-journal-v2",
+            "instruction_summary": "Replace the demonstrated non-atomic strategy with a journal-backed replayable transaction; preserve the original A1 acceptance",
+            "input_refs": [
+              "source-agent-premise-check",
+              "controlled-spec://atomic-journal-v2"
+            ],
+            "dependency_versions": {
+              "design": "atomic-journal-v2"
+            },
+            "required_review": {
+              "required": true,
+              "reviewer_id": "C",
+              "scope_refs": [
+                "scope://T1"
+              ]
+            },
+            "instruction_digest": "sha256:66868b4c23c990c972d010e6b8755f5bfb02e6245203935c8b9e27e3f7fe4842",
+            "intent_id": "I2",
+            "status": "not_sent",
+            "created_at": "2026-11-17T11:43:36.688824+00:00",
+            "disposition": null
+          }
+        },
+        "intents": {
+          "I1": {
+            "intent_id": "I1",
+            "target_participant_id": "B",
+            "target_thread_ref": "thread-b",
+            "instruction_digest": "sha256:45e410b2d17a03776a29c1e1ec253de493db572333a0709a6bee8c934b779aae",
+            "send_state": "confirmed",
+            "execution_state": "stopped",
+            "stop_requested": true,
+            "native_refs": [
+              "thread://b/message/I1",
+              "controlled-host://D1/stop-confirmed"
+            ],
+            "observed_at": "2026-11-17T11:43:36.668766+00:00",
+            "reason": "Controlled host provider reports the original writer stopped",
+            "created_at": "2026-11-17T11:39:06.534823+00:00"
+          },
+          "I2": {
+            "intent_id": "I2",
+            "target_participant_id": "B",
+            "target_thread_ref": "thread-b",
+            "instruction_digest": "sha256:66868b4c23c990c972d010e6b8755f5bfb02e6245203935c8b9e27e3f7fe4842",
+            "send_state": "not_sent",
+            "execution_state": "not_started",
+            "stop_requested": false,
+            "native_refs": [
+              "controlled-owner://T29/scope-change-1"
+            ],
+            "observed_at": "2026-11-17T11:48:23.285485+00:00",
+            "reason": "The controlled owner event narrows this test to a local compatibility assessment; withdraw the prepared, unstarted replacement",
+            "created_at": "2026-11-17T11:43:36.688824+00:00"
+          }
+        },
+        "pending": [],
+        "adoptions": {},
+        "coordination": {
+          "state": "working",
+          "focus_task_id": "T2",
+          "gap_summary": "A1 still requires an adopted, reviewed atomic replay result",
+          "next_action": "Finalize the revised contract in T2 before any replacement dispatch",
+          "resume_basis": [
+            "T2",
+            "D2",
+            "source-agent-premise-check"
+          ],
+          "waiting_on": [],
+          "updated_at": "2026-11-17T11:43:36.703270+00:00"
+        }
+      }
+    }
+  ],
+  "goal_successor": {
+    "canonical_mission": {
+      "id": "compatibility-assessment",
+      "title": "Local compatibility assessment",
+      "objective": "Produce a compatibility assessment in the current session",
+      "status": "active",
+      "human_in_loop": 0,
+      "risk_tolerance": 50,
+      "resource_sufficiency": 50,
+      "acceptance_evidence": [
+        {
+          "id": "N1",
+          "description": "Compatibility assessment plus reproducible evidence"
+        }
+      ]
+    },
+    "collaboration_enabled": false,
+    "tasks": [
+      {
+        "id": "N1",
+        "parent_id": null,
+        "kind": "task",
+        "level": 1,
+        "title": "Produce the local compatibility assessment with reproducible evidence",
+        "status": "active",
+        "role": "success-critical",
+        "evidence_links": [],
+        "mission_contribution": "Delivers the new owner-scoped assessment",
+        "acceptance_evidence": [
+          "N1"
+        ]
+      }
+    ]
+  },
+  "assertions": "All explicit source-state assertions passed; judgments and requests were supplied by the source Agent after observations."
+}

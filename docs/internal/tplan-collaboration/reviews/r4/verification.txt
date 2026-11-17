@@ -1,0 +1,26 @@
+R4 local verification / CPython 3.11.11 / 2026-11-17
+Final suite environment: TMPDIR=/private/tmp; PYTHONDONTWRITEBYTECODE=1; PYTHONPYCACHEPREFIX=/private/tmp/mindthus246-r4-pycache
+Interpreter: /private/var/tmp/mindthus-246-py311/bin/python
+Counts below are unittest Ran totals, including skips.
+Earlier sandbox attempts fell back to /tmp or could not write the default py_compile cache; final canonical TMPDIR and temporary cache runs below succeeded.
+
+python -B -m unittest tests.tplan.test_collaboration tests.tplan.test_collaboration_runtime tests.tplan.test_collaboration_behavior -q
+Ran 58 tests in 7.133s
+OK
+
+python -B -m unittest discover -s tests/tplan -q
+Ran 646 tests in 94.110s
+OK (skipped=1)
+
+python -B -m unittest tests.test_packaging_docs -q
+Ran 41 tests in 16.525s
+OK (skipped=1)
+
+python -B -m unittest discover -s tests -q
+Ran 1399 tests in 238.192s
+OK (skipped=8)
+
+Mechanical probes: 8 / 8 assertions passed (6 blocked paths + 2 full completion paths).
+git diff --check: PASS
+py_compile (collaboration.py, collaboration_runtime.py, tplan_runtime.py, test_collaboration_runtime.py, reviews/r4/reproduce.py): PASS
+Historical platform distinction: R3 local Ran 1388 / skipped 8; source/CI Ran 1388 / skipped 7. R4 remote CI is recorded separately against the submitted exact head.

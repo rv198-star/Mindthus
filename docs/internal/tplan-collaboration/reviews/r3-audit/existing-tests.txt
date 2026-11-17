@@ -1,0 +1,17 @@
+Audited code head: 2753470fcd32ef2482e2af6126354e59aca57dcc
+Source audit chat: 01a1e806-292f-76d0-af7e-f4786d70b3e1 (local)
+CPython 3.11.11; independent rerun by source auditor
+Command: /private/var/tmp/mindthus-246-py311/bin/python -B -m unittest tests.tplan.test_collaboration tests.tplan.test_collaboration_runtime tests.tplan.test_collaboration_behavior -q
+----------------------------------------------------------------------
+Ran 47 tests in 3.776s
+
+OK
+
+PR #247 remote head verified as 2753470fcd32ef2482e2af6126354e59aca57dcc.
+unittest-smoke: SUCCESS, completed 2026-11-17T11:29:35Z.
+https://github.com/rv198-star/Mindthus/actions/runs/44073953134/job/134007024823
+Developer-reported local full suite: Ran 1388 tests, OK (skipped=8).
+Independently checked CI log (CPython 3.11.18):
+  tplan: Ran 635 tests in 74.409s; OK
+  full suite: Ran 1388 tests in 115.181s; OK (skipped=7)
+The auditor reused this successful exact-head CI run after the targeted rerun; no duplicate full-suite run was needed for audit-only files.

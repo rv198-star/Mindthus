@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/private/var/tmp/mindthus-246-py311/bin/python",
+    "-B",
+    "/Users/william/.codex/worktrees/mindthus-246-collaboration/Mindthus/skills/tplan/scripts/apply_decision.py",
+    "/private/tmp/mindthus246-live-host-qtgzbf0z/mission",
+    "--decision",
+    "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/closeout-decision.json"
+  ],
+  "stdout": "applied_decision: /private/tmp/mindthus246-live-host-qtgzbf0z/audit/closeout-decision.json\nscript_result: authority enforced; semantic correctness remains agentic\n",
+  "stderr": "",
+  "exit_code": 0
+}

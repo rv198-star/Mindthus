@@ -1,0 +1,56 @@
+{
+  "scope": "Ordinary Codex A/B/C chats on the existing local account, with only A using TPlan",
+  "current_artifact_review": "R2 pending C full return; this is capability preflight, not final verdict",
+  "code_head": "223b7d2b99969c6a6ee9549730d2b8a2271d2401",
+  "observed": {
+    "ordinary_participants": {
+      "B": "01a1e873-14df-76b0-bead-411483962104",
+      "C": "01a1ea10-30b5-7af3-8f00-0c6b4dca2daa",
+      "B_model_context_ref": "b-r2-actual-model.json",
+      "C_model_context_ref": "c-r2-actual-model.json"
+    },
+    "native_send_and_wakeup": {
+      "status": "observed",
+      "evidence": [
+        "native-b-r1-observation.json",
+        "native-b-r2-initial.json",
+        "native-c-r1-complete.json"
+      ]
+    },
+    "origin_association": {
+      "status": "observed via native target thread/turn and host source wrapper",
+      "binding": "A matches assigned participant, current delegation/round/contract, fixed file digest and review scope"
+    },
+    "unknown_send_reconciliation": {
+      "status": "observed",
+      "controlled_case": "One real send with its result deliberately withheld at A; target read confirmed original input without resend",
+      "real_case": "Immediate R2 target read briefly lacked the input; A retained unknown intent until the native input appeared",
+      "native_send_attempts_per_B_intent": 1
+    },
+    "duplicate_return_import": {
+      "status": "observed",
+      "behavior": "Same actual B return reimported, same feedback identity and one business effect",
+      "native_transport_redelivery_injected": false
+    },
+    "peer_model_substitution": {
+      "status": "observed recovery",
+      "old_actual_model": "group/qwen-4-max/high",
+      "old_failure_channel": "商汤小浣熊",
+      "fresh_verified_model": "auto/gpt-6.1-sol/high",
+      "evidence": "actual-sol-model-recovery.json"
+    },
+    "goal_and_acceptance": {
+      "status": "unchanged across every captured mutation",
+      "mutation_count_checked": 25,
+      "rejected_writes_unchanged": 1,
+      "current_A_focus": "T3",
+      "focus_transition": "A T2 completed design/evidence preflight -> A T3 final host acceptance, with explicit rationale"
+    }
+  },
+  "host_capability_boundaries": {
+    "native_send_idempotency_key": "Not exposed by send_message_to_thread; A uses stable intent and native target reconciliation before retry",
+    "cancel": "No stop/interrupt method exposed in this task MCP tools; no real cancellation was performed. Public Codex app-server documents interrupt, but that separate transport was not connected/tested here",
+    "writer_isolation": "Ordinary chats share a local account. Cooperative generation checks are mechanically covered; physical per-thread storage isolation and protected identity are not supplied by collaboration metadata",
+    "participant_access": "Instruction-scoped ordinary B/C work; native command records will be checked for no Mission/API use. This is not an OS ACL claim"
+  }
+}

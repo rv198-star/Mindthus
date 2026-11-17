@@ -1,0 +1,13 @@
+{
+  "original_world": "/private/tmp/mindthus246-live-host-qtgzbf0z",
+  "source_thread_id": "01a1e806-292f-76d0-af7e-f4786d70b3e1",
+  "B_thread_id": "01a1e873-14df-76b0-bead-411483962104",
+  "C_thread_id": "01a1ea10-30b5-7af3-8f00-0c6b4dca2daa",
+  "code_head": "223b7d2b99969c6a6ee9549730d2b8a2271d2401",
+  "source_checkout_head_before_host_evidence": "54c0185cbf0f364c3a21ea285dd496c22de570c6",
+  "completed_at_client_timezone": "2026-11-18T00:25:29.213660+08:00",
+  "evidence_class": "live_host_bounded_canary_exercise",
+  "canary_fault": "Deliberately faulty legacy sample, independently checked by actual C",
+  "response_loss": "Controlled result withholding around one actual native send; real native reads reconciled it",
+  "physical_identity_isolation_claimed": false
+}

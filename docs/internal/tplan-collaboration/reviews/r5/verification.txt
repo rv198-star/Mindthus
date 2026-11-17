@@ -1,0 +1,35 @@
+R5 local verification / CPython 3.11.11 / 2026-11-17
+Baseline: ee725e6ac8b44bfddc46ab25ec3f282047369900 (audit-only commit over R4 d57d6816e).
+Environment: TMPDIR=/private/tmp; PYTHONDONTWRITEBYTECODE=1; PYTHONPYCACHEPREFIX=/private/tmp/mindthus246-r5-pycache
+Interpreter: /private/var/tmp/mindthus-246-py311/bin/python
+Counts are unittest Ran totals, including skips.
+
+Initial added C1 test batch, before runtime repair:
+Ran 13 tests in 4.304s
+FAILED (failures=6)
+
+python -B -m unittest tests.tplan.test_collaboration tests.tplan.test_collaboration_runtime tests.tplan.test_collaboration_behavior -q
+Ran 71 tests in 21.683s
+OK
+
+python -B -m unittest tests.tplan.test_evidence_and_transition tests.tplan.test_h1_core tests.tplan.test_h1_completion tests.tplan.test_h1_kernel_gate -q
+Ran 75 tests in 21.311s
+OK
+
+python -B -m unittest discover -s tests/tplan -q
+Ran 659 tests in 213.609s
+OK (skipped=1)
+
+python -B -m unittest tests.test_packaging_docs -q
+Ran 41 tests in 17.064s
+OK (skipped=1)
+
+python -B -m unittest discover -s tests -q
+Ran 1412 tests in 287.962s
+OK (skipped=8)
+
+Independent original C1 probes: both complete Mission with no completion/resume gaps.
+Original R4 B1 probes: all 8 assertions passed (6 blocked + 2 valid).
+git diff --check: PASS
+py_compile (collaboration.py, test_collaboration_runtime.py): PASS
+Remote exact-head CI and platform skips are reported separately in PR/Issue handoff.

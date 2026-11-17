@@ -50,6 +50,12 @@ from tplan_h1 import (SCHEMA as H1_SCHEMA, CAPABILITY as H1_CAPABILITY,
                      source_acceptance as h1_source_acceptance,
                      completion_findings as h1_completion_findings)
 from tplan_commands import STORE_SCHEMA as COMMAND_RESULTS_SCHEMA, validate_store as validate_command_results
+from collaboration import (
+    build_resume_view as build_collaboration_resume_view,
+    completion_findings as collaboration_completion_findings,
+    task_completion_findings as collaboration_task_completion_findings,
+    validate_state as validate_collaboration_state,
+)
 from work_plan import WORK_PLAN_SCHEMA_VERSION, validate_work_plan
 from tplan_identity import (
     RUNTIME_MANIFEST_SCHEMA_VERSION, RUNTIME_FINGERPRINT_SCHEMA_VERSION,
@@ -80,6 +86,7 @@ MISSION_REENTRY_RECEIPT_SCHEMA_VERSION = "tplan.mission_reentry_receipt.v0.1"
 RESERVED_EVIDENCE_EVENT_TYPES = {"decision_applied", "planning_metadata_updated"}
 _COMMAND_RESULT_AUTHORITY = object()
 _H1_CONTROL_AUTHORITY = object()
+_COLLABORATION_CONTROL_AUTHORITY = object()
 _RESERVED_EVIDENCE_AUTHORITY = object()
 _RESERVED_EVIDENCE_CONTEXT = threading.local()
 QUALIFIED_ACCEPTANCE_EVENT_TYPES = {"acceptance_passed", "acceptance_failed"}
@@ -328,6 +335,7 @@ MISSION_PULSE_SIGNAL_TIE_BREAK_ORDER = {
     "checkpoint_batch_without_acceptance_evidence": 8,
     "branch_cleanup_candidate": 9,
     "same_path_continuation": 10,
+    "collaboration_feedback": 11,
 }
 MISSION_PULSE_CANDIDATE_SEVERITIES = {"low", "medium", "high", "critical"}
 MISSION_PULSE_SEVERITY_ORDER = {"low": 1, "medium": 2, "high": 3, "critical": 4}
@@ -371,6 +379,7 @@ MISSION_PULSE_CONSUMABLE_SIGNALS = {
     "third_touch",
     "checkpoint_batch_without_acceptance_evidence",
     "branch_cleanup_candidate",
+    "collaboration_feedback",
 }
 MISSION_PULSE_STICKY_SIGNALS = {
     "active_shared_risk",
@@ -856,6 +865,8 @@ def write_mission(mission_dir: Path, data: dict[str, Any], *, latest_state: str 
     """
 
     paths = mission_paths(mission_dir)
+    if not paths["mission"].exists() and "collaboration" in data:
+        raise TplanError("collaboration must be enabled through the explicit collaboration transaction")
     if paths["mission"].exists():
         with execution_trace_lock(mission_dir):
             _recover_pending_mission_transaction_unlocked(mission_dir)
@@ -1836,6 +1847,8 @@ def validate_mission(state: Any) -> list[str]:
         errors.extend(validate_command_results(state["command_results"]))
     if "human_control" in state:
         errors.extend(validate_h1_control(state))
+    if "collaboration" in state:
+        errors.extend(validate_collaboration_state(state))
     return errors
 
 
@@ -3375,28 +3388,30 @@ def _validate_trace_evidence_references(
     ]
 
 
-def _mission_completion_findings(
-    mission: dict[str, Any], events: list[dict[str, Any]]
-) -> list[str]:
-    """Check mechanical closure eligibility against one supplied evidence snapshot."""
+def _qualified_acceptance_observations(
+    mission: dict[str, Any], events: list[dict[str, Any]], *, task_id: str | None = None
+) -> tuple[list[str], list[tuple[dict[str, Any], str]]]:
+    """Reuse native qualification, unique references and current H1 source versions.
+
+    Observations retain evidence-log order so callers can select the latest result
+    within their own acceptance scope without borrowing another task's PASS.
+    """
     errors: list[str] = []
-    incomplete = sorted(
-        str(task["id"]) for task in mission["tasks"]
-        if task.get("role") == "success-critical" and task.get("status") != "completed"
-    )
-    if incomplete:
-        errors.append("Mission completion requires completed success-critical nodes: " + ", ".join(incomplete))
     counts = Counter(
         event.get("id") for event in events
         if isinstance(event, dict) and isinstance(event.get("id"), str)
     )
-    latest: dict[str, str] = {}
+    observations: list[tuple[dict[str, Any], str]] = []
     # Project only controlled sources; keep unrelated events in native AC order.
     source_events: dict[tuple[str, str], set[str]] = {}
     if "human_control" in mission and not validate_h1_control(mission):
         from tplan_commands import CommandError
         control = mission["human_control"]
         for request_id, req in control["requests"].items():
+            if task_id is not None and task_id not in {
+                task["id"] for task in parent_chain(mission, req["business_task_id"])
+            }:
+                continue
             adoption = control["adoptions"].get(request_id, {})
             decision = control["decisions"].get(req["current_decision_id"], {})
             candidate = control["candidates"].get(adoption.get("candidate_id"))
@@ -3417,13 +3432,15 @@ def _mission_completion_findings(
             if any(scoped.get(ac, {}).get("event_type") != "acceptance_passed" for ac in required):
                 errors.append("H1 current adopted source requires positive version-bound acceptance")
             failure_scope = {task["id"] for task in parent_chain(mission, candidate["task_id"])}
-            for task_id in failure_scope:
+            for source_task_id in failure_scope:
                 for acceptance_id in required:
-                    allowed = source_events.setdefault((task_id, acceptance_id), set())
+                    allowed = source_events.setdefault((source_task_id, acceptance_id), set())
                     if acceptance_id in scoped:
                         allowed.add(scoped[acceptance_id]["id"])
     for event in events:
         if not isinstance(event, dict):
+            continue
+        if task_id is not None and event.get("task_id") != task_id:
             continue
         kind = event.get("event_type")
         if not isinstance(kind, str) or kind not in {"acceptance", "acceptance_passed", "acceptance_failed"}:
@@ -3436,7 +3453,28 @@ def _mission_completion_findings(
             scope = (event["task_id"], acceptance_id)
             if scope in source_events and event["id"] not in source_events[scope]:
                 continue  # Other source versions cannot override the current adoption.
-            latest[acceptance_id] = kind
+            observations.append((event, acceptance_id))
+    if "human_control" in mission and validate_h1_control(mission):
+        errors.append("H1 control structure is invalid; Mission cannot be completed")
+    return errors, observations
+
+
+def _mission_completion_findings(
+    mission: dict[str, Any], events: list[dict[str, Any]]
+) -> list[str]:
+    """Check mechanical closure eligibility against one supplied evidence snapshot."""
+    errors: list[str] = []
+    incomplete = sorted(
+        str(task["id"]) for task in mission["tasks"]
+        if task.get("role") == "success-critical" and task.get("status") != "completed"
+    )
+    if incomplete:
+        errors.append("Mission completion requires completed success-critical nodes: " + ", ".join(incomplete))
+    qualification_errors, observations = _qualified_acceptance_observations(mission, events)
+    errors.extend(qualification_errors)
+    latest: dict[str, str] = {}
+    for event, acceptance_id in observations:
+        latest[acceptance_id] = event["event_type"]
     missing = sorted(
         acceptance_id for acceptance_id in acceptance_ids(mission)
         if latest.get(acceptance_id) not in {"acceptance", "acceptance_passed"}
@@ -3446,10 +3484,10 @@ def _mission_completion_findings(
             "Mission completion requires positive qualified acceptance: "
             + ", ".join(f"{item} ({latest.get(item, 'missing')})" for item in missing)
         )
-    if "human_control" in mission and validate_h1_control(mission):
-        errors.append("H1 control structure is invalid; Mission cannot be completed")
-    elif "human_control" in mission:
+    if "human_control" in mission and not validate_h1_control(mission):
         errors.extend(h1_completion_findings(mission, events))
+    if "collaboration" in mission:
+        errors.extend(collaboration_completion_findings(mission, events))
     return errors
 
 
@@ -4137,6 +4175,7 @@ def _commit_mission_state_unlocked(
     allow_prepared_legacy_adoption: bool = False,
     command_result_authority: object | None = None,
     h1_control_authority: object | None = None,
+    collaboration_control_authority: object | None = None,
 ) -> list[dict[str, Any]]:
     old_results, new_results = before.get("command_results"), after.get("command_results")
     if old_results != new_results:
@@ -4146,6 +4185,9 @@ def _commit_mission_state_unlocked(
             raise TplanError("command_results require an explicitly enabled valid Mission")
         if any(new_results["records"].get(k) != v for k, v in old_results["records"].items()):
             raise TplanError("committed command results cannot be rewritten or removed")
+    if before.get("collaboration") != after.get("collaboration"):
+        if collaboration_control_authority is not _COLLABORATION_CONTROL_AUTHORITY:
+            raise TplanError("collaboration is owned by the explicit collaboration transaction")
     h1_shape_errors = validate_h1_control(after)
     if h1_shape_errors:
         raise TplanError("; ".join(h1_shape_errors))
@@ -4210,6 +4252,9 @@ def _commit_mission_state_unlocked(
         completion_errors = _mission_completion_findings(after, evidence_snapshot)
         if completion_errors:
             raise TplanError("; ".join(completion_errors))
+    task_completion_errors = collaboration_task_completion_findings(before, after, evidence_snapshot)
+    if task_completion_errors:
+        raise TplanError("; ".join(task_completion_errors))
 
     paths = mission_paths(mission_dir)
     previous_trace = paths["trace"].read_text(encoding="utf-8") if paths["trace"].exists() else ""
@@ -5126,6 +5171,15 @@ def set_task_status(mission: dict[str, Any], task_id: str, status: str) -> dict[
     return mission
 
 
+def set_task_status_preserving_focus(mission: dict[str, Any], task_id: str, status: str) -> dict[str, Any]:
+    """Apply a delegated task transition without moving the coordinator cursor."""
+
+    focus = mission.get("active_task_id")
+    set_task_status(mission, task_id, status)
+    mission["active_task_id"] = focus
+    return mission
+
+
 def parent_chain(mission: dict[str, Any], task_id: str | None) -> list[dict[str, Any]]:
     if task_id is None:
         return []
@@ -5162,7 +5216,7 @@ def active_task(mission: dict[str, Any]) -> dict[str, Any] | None:
 
 def build_survey_from_state(mission: dict[str, Any], events: list[dict[str, Any]]) -> dict[str, Any]:
     active = active_task(mission)
-    return {
+    survey = {
         "mission": mission["mission"],
         "active_task": active,
         "active_parent_chain": parent_chain(mission, active.get("id") if active else None),
@@ -5171,6 +5225,9 @@ def build_survey_from_state(mission: dict[str, Any], events: list[dict[str, Any]
         "shared_context": shared_context_summary(mission),
         "event_count": len(events),
     }
+    if "collaboration" in mission:
+        survey["collaboration_resume"] = build_collaboration_resume_view(mission, events)
+    return survey
 
 
 def build_survey(mission_dir: Path) -> dict[str, Any]:
@@ -5599,6 +5656,76 @@ def _event_is_on_current_path(
     return active is not None and task_id == active.get("id")
 
 
+def _collect_collaboration_feedback_candidates(mission: dict[str, Any]) -> list[dict[str, Any]]:
+    collaboration = mission.get("collaboration")
+    if not isinstance(collaboration, dict):
+        return []
+    feedback = collaboration.get("feedback")
+    if not isinstance(feedback, dict):
+        return []
+    pending = [
+        item
+        for item in feedback.values()
+        if isinstance(item, dict) and item.get("status") == "pending"
+    ]
+    if not pending:
+        return []
+    pending.sort(key=lambda item: str(item.get("recorded_at", "")))
+    associations = sorted(
+        {
+            str(item.get("association_status"))
+            for item in pending
+            if isinstance(item.get("association_status"), str)
+        }
+    )
+    task_ids = sorted(
+        {
+            str(delegation.get("task_id"))
+            for item in pending
+            for delegation_id in [item.get("delegation_id")]
+            for delegation in [collaboration.get("delegations", {}).get(delegation_id)]
+            if isinstance(delegation, dict) and isinstance(delegation.get("task_id"), str)
+        }
+    )
+    kinds = [str(item.get("kind", "progress")) for item in pending]
+    rank = {"progress": 0, "question": 0, "result": 1, "review": 1, "blocker": 2}
+    strongest = max((rank.get(kind, 0) for kind in kinds), default=0)
+    if strongest >= 2:
+        priority_class = "current_blocker_or_feedback"
+        next_gate = "mission_review"
+        severity = "high"
+    elif strongest == 1:
+        priority_class = "current_blocker_or_feedback"
+        next_gate = "continuation_authorization"
+        severity = "medium"
+    else:
+        priority_class = "same_path_continuation"
+        next_gate = "continuation_authorization"
+        severity = "low"
+    return [
+        _pulse_candidate(
+            signal="collaboration_feedback",
+            candidate_next_gate=next_gate,
+            scope="mission",
+            source_kind="derived",
+            source_ids=[str(item.get("feedback_id")) for item in pending[:32]],
+            priority_class=priority_class,
+            severity=severity,
+            freshness="current_state",
+            reason="Pending participant input awaits A's goal-relevance judgment; ordinary progress does not redirect the mainline.",
+            context={
+                "source": "collaboration",
+                "pending_count": len(pending),
+                "association_states": associations,
+                "task_ids": task_ids,
+                "kinds": sorted(set(kinds)),
+            },
+            signals=["collaboration_feedback"],
+            rationale="A judges relevance, responsibility, and current-version effect; key feedback is handled before the relevant side effect or closure.",
+        )
+    ]
+
+
 def _collect_feedback_or_blocker_candidates(
     mission: dict[str, Any],
     active: dict[str, Any] | None,
@@ -5829,6 +5956,7 @@ def _collect_pulse_candidates(
     candidates.extend(_collect_mission_boundary_candidates(trigger))
     candidates.extend(_collect_no_active_path_candidates(trigger, active))
     candidates.extend(_collect_shared_risk_candidates(active_risks))
+    candidates.extend(_collect_collaboration_feedback_candidates(mission))
     candidates.extend(_collect_feedback_or_blocker_candidates(mission, active, events, trigger))
     candidates.extend(_collect_anti_spiral_candidates(active, active_logs))
     candidates.extend(_collect_checkpoint_batch_candidates(active, active_logs, events, trigger))

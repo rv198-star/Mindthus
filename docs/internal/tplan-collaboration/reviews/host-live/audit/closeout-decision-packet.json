@@ -1,0 +1,199 @@
+{
+  "schema_version": "tplan.v0.1",
+  "hook": "mission_review",
+  "mission": {
+    "id": "mindthus246-live-host",
+    "title": "Mindthus 246 live A/B/C host acceptance",
+    "objective": "Verify that A preserves its user-assigned goal, responsibility and acceptance while real ordinary B/C chats deliver, review and repair a bounded artifact",
+    "status": "active",
+    "acceptance_evidence": [
+      {
+        "id": "ART",
+        "description": "Real B artifact repaired and independently reviewed against the fixed contract"
+      },
+      {
+        "id": "HOST",
+        "description": "Real host send, observed origin, return and deduplicated import facts are recorded with capability limits"
+      },
+      {
+        "id": "FOCUS",
+        "description": "A decisions and next actions remain attached to its goal and acceptance across peer turns"
+      }
+    ]
+  },
+  "policy": {
+    "human_in_loop": 0,
+    "risk_tolerance": 50,
+    "resource_sufficiency": 50
+  },
+  "active_task": null,
+  "parent_chain": [],
+  "task_tree_summary": {
+    "abandoned": [],
+    "active": [],
+    "blocked": [],
+    "completed": [
+      "T1",
+      "T2",
+      "T3"
+    ],
+    "paused": [],
+    "pending": [],
+    "pruned": [],
+    "superseded": []
+  },
+  "shared_context": {
+    "active_risk_signals": [],
+    "recent_resolved_risk_signals": [],
+    "active_risk_signal_count": 0,
+    "highest_active_severity": null
+  },
+  "relevant_evidence_events": [
+    {
+      "event_type": "key_finding",
+      "summary": "Native target read reconciled one real send after controlled result withholding; A focus and original goal/acceptance remain stable",
+      "task_id": "T2",
+      "payload": {
+        "native_observation_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/native-b-r1-observation.json",
+        "capability_inventory_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/host-capability-inventory.json",
+        "native_send_attempts": 1,
+        "A_focus": "T2",
+        "test_fault": "Controlled response withholding, not a provider outage"
+      },
+      "id": "E513dca52",
+      "timestamp": "2026-11-17T15:20:08.338913+00:00"
+    },
+    {
+      "event_type": "key_finding",
+      "summary": "A verified actual B return, original canary bytes, per-file digests and smoke; fixed r1 sent for independent C contract review",
+      "task_id": "T2",
+      "payload": {
+        "native_B_return_ref": "codex://threads/01a1e873-14df-76b0-bead-411483962104?turnId=01a1ea14-da95-7ba0-ba8b-b7d80b914bff",
+        "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r1",
+        "artifact_digest": "sha256:03bc9a0581d509c7f233d27946d643a291c3d5fef6f6243aea519596b90a91cb",
+        "manifest_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/r1-artifact.json",
+        "review_request_nonce": "LIVE-246-C-D1-R1",
+        "contract_version": "host-normalizer-v1",
+        "review_scope": [
+          "contract://host-normalizer-v1/all"
+        ]
+      },
+      "id": "E1b3e0479",
+      "timestamp": "2026-11-17T15:26:02.246140+00:00"
+    },
+    {
+      "event_type": "key_finding",
+      "summary": "C recovered from failed default Qwen turn to a verified new Sol/high native turn and began actual review commands",
+      "task_id": "T2",
+      "payload": {
+        "old_turn_id": "01a1ea10-33ae-7ef0-8c11-e8e1ffd8e28e",
+        "old_actual_model": "group/qwen-4-max",
+        "new_turn_id": "01a1ea2c-af0e-7441-a0b8-58fe2b8bdff2",
+        "actual_new_model": "auto/gpt-6.1-sol",
+        "actual_effort": "high",
+        "proof_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/actual-sol-model-recovery.json",
+        "same_artifact_contract_goal": true
+      },
+      "id": "Ea614004d",
+      "timestamp": "2026-11-17T15:44:28.643688+00:00"
+    },
+    {
+      "event_type": "acceptance_failed",
+      "summary": "Fixed r1 canary fails the full artifact contract based on the actual C review",
+      "task_id": "T1",
+      "payload": {
+        "acceptance_ids": [
+          "ART"
+        ],
+        "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r1",
+        "artifact_digest": "sha256:03bc9a0581d509c7f233d27946d643a291c3d5fef6f6243aea519596b90a91cb",
+        "delegation_id": "D1",
+        "round": 1,
+        "contract_version": "host-normalizer-v1",
+        "review_source_ref": "codex://threads/01a1ea10-30b5-7af3-8f00-0c6b4dca2daa?turnId=01a1ea2c-af0e-7441-a0b8-58fe2b8bdff2",
+        "test_result_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/c-out/r1/results.json"
+      },
+      "id": "E7a4ba736",
+      "timestamp": "2026-11-17T15:48:43.881884+00:00"
+    },
+    {
+      "event_type": "key_finding",
+      "summary": "B completed full R2 repair; source verified hashes and reran 381 tests, then froze current bytes for C independent re-review",
+      "task_id": "T2",
+      "payload": {
+        "native_B_return_ref": "codex://threads/01a1e873-14df-76b0-bead-411483962104?turnId=01a1ea33-e336-7382-a7a5-0087b23ab1e4",
+        "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r2",
+        "artifact_digest": "sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14",
+        "manifest_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/r2-artifact.json",
+        "source_test_check_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/r2-source-hash-test-check.json",
+        "review_request_nonce": "LIVE-246-C-D2-R2"
+      },
+      "id": "Eccff616b",
+      "timestamp": "2026-11-17T16:08:25.614599+00:00"
+    },
+    {
+      "event_type": "key_finding",
+      "summary": "A completed evidence preflight and chooses its final host-acceptance task while C independently re-reviews R2",
+      "task_id": "T2",
+      "payload": {
+        "from_focus": "T2",
+        "to_focus": "T3",
+        "rationale": "Design/contract preflight is complete; final host capability and goal-alignment acceptance are A own remaining work",
+        "current_review_model": {
+          "turn_id": "01a1ea44-7954-7bd1-b354-3a5fc6749569",
+          "model": "auto/gpt-6.1-sol",
+          "effort": "high",
+          "timestamp": "2026-11-17T16:08:41.036Z"
+        },
+        "same_objective_and_acceptance": true
+      },
+      "id": "E7a3402ed",
+      "timestamp": "2026-11-17T16:11:22.841405+00:00"
+    },
+    {
+      "event_type": "acceptance_passed",
+      "summary": "Current fixed R2 satisfies ART after actual independent C full-contract review and A evidence qualification",
+      "task_id": "T1",
+      "payload": {
+        "acceptance_ids": [
+          "ART"
+        ],
+        "delegation_id": "D2",
+        "round": 2,
+        "contract_version": "host-normalizer-v1",
+        "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r2",
+        "artifact_digest": "sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14",
+        "reviewer_ref": "codex://threads/01a1ea10-30b5-7af3-8f00-0c6b4dca2daa?turnId=01a1ea44-7954-7bd1-b354-3a5fc6749569",
+        "test_result_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/c-out/r2/results.json",
+        "test_cases": 443
+      },
+      "id": "Ee68a65f6",
+      "timestamp": "2026-11-17T16:16:03.092524+00:00"
+    },
+    {
+      "event_type": "acceptance_passed",
+      "summary": "Actual live host loop and A goal/role/acceptance retention verified against native records and current capability inventory",
+      "task_id": "T3",
+      "payload": {
+        "acceptance_ids": [
+          "HOST",
+          "FOCUS"
+        ],
+        "evidence_refs": [
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/host-capabilities.json",
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/peer-access-observations.json",
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/host-events.jsonl",
+          "/private/tmp/mindthus246-live-host-qtgzbf0z/audit/actual-sol-model-recovery.json"
+        ],
+        "native_peer_turns_audited": 4,
+        "native_peer_commands_audited": 41,
+        "same_objective_and_acceptance": true,
+        "A_role": "Design, evidence qualification, review/adoption decision and final acceptance",
+        "host_capability_scope": "Ordinary local account host; cooperative metadata, native-query reconciliation and scoped participant behavior; physical/cryptographic isolation not supplied"
+      },
+      "id": "E34ad3637",
+      "timestamp": "2026-11-17T16:19:42.948623+00:00"
+    }
+  ],
+  "current_blockers_or_surprises": []
+}

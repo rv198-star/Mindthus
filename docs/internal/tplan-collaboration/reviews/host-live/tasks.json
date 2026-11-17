@@ -1,0 +1,31 @@
+[
+  {
+    "id": "T1",
+    "title": "Deliver and independently review the bounded artifact through ordinary B/C chats",
+    "role": "success-critical",
+    "mission_contribution": "Proves the real implementation-review-repair loop",
+    "acceptance_evidence": [
+      "ART"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": "T2",
+    "title": "Keep A on design, evidence and acceptance while peers work",
+    "role": "supporting",
+    "mission_contribution": "Preserves A responsibility and valid continuation",
+    "acceptance_evidence": [],
+    "status": "active"
+  },
+  {
+    "id": "T3",
+    "title": "Verify observed host capabilities and final goal alignment",
+    "role": "success-critical",
+    "mission_contribution": "Qualifies actual transport evidence and A goal retention",
+    "acceptance_evidence": [
+      "HOST",
+      "FOCUS"
+    ],
+    "status": "pending"
+  }
+]

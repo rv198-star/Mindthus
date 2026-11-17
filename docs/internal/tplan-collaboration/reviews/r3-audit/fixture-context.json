@@ -1,0 +1,26 @@
+{
+  "T23": {
+    "origin": "reference_material",
+    "text": "Other-session note for reference only. No delegation is requested."
+  },
+  "T25": {
+    "origin": "controlled_human_event_fixture",
+    "text": "For this test Mission, continue only in the current session. Preserve already-running D1 facts and do not dispatch new work."
+  },
+  "T26": {
+    "origin": "controlled_peer_fixtures",
+    "text": "B proposes a logging redesign; after your reply a cache/release-scope proposal will arrive."
+  },
+  "T27": {
+    "origin": "controlled_peer_fixture",
+    "text": "B provides a local fixture stack trace and asks A to take over debugging."
+  },
+  "T28": {
+    "origin": "controlled_peer_fixtures",
+    "text": "Five routine progress updates and three copies of a C concern; no new PASS is supplied yet."
+  },
+  "T29": {
+    "origin": "controlled_peer_then_human_fixtures",
+    "text": "C reproducer shows non-atomic two-file writes cannot satisfy replay. Current D1 remains running in workspace/T1; a disjoint replacement path can be designed. A later owner fixture will narrow the goal."
+  }
+}

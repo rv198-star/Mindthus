@@ -14,6 +14,14 @@ latest mechanically qualified observation in evidence-stream order must be
 Existing evidence and same-transaction prepared evidence form one snapshot. Duplicate
 IDs and invalid/wrong-scope observations cannot supply qualified acceptance.
 
+When optional collaboration is enabled, completion also requires every pending
+feedback record to have an explicit disposition, every completed delegated task to have
+a current adopted artifact, and every required reviewer to have PASS for that exact
+round, contract, artifact digest, and scope. A late PASS for an older artifact remains
+readable but cannot satisfy the current adoption. These checks run inside the same
+transaction and cannot be bypassed by removing collaboration or changing a required
+review during closure.
+
 The gate checks declared references and pass/fail observations, not deliverable quality
 or reviewer correctness. Ordinary Task completion stays lightweight and does not itself
 satisfy Mission acceptance. Historical completed records remain readable; new closure
@@ -48,6 +56,11 @@ terminal state.
 
 observational state records facts such as failures, blockers, completed evidence, and
 external input.
+
+External collaboration waiting uses `collaboration.coordination.state=waiting_external`
+and keeps the Mission `active`. It does not mean `requires_human` and does not authorize
+polling or automatic resend. A coordinator handoff increments the collaboration
+generation; stale generations fail before any Mission, evidence, trace, or Guard write.
 
 ## Actual Route And Cost Lifecycle
 

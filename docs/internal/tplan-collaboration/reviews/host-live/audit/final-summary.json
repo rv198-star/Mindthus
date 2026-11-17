@@ -1,0 +1,54 @@
+{
+  "mission_status": "completed",
+  "mission_id": "mindthus246-live-host",
+  "objective": "Verify that A preserves its user-assigned goal, responsibility and acceptance while real ordinary B/C chats deliver, review and repair a bounded artifact",
+  "acceptance": [
+    {
+      "id": "ART",
+      "description": "Real B artifact repaired and independently reviewed against the fixed contract"
+    },
+    {
+      "id": "HOST",
+      "description": "Real host send, observed origin, return and deduplicated import facts are recorded with capability limits"
+    },
+    {
+      "id": "FOCUS",
+      "description": "A decisions and next actions remain attached to its goal and acceptance across peer turns"
+    }
+  ],
+  "task_statuses": {
+    "T1": "completed",
+    "T2": "completed",
+    "T3": "completed"
+  },
+  "current_adoption": {
+    "delegation_id": "D2",
+    "feedback_id": "Fe98db77c4f9baf72",
+    "round": 2,
+    "contract_version": "host-normalizer-v1",
+    "artifact_ref": "/private/tmp/mindthus246-live-host-qtgzbf0z/frozen/r2",
+    "artifact_digest": "sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14",
+    "invalidated": false,
+    "adopted_at": "2026-11-17T16:16:03.106819+00:00"
+  },
+  "review_verdicts": [
+    {
+      "delegation": "D1",
+      "round": 1,
+      "verdict": "FAIL",
+      "digest": "sha256:03bc9a0581d509c7f233d27946d643a291c3d5fef6f6243aea519596b90a91cb"
+    },
+    {
+      "delegation": "D2",
+      "round": 2,
+      "verdict": "PASS",
+      "digest": "sha256:feaa037f61e6b97c7cbb7e03cad8de0f29c2b902db0cb3db231c8f925d752f14"
+    }
+  ],
+  "original_goal_and_acceptance_preserved": true,
+  "pending_feedback": 0,
+  "current_resume_gaps": [],
+  "host_capability_ref": "audit/host-capabilities.json",
+  "current_artifact_cases": 443,
+  "B_tests_independently_rerun": 381
+}
