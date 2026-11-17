@@ -204,5 +204,10 @@ Existing B1 regressions and source-Agent controlled behavior acceptance remain i
 Original independent C1 probes re-run: [probe-results-after.jsonl](reviews/r5/probe-results-after.jsonl).
 Original B1 probes re-run: [b1-probe-rerun.jsonl](reviews/r5/b1-probe-rerun.jsonl).
 Local verification: targeted Ran 71; evidence/H1 Ran 75; TPlan Ran 659 / skipped 1; packaging Ran 41 / skipped 1; full repository Ran 1412 / skipped 8. All OK. Commands and actual summaries: [verification.txt](reviews/r5/verification.txt).
-The next handoff is exact-head independent re-audit. PR remains draft and Issue open;
-real host acceptance and release permissions retain the existing boundary.
+Source independent re-audit: **PASS** for code head
+`223b7d2b99969c6a6ee9549730d2b8a2271d2401`; see [REVIEW-R5.md](REVIEW-R5.md).
+The source reran 71 targeted tests, both original C1 probes and all eight B1 probes,
+and added two independent checks for late current review FAIL and mixed split-AC
+successors. Exact-head CI ran 1412 tests, skipped 7, and succeeded.
+The next stage is the already-listed real host acceptance. PR remains draft and Issue
+open; release permissions retain the existing boundary.
