@@ -1613,4 +1613,3 @@ def validate_state(mission: Any) -> list[str]:
             ):
                 findings.append(f"collaboration command values are invalid: {command_id}")
     return findings
-
