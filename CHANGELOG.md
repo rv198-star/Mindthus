@@ -2,9 +2,13 @@
 
 ## Unreleased
 
-- Codex 的 TPlan 协同默认进入已安装的 Codex Dispatch。新 Mission 的 TPlan
-  runtime 为 `1.7.0`，可先登记派工、再凭原生回执绑定晚到的会话身份；
-  已在途的 Mission 沿用原 writer。
+## v1.15.0 — Codex Dispatch 与 TPlan 协同
+
+发布日期：2026-11-18。完整说明：[v1.15.0](docs/releases/v1.15.0.md)；[协同与派工图解](docs/guides/tplan-and-dispatch.md)。
+
+- 新增 Codex 专用 Dispatch：读取实际模型和推理档、比较含替补的整组方案、支持用户选择或自由修改，按确认范围派工。
+- Codex 内的 TPlan 协同默认调用 Dispatch；A 保管原任务、授权和验收，B 先实现自测，固定版本交给 A 或独立审计方。长任务在约定的检查点核对方向，日常偏差随交付回写。
+- TPlan runtime 为 `1.7.0`：可先登记派工，再凭原生回执绑定晚到的会话身份。已在途的 Mission 沿用原 writer。
 
 ## v1.14.0 — TPlan 多会话目标保持
 

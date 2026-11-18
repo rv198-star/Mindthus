@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="764" viewBox="0 0 920 764" role="img" aria-labelledby="title desc">
+<title id="title">谁来做、用什么模型，由谁决定？</title>
+<desc id="desc">Dispatch 可独立使用，也可由 Codex 中的 TPlan 协同调用。两种方式共用读模型清单、提出组合、确认和派工的路径，验收归 A。</desc>
+<rect x="0" y="0" width="920" height="764" rx="0" fill="#F9FBF8"/>
+<g font-family="PingFang SC, Noto Sans CJK SC, Microsoft YaHei, Helvetica Neue, sans-serif">
+<text x="40" y="39" font-size="16" font-weight="700" fill="#21556B" text-anchor="start">MINDTHUS  /  图 02</text>
+<text x="880" y="39" font-size="16" font-weight="700" fill="#21556B" text-anchor="end">v1.15.0  /  Codex Dispatch</text>
+<line x1="40" y1="55" x2="880" y2="55" stroke="#152F37" stroke-width="2" />
+<text x="40" y="104" font-size="36" font-weight="700" fill="#152F37" text-anchor="start">谁来做、用什么模型，由谁决定？</text>
+<text x="40" y="142" font-size="20" font-weight="400" fill="#405A60" text-anchor="start">选一个入口；两者使用同一次会话选择，由同一个主会话 A 负责。</text>
+<rect x="40" y="169" width="404" height="89" rx="5" fill="#E0EFEB"/>
+<text x="58" y="203" font-size="24" font-weight="700" fill="#126859" text-anchor="start">直接用 Dispatch</text>
+<text x="58" y="236" font-size="19" font-weight="400" fill="#405A60" text-anchor="start">边界清楚的一批实现或审计。</text>
+<rect x="476" y="169" width="404" height="89" rx="5" fill="#E1EBEF"/>
+<text x="494" y="203" font-size="24" font-weight="700" fill="#21556B" text-anchor="start">从 TPlan 协同进入</text>
+<text x="494" y="236" font-size="19" font-weight="400" fill="#405A60" text-anchor="start">已有长期目标、任务和验收条件。</text>
+<path d="M242 259V275H460M678 259V275H460V294" fill="none" stroke="#152F37" stroke-width="2"/>
+<path d="M460 298L454 286H466Z" fill="#152F37"/>
+<rect x="40" y="304" width="840" height="65" rx="3" fill="#EDF2EF"/>
+<text x="56" y="345" font-size="18" font-weight="700" fill="#126859" text-anchor="start">01</text>
+<text x="112" y="345" font-size="24" font-weight="700" fill="#152F37" text-anchor="start">读实际清单</text>
+<text x="324" y="344" font-size="19" font-weight="400" fill="#405A60" text-anchor="start">核对目标宿主的模型与推理档；能力不清时再查证。</text>
+<rect x="40" y="377" width="840" height="65" rx="3" fill="#F9FBF8"/>
+<text x="56" y="418" font-size="18" font-weight="700" fill="#126859" text-anchor="start">02</text>
+<text x="112" y="418" font-size="24" font-weight="700" fill="#152F37" text-anchor="start">比较整组方案</text>
+<text x="324" y="417" font-size="19" font-weight="400" fill="#405A60" text-anchor="start">列职责、首选与可用替补，说明取舍。</text>
+<rect x="40" y="450" width="840" height="65" rx="3" fill="#EDF2EF"/>
+<text x="56" y="491" font-size="18" font-weight="700" fill="#126859" text-anchor="start">03</text>
+<text x="112" y="491" font-size="24" font-weight="700" fill="#152F37" text-anchor="start">用户决定</text>
+<text x="324" y="490" font-size="19" font-weight="400" fill="#405A60" text-anchor="start">可选、可改、可暂缓；已有完整授权就沿用。</text>
+<rect x="40" y="523" width="840" height="65" rx="3" fill="#F9FBF8"/>
+<text x="56" y="564" font-size="18" font-weight="700" fill="#126859" text-anchor="start">04</text>
+<text x="112" y="564" font-size="24" font-weight="700" fill="#152F37" text-anchor="start">派工一次</text>
+<text x="324" y="563" font-size="19" font-weight="400" fill="#405A60" text-anchor="start">复用或新建会话。回执未知，先查原目标。</text>
+<line x1="40" y1="605" x2="880" y2="605" stroke="#152F37" stroke-width="2" />
+<text x="40" y="646" font-size="25" font-weight="700" fill="#152F37" text-anchor="start">成果回到哪里？</text>
+<text x="40" y="683" font-size="19" font-weight="700" fill="#126859" text-anchor="start">独立使用</text>
+<text x="159" y="683" font-size="19" font-weight="400" fill="#152F37" text-anchor="start">A 按本批约定验收。</text>
+<text x="40" y="721" font-size="19" font-weight="700" fill="#21556B" text-anchor="start">联合使用</text>
+<text x="159" y="721" font-size="19" font-weight="400" fill="#152F37" text-anchor="start">A 在原 TPlan 任务中采纳、返修或等待，并保留当前版本。</text>
+</g></svg>

@@ -48,7 +48,7 @@ Generated release packs include `codex-plugin/mindthus/` with `.codex-plugin/plu
 
 After installation, Codex should discover:
 
-以下清单对应当前源码；发行包以所选版本为准。Codex Dispatch 目前随本开发分支提供。
+以下清单对应当前源码；Codex Dispatch 自 `v1.15.0` 起随 Codex 插件包和便携 Skills 包提供。
 
 - `mindthus:using-mindthus`
 - `mindthus:sela`
@@ -61,7 +61,7 @@ After installation, Codex should discover:
 - `mindthus:tplan`
 - `mindthus:explain`
 - `mindthus:case-prep`
-- `mindthus:codex-dispatch`：可独立选模和派工；使用本开发分支的 TPlan 在 Codex 中协同时，主会话默认调用它决定如何使用会话，无需再点名。
+- `mindthus:codex-dispatch`：可独立选模和派工；在 Codex 中使用 TPlan 协同时，主会话默认调用它。见[场景与图解](../docs/guides/tplan-and-dispatch.md)。
 
 ## Verify
 

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="818" viewBox="0 0 920 818" role="img" aria-labelledby="title desc">
+<title id="title">同一份交付，按版本接力</title>
+<desc id="desc">示例：A 保管全量 101 条的目标；B 提交 v1，C 发现漏页。B 修正后交 v2，C 复审，A 采纳 v2。</desc>
+<rect x="0" y="0" width="920" height="818" rx="0" fill="#F9FBF8"/>
+<g font-family="PingFang SC, Noto Sans CJK SC, Microsoft YaHei, Helvetica Neue, sans-serif">
+<text x="40" y="39" font-size="16" font-weight="700" fill="#21556B" text-anchor="start">MINDTHUS  /  图 01</text>
+<text x="880" y="39" font-size="16" font-weight="700" fill="#21556B" text-anchor="end">v1.14.0  /  TPlan 协同</text>
+<line x1="40" y1="55" x2="880" y2="55" stroke="#152F37" stroke-width="2" />
+<text x="40" y="104" font-size="36" font-weight="700" fill="#152F37" text-anchor="start">同一份交付，按版本接力</text>
+<text x="40" y="142" font-size="20" font-weight="400" fill="#405A60" text-anchor="start">任务：导入接口里的全部 101 条记录。用户把目标和验收交给 A。</text>
+<rect x="60" y="170" width="232" height="64" rx="5" fill="#21556B"/>
+<text x="176" y="196" font-size="22" font-weight="700" fill="#FFFFFF" text-anchor="middle">A  主会话</text>
+<text x="176" y="219" font-size="16" font-weight="400" fill="#FFFFFF" text-anchor="middle">目标与验收</text>
+<line x1="176" y1="234" x2="176" y2="704" stroke="#B5C7C6" stroke-width="2" stroke-dasharray="4 7"/>
+<rect x="343" y="170" width="232" height="64" rx="5" fill="#126859"/>
+<text x="459" y="196" font-size="22" font-weight="700" fill="#FFFFFF" text-anchor="middle">B  实现会话</text>
+<text x="459" y="219" font-size="16" font-weight="400" fill="#FFFFFF" text-anchor="middle">实现与自测</text>
+<line x1="459" y1="234" x2="459" y2="704" stroke="#B5C7C6" stroke-width="2" stroke-dasharray="4 7"/>
+<rect x="627" y="170" width="232" height="64" rx="5" fill="#974426"/>
+<text x="743" y="196" font-size="22" font-weight="700" fill="#FFFFFF" text-anchor="middle">C  审计会话</text>
+<text x="743" y="219" font-size="16" font-weight="400" fill="#FFFFFF" text-anchor="middle">独立检查</text>
+<line x1="743" y1="234" x2="743" y2="704" stroke="#B5C7C6" stroke-width="2" stroke-dasharray="4 7"/>
+<text x="52" y="280" font-size="16" font-weight="700" fill="#405A60" text-anchor="start">01</text>
+<rect x="218.5" y="250" width="198" height="24" rx="0" fill="#F9FBF8"/>
+<text x="317.5" y="269" font-size="19" font-weight="400" fill="#21556B" text-anchor="middle">给出目标和验收条件</text>
+<line x1="181" y1="283" x2="454" y2="283" stroke="#21556B" stroke-width="2"/>
+<path d="M454,283 L442,278 L442,288 Z" fill="#21556B"/>
+<circle cx="176" cy="283" r="3.5" fill="#21556B"/>
+<text x="52" y="337" font-size="16" font-weight="700" fill="#405A60" text-anchor="start">02</text>
+<rect x="207.5" y="307" width="220" height="24" rx="0" fill="#F9FBF8"/>
+<text x="317.5" y="326" font-size="19" font-weight="400" fill="#126859" text-anchor="middle">交 v1 和自测结果</text>
+<line x1="454" y1="340" x2="181" y2="340" stroke="#126859" stroke-width="2"/>
+<path d="M181,340 L193,335 L193,345 Z" fill="#126859"/>
+<circle cx="459" cy="340" r="3.5" fill="#126859"/>
+<text x="52" y="394" font-size="16" font-weight="700" fill="#405A60" text-anchor="start">03</text>
+<rect x="305.5" y="364" width="308" height="24" rx="0" fill="#F9FBF8"/>
+<text x="459.5" y="383" font-size="19" font-weight="400" fill="#21556B" text-anchor="middle">交固定的 v1 与原验收条件</text>
+<line x1="181" y1="397" x2="738" y2="397" stroke="#21556B" stroke-width="2"/>
+<path d="M738,397 L726,392 L726,402 Z" fill="#21556B"/>
+<circle cx="176" cy="397" r="3.5" fill="#21556B"/>
+<text x="52" y="451" font-size="16" font-weight="700" fill="#405A60" text-anchor="start">04</text>
+<rect x="283.5" y="421" width="352" height="24" rx="0" fill="#F9FBF8"/>
+<text x="459.5" y="440" font-size="19" font-weight="700" fill="#974426" text-anchor="middle">v1 需返修：只读到 100 条</text>
+<line x1="738" y1="454" x2="181" y2="454" stroke="#974426" stroke-width="2"/>
+<path d="M181,454 L193,449 L193,459 Z" fill="#974426"/>
+<circle cx="743" cy="454" r="3.5" fill="#974426"/>
+<line x1="40" y1="468" x2="880" y2="468" stroke="#CFD9D6" stroke-width="2" stroke-dasharray="2 5"/>
+<text x="52" y="508" font-size="16" font-weight="700" fill="#405A60" text-anchor="start">05</text>
+<rect x="251.5" y="478" width="132" height="24" rx="0" fill="#F9FBF8"/>
+<text x="317.5" y="497" font-size="19" font-weight="400" fill="#21556B" text-anchor="middle">派回漏页问题</text>
+<line x1="181" y1="511" x2="454" y2="511" stroke="#21556B" stroke-width="2"/>
+<path d="M454,511 L442,506 L442,516 Z" fill="#21556B"/>
+<circle cx="176" cy="511" r="3.5" fill="#21556B"/>
+<text x="52" y="565" font-size="16" font-weight="700" fill="#405A60" text-anchor="start">06</text>
+<rect x="207.5" y="535" width="220" height="24" rx="0" fill="#F9FBF8"/>
+<text x="317.5" y="554" font-size="19" font-weight="400" fill="#126859" text-anchor="middle">交 v2：已读到末页</text>
+<line x1="454" y1="568" x2="181" y2="568" stroke="#126859" stroke-width="2"/>
+<path d="M181,568 L193,563 L193,573 Z" fill="#126859"/>
+<circle cx="459" cy="568" r="3.5" fill="#126859"/>
+<text x="52" y="622" font-size="16" font-weight="700" fill="#405A60" text-anchor="start">07</text>
+<rect x="382.5" y="592" width="154" height="24" rx="0" fill="#F9FBF8"/>
+<text x="459.5" y="611" font-size="19" font-weight="400" fill="#21556B" text-anchor="middle">交 v2 复审</text>
+<line x1="181" y1="625" x2="738" y2="625" stroke="#21556B" stroke-width="2"/>
+<path d="M738,625 L726,620 L726,630 Z" fill="#21556B"/>
+<circle cx="176" cy="625" r="3.5" fill="#21556B"/>
+<text x="52" y="679" font-size="16" font-weight="700" fill="#405A60" text-anchor="start">08</text>
+<rect x="316.5" y="649" width="286" height="24" rx="0" fill="#F9FBF8"/>
+<text x="459.5" y="668" font-size="19" font-weight="700" fill="#974426" text-anchor="middle">v2 通过：101 条齐全</text>
+<line x1="738" y1="682" x2="181" y2="682" stroke="#974426" stroke-width="2"/>
+<path d="M181,682 L193,677 L193,687 Z" fill="#974426"/>
+<circle cx="743" cy="682" r="3.5" fill="#974426"/>
+<rect x="40" y="728" width="840" height="59" rx="5" fill="#E2ECE8"/>
+<text x="62" y="766" font-size="23" font-weight="700" fill="#152F37" text-anchor="start">收口：A 采纳 v2，并把复审结论记回原任务。</text>
+</g></svg>
