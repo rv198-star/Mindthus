@@ -65,6 +65,52 @@ generation (shown in `snapshot.get`).
   legitimate successor, not an older round picked by numeric max.
 - Creates one `prepared` intent; does not send; preserves A focus.
 
+### Native target binding (optional capability)
+
+The base command envelope and known-target payloads remain valid. Use
+`tplan.collaboration.native_binding.v0.1` as advertised by the Mission's selected
+writer (also returned as `native_binding_capability` by `snapshot.get`). The new
+writer has generation `1.7.0`. Keep an old Mission on its recorded runtime; do
+not adopt or upgrade its writer in place.
+
+- `enable` may register a planned participant with `thread_ref: null`, the expected
+  `host_ref`, the responsibility and explicit communication authorization references.
+  `delegation.prepare` and `feedback.resolve.next_delegation` accept optional
+  `new_participant` in that same shape, for the new intent's assignee. This registers
+  the participant and prepares the intent atomically. Predeclare a logical reviewer
+  before preparing work that requires that reviewer. An unbound role cannot hold
+  two in-flight intents. A prepared intent retains its original target reference.
+- `dispatch.claim` payload: `coordinator_generation`, `intent_id`, `attempt_ref`.
+  A stable, unique attempt reference identifies the native brief. Atomically change
+  an untouched prepared intent to unknown send and execution before the one host
+  call. Only a **fresh committed** claim in the current dispatch permits that
+  call. Replays, command lookups, an uncertain claim result and restart use the
+  original target for reconciliation; they grant no new send. The state machine
+  never sends to the host itself.
+- For a claimed intent, `dispatch.record` additionally requires its `attempt_ref`.
+  Record pending native references with both states unknown. A confirmed receipt
+  requires new `native_refs` and `target_binding: {host_ref, thread_ref, evidence_ref}`.
+  A supplies evidence from the original host and exact attempt. A real native
+  thread ref must match the planned host and any preexisting binding. The first
+  confirmation of a planned participant atomically sets its native thread and
+  saves the originating intent and evidence. Further confirmations must match it.
+  Pending creation refs belong in `native_refs`, never in `thread_ref`.
+  Use A's observed receipt time for `observed_at`, independent of the target's clock.
+- Unknown keeps possession of the task/write scope. A may establish `not_sent`
+  only with native non-delivery evidence and `execution_state: not_started`.
+  If already sent, reconcile actual terminal execution and inspect partial outputs.
+  Prepare a strictly later round for any authorized replacement. Claim and
+  receipt history retain the original attempt and native evidence. For a change
+  of required reviewer, carry the same fixed artifact and acceptance scope into
+  the authorized successor contract; do not rewrite the historical reviewer.
+- For claimed work, link feedback only after confirmed dispatch and source
+  host/chat and assignee or designated reviewer match. A may submit the same
+  native event again with a fresh command ID and identical facts after binding;
+  this can link a pending record without changing its identity. A conflicting
+  reuse of a source event is rejected. Unassociated or superseded feedback
+  cannot adopt or change current work; historical reviews may retain their old
+  version references.
+
 ### dispatch.record
 `payload`: `coordinator_generation`, `intent_id`, `send_state`, `execution_state`,
 `stop_requested`, `native_refs`, `observed_at`, `reason`.

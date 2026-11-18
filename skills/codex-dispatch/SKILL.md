@@ -13,6 +13,17 @@ evidence and design deviations back with the result.
 
 ## Mainline
 
+At entry, distinguish a standalone batch from a TPlan collaboration handoff.
+For the handoff, consume A's existing Mission, pinned writer, snapshot, contract
+and authorization using the adapter that invoked this skill. Continue below in
+the same coordinator, including the live model checks. Reuse an authorized full
+choice and any existing intent; reconcile a previously claimed or sent intent.
+Prepare, claim and record through that Mission's protocol before/after the host
+call as directed by the adapter. Use its record for recovery instead of a
+second dispatch log. Do not re-enter TPlan startup or ask for the same choice
+again. If the referenced Mission or writer is unavailable, hold the affected
+dispatch. A standalone invocation does not open a Mission.
+
 1. **Pick the carrier and read its live inventory first.** Use an in-chat
    SubAgent for a short investigation under the host's delegation rules. Use
    independent Codex chats for sustained design, implementation, repair or

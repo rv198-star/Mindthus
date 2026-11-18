@@ -1732,6 +1732,20 @@ class PackagingDocsTests(unittest.TestCase):
             capture_output=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
+        tplan = skills_root / "tplan"
+        self.assertIn("resources/collaboration.md", (tplan / "SKILL.md").read_text(encoding="utf-8"))
+        self.assertIn("platforms/codex.md#ordinary-multi-session-collaboration",
+                      (tplan / "resources/collaboration.md").read_text(encoding="utf-8"))
+        adapter = (tplan / "resources/platforms/codex.md").read_text(encoding="utf-8")
+        self.assertIn("codex-dispatch/SKILL.md", adapter)
+        with tempfile.TemporaryDirectory() as work:
+            smoke = subprocess.run(
+                [sys.executable, str(tplan / "scripts/collaboration_example.py"),
+                 "--work-dir", str(Path(work).resolve() / "mission-smoke")],
+                cwd=work, text=True, capture_output=True, timeout=20,
+            )
+            self.assertEqual(smoke.returncode, 0, smoke.stderr + smoke.stdout)
+            self.assertEqual(json.loads(smoke.stdout)["task_T1"], "completed")
 
     def test_release_pack_includes_cinematic_profile_adapters_and_atlas_runtime(self):
         script = REPO / "scripts" / "build-release-pack.py"

@@ -2,7 +2,9 @@
 
 ## Unreleased
 
-（下一次开发更新）
+- Codex 的 TPlan 协同默认进入已安装的 Codex Dispatch。新 Mission 的 TPlan
+  runtime 为 `1.7.0`，可先登记派工、再凭原生回执绑定晚到的会话身份；
+  已在途的 Mission 沿用原 writer。
 
 ## v1.14.0 — TPlan 多会话目标保持
 

@@ -90,7 +90,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
         }
         return collaboration_runtime.execute(self.mission, request, principal=self.principal)
 
-    def enable(self):
+    def enable(self, implementation_thread="thread-b"):
         response, code = self.mutate("enable", {
             "coordinator": {
                 "thread_ref": "thread-a", "host_ref": "local",
@@ -98,7 +98,7 @@ class CollaborationRuntimeTests(unittest.TestCase):
                 "communication_authorization_refs": ["user-turn-1"],
             },
             "participants": [
-                {"participant_id": "B", "thread_ref": "thread-b", "host_ref": "local",
+                {"participant_id": "B", "thread_ref": implementation_thread, "host_ref": "local",
                  "responsibility": "Implement and report bounded work",
                  "communication_authorization_refs": ["user-turn-1"]},
                 {"participant_id": "C", "thread_ref": "thread-c", "host_ref": "local",
@@ -130,6 +130,129 @@ class CollaborationRuntimeTests(unittest.TestCase):
         response, code = self.mutate("delegation.prepare", self.delegation_payload(**kwargs))
         self.assertEqual(code, 0, response)
         return response
+
+    def native_receipt(self, *, intent="I1", attempt="attempt-1", send="confirmed",
+                       execution="completed", thread="thread-b", host="local", refs=None,
+                       observed_at=None):
+        payload = {
+            "coordinator_generation": 1, "intent_id": intent, "attempt_ref": attempt,
+            "send_state": send, "execution_state": execution, "stop_requested": False,
+            "native_refs": refs if refs is not None else ["native-turn-1"],
+            "observed_at": observed_at or runtime.now_iso(), "reason": "Host simulator observation",
+        }
+        if send == "confirmed":
+            payload["target_binding"] = {
+                "host_ref": host, "thread_ref": thread, "evidence_ref": "native-evidence-1",
+            }
+        return self.mutate("dispatch.record", payload)
+
+    def claim_and_simulate_call(self, calls, intent="I1", attempt="attempt-1", tool="send_message_to_thread"):
+        payload = {"coordinator_generation": 1, "intent_id": intent, "attempt_ref": attempt}
+        snapshot = self.snapshot()["data"]["expected_snapshot"]
+        response, code = self.mutate("dispatch.claim", payload, attempt, snapshot)
+        self.assertEqual((code, response["status"]), (0, "committed"), response)
+        claims = [response, self.mutate("dispatch.claim", payload, attempt, snapshot)[0]]
+        for claim in claims:
+            if claim["status"] == "committed":
+                calls.append((tool, intent, attempt))
+        self.assertEqual(claims[1]["status"], "replayed")
+        denied, code = self.mutate("dispatch.claim", {**payload, "attempt_ref": attempt + "-second"})
+        self.assertEqual(denied["code"], "command_conflict")
+        self.assertNotEqual(code, 0)
+
+    def test_joint_known_chat_claims_once_and_links_only_attributed_receipts(self):
+        self.enable()
+        self.prepare()
+        calls = []
+        self.claim_and_simulate_call(calls)
+        early = self.feedback(source="first-result", artifact="h1")
+        self.assertEqual(early["data"]["association_status"], "needs_association")
+        refused, _ = self.resolve(feedback_id=early["data"]["feedback_id"], review=False)
+        self.assertEqual(refused["code"], "association_required")
+        for receipt in ({"thread": "wrong-chat"}, {"host": "wrong-host"}, {"attempt": "other-attempt"}):
+            rejected, code = self.native_receipt(**receipt)
+            self.assertNotEqual(code, 0, rejected)
+            self.assertEqual(rejected["code"], "command_conflict")
+        ok, code = self.native_receipt()
+        self.assertEqual(code, 0, ok)
+        late_receipt, _ = self.native_receipt(observed_at="2020-01-01T00:00:00+00:00")
+        self.assertEqual(late_receipt["code"], "command_conflict")
+        reconsidered = self.feedback(source="first-result", artifact="h1")
+        self.assertEqual(reconsidered["data"]["feedback_id"], early["data"]["feedback_id"])
+        self.assertEqual(reconsidered["data"]["association_status"], "linked")
+        accepted, code = self.resolve(feedback_id=reconsidered["data"]["feedback_id"], review=False, complete=False)
+        self.assertEqual(code, 0, accepted)
+        self.assertEqual(calls, [("send_message_to_thread", "I1", "attempt-1")])
+
+    def test_joint_create_reconciles_pending_handle_and_binds_only_one_thread(self):
+        self.enable(implementation_thread=None)
+        self.prepare()
+        calls = []
+        self.claim_and_simulate_call(calls, tool="create_thread")
+        busy, _ = self.mutate("delegation.prepare", self.delegation_payload(
+            task_id="T2", delegation_id="D2", intent_id="I2",
+        ))
+        self.assertEqual(busy["code"], "execution_in_flight")
+        pending, code = self.native_receipt(send="unknown", execution="unknown", refs=["client-setup-1"])
+        self.assertEqual(code, 0, pending)
+        row = self.snapshot()["data"]["resume"]["external_pending"][0]
+        self.assertEqual((row["target_thread_ref"], row["native_refs"]), (None, ["client-setup-1"]))
+        for receipt in ({"thread": "client-setup-1"}, {"thread": "thread-c"}, {"host": "wrong-host"}):
+            rejected, code = self.native_receipt(**receipt)
+            self.assertNotEqual(code, 0, rejected)
+        too_soon, _ = self.native_receipt(send="unknown", execution="failed")
+        self.assertEqual(too_soon["code"], "association_required")
+        bound, code = self.native_receipt(execution="running")
+        self.assertEqual(code, 0, bound)
+        repeated, code = self.native_receipt(execution="completed")
+        self.assertEqual(code, 0, repeated)
+        wrong, _ = self.native_receipt(thread="new-claimed-id")
+        self.assertEqual(wrong["code"], "command_conflict")
+        collab = self.snapshot()["data"]["collaboration"]
+        self.assertEqual(collab["participants"]["B"]["thread_ref"], "thread-b")
+        self.assertEqual(collab["participants"]["B"]["native_binding"]["intent_id"], "I1")
+        self.assertIsNone(collab["intents"]["I1"]["target_thread_ref"])
+        self.assertEqual(collab["intents"]["I1"]["native_refs"],
+                         ["client-setup-1", "native-turn-1", "native-evidence-1"])
+        self.assertEqual(calls, [("create_thread", "I1", "attempt-1")])
+
+        # The bound formal chat can be reused on a later authorized round.
+        self.prepare(delegation_id="D2", intent_id="I2", round_no=2)
+        self.claim_and_simulate_call(calls, intent="I2", attempt="attempt-2")
+        completed, code = self.native_receipt(intent="I2", attempt="attempt-2")
+        self.assertEqual(code, 0, completed)
+        old = self.feedback(source="old-round")
+        decision, _ = self.resolve(feedback_id=old["data"]["feedback_id"], review=False, complete=False)
+        self.assertEqual(decision["code"], "association_required")
+        new = self.feedback(source="current-round", delegation_id="D2", round_no=2)
+        self.assertEqual(new["data"]["association_status"], "linked")
+
+    def test_joint_proven_non_delivery_allows_authorized_fallback_only(self):
+        self.enable(implementation_thread=None)
+        self.prepare()
+        calls = []
+        self.claim_and_simulate_call(calls, tool="create_thread")
+        fallback = self.delegation_payload(delegation_id="D2", intent_id="I2", round_no=2)
+        fallback["assignee_id"] = "B-backup"
+        fallback["new_participant"] = {
+            "participant_id": "B-backup", "thread_ref": None, "host_ref": "local",
+            "responsibility": "Implement on confirmed primary refusal",
+            "communication_authorization_refs": ["user-authorized-fallback"],
+        }
+        delayed, code = self.mutate("delegation.prepare", fallback)
+        self.assertNotEqual(code, 0)
+        self.assertEqual(delayed["code"], "execution_in_flight")
+        self.assertNotIn("B-backup", self.snapshot()["data"]["collaboration"]["participants"])
+        no_proof, _ = self.native_receipt(send="not_sent", execution="not_started", refs=[])
+        self.assertEqual(no_proof["code"], "invalid_request")
+        failed, code = self.native_receipt(send="not_sent", execution="not_started", refs=["native-refusal"])
+        self.assertEqual(code, 0, failed)
+        created, code = self.mutate("delegation.prepare", fallback)
+        self.assertEqual(code, 0, created)
+        self.claim_and_simulate_call(calls, intent="I2", attempt="attempt-2", tool="create_thread")
+        wrong_primary, _ = self.native_receipt()
+        self.assertEqual(wrong_primary["code"], "command_conflict")
+        self.assertEqual(calls, [("create_thread", "I1", "attempt-1"), ("create_thread", "I2", "attempt-2")])
 
     def dispatch(self, intent_id="I1", send_state="confirmed", execution_state="running", stop_requested=False):
         response, code = self.mutate("dispatch.record", {

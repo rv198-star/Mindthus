@@ -14,16 +14,26 @@ When the user has already authorized an actual division of work, A may enable th
 extension without asking for a mode phrase. Do not create collaboration from mere
 mentions of another session, reference reading, or unassociated incoming text.
 
-1. Run `snapshot.get`. Read the original objective, A's responsibility, acceptance
+On Codex, use the [Codex adapter](platforms/codex.md#ordinary-multi-session-collaboration)
+to enter the installed Dispatch for actual collaboration. Its selection and dispatch
+steps use this Mission's existing contract and authority. On other hosts, use the
+ordinary host instructions below. Without collaboration, stay on the ordinary
+TPlan path.
+
+1. Run `snapshot.get` using the Mission's pinned writer. Read the original objective, A's responsibility, acceptance
    gaps, current focus, pending feedback, external work, waiting conditions, and next
    action.
 2. Use `enable` with the coordinator, ordinary participant references, and the exact
    user authorization references.
 3. Use `delegation.prepare` for an existing non-terminal task. This records a stable
    intent and does not send anything.
-4. Send the normal work instruction through the host's existing thread tool. Record
-   the observed native reference through `dispatch.record`; leave the send unknown if
-   the tool result is unknown.
+4. Send through the host's existing thread tool. For a one-shot delivery or a
+   target whose ID arrives later, use `dispatch.claim` before the host call and
+   `dispatch.record` after it, on a runtime that advertises native binding.
+   The only send permit is the fresh successful claim. Pending references and
+   timeouts stay in flight; confirm from host evidence. A formal thread ref can
+   bind a logical participant once. Ordinary known-target hosts may keep their
+   existing recording path.
 5. Read B/C replies. Use `feedback.record` to preserve source, content digest, optional
    artifact, and task/round/contract association. A missing association remains pending;
    ask one targeted question while independent work continues.

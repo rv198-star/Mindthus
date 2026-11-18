@@ -78,9 +78,10 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("TPlan runtime generation 保持 `1.5.4`",
                       (REPO / "docs/releases/v1.13.0.md").read_text(encoding="utf-8"))
         runtime_manifest = json.loads(tplan_manifest)
-        self.assertEqual(runtime_manifest["package_version"], "1.6.0")
-        self.assertEqual(runtime_manifest["source_id"], "mindthus-tplan-v1.6.0")
-        for capability in ("atomic_command_results", "task_scoped_owner_gate", "tplan.collaboration.v0.1"):
+        self.assertEqual(runtime_manifest["package_version"], "1.7.0")
+        self.assertEqual(runtime_manifest["source_id"], "mindthus-tplan-v1.7.0")
+        for capability in ("atomic_command_results", "task_scoped_owner_gate", "tplan.collaboration.v0.1",
+                           "tplan.collaboration.native_binding.v0.1"):
             self.assertIn(capability, runtime_manifest["capabilities"])
         for path in ("scripts/query_runtime.py", "scripts/tplan_h1.py", "scripts/collaboration_runtime.py"):
             self.assertIn(path, runtime_manifest["fingerprint_files"])
