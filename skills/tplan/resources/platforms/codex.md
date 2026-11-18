@@ -122,10 +122,57 @@ host also terminates/isolates pre-existing mutable executions and protects hook 
 ## Ordinary Multi-Session Collaboration
 
 Only the coordinator session A runs TPlan. Participants B/C may be ordinary Codex
-threads with no TPlan installation or total-Mission access. A reads the Mission's
-collaboration snapshot, prepares a bounded intent, sends a normal work instruction with
-the existing thread tool, records the returned thread/message reference, and later reads
-normal replies into `feedback.record`.
+threads with no TPlan installation or total-Mission access.
+
+When A begins or resumes actual Codex collaboration, load and execute the installed
+`codex-dispatch` entrypoint in A's own context, even if the user named only TPlan.
+Use the enabled skill path from the current host's skill inventory/context. In a
+co-installed Mindthus pack it is the `codex-dispatch/SKILL.md` sibling of the
+selected TPlan root (plugin, portable pack or development checkout). Where the host
+supports it, use `skills/list` for the target workspace to resolve a separately
+installed copy. Read the selected file and its relevant resources. Do not choose an
+arbitrary cache or Git copy when several definitions exist. If unavailable or
+ambiguous, report the gap and hold the affected dispatch while continuing other work.
+Merely mentioning the skill is not an invocation.
+
+Pass A's fixed Mission/writer, current collaboration snapshot, delegation/task scope,
+contract/version and existing human authorization. Dispatch owns the carrier, target
+inventory, model/effort and eligible substitutes, the one user choice (or validation
+of a complete authorized choice), and the native tool sequence. A remains the only
+writer and acceptance owner throughout. Enable new collaboration after the user
+authorizes the work. Reuse a prepared intent for that same authorized recipient,
+contract and brief; use the existing result when a send was already attempted.
+Use one selection and host operation per approved attempt. This is a handoff within
+A's current turn; the Dispatch inbound path does not restart TPlan.
+
+On a writer advertising `tplan.collaboration.native_binding.v0.1`, each independent
+chat dispatch follows the [collaboration protocol](../collaboration-protocol.md):
+
+1. Register a known participant with native host/thread, or a planned participant
+   with the authorized host and `thread_ref: null`. Prepare the delegation and intent
+   before calling the host. Commit `dispatch.claim` with a unique `attempt_ref`
+   and include that recognizable marker in the host brief. Only a fresh `committed`
+   claim observed by this ongoing dispatch authorizes its one host call. A replay,
+   historical command result or a recovered snapshot is used only for reconciliation.
+2. For a known chat use the authorized `send_message_to_thread`; for a new chat
+   use `create_thread` with the brief as the initial prompt. A `clientThreadId`,
+   setup status or transport timeout is not a `threadId`. Persist the pending
+   reference as a native reference when present, with send and execution both unknown.
+3. Verify actual host, formal `threadId` and delivery of this exact attempt in the
+   tool response or by reading the original target; then record confirmation with
+   the attributed target and native evidence. An immediate ready response can be
+   bound in the first receipt. For queued creation use host records to locate the
+   formal chat and match the marker/first prompt; neither a similar title nor an idle
+   snapshot is sufficient. Once bound, use the formal ID for waits and reads. Import
+   feedback only against its verified source, delegation, round and version.
+
+An in-flight Mission pinned to an earlier writer stays on that writer. It may use
+Dispatch for a known target with the existing protocol: if sending a fresh prepared
+intent, first commit `dispatch.record` as unknown using the exact snapshot and a
+unique command ID, then send once from that fresh commit and reconcile as usual.
+Already attempted intents are read/reconciled only. Hold unbound creation on this
+writer, and disclose the missing capability; do not silently swap its runtime or
+dispatch outside the Mission. A new Mission on the newer writer supports both paths.
 
 When a send result is unknown, keep the original intent and query/read that same target
 session. Do not create a second execution for the same task or write scope. A host that

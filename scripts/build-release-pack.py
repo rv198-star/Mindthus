@@ -10,7 +10,7 @@ import shutil
 from pathlib import Path
 
 
-VERSION = "1.14.0"
+VERSION = "1.15.0"
 EXCLUDED_DIRS = {
     "__pycache__",
     ".pytest_cache",
@@ -26,6 +26,7 @@ EXCLUDED_NAME_SUBSTRINGS = ("ab_run", "pilot")
 JSONL_ALLOWLIST = {Path("tplan/templates/evidence.jsonl")}
 TEXT_REWRITE_SUFFIXES = {".md"}
 SKILL_NAMES = ("3l5s", "sra", "sela", "mpg", "edsp", "wae", "tvg", "tplan", "using-mindthus", "case-prep", "explain")
+CODEX_ONLY_SKILLS = frozenset({"codex-dispatch"})
 LICENSE_FILES = ("LICENSE", "COMMERCIAL-LICENSE.md")
 CODEX_PLUGIN_VISUAL_ASSETS = (
     Path("assets/mindthus-icon.svg"),
@@ -124,12 +125,13 @@ def copy_tree_filtered(
     replacements: dict[str, str] | None = None,
     binary_asset_allowlist: set[Path] | None = None,
     jsonl_allowlist: set[Path] | None = None,
+    exclude_roots: frozenset[str] = frozenset(),
 ) -> None:
     binary_asset_allowlist = binary_asset_allowlist or set()
     jsonl_allowlist = JSONL_ALLOWLIST if jsonl_allowlist is None else jsonl_allowlist
     for item in sorted(source.rglob("*")):
         rel = item.relative_to(source)
-        if any(part in EXCLUDED_DIRS for part in rel.parts):
+        if rel.parts[0] in exclude_roots or any(part in EXCLUDED_DIRS for part in rel.parts):
             continue
         lowered = rel.as_posix().lower()
         if any(token in lowered for token in EXCLUDED_NAME_SUBSTRINGS):
@@ -267,7 +269,7 @@ def build_claude_code(root: Path, repo: Path, skills_dir: Path, methodologies_di
             "author": {"name": "Mindthus"},
         },
     )
-    copy_tree_filtered(skills_dir, plugin_root / "skills")
+    copy_tree_filtered(skills_dir, plugin_root / "skills", exclude_roots=CODEX_ONLY_SKILLS)
     copy_using_mindthus_conditional_primitives(
         methodologies_dir,
         plugin_root / "skills" / "using-mindthus",
@@ -280,7 +282,7 @@ def build_claude_code(root: Path, repo: Path, skills_dir: Path, methodologies_di
 
 def build_claude_code_skills(root: Path, repo: Path, skills_dir: Path, methodologies_dir: Path) -> None:
     platform_root = root / "claude-code"
-    copy_tree_filtered(skills_dir, platform_root / "skills")
+    copy_tree_filtered(skills_dir, platform_root / "skills", exclude_roots=CODEX_ONLY_SKILLS)
     copy_using_mindthus_conditional_primitives(
         methodologies_dir,
         platform_root / "skills" / "using-mindthus",
@@ -372,7 +374,7 @@ def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_d
             },
         },
     )
-    for skill_name in SKILL_NAMES:
+    for skill_name in (*SKILL_NAMES, *sorted(CODEX_ONLY_SKILLS)):
         jsonl_allowlist = {Path("templates/evidence.jsonl")} if skill_name == "tplan" else set()
         copy_tree_filtered(skills_dir / skill_name, plugin_root / "skills" / skill_name, jsonl_allowlist=jsonl_allowlist)
     copy_file_filtered(skills_dir / "runtime_bootstrap.py", plugin_root / "skills" / "runtime_bootstrap.py")
@@ -393,7 +395,10 @@ def build_codex_plugin(root: Path, repo: Path, skills_dir: Path, methodologies_d
 def build_opencode(root: Path, repo: Path, skills_dir: Path, agents_file: Path, methodologies_dir: Path) -> None:
     platform_root = root / "opencode"
     replacements = skill_path_replacements(".opencode/skills/mindthus")
-    copy_tree_filtered(skills_dir, platform_root / ".opencode" / "skills" / "mindthus", replacements)
+    copy_tree_filtered(
+        skills_dir, platform_root / ".opencode" / "skills" / "mindthus", replacements,
+        exclude_roots=CODEX_ONLY_SKILLS,
+    )
     copy_using_mindthus_conditional_primitives(
         methodologies_dir,
         platform_root / ".opencode" / "skills" / "mindthus" / "using-mindthus",

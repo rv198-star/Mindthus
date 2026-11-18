@@ -62,15 +62,15 @@ Lite Quickstart Recipe: Prefer these recipes over script-help exploration. `scri
 
 ### Optional Collaboration
 
-`scripts/collaboration_runtime.py` keeps A state; B/C ordinary. See `resources/collaboration.md`.
+A runs `collaboration_runtime.py`; B/C stay ordinary. In Codex collaboration,
+run installed `codex-dispatch` via [collaboration](resources/collaboration.md).
 
 ### Shared Risk Context
 
-execution units do not read each other's task logs. For blockers, degradation, evidence risk,
-abnormal cost or recovery affecting another unit's risk-adjusted value, publish
-`shared_context.risk_signals` via `scripts/record_risk_context.py`:
-`risk_context_update` or `risk_context_recovery`. High-impact decisions with active
-shared risk must expose `risk_assessment`.
+execution units do not read each other's task logs. When risk changes another
+unit's risk-adjusted value, use `scripts/record_risk_context.py` to publish
+`shared_context.risk_signals` (`risk_context_update` or `risk_context_recovery`).
+High-impact decisions with active shared risk expose `risk_assessment`.
 
 ### Mission Shared Context Memory
 
@@ -102,9 +102,9 @@ main agent must verify, merge, decide, and write. SubAgents must not mutate file
 
 ### Anti-Spiral Gate
 
-Activate Anti-Spiral when local repair may be replacing Mission progress: third touches,
-worsening feedback, additive layering, or weak evidence delta. This gate can route back
-to `3l5s`, `wae`, subtraction, rollback, or a stop.
+At checkpoints or re-entry, check for drift: compare the goal with fresh evidence.
+Third touches, worse feedback, added layers or weak gains trigger Anti-Spiral:
+name the next evidence gain, reroute, simplify, roll back or stop.
 
 ### Alignment Gate
 

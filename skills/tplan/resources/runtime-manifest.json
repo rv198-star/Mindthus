@@ -1,7 +1,7 @@
 {
   "schema_version": "tplan.runtime_manifest.v0.1",
-  "package_version": "1.6.0",
-  "source_id": "mindthus-tplan-v1.6.0",
+  "package_version": "1.7.0",
+  "source_id": "mindthus-tplan-v1.7.0",
   "capability_versions": {
     "mission": "tplan.v0.1",
     "execution_trace": "tplan.execution_trace.v0.1",
@@ -15,7 +15,8 @@
     "progress_view": "tplan.progress_view.v1",
     "command_results": "tplan.command_results.v0.1",
     "human_control": "tplan.h1.v0.1",
-    "collaboration": "tplan.collaboration.v0.1"
+    "collaboration": "tplan.collaboration.v0.1",
+    "collaboration_native_binding": "tplan.collaboration.native_binding.v0.1"
   },
   "capabilities": [
     "atomic_mission_mutation",
@@ -35,7 +36,8 @@
     "task_scoped_owner_gate",
     "scoped_owner_execution_core",
     "scoped_task_completion",
-    "tplan.collaboration.v0.1"
+    "tplan.collaboration.v0.1",
+    "tplan.collaboration.native_binding.v0.1"
   ],
   "required_scripts": [
     "scripts/tplan_runtime.py",

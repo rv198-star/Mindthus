@@ -63,6 +63,7 @@ Mindthus 不会要求 agent 每次都跑完整流程。它更像一组判断刹�
 - [`WAE / Workflow-Agentic-Evidence`](docs/methodologies/wae.md)：脚本、agent、review gate 都在管事时，分清流程、判断和证据各该控制哪一段。
 - [`TVG / Thinking Value-Gain`](docs/methodologies/tvg.md)：产物已经成形但价值薄时，补判断、取舍、证据边界、失败路径和下游可用性。
 - [`TPlan / OKR-Runtime`](docs/methodologies/tplan.md)：长任务需要持续对齐目标、证据、任务状态和验收责任时，用它保持 Mission 不漂移。
+- [`Codex Dispatch / 会话派工`](docs/guides/tplan-and-dispatch.md)：一批工作可直接选模型和会话；在 Codex 的 TPlan 协同模式中会默认调用。图解展示谁执行、谁审计，以及一次返修怎样回到原任务。
 - [`Anti-Spiral / 反螺旋自检`](docs/methodologies/anti-spiral-self-audit.md)：同一个局部反复修时，先问是不是目标、素材或路径错了，而不是继续加层。
 - [`Explain / 解释与表达`](skills/explain/SKILL.md)：Mindthus 默认的人向结果交付 Skill。当前 Agent 使用 clarity 模式讲清结果，保留原判断与证据；brief / ELI5 / audience / HTML 是按需模式。
 
@@ -127,16 +128,16 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
-当前已发布 Stable 是 `v1.14.0`。本版新增 **TPlan 多会话协同**：主会话 A 持续围绕用户目标、职责和验收作判断，其他会话以普通工作说明和自然语言回复参与；反馈处理后，A 按当前目标差距继续工作。
+当前已发布 Stable 是 `v1.15.0`。本版新增 **Codex Dispatch**：它可以独立给一批工作选会话、模型和推理档，也会由 Codex 中的 TPlan 协同默认调用。用户确认一次，主会话按原目标和授权派工、验收。
 
-**升级建议**：使用设计、开发、审计等多会话分工，或需要 TPlan 查询与命令接口的用户建议升级。只有 A 需要启用 TPlan；用户说明目标、分工和通信授权即可，无需协同模式口令。
+**怎么用**：普通 A/B/C 协同由 A 管目标和验收，B 实现、自测并交出固定版本，C 再独立审计。一次性选模派工可以只用 Dispatch；跨轮次返修、暂停或恢复则交给 TPlan。参见[两张图看懂实际分工、派工步骤和适用场景](docs/guides/tplan-and-dispatch.md)。
 
-普通 A/B/C 的开发—审计—返修闭环已通过真实宿主验收；目标保持、重复/乱序回报、当前版本验收、Guard 和恢复有相应行为或工程证据。宿主发送去重、取消和物理隔离按实际能力使用。详见 [v1.14.0 发布说明](docs/releases/v1.14.0.md)。
+实际模型清单、独立技能发现和向既有会话派工已在真实宿主验证；新建会话晚到 ID 的路径在两个 Codex 包中回放。详见 [v1.15.0 发布说明](docs/releases/v1.15.0.md)。
 
-**升级与发行**：TPlan runtime generation 更新为 `1.6.0`。已固定旧运行时的 Mission 继续使用原版本；新 Mission 使用本版，升级前保留旧版本供在途工作完成。ROI Beta 已停止维护及后续发布，历史版本保留。本版提供 Stable 插件包、Skills 包及校验和。
+**升级与发行**：TPlan runtime generation 更新为 `1.7.0`。已固定旧运行时的 Mission 继续使用原版本；新 Mission 可先登记派工意图，再凭原生回执绑定正式会话。ROI Beta 已停止维护及后续发布，历史版本保留。本版提供 Stable 插件包、Skills 包及校验和。
 
-- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.14.0.tar.gz`。
-- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.14.0.tar.gz`。
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.15.0.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.15.0.tar.gz`。
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
 ### 下载
@@ -145,22 +146,22 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-plugins-1.14.0.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.14.0/mindthus-plugins-1.14.0.tar.gz"
+  -o /tmp/mindthus-plugins-1.15.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.15.0/mindthus-plugins-1.15.0.tar.gz"
 rm -rf /tmp/mindthus-plugins
 mkdir -p /tmp/mindthus-plugins
-tar -xzf /tmp/mindthus-plugins-1.14.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+tar -xzf /tmp/mindthus-plugins-1.15.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
 ```
 
 Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-skills-1.14.0.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.14.0/mindthus-skills-1.14.0.tar.gz"
+  -o /tmp/mindthus-skills-1.15.0.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.15.0/mindthus-skills-1.15.0.tar.gz"
 rm -rf /tmp/mindthus-skills
 mkdir -p /tmp/mindthus-skills
-tar -xzf /tmp/mindthus-skills-1.14.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
+tar -xzf /tmp/mindthus-skills-1.15.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
 ### Codex Plugin Mode（推荐）
@@ -300,7 +301,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.14.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md)，正式安装版见 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.15.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md)，正式安装版见 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 

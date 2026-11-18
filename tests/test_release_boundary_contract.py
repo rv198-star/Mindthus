@@ -37,10 +37,24 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("rather than encoded in the SPDX field", readme)
 
     def test_current_release_log_does_not_record_exact_suite_count(self):
-        release_log = (REPO / "docs" / "releases" / "v1.14.0.md").read_text(
+        release_log = (REPO / "docs" / "releases" / "v1.15.0.md").read_text(
             encoding="utf-8"
         )
         self.assertIsNone(re.search(r"\b\d+\s+tests\s+OK\b", release_log))
+
+    def test_collaboration_release_and_guide_embed_both_published_figures(self):
+        note = REPO / "docs/releases/v1.15.0.md"
+        guide = REPO / "docs/guides/tplan-and-dispatch.md"
+        self.assertIn("docs/guides/tplan-and-dispatch.md", (REPO / "README.md").read_text(encoding="utf-8"))
+        expected = {REPO / f"docs/assets/collaboration/{stem}.png"
+                    for stem in ("tplan-collaboration", "codex-dispatch")}
+        for page in (note, guide):
+            images = re.findall(r"!\[([^\]]+)\]\(([^)]+)\)", page.read_text(encoding="utf-8"))
+            targets = {(page.parent / href).resolve() for _, href in images}
+            self.assertEqual(targets, expected)
+            for target in targets:
+                self.assertEqual(target.read_bytes()[:8], b"\x89PNG\r\n\x1a\n")
+                self.assertTrue(target.with_suffix(".svg").is_file())
 
     def test_current_release_preserves_stable_and_roi_beta_history(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")
@@ -51,17 +65,17 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         release_log = (REPO / "docs" / "releases" / "v1.8.0.md").read_text(encoding="utf-8")
         beta_notes = (REPO / "docs" / "releases" / "v1.8.0-roi-beta.md").read_text(encoding="utf-8")
 
-        self.assertIn("当前仓库版本：`v1.14.0`", readme)
+        self.assertIn("当前仓库版本：`v1.15.0`", readme)
         self.assertEqual(readme.count("当前仓库版本："), 1)
         self.assertIn("Explain / 解释与表达", readme)
         self.assertIn("Visualizations", readme)
         self.assertIn("普通 A/B/C", readme)
         self.assertIn("已固定旧运行时的 Mission 继续使用原版本", readme)
-        self.assertIn("当前已发布 Stable 是 `v1.14.0`", readme)
-        self.assertIn("mindthus-plugins-1.14.0.tar.gz", readme)
-        self.assertIn("mindthus-skills-1.14.0.tar.gz", readme)
+        self.assertIn("当前已发布 Stable 是 `v1.15.0`", readme)
+        self.assertIn("mindthus-plugins-1.15.0.tar.gz", readme)
+        self.assertIn("mindthus-skills-1.15.0.tar.gz", readme)
         self.assertIn("mindthus-beta-1.10.1-roi-beta.tar.gz", readme)
-        self.assertNotIn("mindthus-beta-1.14.0-roi-beta.tar.gz", readme)
+        self.assertNotIn("mindthus-beta-1.15.0-roi-beta.tar.gz", readme)
         self.assertIn("Scarce Resource Allocation", readme)
         self.assertIn("## v1.10.1", changelog)
         self.assertIn("## v1.10.0", changelog)
@@ -72,15 +86,16 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
         self.assertIn("## v1.8.0", changelog)
         self.assertIn("补充发布包：1.9.1 ROI Beta", changelog)
         self.assertIn("v1.9.1-roi-beta", changelog)
-        self.assertIn('VERSION = "1.14.0"', builder)
-        self.assertIn('VERSION = "1.14.0"', runtime_logger)
+        self.assertIn('VERSION = "1.15.0"', builder)
+        self.assertIn('VERSION = "1.15.0"', runtime_logger)
         # Published history retains its original runtime; the new Stable is explicit.
         self.assertIn("TPlan runtime generation 保持 `1.5.4`",
                       (REPO / "docs/releases/v1.13.0.md").read_text(encoding="utf-8"))
         runtime_manifest = json.loads(tplan_manifest)
-        self.assertEqual(runtime_manifest["package_version"], "1.6.0")
-        self.assertEqual(runtime_manifest["source_id"], "mindthus-tplan-v1.6.0")
-        for capability in ("atomic_command_results", "task_scoped_owner_gate", "tplan.collaboration.v0.1"):
+        self.assertEqual(runtime_manifest["package_version"], "1.7.0")
+        self.assertEqual(runtime_manifest["source_id"], "mindthus-tplan-v1.7.0")
+        for capability in ("atomic_command_results", "task_scoped_owner_gate", "tplan.collaboration.v0.1",
+                           "tplan.collaboration.native_binding.v0.1"):
             self.assertIn(capability, runtime_manifest["capabilities"])
         for path in ("scripts/query_runtime.py", "scripts/tplan_h1.py", "scripts/collaboration_runtime.py"):
             self.assertIn(path, runtime_manifest["fingerprint_files"])
@@ -111,15 +126,15 @@ class ReleaseBoundaryContractTests(unittest.TestCase):
 
     def test_release_defaults_beta_is_retired_and_current_assets_match(self):
         policy = (REPO / "docs/internal/release-defaults.md").read_text(encoding="utf-8")
-        release = (REPO / "docs/releases/v1.14.0.md").read_text(encoding="utf-8")
+        release = (REPO / "docs/releases/v1.15.0.md").read_text(encoding="utf-8")
         historical = (REPO / "docs/releases/v1.10.1.md").read_text(encoding="utf-8")
         prior_beta = (REPO / "docs/releases/v1.10.1-roi-beta.md").read_text(encoding="utf-8")
         self.assertIn("Stable发布不再要求同步ROI Beta", policy)
         self.assertIn("ROI Beta 已停止维护及后续发布", policy)
         self.assertIn("ROI Beta 已停止维护及后续发布", release)
-        for name in ("mindthus-plugins-1.14.0.tar.gz", "mindthus-skills-1.14.0.tar.gz"):
+        for name in ("mindthus-plugins-1.15.0.tar.gz", "mindthus-skills-1.15.0.tar.gz"):
             self.assertIn(name, release)
-        self.assertNotIn("mindthus-beta-1.14.0-roi-beta.tar.gz", release)
+        self.assertNotIn("mindthus-beta-1.15.0-roi-beta.tar.gz", release)
         self.assertIn("覆盖上述两份归档", release)
         self.assertIn("ROI Beta 同步发布", historical)
         self.assertIn("mindthus-beta-1.10.1-roi-beta.tar.gz", historical)

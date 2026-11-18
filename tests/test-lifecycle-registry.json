@@ -7,6 +7,17 @@
   ],
   "entries": [
     {
+      "test_id": "codex-dispatch-inventory",
+      "paths": ["tests/test_codex_dispatch_inventory.py"],
+      "owner": "skill",
+      "protects": ["target provider and visibility across pages, exact catalog model fields, and withholding an incomplete inventory"],
+      "introduced_by": "codex-dispatch v0.1",
+      "lifecycle_status": "active_regression",
+      "suite_role": "contract",
+      "runtime_cost": "low",
+      "notes": "Uses a local App Server double to exercise only the read-only wire protocol."
+    },
+    {
       "test_id": "judgment-method-contracts",
       "paths": [
         "tests/test_anti_spiral_pressure_contract.py",

@@ -14,25 +14,44 @@ When the user has already authorized an actual division of work, A may enable th
 extension without asking for a mode phrase. Do not create collaboration from mere
 mentions of another session, reference reading, or unassociated incoming text.
 
-1. Run `snapshot.get`. Read the original objective, A's responsibility, acceptance
-   gaps, current focus, pending feedback, external work, waiting conditions, and next
-   action.
+On Codex, use the [Codex adapter](platforms/codex.md#ordinary-multi-session-collaboration)
+to enter the installed Dispatch for actual collaboration. Its selection and dispatch
+steps use this Mission's existing contract and authority. On other hosts, use the
+ordinary host instructions below. Without collaboration, stay on the ordinary
+TPlan path.
+
+1. Run `snapshot.get` using the Mission's pinned writer. Start with the resume
+   view: compare the objective and acceptance gap with the latest evidence at
+   handoff, re-entry or an agreed checkpoint. If work is circling one detail,
+   name what the next attempt would establish, change direction or stop.
+   Read the relevant intent, feedback, review or guard in full for a decision;
+   keep the exact snapshot token for writes. Routine updates need only the
+   changed facts and their references.
 2. Use `enable` with the coordinator, ordinary participant references, and the exact
    user authorization references.
 3. Use `delegation.prepare` for an existing non-terminal task. This records a stable
    intent and does not send anything.
-4. Send the normal work instruction through the host's existing thread tool. Record
-   the observed native reference through `dispatch.record`; leave the send unknown if
-   the tool result is unknown.
+4. Send through the host's existing thread tool. For a one-shot delivery or a
+   target whose ID arrives later, use `dispatch.claim` before the host call and
+   `dispatch.record` after it, on a runtime that advertises native binding.
+   The only send permit is the fresh successful claim. Pending references and
+   timeouts stay in flight; confirm from host evidence. A formal thread ref can
+   bind a logical participant once. Ordinary known-target hosts may keep their
+   existing recording path.
 5. Read B/C replies. Use `feedback.record` to preserve source, content digest, optional
-   artifact, and task/round/contract association. A missing association remains pending;
-   ask one targeted question while independent work continues.
+   artifact, and task/round/contract association. If an association is missing,
+   keep it pending and check the existing intent and native evidence first.
+   Batch outstanding questions into one authorized contact when the gap blocks
+   a decision. Ordinary progress can wait for the agreed handoff.
 6. Judge relevance to the Mission and A's duty. Use `feedback.resolve` with a clear
    disposition, goal relation, evidence references, current artifact, review, bounded
    task changes, optional next intent, and next action. The runtime commits all effects
    together.
-7. Use `coordination.checkpoint` for external waiting or resume state. Use
-   `coordinator.handoff` when another A session becomes responsible.
+7. Record what will resume work in `coordination.checkpoint`. While B owns a
+   delivery, A waits for its fixed revision before accepting it or assigning
+   its audit. A may advance another explicitly assigned deliverable. A verified
+   scope conflict or blocker can interrupt the affected work before handoff.
+   Use `coordinator.handoff` when another A session becomes responsible.
 
 ## Guardrails
 

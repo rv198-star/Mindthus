@@ -15,6 +15,7 @@ from tplan_task_contract import TASK_STATUSES
 PROTOCOL = "tplan.collaboration.command.v1"
 SCHEMA = "tplan.collaboration.v0.1"
 CAPABILITY = "tplan.collaboration.v0.1"
+BINDING_CAPABILITY = "tplan.collaboration.native_binding.v0.1"
 ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,159}\Z")
 HASH = re.compile(r"sha256:[a-f0-9]{64}\Z")
 MAX_REQUEST = 16 * 1024
@@ -29,6 +30,7 @@ DEFAULT_PROCESSING_DEADLINE_SECONDS = 900
 ACTIONS = {
     "enable",
     "delegation.prepare",
+    "dispatch.claim",
     "dispatch.record",
     "feedback.record",
     "feedback.resolve",
@@ -185,10 +187,14 @@ def _valid_time(value: Any) -> bool:
     if not isinstance(value, str) or not value:
         return False
     try:
-        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        parsed = _instant(value)
     except ValueError:
         return False
     return parsed.tzinfo is not None
+
+
+def _instant(value: str) -> datetime:
+    return datetime.fromisoformat(value.replace("Z", "+00:00"))
 
 
 def _exact_fields(value: Any, fields: set[str], label: str) -> dict[str, Any]:
@@ -306,27 +312,7 @@ def _new_state(payload: dict[str, Any], now: str) -> dict[str, Any]:
         raise CollaborationError("invalid_request", "participants must be a list of at most 64 entries")
     participants: dict[str, dict[str, Any]] = {}
     for raw in raw_participants:
-        _exact_fields(
-            raw,
-            {"participant_id", "thread_ref", "host_ref", "responsibility", "communication_authorization_refs"},
-            "participant",
-        )
-        participant_id = raw["participant_id"]
-        if not valid_id(participant_id):
-            raise CollaborationError("invalid_request", "participant_id is invalid")
-        if participant_id in participants:
-            raise CollaborationError("invalid_request", f"duplicate participant_id {participant_id}")
-        participant = {
-            "thread_ref": _ref(raw["thread_ref"], "participant thread_ref"),
-            "host_ref": _ref(raw["host_ref"], "participant host_ref"),
-            "responsibility": _text(raw["responsibility"], "participant responsibility", limit=2048, one_line=True),
-            "communication_authorization_refs": _refs(
-                raw["communication_authorization_refs"], "participant communication_authorization_refs"
-            ),
-        }
-        if not participant["communication_authorization_refs"]:
-            raise CollaborationError("invalid_request", "participant requires a communication authorization reference")
-        participants[participant_id] = participant
+        _register_participant(participants, raw)
     policy = payload["policy"]
     if not isinstance(policy, dict) or set(policy) - {"max_pending_feedback", "processing_deadline_seconds"}:
         raise CollaborationError("invalid_request", "policy must contain only supported optional fields")
@@ -365,6 +351,25 @@ def _new_state(payload: dict[str, Any], now: str) -> dict[str, Any]:
             "updated_at": now,
         },
         "commands": {},
+    }
+
+
+def _register_participant(participants: dict[str, Any], raw: Any) -> None:
+    _exact_fields(
+        raw, {"participant_id", "thread_ref", "host_ref", "responsibility",
+              "communication_authorization_refs"}, "participant",
+    )
+    participant_id = raw["participant_id"]
+    if not valid_id(participant_id) or participant_id in participants or len(participants) >= 64:
+        raise CollaborationError("invalid_request", "Invalid, duplicate, or excess participant")
+    refs = _refs(raw["communication_authorization_refs"], "participant communication_authorization_refs")
+    if not refs:
+        raise CollaborationError("invalid_request", "participant requires a communication authorization reference")
+    participants[participant_id] = {
+        "thread_ref": _optional_ref(raw["thread_ref"], "participant thread_ref"),
+        "host_ref": _ref(raw["host_ref"], "participant host_ref"),
+        "responsibility": _text(raw["responsibility"], "participant responsibility", one_line=True),
+        "communication_authorization_refs": refs,
     }
 
 
@@ -456,6 +461,8 @@ def _prepare_delegation(
     }
     if include_generation:
         fields.add("coordinator_generation")
+    if isinstance(payload, dict) and "new_participant" in payload:
+        fields.add("new_participant")
     _exact_fields(payload, fields, "delegation payload")
     collab = mission["collaboration"]
     if include_generation:
@@ -473,6 +480,11 @@ def _prepare_delegation(
         raise CollaborationError("invalid_request", "Delegation task does not exist")
     if task.get("status") in TERMINAL_TASK_STATUSES:
         raise CollaborationError("invalid_request", "Terminal tasks require a new bounded task before delegation")
+    if "new_participant" in payload:
+        proposed = payload["new_participant"]
+        if not isinstance(proposed, dict) or proposed.get("participant_id") != payload["assignee_id"]:
+            raise CollaborationError("invalid_request", "New participant must be this delegation's assignee")
+        _register_participant(collab["participants"], proposed)
     participant = collab["participants"].get(payload["assignee_id"])
     if participant is None:
         raise CollaborationError("invalid_request", "Delegation assignee is not configured")
@@ -510,7 +522,11 @@ def _prepare_delegation(
     elif reviewer_id is not None or scope_refs:
         raise CollaborationError("invalid_request", "Optional review must use reviewer_id=null and empty scope_refs")
     for existing in collab["delegations"].values():
-        if existing.get("task_id") != payload["task_id"] and existing.get("write_scope") != write_scope:
+        shares_unbound_participant = (
+            participant["thread_ref"] is None and existing["assignee_id"] == payload["assignee_id"]
+        )
+        if (not shares_unbound_participant and existing.get("task_id") != payload["task_id"]
+                and existing.get("write_scope") != write_scope):
             continue
         if _delegation_physically_in_flight(collab, existing):
             raise CollaborationError(
@@ -574,7 +590,57 @@ def _dispatch_status(intent: dict[str, Any]) -> str:
     return "prepared"
 
 
+def _set_dispatch_status(collab: dict[str, Any], intent: dict[str, Any]) -> dict[str, Any]:
+    status = _dispatch_status(intent)
+    delegation = next(item for item in collab["delegations"].values() if item["intent_id"] == intent["intent_id"])
+    # Host observations do not undo A's adoption or repair disposition.
+    if delegation["status"] not in {"accepted", "repair_required", "superseded"}:
+        delegation["status"] = status
+    return {key: intent[key] for key in ("intent_id", "send_state", "execution_state")} | {"status": status}
+
+
+def _claim_dispatch(collab: dict[str, Any], payload: dict[str, Any], now: str) -> dict[str, Any]:
+    _exact_fields(payload, {"coordinator_generation", "intent_id", "attempt_ref"}, "dispatch.claim payload")
+    _require_generation(collab, payload)
+    attempt = _ref(payload["attempt_ref"], "attempt_ref")
+    intent = collab["intents"].get(payload["intent_id"])
+    if intent is None:
+        raise CollaborationError("invalid_request", "Dispatch intent does not exist")
+    if (intent["send_state"] != "prepared" or intent["execution_state"] != "not_started"
+            or "attempt_ref" in intent or intent["stop_requested"] or intent["native_refs"]):
+        raise CollaborationError("command_conflict", "Only an untouched prepared intent can be claimed")
+    if any(other.get("attempt_ref") == attempt for other in collab["intents"].values()):
+        raise CollaborationError("command_conflict", "Dispatch attempt_ref was already used")
+    intent.update(attempt_ref=attempt, send_state="unknown", execution_state="unknown",
+                  observed_at=now, reason="Dispatch claimed; host outcome must be reconciled")
+    return {**_set_dispatch_status(collab, intent), "attempt_ref": attempt}
+
+
+def _bind_dispatch_target(collab, intent, participant, binding):
+    _exact_fields(binding, {"host_ref", "thread_ref", "evidence_ref"}, "target_binding")
+    target = {key: _ref(value, f"target_binding {key}") for key, value in binding.items()}
+    if target["host_ref"] != participant["host_ref"]:
+        raise CollaborationError("command_conflict", "Native host differs from the planned target")
+    if participant["thread_ref"] is not None:
+        if target["thread_ref"] != participant["thread_ref"]:
+            raise CollaborationError("command_conflict", "Native thread differs from the bound target")
+        return
+    identity = (target["host_ref"], target["thread_ref"])
+    if target["thread_ref"] == intent["attempt_ref"]:
+        raise CollaborationError("invalid_request", "Dispatch attempt reference is not a native thread identity")
+    if target["thread_ref"] in intent["native_refs"]:
+        raise CollaborationError("invalid_request", "Pending native reference is not a thread identity")
+    if any((row["host_ref"], row["thread_ref"]) == identity for row in
+           [collab["coordinator"], *collab["participants"].values()]):
+        raise CollaborationError("command_conflict", "Native thread is already bound")
+    participant["thread_ref"] = target["thread_ref"]
+    participant["native_binding"] = {
+        "intent_id": intent["intent_id"], "evidence_ref": target["evidence_ref"],
+    }
+
+
 def _record_dispatch(collab: dict[str, Any], payload: dict[str, Any]) -> dict[str, Any]:
+    optional = {"attempt_ref", "target_binding"} & payload.keys()
     _exact_fields(
         payload,
         {
@@ -586,7 +652,7 @@ def _record_dispatch(collab: dict[str, Any], payload: dict[str, Any]) -> dict[st
             "native_refs",
             "observed_at",
             "reason",
-        },
+        } | optional,
         "dispatch payload",
     )
     _require_generation(collab, payload)
@@ -604,6 +670,28 @@ def _record_dispatch(collab: dict[str, Any], payload: dict[str, Any]) -> dict[st
     if not _valid_time(observed_at):
         raise CollaborationError("invalid_request", "observed_at must be an ISO timestamp")
     reason = _text(payload["reason"], "dispatch reason", limit=MAX_SUMMARY, one_line=True)
+    participant = collab["participants"][intent["target_participant_id"]]
+    claimed = "attempt_ref" in intent
+    if claimed != ("attempt_ref" in payload) or (claimed and payload["attempt_ref"] != intent["attempt_ref"]):
+        raise CollaborationError("command_conflict", "Dispatch receipt must match the claimed attempt")
+    if claimed and _instant(observed_at) < _instant(intent["observed_at"]):
+        raise CollaborationError("command_conflict", "Dispatch observation predates the current receipt")
+    if claimed and send_state == "confirmed":
+        if "target_binding" not in payload or not native_refs:
+            raise CollaborationError("invalid_request", "Confirmed claim requires an attributed native receipt")
+        _bind_dispatch_target(collab, intent, participant, payload["target_binding"])
+        native_refs.append(payload["target_binding"]["evidence_ref"])
+    elif "target_binding" in payload:
+        raise CollaborationError("invalid_request", "Only a confirmed claim may carry a native target binding")
+    if participant["thread_ref"] is None:
+        if not claimed:
+            raise CollaborationError("command_conflict", "Unbound targets must be claimed before recording a receipt")
+        if (send_state, execution_state) not in {("unknown", "unknown"), ("not_sent", "not_started")}:
+            raise CollaborationError("association_required", "Reconcile the unbound target before recording execution")
+    if claimed and send_state == "not_sent" and (not native_refs or execution_state != "not_started"):
+        raise CollaborationError("invalid_request", "Non-delivery requires native evidence and a not-started execution")
+    if claimed and send_state == "unknown" and execution_state != "unknown":
+        raise CollaborationError("invalid_request", "Unknown delivery keeps execution unresolved")
     old_send = intent["send_state"]
     allowed_send = {
         "prepared": {"prepared", "confirmed", "unknown", "not_sent"},
@@ -623,13 +711,19 @@ def _record_dispatch(collab: dict[str, Any], payload: dict[str, Any]) -> dict[st
         "completed": {"completed"},
         "failed": {"failed"},
     }
-    if execution_state not in allowed_execution[old_execution]:
+    if (execution_state not in allowed_execution[old_execution]
+            or (claimed and old_execution == "running" and execution_state == "unknown")) and not (
+        claimed and old_execution == "unknown" and send_state == "not_sent"
+    ):
         raise CollaborationError("command_conflict", "Execution-state transition conflicts with recorded facts")
     if old_execution in terminal_execution and execution_state != old_execution:
         raise CollaborationError("command_conflict", "Terminal execution facts cannot be rewritten")
     if intent["stop_requested"] and not payload["stop_requested"]:
         raise CollaborationError("command_conflict", "stop_requested cannot be cleared")
-    effective_refs = native_refs or list(intent["native_refs"])
+    effective_refs = (list(dict.fromkeys([*intent["native_refs"], *native_refs])) if claimed
+                      else native_refs or list(intent["native_refs"]))
+    if len(effective_refs) > 64:
+        raise CollaborationError("capacity_exceeded", "Dispatch native reference capacity is exhausted")
     if send_state == "confirmed" and not effective_refs:
         raise CollaborationError("invalid_request", "Confirmed dispatch requires a native reference")
     intent.update(
@@ -642,20 +736,7 @@ def _record_dispatch(collab: dict[str, Any], payload: dict[str, Any]) -> dict[st
             "reason": reason,
         }
     )
-    delegation = collab["delegations"][intent["delegation_id"]] if "delegation_id" in intent else None
-    if delegation is None:
-        delegation = next(
-            (item for item in collab["delegations"].values() if item.get("intent_id") == intent["intent_id"]),
-            None,
-        )
-    if delegation is not None:
-        delegation["status"] = _dispatch_status(intent)
-    return {
-        "intent_id": intent["intent_id"],
-        "send_state": send_state,
-        "execution_state": execution_state,
-        "status": _dispatch_status(intent),
-    }
+    return _set_dispatch_status(collab, intent)
 
 
 def _feedback_content_digest(payload: dict[str, Any]) -> str:
@@ -669,6 +750,30 @@ def _feedback_content_digest(payload: dict[str, Any]) -> str:
             "attachment_refs": payload["attachment_refs"],
         }
     )
+
+
+def _feedback_gap(collab, row):
+    role = row["source_role_id"]
+    if role is not None:
+        source = collab["participants"].get(role)
+        if source is None:
+            return "source role is not configured"
+        if (source["thread_ref"], source["host_ref"]) != (row["source_thread_ref"], row["source_host_ref"]):
+            return "source thread/host does not match the claimed participant"
+    if any(row[key] is None for key in ("delegation_id", "round", "contract_version")):
+        return "task/delegation round and contract version are required"
+    delegation = collab["delegations"].get(row["delegation_id"])
+    if delegation is None:
+        return "delegation_id is not configured"
+    if row["round"] != delegation["round"] or row["contract_version"] != delegation["contract_version"]:
+        return "round or contract version does not match the delegation"
+    intent = collab["intents"][delegation["intent_id"]]
+    if "attempt_ref" in intent or intent["target_thread_ref"] is None:
+        if role not in {delegation["assignee_id"], delegation["required_review"]["reviewer_id"]} or role is None:
+            return "source role is not the assignee or the designated reviewer"
+        if intent["send_state"] != "confirmed":
+            return "a confirmed native dispatch is required"
+    return None
 
 
 def _record_feedback(mission: dict[str, Any], payload: dict[str, Any], now: str) -> tuple[dict[str, Any], str]:
@@ -720,12 +825,19 @@ def _record_feedback(mission: dict[str, Any], payload: dict[str, Any], now: str)
     if normalized["artifact_digest"] is not None and not _valid_hash(normalized["artifact_digest"]):
         raise CollaborationError("invalid_request", "artifact_digest must be sha256")
     content_digest = _feedback_content_digest(normalized)
+    association_gap = _feedback_gap(collab, normalized)
     for existing in collab["feedback"].values():
         if existing.get("source_event_ref") != normalized["source_event_ref"]:
             continue
-        if existing.get("content_digest") != content_digest:
+        if (existing.get("content_digest") != content_digest
+                or any(existing[key] != val for key, val in normalized.items())):
             raise CollaborationError("feedback_conflict", "The source event identity already has different content")
-        return {"feedback_id": existing["feedback_id"], "status": existing["status"]}, "no_change"
+        can_link = (existing["status"] == "pending" and existing["association_status"] == "needs_association"
+                    and association_gap is None)
+        if can_link:
+            existing.update(association_status="linked", association_gap=None)
+        return {key: existing[key] for key in ("feedback_id", "status", "association_status",
+                                                "association_gap")}, "committed" if can_link else "no_change"
     pending_count = sum(1 for item in collab["feedback"].values() if item.get("status") == "pending")
     max_pending = min(
         int(collab["policy"]["max_pending_feedback"]),
@@ -733,33 +845,7 @@ def _record_feedback(mission: dict[str, Any], payload: dict[str, Any], now: str)
     )
     if pending_count >= max_pending:
         raise CollaborationError("capacity_exceeded", "Pending collaboration feedback capacity is exhausted")
-    association_gap = None
-    association_status = "linked"
-    delegation = None
-    source_gap = None
-    if normalized["source_role_id"] is not None:
-        source_participant = collab["participants"].get(normalized["source_role_id"])
-        if source_participant is None:
-            source_gap = "source role is not configured"
-        elif (
-            source_participant["thread_ref"] != normalized["source_thread_ref"]
-            or source_participant["host_ref"] != normalized["source_host_ref"]
-        ):
-            source_gap = "source thread/host does not match the claimed participant"
-    if source_gap is not None:
-        association_status = "needs_association"
-        association_gap = source_gap
-    elif normalized["delegation_id"] is None or normalized["round"] is None or normalized["contract_version"] is None:
-        association_status = "needs_association"
-        association_gap = "task/delegation round and contract version are required"
-    else:
-        delegation = collab["delegations"].get(normalized["delegation_id"])
-        if delegation is None:
-            association_status = "needs_association"
-            association_gap = "delegation_id is not configured"
-        elif normalized["round"] != delegation["round"] or normalized["contract_version"] != delegation["contract_version"]:
-            association_status = "needs_association"
-            association_gap = "round or contract version does not match the delegation"
+    association_status = "linked" if association_gap is None else "needs_association"
     feedback_id = "F" + hashlib.sha256(
         (normalized["source_event_ref"] + "\0" + content_digest).encode("utf-8")
     ).hexdigest()[:16]
@@ -965,6 +1051,17 @@ def _resolve_feedback(
     disposition = payload["disposition"]
     if disposition not in DISPOSITIONS:
         raise CollaborationError("invalid_request", "Feedback disposition is unsupported")
+    linked = feedback["association_status"] == "linked" and _feedback_gap(collab, feedback) is None
+    changes_work = (disposition in {"adopted", "repair", "path_adjusted"} or payload["task_changes"]
+                    or payload["new_tasks"] or payload["next_delegation"] is not None
+                    or payload["artifact_ref"] is not None)
+    if not linked and (changes_work or payload["review"] is not None):
+        raise CollaborationError("association_required", "Unassociated feedback cannot change work or acceptance")
+    if linked and changes_work:
+        source_delegation = collab["delegations"][feedback["delegation_id"]]
+        if any(other["task_id"] == source_delegation["task_id"] and other["round"] > source_delegation["round"]
+               for other in collab["delegations"].values()):
+            raise CollaborationError("association_required", "Feedback from an older round cannot change current work")
     goal = _exact_fields(payload["goal_relation"], {"responsibility", "acceptance_ids", "rationale"}, "goal_relation")
     responsibility = _text(goal["responsibility"], "goal_relation responsibility", limit=MAX_SUMMARY, one_line=True)
     acceptance_ids = _refs(goal["acceptance_ids"], "goal_relation acceptance_ids")
@@ -1085,7 +1182,7 @@ def _resolve_feedback(
         "evidence_refs": evidence_refs,
         "resolved_at": now,
     }
-    if disposition not in {"adopted", "repair"} and feedback.get("delegation_id") in collab["delegations"]:
+    if linked and disposition not in {"adopted", "repair"}:
         collab["delegations"][feedback["delegation_id"]]["disposition"] = disposition
     completion = task_completion_findings(before_mission, mission, events)
     if completion:
@@ -1155,6 +1252,9 @@ def apply_command(
             raise CollaborationError("unsupported_capability", "Collaboration is not enabled for this Mission")
         if action == "delegation.prepare":
             data = _prepare_delegation(after, payload, now=now, include_generation=True)
+            command_status = "committed"
+        elif action == "dispatch.claim":
+            data = _claim_dispatch(collab, payload, now)
             command_status = "committed"
         elif action == "dispatch.record":
             data = _record_dispatch(collab, payload)
@@ -1270,16 +1370,20 @@ def build_resume_view(mission: dict[str, Any], events: list[dict[str, Any]] | No
         if not _delegation_physically_in_flight(collab, delegation):
             continue
         intent = collab["intents"].get(delegation["intent_id"], {})
-        external_pending.append(
-            {
+        row = {
                 "delegation_id": delegation["delegation_id"],
                 "task_id": delegation["task_id"],
                 "assignee_id": delegation["assignee_id"],
                 "status": delegation["status"],
                 "send_state": intent.get("send_state"),
                 "execution_state": intent.get("execution_state"),
-            }
-        )
+        }
+        if "attempt_ref" in intent or intent.get("target_thread_ref") is None:
+            row.update(intent_id=intent["intent_id"], attempt_ref=intent.get("attempt_ref"),
+                       native_refs=list(intent["native_refs"]),
+                       target_host_ref=collab["participants"][delegation["assignee_id"]]["host_ref"],
+                       target_thread_ref=collab["participants"][delegation["assignee_id"]]["thread_ref"])
+        external_pending.append(row)
     next_action = collab["coordination"]["next_action"]
     needs_association = sum(1 for item in pending_feedback if item["association_status"] == "needs_association")
     return {
@@ -1487,6 +1591,11 @@ def validate_transition(before: dict[str, Any], after: dict[str, Any]) -> list[s
                 comparable_new = copy.deepcopy(new[collection][key])
                 comparable_old["status"] = comparable_new["status"] = None
                 comparable_old["resolution"] = comparable_new["resolution"] = None
+                if (value["status"] == new[collection][key]["status"] == "pending"
+                        and value["association_status"] == "needs_association"
+                        and comparable_new["association_status"] == "linked"
+                        and _feedback_gap(new, comparable_new) is None):
+                    comparable_old.update(association_status="linked", association_gap=None)
                 if comparable_old != comparable_new:
                     findings.append(f"collaboration feedback identity is immutable: {key}")
             elif old[collection][key] != new[collection][key]:
@@ -1496,6 +1605,11 @@ def validate_transition(before: dict[str, Any], after: dict[str, Any]) -> list[s
             findings.append(f"collaboration intent cannot be removed: {key}")
             continue
         mutable = {"send_state", "execution_state", "stop_requested", "native_refs", "observed_at", "reason"}
+        fresh = new["intents"][key]
+        if ("attempt_ref" not in value and "attempt_ref" in fresh
+                and (value["send_state"], value["execution_state"]) == ("prepared", "not_started")
+                and (fresh["send_state"], fresh["execution_state"]) == ("unknown", "unknown")):
+            mutable.add("attempt_ref")
         if {field: value[field] for field in set(value) - mutable} != {
             field: new["intents"][key][field] for field in set(new["intents"][key]) - mutable
         }:
@@ -1510,7 +1624,19 @@ def validate_transition(before: dict[str, Any], after: dict[str, Any]) -> list[s
         }:
             findings.append(f"collaboration delegation identity is immutable: {key}")
     for key, value in old["participants"].items():
-        if new["participants"].get(key) != value:
+        participant = new["participants"].get(key, {})
+        if value == participant:
+            continue
+        binding = participant.get("native_binding")
+        intent = new["intents"].get(binding["intent_id"], {}) if isinstance(binding, dict) else {}
+        prior_intent = old["intents"].get(intent.get("intent_id"), {})
+        if not (
+            value.get("thread_ref") is None and "native_binding" not in value
+            and participant.get("thread_ref") is not None
+            and value == ({k: v for k, v in participant.items() if k != "native_binding"} | {"thread_ref": None})
+            and prior_intent.get("send_state") == "unknown" and "attempt_ref" in prior_intent
+            and intent.get("send_state") == "confirmed" and intent.get("target_participant_id") == key
+        ):
             findings.append(f"collaboration participant is immutable: {key}")
     if new["coordinator"]["generation"] < old["coordinator"]["generation"]:
         findings.append("coordinator generation cannot move backward")
@@ -1565,8 +1691,18 @@ def validate_state(mission: Any) -> list[str]:
         if not valid_id(participant_id) or not isinstance(participant, dict):
             findings.append("collaboration participant identity is invalid")
             continue
-        if set(participant) != {"thread_ref", "host_ref", "responsibility", "communication_authorization_refs"}:
+        fields = {"thread_ref", "host_ref", "responsibility", "communication_authorization_refs"}
+        if set(participant) not in (fields, fields | {"native_binding"}):
             findings.append(f"collaboration participant {participant_id} fields are invalid")
+            continue
+        try:
+            _optional_ref(participant["thread_ref"], "participant thread_ref")
+            _ref(participant["host_ref"], "participant host_ref")
+            _text(participant["responsibility"], "participant responsibility", one_line=True)
+            if not _refs(participant["communication_authorization_refs"], "participant authorization"):
+                findings.append(f"collaboration participant {participant_id} has no authorization")
+        except CollaborationError as exc:
+            findings.append(str(exc))
     policy = collab.get("policy")
     if not isinstance(policy, dict) or set(policy) != {"max_pending_feedback", "processing_deadline_seconds"}:
         findings.append("collaboration policy fields are invalid")
@@ -1614,12 +1750,14 @@ def validate_state(mission: Any) -> list[str]:
                 findings.append(f"delegation {delegation_id} reviewer does not exist")
             if not isinstance(review.get("scope_refs"), list):
                 findings.append(f"delegation {delegation_id} review scope is invalid")
+    attempts: set[str] = set()
     for intent_id, intent in intents.items():
-        if set(intent) != {
+        fields = {
             "intent_id", "target_participant_id", "target_thread_ref", "instruction_digest",
             "send_state", "execution_state", "stop_requested", "native_refs", "observed_at",
             "reason", "created_at",
-        }:
+        }
+        if set(intent) not in (fields, fields | {"attempt_ref"}):
             findings.append(f"collaboration intent {intent_id} fields are invalid")
             continue
         if intent_id != intent.get("intent_id"):
@@ -1628,12 +1766,46 @@ def validate_state(mission: Any) -> list[str]:
             findings.append(f"collaboration intent {intent_id} state is unsupported")
         if intent.get("target_participant_id") not in participants:
             findings.append(f"collaboration intent {intent_id} target does not exist")
+        else:
+            participant = participants[intent["target_participant_id"]]
+            if intent["target_thread_ref"] is not None and intent["target_thread_ref"] != participant.get("thread_ref"):
+                findings.append(f"collaboration intent {intent_id} target differs from its participant")
+            if intent["target_thread_ref"] is None and intent["send_state"] == "confirmed" and (
+                not isinstance(participant.get("native_binding"), dict)
+                or participant["native_binding"].get("intent_id") != intent_id
+            ):
+                findings.append(f"collaboration intent {intent_id} has no originating binding")
+        if "attempt_ref" in intent:
+            try:
+                attempt = _ref(intent["attempt_ref"], "attempt_ref")
+                if attempt in attempts or intent["send_state"] == "prepared":
+                    findings.append(f"collaboration intent {intent_id} claim is invalid")
+                attempts.add(attempt)
+            except CollaborationError as exc:
+                findings.append(str(exc))
         if not isinstance(intent.get("stop_requested"), bool):
             findings.append(f"collaboration intent {intent_id} stop_requested is invalid")
         if not isinstance(intent.get("native_refs"), list):
             findings.append(f"collaboration intent {intent_id} native_refs is invalid")
         if not _valid_time(intent.get("created_at")) or not _valid_time(intent.get("observed_at")):
             findings.append(f"collaboration intent {intent_id} timestamps are invalid")
+    for participant_id, participant in participants.items():
+        if not isinstance(participant, dict) or "native_binding" not in participant:
+            continue
+        binding = participant["native_binding"]
+        if not isinstance(binding, dict) or set(binding) != {"intent_id", "evidence_ref"}:
+            findings.append(f"collaboration participant {participant_id} binding fields are invalid")
+            continue
+        origin = intents.get(binding["intent_id"]) if valid_id(binding["intent_id"]) else None
+        try:
+            _ref(binding["evidence_ref"], "binding evidence")
+            _ref(participant.get("thread_ref"), "bound native thread")
+        except CollaborationError as exc:
+            findings.append(str(exc))
+        if (not isinstance(origin, dict) or origin.get("target_participant_id") != participant_id
+                or origin.get("target_thread_ref") is not None or "attempt_ref" not in origin
+                or origin.get("send_state") != "confirmed"):
+            findings.append(f"collaboration participant {participant_id} binding origin is invalid")
     feedback = collab.get("feedback")
     if not isinstance(feedback, dict):
         findings.append("collaboration feedback must be an object")

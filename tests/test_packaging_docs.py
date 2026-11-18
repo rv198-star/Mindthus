@@ -55,7 +55,7 @@ class PackagingDocsTests(unittest.TestCase):
             root = Path(tmp)
             out = root / "release"
             codex_home = root / "home"
-            cache = codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / "1.14.0"
+            cache = codex_home / "plugins" / "cache" / "mindthus" / "mindthus" / "1.15.0"
             result = subprocess.run(
                 [sys.executable, str(script), "--package", "plugins", "--out", str(out)],
                 text=True,
@@ -649,7 +649,7 @@ class PackagingDocsTests(unittest.TestCase):
             "mindthus:tplan",
             "mindthus:explain",
             "mindthus:*",
-            "当前仓库版本：`v1.14.0`",
+            "当前仓库版本：`v1.15.0`",
             "GitHub Releases",
             "局部正确",
             "输入定框审计",
@@ -1249,6 +1249,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue(target.is_symlink(), result.stdout)
             self.assertEqual(target.resolve(), REPO / "skills")
             self.assertTrue((target / "tplan" / "SKILL.md").exists())
+            self.assertTrue((target / "codex-dispatch" / "SKILL.md").is_file())
             self.assertIn(str(target), result.stdout)
 
     def test_codex_install_script_defaults_to_home_codex_skills(self):
@@ -1273,7 +1274,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(target.resolve(), REPO / "skills")
             self.assertTrue((target / "tplan" / "SKILL.md").exists())
 
-    def test_claude_install_script_skips_runtime_support_directory(self):
+    def test_claude_install_script_skips_runtime_support_and_codex_dispatch(self):
         script = REPO / "scripts" / "install-skills.sh"
         with tempfile.TemporaryDirectory() as tmp:
             home = Path(tmp) / "home"
@@ -1290,6 +1291,7 @@ class PackagingDocsTests(unittest.TestCase):
 
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertFalse((home / ".claude" / "skills" / "_runtime").exists())
+            self.assertFalse((home / ".claude" / "skills" / "codex-dispatch").exists())
             self.assertTrue((home / ".claude" / "skills" / "tplan").is_symlink(), result.stdout)
             self.assertTrue((home / ".claude" / "skills" / "sela").is_symlink(), result.stdout)
             self.assertIn("repo-local _runtime", result.stdout)
@@ -1389,7 +1391,7 @@ class PackagingDocsTests(unittest.TestCase):
             source = marketplace["plugins"][0]["source"]
             self.assertEqual(source, "./claude-plugin")
             self.assertNotIn("..", source)
-            self.assertEqual(plugin["version"], "1.14.0")
+            self.assertEqual(plugin["version"], "1.15.0")
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "tplan" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "mpg" / "SKILL.md").exists())
             self.assertTrue((out / "claude-code" / "claude-plugin" / "skills" / "sra" / "SKILL.md").exists())
@@ -1489,7 +1491,7 @@ class PackagingDocsTests(unittest.TestCase):
             )
             self.assertEqual(codex_marketplace["plugins"][0]["policy"]["installation"], "AVAILABLE")
             self.assertEqual(codex_plugin_manifest["name"], "mindthus")
-            self.assertEqual(codex_plugin_manifest["version"], "1.14.0")
+            self.assertEqual(codex_plugin_manifest["version"], "1.15.0")
             self.assertEqual(codex_plugin_manifest["skills"], "./skills/")
             self.assertEqual(codex_plugin_manifest["license"], "AGPL-3.0-only")
             self.assertEqual(codex_plugin_manifest["interface"]["brandColor"], "#161614")
@@ -1614,8 +1616,8 @@ class PackagingDocsTests(unittest.TestCase):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
             tmp_dir = Path(tmp)
-            plugins = tmp_dir / "mindthus-plugins-1.14.0"
-            skills = tmp_dir / "mindthus-skills-1.14.0"
+            plugins = tmp_dir / "mindthus-plugins-1.15.0"
+            skills = tmp_dir / "mindthus-skills-1.15.0"
 
             plugin_result = subprocess.run(
                 ["python3", str(script), "--package", "plugins", "--out", str(plugins)],
@@ -1626,6 +1628,8 @@ class PackagingDocsTests(unittest.TestCase):
             self.assert_release_pack_excludes_runtime_artifacts(plugins)
             self.assertTrue((plugins / "codex-plugin" / "mindthus" / ".codex-plugin" / "plugin.json").exists())
             self.assertTrue((plugins / "claude-code" / ".claude-plugin" / "marketplace.json").exists())
+            self.assert_dispatch_skill_complete(plugins / "codex-plugin" / "mindthus" / "skills")
+            self.assertFalse((plugins / "claude-code" / "claude-plugin" / "skills" / "codex-dispatch").exists())
             self.assertFalse((plugins / "codex").exists())
             self.assertFalse((plugins / "opencode").exists())
             self.assertFalse((plugins / "claude-code" / "skills").exists())
@@ -1639,6 +1643,9 @@ class PackagingDocsTests(unittest.TestCase):
             self.assert_release_pack_excludes_runtime_artifacts(skills)
             self.assertTrue((skills / "codex" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists())
             self.assertTrue((skills / "claude-code" / "skills" / "tplan" / "SKILL.md").exists())
+            self.assert_dispatch_skill_complete(skills / "codex" / "skills" / "mindthus")
+            for path in (skills / "claude-code" / "skills", skills / "opencode" / ".opencode" / "skills" / "mindthus"):
+                self.assertFalse((path / "codex-dispatch").exists())
             self.assertTrue(
                 (skills / "opencode" / ".opencode" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists()
             )
@@ -1712,6 +1719,33 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertFalse((skills / "codex-plugin").exists())
             self.assertFalse((skills / "claude-code" / ".claude-plugin").exists())
             self.assertFalse((skills / "claude-code" / "claude-plugin").exists())
+
+    def assert_dispatch_skill_complete(self, skills_root):
+        skill = skills_root / "codex-dispatch"
+        self.assert_skill_frontmatter_is_parseable(skill / "SKILL.md")
+        for reference in ("host-operations.md", "batch-handoff.md"):
+            self.assertTrue((skill / "references" / reference).is_file())
+        result = subprocess.run(
+            [sys.executable, str(skill / "scripts" / "model_inventory.py"), "--help"],
+            cwd=skills_root,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        tplan = skills_root / "tplan"
+        self.assertIn("resources/collaboration.md", (tplan / "SKILL.md").read_text(encoding="utf-8"))
+        self.assertIn("platforms/codex.md#ordinary-multi-session-collaboration",
+                      (tplan / "resources/collaboration.md").read_text(encoding="utf-8"))
+        adapter = (tplan / "resources/platforms/codex.md").read_text(encoding="utf-8")
+        self.assertIn("codex-dispatch/SKILL.md", adapter)
+        with tempfile.TemporaryDirectory() as work:
+            smoke = subprocess.run(
+                [sys.executable, str(tplan / "scripts/collaboration_example.py"),
+                 "--work-dir", str(Path(work).resolve() / "mission-smoke")],
+                cwd=work, text=True, capture_output=True, timeout=20,
+            )
+            self.assertEqual(smoke.returncode, 0, smoke.stderr + smoke.stdout)
+            self.assertEqual(json.loads(smoke.stdout)["task_T1"], "completed")
 
     def test_release_pack_includes_cinematic_profile_adapters_and_atlas_runtime(self):
         script = REPO / "scripts" / "build-release-pack.py"

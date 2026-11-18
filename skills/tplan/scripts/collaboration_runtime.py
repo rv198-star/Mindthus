@@ -167,6 +167,7 @@ def _snapshot_data(runtime: Any, directory: Path, state: dict[str, Any], events:
         "resume": collaboration.build_resume_view(state, events),
         "expected_snapshot": expected_snapshot(runtime, directory, state),
         "capability": collaboration.CAPABILITY,
+        "native_binding_capability": collaboration.BINDING_CAPABILITY,
     }
 
 
