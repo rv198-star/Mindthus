@@ -48,7 +48,7 @@ Generated release packs include `codex-plugin/mindthus/` with `.codex-plugin/plu
 
 After installation, Codex should discover:
 
-以下清单对应当前源码；发行包以所选版本为准，Explain 当前为 Unreleased。
+以下清单对应当前源码；发行包以所选版本为准，Explain 和 Codex Dispatch 当前为 Unreleased。
 
 - `mindthus:using-mindthus`
 - `mindthus:sela`
@@ -61,6 +61,7 @@ After installation, Codex should discover:
 - `mindthus:tplan`
 - `mindthus:explain`
 - `mindthus:case-prep`
+- `mindthus:codex-dispatch`（按 Codex 实时清单配置会话组合和派工，可单独使用）
 
 ## Verify
 

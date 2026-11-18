@@ -84,7 +84,9 @@ case "${mode}" in
   claude)
     for skill in "${skills_dir}"/*; do
       [[ -d "${skill}" ]] || continue
-      [[ "$(basename "${skill}")" == "_runtime" ]] && continue
+      case "$(basename "${skill}")" in
+        _runtime|codex-dispatch) continue ;;
+      esac
       link_path "${skill}" "${HOME}/.claude/skills/$(basename "${skill}")" "${force}"
     done
     echo "installed Mindthus skills into ${HOME}/.claude/skills"

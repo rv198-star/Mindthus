@@ -1249,6 +1249,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertTrue(target.is_symlink(), result.stdout)
             self.assertEqual(target.resolve(), REPO / "skills")
             self.assertTrue((target / "tplan" / "SKILL.md").exists())
+            self.assertTrue((target / "codex-dispatch" / "SKILL.md").is_file())
             self.assertIn(str(target), result.stdout)
 
     def test_codex_install_script_defaults_to_home_codex_skills(self):
@@ -1273,7 +1274,7 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(target.resolve(), REPO / "skills")
             self.assertTrue((target / "tplan" / "SKILL.md").exists())
 
-    def test_claude_install_script_skips_runtime_support_directory(self):
+    def test_claude_install_script_skips_runtime_support_and_codex_dispatch(self):
         script = REPO / "scripts" / "install-skills.sh"
         with tempfile.TemporaryDirectory() as tmp:
             home = Path(tmp) / "home"
@@ -1290,6 +1291,7 @@ class PackagingDocsTests(unittest.TestCase):
 
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertFalse((home / ".claude" / "skills" / "_runtime").exists())
+            self.assertFalse((home / ".claude" / "skills" / "codex-dispatch").exists())
             self.assertTrue((home / ".claude" / "skills" / "tplan").is_symlink(), result.stdout)
             self.assertTrue((home / ".claude" / "skills" / "sela").is_symlink(), result.stdout)
             self.assertIn("repo-local _runtime", result.stdout)
@@ -1626,6 +1628,8 @@ class PackagingDocsTests(unittest.TestCase):
             self.assert_release_pack_excludes_runtime_artifacts(plugins)
             self.assertTrue((plugins / "codex-plugin" / "mindthus" / ".codex-plugin" / "plugin.json").exists())
             self.assertTrue((plugins / "claude-code" / ".claude-plugin" / "marketplace.json").exists())
+            self.assert_dispatch_skill_complete(plugins / "codex-plugin" / "mindthus" / "skills")
+            self.assertFalse((plugins / "claude-code" / "claude-plugin" / "skills" / "codex-dispatch").exists())
             self.assertFalse((plugins / "codex").exists())
             self.assertFalse((plugins / "opencode").exists())
             self.assertFalse((plugins / "claude-code" / "skills").exists())
@@ -1639,6 +1643,9 @@ class PackagingDocsTests(unittest.TestCase):
             self.assert_release_pack_excludes_runtime_artifacts(skills)
             self.assertTrue((skills / "codex" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists())
             self.assertTrue((skills / "claude-code" / "skills" / "tplan" / "SKILL.md").exists())
+            self.assert_dispatch_skill_complete(skills / "codex" / "skills" / "mindthus")
+            for path in (skills / "claude-code" / "skills", skills / "opencode" / ".opencode" / "skills" / "mindthus"):
+                self.assertFalse((path / "codex-dispatch").exists())
             self.assertTrue(
                 (skills / "opencode" / ".opencode" / "skills" / "mindthus" / "tplan" / "SKILL.md").exists()
             )
@@ -1712,6 +1719,19 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertFalse((skills / "codex-plugin").exists())
             self.assertFalse((skills / "claude-code" / ".claude-plugin").exists())
             self.assertFalse((skills / "claude-code" / "claude-plugin").exists())
+
+    def assert_dispatch_skill_complete(self, skills_root):
+        skill = skills_root / "codex-dispatch"
+        self.assert_skill_frontmatter_is_parseable(skill / "SKILL.md")
+        for reference in ("host-operations.md", "batch-handoff.md"):
+            self.assertTrue((skill / "references" / reference).is_file())
+        result = subprocess.run(
+            [sys.executable, str(skill / "scripts" / "model_inventory.py"), "--help"],
+            cwd=skills_root,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_release_pack_includes_cinematic_profile_adapters_and_atlas_runtime(self):
         script = REPO / "scripts" / "build-release-pack.py"
