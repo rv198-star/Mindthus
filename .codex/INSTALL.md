@@ -61,7 +61,7 @@ After installation, Codex should discover:
 - `mindthus:tplan`
 - `mindthus:explain`
 - `mindthus:case-prep`
-- `mindthus:codex-dispatch`（按 Codex 实时清单配置会话组合和派工，可单独使用）
+- `mindthus:codex-dispatch`：可独立选模和派工；使用本开发分支的 TPlan 在 Codex 中协同时，主会话默认调用它决定如何使用会话，无需再点名。
 
 ## Verify
 

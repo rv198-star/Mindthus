@@ -72,8 +72,10 @@ dispatch. A standalone invocation does not open a Mission.
    objective, baseline and input version, allowed writes, decisions delegated,
    acceptance evidence, delivery location and escalation boundary. Use the
    approved carrier and requested model/effort. Send the first brief only once;
-   keep the native chat/turn references. Continue independent work while recipients
-   execute. Use the [host recovery rules](references/host-operations.md#dispatch-and-reconcile)
+   keep the native chat/turn references. For the same deliverable, B implements
+   and self-tests first; A or C starts acceptance only after B hands over a
+   fixed revision. While waiting, A can do separately assigned work on another
+   deliverable; otherwise wait. Use the [host recovery rules](references/host-operations.md#dispatch-and-reconcile)
    for unknown delivery and authorized fallbacks. A normally reads recipients'
    results; no routine messages or acknowledgments are needed.
 6. **Adopt a version and close the design feedback.** Use
