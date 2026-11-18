@@ -71,8 +71,10 @@ required by the host; never use a choice tool prohibited from requesting it.
   does not switch the model for an in-flight turn. Record the requested model and
   effort separately from the actual pair, which must be verified for that turn
   if the host exposes it. Otherwise mark actual execution as unverified.
-- **Follow:** Use bounded `wait_threads` snapshots and cursors for known chat
-  IDs, then `read_thread` when evidence is missing or ambiguous. Preserve the
+- **Follow:** For a known chat, use a bounded `wait_threads` with its latest
+  cursor for completion or a decision event. Back off after an unchanged timeout;
+  a wait reads status without sending B a message. Use `read_thread` for
+  the relevant turn when evidence is missing or ambiguous. Preserve the
   original intent and a recognizable brief reference. A timeout, transport
   error without a known outcome, or pending creation is unresolved. For a known
   target, reconcile that chat's turns and artifact writes. For creation with no
@@ -93,3 +95,17 @@ required by the host; never use a choice tool prohibited from requesting it.
 If a host does not supply the necessary chat operation, present the available
 options and missing capability. Do not use shell commands or a different host
 to bypass a chat tool's authorization boundary.
+
+## Keep follow-ups small
+
+For an authorized continuation of the same role, keep the original brief and
+tool results in place. Send the changed facts, artifact version and next
+decision as a new message. In a fresh brief, place reusable role, scope and
+acceptance text before the round-specific facts; keep the recognizable attempt
+marker in that same message. A fresh recipient still needs enough context to
+act. Preserve independent review and user-pinned model or effort choices.
+
+Stable prefixes can help [prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching#preserve-conversation-history).
+Codex controls the request envelope. For comparable batches, use reported
+cached input divided by reported input, and compare total input, uncached
+input and model steps per accepted delivery. Keep missing usage unknown.

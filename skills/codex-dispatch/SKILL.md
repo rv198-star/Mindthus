@@ -77,7 +77,9 @@ dispatch. A standalone invocation does not open a Mission.
    fixed revision. While waiting, A can do separately assigned work on another
    deliverable; otherwise wait. Use the [host recovery rules](references/host-operations.md#dispatch-and-reconcile)
    for unknown delivery and authorized fallbacks. A normally reads recipients'
-   results; no routine messages or acknowledgments are needed.
+   results; no routine messages or acknowledgments are needed. For sustained
+   work, agree on a useful checkpoint and apply the [drift check](references/batch-handoff.md#check-direction-without-shadowing-b)
+   to evidence available there or on re-entry.
 6. **Adopt a version and close the design feedback.** Use
    [Batch handoff](references/batch-handoff.md) to collect results and deviations.
    A checks the artifact against the original acceptance conditions. When an

@@ -102,9 +102,9 @@ main agent must verify, merge, decide, and write. SubAgents must not mutate file
 
 ### Anti-Spiral Gate
 
-Activate Anti-Spiral when local repair may be replacing Mission progress: third touches,
-worsening feedback, additive layering, or weak evidence delta. This gate can route back
-to `3l5s`, `wae`, subtraction, rollback, or a stop.
+At checkpoints or re-entry, check for drift: compare the goal with fresh evidence.
+Third touches, worse feedback, added layers or weak gains trigger Anti-Spiral:
+name the next evidence gain, reroute, simplify, roll back or stop.
 
 ### Alignment Gate
 

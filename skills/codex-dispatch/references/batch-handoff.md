@@ -18,6 +18,21 @@ repairing or waiting. Keep model choices and deviations in linked materials,
 not a second Mission state. For read-only investigations use TPlan's established
 SubAgent restrictions. No separate runtime is required for standalone use.
 
+### Check direction without shadowing B
+
+For sustained work, put one observable checkpoint in the brief: a versioned
+intermediate result, a dependency decision or a resource limit already agreed
+with the user. At that point, on re-entry, or when reported evidence conflicts
+with the design, A compares the original goal to the gap that actually closed.
+When work stays on one detail without new evidence, pause that path and identify
+a discriminating check, a simpler route or a decision for the design owner.
+
+B can do this check locally while working. A uses available evidence and waits
+for the agreed event if nothing requires a decision; elapsed time alone is a
+reason to check the waiting condition, not to ask B for a status report. If
+scope, authority or another deliverable is at risk, contact the owner once with
+the evidence and decision needed. Acceptance still uses B's handed-off revision.
+
 ## B/C: execute, verify, report
 
 Read the fixed baseline and verify it against reality. Choose the approach,
