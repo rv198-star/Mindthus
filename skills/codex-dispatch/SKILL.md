@@ -9,7 +9,8 @@ description: Configure or dispatch a batch of work across Codex chats using live
 
 The coordinating chat A proposes a batch the user can choose, sends only the
 agreed work, and owns adoption. Each recipient owns its bounded work and brings
-evidence and design deviations back with the result.
+evidence and design deviations back with the result through the authorized
+return path named in its brief.
 
 ## Mainline
 
@@ -59,7 +60,8 @@ dispatch. A standalone invocation does not open a Mission.
    supported native choice control with recommendation, free input and a way
    to defer. Otherwise present the same choices and free reply in chat. State
    what submitting an option will authorize, including the actions and
-   conditional fallbacks described above. Wait for a human submission.
+   conditional fallbacks described above, and the delivery return path each
+   recipient will use. Wait for a human submission.
    A preference locks the relevant field; it does not authorize dispatch.
    Validate free edits against the appropriate target and the original
    constraints. An explicit choice such as “option 2, B to high, rest as shown,
@@ -70,15 +72,51 @@ dispatch. A standalone invocation does not open a Mission.
    can proceed without asking again.
 5. **Dispatch against a fixed brief.** Record intent before acting. Include the
    objective, baseline and input version, allowed writes, decisions delegated,
-   acceptance evidence, delivery location and escalation boundary. Use the
-   approved carrier and requested model/effort. Send the first brief only once;
-   keep the native chat/turn references. For the same deliverable, B implements
-   and self-tests first; A or C starts acceptance only after B hands over a
-   fixed revision. While waiting, A can do separately assigned work on another
-   deliverable; otherwise wait. Use the [host recovery rules](references/host-operations.md#dispatch-and-reconcile)
-   for unknown delivery and authorized fallbacks. A normally reads recipients'
-   results; no routine messages or acknowledgments are needed. For sustained
-   work, agree on a useful checkpoint and apply the [drift check](references/batch-handoff.md#check-direction-without-shadowing-b)
+   acceptance evidence, delivery location and escalation boundary. Every first
+   brief also names the delivery handoff contract in concrete terms: who B
+   hands the result to, at which point (fixed revision, agreed milestone or a
+   real blocker), along which host-supported return path, who takes over after
+   that send, and how A re-enters. The return path's authority comes from the
+   user, and the brief points B at the evidence it can verify (for example the
+   originating user turn or A's dispatch record) — a brief from A does not by
+   itself grant a reply. Reusing a chat reuses only the two-way authorization
+   already on it; a one-direction dispatch authority stays one-direction. If
+   no authorized return path or wake-up exists for this carrier, name that
+   gap in the brief and agree the bounded collection A will use instead (a
+   declared wait condition on the original target, an agreed milestone read,
+   or another authorized check-in). The brief also names where B keeps its own
+   recovery record (the native chat/task history it can re-enter, or an
+   authorized local work note), holding the round, owner/recipient, the
+   verifiable user-authorization source, delivery condition and target, the
+   current revision, and the last send evidence — so an interrupted,
+   compacted or preempted B can still find the pending handoff. Use the
+   approved carrier and requested model/effort. Send the first brief once;
+   keep the native chat/turn references and record A's resume condition. A
+   down-stream dispatch waits for a busy peer's hand-off while an up-stream
+   delivery may reach a busy A once; messages use the
+   [sender-colon form](references/host-operations.md#identify-a-cross-chat-message).
+
+   For the same deliverable the handoff is serial: B implements, self-tests
+   and hands over the fixed revision once, then yields the turn. A (or the
+   designated C) starts acceptance only after that hand-off arrives, then
+   adopts, repairs, forwards for review or sends an already authorized next
+   item. Each agreed event carries a stable identity — task, round, sender
+   role, the event itself (milestone, blocker, delivery, review) and the
+   reported revision — and A disposes each such event once. A replayed
+   receipt for the same event stays history; a milestone or blocker report
+   does not discharge the pending delivery, so B can still hand the same
+   revision over afterwards. C's review of the same revision is likewise a
+   distinct event from B's delivery of it and is never swallowed as a
+   duplicate. An A that has only seen a milestone report has not accepted
+   the deliverable.
+   While B owns a delivery, A records its resume condition and lets the turn
+   end; B's ordinary progress, a bare wait timeout, or an unchanged snapshot
+   does not start a new status query or a same-item investigation. Use the
+   [host recovery rules](references/host-operations.md#dispatch-and-reconcile)
+   for unknown delivery and authorized fallbacks. A bounded collection is for
+   reconciling an original target, an agreed milestone or a real blocker; it
+   is not minute-scale polling. For sustained work, agree on a useful
+   checkpoint and apply the [drift check](references/batch-handoff.md#check-direction-without-shadowing-b)
    to evidence available there or on re-entry.
 6. **Adopt a version and close the design feedback.** Use
    [Batch handoff](references/batch-handoff.md) to collect results and deviations.
