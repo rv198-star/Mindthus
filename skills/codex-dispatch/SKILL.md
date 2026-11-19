@@ -75,16 +75,24 @@ dispatch. A standalone invocation does not open a Mission.
    acceptance evidence, delivery location and escalation boundary. Every first
    brief also names the delivery handoff contract in concrete terms: who B
    hands the result to, at which point (fixed revision, agreed milestone or a
-   real blocker), along which host-supported return path A has already
-   authorized (typically one send back to A's chat), who takes over after that
-   send, and how A re-enters. Reuse an existing two-way authorization for a
-   reused chat; do not widen a one-direction dispatch authority into a reply
-   the user never granted. If no authorized return path or wake-up exists for
-   this carrier, name that gap in the brief and agree the bounded collection
-   A will use instead (a declared wait condition on the original target, an
-   agreed milestone read, or another authorized check-in). Use the approved
-   carrier and requested model/effort. Send the first brief only once; keep
-   the native chat/turn references and record A's resume condition.
+   real blocker), along which host-supported return path, who takes over after
+   that send, and how A re-enters. The return path's authority comes from the
+   user, and the brief points B at the evidence it can verify (for example the
+   originating user turn or A's dispatch record) — a brief from A does not by
+   itself grant a reply. Reusing a chat reuses only the two-way authorization
+   already on it; a one-direction dispatch authority stays one-direction. If
+   no authorized return path or wake-up exists for this carrier, name that
+   gap in the brief and agree the bounded collection A will use instead (a
+   declared wait condition on the original target, an agreed milestone read,
+   or another authorized check-in). The brief also names where B keeps its own
+   recovery record (the native chat/task history it can re-enter, or an
+   authorized local work note), holding the round, owner/recipient, the
+   verifiable user-authorization source, delivery condition and target, the
+   current revision, and the last send evidence — so an interrupted,
+   compacted or preempted B can still find the pending handoff. Use the
+   approved carrier and requested model/effort. Send the first brief only
+   once; keep the native chat/turn references and record A's resume
+   condition.
 
    For the same deliverable the handoff is serial: B implements, self-tests
    and hands over the fixed revision once, then yields the turn. A (or the
@@ -92,6 +100,9 @@ dispatch. A standalone invocation does not open a Mission.
    adopts, repairs, forwards for review or sends an already authorized next
    item. A treats one valid report for a fixed revision as a single event:
    a repeated receipt for an old version stays history on its original round.
+   Idempotence keys on task, round, sender role and the reported revision —
+   so C's review of the same revision is a distinct event from B's delivery
+   of it and is never swallowed as a duplicate.
    While B owns a delivery, A records its resume condition and lets the turn
    end; B's ordinary progress, a bare wait timeout, or an unchanged snapshot
    does not start a new status query or a same-item investigation. Use the

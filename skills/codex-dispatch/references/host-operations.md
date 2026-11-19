@@ -71,23 +71,28 @@ required by the host; never use a choice tool prohibited from requesting it.
   does not switch the model for an in-flight turn. Record the requested model and
   effort separately from the actual pair, which must be verified for that turn
   if the host exposes it. Otherwise mark actual execution as unverified.
-- **Follow:** For a known chat, use a bounded `wait_threads` with its latest
-  cursor for completion or a decision event. Record one declared resume
-  condition for the wait (the named hand-off arrival, an agreed milestone, or
-  a real blocker) and let A's turn end; the host delivery of B's authorized
-  report is what restarts work. Back off after an unchanged timeout; a wait
-  reads status without sending B a message, and an unchanged or progress-only
-  snapshot does not by itself justify another wait, a status read, or looking
-  at the same item B owns. Do not re-investigate or pre-emptively audit the
-  deliverable while B still owns it. Use `read_thread` for the relevant
-  turn when evidence is missing or ambiguous. Preserve the original intent
-  and a recognizable brief reference. A timeout, transport error without a
-  known outcome, or pending creation is unresolved. For a known target,
-  reconcile that chat's turns and artifact writes. For creation with no
-  usable chat ID, resolve the pending reference or search the original target
-  host's chat listing around the attempt, then verify the exact brief in the
-  matching chat. Absence from a list alone does not establish non-delivery.
-  Keep waiting or escalate the unknown if the host cannot resolve it.
+- **Follow:** When the named hand-off is an authorized delivery event that
+  reaches A, A does not need to wait at all: it records the resume condition
+  and lets its turn end, and the arriving report is what restarts work. Only
+  when the brief's agreed collection is a bounded wait (because no return
+  path or wake-up was authorized) does A hold a `wait_threads` with the
+  latest cursor, and that wait ends on its declared condition — the
+  milestone, the blocker, or its bound — not on every timeout. When that
+  bounded wait is exhausted without the declared event, A escalates the
+  unknown to the decision owner instead of opening another wait or
+  investigating the same item. A wait reads status without sending B a
+  message, and an unchanged or progress-only snapshot does not by itself
+  justify another wait, a status read, or looking at the same item B owns.
+  Do not re-investigate or pre-emptively audit the deliverable while B still
+  owns it. Use `read_thread` for the relevant turn when evidence is missing
+  or ambiguous. Preserve the original intent and a recognizable brief
+  reference. A timeout, a transport error without a known outcome, or a
+  pending creation is unresolved — keep it in flight and reconcile the same
+  target, as below. For creation with no usable chat ID, resolve the pending
+  reference or search the original target host's chat listing around the
+  attempt, then verify the exact brief in the matching chat. Absence from a
+  list alone does not establish non-delivery. Keep waiting or escalate the
+  unknown if the host cannot resolve it.
 - **Substitute:** Use the agreed sequence only after affirmative evidence of
   refusal/non-delivery or a terminal failed execution and no in-flight writes
   in the scope. Inspect partial artifacts; preserve the brief, authority and
@@ -100,18 +105,40 @@ required by the host; never use a choice tool prohibited from requesting it.
 
 ## Deliver the result back
 
+The hand-off obligation rides on the first brief, not on B's memory of the
+turn. When starting, B leaves a recovery record it can find later — the
+native chat/task history it re-enters, or an authorized local work note —
+with the round, owner and recipient, the verifiable user-authorization
+source, the delivery condition and target, the current revision, and the
+last send evidence. After an interruption, compaction or an unrelated
+in-between task, B reads that record and the latest instruction before
+acting, then picks the row that matches:
+
+| State found | What B does |
+| --- | --- |
+| Work unfinished | Finish within scope; the handoff stays pending. |
+| Revision fixed, send not attempted | Deliver once over the authorized path and yield. |
+| Send attempted, outcome unknown | Verify against the original target; resend only on confirmed non-delivery while authorization holds. |
+| Already delivered | Do not resend; the delivery stands on its round. |
+
+A user pause, cancel or repurpose takes precedence over any pending send.
+Read-only reviewers keep the same record in their native chat history; B and
+C do not write Mission state or run a scheduler.
+
 - **Recipient send:** Where the brief names an authorized return path, B's
   delivery includes exactly one send to A (for example
   `send_message_to_thread` to A's thread id) carrying the fixed revision,
   actual verification and results, deviations handled or remaining, and the
-  attempt marker. One valid send per fixed revision; B then yields. Routine
+  attempt marker (task / round / sender / revision). B leaves the attempt
+  marker before sending so an interrupted send is still reconcilable. One
+  valid send per fixed revision; B then yields. Routine
   progress stays inside the single delivery. If the send's outcome is
   unknown, reconcile the original target before retrying rather than sending
   a second copy.
-- **No authorized return:** When the brief cannot name a host-supported,
-  authorized path back, B leaves the fixed result where A agreed to collect
-  it and reports the missing path; A uses the bounded collection agreed in
-  the brief instead of expecting a wake-up.
+- **No authorized return:** When the brief cannot name a user-authorized,
+  host-supported path back, B leaves the fixed result where A agreed to
+  collect it and reports the missing path; A uses the bounded collection
+  agreed in the brief instead of expecting a wake-up.
 
 If a host does not supply the necessary chat operation, present the available
 options and missing capability. Do not use shell commands or a different host

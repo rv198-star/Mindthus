@@ -41,8 +41,13 @@ TPlan path.
    The first brief to a participant also names the delivery handoff: who the
    fixed revision goes to, when to send it, along which host-supported return
    path this Mission's existing authority covers, who resumes after the send,
-   and how A re-enters. Where no authorized return path or wake-up exists, the
-   brief names the bounded collection A will use instead.
+   and how A re-enters. It also tells the ordinary participant to keep a
+   recoverable record — its native chat/task history or an authorized local
+   work note — of the round, recipient, user-authorization source, delivery
+   condition, current revision and last send evidence, so a B/C that is
+   interrupted, compacted or preempted still completes the pending handoff
+   instead of stopping after delivery. Where no authorized return path or
+   wake-up exists, the brief names the bounded collection A will use instead.
 5. Read B/C replies. An authorized return send to A is the normal delivery
    event that restarts A's turn; otherwise A collects through the agreed
    bounded path. Use `feedback.record` to preserve source, content digest, optional
@@ -73,6 +78,8 @@ TPlan path.
   adopted artifact.
 - Unknown delivery keeps the original intent protected. Query the same target and do
   not create a second execution for the same task or write scope.
+- A user pause, cancel or repurpose wins over a pending delivery. A participant that
+  resumes after one acts on the newest instruction, not the stale handoff.
 - An open Interaction Guard blocks collaboration writes. The host may hold the peer
   result outside the Mission; import it once after the authorized guard resolution.
 - External waiting is not `requires_human`. Record a concrete resume condition instead

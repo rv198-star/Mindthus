@@ -66,3 +66,26 @@ updated (version and location) or kept as a local exception (reason and
 scope), and carries applicable changes into the next brief and review. A
 second receipt for an already delivered revision stays history; do not
 re-report the same version.
+
+### First-brief template B can act on
+
+A usable first brief for a new or reused B/C carries the hand-off and the
+recovery record B should keep, in a form an ordinary chat can follow
+verbatim:
+
+> Round R1, attempt marker <attempt-ref>. You are B; A is <A-thread-id>.
+> Objective / baseline / writable scope: … Acceptance evidence: …
+> When you reach a fixed revision, the agreed milestone, or a real blocker,
+> send exactly one delivery back to me at <A-thread-id> over
+> send_message_to_thread, carrying this attempt marker, the revision, your
+> verification, deviations and remaining items — then yield your turn.
+> Return authority: the user authorized this two-way handoff at
+> <user-turn-ref> (or: this dispatch only; you have no return path — leave
+> the fixed result where I named and I will collect it by <bounded means>).
+> Keep your recovery record in this chat (or <authorized work note>):
+> round, me as recipient, that authorization source, the delivery condition,
+> the current revision, and your last send evidence. If you are interrupted,
+> compacted or pulled onto something else, read that record first, then act
+> on the matching state — unfinished, fixed-not-sent, sent-but-unknown, or
+> already delivered. If a send's outcome is unknown, check the original
+> target before retrying; a pause or new instruction from the user wins.
