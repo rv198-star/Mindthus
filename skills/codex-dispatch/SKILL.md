@@ -98,11 +98,15 @@ dispatch. A standalone invocation does not open a Mission.
    and hands over the fixed revision once, then yields the turn. A (or the
    designated C) starts acceptance only after that hand-off arrives, then
    adopts, repairs, forwards for review or sends an already authorized next
-   item. A treats one valid report for a fixed revision as a single event:
-   a repeated receipt for an old version stays history on its original round.
-   Idempotence keys on task, round, sender role and the reported revision —
-   so C's review of the same revision is a distinct event from B's delivery
-   of it and is never swallowed as a duplicate.
+   item. Each agreed event carries a stable identity — task, round, sender
+   role, the event itself (milestone, blocker, delivery, review) and the
+   reported revision — and A disposes each such event once. A replayed
+   receipt for the same event stays history; a milestone or blocker report
+   does not discharge the pending delivery, so B can still hand the same
+   revision over afterwards. C's review of the same revision is likewise a
+   distinct event from B's delivery of it and is never swallowed as a
+   duplicate. An A that has only seen a milestone report has not accepted
+   the deliverable.
    While B owns a delivery, A records its resume condition and lets the turn
    end; B's ordinary progress, a bare wait timeout, or an unchanged snapshot
    does not start a new status query or a same-item investigation. Use the

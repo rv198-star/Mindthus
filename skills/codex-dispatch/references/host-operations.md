@@ -119,7 +119,7 @@ acting, then picks the row that matches:
 | Work unfinished | Finish within scope; the handoff stays pending. |
 | Revision fixed, send not attempted | Deliver once over the authorized path and yield. |
 | Send attempted, outcome unknown | Verify against the original target; resend only on confirmed non-delivery while authorization holds. |
-| Already delivered | Do not resend; the delivery stands on its round. |
+| Delivery already sent | Do not resend that event; the delivery stands on its round. An earlier milestone or blocker report does not clear it. |
 
 A user pause, cancel or repurpose takes precedence over any pending send.
 Read-only reviewers keep the same record in their native chat history; B and
@@ -129,12 +129,14 @@ C do not write Mission state or run a scheduler.
   delivery includes exactly one send to A (for example
   `send_message_to_thread` to A's thread id) carrying the fixed revision,
   actual verification and results, deviations handled or remaining, and the
-  attempt marker (task / round / sender / revision). B leaves the attempt
-  marker before sending so an interrupted send is still reconcilable. One
-  valid send per fixed revision; B then yields. Routine
-  progress stays inside the single delivery. If the send's outcome is
-  unknown, reconcile the original target before retrying rather than sending
-  a second copy.
+  attempt marker (task / round / sender / event / revision), where event is
+  one of the brief's agreed kinds — milestone, blocker, delivery or review.
+  Each agreed event has a stable identity; replaying the same event must not
+  re-dispose it, while a milestone or blocker does not clear the still-pending
+  delivery. B leaves the attempt marker before sending so an interrupted send
+  is still reconcilable, then yields. Routine progress stays inside the
+  single delivery event. If the send's outcome is unknown, reconcile the
+  original target before retrying rather than sending a second copy.
 - **No authorized return:** When the brief cannot name a user-authorized,
   host-supported path back, B leaves the fixed result where A agreed to
   collect it and reports the missing path; A uses the bounded collection

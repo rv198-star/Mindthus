@@ -50,7 +50,10 @@ TPlan path.
    wake-up exists, the brief names the bounded collection A will use instead.
 5. Read B/C replies. An authorized return send to A is the normal delivery
    event that restarts A's turn; otherwise A collects through the agreed
-   bounded path. Use `feedback.record` to preserve source, content digest, optional
+   bounded path. Each agreed event keeps its own `source_event_ref` and
+   `kind` — a milestone or blocker report is a distinct event from the
+   delivery and does not discharge it. Use `feedback.record` to preserve
+   source, content digest, optional
    artifact, and task/round/contract association. If an association is missing,
    keep it pending and check the existing intent and native evidence first.
    Batch outstanding questions into one authorized contact when the gap blocks
@@ -62,7 +65,8 @@ TPlan path.
 7. Record what will resume work in `coordination.checkpoint` and let the
    turn end. While B owns a delivery, A waits for its fixed revision to
    arrive through the agreed path before accepting it or assigning its
-   audit; B's ordinary progress and bare wait timeouts do not start a new
+   audit; an A that has seen only a milestone or blocker report does not
+   accept early. B's ordinary progress and bare wait timeouts do not start a new
    status query or a same-item investigation. A may advance another
    explicitly assigned deliverable. A verified scope conflict or blocker can
    interrupt the affected work before handoff. A bounded collection reconciles

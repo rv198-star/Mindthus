@@ -11,10 +11,13 @@ other stable reference), actual tests and any acceptance gap. Link independent
 review evidence to the same revision and criteria. If a revision changes, mark
 its prior verdict historical and get a review of the new version.
 
-A delivery arriving through the authorized return path is one event for the
-recorded revision: accept, send for repair or review, or dispatch an already
-authorized next item against that version once. A late duplicate or an older
-revision stays history on its original round; it does not restart acceptance.
+A delivery arriving through the authorized return path is one event: accept,
+send for repair or review, or dispatch an already authorized next item
+against that version once. Events are keyed by task / round / sender / event
+/ revision, so replaying the same event does not dispose it twice. A
+milestone or blocker report is not the delivery: an A that has seen only a
+milestone keeps the acceptance open and does not start it early, and a late
+duplicate or older revision stays history on its original round.
 
 With TPlan, read the existing [collaboration protocol](../../tplan/resources/collaboration-protocol.md).
 A prepares the intent before sending, records the native dispatch outcome, and
@@ -58,14 +61,16 @@ delegation as permission to send a message back.
 
 Return the fixed artifact, evidence, unresolved items and deviation rows in
 one delivery. Where the brief named an authorized return path, make that
-delivery include one send back to A at the hand-off point (fixed revision,
-agreed milestone or a real blocker), carrying the attempt marker; then yield
-the turn instead of waiting for a prompt. Routine troubleshooting stays
-inside this single delivery. A or the designated designer marks each row
-updated (version and location) or kept as a local exception (reason and
-scope), and carries applicable changes into the next brief and review. A
-second receipt for an already delivered revision stays history; do not
-re-report the same version.
+delivery include one send back to A at the hand-off point, carrying the
+attempt marker; then yield the turn instead of waiting for a prompt. An
+agreed milestone or a real blocker is its own send with its own event
+marker — reporting one does not discharge the delivery, and the same
+revision is still owed afterwards. Routine troubleshooting stays inside the
+delivery send. A or the designated designer marks each row updated (version
+and location) or kept as a local exception (reason and scope), and carries
+applicable changes into the next brief and review. Replaying an already sent
+event stays history; do not re-report the same event, and do not skip the
+delivery because an earlier milestone or blocker went out.
 
 ### First-brief template B can act on
 
@@ -75,10 +80,13 @@ verbatim:
 
 > Round R1, attempt marker <attempt-ref>. You are B; A is <A-thread-id>.
 > Objective / baseline / writable scope: … Acceptance evidence: …
-> When you reach a fixed revision, the agreed milestone, or a real blocker,
-> send exactly one delivery back to me at <A-thread-id> over
-> send_message_to_thread, carrying this attempt marker, the revision, your
-> verification, deviations and remaining items — then yield your turn.
+> When you reach a fixed revision send one delivery back to me at
+> <A-thread-id> over send_message_to_thread carrying this attempt marker,
+> the revision, your verification, deviations and remaining items — then
+> yield your turn. An agreed milestone or a real blocker is its own send
+> with its own event marker (task/round/sender/event/revision); sending one
+> does not close the delivery, and the same revision is still owed. An A
+> that has only seen the milestone does not accept yet.
 > Return authority: the user authorized this two-way handoff at
 > <user-turn-ref> (or: this dispatch only; you have no return path — leave
 > the fixed result where I named and I will collect it by <bounded means>).
