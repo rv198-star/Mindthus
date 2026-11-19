@@ -11,6 +11,11 @@ other stable reference), actual tests and any acceptance gap. Link independent
 review evidence to the same revision and criteria. If a revision changes, mark
 its prior verdict historical and get a review of the new version.
 
+A delivery arriving through the authorized return path is one event for the
+recorded revision: accept, send for repair or review, or dispatch an already
+authorized next item against that version once. A late duplicate or an older
+revision stays history on its original round; it does not restart acceptance.
+
 With TPlan, read the existing [collaboration protocol](../../tplan/resources/collaboration-protocol.md).
 A prepares the intent before sending, records the native dispatch outcome, and
 associates feedback with the current round, contract and artifact before adopting,
@@ -52,6 +57,12 @@ blocker visible in the recipient chat for A to read. Do not treat an incoming
 delegation as permission to send a message back.
 
 Return the fixed artifact, evidence, unresolved items and deviation rows in
-one delivery. A or the designated designer marks each row updated (version
-and location) or kept as a local exception (reason and scope), and carries
-applicable changes into the next brief and review.
+one delivery. Where the brief named an authorized return path, make that
+delivery include one send back to A at the hand-off point (fixed revision,
+agreed milestone or a real blocker), carrying the attempt marker; then yield
+the turn instead of waiting for a prompt. Routine troubleshooting stays
+inside this single delivery. A or the designated designer marks each row
+updated (version and location) or kept as a local exception (reason and
+scope), and carries applicable changes into the next brief and review. A
+second receipt for an already delivered revision stays history; do not
+re-report the same version.

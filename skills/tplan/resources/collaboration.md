@@ -38,7 +38,14 @@ TPlan path.
    timeouts stay in flight; confirm from host evidence. A formal thread ref can
    bind a logical participant once. Ordinary known-target hosts may keep their
    existing recording path.
-5. Read B/C replies. Use `feedback.record` to preserve source, content digest, optional
+   The first brief to a participant also names the delivery handoff: who the
+   fixed revision goes to, when to send it, along which host-supported return
+   path this Mission's existing authority covers, who resumes after the send,
+   and how A re-enters. Where no authorized return path or wake-up exists, the
+   brief names the bounded collection A will use instead.
+5. Read B/C replies. An authorized return send to A is the normal delivery
+   event that restarts A's turn; otherwise A collects through the agreed
+   bounded path. Use `feedback.record` to preserve source, content digest, optional
    artifact, and task/round/contract association. If an association is missing,
    keep it pending and check the existing intent and native evidence first.
    Batch outstanding questions into one authorized contact when the gap blocks
@@ -47,11 +54,16 @@ TPlan path.
    disposition, goal relation, evidence references, current artifact, review, bounded
    task changes, optional next intent, and next action. The runtime commits all effects
    together.
-7. Record what will resume work in `coordination.checkpoint`. While B owns a
-   delivery, A waits for its fixed revision before accepting it or assigning
-   its audit. A may advance another explicitly assigned deliverable. A verified
-   scope conflict or blocker can interrupt the affected work before handoff.
-   Use `coordinator.handoff` when another A session becomes responsible.
+7. Record what will resume work in `coordination.checkpoint` and let the
+   turn end. While B owns a delivery, A waits for its fixed revision to
+   arrive through the agreed path before accepting it or assigning its
+   audit; B's ordinary progress and bare wait timeouts do not start a new
+   status query or a same-item investigation. A may advance another
+   explicitly assigned deliverable. A verified scope conflict or blocker can
+   interrupt the affected work before handoff. A bounded collection reconciles
+   the original target, an agreed milestone or a real blocker; it is not
+   minute-scale polling. Use `coordinator.handoff` when another A session
+   becomes responsible.
 
 ## Guardrails
 

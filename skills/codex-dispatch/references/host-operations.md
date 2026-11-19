@@ -72,12 +72,18 @@ required by the host; never use a choice tool prohibited from requesting it.
   effort separately from the actual pair, which must be verified for that turn
   if the host exposes it. Otherwise mark actual execution as unverified.
 - **Follow:** For a known chat, use a bounded `wait_threads` with its latest
-  cursor for completion or a decision event. Back off after an unchanged timeout;
-  a wait reads status without sending B a message. Use `read_thread` for
-  the relevant turn when evidence is missing or ambiguous. Preserve the
-  original intent and a recognizable brief reference. A timeout, transport
-  error without a known outcome, or pending creation is unresolved. For a known
-  target, reconcile that chat's turns and artifact writes. For creation with no
+  cursor for completion or a decision event. Record one declared resume
+  condition for the wait (the named hand-off arrival, an agreed milestone, or
+  a real blocker) and let A's turn end; the host delivery of B's authorized
+  report is what restarts work. Back off after an unchanged timeout; a wait
+  reads status without sending B a message, and an unchanged or progress-only
+  snapshot does not by itself justify another wait, a status read, or looking
+  at the same item B owns. Do not re-investigate or pre-emptively audit the
+  deliverable while B still owns it. Use `read_thread` for the relevant
+  turn when evidence is missing or ambiguous. Preserve the original intent
+  and a recognizable brief reference. A timeout, transport error without a
+  known outcome, or pending creation is unresolved. For a known target,
+  reconcile that chat's turns and artifact writes. For creation with no
   usable chat ID, resolve the pending reference or search the original target
   host's chat listing around the attempt, then verify the exact brief in the
   matching chat. Absence from a list alone does not establish non-delivery.
@@ -91,6 +97,21 @@ required by the host; never use a choice tool prohibited from requesting it.
   evidence. If the approved alternatives are exhausted, ask about that gap.
   Repair a technical defect with its assigned owner instead of treating it as
   a model service failure.
+
+## Deliver the result back
+
+- **Recipient send:** Where the brief names an authorized return path, B's
+  delivery includes exactly one send to A (for example
+  `send_message_to_thread` to A's thread id) carrying the fixed revision,
+  actual verification and results, deviations handled or remaining, and the
+  attempt marker. One valid send per fixed revision; B then yields. Routine
+  progress stays inside the single delivery. If the send's outcome is
+  unknown, reconcile the original target before retrying rather than sending
+  a second copy.
+- **No authorized return:** When the brief cannot name a host-supported,
+  authorized path back, B leaves the fixed result where A agreed to collect
+  it and reports the missing path; A uses the bounded collection agreed in
+  the brief instead of expecting a wake-up.
 
 If a host does not supply the necessary chat operation, present the available
 options and missing capability. Do not use shell commands or a different host
