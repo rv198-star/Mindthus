@@ -202,35 +202,32 @@ input and model steps per accepted delivery. Keep missing usage unknown.
 
 ## Identify a cross-chat message
 
-Every message between chats opens with one short header so the recipient can
-see at a glance who is speaking and why. The header leads with the real
-sending chat and the final recipient chat — a readable title or an agreed
-short name first, the role alongside — then the intent and a short task /
-round or original-event reference. It does not reuse or forge the user's
-identity, and it does not by itself grant any authority. Use a chat's
-human-readable title or an agreed short name for people; when names collide
-or span hosts, add a short distinguisher and keep the stable thread reference
-for routing. A recipient with no thread id yet uses the agreed name.
+Every message between chats opens with the sender's name and a full-width
+colon, then the content: `<sending chat name>：<what it says>`. Use the
+sending chat's human-readable title or its agreed short name. The body after
+the colon states the thing itself — name a task, round or version only when
+the reader actually needs it, not the destination by rote. There is no type
+tag, arrow, recipient field, role code or fixed task ledger — those stay in
+the underlying record. A header never reuses or forges the user's identity
+and grants no authority. When names collide or span hosts, add a short
+distinguisher and keep the stable thread reference for routing; a recipient
+with no thread id yet uses the agreed name.
 
 Direct, first dispatch to a new chat (B reads this first):
 
-> [派工] 「导入修复·协调」(A) → 「导入修复·实现」(B)。任务 import-fix，
-> 轮次 R1，事件 dispatch。
+> 导入修复·协调：请修复导入并验证 101 条记录。
 
 Direct, B's delivery back to A (the up-stream return):
 
-> [交付] 「导入修复·实现」(B) → 「导入修复·协调」(A)。任务 import-fix，
-> 轮次 R1，事件 delivery，版本 a1b2c3d。
+> 导入修复·实现：101 条已全部导入且复测通过，请复审版本 a1b2c3d。
 
-A real relay leads with the actual sender and the final recipient, and names
-the original author separately — it never presents itself as the original
-author or as the user, and an unknown source stays unknown. It keeps the
-original text / summary and its event or version boundary intact, separate
-from whatever the relayer adds.
+A real relay names the actual sender in front of the colon and the original
+provider inside the body, keeping the original text / summary and its event
+or version boundary intact, separate from what the relayer adds. It never
+presents itself as the original author or as the user; an unknown source
+stays unknown.
 
-> [转发] 「导入修复·协调」(A, relaying) → 「导入修复·审查」(C)；原作者
-> 「导入修复·实现」(B)。任务 import-fix，轮次 R1，原事件 delivery，版本
-> a1b2c3d。
+> 导入修复·协调：实现会话反馈已导入 101 条，请复审版本 a1b2c3d。
 
 Verify the immediate previous hop against the host's own source record when
 one exists; if that record conflicts with the displayed header, reconcile the

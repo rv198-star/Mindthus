@@ -48,8 +48,8 @@ TPlan path.
    interrupted, compacted or preempted still completes the pending handoff
    instead of stopping after delivery. Where no authorized return path or
    wake-up exists, the brief names the bounded collection A will use instead.
-   A down-stream send opens with a header naming sender and role, recipient
-   and role, the dispatch intent and the task / round reference; it waits
+   A down-stream send opens with the sender's name and a full-width colon,
+   then the thing itself; it waits
    for the participant's current item to be handed off rather than injected
    mid-turn, unless it is an authorized and cannot-wait interrupt or
    substantive conflict.

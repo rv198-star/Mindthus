@@ -79,8 +79,8 @@ recovery record B should keep, in a form an ordinary chat can follow
 verbatim:
 
 ```text
-[派工] 「<协调会话名>」(A) → 「<实现会话名>」(B)。任务 <task-id>，轮次 R1，事件 dispatch。
-Attempt marker <attempt-ref>. You are B; A is <A-thread-id>.
+<协调会话名>：请按 <基线版本> 完成 <具体工作>，并验证 <验收条件>。
+You are B; A is <A-thread-id>. Attempt marker <attempt-ref>.
 Objective / baseline / writable scope: … Acceptance evidence: …
 On fixing the revision, keep the package at <agreed location>. Use the
 user-authorized return route once when A is ready for this event or the
@@ -104,9 +104,9 @@ already delivered. If a send's outcome is unknown, check the original
 target before retrying; a pause or new instruction from the user wins.
 ```
 
-B's matching delivery back to A uses the up-stream header:
+B's matching delivery back to A uses the same name-colon form:
 
 ```text
-[交付] 「<实现会话名>」(B) → 「<协调会话名>」(A)。任务 <task-id>，轮次 R1，事件 delivery，版本 <fixed-SHA>。
-Verification: … Deviations: … Remaining: …
+<实现会话名>：<完成了什么和验证结果>，请复审 <固定版本>。
+<验证证据或交付位置>。<说明已处理的设计偏差和仍需决定的事项，如有。>
 ```
