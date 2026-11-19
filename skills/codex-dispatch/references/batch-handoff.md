@@ -60,8 +60,8 @@ blocker visible in the recipient chat for A to read. Do not treat an incoming
 delegation as permission to send a message back.
 
 Return the fixed artifact, evidence, unresolved items and deviation rows in
-one delivery. Where the brief named an authorized return path, make that
-delivery include one send back to A at the hand-off point, carrying the
+one delivery. Where the brief named an authorized return path, use the
+return-or-collection route named in the brief, carrying the
 attempt marker; then yield the turn instead of waiting for a prompt. An
 agreed milestone or a real blocker is its own send with its own event
 marker — reporting one does not discharge the delivery, and the same
@@ -78,22 +78,35 @@ A usable first brief for a new or reused B/C carries the hand-off and the
 recovery record B should keep, in a form an ordinary chat can follow
 verbatim:
 
-> Round R1, attempt marker <attempt-ref>. You are B; A is <A-thread-id>.
-> Objective / baseline / writable scope: … Acceptance evidence: …
-> When you reach a fixed revision send one delivery back to me at
-> <A-thread-id> over send_message_to_thread carrying this attempt marker,
-> the revision, your verification, deviations and remaining items — then
-> yield your turn. An agreed milestone or a real blocker is its own send
-> with its own event marker (task/round/sender/event/revision); sending one
-> does not close the delivery, and the same revision is still owed. An A
-> that has only seen the milestone does not accept yet.
-> Return authority: the user authorized this two-way handoff at
-> <user-turn-ref> (or: this dispatch only; you have no return path — leave
-> the fixed result where I named and I will collect it by <bounded means>).
-> Keep your recovery record in this chat (or <authorized work note>):
-> round, me as recipient, that authorization source, the delivery condition,
-> the current revision, and your last send evidence. If you are interrupted,
-> compacted or pulled onto something else, read that record first, then act
-> on the matching state — unfinished, fixed-not-sent, sent-but-unknown, or
-> already delivered. If a send's outcome is unknown, check the original
-> target before retrying; a pause or new instruction from the user wins.
+```text
+[派工] 「<协调会话名>」(A) → 「<实现会话名>」(B)。任务 <task-id>，轮次 R1，事件 dispatch。
+Attempt marker <attempt-ref>. You are B; A is <A-thread-id>.
+Objective / baseline / writable scope: … Acceptance evidence: …
+On fixing the revision, keep the package at <agreed location>. Use the
+user-authorized return route once when A is ready for this event or the
+host guarantees non-disruptive queuing. If a send would interrupt
+unrelated work or its effect is unknown, leave the package there;
+<named collector> collects at <reachable bounded event>. Include
+<event marker>, revision, checks, deviations and open items; yield.
+An agreed milestone or a real blocker is its own send
+with its own event marker (task/round/sender/event/revision); sending one
+does not close the delivery, and the same revision is still owed. An A
+that has only seen the milestone does not accept yet.
+Return authority: the user authorized this two-way handoff at
+<user-turn-ref> (or: this dispatch only; you have no return path — leave
+the fixed result where I named and I will collect it by <bounded means>).
+Keep your recovery record in this chat (or <authorized work note>):
+round, me as recipient, that authorization source, the delivery condition,
+the current revision, and your last send evidence. If you are interrupted,
+compacted or pulled onto something else, read that record first, then act
+on the matching state — unfinished, fixed-not-sent, sent-but-unknown, or
+already delivered. If a send's outcome is unknown, check the original
+target before retrying; a pause or new instruction from the user wins.
+```
+
+B's matching delivery back to A uses the up-stream header:
+
+```text
+[交付] 「<实现会话名>」(B) → 「<协调会话名>」(A)。任务 <task-id>，轮次 R1，事件 delivery，版本 <fixed-SHA>。
+Verification: … Deviations: … Remaining: …
+```

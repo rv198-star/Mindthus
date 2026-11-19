@@ -48,8 +48,15 @@ TPlan path.
    interrupted, compacted or preempted still completes the pending handoff
    instead of stopping after delivery. Where no authorized return path or
    wake-up exists, the brief names the bounded collection A will use instead.
+   A down-stream send opens with a header naming sender and role, recipient
+   and role, the dispatch intent and the task / round reference; it waits
+   for the participant's current item to be handed off rather than injected
+   mid-turn, unless it is an authorized and cannot-wait interrupt or
+   substantive conflict.
 5. Read B/C replies. An authorized return send to A is the normal delivery
-   event that restarts A's turn; otherwise A collects through the agreed
+   event that restarts A's turn; it may reach a busy A inside the active turn
+   because that hand-off is the recorded resume condition, while a routine
+   new dispatch does not. Otherwise A collects through the agreed
    bounded path. Each agreed event keeps its own `source_event_ref` and
    `kind` — a milestone or blocker report is a distinct event from the
    delivery and does not discharge it. Use `feedback.record` to preserve

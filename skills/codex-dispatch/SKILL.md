@@ -90,9 +90,11 @@ dispatch. A standalone invocation does not open a Mission.
    verifiable user-authorization source, delivery condition and target, the
    current revision, and the last send evidence — so an interrupted,
    compacted or preempted B can still find the pending handoff. Use the
-   approved carrier and requested model/effort. Send the first brief only
-   once; keep the native chat/turn references and record A's resume
-   condition.
+   approved carrier and requested model/effort. Send the first brief once;
+   keep the native chat/turn references and record A's resume condition. A
+   down-stream dispatch waits for a busy peer's hand-off while an up-stream
+   delivery may reach a busy A once; each message uses the
+   [message header](references/host-operations.md#identify-a-cross-chat-message).
 
    For the same deliverable the handoff is serial: B implements, self-tests
    and hands over the fixed revision once, then yields the turn. A (or the
