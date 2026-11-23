@@ -105,8 +105,10 @@ TPlan path.
 - A user pause, cancel or repurpose wins over a pending delivery. A participant that
   resumes after one acts on the newest instruction, not the stale handoff.
 - A human message identified by the host's source tag (Codex:
-  `turn_trigger` `composer`; hook/automation prompts excluded — hook
-  block reasons carry a `[dispatch-hook]` prefix) pre-empts queued
+  per item, not per turn: unwrapped `composer` input is human; a
+  `<codex_delegation>` item is a chat; a `HookPrompt` item wrapped in
+  `<hook_prompt hook_run_id="stop:0:...">` with a `[dispatch-hook]`
+  prefix is the Stop hook) pre-empts queued
   deliveries and is answered first. The participant applies the
   instruction directly and notifies A once — immediately, not folded
   into a later delivery — only when it changes goal, scope or a shared
