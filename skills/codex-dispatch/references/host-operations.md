@@ -171,7 +171,11 @@ existing rule and mark actual execution unverified rather than guessing.
   actual verification and results, deviations handled or remaining, and the
   attempt marker (task / round / sender / event / revision), where event is
   one of the brief's agreed kinds — milestone, blocker, delivery or review.
-  Each agreed event has a stable identity; replaying the same event must not
+  Before the wake send, B registers that event in the delivery inbox
+  (`scripts/dispatch_inbox.py put` — see
+  [Inbox, Stop hook and heartbeat fallback](inbox-and-hooks.md)), so the
+  send has a durable landing even when it reaches a busy A inside its
+  turn. Each agreed event has a stable identity; replaying the same event must not
   re-dispose it, while a milestone or blocker does not clear the still-pending
   delivery. B leaves the attempt marker before sending so an interrupted send
   is still reconcilable, then yields. Routine progress stays inside the
@@ -181,6 +185,33 @@ existing rule and mark actual execution unverified rather than guessing.
   host-supported path back, B leaves the fixed result where A agreed to
   collect it and reports the missing path; A uses the bounded collection
   agreed in the brief instead of expecting a wake-up.
+
+Every send that starts or continues work — down-stream dispatch and
+up-stream delivery alike — ends with one receipt check. A successful
+send call only proves the message left; the target session may already
+be in `systemError` or its new turn may fail within seconds. Take one
+`wait_threads` snapshot (`timeoutMs: 0`) right after the send; if it is
+inconclusive take one more after roughly 30 seconds, then stop. A new
+turn that started and did not fail counts as received; a `systemError`
+or a failed turn means unexecuted — the dispatch does not count as
+delivered, the agreed fallback (a fresh chat or an authorized alternate
+model) takes over, and the pending event stays in the inbox for A's
+collection. Record the outcome on the event (`dispatch_inbox.py
+confirm`) or in A's dispatch record; see
+[Send confirmation](inbox-and-hooks.md#send-confirmation-delivery-receipt).
+
+While a delivery is outstanding, A also needs a wake-up path when its
+own turn ends. The dispatch brief records which mechanism applies this
+round: when the user-level
+[Stop hook](inbox-and-hooks.md#stop-hook) is live (its liveness
+timestamp under `.git/dispatch-local/hook-last-run.json` is fresh —
+never trust config), the hook reminds A of pending inbox events and
+reminds a worker whose closing message shows neither a delivery nor a
+blocker. When the hook is not live, A installs one
+[heartbeat automation](inbox-and-hooks.md#heartbeat-fallback) on its own
+thread; measured on this host the heartbeat is skipped while the target
+is mid-turn rather than injected or queued, so it covers the post-turn
+gap, not a running turn.
 
 If a host does not supply the necessary chat operation, present the available
 options and missing capability. Do not use shell commands or a different host
