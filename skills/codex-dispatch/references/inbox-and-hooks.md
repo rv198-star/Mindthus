@@ -18,16 +18,26 @@ A delivery event is registered before the wake-up send. The script is
 `skills/codex-dispatch/scripts/dispatch_inbox.py`.
 
 ```bash
-# B registers its delivery for task "import-fix", round r1
+# At dispatch time A records the round's return obligation once
+python3 skills/codex-dispatch/scripts/dispatch_inbox.py bind \
+  --task import-fix --round r1 \
+  --worker <B-session-id> --recipient <A-session-id>
+
+# B registers its delivery, naming the session that will collect it
 python3 skills/codex-dispatch/scripts/dispatch_inbox.py put \
   --task import-fix --round r1 --sender "导入修复·实现" \
   --event delivery --revision a1b2c3d \
+  --recipient <A-session-id> \
   --summary "101 条已全部导入且复测通过，请复审"
 
 # A lists what is waiting (pending only by default)
 python3 skills/codex-dispatch/scripts/dispatch_inbox.py list --task import-fix
 
-# A marks the event disposed exactly once
+# A parks an event it is deliberately not handling yet
+python3 skills/codex-dispatch/scripts/dispatch_inbox.py defer \
+  --task import-fix --key <key> --reason "等用户拍板"
+
+# A marks the event disposed exactly once — only the named recipient may
 python3 skills/codex-dispatch/scripts/dispatch_inbox.py done \
   --task import-fix --key import-fix__r1__导入修复·实现__delivery__a1b2c3d
 ```
@@ -35,6 +45,25 @@ python3 skills/codex-dispatch/scripts/dispatch_inbox.py done \
 Events live under the repository's **common** git dir
 (`git rev-parse --git-common-dir`), so every worktree of one repo shares
 the inbox and it never enters the index. Outside a repo pass `--base-dir`.
+
+### Sessions, not replies, decide who owes what
+
+Because one repo hosts several sessions, events and obligations carry
+session ids and the Stop hook checks those — never the text of a reply:
+
+- **`bind`** records the round's return obligation once at dispatch time
+  (task / round / worker session / recipient session / expected kinds).
+- **`put`** names the event's `recipient` session id. Only that session
+  is reminded of pending work, and only it may `done` the event (a
+  `--force` override exists for the operator). A session that merely
+  shares the repo is not interrupted and cannot steal someone else's
+  disposal.
+- **`defer`** parks an event A is deliberately not handling yet — for
+  example while waiting on the user — so the Stop hook does not re-block
+  every turn; `resume` un-parks it.
+- **`discharge`** closes an obligation after its delivery (or blocker)
+  event has been registered; an obligation for round N is not satisfied
+  by round N−1's delivery.
 
 An event's stable identity is task / round / sender / event / revision —
 the same attempt marker the first brief names. `put` on an existing key
@@ -85,15 +114,20 @@ hook. When enabled it runs at the end of every turn and:
   fallback outside a repo);
 - exits through `stop_hook_active` — a turn the hook already continued
   once is allowed to end;
-- blocks once with a reminder when the repo's `dispatch-local` has
-  pending inbox events (the local A still owes disposals), or when the
-  repo participates in dispatch and `last_assistant_message` shows
-  neither a delivery report nor a blocker note (the worker may have
-  finished without its authorized return send).
+- blocks once with a reminder only when the repo's `dispatch-local`
+  binds work to *this* session id:
+  pending non-deferred inbox events whose `recipient` is this session
+  (the local A still owes disposal), or an open obligation whose
+  `worker` is this session and whose expected event kind has not been
+  registered for its round (the worker may have finished without its
+  return send). Sessions with neither binding are never interrupted,
+  even in a repo that takes part in dispatch.
 
-The worker-side check is heuristic and gated: it only runs in repos that
-already have a `dispatch-local/*/inbox` tree, and `stop_hook_active`
-caps it at one interruption per turn.
+Because the inbox sits in the shared `.git`, an early version of this
+hook reminded every session in the repo — a wrong session could then
+mark A's delivery processed and lose it. Binding every event and
+obligation to a session id is what keeps the reminder pointed at the
+right owner.
 
 ### Installation (user does this)
 
@@ -110,7 +144,7 @@ decision — this skill ships the script and the shape only.
         "hooks": [
           {
             "type": "command",
-            "command": "python3 <skills-dir>/codex-dispatch/scripts/dispatch_stop_hook.py",
+            "command": "python3 ~/.codex/plugins/cache/mindthus/mindthus/<version>/skills/codex-dispatch/scripts/dispatch_stop_hook.py",
             "timeout": 10
           }
         ]
@@ -120,9 +154,14 @@ decision — this skill ships the script and the shape only.
 }
 ```
 
-Restart Codex after editing. Any command hook that exits non-zero or
-prints invalid JSON fails closed: Codex marks the hook run failed and
-the turn ends normally.
+The example path is the plugin-packaged copy (e.g.
+`.../mindthus/1.15.0/skills/...`); point it at wherever the installed
+skill actually lives, since the plugin cache moves on each upgrade —
+when the path goes stale the hook stops running and liveness detection
+hands the round back to the heartbeat fallback. Restart Codex after
+editing. Any command hook that exits non-zero or prints invalid JSON
+fails closed: Codex marks the hook run failed and the turn ends
+normally.
 
 ## Liveness detection
 

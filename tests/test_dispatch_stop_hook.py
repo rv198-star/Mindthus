@@ -29,21 +29,9 @@ def run_hook(event: dict):
     )
 
 
-def inbox_put(repo: Path, task="t1", sender="B", revision="v1"):
+def inbox(repo: Path, *args: str):
     return subprocess.run(
-        [
-            sys.executable, str(INBOX), "put",
-            "--task", task, "--round", "r1", "--sender", sender,
-            "--event", "delivery", "--revision", revision, "--cwd", str(repo),
-        ],
-        capture_output=True, text=True, timeout=30,
-    )
-
-
-def inbox_done(repo: Path, key: str):
-    return subprocess.run(
-        [sys.executable, str(INBOX), "done", "--task", "t1",
-         "--key", key, "--cwd", str(repo)],
+        [sys.executable, str(INBOX), *args, "--cwd", str(repo)],
         capture_output=True, text=True, timeout=30,
     )
 
@@ -62,84 +50,139 @@ class DispatchStopHookTest(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
-    def _event(self, **overrides):
+    def _event(self, session_id="sess-A", **overrides):
         event = {
-            "session_id": "sess-1",
+            "session_id": session_id,
             "cwd": str(self.repo),
             "hook_event_name": "Stop",
             "stop_hook_active": False,
-            "last_assistant_message": "做完了，实现了全部功能",
+            "last_assistant_message": None,
         }
         event.update(overrides)
         return event
+
+    def _bind(self, worker="sess-B", recipient="sess-A", round_id="r1", task="t1"):
+        return inbox(
+            self.repo, "bind", "--task", task, "--round", round_id,
+            "--worker", worker, "--recipient", recipient,
+        )
+
+    def _put(self, sender="sess-B", recipient="sess-A", kind="delivery",
+             round_id="r1", revision="v1", task="t1"):
+        return inbox(
+            self.repo, "put", "--task", task, "--round", round_id,
+            "--sender", sender, "--event", kind, "--revision", revision,
+            "--recipient", recipient,
+        )
 
     def test_writes_liveness_timestamp(self):
         result = run_hook(self._event())
         self.assertEqual(result.returncode, 0)
         path = liveness_path(self.repo)
-        self.assertTrue(path.exists(), "hook must record that it ran")
+        self.assertTrue(path.exists())
         record = json.loads(path.read_text())
-        self.assertEqual(record["session_id"], "sess-1")
+        self.assertEqual(record["session_id"], "sess-A")
         self.assertIn("ran_at", record)
 
-    def test_stop_hook_active_lets_turn_end(self):
-        # Even with an undelivered worker message, an already-continued turn ends.
-        result = run_hook(self._event(stop_hook_active=True))
+    # --- Coordinator check: only the named recipient is interrupted ---------
+
+    def test_pending_event_blocks_only_its_recipient(self):
+        """Reproduction of the R1 bug: an event addressed to sess-A blocks A,
+        not an unrelated session ending its turn in the same repo."""
+        self._put(recipient="sess-A")
+        # Recipient is reminded.
+        result_a = run_hook(self._event(session_id="sess-A"))
+        self.assertEqual(json.loads(result_a.stdout)["decision"], "block")
+        self.assertIn("收件箱", json.loads(result_a.stdout)["reason"])
+        # An unrelated session in the same repo is NOT reminded.
+        result_other = run_hook(self._event(session_id="sess-unrelated"))
+        self.assertEqual(result_other.stdout.strip(), "{}")
+
+    def test_deferred_event_does_not_block(self):
+        put_result = self._put(recipient="sess-A")
+        key = json.loads(put_result.stdout)["key"]
+        inbox(self.repo, "defer", "--task", "t1", "--key", key,
+              "--reason", "等用户决定")
+        result = run_hook(self._event(session_id="sess-A"))
         self.assertEqual(result.stdout.strip(), "{}")
 
-    def test_pending_inbox_blocks_once_for_coordinator(self):
-        inbox_put(self.repo)
-        result = run_hook(self._event())
-        out = json.loads(result.stdout)
+    def test_processed_event_does_not_block(self):
+        put_result = self._put(recipient="sess-A")
+        key = json.loads(put_result.stdout)["key"]
+        inbox(self.repo, "done", "--task", "t1", "--key", key,
+              "--processor", "sess-A")
+        result = run_hook(self._event(session_id="sess-A"))
+        self.assertEqual(result.stdout.strip(), "{}")
+
+    # --- Worker check: open obligation, deterministic ------------------------
+
+    def test_open_obligation_reminds_only_its_worker(self):
+        """A worker with an open obligation and no matching inbox event is
+        reminded once — regardless of what its closing message said."""
+        self._bind(worker="sess-B", recipient="sess-A")
+        # The worker is reminded even when its message contains no markers.
+        result_b = run_hook(
+            self._event(session_id="sess-B", last_assistant_message="随便聊聊")
+        )
+        out = json.loads(result_b.stdout)
         self.assertEqual(out["decision"], "block")
-        self.assertIn("收件箱", out["reason"])
-        # A second stop with stop_hook_active true ends normally.
-        result2 = run_hook(self._event(stop_hook_active=True))
+        self.assertIn("义务", out["reason"])
+        # An unrelated session is not reminded.
+        result_other = run_hook(self._event(session_id="sess-other"))
+        self.assertEqual(result_other.stdout.strip(), "{}")
+
+    def test_obligation_closed_by_delivery_event(self):
+        """Registering a delivery for the round satisfies the obligation."""
+        self._bind(worker="sess-B", recipient="sess-A")
+        self._put(kind="delivery", recipient="sess-A")
+        result = run_hook(self._event(session_id="sess-B"))
+        self.assertEqual(result.stdout.strip(), "{}")
+
+    def test_obligation_closed_by_blocker_event(self):
+        """A blocker event also satisfies the obligation."""
+        self._bind(worker="sess-B", recipient="sess-A")
+        self._put(kind="blocker", recipient="sess-A")
+        result = run_hook(self._event(session_id="sess-B"))
+        self.assertEqual(result.stdout.strip(), "{}")
+
+    def test_obligation_in_other_round_still_owes(self):
+        """An obligation for r2 is not satisfied by r1's delivery."""
+        self._bind(worker="sess-B", recipient="sess-A", round_id="r2")
+        self._put(kind="delivery", round_id="r1", recipient="sess-A")
+        result = run_hook(self._event(session_id="sess-B"))
+        self.assertEqual(json.loads(result.stdout)["decision"], "block")
+
+    def test_discharged_obligation_not_reminded(self):
+        bound = self._bind(worker="sess-B", recipient="sess-A")
+        key = json.loads(bound.stdout)["key"]
+        inbox(self.repo, "discharge", "--task", "t1", "--key", key)
+        result = run_hook(self._event(session_id="sess-B"))
+        self.assertEqual(result.stdout.strip(), "{}")
+
+    # --- General gates --------------------------------------------------------
+
+    def test_stop_hook_active_lets_turn_end(self):
+        self._put(recipient="sess-A")
+        self._bind(worker="sess-B", recipient="sess-A")
+        result = run_hook(self._event(session_id="sess-A", stop_hook_active=True))
+        self.assertEqual(result.stdout.strip(), "{}")
+        result2 = run_hook(self._event(session_id="sess-B", stop_hook_active=True))
         self.assertEqual(result2.stdout.strip(), "{}")
 
-    def test_worker_without_delivery_or_blocker_is_reminded(self):
-        # The repo takes part in dispatch (dispatch-local exists), and the last
-        # assistant message neither reports a delivery nor records a blocker.
-        (self.repo / ".git" / "dispatch-local" / "t1" / "inbox" / "pending").mkdir(parents=True)
-        result = run_hook(self._event(last_assistant_message="做完了，功能都实现了"))
-        out = json.loads(result.stdout)
-        self.assertEqual(out["decision"], "block")
-        self.assertIn("回发", out["reason"])
-
-    def test_worker_that_delivered_is_let_go(self):
-        (self.repo / ".git" / "dispatch-local" / "t1" / "inbox" / "pending").mkdir(parents=True)
-        result = run_hook(
-            self._event(
-                last_assistant_message="实现：101 条已导入并复测通过，请复审版本 a1b2c3d。已回发。"
-            )
-        )
-        self.assertEqual(result.stdout.strip(), "{}")
-
-    def test_worker_with_blocker_note_is_let_go(self):
-        (self.repo / ".git" / "dispatch-local" / "t1" / "inbox" / "pending").mkdir(parents=True)
-        result = run_hook(
-            self._event(last_assistant_message="遇到阻塞：无法连接目标主机，等待用户决定。")
-        )
-        self.assertEqual(result.stdout.strip(), "{}")
-
     def test_repo_without_dispatch_tree_is_ignored(self):
-        result = run_hook(self._event(last_assistant_message="随便聊聊"))
+        result = run_hook(self._event(session_id="sess-x",
+                                      last_assistant_message="随便聊聊"))
         self.assertEqual(result.stdout.strip(), "{}")
 
     def test_non_git_cwd_is_ignored(self):
-        result = run_hook(self._event(cwd=str(self.repo.parent)))
+        result = run_hook(self._event(session_id="sess-x", cwd=str(self.repo.parent)))
         self.assertEqual(result.stdout.strip(), "{}")
 
-    def test_processed_inbox_does_not_block(self):
-        put_result = inbox_put(self.repo)
-        key = json.loads(put_result.stdout)["key"]
-        inbox_done(self.repo, key)
-        result = run_hook(self._event())
-        # No pending inbox falls through to the worker heuristic: the default
-        # test message has no delivery/blocker marker, so it is blocked once.
-        out = json.loads(result.stdout)
-        self.assertEqual(out["decision"], "block")
-        self.assertNotIn("收件箱", out["reason"])
+    def test_missing_session_id_is_ignored(self):
+        event = self._event()
+        del event["session_id"]
+        result = run_hook(event)
+        self.assertEqual(result.stdout.strip(), "{}")
 
     def test_invalid_stdin_still_outputs_json(self):
         result = subprocess.run(

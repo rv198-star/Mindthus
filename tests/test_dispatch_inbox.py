@@ -15,14 +15,18 @@ SCRIPT = (
 )
 
 
-def run_inbox(base_dir: Path, *args: str, cwd=None):
+def run_inbox(base_dir: Path, *args: str, cwd=None, env=None):
     cmd = [sys.executable, str(SCRIPT), *args]
+    merged_env = dict(os.environ)
+    if env:
+        merged_env.update(env)
     return subprocess.run(
         cmd,
         cwd=str(cwd) if cwd else None,
         capture_output=True,
         text=True,
         timeout=30,
+        env=merged_env,
     )
 
 
@@ -35,12 +39,17 @@ def put(base_dir: Path, **overrides):
         "--sender", overrides.get("sender", "B"),
         "--event", overrides.get("kind", "delivery"),
         "--revision", overrides.get("revision", "v1"),
+        "--recipient", overrides.get("recipient", "session-A"),
     ]
     if overrides.get("summary"):
         args += ["--summary", overrides["summary"]]
     if overrides.get("payload_file"):
         args += ["--payload-file", str(overrides["payload_file"])]
     return run_inbox(base_dir, *args)
+
+
+def put_key(base_dir: Path, **overrides) -> str:
+    return json.loads(put(base_dir, **overrides).stdout)["key"]
 
 
 class DispatchInboxTest(unittest.TestCase):
@@ -62,14 +71,21 @@ class DispatchInboxTest(unittest.TestCase):
         self.assertIn("inbox", body["path"])
         self.assertIn("pending", body["path"])
 
+    def test_put_requires_recipient(self):
+        result = run_inbox(
+            self.base,
+            "put", "--task", "t1", "--base-dir", str(self.base),
+            "--round", "r1", "--sender", "B", "--event", "delivery",
+            "--revision", "v1",
+        )
+        self.assertNotEqual(result.returncode, 0)
+
     def test_duplicate_put_is_noop(self):
-        first = put(self.base)
+        put(self.base)
         second = put(self.base)
         self.assertEqual(json.loads(second.stdout)["status"], "duplicate")
-        # Same event written twice does not create two pending entries.
         listing = run_inbox(self.base, "list", "--task", "t1", "--base-dir", str(self.base), "--json")
-        events = json.loads(listing.stdout)["events"]
-        self.assertEqual(len(events), 1)
+        self.assertEqual(len(json.loads(listing.stdout)["events"]), 1)
 
     def test_distinct_events_are_separate(self):
         put(self.base, kind="milestone", revision="v1")
@@ -78,39 +94,69 @@ class DispatchInboxTest(unittest.TestCase):
         listing = run_inbox(self.base, "list", "--task", "t1", "--base-dir", str(self.base), "--json")
         events = json.loads(listing.stdout)["events"]
         self.assertEqual(len(events), 3)
-        states = {e["_state"] for e in events}
-        self.assertEqual(states, {"pending"})
+        self.assertEqual({e["_state"] for e in events}, {"pending"})
 
     def test_done_processes_exactly_once(self):
-        put(self.base)
-        key = json.loads(put(self.base).stdout)["key"]
+        key = put_key(self.base, recipient="session-A")
         first = run_inbox(
             self.base, "done", "--task", "t1", "--base-dir", str(self.base),
-            "--key", key, "--processor", "A",
+            "--key", key, "--processor", "session-A",
         )
         self.assertEqual(json.loads(first.stdout)["status"], "processed")
         second = run_inbox(
             self.base, "done", "--task", "t1", "--base-dir", str(self.base),
-            "--key", key, "--processor", "A",
+            "--key", key, "--processor", "session-A",
         )
         self.assertEqual(json.loads(second.stdout)["status"], "already_processed")
-        # The event moved to processed and stays visible with --all only.
         pending = run_inbox(self.base, "list", "--task", "t1", "--base-dir", str(self.base), "--json")
         self.assertEqual(json.loads(pending.stdout)["events"], [])
         all_events = run_inbox(self.base, "list", "--task", "t1", "--base-dir", str(self.base), "--all", "--json")
-        states = {e["_state"] for e in json.loads(all_events.stdout)["events"]}
-        self.assertEqual(states, {"processed"})
+        self.assertEqual({e["_state"] for e in json.loads(all_events.stdout)["events"]}, {"processed"})
+
+    def test_done_forbidden_for_wrong_session(self):
+        """Only the named recipient may dispose an event."""
+        key = put_key(self.base, recipient="session-A")
+        wrong = run_inbox(
+            self.base, "done", "--task", "t1", "--base-dir", str(self.base),
+            "--key", key, "--processor", "session-stranger",
+        )
+        body = json.loads(wrong.stdout)
+        self.assertEqual(body["status"], "forbidden")
+        self.assertIn("session-A", body["reason"])
+        # Event is still pending for the real recipient.
+        pending = run_inbox(self.base, "list", "--task", "t1", "--base-dir", str(self.base), "--json")
+        self.assertEqual(len(json.loads(pending.stdout)["events"]), 1)
+
+    def test_done_force_overrides_recipient_check(self):
+        key = put_key(self.base, recipient="session-A")
+        forced = run_inbox(
+            self.base, "done", "--task", "t1", "--base-dir", str(self.base),
+            "--key", key, "--processor", "operator", "--force",
+        )
+        self.assertEqual(json.loads(forced.stdout)["status"], "processed")
+
+    def test_done_defaults_processor_to_session_id(self):
+        key = put_key(self.base, recipient="session-A")
+        env = {"CODEX_SESSION_ID": "session-A"}
+        result = run_inbox(
+            self.base, "done", "--task", "t1", "--base-dir", str(self.base),
+            "--key", key, env=env,
+        )
+        self.assertEqual(json.loads(result.stdout)["status"], "processed")
 
     def test_put_after_process_stays_processed(self):
-        put(self.base)
-        key = json.loads(put(self.base).stdout)["key"]
-        run_inbox(self.base, "done", "--task", "t1", "--base-dir", str(self.base), "--key", key)
-        again = put(self.base)
+        key = put_key(self.base, recipient="session-A")
+        run_inbox(
+            self.base, "done", "--task", "t1", "--base-dir", str(self.base),
+            "--key", key, "--processor", "session-A",
+        )
+        again = put(self.base, recipient="session-A")
         self.assertEqual(json.loads(again.stdout)["status"], "already_processed")
 
     def test_done_unknown_key_reports_not_found(self):
         result = run_inbox(
-            self.base, "done", "--task", "t1", "--base-dir", str(self.base), "--key", "missing"
+            self.base, "done", "--task", "t1", "--base-dir", str(self.base),
+            "--key", "missing", "--processor", "session-A",
         )
         self.assertEqual(json.loads(result.stdout)["status"], "not_found")
 
@@ -122,14 +168,14 @@ class DispatchInboxTest(unittest.TestCase):
         self.assertIn("请复审固定提交", result.stdout)
 
     def test_git_common_dir_resolution(self):
-        # In a real git work tree, inbox lands under the common dir.
         repo = self.base / "repo"
         repo.mkdir()
         subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
         result = run_inbox(
             self.base,
             "put", "--task", "t1", "--round", "r1", "--sender", "B",
-            "--event", "delivery", "--revision", "v1", "--cwd", str(repo),
+            "--event", "delivery", "--revision", "v1",
+            "--recipient", "session-A", "--cwd", str(repo),
         )
         self.assertEqual(result.returncode, 0, result.stderr)
         body = json.loads(result.stdout)
@@ -153,16 +199,15 @@ class DispatchInboxTest(unittest.TestCase):
         result = run_inbox(
             self.base,
             "put", "--task", "t1", "--base-dir", str(self.base),
-            "--round", "r1", "--sender", "B", "--event", "bogus", "--revision", "v1",
+            "--round", "r1", "--sender", "B", "--event", "bogus",
+            "--revision", "v1", "--recipient", "session-A",
         )
         self.assertNotEqual(result.returncode, 0)
 
     def test_payload_file_merged(self):
         payload_file = self.base / "payload.json"
         payload_file.write_text(json.dumps({"pr": "https://x/1", "tests": "12 passed"}))
-        result = put(self.base, payload_file=payload_file)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        key = json.loads(result.stdout)["key"]
+        key = put_key(self.base, payload_file=payload_file)
         event_path = self.base / "dispatch-local" / "t1" / "inbox" / "pending" / f"{key}.json"
         event = json.loads(event_path.read_text())
         self.assertEqual(event["payload"]["pr"], "https://x/1")
@@ -171,13 +216,67 @@ class DispatchInboxTest(unittest.TestCase):
         result = run_inbox(
             self.base,
             "put", "--task", "../escape", "--base-dir", str(self.base),
-            "--round", "r1", "--sender", "B", "--event", "delivery", "--revision", "v1",
+            "--round", "r1", "--sender", "B", "--event", "delivery",
+            "--revision", "v1", "--recipient", "session-A",
         )
         self.assertEqual(result.returncode, 2)
 
+    # --- defer / resume ----------------------------------------------------
 
-if __name__ == "__main__":
-    unittest.main()
+    def test_defer_marks_event_deferred(self):
+        key = put_key(self.base, recipient="session-A")
+        result = run_inbox(
+            self.base, "defer", "--task", "t1", "--base-dir", str(self.base),
+            "--key", key, "--reason", "等用户拍板",
+        )
+        self.assertEqual(json.loads(result.stdout)["status"], "deferred")
+        listing = run_inbox(self.base, "list", "--task", "t1", "--base-dir", str(self.base))
+        self.assertIn("DEFERRED", listing.stdout)
+
+    def test_resume_unmarks(self):
+        key = put_key(self.base, recipient="session-A")
+        run_inbox(self.base, "defer", "--task", "t1", "--base-dir", str(self.base),
+                  "--key", key, "--reason", "x")
+        result = run_inbox(self.base, "resume", "--task", "t1", "--base-dir", str(self.base),
+                           "--key", key)
+        self.assertEqual(json.loads(result.stdout)["status"], "resumed")
+
+    # --- obligations ---------------------------------------------------------
+
+    def test_bind_and_discharge_obligation(self):
+        bound = run_inbox(
+            self.base, "bind", "--task", "t1", "--base-dir", str(self.base),
+            "--round", "r1", "--worker", "session-B", "--recipient", "session-A",
+        )
+        self.assertEqual(bound.returncode, 0, bound.stderr)
+        body = json.loads(bound.stdout)
+        self.assertEqual(body["status"], "bound")
+        key = body["key"]
+        # Duplicate bind is a no-op.
+        dup = run_inbox(
+            self.base, "bind", "--task", "t1", "--base-dir", str(self.base),
+            "--round", "r1", "--worker", "session-B", "--recipient", "session-A",
+        )
+        self.assertEqual(json.loads(dup.stdout)["status"], "duplicate")
+        # Obligations list shows it open.
+        listing = run_inbox(self.base, "obligations", "--task", "t1",
+                            "--base-dir", str(self.base), "--json")
+        open_keys = {o["key"] for o in json.loads(listing.stdout)["obligations"]}
+        self.assertIn(key, open_keys)
+        # Discharge closes it.
+        done = run_inbox(self.base, "discharge", "--task", "t1",
+                         "--base-dir", str(self.base), "--key", key,
+                         "--evidence", "delivery registered")
+        self.assertEqual(json.loads(done.stdout)["status"], "discharged")
+        listing2 = run_inbox(self.base, "obligations", "--task", "t1",
+                             "--base-dir", str(self.base), "--json")
+        self.assertEqual(json.loads(listing2.stdout)["obligations"], [])
+
+    def test_discharge_unknown_key(self):
+        result = run_inbox(self.base, "discharge", "--task", "t1",
+                           "--base-dir", str(self.base), "--key", "nope")
+        self.assertEqual(json.loads(result.stdout)["status"], "not_found")
+
 
 class DispatchInboxConfirmationTest(unittest.TestCase):
     def setUp(self):
@@ -188,8 +287,7 @@ class DispatchInboxConfirmationTest(unittest.TestCase):
         self.tmp.cleanup()
 
     def _put(self):
-        result = put(self.base, sender="实现会话", revision="v1")
-        return json.loads(result.stdout)["key"]
+        return put_key(self.base, sender="实现会话", revision="v1", recipient="session-A")
 
     def _confirm(self, key, outcome, evidence="wait_threads snapshot"):
         return run_inbox(
@@ -209,15 +307,11 @@ class DispatchInboxConfirmationTest(unittest.TestCase):
         self.assertIn("wait_threads", event["confirmation"]["evidence"])
 
     def test_confirm_unexecuted_marks_failed_delivery(self):
-        # The send tool reported success but the target session errored — the
-        # event must not count as delivered.
         key = self._put()
         result = self._confirm(key, "unexecuted", "target thread status=systemError; turn failed in 4s")
         body = json.loads(result.stdout)
         self.assertEqual(body["status"], "confirmed")
         self.assertEqual(body["outcome"], "unexecuted")
-        # The event stays pending for A-side collection rather than being
-        # silently counted as delivered.
         event_path = self.base / "dispatch-local" / "t1" / "inbox" / "pending" / f"{key}.json"
         self.assertTrue(event_path.exists())
 
@@ -232,3 +326,7 @@ class DispatchInboxConfirmationTest(unittest.TestCase):
             "--key", key, "--outcome", "delivered",
         )
         self.assertNotEqual(result.returncode, 0)
+
+
+if __name__ == "__main__":
+    unittest.main()

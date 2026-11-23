@@ -4,25 +4,26 @@
 Installed at user scope (~/.codex/hooks.json). On every turn stop it:
 
 1. Writes a liveness timestamp under <git-common-dir>/dispatch-local/
-   (or a fallback location outside git when the session is not in a repo).
-   Dispatch reads that timestamp — not config — to decide whether the hook
-   is actually running.
-2. Lets the turn end immediately when ``stop_hook_active`` is already true
-   (the hook may interrupt a turn only once).
-3. Blocks once with a reminder when either check applies to this repo:
+   (or a cache/home fallback outside a repo). Dispatch reads that
+   timestamp — not config — to decide whether the hook is running.
+2. Lets the turn end when ``stop_hook_active`` is already true (the hook
+   may interrupt a turn only once).
+3. Otherwise checks the repo's ``dispatch-local`` state for work bound
+   to *this* session, never to reply text:
 
-   - Coordinator side: ``dispatch-local/*/inbox/pending`` is non-empty —
-     there are delivered events waiting for the local A to dispose.
-   - Worker side: this repo has a ``dispatch-local`` tree (so it takes part
-     in dispatch) and ``last_assistant_message`` neither looks like a
-     delivery report nor records a blocker — the worker may have finished
-     without sending its authorized return.
+   - Coordinator check: any pending, non-deferred inbox event whose
+     ``recipient`` equals this ``session_id`` — A still owes disposal.
+   - Worker check: any open obligation whose ``worker`` equals this
+     ``session_id`` and for which no expected event kind (delivery or
+     blocker) has been registered for its round — B may have finished
+     without its return send.
+
+   Sessions unrelated to either check are never interrupted, even in a
+   repo that takes part in dispatch.
 
 Codex Stop contract: exit 0 with a JSON object on stdout. ``decision:
-"block"`` plus ``reason`` makes Codex continue the turn with that reason as
-a new prompt; ``{}`` lets the turn end. Non-JSON stdout is invalid, and any
-matching hook returning ``continue: false`` takes precedence — this hook
-never emits it.
+"block"`` plus ``reason`` makes Codex continue the turn with that
+reason as a new prompt; ``{}`` lets the turn end.
 """
 
 from __future__ import annotations
@@ -35,38 +36,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 LIVENESS_FILENAME = "hook-last-run.json"
-SCHEMA_VERSION = "codex.dispatch_stop_hook.v0.1"
-
-# Markers in last_assistant_message that already close the loop.
-DELIVERY_MARKERS = (
-    "：",  # sender-colon message form used for deliveries
-    "交付",
-    "回发",
-    "请复审",
-    "送审",
-    "send_message_to_thread",
-    "send_message",
-    "delivery",
-    "delivered",
-    "sent",
-)
-BLOCKER_MARKERS = (
-    "阻塞",
-    "无法",
-    "受阻",
-    "暂停",
-    "block",
-    "blocked",
-    "blocker",
-    "cannot",
-    "unable",
-    "waiting",
-    "等待",
-)
+SCHEMA_VERSION = "codex.dispatch_stop_hook.v0.2"
+OBLIGATIONS_FILENAME = "obligations.json"
 
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def _hook_dir() -> Path:
+    return Path(__file__).resolve().parent
 
 
 def _git_common_dir(cwd: Path) -> Path | None:
@@ -92,7 +71,6 @@ def _git_common_dir(cwd: Path) -> Path | None:
 
 
 def _write_liveness(event: dict) -> str | None:
-    """Record that the hook ran; return where it was written, or None."""
     cwd_text = event.get("cwd")
     cwd = Path(cwd_text).resolve() if isinstance(cwd_text, str) and cwd_text else Path.cwd()
     record = {
@@ -120,87 +98,141 @@ def _write_liveness(event: dict) -> str | None:
     return None
 
 
-def _pending_inbox_entries(dispatch_local: Path) -> list[dict]:
-    pending = []
+def _read_json(path: Path):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def _iter_task_dirs(dispatch_local: Path):
     if not dispatch_local.is_dir():
-        return pending
-    for task_dir in sorted(dispatch_local.iterdir()):
-        inbox_pending = task_dir / "inbox" / "pending"
-        if not inbox_pending.is_dir():
+        return
+    for child in sorted(dispatch_local.iterdir()):
+        if child.is_dir() and child.name != ".tmp":
+            yield child
+
+
+def _pending_events_for(task_dir: Path, session_id: str) -> list[dict]:
+    """Pending, non-deferred events addressed to this session."""
+    pending_dir = task_dir / "inbox" / "pending"
+    out = []
+    if not pending_dir.is_dir():
+        return out
+    for path in sorted(pending_dir.glob("*.json")):
+        event = _read_json(path)
+        if not isinstance(event, dict):
             continue
-        for event_path in sorted(inbox_pending.glob("*.json")):
-            try:
-                event = json.loads(event_path.read_text(encoding="utf-8"))
-            except (OSError, json.JSONDecodeError):
-                event = {"key": event_path.stem}
-            pending.append({"task": task_dir.name, "event": event})
-    return pending
+        if event.get("deferred"):
+            continue
+        if event.get("recipient") != session_id:
+            continue
+        out.append(event)
+    return out
 
 
-def _repo_uses_dispatch(dispatch_local: Path) -> bool:
-    """True when a real inbox exists — not merely the hook's own liveness file."""
-    if not dispatch_local.is_dir():
-        return False
-    for child in dispatch_local.iterdir():
-        if child.is_dir() and (child / "inbox").is_dir():
-            return True
+def _inbox_has_event(task_dir: Path, round_id: str, kinds) -> bool:
+    """Whether any event for ``round_id`` with one of ``kinds`` was ever registered."""
+    for state in ("pending", "processed"):
+        directory = task_dir / "inbox" / state
+        if not directory.is_dir():
+            continue
+        for path in sorted(directory.glob("*.json")):
+            event = _read_json(path)
+            if not isinstance(event, dict):
+                continue
+            if event.get("round") != round_id:
+                continue
+            if event.get("event") in kinds:
+                return True
     return False
 
 
-def _looks_delivered(message: str) -> bool:
-    text = message or ""
-    return any(marker in text for marker in DELIVERY_MARKERS)
+def _open_obligations_for(task_dir: Path, session_id: str) -> list[dict]:
+    """Open obligations where this session is the worker."""
+    obligations_path = task_dir / OBLIGATIONS_FILENAME
+    obligations = _read_json(obligations_path)
+    if not isinstance(obligations, dict):
+        return []
+    out = []
+    for record in obligations.values():
+        if not isinstance(record, dict):
+            continue
+        if record.get("status") != "open":
+            continue
+        if record.get("worker") != session_id:
+            continue
+        out.append(record)
+    return out
 
 
-def _looks_blocked(message: str) -> bool:
-    text = message or ""
-    return any(marker in text for marker in BLOCKER_MARKERS)
+def _inbox_cli() -> str:
+    """Absolute path to dispatch_inbox.py for use in reminders."""
+    return str(_hook_dir() / "dispatch_inbox.py")
 
 
 def evaluate(event: dict) -> dict:
-    """Return the stdout JSON for this Stop event."""
     liveness_path = _write_liveness(event)
     if event.get("stop_hook_active") is True:
         return {}
+    session_id = event.get("session_id")
+    if not isinstance(session_id, str) or not session_id:
+        return {}
     cwd_text = event.get("cwd")
     cwd = Path(cwd_text).resolve() if isinstance(cwd_text, str) and cwd_text else None
-    git_dir = _git_common_dir(cwd) if cwd is not None else None
+    if cwd is None:
+        return {}
+    git_dir = _git_common_dir(cwd)
     if git_dir is None:
         return {}
     dispatch_local = git_dir / "dispatch-local"
     if not dispatch_local.is_dir():
         return {}
-    pending = _pending_inbox_entries(dispatch_local)
-    if pending:
-        lines = []
-        for item in pending[:5]:
-            event_info = item["event"]
-            lines.append(
-                f"- {item['task']}: {event_info.get('key', '(unreadable)')} "
-                f"{event_info.get('event', '?')}@{event_info.get('revision', '?')} "
-                f"from {event_info.get('sender', '?')}"
+    inbox_cli = _inbox_cli()
+
+    # Coordinator check: pending events addressed to me.
+    pending_lines = []
+    for task_dir in _iter_task_dirs(dispatch_local):
+        for event in _pending_events_for(task_dir, session_id):
+            pending_lines.append(
+                f"- {event.get('task', task_dir.name)}: {event.get('key')} "
+                f"{event.get('event')}@{event.get('revision')} from {event.get('sender', '?')}"
             )
+    if pending_lines:
         return {
             "decision": "block",
             "reason": (
-                "Dispatch 收件箱还有未处理的交付事件，先调用 dispatch_inbox.py "
-                "list 查看并用 done 处理：\n" + "\n".join(lines)
+                "Dispatch 收件箱里还有未处理的交付事件（指名给你这个会话）。"
+                f"先运行 `{inbox_cli} list --task <任务>` 查看，"
+                "再用 `done --key <key>` 逐项处置；"
+                "确实需要暂缓的事件用 `defer --key <key> --reason <原因>` 挂起。\n"
+                + "\n".join(pending_lines[:8])
             ),
         }
-    if not _repo_uses_dispatch(dispatch_local):
-        return {}
-    message = event.get("last_assistant_message")
-    if isinstance(message, str) and message.strip():
-        if _looks_delivered(message) or _looks_blocked(message):
-            return {}
+
+    # Worker check: open obligations where I owe a return event.
+    owe_lines = []
+    for task_dir in _iter_task_dirs(dispatch_local):
+        for record in _open_obligations_for(task_dir, session_id):
+            kinds = record.get("expected_kinds") or ["delivery", "blocker"]
+            if _inbox_has_event(task_dir, record["round"], kinds):
+                continue
+            owe_lines.append(
+                f"- {record.get('task', task_dir.name)} round {record['round']}: "
+                f"应向 {record.get('recipient')} 交付 {','.join(kinds)}，"
+                "尚未在收件箱登记"
+            )
+    if owe_lines:
         return {
             "decision": "block",
             "reason": (
-                "这一轮结束时既没有交付记录也没有阻塞说明。若你手里有待回发的"
-                "已固定成果，请按派工单沿已授权的回程发一次；若确实没有待交付"
-                "事项，在回复里写明状态即可。"
+                "你有尚未完成的交付义务。把固定成果写入收件箱"
+                f"（`{inbox_cli} put ...`）后沿已授权的回程发一次；"
+                "若确实受阻，写一条 blocker 事件再说明状态。\n"
+                + "\n".join(owe_lines[:8])
             ),
         }
+
     return {}
 
 

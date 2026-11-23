@@ -2,24 +2,33 @@
 """Cross-chat delivery inbox for Codex Dispatch.
 
 Stores delivery events under <git-common-dir>/dispatch-local/<task>/inbox/.
-Four operations:
+Operations:
 
-- ``put``: register a delivery event once. Re-putting the same event is a
-  no-op (status ``duplicate`` or ``already_processed``); an event is never
-  processed twice.
+- ``bind``: register the round's return obligation (task / round / worker /
+  recipient). Recorded once at dispatch time; the Stop hook uses it — not
+  reply text — to decide who owes what.
+- ``discharge``: close an obligation once the delivery (or a blocker) for
+  that round has been registered.
+- ``put``: register a delivery event once, naming its ``recipient`` session.
+  Re-putting the same event is a no-op (``duplicate`` / ``already_processed``).
 - ``list``: show pending events (default) or all events.
 - ``confirm``: record the sender-side receipt check — whether the
   recipient's turn actually started and did not fail. ``isError:false``
-  from the send tool only means the message left; confirmation is what
-  turns a sent event into a received one.
-- ``done``: mark one pending event as processed, exactly once.
+  from the send tool only means the message left.
+- ``defer`` / ``resume``: A parks an event it is deliberately not handling
+  yet (for example while waiting on the user) so it does not re-trigger
+  the Stop hook every turn.
+- ``done``: mark one pending event as processed, exactly once. Only the
+  event's named recipient may do this unless ``--force`` is given.
 
-An event is identified by the stable dispatch identity: task / round /
-sender / event / revision (the attempt marker from the first brief).
+An event's stable identity is task / round / sender / event / revision
+(the attempt marker from the first brief).
 
-The inbox directory lives under the repository's *common* git dir so all
-worktrees of one repository share it, and it never enters the index
-(``.git`` is not tracked). For non-git contexts pass ``--base-dir``.
+The inbox lives under the repository's *common* git dir so all worktrees
+share it, and it never enters the index. Because several sessions can
+share one repo, every event names its ``recipient`` session id: only
+that session is reminded of pending work and only it may ``done`` the
+event. For non-git contexts pass ``--base-dir``.
 """
 
 from __future__ import annotations
@@ -37,9 +46,10 @@ from pathlib import Path
 
 EVENT_KINDS = {"milestone", "blocker", "delivery", "review"}
 CONFIRM_OUTCOMES = {"received", "unexecuted", "unknown"}
-SCHEMA_VERSION = "codex.dispatch_inbox.v0.1"
+SCHEMA_VERSION = "codex.dispatch_inbox.v0.2"
 UNSAFE_KEY_RE = re.compile(r"[/\\\x00-\x1f\x7f]+")
 MAX_KEY_LENGTH = 180
+OBLIGATIONS_FILENAME = "obligations.json"
 
 
 class InboxError(Exception):
@@ -81,10 +91,7 @@ def _git_common_dir(cwd: Path) -> Path | None:
     return path if path.is_dir() else None
 
 
-def inbox_root(task: str, *, base_dir: str | None, cwd: Path) -> Path:
-    task = _safe_key_part(task, "task")
-    if "/" in task or task.startswith("."):
-        raise InboxError("task must be a simple name without '/' or a leading '.'")
+def dispatch_root(task: str | None, *, base_dir: str | None, cwd: Path) -> Path:
     if base_dir:
         root = Path(base_dir).resolve()
     else:
@@ -94,7 +101,17 @@ def inbox_root(task: str, *, base_dir: str | None, cwd: Path) -> Path:
                 "not inside a git work tree; pass --base-dir to place the inbox"
             )
         root = git_dir
-    return root / "dispatch-local" / task / "inbox"
+    root = root / "dispatch-local"
+    if task is None:
+        return root
+    task = _safe_key_part(task, "task")
+    if "/" in task or task.startswith("."):
+        raise InboxError("task must be a simple name without '/' or a leading '.'")
+    return root / task
+
+
+def inbox_root(task: str, *, base_dir: str | None, cwd: Path) -> Path:
+    return dispatch_root(task, base_dir=base_dir, cwd=cwd) / "inbox"
 
 
 def event_key(task: str, round_id: str, sender: str, kind: str, revision: str) -> str:
@@ -156,6 +173,77 @@ def _read_event(path: Path) -> dict:
     return value
 
 
+# --- obligations -----------------------------------------------------------
+
+def _obligations_path(dispatch_dir: Path) -> Path:
+    return dispatch_dir / OBLIGATIONS_FILENAME
+
+
+def _read_obligations(dispatch_dir: Path) -> dict:
+    path = _obligations_path(dispatch_dir)
+    if not path.exists():
+        return {}
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise InboxError("obligations file is unreadable") from exc
+    if not isinstance(value, dict):
+        raise InboxError("obligations file is not an object")
+    return value
+
+
+def _obligation_key(task: str, round_id: str, worker: str, recipient: str) -> str:
+    return event_key(task, round_id, worker, "obligation", recipient)
+
+
+def bind_obligation(dispatch_dir: Path, *, task, round_id, worker, recipient,
+                    expected_kinds=None) -> dict:
+    """Record the round's return obligation once at dispatch time."""
+    obligations = _read_obligations(dispatch_dir)
+    key = _obligation_key(task, round_id, worker, recipient)
+    if key in obligations and obligations[key].get("status") == "open":
+        return {"status": "duplicate", "key": key}
+    record = {
+        "key": key,
+        "task": task,
+        "round": round_id,
+        "worker": worker,
+        "recipient": recipient,
+        "expected_kinds": expected_kinds or ["delivery", "blocker"],
+        "status": "open",
+        "bound_at": _now_iso(),
+        "discharged_at": None,
+    }
+    obligations[key] = record
+    _write_json(_obligations_path(dispatch_dir), obligations, exclusive=False)
+    return {"status": "bound", "key": key, "obligation": record}
+
+
+def discharge_obligation(dispatch_dir: Path, *, key: str, evidence: str) -> dict:
+    obligations = _read_obligations(dispatch_dir)
+    record = obligations.get(key)
+    if record is None:
+        return {"status": "not_found", "key": key}
+    if record.get("status") == "discharged":
+        return {"status": "duplicate", "key": key}
+    record["status"] = "discharged"
+    record["discharged_at"] = _now_iso()
+    record["discharge_evidence"] = evidence
+    _write_json(_obligations_path(dispatch_dir), obligations, exclusive=False)
+    return {"status": "discharged", "key": key}
+
+
+def list_obligations(dispatch_dir: Path, *, only_open: bool) -> list[dict]:
+    obligations = _read_obligations(dispatch_dir)
+    records = list(obligations.values())
+    if only_open:
+        records = [r for r in records if r.get("status") == "open"]
+    records.sort(key=lambda r: r.get("bound_at", ""))
+    return records
+
+
+# --- events ----------------------------------------------------------------
+
 def put_event(root: Path, *, key: str, fields: dict) -> dict:
     pending, processed = _event_paths(root, key)
     if processed.exists():
@@ -173,6 +261,8 @@ def put_event(root: Path, *, key: str, fields: dict) -> dict:
         "key": key,
         "registered_at": _now_iso(),
         "confirmation": None,
+        "deferred": False,
+        "deferred_reason": None,
         "processed_at": None,
         "processor": None,
         **fields,
@@ -200,7 +290,16 @@ def list_events(root: Path, *, include_processed: bool) -> list[dict]:
     return events
 
 
-def done_event(root: Path, *, key: str, processor: str) -> dict:
+def _load_event_for_update(root: Path, key: str):
+    pending, processed = _event_paths(root, key)
+    if pending.exists():
+        return pending, "pending"
+    if processed.exists():
+        return processed, "processed"
+    return None, None
+
+
+def done_event(root: Path, *, key: str, processor: str, force: bool) -> dict:
     pending, processed = _event_paths(root, key)
     if processed.exists():
         event = _read_event(processed)
@@ -212,6 +311,14 @@ def done_event(root: Path, *, key: str, processor: str) -> dict:
     if not pending.exists():
         return {"status": "not_found", "key": key}
     event = _read_event(pending)
+    recipient = event.get("recipient")
+    if recipient and processor != recipient and not force:
+        return {
+            "status": "forbidden",
+            "key": key,
+            "reason": f"only recipient '{recipient}' may dispose this event "
+                      f"(pass --force to override)",
+        }
     event["processed_at"] = _now_iso()
     event["processor"] = processor
     _write_json(processed, event, exclusive=False)
@@ -222,23 +329,26 @@ def done_event(root: Path, *, key: str, processor: str) -> dict:
     return {"status": "processed", "key": key, "processed_at": event["processed_at"]}
 
 
-def confirm_event(root: Path, *, key: str, outcome: str, evidence: str, checker: str) -> dict:
-    """Attach the sender-side receipt check to an event.
+def defer_event(root: Path, *, key: str, deferred: bool, reason: str, actor: str) -> dict:
+    path, state = _load_event_for_update(root, key)
+    if path is None:
+        return {"status": "not_found", "key": key}
+    event = _read_event(path)
+    event["deferred"] = deferred
+    event["deferred_reason"] = reason if deferred else None
+    event["deferred_by"] = actor if deferred else None
+    _write_json(path, event, exclusive=False)
+    return {"status": "deferred" if deferred else "resumed", "key": key}
 
-    ``outcome`` is ``received`` (the target turn ran and did not fail),
-    ``unexecuted`` (the target session errored or its turn failed — the
-    dispatch must not count as delivered) or ``unknown``.
-    """
+
+def confirm_event(root: Path, *, key: str, outcome: str, evidence: str, checker: str) -> dict:
+    """Attach the sender-side receipt check to an event."""
     if outcome not in CONFIRM_OUTCOMES:
         raise InboxError(
             "confirmation outcome must be one of " + ", ".join(sorted(CONFIRM_OUTCOMES))
         )
-    pending, processed = _event_paths(root, key)
-    if pending.exists():
-        path = pending
-    elif processed.exists():
-        path = processed
-    else:
+    path, _state = _load_event_for_update(root, key)
+    if path is None:
         return {"status": "not_found", "key": key}
     event = _read_event(path)
     if event.get("confirmation") and event["confirmation"].get("outcome") == outcome:
@@ -252,6 +362,8 @@ def confirm_event(root: Path, *, key: str, outcome: str, evidence: str, checker:
     _write_json(path, event, exclusive=False)
     return {"status": "confirmed", "key": key, "outcome": outcome}
 
+
+# --- CLI -------------------------------------------------------------------
 
 def _add_common(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--task", required=True, help="dispatch task name")
@@ -273,6 +385,36 @@ def parse_args(argv=None) -> argparse.Namespace:
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
+    bind = sub.add_parser(
+        "bind",
+        help="record the round's return obligation at dispatch time",
+    )
+    _add_common(bind)
+    bind.add_argument("--round", dest="round_id", required=True)
+    bind.add_argument("--worker", required=True, help="worker session id")
+    bind.add_argument("--recipient", required=True, help="collecting session id")
+    bind.add_argument(
+        "--kinds",
+        default="delivery,blocker",
+        help="comma-separated event kinds that discharge this obligation",
+    )
+
+    discharge = sub.add_parser(
+        "discharge",
+        help="close an obligation after its delivery or blocker registered",
+    )
+    _add_common(discharge)
+    discharge.add_argument("--key", required=True)
+    discharge.add_argument("--evidence", default="")
+
+    obligations = sub.add_parser(
+        "obligations",
+        help="list open (or all) return obligations for a task",
+    )
+    _add_common(obligations)
+    obligations.add_argument("--all", action="store_true")
+    obligations.add_argument("--json", action="store_true", dest="as_json")
+
     put = sub.add_parser("put", help="register one delivery event (idempotent)")
     _add_common(put)
     put.add_argument("--round", dest="round_id", required=True)
@@ -285,6 +427,11 @@ def parse_args(argv=None) -> argparse.Namespace:
         help="event kind: milestone, blocker, delivery or review",
     )
     put.add_argument("--revision", required=True, help="fixed revision being reported")
+    put.add_argument(
+        "--recipient",
+        required=True,
+        help="session id that owns (and may dispose) this event",
+    )
     put.add_argument("--summary", default="", help="what the sender asks the reader to do")
     put.add_argument(
         "--payload-file",
@@ -303,8 +450,25 @@ def parse_args(argv=None) -> argparse.Namespace:
     done.add_argument(
         "--processor",
         default=None,
-        help="who processed it (default: session id or 'local')",
+        help="session id doing the processing (default: CODEX_SESSION_ID or 'local')",
     )
+    done.add_argument(
+        "--force",
+        action="store_true",
+        help="override the recipient-only disposal check",
+    )
+
+    defer = sub.add_parser(
+        "defer",
+        help="park an event so the Stop hook stops reminding about it",
+    )
+    _add_common(defer)
+    defer.add_argument("--key", required=True)
+    defer.add_argument("--reason", default="")
+
+    resume = sub.add_parser("resume", help="un-park a deferred event")
+    _add_common(resume)
+    resume.add_argument("--key", required=True)
 
     confirm = sub.add_parser(
         "confirm",
@@ -324,9 +488,9 @@ def parse_args(argv=None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
-def _resolve_root(args) -> Path:
+def _resolve_dispatch_dir(args) -> Path:
     cwd = Path(args.cwd).resolve() if args.cwd else Path.cwd()
-    return inbox_root(args.task, base_dir=args.base_dir, cwd=cwd)
+    return dispatch_root(args.task, base_dir=args.base_dir, cwd=cwd)
 
 
 def _emit(result, code: int = 0) -> int:
@@ -334,10 +498,46 @@ def _emit(result, code: int = 0) -> int:
     return code
 
 
+def _session_id() -> str:
+    return os.environ.get("CODEX_SESSION_ID") or "local"
+
+
 def main(argv=None) -> int:
     args = parse_args(argv)
     try:
-        root = _resolve_root(args)
+        dispatch_dir = _resolve_dispatch_dir(args)
+        root = dispatch_dir / "inbox"
+        if args.command == "bind":
+            kinds = [k.strip() for k in args.kinds.split(",") if k.strip()]
+            return _emit(
+                bind_obligation(
+                    dispatch_dir,
+                    task=args.task,
+                    round_id=args.round_id,
+                    worker=args.worker,
+                    recipient=args.recipient,
+                    expected_kinds=kinds,
+                )
+            )
+        if args.command == "discharge":
+            return _emit(
+                discharge_obligation(
+                    dispatch_dir, key=args.key, evidence=args.evidence
+                )
+            )
+        if args.command == "obligations":
+            records = list_obligations(dispatch_dir, only_open=not args.all)
+            if args.as_json:
+                return _emit({"task": args.task, "obligations": records})
+            for record in records:
+                print(
+                    f"[{record['status']}] {record['key']} "
+                    f"worker={record['worker']} -> {record['recipient']} "
+                    f"expects {','.join(record.get('expected_kinds', []))}"
+                )
+            if not records:
+                print(f"(none) {dispatch_dir}")
+            return 0
         if args.command == "put":
             key = event_key(
                 args.task, args.round_id, args.sender, args.kind, args.revision
@@ -348,6 +548,7 @@ def main(argv=None) -> int:
                 "sender": args.sender,
                 "event": args.kind,
                 "revision": args.revision,
+                "recipient": args.recipient,
                 "summary": args.summary,
             }
             if args.payload_file:
@@ -362,10 +563,13 @@ def main(argv=None) -> int:
             if args.as_json:
                 return _emit({"task": args.task, "inbox": str(root), "events": events})
             for event in events:
+                marker = ""
+                if event.get("deferred"):
+                    marker = " DEFERRED"
                 line = (
-                    f"[{event['_state']}] {event.get('key')} "
+                    f"[{event['_state']}{marker}] {event.get('key')} "
                     f"{event.get('event')}@{event.get('revision')} "
-                    f"from {event.get('sender')}"
+                    f"from {event.get('sender')} -> {event.get('recipient', '?')}"
                 )
                 if event.get("summary"):
                     line += f" — {event['summary']}"
@@ -374,17 +578,30 @@ def main(argv=None) -> int:
                 print(f"(empty) {root}")
             return 0
         if args.command == "done":
-            processor = args.processor or os.environ.get("CODEX_SESSION_ID") or "local"
-            return _emit(done_event(root, key=args.key, processor=processor))
+            processor = args.processor or _session_id()
+            return _emit(
+                done_event(root, key=args.key, processor=processor, force=args.force)
+            )
+        if args.command == "defer":
+            return _emit(
+                defer_event(
+                    root, key=args.key, deferred=True,
+                    reason=args.reason, actor=_session_id(),
+                )
+            )
+        if args.command == "resume":
+            return _emit(
+                defer_event(root, key=args.key, deferred=False, reason="",
+                            actor=_session_id())
+            )
         if args.command == "confirm":
-            checker = os.environ.get("CODEX_SESSION_ID") or "local"
             return _emit(
                 confirm_event(
                     root,
                     key=args.key,
                     outcome=args.outcome,
                     evidence=args.evidence,
-                    checker=checker,
+                    checker=_session_id(),
                 )
             )
     except InboxError as exc:

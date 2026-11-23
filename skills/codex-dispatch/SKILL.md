@@ -95,29 +95,18 @@ dispatch. A standalone invocation does not open a Mission.
    down-stream dispatch waits for a busy peer's hand-off while an up-stream
    delivery may reach a busy A once; messages use the
    [sender-colon form](references/host-operations.md#identify-a-cross-chat-message).
-   The brief also records which receipt mechanism this round relies on:
-   the [Stop hook](references/inbox-and-hooks.md#stop-hook) when its
-   liveness timestamp is fresh, or a
-   [heartbeat](references/inbox-and-hooks.md#heartbeat-fallback) A installs
-   on its own thread when the hook is not running — never decided from
-   config alone. Every send ends with one
-   [receipt check](references/host-operations.md#deliver-the-result-back)
-   because a successful send call does not prove the target turn ran.
+   The mechanics of that hand-off — delivery inbox,
+   Stop hook, heartbeat fallback and send confirmation — are in
+   [Inbox, Stop hook and heartbeat fallback](references/inbox-and-hooks.md).
 
    For the same deliverable the handoff is serial: B implements, self-tests
    and hands over the fixed revision once, then yields the turn. A (or the
    designated C) starts acceptance only after that hand-off arrives, then
    adopts, repairs, forwards for review or sends an already authorized next
-   item. B registers the delivery in the task's
-   [inbox](references/inbox-and-hooks.md#delivery-inbox) before its wake
-   send, so the event survives a busy or interrupted A; A disposes each
-   such event once through the same inbox. A replayed
-   receipt for the same event stays history; a milestone or blocker report
-   does not discharge the pending delivery, so B can still hand the same
-   revision over afterwards. C's review of the same revision is likewise a
-   distinct event from B's delivery of it and is never swallowed as a
-   duplicate. An A that has only seen a milestone report has not accepted
-   the deliverable.
+   item. A disposes each agreed event once under its stable identity
+   (task / round / sender / event / revision); a milestone or blocker report
+   does not discharge the pending delivery, and an A that has only seen the
+   milestone has not accepted.
    While B owns a delivery, A records its resume condition and lets the turn
    end; B's ordinary progress, a bare wait timeout, or an unchanged snapshot
    does not start a new status query or a same-item investigation. Use the
