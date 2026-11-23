@@ -101,6 +101,17 @@ TPlan path.
   not create a second execution for the same task or write scope.
 - A user pause, cancel or repurpose wins over a pending delivery. A participant that
   resumes after one acts on the newest instruction, not the stale handoff.
+- A human message identified by the host's source tag (Codex:
+  `turn_trigger` `composer`; hook/automation prompts excluded — hook
+  block reasons carry a `[dispatch-hook]` prefix) pre-empts queued
+  deliveries and is answered first. The participant applies the
+  instruction directly and notifies A once only when it changes goal,
+  scope or a shared interface, or is a stop/takeover; in-scope
+  corrections ride in the delivery's deviation list marked
+  "用户直接要求". While the user holds a participant session the Stop
+  hook and heartbeat stand down for it (`dispatch_inbox.py takeover` /
+  `release`). Full rules:
+  [Human interjection](../../codex-dispatch/references/human-interjection.md).
 - An open Interaction Guard blocks collaboration writes. The host may hold the peer
   result outside the Mission; import it once after the authorized guard resolution.
 - External waiting is not `requires_human`. Record a concrete resume condition instead

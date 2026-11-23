@@ -123,6 +123,7 @@ class DispatchInboxTest(unittest.TestCase):
         body = json.loads(wrong.stdout)
         self.assertEqual(body["status"], "forbidden")
         self.assertIn("session-A", body["reason"])
+        self.assertNotEqual(wrong.returncode, 0)
         # Event is still pending for the real recipient.
         pending = run_inbox(self.base, "list", "--task", "t1", "--base-dir", str(self.base), "--json")
         self.assertEqual(len(json.loads(pending.stdout)["events"]), 1)
@@ -159,6 +160,38 @@ class DispatchInboxTest(unittest.TestCase):
             "--key", "missing", "--processor", "session-A",
         )
         self.assertEqual(json.loads(result.stdout)["status"], "not_found")
+        self.assertNotEqual(result.returncode, 0)
+
+    # --- takeover / release -------------------------------------------------
+
+    def test_takeover_and_release_session(self):
+        """A repo-wide marker records which session the user holds."""
+        taken = run_inbox(
+            self.base, "takeover", "--task", "t1", "--base-dir", str(self.base),
+            "--session", "sess-A", "--note", "用户在手动排障",
+        )
+        self.assertEqual(taken.returncode, 0, taken.stderr)
+        self.assertEqual(json.loads(taken.stdout)["status"], "taken_over")
+        marker = self.base / "dispatch-local" / "takeover.json"
+        self.assertTrue(marker.exists())
+        state = json.loads(marker.read_text())
+        self.assertIn("sess-A", state)
+        self.assertEqual(state["sess-A"]["note"], "用户在手动排障")
+        # Release clears only that session.
+        released = run_inbox(
+            self.base, "release", "--task", "t1", "--base-dir", str(self.base),
+            "--session", "sess-A",
+        )
+        self.assertEqual(json.loads(released.stdout)["status"], "released")
+        self.assertEqual(json.loads(marker.read_text()), {})
+
+    def test_release_without_marker_reports_cleanly(self):
+        result = run_inbox(
+            self.base, "release", "--task", "t1", "--base-dir", str(self.base),
+            "--session", "sess-nobody",
+        )
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(json.loads(result.stdout)["status"], "not_taken_over")
 
     def test_list_human_readable(self):
         put(self.base, sender="实现会话", summary="请复审固定提交")

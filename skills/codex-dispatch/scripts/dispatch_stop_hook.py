@@ -21,6 +21,10 @@ Installed at user scope (~/.codex/hooks.json). On every turn stop it:
    Sessions unrelated to either check are never interrupted, even in a
    repo that takes part in dispatch.
 
+   A session the user has taken over (recorded in
+   ``dispatch-local/takeover.json`` by ``dispatch_inbox.py takeover``)
+   is skipped entirely until ``release`` clears the marker.
+
 Codex Stop contract: exit 0 with a JSON object on stdout. ``decision:
 "block"`` plus ``reason`` makes Codex continue the turn with that
 reason as a new prompt; ``{}`` lets the turn end.
@@ -38,6 +42,11 @@ from pathlib import Path
 LIVENESS_FILENAME = "hook-last-run.json"
 SCHEMA_VERSION = "codex.dispatch_stop_hook.v0.2"
 OBLIGATIONS_FILENAME = "obligations.json"
+TAKEOVER_FILENAME = "takeover.json"
+# Every block reason starts with this marker so hosts (and the
+# interjection rules) can tell hook-injected prompts from messages a
+# human actually typed.
+HOOK_REASON_PREFIX = "[dispatch-hook]"
 
 
 def _now_iso() -> str:
@@ -71,6 +80,14 @@ def _git_common_dir(cwd: Path) -> Path | None:
 
 
 def _write_liveness(event: dict) -> str | None:
+    # Only a real Stop-hook run proves liveness. Records without a
+    # session_id (unit tests, manual probes) or for other hook events
+    # must not make the hook look alive.
+    if event.get("hook_event_name") != "Stop":
+        return None
+    session = event.get("session_id")
+    if not isinstance(session, str) or not session:
+        return None
     cwd_text = event.get("cwd")
     cwd = Path(cwd_text).resolve() if isinstance(cwd_text, str) and cwd_text else Path.cwd()
     record = {
@@ -171,6 +188,16 @@ def _inbox_cli() -> str:
     return str(_hook_dir() / "dispatch_inbox.py")
 
 
+def _is_taken_over(dispatch_local: Path, session_id: str) -> bool:
+    """Whether the user currently holds this session.
+
+    The marker is repo-wide (one level above the per-task dirs) and is
+    written by dispatch_inbox.py takeover.
+    """
+    state = _read_json(dispatch_local / TAKEOVER_FILENAME)
+    return isinstance(state, dict) and session_id in state
+
+
 def evaluate(event: dict) -> dict:
     liveness_path = _write_liveness(event)
     if event.get("stop_hook_active") is True:
@@ -188,6 +215,8 @@ def evaluate(event: dict) -> dict:
     dispatch_local = git_dir / "dispatch-local"
     if not dispatch_local.is_dir():
         return {}
+    if _is_taken_over(dispatch_local, session_id):
+        return {}
     inbox_cli = _inbox_cli()
 
     # Coordinator check: pending events addressed to me.
@@ -202,6 +231,7 @@ def evaluate(event: dict) -> dict:
         return {
             "decision": "block",
             "reason": (
+                HOOK_REASON_PREFIX + " "
                 "Dispatch 收件箱里还有未处理的交付事件（指名给你这个会话）。"
                 f"先运行 `{inbox_cli} list --task <任务>` 查看，"
                 "再用 `done --key <key>` 逐项处置；"
@@ -226,6 +256,7 @@ def evaluate(event: dict) -> dict:
         return {
             "decision": "block",
             "reason": (
+                HOOK_REASON_PREFIX + " "
                 "你有尚未完成的交付义务。把固定成果写入收件箱"
                 f"（`{inbox_cli} put ...`）后沿已授权的回程发一次；"
                 "若确实受阻，写一条 blocker 事件再说明状态。\n"
