@@ -56,7 +56,17 @@ TPlan path.
 5. Read B/C replies. An authorized return send to A is the normal delivery
    event that restarts A's turn; it may reach a busy A inside the active turn
    because that hand-off is the recorded resume condition, while a routine
-   new dispatch does not. Otherwise A collects through the agreed
+   new dispatch does not. The sender registers the event in the
+   task inbox before the wake send, and each event is disposed once — see
+   [Dispatch inbox](.../codex-dispatch/references/inbox-and-hooks.md).
+   Every send that starts or continues work ends with one receipt check:
+   a successful send call does not prove the target turn ran, so a
+   `systemError` or failed new turn counts as unexecuted and follows the
+   agreed fallback rather than being treated as delivered. While a
+   delivery is outstanding, A relies on the live Stop hook or, when its
+   liveness timestamp is absent or stale, installs one heartbeat on its
+   own thread; the heartbeat is skipped while A is mid-turn, so it covers
+   the post-turn gap. Otherwise A collects through the agreed
    bounded path. Each agreed event keeps its own `source_event_ref` and
    `kind` — a milestone or blocker report is a distinct event from the
    delivery and does not discharge it. Use `feedback.record` to preserve

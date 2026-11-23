@@ -194,6 +194,17 @@
       "suite_role": "mixed",
       "runtime_cost": "medium",
       "notes": "Node checks use a real installed runtime when available; the no-Node path is always checked. Optional browser evidence is produced by check_explain_browser.mjs and is not a model-benefit claim."
+    },
+    {
+      "test_id": "codex-dispatch-inbox-stop-hook",
+      "paths": ["tests/test_dispatch_inbox.py", "tests/test_dispatch_stop_hook.py"],
+      "owner": "skill",
+      "protects": ["one-shot event registration and disposal in the delivery inbox, send-confirmation outcomes recorded on the event, and the Stop hook reminding a busy A or a worker that forgot its return send"],
+      "introduced_by": "issue #251 inbox/stop-hook/heartbeat fallback",
+      "lifecycle_status": "active_regression",
+      "suite_role": "contract",
+      "runtime_cost": "low",
+      "notes": "Exercises the scripts end-to-end in a temp git repo; the stop hook is fed synthetic Codex hook input, no real hooks.json needed."
     }
   ],
   "review_candidates": [],
