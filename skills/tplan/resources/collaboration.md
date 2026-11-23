@@ -38,7 +38,29 @@ TPlan path.
    timeouts stay in flight; confirm from host evidence. A formal thread ref can
    bind a logical participant once. Ordinary known-target hosts may keep their
    existing recording path.
-5. Read B/C replies. Use `feedback.record` to preserve source, content digest, optional
+   The first brief to a participant also names the delivery handoff: who the
+   fixed revision goes to, when to send it, along which host-supported return
+   path this Mission's existing authority covers, who resumes after the send,
+   and how A re-enters. It also tells the ordinary participant to keep a
+   recoverable record — its native chat/task history or an authorized local
+   work note — of the round, recipient, user-authorization source, delivery
+   condition, current revision and last send evidence, so a B/C that is
+   interrupted, compacted or preempted still completes the pending handoff
+   instead of stopping after delivery. Where no authorized return path or
+   wake-up exists, the brief names the bounded collection A will use instead.
+   A down-stream send opens with the sender's name and a full-width colon,
+   then the thing itself; it waits
+   for the participant's current item to be handed off rather than injected
+   mid-turn, unless it is an authorized and cannot-wait interrupt or
+   substantive conflict.
+5. Read B/C replies. An authorized return send to A is the normal delivery
+   event that restarts A's turn; it may reach a busy A inside the active turn
+   because that hand-off is the recorded resume condition, while a routine
+   new dispatch does not. Otherwise A collects through the agreed
+   bounded path. Each agreed event keeps its own `source_event_ref` and
+   `kind` — a milestone or blocker report is a distinct event from the
+   delivery and does not discharge it. Use `feedback.record` to preserve
+   source, content digest, optional
    artifact, and task/round/contract association. If an association is missing,
    keep it pending and check the existing intent and native evidence first.
    Batch outstanding questions into one authorized contact when the gap blocks
@@ -47,11 +69,17 @@ TPlan path.
    disposition, goal relation, evidence references, current artifact, review, bounded
    task changes, optional next intent, and next action. The runtime commits all effects
    together.
-7. Record what will resume work in `coordination.checkpoint`. While B owns a
-   delivery, A waits for its fixed revision before accepting it or assigning
-   its audit. A may advance another explicitly assigned deliverable. A verified
-   scope conflict or blocker can interrupt the affected work before handoff.
-   Use `coordinator.handoff` when another A session becomes responsible.
+7. Record what will resume work in `coordination.checkpoint` and let the
+   turn end. While B owns a delivery, A waits for its fixed revision to
+   arrive through the agreed path before accepting it or assigning its
+   audit; an A that has seen only a milestone or blocker report does not
+   accept early. B's ordinary progress and bare wait timeouts do not start a new
+   status query or a same-item investigation. A may advance another
+   explicitly assigned deliverable. A verified scope conflict or blocker can
+   interrupt the affected work before handoff. A bounded collection reconciles
+   the original target, an agreed milestone or a real blocker; it is not
+   minute-scale polling. Use `coordinator.handoff` when another A session
+   becomes responsible.
 
 ## Guardrails
 
@@ -61,6 +89,8 @@ TPlan path.
   adopted artifact.
 - Unknown delivery keeps the original intent protected. Query the same target and do
   not create a second execution for the same task or write scope.
+- A user pause, cancel or repurpose wins over a pending delivery. A participant that
+  resumes after one acts on the newest instruction, not the stale handoff.
 - An open Interaction Guard blocks collaboration writes. The host may hold the peer
   result outside the Mission; import it once after the authorized guard resolution.
 - External waiting is not `requires_human`. Record a concrete resume condition instead
