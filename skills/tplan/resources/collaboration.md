@@ -41,7 +41,10 @@ TPlan path.
    The first brief to a participant also names the delivery handoff: who the
    fixed revision goes to, when to send it, along which host-supported return
    path this Mission's existing authority covers, who resumes after the send,
-   and how A re-enters. It also tells the ordinary participant to keep a
+   and how A re-enters. It also points the participant at the
+   [human-interjection rules](../../codex-dispatch/references/human-interjection.md)
+   it should apply if the user speaks mid-work — a participant only learns the
+   ruleset exists when the brief names its location. The brief also tells the ordinary participant to keep a
    recoverable record — its native chat/task history or an authorized local
    work note — of the round, recipient, user-authorization source, delivery
    condition, current revision and last send evidence, so a B/C that is
@@ -105,8 +108,9 @@ TPlan path.
   `turn_trigger` `composer`; hook/automation prompts excluded — hook
   block reasons carry a `[dispatch-hook]` prefix) pre-empts queued
   deliveries and is answered first. The participant applies the
-  instruction directly and notifies A once only when it changes goal,
-  scope or a shared interface, or is a stop/takeover; in-scope
+  instruction directly and notifies A once — immediately, not folded
+  into a later delivery — only when it changes goal, scope or a shared
+  interface, or is a stop/takeover; in-scope
   corrections ride in the delivery's deviation list marked
   "用户直接要求". While the user holds a participant session the Stop
   hook and heartbeat stand down for it (`dispatch_inbox.py takeover` /

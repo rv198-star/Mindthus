@@ -76,7 +76,10 @@ unrecorded send), reach a safe stop point first, then wait.
 
 - **B (participant)**: the human's instruction applies directly — B
   does not ask A first. When the instruction changes the goal, scope,
-  or a shared interface, or is a stop/takeover, B notifies A once.
+  or a shared interface, or is a stop/takeover, B notifies A once
+  **immediately** — it does not wait for the delivery. On a long task,
+  deferring the notice to the delivery leaves A ignorant of the change
+  for the whole duration.
   In-scope corrections go into the delivery's deviation list marked
   "用户直接要求" instead of a separate report.
 - **A (coordinator)**: A judges which participants the instruction
