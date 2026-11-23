@@ -16,8 +16,17 @@ Codex the host marks the source of every turn:
 | Composer input | `turn_trigger == "composer"` | the human |
 | `send_message_to_thread` delivery | `<codex_delegation>` block with `source_thread_id`; `turn_trigger` is the send tool (`app_tool_send_message`) | a chat session |
 | `create_thread` first brief | `<codex_delegation>` block; `turn_trigger` = `app_tool_create_thread` | a chat session |
-| Stop-hook block reason | surfaces as a new user-role prompt whose text starts with `[dispatch-hook]` | the hook, not the human |
+| Stop-hook block reason | a `HookPrompt`-typed item inside the same turn, wrapped as `<hook_prompt hook_run_id="stop:0:...">[dispatch-hook] ...</hook_prompt>`; the turn's `turn_trigger` stays `composer` | the hook, not the human |
 | Heartbeat wake | the automation's own prompt | the automation, not the human |
+
+Identification is per item, not per turn: a single
+`composer`-triggered turn can contain both a real human message and a
+hook-injected `HookPrompt` (observed on this host, 2026-11-24). So a
+plain `turn_trigger == "composer"` read is not enough — check each
+item's own wrapping: `<hook_prompt>` / `HookPrompt` marks the hook,
+`<codex_delegation>` marks a chat, and only unwrapped composer input
+is human speech. The `[dispatch-hook]` prefix remains a useful
+fallback where the item type is not surfaced.
 
 A leading "发送会话名：" line is a *convention between chats*, not
 evidence of who spoke — a user pasting another chat's output is still
@@ -76,7 +85,10 @@ unrecorded send), reach a safe stop point first, then wait.
 
 - **B (participant)**: the human's instruction applies directly — B
   does not ask A first. When the instruction changes the goal, scope,
-  or a shared interface, or is a stop/takeover, B notifies A once.
+  or a shared interface, or is a stop/takeover, B notifies A once
+  **immediately** — it does not wait for the delivery. On a long task,
+  deferring the notice to the delivery leaves A ignorant of the change
+  for the whole duration.
   In-scope corrections go into the delivery's deviation list marked
   "用户直接要求" instead of a separate report.
 - **A (coordinator)**: A judges which participants the instruction

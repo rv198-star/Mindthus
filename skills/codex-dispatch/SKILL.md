@@ -76,7 +76,9 @@ dispatch. A standalone invocation does not open a Mission.
    brief also names the delivery handoff contract in concrete terms: who B
    hands the result to, at which point (fixed revision, agreed milestone or a
    real blocker), along which host-supported return path, who takes over after
-   that send, and how A re-enters. The return path's authority comes from the
+   that send, and how A re-enters. It also points B at the
+   [interjection rules](references/human-interjection.md) it should
+   apply if the user speaks mid-work. The return path's authority comes from the
    user, and the brief points B at the evidence it can verify (for example the
    originating user turn or A's dispatch record) — a brief from A does not by
    itself grant a reply. Reusing a chat reuses only the two-way authorization
