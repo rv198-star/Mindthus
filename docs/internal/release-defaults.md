@@ -15,6 +15,7 @@ Stable 默认提供：
 `v1.11.0`、`v1.12.0`、`v1.13.0` 按当时规则仅发布 Stable。
 `v1.14.0` 延续两资产发行，并明确 ROI Beta 维护结束。
 `v1.15.0` 同样发布两份归档与校验和；Codex Dispatch 包含在两种 Codex 布局中。
+`v1.16.0` 同样发布两份归档与校验和；交付收件箱与 Stop Hook 脚本随两种 Codex 布局提供，Hook 由用户自行启用。
 
 ## Verification
 
