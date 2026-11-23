@@ -266,3 +266,11 @@ record first. A header or a relayed summary does not raise the sender's
 authority and does not change dispatch, receipt or acceptance idempotence.
 Messages that predate this convention keep their native source and the
 existing flow.
+
+The colon header is a convention between chats, not proof of who spoke:
+the host's own tag decides — composer input (`turn_trigger`
+`composer`) is the human, a send-tool delivery carries
+`<codex_delegation>` with `source_thread_id`, and a Stop-hook block
+reason arrives as a new user-role prompt starting with
+`[dispatch-hook]`. Only the first kind is human speech; the full
+routing is in [Human interjection](human-interjection.md).

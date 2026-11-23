@@ -95,9 +95,10 @@ dispatch. A standalone invocation does not open a Mission.
    down-stream dispatch waits for a busy peer's hand-off while an up-stream
    delivery may reach a busy A once; messages use the
    [sender-colon form](references/host-operations.md#identify-a-cross-chat-message).
-   The mechanics of that hand-off — delivery inbox,
-   Stop hook, heartbeat fallback and send confirmation — are in
+   The hand-off mechanics are in
    [Inbox, Stop hook and heartbeat fallback](references/inbox-and-hooks.md).
+   When the user speaks into a session mid-work, apply
+   [Human interjection](references/human-interjection.md).
 
    For the same deliverable the handoff is serial: B implements, self-tests
    and hands over the fixed revision once, then yields the turn. A (or the

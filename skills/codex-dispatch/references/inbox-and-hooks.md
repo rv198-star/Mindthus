@@ -64,6 +64,11 @@ session ids and the Stop hook checks those — never the text of a reply:
 - **`discharge`** closes an obligation after its delivery (or blocker)
   event has been registered; an obligation for round N is not satisfied
   by round N−1's delivery.
+- **`takeover` / `release`** mark and clear the repo-wide
+  `dispatch-local/takeover.json` record of a session the user is
+  holding; see
+  [Human interjection](human-interjection.md#human-takeover-state).
+  While marked, hook and heartbeat stand down for that session.
 
 An event's stable identity is task / round / sender / event / revision —
 the same attempt marker the first brief names. `put` on an existing key
@@ -76,7 +81,8 @@ does not clear the still-pending delivery.
 The reader's rule matches the send rule: when a delivery message reaches
 a busy A, A registers nothing extra — the sender already wrote the event
 — and disposes it once the current item finishes. Each event is disposed
-once.
+once. `done` refused for a wrong session or an unknown key exits
+non-zero (3), so a refusal cannot be mistaken for a disposal.
 
 ### Send confirmation (delivery receipt)
 
@@ -122,6 +128,15 @@ hook. When enabled it runs at the end of every turn and:
   registered for its round (the worker may have finished without its
   return send). Sessions with neither binding are never interrupted,
   even in a repo that takes part in dispatch.
+- skips a session recorded in `dispatch-local/takeover.json` — while
+  the user holds that session the hook stays silent for it
+  ([Human interjection](human-interjection.md#human-takeover-state)).
+
+Every block reason starts with the literal prefix `[dispatch-hook]`.
+Codex surfaces the reason as a new user-role prompt, and that prefix is
+what keeps the interjection rules from mistaking the reminder for
+something the human typed — see
+[Human interjection](human-interjection.md#identify-the-speaker-by-host-tags-not-text-format).
 
 Because the inbox sits in the shared `.git`, an early version of this
 hook reminded every session in the repo — a wrong session could then
@@ -168,10 +183,14 @@ normally.
 Never trust the config file. At dispatch time, check the timestamp the
 hook itself writes:
 
-- `<git-common-dir>/dispatch-local/hook-last-run.json` exists and
-  `ran_at` is recent (fresh within the dispatch's expected window) →
-  the hook is live; the brief records "hook check" as this round's
-  receipt mechanism.
+- `<git-common-dir>/dispatch-local/hook-last-run.json` exists,
+  `ran_at` is recent (fresh within the dispatch's expected window),
+  **and** the record carries a real `session_id` with
+  `hook_event_name: "Stop"` → the hook is live; the brief records
+  "hook check" as this round's receipt mechanism. The hook only writes
+  liveness for genuine Stop runs, so a `session_id`-less or
+  differently-named record — a unit test, a manual probe, an older
+  script version — does not count and should be treated as stale.
 - The file is missing or stale → the hook is not running for this repo;
   the brief records "heartbeat check" and A installs the fallback below.
 

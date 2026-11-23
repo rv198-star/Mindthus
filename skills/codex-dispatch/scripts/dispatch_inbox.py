@@ -19,7 +19,10 @@ Operations:
   yet (for example while waiting on the user) so it does not re-trigger
   the Stop hook every turn.
 - ``done``: mark one pending event as processed, exactly once. Only the
-  event's named recipient may do this unless ``--force`` is given.
+  event's named recipient may do this unless ``--force`` is given;
+  a refusal exits non-zero.
+- ``takeover`` / ``release``: mark or clear a session the user has taken
+  over; the Stop hook and heartbeat stand down for it until released.
 
 An event's stable identity is task / round / sender / event / revision
 (the attempt marker from the first brief).
@@ -470,6 +473,30 @@ def parse_args(argv=None) -> argparse.Namespace:
     _add_common(resume)
     resume.add_argument("--key", required=True)
 
+    takeover = sub.add_parser(
+        "takeover",
+        help="mark a session as taken over by the user (hook/heartbeat stand down)",
+    )
+    takeover.add_argument("--task", required=False, default="-",
+                          help="any task name; the marker is repo-wide")
+    takeover.add_argument(
+        "--base-dir", default=None,
+        help="override the root that holds dispatch-local/ (default: git common dir)",
+    )
+    takeover.add_argument("--cwd", default=None)
+    takeover.add_argument("--session", required=True, help="session id being taken over")
+    takeover.add_argument("--note", default="")
+
+    release = sub.add_parser(
+        "release",
+        help="clear a session's takeover marker so checks resume",
+    )
+    release.add_argument("--task", required=False, default="-",
+                         help="any task name; the marker is repo-wide")
+    release.add_argument("--base-dir", default=None)
+    release.add_argument("--cwd", default=None)
+    release.add_argument("--session", required=True)
+
     confirm = sub.add_parser(
         "confirm",
         help="record the sender-side receipt check on an event",
@@ -486,6 +513,42 @@ def parse_args(argv=None) -> argparse.Namespace:
     )
 
     return parser.parse_args(argv)
+
+
+TAKEOVER_FILENAME = "takeover.json"
+
+
+def _takeover_path(dispatch_dir: Path) -> Path:
+    # Repo-wide marker: lives at dispatch-local/takeover.json, one level
+    # above per-task dirs.
+    return dispatch_dir.parent / TAKEOVER_FILENAME
+
+
+def _read_takeover(dispatch_dir: Path) -> dict:
+    path = _takeover_path(dispatch_dir)
+    if not path.exists():
+        return {}
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return value if isinstance(value, dict) else {}
+
+
+def takeover_session(dispatch_dir: Path, *, session: str, note: str) -> dict:
+    state = _read_takeover(dispatch_dir)
+    state[session] = {"since": _now_iso(), "note": note}
+    _write_json(_takeover_path(dispatch_dir), state, exclusive=False)
+    return {"status": "taken_over", "session": session}
+
+
+def release_session(dispatch_dir: Path, *, session: str) -> dict:
+    state = _read_takeover(dispatch_dir)
+    if session not in state:
+        return {"status": "not_taken_over", "session": session}
+    state.pop(session)
+    _write_json(_takeover_path(dispatch_dir), state, exclusive=False)
+    return {"status": "released", "session": session}
 
 
 def _resolve_dispatch_dir(args) -> Path:
@@ -579,9 +642,11 @@ def main(argv=None) -> int:
             return 0
         if args.command == "done":
             processor = args.processor or _session_id()
-            return _emit(
-                done_event(root, key=args.key, processor=processor, force=args.force)
-            )
+            result = done_event(root, key=args.key, processor=processor, force=args.force)
+            code = 0
+            if result.get("status") in {"forbidden", "not_found"}:
+                code = 3
+            return _emit(result, code)
         if args.command == "defer":
             return _emit(
                 defer_event(
@@ -603,6 +668,16 @@ def main(argv=None) -> int:
                     evidence=args.evidence,
                     checker=_session_id(),
                 )
+            )
+        if args.command == "takeover":
+            return _emit(
+                takeover_session(
+                    dispatch_dir, session=args.session, note=args.note
+                )
+            )
+        if args.command == "release":
+            return _emit(
+                release_session(dispatch_dir, session=args.session)
             )
     except InboxError as exc:
         print(f"dispatch_inbox: {exc}", file=sys.stderr)

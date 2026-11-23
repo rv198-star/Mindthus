@@ -19,13 +19,23 @@ INBOX = (
 )
 
 
-def run_hook(event: dict):
+def run_hook(event: dict, tmp_root: Path):
+    # Isolated HOME/XDG_CACHE_HOME: only the tmp repo's dispatch-local is
+    # written, never the real ~/.codex or a real checkout's .git.
+    home = Path(tmp_root) / "home"
+    cache = Path(tmp_root) / "xdg-cache"
+    home.mkdir(exist_ok=True)
+    cache.mkdir(exist_ok=True)
+    env = dict(os.environ)
+    env["HOME"] = str(home)
+    env["XDG_CACHE_HOME"] = str(cache)
     return subprocess.run(
         [sys.executable, str(HOOK)],
         input=json.dumps(event),
         capture_output=True,
         text=True,
         timeout=30,
+        env=env,
     )
 
 
@@ -76,7 +86,7 @@ class DispatchStopHookTest(unittest.TestCase):
         )
 
     def test_writes_liveness_timestamp(self):
-        result = run_hook(self._event())
+        result = run_hook(self._event(), self.tmp.name)
         self.assertEqual(result.returncode, 0)
         path = liveness_path(self.repo)
         self.assertTrue(path.exists())
@@ -91,11 +101,11 @@ class DispatchStopHookTest(unittest.TestCase):
         not an unrelated session ending its turn in the same repo."""
         self._put(recipient="sess-A")
         # Recipient is reminded.
-        result_a = run_hook(self._event(session_id="sess-A"))
+        result_a = run_hook(self._event(session_id="sess-A"), self.tmp.name)
         self.assertEqual(json.loads(result_a.stdout)["decision"], "block")
         self.assertIn("收件箱", json.loads(result_a.stdout)["reason"])
         # An unrelated session in the same repo is NOT reminded.
-        result_other = run_hook(self._event(session_id="sess-unrelated"))
+        result_other = run_hook(self._event(session_id="sess-unrelated"), self.tmp.name)
         self.assertEqual(result_other.stdout.strip(), "{}")
 
     def test_deferred_event_does_not_block(self):
@@ -103,7 +113,7 @@ class DispatchStopHookTest(unittest.TestCase):
         key = json.loads(put_result.stdout)["key"]
         inbox(self.repo, "defer", "--task", "t1", "--key", key,
               "--reason", "等用户决定")
-        result = run_hook(self._event(session_id="sess-A"))
+        result = run_hook(self._event(session_id="sess-A"), self.tmp.name)
         self.assertEqual(result.stdout.strip(), "{}")
 
     def test_processed_event_does_not_block(self):
@@ -111,7 +121,7 @@ class DispatchStopHookTest(unittest.TestCase):
         key = json.loads(put_result.stdout)["key"]
         inbox(self.repo, "done", "--task", "t1", "--key", key,
               "--processor", "sess-A")
-        result = run_hook(self._event(session_id="sess-A"))
+        result = run_hook(self._event(session_id="sess-A"), self.tmp.name)
         self.assertEqual(result.stdout.strip(), "{}")
 
     # --- Worker check: open obligation, deterministic ------------------------
@@ -122,41 +132,41 @@ class DispatchStopHookTest(unittest.TestCase):
         self._bind(worker="sess-B", recipient="sess-A")
         # The worker is reminded even when its message contains no markers.
         result_b = run_hook(
-            self._event(session_id="sess-B", last_assistant_message="随便聊聊")
+            self._event(session_id="sess-B", last_assistant_message="随便聊聊"), self.tmp.name
         )
         out = json.loads(result_b.stdout)
         self.assertEqual(out["decision"], "block")
         self.assertIn("义务", out["reason"])
         # An unrelated session is not reminded.
-        result_other = run_hook(self._event(session_id="sess-other"))
+        result_other = run_hook(self._event(session_id="sess-other"), self.tmp.name)
         self.assertEqual(result_other.stdout.strip(), "{}")
 
     def test_obligation_closed_by_delivery_event(self):
         """Registering a delivery for the round satisfies the obligation."""
         self._bind(worker="sess-B", recipient="sess-A")
         self._put(kind="delivery", recipient="sess-A")
-        result = run_hook(self._event(session_id="sess-B"))
+        result = run_hook(self._event(session_id="sess-B"), self.tmp.name)
         self.assertEqual(result.stdout.strip(), "{}")
 
     def test_obligation_closed_by_blocker_event(self):
         """A blocker event also satisfies the obligation."""
         self._bind(worker="sess-B", recipient="sess-A")
         self._put(kind="blocker", recipient="sess-A")
-        result = run_hook(self._event(session_id="sess-B"))
+        result = run_hook(self._event(session_id="sess-B"), self.tmp.name)
         self.assertEqual(result.stdout.strip(), "{}")
 
     def test_obligation_in_other_round_still_owes(self):
         """An obligation for r2 is not satisfied by r1's delivery."""
         self._bind(worker="sess-B", recipient="sess-A", round_id="r2")
         self._put(kind="delivery", round_id="r1", recipient="sess-A")
-        result = run_hook(self._event(session_id="sess-B"))
+        result = run_hook(self._event(session_id="sess-B"), self.tmp.name)
         self.assertEqual(json.loads(result.stdout)["decision"], "block")
 
     def test_discharged_obligation_not_reminded(self):
         bound = self._bind(worker="sess-B", recipient="sess-A")
         key = json.loads(bound.stdout)["key"]
         inbox(self.repo, "discharge", "--task", "t1", "--key", key)
-        result = run_hook(self._event(session_id="sess-B"))
+        result = run_hook(self._event(session_id="sess-B"), self.tmp.name)
         self.assertEqual(result.stdout.strip(), "{}")
 
     # --- General gates --------------------------------------------------------
@@ -164,24 +174,24 @@ class DispatchStopHookTest(unittest.TestCase):
     def test_stop_hook_active_lets_turn_end(self):
         self._put(recipient="sess-A")
         self._bind(worker="sess-B", recipient="sess-A")
-        result = run_hook(self._event(session_id="sess-A", stop_hook_active=True))
+        result = run_hook(self._event(session_id="sess-A", stop_hook_active=True), self.tmp.name)
         self.assertEqual(result.stdout.strip(), "{}")
-        result2 = run_hook(self._event(session_id="sess-B", stop_hook_active=True))
+        result2 = run_hook(self._event(session_id="sess-B", stop_hook_active=True), self.tmp.name)
         self.assertEqual(result2.stdout.strip(), "{}")
 
     def test_repo_without_dispatch_tree_is_ignored(self):
         result = run_hook(self._event(session_id="sess-x",
-                                      last_assistant_message="随便聊聊"))
+                                      last_assistant_message="随便聊聊"), self.tmp.name)
         self.assertEqual(result.stdout.strip(), "{}")
 
     def test_non_git_cwd_is_ignored(self):
-        result = run_hook(self._event(session_id="sess-x", cwd=str(self.repo.parent)))
+        result = run_hook(self._event(session_id="sess-x", cwd=str(self.repo.parent)), self.tmp.name)
         self.assertEqual(result.stdout.strip(), "{}")
 
     def test_missing_session_id_is_ignored(self):
         event = self._event()
         del event["session_id"]
-        result = run_hook(event)
+        result = run_hook(event, self.tmp.name)
         self.assertEqual(result.stdout.strip(), "{}")
 
     def test_invalid_stdin_still_outputs_json(self):
@@ -193,6 +203,54 @@ class DispatchStopHookTest(unittest.TestCase):
             timeout=30,
         )
         self.assertEqual(result.stdout.strip(), "{}")
+
+    # --- Liveness gating: only a real Stop run with a session id ----------
+
+    def test_liveness_skipped_for_other_hook_events(self):
+        result = run_hook(self._event(hook_event_name="PreToolUse"), self.tmp.name)
+        self.assertEqual(result.returncode, 0)
+        self.assertFalse(liveness_path(self.repo).exists())
+
+    def test_liveness_skipped_without_session_id(self):
+        event = self._event()
+        del event["session_id"]
+        run_hook(event, self.tmp.name)
+        self.assertFalse(liveness_path(self.repo).exists())
+        event2 = self._event(session_id="")
+        run_hook(event2, self.tmp.name)
+        self.assertFalse(liveness_path(self.repo).exists())
+
+    # --- Human takeover ----------------------------------------------------
+
+    def test_taken_over_session_is_not_blocked(self):
+        """While the user holds a session, hook reminders stand down for it —
+        even though its inbox and obligation state say work is still owed."""
+        self._put(recipient="sess-A")
+        self._bind(worker="sess-A", recipient="sess-other")
+        inbox(self.repo, "takeover", "--task", "t1", "--session", "sess-A")
+        result = run_hook(self._event(session_id="sess-A"), self.tmp.name)
+        self.assertEqual(result.stdout.strip(), "{}")
+        # Another session is still checked normally.
+        result_other = run_hook(self._event(session_id="sess-A2"), self.tmp.name)
+        self.assertEqual(result_other.stdout.strip(), "{}")
+        result_b = run_hook(self._event(session_id="sess-other"), self.tmp.name)
+        self.assertEqual(result_b.stdout.strip(), "{}")
+        # After release the same state blocks again.
+        inbox(self.repo, "release", "--task", "t1", "--session", "sess-A")
+        result_after = run_hook(self._event(session_id="sess-A"), self.tmp.name)
+        self.assertEqual(json.loads(result_after.stdout)["decision"], "block")
+
+    # --- Reason marker -----------------------------------------------------
+
+    def test_block_reasons_carry_hook_marker(self):
+        """Every block reason starts with [dispatch-hook] so the interjection
+        rules can tell a hook-injected prompt from a human-typed message."""
+        self._put(recipient="sess-A", round_id="r2")
+        out = json.loads(run_hook(self._event(session_id="sess-A"), self.tmp.name).stdout)
+        self.assertTrue(out["reason"].startswith("[dispatch-hook]"))
+        self._bind(worker="sess-B", recipient="sess-A")
+        out2 = json.loads(run_hook(self._event(session_id="sess-B"), self.tmp.name).stdout)
+        self.assertTrue(out2["reason"].startswith("[dispatch-hook]"))
 
 
 if __name__ == "__main__":
