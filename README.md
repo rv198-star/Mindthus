@@ -128,16 +128,16 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 优先安装插件包；插件不可用或需要 portable skills 时，再安装 skills 包。
 
-当前已发布 Stable 是 `v1.17.0`。本版补上跨会话协作的最后一块：你在主会话或任何子会话里直接插话时，会话按宿主标注识别是人还是会话，立即处理、默认继续原工作，只有硬边界冲突或不可逆分叉才停下来确认一次；你接管某个子会话期间，Stop Hook 和心跳都不再打扰它。
+当前已发布 Stable 是 `v1.17.1`。修复版，不新增方法和规则：明确子会话在改目标、范围、接口或停止、接管时立即通知主会话，不等交付；首份派工单必写人类插话规则的位置；识别人类消息改为逐条看宿主包装，`composer` 回合里也可能夹着 Hook 提示。
 
 **怎么用**：普通 A/B/C 协同由 A 管目标和验收，B 实现、自测并交出固定版本，C 再独立审计。一次性选模派工可以只用 Dispatch；跨轮次返修、暂停或恢复则交给 TPlan。参见[两张图看懂实际分工、派工步骤和适用场景](docs/guides/tplan-and-dispatch.md)。
 
-插话规则与会话接管都有自动化测试和合成 Hook 输入验证，识别标注来自真实会话记录核对；三类插话的真实演练由用户按指南脚本进行。详见 [v1.17.0 发布说明](docs/releases/v1.17.0.md)。
+三类插话的真实演练已在 v1.17.0 部署后完成，演练暴露的两处问题由本版修复；真实 Hook 拦截的宿主记录方式也已核对。详见 [v1.17.1 发布说明](docs/releases/v1.17.1.md)。
 
 **升级与发行**：TPlan runtime generation 保持 `1.7.0`，已固定旧运行时的 Mission 继续使用原版本。Stop Hook 需要用户自行启用，方法见[收件箱与 Hook 说明](skills/codex-dispatch/references/inbox-and-hooks.md)。ROI Beta 已停止维护及后续发布，历史版本保留。本版提供 Stable 插件包、Skills 包及校验和。
 
-- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.17.0.tar.gz`。
-- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.17.0.tar.gz`。
+- Codex App / Codex CLI / Claude Code 支持插件：下载 `mindthus-plugins-1.17.1.tar.gz`。
+- 不使用插件、需要 OpenCode、或只想复制 skills 目录：下载 `mindthus-skills-1.17.1.tar.gz`。
 不要在同一个 client profile 里同时安装 plugin mode 和 skills-pack mode，除非你正在测试重复 discovery。
 
 ### 下载
@@ -146,22 +146,22 @@ Host 根据自然语言自行发现并唤起 Mindthus 属于 **best-effort** 能
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-plugins-1.17.0.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.17.0/mindthus-plugins-1.17.0.tar.gz"
+  -o /tmp/mindthus-plugins-1.17.1.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.17.1/mindthus-plugins-1.17.1.tar.gz"
 rm -rf /tmp/mindthus-plugins
 mkdir -p /tmp/mindthus-plugins
-tar -xzf /tmp/mindthus-plugins-1.17.0.tar.gz -C /tmp/mindthus-plugins --strip-components=1
+tar -xzf /tmp/mindthus-plugins-1.17.1.tar.gz -C /tmp/mindthus-plugins --strip-components=1
 ```
 
 Skills 包，供 Codex skills-pack / Claude Code personal skills / OpenCode 使用：
 
 ```bash
 curl -L \
-  -o /tmp/mindthus-skills-1.17.0.tar.gz \
-  "https://github.com/rv198-star/Mindthus/releases/download/v1.17.0/mindthus-skills-1.17.0.tar.gz"
+  -o /tmp/mindthus-skills-1.17.1.tar.gz \
+  "https://github.com/rv198-star/Mindthus/releases/download/v1.17.1/mindthus-skills-1.17.1.tar.gz"
 rm -rf /tmp/mindthus-skills
 mkdir -p /tmp/mindthus-skills
-tar -xzf /tmp/mindthus-skills-1.17.0.tar.gz -C /tmp/mindthus-skills --strip-components=1
+tar -xzf /tmp/mindthus-skills-1.17.1.tar.gz -C /tmp/mindthus-skills --strip-components=1
 ```
 
 ### Codex Plugin Mode（推荐）
@@ -301,7 +301,7 @@ python3 scripts/log-fidelity-usage.py --help
 
 ## 版本与许可
 
-当前仓库版本：`v1.17.0`。完整变化请看 [CHANGELOG.md](CHANGELOG.md)，正式安装版见 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
+当前仓库版本：`v1.17.1`。完整变化请看 [CHANGELOG.md](CHANGELOG.md)，正式安装版见 [GitHub Releases](https://github.com/rv198-star/Mindthus/releases)。
 
 Mindthus uses AGPLv3 + commercial dual licensing.
 

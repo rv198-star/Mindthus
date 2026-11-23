@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## v1.17.1 — 插话规则修复
+
+发布日期：2026-11-24。修复版，不新增方法和规则。完整说明：[v1.17.1](docs/releases/v1.17.1.md)。
+
+- **子会话立即通知**（#253 演练）：改目标、范围、共享接口或停止、接管时，子会话立即通知主会话一次，不等交付时再一并说。
+- **派工单写明规则位置**：首份派工必写人类插话规则文件的位置，执行会话才知道有这套规则。
+- **识别按条目不按回合**：真实拦截证据显示 Stop Hook 提示在同一回合里以 `HookPrompt` 条目出现，不能只看回合的 `turn_trigger`；识别改为逐条看宿主包装。
+- TPlan runtime generation 保持 `1.7.0`。提供 plugins、skills 两份白名单归档及 `SHA256SUMS`。
+
 ## v1.17.0 — 人类插话规则与会话接管
 
 发布日期：2026-11-24。完整说明：[v1.17.0](docs/releases/v1.17.0.md)；[人类插话规则](skills/codex-dispatch/references/human-interjection.md)。
