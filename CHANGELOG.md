@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## v1.17.0 — 人类插话规则与会话接管
+
+发布日期：2026-11-24。完整说明：[v1.17.0](docs/releases/v1.17.0.md)；[人类插话规则](skills/codex-dispatch/references/human-interjection.md)。
+
+- **插话识别与优先级**（#253）：靠宿主标注区分人类消息、会话消息与 Hook 提示；人类消息立即处理、不进收件箱、先于待处理交付、高于派工单。
+- **默认继续与两类确认**：回答、范围内纠正、改目标、另起一事、保守理解、暂停接管六类默认行为；只有硬边界冲突或不可逆分叉才确认一次。
+- **人类接管状态**：`dispatch_inbox.py takeover` / `release` 登记后，Stop Hook 和心跳不提醒、不拦截该会话，释放后恢复。
+- **随附修复**：Hook 生效检测只认带真实 session_id 的 Stop 记录；非收件会话执行 done 退出码非零；Hook 拦截提示统一 `[dispatch-hook]` 前缀。
+- TPlan runtime generation 保持 `1.7.0`。提供 plugins、skills 两份白名单归档及 `SHA256SUMS`。
+
 ## v1.16.0 — 交付收件箱与回发检查
 
 发布日期：2026-11-24。完整说明：[v1.16.0](docs/releases/v1.16.0.md)；[收件箱与 Hook 说明](skills/codex-dispatch/references/inbox-and-hooks.md)。
