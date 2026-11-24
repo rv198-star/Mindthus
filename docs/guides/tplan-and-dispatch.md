@@ -49,7 +49,7 @@ A 把结果转给 C 时，用自己的会话名开头，在正文交代结果来
 
 两个兜底机制保证 A 回合结束后还会回来取：
 
-- **Stop Hook（用户级安装）**：装在 `~/.codex/hooks.json`（CODEX_HOME 不在默认位置时是 `$CODEX_HOME/hooks.json`），每回合结束时运行。它先写一个运行时间戳；主会话所在仓库的收件箱还有未处理交付时拦截一次提醒先处理；子会话结束回合时既没交付记录也没阻塞说明，也拦截一次提示回发。`stop_hook_active` 保证同一回合最多拦一次。安装三步：① 把 Hook 命令合并进 `hooks.Stop`（references 里的示例会自动选本机最新版 Mindthus，升级不用改配置也不用重新确认；脚本要 Python 3.10 及以上），② 确认信任——桌面端用输入框旁的 Review hooks 或 Settings > Hooks，CLI 用 `/hooks`，未确认的 Hook 会被跳过，③ 确认装好——让任一会话在派工仓库里结束一个回合，看 `.git/dispatch-local/hook-last-run.json` 有没有带真实 session_id 的 Stop 新记录。完整说明见 `skills/codex-dispatch/references/inbox-and-hooks.md` 的 Installation 一节。
+- **Stop Hook（用户级安装）**：装在 `~/.codex/hooks.json`（CODEX_HOME 不在默认位置时是 `$CODEX_HOME/hooks.json`），每回合结束时运行。它先写一个运行时间戳；主会话所在仓库的收件箱还有未处理交付时拦截一次提醒先处理；子会话结束回合时既没交付记录也没阻塞说明，也拦截一次提示回发。`stop_hook_active` 保证同一回合最多拦一次。安装三步：① 把 Hook 命令合并进 `hooks.Stop`（references 里的示例会自动选本机最新版 Mindthus，升级不用改配置也不用重新确认；脚本在 Python 3.9 及以上都能运行），② 确认信任——桌面端用输入框旁的 Review hooks 或 Settings > Hooks，CLI 用 `/hooks`，未确认的 Hook 会被跳过，③ 确认装好——让任一会话在派工仓库里结束一个回合，看 `.git/dispatch-local/hook-last-run.json` 有没有带真实 session_id 的 Stop 新记录。完整说明见 `skills/codex-dispatch/references/inbox-and-hooks.md` 的 Installation 一节。
 - **Hook 生效检测与心跳**：派工不看配置文件，只看 Hook 自己写的时间戳是否新鲜。Hook 没在跑时，A 给自己的会话挂一个心跳自动化（默认每 30 分钟），每次醒来只做三件事：收件箱有未处理交付就处理；收件箱为空但子会话已结束回合却没交付，就提醒子会话回发；两边都没变化就立即结束。收件箱清空或任务结束时删除心跳。实测（2026-11-24 本机）：心跳到期时若目标会话正在运行，该次触发直接跳过、不注入也不排队，等会话空闲的下一次触发才生效——所以心跳覆盖的是「回合已结束但没人来收」的缺口，最长漏检窗口就是一个心跳间隔。
 
 ## 中途插话：会话怎么接你的话

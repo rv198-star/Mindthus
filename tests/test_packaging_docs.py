@@ -1747,6 +1747,28 @@ class PackagingDocsTests(unittest.TestCase):
             self.assertEqual(smoke.returncode, 0, smoke.stderr + smoke.stdout)
             self.assertEqual(json.loads(smoke.stdout)["task_T1"], "completed")
 
+    def test_hook_install_json_block_parses(self):
+        """The hooks.json example in inbox-and-hooks.md must be valid JSON
+        that a user can paste directly — and it must carry the Stop entry."""
+        doc = (REPO / "skills" / "codex-dispatch" / "references" / "inbox-and-hooks.md").read_text(
+            encoding="utf-8"
+        )
+        marker = "```json"
+        start = doc.index(marker) + len(marker)
+        end = doc.index("```", start)
+        config = json.loads(doc[start:end])
+        stop_entries = config["hooks"]["Stop"]
+        self.assertTrue(stop_entries)
+        commands = [
+            hook["command"]
+            for entry in stop_entries
+            for hook in entry["hooks"]
+        ]
+        self.assertTrue(
+            any("dispatch_stop_hook.py" in command for command in commands),
+            commands,
+        )
+
     def test_release_pack_includes_cinematic_profile_adapters_and_atlas_runtime(self):
         script = REPO / "scripts" / "build-release-pack.py"
         with tempfile.TemporaryDirectory() as tmp:
