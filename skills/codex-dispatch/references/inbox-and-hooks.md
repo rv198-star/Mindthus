@@ -146,10 +146,15 @@ right owner.
 
 ### Installation (user does this)
 
-The hook is opt-in at user scope. Add the command to
-`~/.codex/hooks.json`, merging into `hooks.Stop` alongside any existing
-entries. Enabling the hook and trusting the script's path are the user's
-decision — this skill ships the script and the shape only.
+The hook is opt-in at user scope. Three steps: add the entry, confirm
+trust, then verify it is actually running. Enabling the hook and
+trusting it are the user's decision — this skill ships the script and
+the shape only.
+
+**Step 1 — add the entry.** Merge this block into `hooks.Stop` in
+`~/.codex/hooks.json` (if `CODEX_HOME` is set elsewhere, the file is
+`$CODEX_HOME/hooks.json`). Keep any existing hook entries — do not
+overwrite them:
 
 ```json
 {
@@ -159,7 +164,7 @@ decision — this skill ships the script and the shape only.
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.codex/plugins/cache/mindthus/mindthus/<version>/skills/codex-dispatch/scripts/dispatch_stop_hook.py",
+            "command": "/bin/sh -c 'f=$(ls -d "$HOME"/.codex/plugins/cache/mindthus/mindthus/*/skills/codex-dispatch/scripts/dispatch_stop_hook.py 2>/dev/null | sort -V | tail -n 1); if [ -n "$f" ]; then exec /opt/homebrew/opt/python@3.13/bin/python3.13 "$f"; else echo "{}"; fi'",
             "timeout": 10
           }
         ]
@@ -169,14 +174,35 @@ decision — this skill ships the script and the shape only.
 }
 ```
 
-The example path is the plugin-packaged copy (e.g.
-`.../mindthus/1.15.0/skills/...`); point it at wherever the installed
-skill actually lives, since the plugin cache moves on each upgrade —
-when the path goes stale the hook stops running and liveness detection
-hands the round back to the heartbeat fallback. Restart Codex after
-editing. Any command hook that exits non-zero or prints invalid JSON
-fails closed: Codex marks the hook run failed and the turn ends
-normally.
+This command resolves the newest installed Mindthus plugin copy at run
+time, so it survives plugin upgrades — no version to fill in, no edit
+and no re-trust needed after an upgrade. If no installed copy is found
+it prints `{}` and the turn ends normally, so the hook never wedges a
+turn on a missing path.
+
+The interpreter in the example is the user's own Homebrew Python 3.13 —
+substitute your machine's equivalent. The script requires **Python 3.10
+or newer** (it uses `X | None` annotations): on 3.9 it exits with a
+SyntaxError and Codex silently treats the run as failed, which looks
+exactly like "hook not installed" — the liveness check below is how you
+tell. If the hook does not appear in Codex's hook list after saving,
+restart Codex once; an entry that is listed needs no restart.
+
+**Step 2 — confirm trust.** Codex only runs hooks the user has
+confirmed. On the desktop app use the Review hooks prompt by the
+composer or Settings > Hooks; on the CLI use `/hooks`. An unconfirmed
+hook is skipped. Official doc: https://learn.chatgpt.com/docs/hooks
+
+**Step 3 — verify it runs.** Have any session end a turn inside a repo
+that takes part in dispatch, then read
+`<git-common-dir>/dispatch-local/hook-last-run.json`. A fresh record
+with a real `session_id` and `hook_event_name: "Stop"` means the
+hook is live; anything else (missing file, stale `ran_at`, no
+`session_id`) means it is not and the heartbeat fallback applies —
+see [Liveness detection](#liveness-detection).
+
+Any command hook that exits non-zero or prints invalid JSON fails
+closed: Codex marks the hook run failed and the turn ends normally.
 
 ## Liveness detection
 
