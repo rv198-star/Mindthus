@@ -164,7 +164,7 @@ overwrite them:
         "hooks": [
           {
             "type": "command",
-            "command": "/bin/sh -c 'f=$(ls -d "$HOME"/.codex/plugins/cache/mindthus/mindthus/*/skills/codex-dispatch/scripts/dispatch_stop_hook.py 2>/dev/null | sort -V | tail -n 1); if [ -n "$f" ]; then exec /opt/homebrew/opt/python@3.13/bin/python3.13 "$f"; else echo "{}"; fi'",
+            "command": "/bin/sh -c 'f=$(ls -d \"$HOME\"/.codex/plugins/cache/mindthus/mindthus/*/skills/codex-dispatch/scripts/dispatch_stop_hook.py 2>/dev/null | sort -V | tail -n 1); if [ -n \"$f\" ]; then exec /opt/homebrew/opt/python@3.13/bin/python3.13 \"$f\"; else echo \"{}\"; fi'",
             "timeout": 10
           }
         ]
@@ -181,11 +181,8 @@ it prints `{}` and the turn ends normally, so the hook never wedges a
 turn on a missing path.
 
 The interpreter in the example is the user's own Homebrew Python 3.13 —
-substitute your machine's equivalent. The script requires **Python 3.10
-or newer** (it uses `X | None` annotations): on 3.9 it exits with a
-SyntaxError and Codex silently treats the run as failed, which looks
-exactly like "hook not installed" — the liveness check below is how you
-tell. If the hook does not appear in Codex's hook list after saving,
+substitute your machine's `python3`. The scripts run on Python 3.9 and
+newer. If the hook does not appear in Codex's hook list after saving,
 restart Codex once; an entry that is listed needs no restart.
 
 **Step 2 — confirm trust.** Codex only runs hooks the user has
