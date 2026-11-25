@@ -17,6 +17,15 @@ re-checks after the turn ends (inbox + hook + heartbeat).
 A delivery event is registered before the wake-up send. The script is
 `skills/codex-dispatch/scripts/dispatch_inbox.py`.
 
+The everyday path is three calls: `bind` at dispatch time,
+`put` before the wake-up send, `done` when the recipient disposes.
+`bind` accepts `delivery,review,blocker` by default; `put`
+defaults `--sender` to `CODEX_SESSION_ID`; `done` auto-discharges
+the matching open obligation, so a separate `discharge` call is rarely
+needed. `list` / `obligations` without `--task` scan every task in
+the repo. The rest — `discharge`, `defer`/`resume`, `confirm`,
+`takeover`/`release` — are for exceptions and edge cases.
+
 ```bash
 # At dispatch time A records the round's return obligation once
 python3 skills/codex-dispatch/scripts/dispatch_inbox.py bind \
@@ -83,6 +92,8 @@ a busy A, A registers nothing extra — the sender already wrote the event
 — and disposes it once the current item finishes. Each event is disposed
 once. `done` refused for a wrong session or an unknown key exits
 non-zero (3), so a refusal cannot be mistaken for a disposal.
+Once the batch it was handling is disposed, A lets its turn end rather
+than growing one turn indefinitely off mid-turn arrivals.
 
 ### Send confirmation (delivery receipt)
 

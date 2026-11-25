@@ -20,7 +20,10 @@ Operations:
   the Stop hook every turn.
 - ``done``: mark one pending event as processed, exactly once. Only the
   event's named recipient may do this unless ``--force`` is given;
-  a refusal exits non-zero.
+  a refusal exits non-zero. A ``done`` also auto-discharges the open
+  obligation whose round, recipient and expected kind match the event
+  (exact sender match first, else a sole open candidate), so the common
+  path needs no separate ``discharge``.
 - ``takeover`` / ``release``: mark or clear a session the user has taken
   over; the Stop hook and heartbeat stand down for it until released.
 
@@ -212,7 +215,7 @@ def bind_obligation(dispatch_dir: Path, *, task, round_id, worker, recipient,
         "round": round_id,
         "worker": worker,
         "recipient": recipient,
-        "expected_kinds": expected_kinds or ["delivery", "blocker"],
+        "expected_kinds": expected_kinds or ["delivery", "review", "blocker"],
         "status": "open",
         "bound_at": _now_iso(),
         "discharged_at": None,
@@ -234,6 +237,54 @@ def discharge_obligation(dispatch_dir: Path, *, key: str, evidence: str) -> dict
     record["discharge_evidence"] = evidence
     _write_json(_obligations_path(dispatch_dir), obligations, exclusive=False)
     return {"status": "discharged", "key": key}
+
+
+def _auto_discharge_for_event(dispatch_dir: Path, event: dict) -> list:
+    """Discharge open obligations this event satisfies.
+
+    An event satisfies an obligation when round and recipient match and
+    the event kind is in the obligation's expected_kinds. Prefer exact
+    worker == sender matches; when none match (the sender registered an
+    alias, not a session id) discharge the obligation only if exactly
+    one open candidate remains — multiple open candidates stay open so
+    a round handed to a different worker is never silently cleared.
+    """
+    obligations = _read_obligations(dispatch_dir)
+    candidates = []
+    for key, record in obligations.items():
+        if not isinstance(record, dict):
+            continue
+        if record.get("status") != "open":
+            continue
+        if record.get("round") != event.get("round"):
+            continue
+        if record.get("recipient") != event.get("recipient"):
+            continue
+        kinds = record.get("expected_kinds") or []
+        if event.get("event") not in kinds:
+            continue
+        candidates.append((key, record))
+    if not candidates:
+        return []
+
+    exact = [k for k, r in candidates if r.get("worker") == event.get("sender")]
+    if exact:
+        chosen = exact
+    elif len(candidates) == 1:
+        chosen = [candidates[0][0]]
+    else:
+        return []
+
+    discharged = []
+    evidence = f"auto-discharged by done of event {event.get('key')}"
+    for key in chosen:
+        record = obligations[key]
+        record["status"] = "discharged"
+        record["discharged_at"] = _now_iso()
+        record["discharge_evidence"] = evidence
+        discharged.append(key)
+    _write_json(_obligations_path(dispatch_dir), obligations, exclusive=False)
+    return discharged
 
 
 def list_obligations(dispatch_dir: Path, *, only_open: bool) -> list[dict]:
@@ -302,7 +353,8 @@ def _load_event_for_update(root: Path, key: str):
     return None, None
 
 
-def done_event(root: Path, *, key: str, processor: str, force: bool) -> dict:
+def done_event(root: Path, *, key: str, processor: str, force: bool,
+               dispatch_dir: Path | None = None) -> dict:
     pending, processed = _event_paths(root, key)
     if processed.exists():
         event = _read_event(processed)
@@ -329,7 +381,17 @@ def done_event(root: Path, *, key: str, processor: str, force: bool) -> dict:
         pending.unlink()
     except OSError:
         pass
-    return {"status": "processed", "key": key, "processed_at": event["processed_at"]}
+    if dispatch_dir is None and root.name == "inbox":
+        dispatch_dir = root.parent
+    discharged = []
+    if dispatch_dir is not None:
+        discharged = _auto_discharge_for_event(dispatch_dir, event)
+    return {
+        "status": "processed",
+        "key": key,
+        "processed_at": event["processed_at"],
+        "discharged_obligations": discharged,
+    }
 
 
 def defer_event(root: Path, *, key: str, deferred: bool, reason: str, actor: str) -> dict:
@@ -368,8 +430,14 @@ def confirm_event(root: Path, *, key: str, outcome: str, evidence: str, checker:
 
 # --- CLI -------------------------------------------------------------------
 
-def _add_common(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument("--task", required=True, help="dispatch task name")
+def _add_common(parser: argparse.ArgumentParser, *, task_required: bool = True) -> None:
+    parser.add_argument(
+        "--task",
+        required=task_required,
+        default=None if not task_required else argparse.SUPPRESS,
+        help="dispatch task name"
+        + ("" if task_required else " (omit to scan every task in dispatch-local/)"),
+    )
     parser.add_argument(
         "--base-dir",
         default=None,
@@ -398,7 +466,7 @@ def parse_args(argv=None) -> argparse.Namespace:
     bind.add_argument("--recipient", required=True, help="collecting session id")
     bind.add_argument(
         "--kinds",
-        default="delivery,blocker",
+        default="delivery,review,blocker",
         help="comma-separated event kinds that discharge this obligation",
     )
 
@@ -414,14 +482,18 @@ def parse_args(argv=None) -> argparse.Namespace:
         "obligations",
         help="list open (or all) return obligations for a task",
     )
-    _add_common(obligations)
+    _add_common(obligations, task_required=False)
     obligations.add_argument("--all", action="store_true")
     obligations.add_argument("--json", action="store_true", dest="as_json")
 
     put = sub.add_parser("put", help="register one delivery event (idempotent)")
     _add_common(put)
     put.add_argument("--round", dest="round_id", required=True)
-    put.add_argument("--sender", required=True, help="sending chat name or thread ref")
+    put.add_argument(
+        "--sender",
+        default=None,
+        help="sending chat name or thread ref (default: CODEX_SESSION_ID or 'local')",
+    )
     put.add_argument(
         "--event",
         dest="kind",
@@ -443,7 +515,7 @@ def parse_args(argv=None) -> argparse.Namespace:
     )
 
     listing = sub.add_parser("list", help="list pending events (or all with --all)")
-    _add_common(listing)
+    _add_common(listing, task_required=False)
     listing.add_argument("--all", action="store_true", help="include processed events")
     listing.add_argument("--json", action="store_true", dest="as_json")
 
@@ -556,6 +628,16 @@ def _resolve_dispatch_dir(args) -> Path:
     return dispatch_root(args.task, base_dir=args.base_dir, cwd=cwd)
 
 
+def _iter_task_dispatch_dirs(dispatch_local: Path):
+    """Yield per-task dispatch dirs under dispatch-local/, skipping
+    internal dirs like .tmp."""
+    if not dispatch_local.is_dir():
+        return
+    for child in sorted(dispatch_local.iterdir()):
+        if child.is_dir() and child.name != ".tmp" and not child.name.startswith("."):
+            yield child
+
+
 def _emit(result, code: int = 0) -> int:
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return code
@@ -589,12 +671,22 @@ def main(argv=None) -> int:
                 )
             )
         if args.command == "obligations":
-            records = list_obligations(dispatch_dir, only_open=not args.all)
+            if args.task is None:
+                records = []
+                for task_dir in _iter_task_dispatch_dirs(dispatch_dir):
+                    for record in list_obligations(task_dir, only_open=not args.all):
+                        record = dict(record)
+                        record["task"] = record.get("task") or task_dir.name
+                        records.append(record)
+            else:
+                records = list_obligations(dispatch_dir, only_open=not args.all)
             if args.as_json:
                 return _emit({"task": args.task, "obligations": records})
             for record in records:
                 print(
-                    f"[{record['status']}] {record['key']} "
+                    f"[{record['status']}] "
+                    + (f"{record['task']}: " if args.task is None else "")
+                    + f"{record['key']} "
                     f"worker={record['worker']} -> {record['recipient']} "
                     f"expects {','.join(record.get('expected_kinds', []))}"
                 )
@@ -602,13 +694,14 @@ def main(argv=None) -> int:
                 print(f"(none) {dispatch_dir}")
             return 0
         if args.command == "put":
+            sender = args.sender or _session_id()
             key = event_key(
-                args.task, args.round_id, args.sender, args.kind, args.revision
+                args.task, args.round_id, sender, args.kind, args.revision
             )
             fields = {
                 "task": args.task,
                 "round": args.round_id,
-                "sender": args.sender,
+                "sender": sender,
                 "event": args.kind,
                 "revision": args.revision,
                 "recipient": args.recipient,
@@ -622,7 +715,16 @@ def main(argv=None) -> int:
                 fields["payload"] = payload
             return _emit(put_event(root, key=key, fields=fields))
         if args.command == "list":
-            events = list_events(root, include_processed=args.all)
+            if args.task is None:
+                events = []
+                for task_dir in _iter_task_dispatch_dirs(dispatch_dir):
+                    for event in list_events(task_dir / "inbox", include_processed=args.all):
+                        event = dict(event)
+                        event["task"] = event.get("task") or task_dir.name
+                        events.append(event)
+                events.sort(key=lambda e: e.get("registered_at", ""))
+            else:
+                events = list_events(root, include_processed=args.all)
             if args.as_json:
                 return _emit({"task": args.task, "inbox": str(root), "events": events})
             for event in events:
@@ -630,7 +732,9 @@ def main(argv=None) -> int:
                 if event.get("deferred"):
                     marker = " DEFERRED"
                 line = (
-                    f"[{event['_state']}{marker}] {event.get('key')} "
+                    f"[{event['_state']}{marker}] "
+                    + (f"{event['task']}: " if args.task is None else "")
+                    + f"{event.get('key')} "
                     f"{event.get('event')}@{event.get('revision')} "
                     f"from {event.get('sender')} -> {event.get('recipient', '?')}"
                 )
@@ -642,7 +746,13 @@ def main(argv=None) -> int:
             return 0
         if args.command == "done":
             processor = args.processor or _session_id()
-            result = done_event(root, key=args.key, processor=processor, force=args.force)
+            result = done_event(
+                root,
+                key=args.key,
+                processor=processor,
+                force=args.force,
+                dispatch_dir=dispatch_dir,
+            )
             code = 0
             if result.get("status") in {"forbidden", "not_found"}:
                 code = 3

@@ -361,5 +361,137 @@ class DispatchInboxConfirmationTest(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
 
 
+class DispatchInboxSlimTest(unittest.TestCase):
+    """Auto-discharge, optional --sender/--task, and the new bind default."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.base = Path(self.tmp.name)
+        self.repo = self.base / "repo"
+        self.repo.mkdir()
+        subprocess.run(["git", "init", "-q"], cwd=self.repo, check=True)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def _bind(self, task="t1", round_id="r1", worker="session-B",
+              recipient="session-A", kinds=None):
+        args = ["bind", "--task", task, "--round", round_id,
+                "--worker", worker, "--recipient", recipient]
+        if kinds is not None:
+            args += ["--kinds", kinds]
+        return run_inbox(self.base, *args, "--base-dir", str(self.base))
+
+    def _put(self, task="t1", round_id="r1", sender="session-B",
+             kind="delivery", revision="v1", recipient="session-A", **kw):
+        return put(self.base, task=task, round_id=round_id, sender=sender,
+                   kind=kind, revision=revision, recipient=recipient, **kw)
+
+    def _done(self, key, processor="session-A", task="t1"):
+        return run_inbox(
+            self.base, "done", "--task", task, "--base-dir", str(self.base),
+            "--key", key, "--processor", processor,
+        )
+
+    def _open_obligation_keys(self, task="t1"):
+        result = run_inbox(
+            self.base, "obligations", "--task", task,
+            "--base-dir", str(self.base), "--json",
+        )
+        return {o["key"] for o in json.loads(result.stdout)["obligations"]}
+
+    # --- done auto-discharge ------------------------------------------------
+
+    def test_done_auto_discharges_exact_worker_match(self):
+        bound = self._bind(worker="session-B", recipient="session-A")
+        obligation_key = json.loads(bound.stdout)["key"]
+        key = json.loads(self._put(sender="session-B").stdout)["key"]
+        result = self._done(key)
+        body = json.loads(result.stdout)
+        self.assertEqual(body["status"], "processed")
+        self.assertEqual(body["discharged_obligations"], [obligation_key])
+        self.assertEqual(self._open_obligation_keys(), set())
+
+    def test_done_auto_discharges_unique_open_candidate_for_alias_sender(self):
+        """sender is an alias (not the worker session id); with exactly one
+        open obligation matching round+recipient+kind, it discharges."""
+        bound = self._bind(worker="session-B", recipient="session-A")
+        obligation_key = json.loads(bound.stdout)["key"]
+        key = json.loads(self._put(sender="实现会话·别名").stdout)["key"]
+        result = self._done(key)
+        body = json.loads(result.stdout)
+        self.assertEqual(body["discharged_obligations"], [obligation_key])
+
+    def test_done_keeps_multiple_unmatched_open_obligations(self):
+        """Two open obligations for the same round/recipient, neither matching
+        the sender: neither may be silently cleared."""
+        self._bind(worker="session-B1", recipient="session-A")
+        self._bind(worker="session-B2", recipient="session-A")
+        key = json.loads(self._put(sender="session-B3").stdout)["key"]
+        result = self._done(key)
+        body = json.loads(result.stdout)
+        self.assertEqual(body["discharged_obligations"], [])
+        self.assertEqual(len(self._open_obligation_keys()), 2)
+
+    def test_done_on_milestone_never_auto_discharges(self):
+        self._bind(worker="session-B", recipient="session-A")
+        key = json.loads(self._put(sender="session-B", kind="milestone").stdout)["key"]
+        result = self._done(key)
+        body = json.loads(result.stdout)
+        self.assertEqual(body["discharged_obligations"], [])
+        self.assertEqual(len(self._open_obligation_keys()), 1)
+
+    # --- bind default kinds -------------------------------------------------
+
+    def test_bind_default_kinds_includes_review(self):
+        bound = self._bind(worker="session-B", recipient="session-A")
+        record = json.loads(bound.stdout)["obligation"]
+        self.assertEqual(
+            record["expected_kinds"], ["delivery", "review", "blocker"]
+        )
+
+    # --- put optional sender -------------------------------------------------
+
+    def test_put_defaults_sender_to_session_id(self):
+        env = {"CODEX_SESSION_ID": "session-B"}
+        result = run_inbox(
+            self.base,
+            "put", "--task", "t1", "--base-dir", str(self.base),
+            "--round", "r1", "--event", "delivery", "--revision", "v1",
+            "--recipient", "session-A", env=env,
+        )
+        body = json.loads(result.stdout)
+        event_path = Path(body["path"])
+        event = json.loads(event_path.read_text())
+        self.assertEqual(event["sender"], "session-B")
+
+    def test_put_explicit_sender_unchanged(self):
+        key = json.loads(self._put(sender="explicit-name").stdout)["key"]
+        self.assertIn("explicit-name", key)
+
+    # --- list / obligations without --task ----------------------------------
+
+    def test_list_scans_all_tasks_without_task_arg(self):
+        self._put(task="alpha", sender="B")
+        self._put(task="beta", sender="B")
+        result = run_inbox(
+            self.base, "list", "--base-dir", str(self.base), "--json",
+        )
+        body = json.loads(result.stdout)
+        self.assertIsNone(body["task"])
+        tasks = {e["task"] for e in body["events"]}
+        self.assertEqual(tasks, {"alpha", "beta"})
+
+    def test_obligations_scans_all_tasks_without_task_arg(self):
+        self._bind(task="alpha", worker="session-B", recipient="session-A")
+        self._bind(task="beta", worker="session-C", recipient="session-A")
+        result = run_inbox(
+            self.base, "obligations", "--base-dir", str(self.base), "--json",
+        )
+        body = json.loads(result.stdout)
+        self.assertIsNone(body["task"])
+        tasks = {o["task"] for o in body["obligations"]}
+        self.assertEqual(tasks, {"alpha", "beta"})
+
 if __name__ == "__main__":
     unittest.main()
