@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## v1.17.2 — 收件箱三步收敛与 Hook 安装指引
+
+发布日期：2026-11-25。完整说明：[v1.17.2](docs/releases/v1.17.2.md)。
+
+- **收件箱日常三步**（PR #261）：bind 登记义务、put 登记交付、done 处理后自动核销匹配义务；bind 默认接受 delivery/review/blocker，put 可省 --sender（默认 CODEX_SESSION_ID），list 和 obligations 省略 --task 可扫全仓；主会话处理完手上的批次即收口回合。
+- **Hook 安装指引补全**（PR #260）：示例为自解析最新插件版本的合法 JSON 配置，新增确认信任与验证装好两步，CI 测试保证示例始终可解析。
+- Stop Hook 脚本无改动。TPlan runtime generation 保持 `1.7.0`。提供 plugins、skills 两份白名单归档及 `SHA256SUMS`。
+
 ## v1.17.1 — 插话规则修复
 
 发布日期：2026-11-24。修复版，不新增方法和规则。完整说明：[v1.17.1](docs/releases/v1.17.1.md)。
