@@ -26,6 +26,11 @@ needed. `list` / `obligations` without `--task` scan every task in
 the repo. The rest — `discharge`, `defer`/`resume`, `confirm`,
 `takeover`/`release` — are for exceptions and edge cases.
 
+The inbox carries one direction only: upward — a delivery, review or
+blocker from a Worker to its Owner or the designated audit seat. An
+Owner never queues work orders or notifications downward with
+`put --event milestone`.
+
 ```bash
 # At dispatch time A records the round's return obligation once
 python3 skills/codex-dispatch/scripts/dispatch_inbox.py bind \
@@ -78,6 +83,12 @@ session ids and the Stop hook checks those — never the text of a reply:
   holding; see
   [Human interjection](human-interjection.md#human-takeover-state).
   While marked, hook and heartbeat stand down for that session.
+
+Scope the binding: `bind` exists for a single-round, clearly
+deliverable Worker or Reviewer task. A long, cross-line delegation
+between peer Owners is not bound as one round's obligation — otherwise
+the Stop hook keeps intercepting that peer's ordinary coordination
+turns.
 
 An event's stable identity is task / round / sender / event / revision —
 the same attempt marker the first brief names. `put` on an existing key

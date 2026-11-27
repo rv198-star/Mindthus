@@ -41,7 +41,11 @@ TPlan path.
    The first brief to a participant also names the delivery handoff: who the
    fixed revision goes to, when to send it, along which host-supported return
    path this Mission's existing authority covers, who resumes after the send,
-   and how A re-enters. It also points the participant at the
+   and how A re-enters. The brief fixes the participant's role (Worker, or
+   Reviewer for a read-only audit seat) and its autonomy mode — `strict`,
+   or the default `bounded`, under which it chooses path and in-plan
+   troubleshooting and reports every change with evidence in the delivery's
+   deviation list. It also points the participant at the
    [human-interjection rules](../../codex-dispatch/references/human-interjection.md)
    it should apply if the user speaks mid-work — a participant only learns the
    ruleset exists when the brief names its location. The brief also tells the ordinary participant to keep a

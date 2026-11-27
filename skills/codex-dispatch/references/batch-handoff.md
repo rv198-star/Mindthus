@@ -1,5 +1,24 @@
 # Batch handoff
 
+## Session roles and default boundaries
+
+Two roles cover a batch. **Owner / Leader** — the planner, line owner or
+delivery coordinator — keeps the goal and the norms, splits and dispatches
+bounded work, accepts results or organizes an independent audit, and rules
+on escalations. It does not by default: edit implementation code or run
+long test chains and bulk remote evidence-gathering itself; sit in a
+timed `wait_threads` loop once a brief is sent and confirmed started —
+it yields the turn and waits for the return; or bind a long, cross-line
+peer-to-peer delegation between fellow Owners as a single-round Worker
+obligation.
+
+**Worker** — implementation, investigation, or independent audit; an
+audit seat is a read-only Worker — executes or audits inside the agreed
+boundary, self-verifies, and returns once along the named path before
+ending its turn. It does not by default: spawn further chats and
+sub-delegate, bypass the named recipient, change the objective or shared
+contracts on its own, or coordinate across lines for the Owner.
+
 ## A: record the intent and the result
 
 In an existing task document or this chat's batch record, keep the approved
@@ -60,7 +79,10 @@ blocker visible in the recipient chat for A to read. Do not treat an incoming
 delegation as permission to send a message back.
 
 Return the fixed artifact, evidence, unresolved items and deviation rows in
-one delivery. Where the brief named an authorized return path, use the
+one delivery. The brief fixes the one recipient — back to A or straight to
+a designated audit seat — and the triggers for a send: the fixed revision,
+a real blocker, or the single agreed checkpoint. Where the brief named an
+authorized return path, use the
 return-or-collection route named in the brief, carrying the
 attempt marker; then yield the turn instead of waiting for a prompt. An
 agreed milestone or a real blocker is its own send with its own event
@@ -81,6 +103,11 @@ verbatim:
 ```text
 <协调会话名>：请按 <基线版本> 完成 <具体工作>，并验证 <验收条件>。
 You are B; A is <A-thread-id>. Attempt marker <attempt-ref>.
+Role: Worker (or: Reviewer — a read-only Worker).
+Autonomy: <strict | bounded (default)>.
+Return path & responsibility: send to <the one recipient — parent chat A
+or the designated audit seat> exactly when <the fixed revision is ready /
+a real blocker / the single agreed checkpoint>.
 Objective / baseline / writable scope: … Acceptance evidence: …
 On fixing the revision, keep the package at <agreed location>. Use the
 user-authorized return route once when A is ready for this event or the
@@ -103,6 +130,27 @@ on the matching state — unfinished, fixed-not-sent, sent-but-unknown, or
 already delivered. If a send's outcome is unknown, check the original
 target before retrying; a pause or new instruction from the user wins.
 ```
+
+Pick exactly one autonomy mode in the first brief:
+
+- **strict** (follow the plan): execute the fixed spec exactly. On any
+  unplanned change, ambiguity of terms or boundary conflict, stop the
+  affected part and send a blocker to the parent chat for a ruling.
+- **bounded** (default): within an unchanged objective, shared contract
+  and acceptance criteria, choose your own path, implementation and
+  in-plan troubleshooting. Handle in-plan deviations yourself, but every
+  change item and its verification evidence goes into the delivery's
+  deviation list. Escalate to the parent chat when touching the
+  objective, a shared interface or contract, external publish or
+  permission, or an unresolvable blocker.
+
+### Replacement vs compaction
+
+A replacement chat exists only for a session that errored, is
+unavailable, or stays degraded after compaction. Context fill
+percentage — say 75% — is never an auto-stop or auto-replace line: a
+healthy session is compacted in place and continues from its recovery
+record.
 
 B's matching delivery back to A uses the same name-colon form:
 
